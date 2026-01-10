@@ -26,7 +26,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  Id <--(0..many) BookAuthors.AuthorId                              
+  Id <--(1..many) BookAuthors.AuthorId                              
 
 Indexes
 
@@ -77,10 +77,10 @@ BookAuthors                                                      [table]
 Foreign Keys
 
                                            [foreign key, with no action]
-  AuthorId (0..many)--> Authors.Id                              
+  AuthorId (1..many)--> Authors.Id                              
 
                                            [foreign key, with no action]
-  BookId (0..many)--> Books.Id                                  
+  BookId (1..many)--> Books.Id                                  
 
 Indexes
 
@@ -108,7 +108,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  Id <--(0..many) BookAuthors.BookId                              
+  Id <--(1..many) BookAuthors.BookId                              
 
                                            [foreign key, with no action]
   Id <--(0..1) PreviousEditionId                                
@@ -133,7 +133,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  Id <--(0..many) "Celebrity Updates"."Celebrity Id"                              
+  Id <--(1..many) "Celebrity Updates"."Celebrity Id"                              
 
 
 
@@ -150,7 +150,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  "Celebrity Id" (0..many)--> Celebrities.Id                              
+  "Celebrity Id" (1..many)--> Celebrities.Id                              
 
 
 
@@ -182,7 +182,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  Id <--(0..many) Βιβλία.Εκδότης                                
+  Id <--(1..many) Βιβλία.Εκδότης                                
 
 
 
@@ -215,7 +215,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  Εκδότης (0..many)--> Publishers.Id                              
+  Εκδότης (1..many)--> Publishers.Id                              
 
 Indexes
 

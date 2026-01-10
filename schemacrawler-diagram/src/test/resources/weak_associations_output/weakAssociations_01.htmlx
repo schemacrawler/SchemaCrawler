@@ -300,9 +300,10 @@ td.section {
 <!-- bookauthors_ead84c5d&#45;&gt;authors_f521e766 -->
 <g id="edge1" class="edge">
 <title>bookauthors_ead84c5d:w&#45;&gt;authors_f521e766:e</title>
-<path fill="none" stroke="black" d="M1407.22,-715.86C1036.78,-715.26 937.35,-697.4 557.75,-682.62 479.08,-679.56 454.85,-702.22 380.75,-675.62 371.15,-672.18 369.37,-663.81 364.11,-659.15"/>
+<path fill="none" stroke="black" d="M1411.09,-715.87C1037.47,-715.39 938.67,-697.45 557.75,-682.62 479.08,-679.56 454.85,-702.22 380.75,-675.62 371.15,-672.18 369.37,-663.81 364.11,-659.15"/>
 <polygon fill="black" stroke="black" points="1416.17,-715.87 1426.16,-720.37 1421.5,-715.87 1425.83,-715.87 1425.83,-715.87 1425.83,-715.87 1421.5,-715.87 1426.17,-711.37 1416.17,-715.87"/>
-<ellipse fill="none" stroke="black" cx="1410.45" cy="-715.86" rx="4" ry="4"/>
+<polygon fill="black" stroke="black" points="1413.95,-710.87 1413.94,-720.87 1411.94,-720.87 1411.95,-710.87 1413.95,-710.87"/>
+<polyline fill="none" stroke="black" points="1414.95,-715.87 1409.95,-715.86"/>
 <polygon fill="black" stroke="black" points="354.04,-660.92 357.35,-651.49 359.23,-652.15 355.93,-661.59 354.04,-660.92"/>
 <polyline fill="none" stroke="black" points="354.75,-655.88 359.47,-657.53"/>
 <polygon fill="black" stroke="black" points="358.76,-662.58 362.06,-653.14 363.95,-653.8 360.65,-663.24 358.76,-662.58"/>
@@ -356,13 +357,14 @@ td.section {
 <!-- bookauthors_ead84c5d&#45;&gt;books_f4a675c8 -->
 <g id="edge7" class="edge">
 <title>bookauthors_ead84c5d:w&#45;&gt;books_f4a675c8:e</title>
-<path fill="none" stroke="black" d="M1409.97,-725.82C1364.09,-682.42 1269.9,-508.62 1229.9,-481.06"/>
-<polygon fill="black" stroke="black" points="1417.61,-730.35 1423.92,-739.32 1422.2,-733.07 1425.92,-735.28 1425.92,-735.28 1425.92,-735.28 1422.2,-733.07 1428.51,-731.58 1417.61,-730.35"/>
-<ellipse fill="none" stroke="black" cx="1412.69" cy="-727.43" rx="4" ry="4"/>
-<polygon fill="black" stroke="black" points="1219.81,-482.39 1223.55,-473.11 1225.4,-473.86 1221.66,-483.13 1219.81,-482.39"/>
-<polyline fill="none" stroke="black" points="1220.75,-477.38 1225.39,-479.25"/>
-<polygon fill="black" stroke="black" points="1224.44,-484.26 1228.18,-474.98 1230.04,-475.73 1226.3,-485 1224.44,-484.26"/>
-<polyline fill="none" stroke="black" points="1225.39,-479.25 1230.02,-481.12"/>
+<path fill="none" stroke="black" d="M1412.88,-728.45C1368.18,-690 1270.69,-509.06 1229.85,-481.03"/>
+<polygon fill="black" stroke="black" points="1417.36,-730.81 1424.11,-739.45 1422.08,-733.29 1425.91,-735.31 1425.91,-735.31 1425.91,-735.31 1422.08,-733.29 1428.3,-731.49 1417.36,-730.81"/>
+<polygon fill="black" stroke="black" points="1417.72,-725.35 1413.06,-734.2 1411.29,-733.27 1415.96,-724.42 1417.72,-725.35"/>
+<polyline fill="none" stroke="black" points="1416.28,-730.24 1411.86,-727.91"/>
+<polygon fill="black" stroke="black" points="1219.81,-482.39 1223.54,-473.11 1225.4,-473.85 1221.67,-483.13 1219.81,-482.39"/>
+<polyline fill="none" stroke="black" points="1220.75,-477.38 1225.39,-479.24"/>
+<polygon fill="black" stroke="black" points="1224.45,-484.25 1228.18,-474.97 1230.04,-475.72 1226.31,-485 1224.45,-484.25"/>
+<polyline fill="none" stroke="black" points="1225.39,-479.24 1230.03,-481.1"/>
 <text text-anchor="start" x="1275.62" y="-715.99" font-family="Helvetica,sans-Serif" font-size="14.00">SYS_FK_10118</text>
 </g>
 <!-- authorid_4ce6c7c0 -->
@@ -402,10 +404,11 @@ td.section {
 <!-- books_f4a675c8&#45;&gt;authors_f521e766 -->
 <g id="edge4" class="edge">
 <title>books_f4a675c8:w&#45;&gt;authors_f521e766:e</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M552.88,-482.72C549.39,-486.17 546.31,-490.57 539.75,-493.62 472.42,-524.99 431.06,-490.48 380.75,-545.12 349.05,-579.56 397.09,-645.16 364.28,-654.7"/>
-<polygon fill="black" stroke="black" points="562.91,-473.14 566.75,-482.38 564.9,-483.14 561.06,-473.91 562.91,-473.14"/>
-<polyline fill="none" stroke="black" points="565.75,-477.38 561.13,-479.29"/>
-<ellipse fill="none" stroke="black" cx="556.98" cy="-481.02" rx="4" ry="4"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M556.17,-479.99C550.91,-483.47 548.24,-489.67 539.75,-493.62 472.42,-524.99 431.06,-490.48 380.75,-545.12 349.05,-579.56 397.09,-645.16 364.28,-654.7"/>
+<polygon fill="black" stroke="black" points="563.47,-472.81 566.1,-482.46 564.17,-482.99 561.54,-473.34 563.47,-472.81"/>
+<polyline fill="none" stroke="black" points="565.75,-477.38 560.93,-478.69"/>
+<polygon fill="black" stroke="black" points="558.65,-474.13 561.28,-483.78 559.35,-484.3 556.72,-474.65 558.65,-474.13"/>
+<polyline fill="none" stroke="black" points="560.93,-478.69 556.1,-480"/>
 <polygon fill="black" stroke="black" points="356.35,-660.72 355.13,-650.79 357.12,-650.55 358.34,-660.47 356.35,-660.72"/>
 <polyline fill="none" stroke="black" points="354.75,-655.88 359.71,-655.27"/>
 <polygon fill="black" stroke="black" points="361.31,-660.11 360.1,-650.18 362.08,-649.94 363.3,-659.86 361.31,-660.11"/>
@@ -434,10 +437,11 @@ td.section {
 <!-- books_f4a675c8&#45;&gt;id_f8ccecea -->
 <g id="edge8" class="edge">
 <title>books_f4a675c8:w&#45;&gt;id_f8ccecea:e</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M552.1,-477.25C440.42,-475.19 406.91,-448.16 293.42,-446.69"/>
-<polygon fill="black" stroke="black" points="564.8,-472.37 564.7,-482.37 562.7,-482.35 562.8,-472.35 564.8,-472.37"/>
-<polyline fill="none" stroke="black" points="565.75,-477.38 560.75,-477.33"/>
-<ellipse fill="none" stroke="black" cx="556.25" cy="-477.29" rx="4" ry="4"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M555.97,-477.31C441.22,-475.82 408.24,-448.2 293.53,-446.69"/>
+<polygon fill="black" stroke="black" points="564.78,-472.37 564.72,-482.37 562.72,-482.36 562.78,-472.36 564.78,-472.37"/>
+<polyline fill="none" stroke="black" points="565.75,-477.38 560.75,-477.34"/>
+<polygon fill="black" stroke="black" points="559.78,-472.34 559.72,-482.34 557.72,-482.32 557.78,-472.32 559.78,-472.34"/>
+<polyline fill="none" stroke="black" points="560.75,-477.34 555.75,-477.31"/>
 <polygon fill="black" stroke="black" points="284.62,-451.63 284.69,-441.63 286.69,-441.64 286.62,-451.64 284.62,-451.63"/>
 <polyline fill="none" stroke="black" points="283.65,-446.62 288.65,-446.66"/>
 <polygon fill="black" stroke="black" points="289.62,-451.66 289.69,-441.66 291.69,-441.68 291.62,-451.68 289.62,-451.66"/>
@@ -528,9 +532,10 @@ td.section {
 <!-- sales_751e68cc&#45;&gt;regions_dbf65bbf -->
 <g id="edge12" class="edge">
 <title>sales_751e68cc:w&#45;&gt;regions_dbf65bbf:e</title>
-<path fill="none" stroke="black" d="M1465.85,-152.91C1317.44,-151.49 1271.84,-133.63 1119.11,-132.9"/>
-<polygon fill="black" stroke="black" points="1474.54,-152.95 1484.52,-157.5 1479.88,-152.98 1484.21,-153 1484.21,-153 1484.21,-153 1479.88,-152.98 1484.56,-148.5 1474.54,-152.95"/>
-<ellipse fill="none" stroke="black" cx="1468.82" cy="-152.92" rx="4" ry="4"/>
+<path fill="none" stroke="black" d="M1469.57,-152.94C1318.21,-151.79 1273.12,-133.64 1119.19,-132.9"/>
+<polygon fill="black" stroke="black" points="1474.54,-152.96 1484.52,-157.5 1479.88,-152.98 1484.21,-153 1484.21,-153 1484.21,-153 1479.88,-152.98 1484.56,-148.5 1474.54,-152.96"/>
+<polygon fill="black" stroke="black" points="1472.34,-147.95 1472.3,-157.95 1470.3,-157.94 1470.34,-147.95 1472.34,-147.95"/>
+<polyline fill="none" stroke="black" points="1473.32,-152.96 1468.32,-152.94"/>
 <polygon fill="black" stroke="black" points="1110.36,-137.88 1110.39,-127.88 1112.39,-127.88 1112.36,-137.88 1110.36,-137.88"/>
 <polyline fill="none" stroke="black" points="1109.38,-132.88 1114.37,-132.89"/>
 <polygon fill="black" stroke="black" points="1115.36,-137.89 1115.39,-127.89 1117.39,-127.89 1117.36,-137.89 1115.36,-137.89"/>
@@ -540,9 +545,10 @@ td.section {
 <!-- sales_751e68cc&#45;&gt;regions_dbf65bbf -->
 <g id="edge13" class="edge">
 <title>sales_751e68cc:w&#45;&gt;regions_dbf65bbf:e</title>
-<path fill="none" stroke="black" d="M1465.53,-132.15C1442.41,-129.31 1430.97,-121.76 1400.5,-118.88 1274.93,-107.01 1240.52,-112.81 1119.05,-113.11"/>
-<polygon fill="black" stroke="black" points="1474.56,-132.66 1484.29,-137.72 1479.88,-132.97 1484.21,-133.21 1484.21,-133.21 1484.21,-133.21 1479.88,-132.97 1484.8,-128.74 1474.56,-132.66"/>
-<ellipse fill="none" stroke="black" cx="1468.85" cy="-132.34" rx="4" ry="4"/>
+<path fill="none" stroke="black" d="M1469.7,-132.6C1443.67,-130.2 1432.75,-121.92 1400.5,-118.88 1274.93,-107.01 1240.52,-112.81 1119.05,-113.11"/>
+<polygon fill="black" stroke="black" points="1474.55,-132.8 1484.35,-137.73 1479.88,-133.03 1484.21,-133.22 1484.21,-133.22 1484.21,-133.22 1479.88,-133.03 1484.73,-128.74 1474.55,-132.8"/>
+<polygon fill="black" stroke="black" points="1472.55,-127.71 1472.12,-137.7 1470.12,-137.62 1470.55,-127.63 1472.55,-127.71"/>
+<polyline fill="none" stroke="black" points="1473.33,-132.75 1468.34,-132.54"/>
 <polygon fill="black" stroke="black" points="1110.38,-118.12 1110.37,-108.12 1112.37,-108.12 1112.38,-118.12 1110.38,-118.12"/>
 <polyline fill="none" stroke="black" points="1109.38,-113.12 1114.37,-113.12"/>
 <polygon fill="black" stroke="black" points="1115.38,-118.12 1115.37,-108.12 1117.37,-108.11 1117.38,-118.11 1115.38,-118.12"/>
@@ -626,10 +632,11 @@ td.section {
 <!-- celebrityupdates_f5088e8b&#45;&gt;celebrities_db1258df -->
 <g id="edge10" class="edge">
 <title>celebrityupdates_f5088e8b:w&#45;&gt;celebrities_db1258df:e</title>
-<path fill="none" stroke="black" d="M2157.58,-842.62C2032.9,-842.62 1994.58,-842.62 1867.93,-842.62"/>
+<path fill="none" stroke="black" d="M2161.88,-842.62C2033.79,-842.62 1996.04,-842.62 1868.03,-842.62"/>
 <polygon fill="black" stroke="black" points="2170.5,-837.63 2170.5,-847.63 2168.5,-847.63 2168.5,-837.63 2170.5,-837.63"/>
 <polyline fill="none" stroke="black" points="2171.5,-842.62 2166.5,-842.63"/>
-<ellipse fill="none" stroke="black" cx="2162" cy="-842.63" rx="4" ry="4"/>
+<polygon fill="black" stroke="black" points="2165.5,-837.63 2165.5,-847.63 2163.5,-847.63 2163.5,-837.63 2165.5,-837.63"/>
+<polyline fill="none" stroke="black" points="2166.5,-842.63 2161.5,-842.63"/>
 <polygon fill="black" stroke="black" points="1859.25,-847.63 1859.25,-837.63 1861.25,-837.63 1861.25,-847.63 1859.25,-847.63"/>
 <polyline fill="none" stroke="black" points="1858.25,-842.62 1863.25,-842.63"/>
 <polygon fill="black" stroke="black" points="1864.25,-847.63 1864.25,-837.63 1866.25,-837.63 1866.25,-847.63 1864.25,-847.63"/>
@@ -739,9 +746,10 @@ td.section {
 <!-- βιβλία_3cecb755&#45;&gt;publishers_8037d535 -->
 <g id="edge11" class="edge">
 <title>βιβλία_3cecb755:w&#45;&gt;publishers_8037d535:e</title>
-<path fill="none" stroke="black" d="M2173.89,-1251.14C2065.46,-1251.25 2029.48,-1252.31 1916.7,-1252.37"/>
+<path fill="none" stroke="black" d="M2178.06,-1251.13C2066.4,-1251.22 2030.94,-1252.31 1916.81,-1252.37"/>
 <polygon fill="black" stroke="black" points="2182.92,-1251.13 2192.92,-1255.63 2188.25,-1251.13 2192.58,-1251.13 2192.58,-1251.13 2192.58,-1251.13 2188.25,-1251.13 2192.91,-1246.63 2182.92,-1251.13"/>
-<ellipse fill="none" stroke="black" cx="2177.2" cy="-1251.13" rx="4" ry="4"/>
+<polygon fill="black" stroke="black" points="2180.7,-1246.13 2180.7,-1256.13 2178.7,-1256.13 2178.7,-1246.13 2180.7,-1246.13"/>
+<polyline fill="none" stroke="black" points="2181.7,-1251.13 2176.7,-1251.13"/>
 <polygon fill="black" stroke="black" points="1908,-1257.37 1908,-1247.37 1910,-1247.37 1910,-1257.37 1908,-1257.37"/>
 <polyline fill="none" stroke="black" points="1907,-1252.38 1912,-1252.37"/>
 <polygon fill="black" stroke="black" points="1913,-1257.37 1913,-1247.37 1915,-1247.37 1915,-1257.37 1913,-1257.37"/>
@@ -884,7 +892,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID ←(0..many) <a href='#bookauthors_ead84c5d'>PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID</a></td>
+		<td class='minwidth'>ID ←(1..many) <a href='#bookauthors_ead84c5d'>PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -929,7 +937,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID ⇜(0..1) <a href='#books_f4a675c8'>PUBLIC.BOOKS.BOOKS.ID</a></td>
+		<td class='minwidth'>ID ⇜(1..1) <a href='#books_f4a675c8'>PUBLIC.BOOKS.BOOKS.ID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1068,7 +1076,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>AUTHORID (0..many)→ <a href='#authors_f521e766'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
+		<td class='minwidth'>AUTHORID (1..many)→ <a href='#authors_f521e766'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1080,7 +1088,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>BOOKID (0..many)→ <a href='#books_f4a675c8'>PUBLIC.BOOKS.BOOKS.ID</a></td>
+		<td class='minwidth'>BOOKID (1..many)→ <a href='#books_f4a675c8'>PUBLIC.BOOKS.BOOKS.ID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1255,7 +1263,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID ←(0..many) <a href='#bookauthors_ead84c5d'>PUBLIC.BOOKS.BOOKAUTHORS.BOOKID</a></td>
+		<td class='minwidth'>ID ←(1..many) <a href='#bookauthors_ead84c5d'>PUBLIC.BOOKS.BOOKAUTHORS.BOOKID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1285,7 +1293,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID (0..1)⇝ PRIVATE.LIBRARY.BOOKS.ID</td>
+		<td class='minwidth'>ID (1..1)⇝ PRIVATE.LIBRARY.BOOKS.ID</td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1300,7 +1308,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID (0..1)⇝ <a href='#authors_f521e766'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
+		<td class='minwidth'>ID (1..1)⇝ <a href='#authors_f521e766'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1411,7 +1419,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>"Id" ←(0..1) <a href='#celebrityupdates_f5088e8b'>PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"</a></td>
+		<td class='minwidth'>"Id" ←(1..1) <a href='#celebrityupdates_f5088e8b'>PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1486,7 +1494,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>"Celebrity Id" (0..1)→ <a href='#celebrities_db1258df'>PUBLIC.BOOKS."Celebrities"."Id"</a></td>
+		<td class='minwidth'>"Celebrity Id" (1..1)→ <a href='#celebrities_db1258df'>PUBLIC.BOOKS."Celebrities"."Id"</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1787,7 +1795,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID ←(0..many) <a href='#βιβλία_3cecb755'>PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ</a></td>
+		<td class='minwidth'>ID ←(1..many) <a href='#βιβλία_3cecb755'>PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1872,7 +1880,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ΕΚΔΌΤΗΣ (0..many)→ <a href='#publishers_8037d535'>PUBLIC.BOOKS.PUBLISHERS.ID</a></td>
+		<td class='minwidth'>ΕΚΔΌΤΗΣ (1..many)→ <a href='#publishers_8037d535'>PUBLIC.BOOKS.PUBLISHERS.ID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1974,12 +1982,12 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>POSTALCODE ←(0..many) <a href='#sales_751e68cc'>PUBLIC."PUBLISHER SALES".SALES.POSTALCODE</a></td>
+		<td class='minwidth'>POSTALCODE ←(1..many) <a href='#sales_751e68cc'>PUBLIC."PUBLISHER SALES".SALES.POSTALCODE</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>COUNTRY ←(0..many) <a href='#sales_751e68cc'>PUBLIC."PUBLISHER SALES".SALES.COUNTRY</a></td>
+		<td class='minwidth'>COUNTRY ←(1..many) <a href='#sales_751e68cc'>PUBLIC."PUBLISHER SALES".SALES.COUNTRY</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -2090,12 +2098,12 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>POSTALCODE (0..many)→ <a href='#regions_dbf65bbf'>PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE</a></td>
+		<td class='minwidth'>POSTALCODE (1..many)→ <a href='#regions_dbf65bbf'>PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>COUNTRY (0..many)→ <a href='#regions_dbf65bbf'>PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY</a></td>
+		<td class='minwidth'>COUNTRY (1..many)→ <a href='#regions_dbf65bbf'>PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>

@@ -18,10 +18,10 @@ a_a_table1_pkey                                            [primary key]
 Foreign Keys
 
 fk_a_a_to_a_a                              [foreign key, with no action]
-  id <--(0..many) schema_a_a.a_a_table2.fk_col_to_a_a                              
+  id <--(1..many) schema_a_a.a_a_table2.fk_col_to_a_a                              
 
 fk_a_b_to_a_a                              [foreign key, with no action]
-  id <--(0..many) schema_a_b.a_b_table2.fk_col_to_a_a                              
+  id <--(1..many) schema_a_b.a_b_table2.fk_col_to_a_a                              
 
 Indexes
 
@@ -58,7 +58,7 @@ a_a_table2_pkey                                            [primary key]
 Foreign Keys
 
 fk_a_a_to_a_a                              [foreign key, with no action]
-  fk_col_to_a_a (0..many)--> schema_a_a.a_a_table1.id                              
+  fk_col_to_a_a (1..many)--> schema_a_a.a_a_table1.id                              
 
 Indexes
 
@@ -97,7 +97,7 @@ a_b_table2_pkey                                            [primary key]
 Foreign Keys
 
 fk_a_b_to_a_a                              [foreign key, with no action]
-  fk_col_to_a_a (0..many)--> schema_a_a.a_a_table1.id                              
+  fk_col_to_a_a (1..many)--> schema_a_a.a_a_table1.id                              
 
 Indexes
 

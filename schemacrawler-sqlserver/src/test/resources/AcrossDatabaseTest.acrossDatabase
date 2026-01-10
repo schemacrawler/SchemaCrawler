@@ -12,23 +12,23 @@ DATABASE_A.dbo.A_DBO_TABLE1                                      [table]
 
 Primary Key
 
-PK__A_DBO_TA__3214EC07AD02DA7A                             [primary key]
+PK__A_DBO_TA__3214EC078DEAEC86                             [primary key]
   Id                                                            
 
 Foreign Keys
 
 FK_A_A_TO_DBO                              [foreign key, with no action]
-  Id <--(0..many) DATABASE_A.SCHEMA_A_A.A_A_TABLE2.FK_COL_TO_DBO                              
+  Id <--(1..many) DATABASE_A.SCHEMA_A_A.A_A_TABLE2.FK_COL_TO_DBO                              
 
 FK_A_B_TO_DBO                              [foreign key, with no action]
-  Id <--(0..many) DATABASE_A.SCHEMA_A_B.A_B_TABLE2.FK_COL_TO_DBO                              
+  Id <--(1..many) DATABASE_A.SCHEMA_A_B.A_B_TABLE2.FK_COL_TO_DBO                              
 
 FK_DBO_TO_DBO                              [foreign key, with no action]
-  Id <--(0..many) DATABASE_A.dbo.A_DBO_TABLE2.FK_COL_TO_DBO                              
+  Id <--(1..many) DATABASE_A.dbo.A_DBO_TABLE2.FK_COL_TO_DBO                              
 
 Indexes
 
-PK__A_DBO_TA__3214EC07AD02DA7A                  [unique clustered index]
+PK__A_DBO_TA__3214EC078DEAEC86                  [unique clustered index]
   Id                                ascending                   
 
 Used By Objects
@@ -47,17 +47,17 @@ DATABASE_A.dbo.A_DBO_TABLE2                                      [table]
 
 Primary Key
 
-PK__A_DBO_TA__3214EC0744FA179C                             [primary key]
+PK__A_DBO_TA__3214EC0751281FE2                             [primary key]
   Id                                                            
 
 Foreign Keys
 
 FK_DBO_TO_DBO                              [foreign key, with no action]
-  FK_COL_TO_DBO (0..many)--> DATABASE_A.dbo.A_DBO_TABLE1.Id                              
+  FK_COL_TO_DBO (1..many)--> DATABASE_A.dbo.A_DBO_TABLE1.Id                              
 
 Indexes
 
-PK__A_DBO_TA__3214EC0744FA179C                  [unique clustered index]
+PK__A_DBO_TA__3214EC0751281FE2                  [unique clustered index]
   Id                                ascending                   
 
 
@@ -69,20 +69,20 @@ DATABASE_A.SCHEMA_A_A.A_A_TABLE1                                 [table]
 
 Primary Key
 
-PK__A_A_TABL__3214EC0798003088                             [primary key]
+PK__A_A_TABL__3214EC07B335399F                             [primary key]
   Id                                                            
 
 Foreign Keys
 
 FK_A_A_TO_A_A                              [foreign key, with no action]
-  Id <--(0..many) DATABASE_A.SCHEMA_A_A.A_A_TABLE2.FK_COL_TO_A_A                              
+  Id <--(1..many) DATABASE_A.SCHEMA_A_A.A_A_TABLE2.FK_COL_TO_A_A                              
 
 FK_A_B_TO_A_A                              [foreign key, with no action]
-  Id <--(0..many) DATABASE_A.SCHEMA_A_B.A_B_TABLE2.FK_COL_TO_A_A                              
+  Id <--(1..many) DATABASE_A.SCHEMA_A_B.A_B_TABLE2.FK_COL_TO_A_A                              
 
 Indexes
 
-PK__A_A_TABL__3214EC0798003088                  [unique clustered index]
+PK__A_A_TABL__3214EC07B335399F                  [unique clustered index]
   Id                                ascending                   
 
 Used By Objects
@@ -101,20 +101,20 @@ DATABASE_A.SCHEMA_A_A.A_A_TABLE2                                 [table]
 
 Primary Key
 
-PK__A_A_TABL__3214EC0756D1AD0B                             [primary key]
+PK__A_A_TABL__3214EC0798D852BA                             [primary key]
   Id                                                            
 
 Foreign Keys
 
 FK_A_A_TO_A_A                              [foreign key, with no action]
-  FK_COL_TO_A_A (0..many)--> DATABASE_A.SCHEMA_A_A.A_A_TABLE1.Id                              
+  FK_COL_TO_A_A (1..many)--> DATABASE_A.SCHEMA_A_A.A_A_TABLE1.Id                              
 
 FK_A_A_TO_DBO                              [foreign key, with no action]
-  FK_COL_TO_DBO (0..many)--> DATABASE_A.dbo.A_DBO_TABLE1.Id                              
+  FK_COL_TO_DBO (1..many)--> DATABASE_A.dbo.A_DBO_TABLE1.Id                              
 
 Indexes
 
-PK__A_A_TABL__3214EC0756D1AD0B                  [unique clustered index]
+PK__A_A_TABL__3214EC0798D852BA                  [unique clustered index]
   Id                                ascending                   
 
 Used By Objects
@@ -132,20 +132,20 @@ DATABASE_A.SCHEMA_A_B.A_B_TABLE2                                 [table]
 
 Primary Key
 
-PK__A_B_TABL__3214EC07D4DE1D11                             [primary key]
+PK__A_B_TABL__3214EC072186494B                             [primary key]
   Id                                                            
 
 Foreign Keys
 
 FK_A_B_TO_A_A                              [foreign key, with no action]
-  FK_COL_TO_A_A (0..many)--> DATABASE_A.SCHEMA_A_A.A_A_TABLE1.Id                              
+  FK_COL_TO_A_A (1..many)--> DATABASE_A.SCHEMA_A_A.A_A_TABLE1.Id                              
 
 FK_A_B_TO_DBO                              [foreign key, with no action]
-  FK_COL_TO_DBO (0..many)--> DATABASE_A.dbo.A_DBO_TABLE1.Id                              
+  FK_COL_TO_DBO (1..many)--> DATABASE_A.dbo.A_DBO_TABLE1.Id                              
 
 Indexes
 
-PK__A_B_TABL__3214EC07D4DE1D11                  [unique clustered index]
+PK__A_B_TABL__3214EC072186494B                  [unique clustered index]
   Id                                ascending                   
 
 

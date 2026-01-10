@@ -31,7 +31,7 @@ PK_AUTHORS                                                 [primary key]
 Foreign Keys
 
 Z_FK_AUTHOR                            [foreign key, on delete restrict]
-  ID <--(0..many) BOOKS.BOOKAUTHORS.AUTHORID                              
+  ID <--(1..many) BOOKS.BOOKAUTHORS.AUTHORID                              
 
 Indexes
 
@@ -180,10 +180,10 @@ along with the latest updated information
 Foreign Keys
 
 Z_FK_AUTHOR                            [foreign key, on delete restrict]
-  AUTHORID (0..many)--> BOOKS.AUTHORS.ID                              
+  AUTHORID (1..many)--> BOOKS.AUTHORS.ID                              
 
 SYS_C008750                            [foreign key, on delete restrict]
-  BOOKID (0..many)--> BOOKS.BOOKS.ID                              
+  BOOKID (1..many)--> BOOKS.BOOKS.ID                              
 
 Indexes
 
@@ -247,7 +247,7 @@ PK_BOOKS                                                   [primary key]
 Foreign Keys
 
 SYS_C008750                            [foreign key, on delete restrict]
-  ID <--(0..many) BOOKS.BOOKAUTHORS.BOOKID                              
+  ID <--(1..many) BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                     [foreign key, on delete restrict]
   ID <--(0..1) PREVIOUSEDITIONID                                
@@ -329,7 +329,7 @@ Primary Key
 Foreign Keys
 
 SYS_C008758                            [foreign key, on delete restrict]
-  "Id" <--(0..1) BOOKS."Celebrity Updates"."Celebrity Id"                              
+  "Id" <--(1..1) BOOKS."Celebrity Updates"."Celebrity Id"                              
 
 Indexes
 
@@ -372,7 +372,7 @@ Primary Key
 Foreign Keys
 
 SYS_C008758                            [foreign key, on delete restrict]
-  "Celebrity Id" (0..1)--> BOOKS."Celebrities"."Id"                              
+  "Celebrity Id" (1..1)--> BOOKS."Celebrities"."Id"                              
 
 Indexes
 
@@ -507,7 +507,7 @@ SYS_C008753                                                [primary key]
 Foreign Keys
 
 FK_ΒΙΒΛΊΑ_PUBLISHERS                   [foreign key, on delete restrict]
-  ID <--(0..many) BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                              
+  ID <--(1..many) BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                              
 
 Indexes
 
@@ -651,7 +651,7 @@ PK_ΒΙΒΛΊΑ                                                  [primary key]
 Foreign Keys
 
 FK_ΒΙΒΛΊΑ_PUBLISHERS                   [foreign key, on delete restrict]
-  ΕΚΔΌΤΗΣ (0..many)--> BOOKS.PUBLISHERS.ID                              
+  ΕΚΔΌΤΗΣ (1..many)--> BOOKS.PUBLISHERS.ID                              
 
 Indexes
 
