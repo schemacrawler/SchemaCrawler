@@ -27,7 +27,7 @@ Primary Key
 Foreign Keys
 
                                             [foreign key, with restrict]
-  `Id` <--(0..many) bookauthors.`AuthorId`                              
+  `Id` <--(1..many) bookauthors.`AuthorId`                              
 
 Indexes
 
@@ -66,10 +66,10 @@ along with the latest updated information
 Foreign Keys
 
                                             [foreign key, with restrict]
-  `AuthorId` (0..many)--> authors.`Id`                              
+  `AuthorId` (1..many)--> authors.`Id`                              
 
                                             [foreign key, with restrict]
-  `BookId` (0..many)--> books.`Id`                              
+  `BookId` (1..many)--> books.`Id`                              
 
 Indexes
 
@@ -108,7 +108,7 @@ Primary Key
 Foreign Keys
 
                                             [foreign key, with restrict]
-  `Id` <--(0..many) bookauthors.`BookId`                              
+  `Id` <--(1..many) bookauthors.`BookId`                              
 
                                             [foreign key, with restrict]
   `Id` <--(0..1) `PreviousEditionId`                              
@@ -136,7 +136,7 @@ Primary Key
 Foreign Keys
 
                                             [foreign key, with restrict]
-  `Id` <--(0..1) `celebrity updates`.`Celebrity Id`                              
+  `Id` <--(1..1) `celebrity updates`.`Celebrity Id`                              
 
 Indexes
 
@@ -158,7 +158,7 @@ Primary Key
 Foreign Keys
 
                                             [foreign key, with restrict]
-  `Celebrity Id` (0..1)--> celebrities.`Id`                              
+  `Celebrity Id` (1..1)--> celebrities.`Id`                              
 
 Indexes
 

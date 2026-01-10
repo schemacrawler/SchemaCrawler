@@ -26,7 +26,7 @@ Primary Key
 Foreign Keys
 
                                        [foreign key, on delete restrict]
-  ID <--(0..many) BOOKAUTHORS.AUTHORID                              
+  ID <--(1..many) BOOKAUTHORS.AUTHORID                              
 
 Indexes
 
@@ -81,10 +81,10 @@ BOOKAUTHORS                                                      [table]
 Foreign Keys
 
                                        [foreign key, on delete restrict]
-  AUTHORID (0..many)--> AUTHORS.ID                              
+  AUTHORID (1..many)--> AUTHORS.ID                              
 
                                        [foreign key, on delete restrict]
-  BOOKID (0..many)--> BOOKS.ID                                  
+  BOOKID (1..many)--> BOOKS.ID                                  
 
 Indexes
 
@@ -112,7 +112,7 @@ Primary Key
 Foreign Keys
 
                                        [foreign key, on delete restrict]
-  ID <--(0..many) BOOKAUTHORS.BOOKID                              
+  ID <--(1..many) BOOKAUTHORS.BOOKID                              
 
                                        [foreign key, on delete restrict]
   ID <--(0..1) PREVIOUSEDITIONID                                
@@ -140,7 +140,7 @@ Primary Key
 Foreign Keys
 
                                        [foreign key, on delete restrict]
-  "Id" <--(0..many) "Celebrity Updates"."Celebrity Id"                              
+  "Id" <--(1..many) "Celebrity Updates"."Celebrity Id"                              
 
 Indexes
 
@@ -162,7 +162,7 @@ Primary Key
 Foreign Keys
 
                                        [foreign key, on delete restrict]
-  "Celebrity Id" (0..many)--> "Celebrities"."Id"                              
+  "Celebrity Id" (1..many)--> "Celebrities"."Id"                              
 
 
 
@@ -194,7 +194,7 @@ JSON_BOOKS                                                        [view]
 PUBLISHERS                                                       [table]
 ------------------------------------------------------------------------
   ID                                BIT NOT NULL                
-                                    default "BOOKS"."ISEQ$$_71647".nextval
+                                    default "BOOKS"."ISEQ$$_72401".nextval
   PUBLISHER                         VARCHAR(255)                
 
 Primary Key
@@ -205,7 +205,7 @@ Primary Key
 Foreign Keys
 
                                        [foreign key, on delete restrict]
-  ID <--(0..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
+  ID <--(1..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
 
 Indexes
 
@@ -271,7 +271,7 @@ Primary Key
 Foreign Keys
 
                                        [foreign key, on delete restrict]
-  ΕΚΔΌΤΗΣ (0..many)--> PUBLISHERS.ID                              
+  ΕΚΔΌΤΗΣ (1..many)--> PUBLISHERS.ID                              
 
 Indexes
 

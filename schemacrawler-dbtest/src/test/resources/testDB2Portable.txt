@@ -27,7 +27,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  ID <--(0..many) BOOKAUTHORS.AUTHORID                              
+  ID <--(1..many) BOOKAUTHORS.AUTHORID                              
 
 Indexes
 
@@ -74,10 +74,10 @@ along with the latest updated information
 Foreign Keys
 
                                            [foreign key, with no action]
-  AUTHORID (0..many)--> AUTHORS.ID                              
+  AUTHORID (1..many)--> AUTHORS.ID                              
 
                                            [foreign key, with no action]
-  BOOKID (0..many)--> BOOKS.ID                                  
+  BOOKID (1..many)--> BOOKS.ID                                  
 
 Indexes
 
@@ -114,10 +114,10 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  ID <--(0..many) BOOKAUTHORS.BOOKID                              
+  ID <--(1..many) BOOKAUTHORS.BOOKID                              
 
                                            [foreign key, with no action]
-  ID <--(0..1) PREVIOUSEDITIONID                                
+  ID <--(1..1) PREVIOUSEDITIONID                                
 
                                            [foreign key, with no action]
   ID <-- PUBLICATIONS.PREVIOUSEDITIONID                              
@@ -145,7 +145,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+  "Id" <--(1..1) "Celebrity Updates"."Celebrity Id"                              
 
 Indexes
 
@@ -167,7 +167,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
+  "Celebrity Id" (1..1)--> "Celebrities"."Id"                              
 
 Indexes
 
@@ -232,7 +232,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  ID <--(0..many) ΒΙΒΛΊΑ."ΕΚΔΌΤΗς"                              
+  ID <--(1..many) ΒΙΒΛΊΑ."ΕΚΔΌΤΗς"                              
 
 Indexes
 
@@ -276,7 +276,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  "ΕΚΔΌΤΗς" (0..many)--> PUBLISHERS.ID                              
+  "ΕΚΔΌΤΗς" (1..many)--> PUBLISHERS.ID                              
 
 Indexes
 
