@@ -15,7 +15,7 @@ BOOKS.CHANNEL                                                    [table]
 Foreign Keys
 
 CHANNEL_FK1                            [foreign key, on delete restrict]
-  COMMUNICATION_CODE_FK (0..many)--> BOOKS.COMMUNICATION.COMMUNICATION_CODE                              
+  COMMUNICATION_CODE_FK (1..many)--> BOOKS.COMMUNICATION.COMMUNICATION_CODE                              
 
 
 
@@ -28,7 +28,7 @@ BOOKS.COMMUNICATION                                              [table]
 Foreign Keys
 
 CHANNEL_FK1                            [foreign key, on delete restrict]
-  COMMUNICATION_CODE <--(0..many) BOOKS.CHANNEL.COMMUNICATION_CODE_FK                              
+  COMMUNICATION_CODE <--(1..many) BOOKS.CHANNEL.COMMUNICATION_CODE_FK                              
 
 Indexes
 
