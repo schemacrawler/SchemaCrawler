@@ -29,7 +29,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2026-01-07 23:28:33</td>
+		<td align='left'>2026-01-11 21:08:34</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -263,7 +263,7 @@ along with the latest updated information</td>
 
   "books_f4a675c8":"previouseditionid_6cf3995a.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<FK_PREVIOUSEDITION> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
   "sales_751e68cc":"bookid_a3ccd678.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<FK_SALES_BOOK> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
-  "bookauthors_ead84c5d":"bookid_e54f6507.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<SYS_FK_10118> style="solid" dir="both" arrowhead="teetee" arrowtail="crowtee"];
+  "bookauthors_ead84c5d":"bookid_e54f6507.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<SYS_FK_10121> style="solid" dir="both" arrowhead="teetee" arrowtail="crowtee"];
 
 
   /* PUBLIC.BOOKS."Celebrities" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -292,7 +292,7 @@ along with the latest updated information</td>
     >
   ];
 
-  "celebrityupdates_f5088e8b":"celebrityid_83e278d.start":w -> "celebrities_db1258df":"id_8738cc3c.end":e [label=<SYS_FK_10128> style="solid" dir="both" arrowhead="teetee" arrowtail="teetee"];
+  "celebrityupdates_f5088e8b":"celebrityid_83e278d.start":w -> "celebrities_db1258df":"id_8738cc3c.end":e [label=<SYS_FK_10131> style="solid" dir="both" arrowhead="teetee" arrowtail="teetee"];
 
 
   /* PUBLIC.BOOKS."Celebrity Updates" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -370,9 +370,14 @@ along with the latest updated information</td>
 		<td bgcolor='#C2DCF2' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='id_6540fe15.start' align='left'><b><i>ID</i></b></td>
+		<td port='customerid_23ebee73.start' align='left'><b><i>CUSTOMERID</i></b></td>
 		<td align='left'> </td>
-		<td port='id_6540fe15.end' align='left'>INTEGER NOT NULL</td>
+		<td port='customerid_23ebee73.end' align='left'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td port='dataid_dd05a33f.start' align='left'><b><i>DATAID</i></b></td>
+		<td align='left'> </td>
+		<td port='dataid_dd05a33f.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='data_6560dca4.start' align='left'>DATA</td>
@@ -425,6 +430,7 @@ along with the latest updated information</td>
     >
   ];
 
+  "customerdata_b0af83c6":"customerid_23ebee73.start":w -> "customers_f705d773":"id_e9b52008.end":e [label=<FK_CUSTOMER> style="solid" dir="both" arrowhead="teetee" arrowtail="crowtee"];
 
 
   /* PUBLIC.BOOKS.PUBLISHERS -=-=-=-=-=-=-=-=-=-=-=-=-=- */

@@ -149,7 +149,7 @@ id	data	coupons	books
 
 books.customerdata                                                      
 ------------------------------------------------------------------------
-id	data
+customerid	dataid	data
 
 
 

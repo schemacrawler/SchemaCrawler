@@ -212,18 +212,26 @@ Indexes
 
 customerdata                                                     [table]
 ------------------------------------------------------------------------
-  id                                INTEGER NOT NULL            
+  customerid                        INTEGER NOT NULL            
+  dataid                            INTEGER NOT NULL            
   data                              DISTINCT                    
 
 Primary Key
 
                                                            [primary key]
-  id                                                            
+  customerid                                                    
+  dataid                                                        
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  customerid (1..many)--> customers.id                              
 
 Indexes
 
                                                           [unique index]
-  id                                ascending                   
+  customerid                        ascending                   
+  dataid                            ascending                   
 
 
 
@@ -238,6 +246,11 @@ Primary Key
 
                                                            [primary key]
   id                                                            
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  id <--(1..many) customerdata.customerid                              
 
 Indexes
 

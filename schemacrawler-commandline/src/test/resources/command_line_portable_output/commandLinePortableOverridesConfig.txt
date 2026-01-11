@@ -56,13 +56,13 @@ Table Constraints
 CHECK_UPPERCASE_STATE                                 [check constraint]
 7   STATE                                                         
 
-SYS_CT_10102                                          [check constraint]
+SYS_CT_10105                                          [check constraint]
 1   ID                                                            
 
-SYS_CT_10103                                          [check constraint]
+SYS_CT_10106                                          [check constraint]
 2   FIRSTNAME                                                     
 
-SYS_CT_10104                                          [check constraint]
+SYS_CT_10107                                          [check constraint]
 3   LASTNAME                                                      
 
 
@@ -88,7 +88,7 @@ Foreign Keys
 Z_FK_AUTHOR                                [foreign key, with no action]
  1  AUTHORID (1..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
-SYS_FK_10118                               [foreign key, with no action]
+SYS_FK_10121                               [foreign key, with no action]
  1  BOOKID (1..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 Indexes
@@ -96,7 +96,7 @@ Indexes
 Z_FK_AUTHOR                                           [non-unique index]
 2   AUTHORID                          ascending                   
 
-SYS_FK_10118                                          [non-unique index]
+SYS_FK_10121                                          [non-unique index]
 1   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
@@ -105,10 +105,10 @@ UIDX_BOOKAUTHORS                                          [unique index]
 
 Table Constraints
 
-SYS_CT_10116                                          [check constraint]
+SYS_CT_10119                                          [check constraint]
 1   BOOKID                                                        
 
-SYS_CT_10117                                          [check constraint]
+SYS_CT_10120                                          [check constraint]
 2   AUTHORID                                                      
 
 
@@ -141,7 +141,7 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
  1  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
-SYS_FK_10118                               [foreign key, with no action]
+SYS_FK_10121                               [foreign key, with no action]
  1  ID <--(1..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -163,13 +163,13 @@ Table Constraints
 U_PREVIOUSEDITION                                    [unique constraint]
 7   PREVIOUSEDITIONID                                             
 
-SYS_CT_10109                                          [check constraint]
+SYS_CT_10112                                          [check constraint]
 1   ID                                                            
 
-SYS_CT_10110                                          [check constraint]
+SYS_CT_10113                                          [check constraint]
 2   TITLE                                                         
 
-SYS_CT_10111                                          [check constraint]
+SYS_CT_10114                                          [check constraint]
 4   PUBLISHERID                                                   
 
 
@@ -186,7 +186,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10128                               [foreign key, with no action]
+SYS_FK_10131                               [foreign key, with no action]
  1  "Id" <--(1..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
 
 Indexes
@@ -196,7 +196,7 @@ Indexes
 
 Table Constraints
 
-SYS_CT_10125                                          [check constraint]
+SYS_CT_10128                                          [check constraint]
 1   "Id"                                                          
 
 
@@ -213,7 +213,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10128                               [foreign key, with no action]
+SYS_FK_10131                               [foreign key, with no action]
  1  "Celebrity Id" (1..1)--> PUBLIC.BOOKS."Celebrities"."Id"                              
 
 Indexes
@@ -221,12 +221,12 @@ Indexes
 "PK Celebrity Updates"                                    [unique index]
 1   "Celebrity Id"                    ascending                   
 
-SYS_FK_10128                                          [non-unique index]
+SYS_FK_10131                                          [non-unique index]
 1   "Celebrity Id"                    ascending                   
 
 Table Constraints
 
-SYS_CT_10127                                          [check constraint]
+SYS_CT_10130                                          [check constraint]
 1   "Celebrity Id"                                                
 
 
@@ -258,23 +258,37 @@ SYS_CT_10091                                          [check constraint]
 
 PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
 ------------------------------------------------------------------------
-1   ID                                INTEGER NOT NULL            
-2   DATA                              VALID_STRING(20)            
+1   CUSTOMERID                        INTEGER NOT NULL            
+2   DATAID                            INTEGER NOT NULL            
+3   DATA                              VALID_STRING(20)            
 
 Primary Key
 
 PK_CUSTOMERDATA                                            [primary key]
-1   ID                                                            
+1   CUSTOMERID                                                    
+2   DATAID                                                        
+
+Foreign Keys
+
+FK_CUSTOMER                                [foreign key, with no action]
+ 1  CUSTOMERID (1..many)--> PUBLIC.BOOKS.CUSTOMERS.ID                              
 
 Indexes
 
+FK_CUSTOMER                                           [non-unique index]
+1   CUSTOMERID                        ascending                   
+
 PK_CUSTOMERDATA                                           [unique index]
-1   ID                                ascending                   
+1   CUSTOMERID                        ascending                   
+2   DATAID                            ascending                   
 
 Table Constraints
 
 SYS_CT_10100                                          [check constraint]
-1   ID                                                            
+1   CUSTOMERID                                                    
+
+SYS_CT_10101                                          [check constraint]
+2   DATAID                                                        
 
 
 
@@ -289,6 +303,11 @@ Primary Key
 
 PK_CUSTOMERS                                               [primary key]
 1   ID                                                            
+
+Foreign Keys
+
+FK_CUSTOMER                                [foreign key, with no action]
+ 1  ID <--(1..many) PUBLIC.BOOKS.CUSTOMERDATA.CUSTOMERID                              
 
 Indexes
 
@@ -319,7 +338,7 @@ List of book publishers
 
 Primary Key
 
-SYS_PK_10124                                               [primary key]
+SYS_PK_10127                                               [primary key]
 1   ID                                                            
 
 Foreign Keys
@@ -329,7 +348,7 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
 
 Indexes
 
-SYS_PK_10124                                              [unique index]
+SYS_PK_10127                                              [unique index]
 1   ID                                ascending                   
 
 
@@ -361,13 +380,13 @@ PK_ΒΙΒΛΊΑ                                                 [unique index]
 
 Table Constraints
 
-SYS_CT_10131                                          [check constraint]
+SYS_CT_10134                                          [check constraint]
 1   ΜΟΝΑΔΙΚΌΣ                                                     
 
-SYS_CT_10132                                          [check constraint]
+SYS_CT_10135                                          [check constraint]
 2   ΤΊΤΛΟΣ                                                        
 
-SYS_CT_10133                                          [check constraint]
+SYS_CT_10136                                          [check constraint]
 4   ΕΚΔΌΤΗΣ                                                       
 
 
@@ -399,16 +418,16 @@ PK_CUSTOMERS                                              [unique index]
 
 Table Constraints
 
-SYS_CT_10204                                          [check constraint]
+SYS_CT_10207                                          [check constraint]
 1   CITY                                                          
 
-SYS_CT_10205                                          [check constraint]
+SYS_CT_10208                                          [check constraint]
 2   STATE                                                         
 
-SYS_CT_10206                                          [check constraint]
+SYS_CT_10209                                          [check constraint]
 3   POSTALCODE                                                    
 
-SYS_CT_10207                                          [check constraint]
+SYS_CT_10210                                          [check constraint]
 4   COUNTRY                                                       
 
 
@@ -449,10 +468,10 @@ FK_SALES_REGIONS                                      [non-unique index]
 
 Table Constraints
 
-SYS_CT_10213                                          [check constraint]
+SYS_CT_10216                                          [check constraint]
 1   POSTALCODE                                                    
 
-SYS_CT_10214                                          [check constraint]
+SYS_CT_10217                                          [check constraint]
 2   COUNTRY                                                       
 
 

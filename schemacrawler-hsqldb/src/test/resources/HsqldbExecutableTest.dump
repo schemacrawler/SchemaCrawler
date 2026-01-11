@@ -149,7 +149,7 @@ ID	DATA	COUPONS	BOOKS
 
 PUBLIC.BOOKS.CUSTOMERDATA                                               
 ------------------------------------------------------------------------
-ID	DATA
+CUSTOMERID	DATAID	DATA
 
 
 

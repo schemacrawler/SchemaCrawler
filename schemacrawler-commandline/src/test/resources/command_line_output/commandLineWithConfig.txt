@@ -22,7 +22,7 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
   ID <-- SALES.BOOKID                                           
 
-SYS_FK_10118                               [foreign key, with no action]
+SYS_FK_10121                               [foreign key, with no action]
   ID <-- BOOKAUTHORS.BOOKID                                     
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -41,7 +41,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10128                               [foreign key, with no action]
+SYS_FK_10131                               [foreign key, with no action]
   "Id" <--(1..1) "Celebrity Updates"."Celebrity Id"                              
 
 
@@ -57,7 +57,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10128                               [foreign key, with no action]
+SYS_FK_10131                               [foreign key, with no action]
   "Celebrity Id" (1..1)--> "Celebrities"."Id"                              
 
 
@@ -82,6 +82,11 @@ Primary Key
 PK_CUSTOMERS                                               [primary key]
   ID                                                            
 
+Foreign Keys
+
+FK_CUSTOMER                                [foreign key, with no action]
+  ID <-- CUSTOMERDATA.CUSTOMERID                                
+
 
 
 PUBLISHERS                                                       [table]
@@ -93,7 +98,7 @@ List of book publishers
 
 Primary Key
 
-SYS_PK_10124                                               [primary key]
+SYS_PK_10127                                               [primary key]
   ID                                                            
 
 Foreign Keys

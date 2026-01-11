@@ -149,7 +149,7 @@ ID
 
 PUBLIC.BOOKS.CUSTOMERDATA                                               
 ------------------------------------------------------------------------
-ID	DATA
+CUSTOMERID	DATAID	DATA
 
 
 

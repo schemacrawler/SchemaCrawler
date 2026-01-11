@@ -149,7 +149,7 @@ NULL	ARRAY[]	<binary>	10
 
 PUBLIC.BOOKS.CUSTOMERDATA                                               
 ------------------------------------------------------------------------
-DATA	ID
+CUSTOMERID	DATA	DATAID
 
 
 
