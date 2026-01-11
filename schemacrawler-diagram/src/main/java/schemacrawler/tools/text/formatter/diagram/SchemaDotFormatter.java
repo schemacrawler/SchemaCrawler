@@ -35,6 +35,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.ForeignKeyCardinality;
 import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexType;
@@ -52,7 +53,6 @@ import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
-import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
@@ -263,6 +263,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         return "crowodot";
       case one_one:
         return "teetee";
+      case one_many:
+        return "crowtee";
       default: // Including "unknown"
         return "box";
     }

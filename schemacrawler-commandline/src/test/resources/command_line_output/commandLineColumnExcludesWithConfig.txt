@@ -77,10 +77,10 @@ along with the latest updated information
 Foreign Keys
 
 Z_FK_AUTHOR                                [foreign key, with no action]
-  AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
+  AUTHORID (1..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
 SYS_FK_10118                               [foreign key, with no action]
-  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
+  BOOKID (1..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 Indexes
 
@@ -168,7 +168,7 @@ Primary Key
 Foreign Keys
 
 SYS_FK_10128                               [foreign key, with no action]
-  "Id" <--(0..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
+  "Id" <--(1..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
 
 Indexes
 
@@ -195,7 +195,7 @@ Primary Key
 Foreign Keys
 
 SYS_FK_10128                               [foreign key, with no action]
-  "Celebrity Id" (0..1)--> PUBLIC.BOOKS."Celebrities"."Id"                              
+  "Celebrity Id" (1..1)--> PUBLIC.BOOKS."Celebrities"."Id"                              
 
 Indexes
 
@@ -312,7 +312,7 @@ PK_ΒΙΒΛΊΑ                                                  [primary key]
 Foreign Keys
 
 FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
-  ΕΚΔΌΤΗΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
+  ΕΚΔΌΤΗΣ (1..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
 
 Indexes
 
@@ -351,8 +351,8 @@ PK_CUSTOMERS                                               [primary key]
 Foreign Keys
 
 FK_SALES_REGIONS                           [foreign key, with no action]
-  POSTALCODE <--(0..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
-  COUNTRY <--(0..many) PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
+  POSTALCODE <--(1..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
+  COUNTRY <--(1..many) PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
 Indexes
 
@@ -362,16 +362,16 @@ PK_CUSTOMERS                                              [unique index]
 
 Table Constraints
 
-SYS_CT_10202                                          [check constraint]
+SYS_CT_10204                                          [check constraint]
   CITY                                                          
 
-SYS_CT_10203                                          [check constraint]
+SYS_CT_10205                                          [check constraint]
   STATE                                                         
 
-SYS_CT_10204                                          [check constraint]
+SYS_CT_10206                                          [check constraint]
   POSTALCODE                                                    
 
-SYS_CT_10205                                          [check constraint]
+SYS_CT_10207                                          [check constraint]
   COUNTRY                                                       
 
 
@@ -395,8 +395,8 @@ FK_SALES_SALESDATA                         [foreign key, with no action]
   SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              
 
 FK_SALES_REGIONS                           [foreign key, with no action]
-  POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
-  COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
+  POSTALCODE (1..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
+  COUNTRY (1..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
 
 Indexes
 
@@ -412,10 +412,10 @@ FK_SALES_REGIONS                                      [non-unique index]
 
 Table Constraints
 
-SYS_CT_10211                                          [check constraint]
+SYS_CT_10213                                          [check constraint]
   POSTALCODE                                                    
 
-SYS_CT_10212                                          [check constraint]
+SYS_CT_10214                                          [check constraint]
   COUNTRY                                                       
 
 

@@ -14,14 +14,13 @@ import static us.fatehi.utility.Utility.hasNoUpperCase;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.Identifiers;
+import schemacrawler.schema.IdentifiersBuilder;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.Identifiers;
-import schemacrawler.schema.IdentifiersBuilder;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -108,10 +107,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
     if (!isBrief()) {
       return true;
     }
-    return column instanceof IndexColumn
-        || column.isPartOfPrimaryKey()
-        || column.isPartOfForeignKey()
-        || column.isPartOfIndex();
+    return column instanceof IndexColumn || column.isSignificant();
   }
 
   protected boolean isTableFiltered(final Table table) {
@@ -126,9 +122,8 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
   protected String nodeId(final DatabaseObject dbObject) {
     if (dbObject == null) {
       return "";
-    } else {
-      return dbObject.key().slug();
     }
+    return dbObject.key().slug();
   }
 
   protected String quoteName(final DatabaseObject table) {

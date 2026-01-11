@@ -42,7 +42,7 @@ Primary Key
 Foreign Keys
 
 SYS_FK_10128                               [foreign key, with no action]
-  "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+  "Id" <--(1..1) "Celebrity Updates"."Celebrity Id"                              
 
 
 
@@ -58,7 +58,7 @@ Primary Key
 Foreign Keys
 
 SYS_FK_10128                               [foreign key, with no action]
-  "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
+  "Celebrity Id" (1..1)--> "Celebrities"."Id"                              
 
 
 
@@ -99,7 +99,7 @@ SYS_PK_10124                                               [primary key]
 Foreign Keys
 
 FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
-  ID <--(0..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
+  ID <--(1..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
 
 
 
@@ -116,7 +116,7 @@ PK_ΒΙΒΛΊΑ                                                  [primary key]
 Foreign Keys
 
 FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
-  ΕΚΔΌΤΗΣ (0..many)--> PUBLISHERS.ID                              
+  ΕΚΔΌΤΗΣ (1..many)--> PUBLISHERS.ID                              
 
 
 

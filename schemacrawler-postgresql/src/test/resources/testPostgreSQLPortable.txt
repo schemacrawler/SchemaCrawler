@@ -28,7 +28,7 @@ Foreign Keys
 
                                            [foreign key, with no action]
 Foreign key marking relationship of authors to books
-  id <--(0..many) bookauthors.authorid                              
+  id <--(1..many) bookauthors.authorid                              
 
 Indexes
 
@@ -87,10 +87,10 @@ Foreign Keys
 
                                            [foreign key, with no action]
 Foreign key marking relationship of authors to books
-  authorid (0..many)--> authors.id                              
+  authorid (1..many)--> authors.id                              
 
                                            [foreign key, with no action]
-  bookid (0..many)--> books.id                                  
+  bookid (1..many)--> books.id                                  
 
 Indexes
 
@@ -126,7 +126,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  id <--(0..many) bookauthors.bookid                              
+  id <--(1..many) bookauthors.bookid                              
 
                                            [foreign key, with no action]
   id <--(0..1) previouseditionid                                
@@ -160,7 +160,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  "Id" <--(0..1) "Celebrity Updates"."Celebrity Id"                              
+  "Id" <--(1..1) "Celebrity Updates"."Celebrity Id"                              
 
 Indexes
 
@@ -182,7 +182,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  "Celebrity Id" (0..1)--> "Celebrities"."Id"                              
+  "Celebrity Id" (1..1)--> "Celebrities"."Id"                              
 
 Indexes
 
@@ -274,7 +274,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  id <--(0..many) "Βιβλία"."Εκδότης"                              
+  id <--(1..many) "Βιβλία"."Εκδότης"                              
 
 Indexes
 
@@ -298,7 +298,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  "Εκδότης" (0..many)--> publishers.id                              
+  "Εκδότης" (1..many)--> publishers.id                              
 
 Indexes
 
