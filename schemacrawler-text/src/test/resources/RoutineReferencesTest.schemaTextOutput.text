@@ -116,7 +116,7 @@ Foreign Keys
 Z_FK_AUTHOR                                [foreign key, with no action]
   AUTHORID (1..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
-SYS_FK_10118                               [foreign key, with no action]
+SYS_FK_10121                               [foreign key, with no action]
   BOOKID (1..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 Indexes
@@ -124,7 +124,7 @@ Indexes
 Z_FK_AUTHOR                                           [non-unique index]
   AUTHORID                          ascending                   
 
-SYS_FK_10118                                          [non-unique index]
+SYS_FK_10121                                          [non-unique index]
   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
@@ -181,7 +181,7 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
   ID <-- PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
-SYS_FK_10118                               [foreign key, with no action]
+SYS_FK_10121                               [foreign key, with no action]
   ID <--(1..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -237,7 +237,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10128                               [foreign key, with no action]
+SYS_FK_10131                               [foreign key, with no action]
   "Id" <--(1..1) PUBLIC.BOOKS."Celebrity Updates"."Celebrity Id"                              
 
 Indexes
@@ -283,7 +283,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10128                               [foreign key, with no action]
+SYS_FK_10131                               [foreign key, with no action]
   "Celebrity Id" (1..1)--> PUBLIC.BOOKS."Celebrities"."Id"                              
 
 Indexes
@@ -291,7 +291,7 @@ Indexes
 "PK Celebrity Updates"                                    [unique index]
   "Celebrity Id"                    ascending                   
 
-SYS_FK_10128                                          [non-unique index]
+SYS_FK_10131                                          [non-unique index]
   "Celebrity Id"                    ascending                   
 
 Privileges and Grants
@@ -358,18 +358,29 @@ UPDATE                                                       [privilege]
 
 PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
 ------------------------------------------------------------------------
-  ID                                INTEGER NOT NULL            
+  CUSTOMERID                        INTEGER NOT NULL            
+  DATAID                            INTEGER NOT NULL            
   DATA                              VALID_STRING(20)            
 
 Primary Key
 
 PK_CUSTOMERDATA                                            [primary key]
-  ID                                                            
+  CUSTOMERID                                                    
+  DATAID                                                        
+
+Foreign Keys
+
+FK_CUSTOMER                                [foreign key, with no action]
+  CUSTOMERID (1..many)--> PUBLIC.BOOKS.CUSTOMERS.ID                              
 
 Indexes
 
+FK_CUSTOMER                                           [non-unique index]
+  CUSTOMERID                        ascending                   
+
 PK_CUSTOMERDATA                                           [unique index]
-  ID                                ascending                   
+  CUSTOMERID                        ascending                   
+  DATAID                            ascending                   
 
 Privileges and Grants
 
@@ -405,10 +416,19 @@ Primary Key
 PK_CUSTOMERS                                               [primary key]
   ID                                                            
 
+Foreign Keys
+
+FK_CUSTOMER                                [foreign key, with no action]
+  ID <--(1..many) PUBLIC.BOOKS.CUSTOMERDATA.CUSTOMERID                              
+
 Indexes
 
 PK_CUSTOMERS                                              [unique index]
   ID                                ascending                   
+
+Used By Objects
+
+PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
 
 Privileges and Grants
 
@@ -443,7 +463,7 @@ List of book publishers
 
 Primary Key
 
-SYS_PK_10124                                               [primary key]
+SYS_PK_10127                                               [primary key]
   ID                                                            
 
 Foreign Keys
@@ -453,7 +473,7 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
 
 Indexes
 
-SYS_PK_10124                                              [unique index]
+SYS_PK_10127                                              [unique index]
   ID                                ascending                   
 
 Used By Objects
@@ -539,7 +559,7 @@ PUBLIC.BOOKS.GETBOOKSCOUNT                        [procedure, no result]
   BOOKSCOUNT                        INTEGER, out                
 
                                                          [specific name]
-GETBOOKSCOUNT_10155
+GETBOOKSCOUNT_10158
 
 
 
@@ -562,7 +582,7 @@ PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
   PUBLISHER                         CHARACTER VARYING, out      
 
                                                          [specific name]
-NEW_PUBLISHER_10151
+NEW_PUBLISHER_10154
 
 
 
@@ -571,7 +591,7 @@ PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
   ONE                               INTEGER, in                 
 
                                                          [specific name]
-CUSTOMADD_10153
+CUSTOMADD_10156
 
 
 
@@ -581,5 +601,5 @@ PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
   TWO                               INTEGER, in                 
 
                                                          [specific name]
-CUSTOMADD_10152
+CUSTOMADD_10155
 

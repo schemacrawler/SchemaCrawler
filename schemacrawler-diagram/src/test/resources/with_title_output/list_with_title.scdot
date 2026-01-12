@@ -198,7 +198,7 @@ digraph "SchemaCrawler_Diagram" {
   "books_f4a675c8":"previouseditionid_6cf3995a.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<FK_PREVIOUSEDITION> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
   "bookid_a3ccd678" [label=<PUBLIC."PUBLISHER SALES".SALES.BOOKID>];
   "bookid_a3ccd678":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<FK_SALES_BOOK> style="solid" dir="both" arrowhead="teetee" arrowtail="box"];
-  "bookauthors_ead84c5d":"bookid_e54f6507.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<SYS_FK_10118> style="solid" dir="both" arrowhead="teetee" arrowtail="crowtee"];
+  "bookauthors_ead84c5d":"bookid_e54f6507.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<SYS_FK_10121> style="solid" dir="both" arrowhead="teetee" arrowtail="crowtee"];
 
 
   /* PUBLIC.BOOKS."Celebrities" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -223,7 +223,7 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
-  "celebrityupdates_f5088e8b":"celebrityid_83e278d.start":w -> "celebrities_db1258df":"id_8738cc3c.end":e [label=<SYS_FK_10128> style="solid" dir="both" arrowhead="teetee" arrowtail="teetee"];
+  "celebrityupdates_f5088e8b":"celebrityid_83e278d.start":w -> "celebrities_db1258df":"id_8738cc3c.end":e [label=<SYS_FK_10131> style="solid" dir="both" arrowhead="teetee" arrowtail="teetee"];
 
 
   /* PUBLIC.BOOKS."Celebrity Updates" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -293,9 +293,14 @@ digraph "SchemaCrawler_Diagram" {
 		<td bgcolor='#C2DCF2' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='id_6540fe15.start' align='left'><b><i>ID</i></b></td>
+		<td port='customerid_23ebee73.start' align='left'><b><i>CUSTOMERID</i></b></td>
 		<td align='left'> </td>
-		<td port='id_6540fe15.end' align='left'>INTEGER NOT NULL</td>
+		<td port='customerid_23ebee73.end' align='left'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td port='dataid_dd05a33f.start' align='left'><b><i>DATAID</i></b></td>
+		<td align='left'> </td>
+		<td port='dataid_dd05a33f.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='data_6560dca4.start' align='left'>DATA</td>
@@ -340,6 +345,7 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
+  "customerdata_b0af83c6":"customerid_23ebee73.start":w -> "customers_f705d773":"id_e9b52008.end":e [label=<FK_CUSTOMER> style="solid" dir="both" arrowhead="teetee" arrowtail="crowtee"];
 
 
   /* PUBLIC.BOOKS.PUBLISHERS -=-=-=-=-=-=-=-=-=-=-=-=-=- */

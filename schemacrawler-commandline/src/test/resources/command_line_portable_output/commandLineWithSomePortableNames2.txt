@@ -121,12 +121,19 @@ PK_COUPONS                                                 [primary key]
 
 PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
 ------------------------------------------------------------------------
-  ID                                INTEGER NOT NULL            
+  CUSTOMERID                        INTEGER NOT NULL            
+  DATAID                            INTEGER NOT NULL            
 
 Primary Key
 
 PK_CUSTOMERDATA                                            [primary key]
-  ID                                                            
+  CUSTOMERID                                                    
+  DATAID                                                        
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  CUSTOMERID (1..many)--> PUBLIC.BOOKS.CUSTOMERS.ID                              
 
 
 
@@ -139,6 +146,11 @@ Primary Key
 PK_CUSTOMERS                                               [primary key]
   ID                                                            
 
+Foreign Keys
+
+                                           [foreign key, with no action]
+  ID <--(1..many) PUBLIC.BOOKS.CUSTOMERDATA.CUSTOMERID                              
+
 
 
 PUBLIC.BOOKS.PUBLISHERS                                          [table]
@@ -150,7 +162,7 @@ List of book publishers
 
 Primary Key
 
-SYS_PK_10124                                               [primary key]
+SYS_PK_10127                                               [primary key]
   ID                                                            
 
 Foreign Keys

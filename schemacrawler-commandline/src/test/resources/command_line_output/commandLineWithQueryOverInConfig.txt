@@ -133,7 +133,7 @@ PUBLIC.BOOKS."Celebrity Updates"
 
 PUBLIC.BOOKS.CUSTOMERDATA                                               
 ------------------------------------------------------------------------
-ID	DATA
+CUSTOMERID	DATAID	DATA
 
 
 

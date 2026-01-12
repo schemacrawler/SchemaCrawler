@@ -43,7 +43,7 @@ Foreign Keys
 Z_FK_AUTHOR                                [foreign key, with no action]
  1  AUTHORID (1..many)--> AUTHORS.ID                              
 
-SYS_FK_10118                               [foreign key, with no action]
+SYS_FK_10121                               [foreign key, with no action]
  1  BOOKID (1..many)--> BOOKS.ID                                  
 
 
@@ -63,7 +63,7 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
  1  ID <--(0..many) SALES.BOOKID                                  
 
-SYS_FK_10118                               [foreign key, with no action]
+SYS_FK_10121                               [foreign key, with no action]
  1  ID <--(1..many) BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -82,7 +82,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10128                               [foreign key, with no action]
+SYS_FK_10131                               [foreign key, with no action]
  1  "Id" <--(1..1) "Celebrity Updates"."Celebrity Id"                              
 
 
@@ -98,7 +98,7 @@ Primary Key
 
 Foreign Keys
 
-SYS_FK_10128                               [foreign key, with no action]
+SYS_FK_10131                               [foreign key, with no action]
  1  "Celebrity Id" (1..1)--> "Celebrities"."Id"                              
 
 
@@ -116,12 +116,19 @@ PK_COUPONS                                                 [primary key]
 
 CUSTOMERDATA                                                     [table]
 ------------------------------------------------------------------------
-1   ID                                INTEGER NOT NULL            
+1   CUSTOMERID                        INTEGER NOT NULL            
+2   DATAID                            INTEGER NOT NULL            
 
 Primary Key
 
 PK_CUSTOMERDATA                                            [primary key]
-1   ID                                                            
+1   CUSTOMERID                                                    
+2   DATAID                                                        
+
+Foreign Keys
+
+FK_CUSTOMER                                [foreign key, with no action]
+ 1  CUSTOMERID (1..many)--> CUSTOMERS.ID                              
 
 
 
@@ -134,6 +141,11 @@ Primary Key
 PK_CUSTOMERS                                               [primary key]
 1   ID                                                            
 
+Foreign Keys
+
+FK_CUSTOMER                                [foreign key, with no action]
+ 1  ID <--(1..many) CUSTOMERDATA.CUSTOMERID                              
+
 
 
 PUBLISHERS                                                       [table]
@@ -143,7 +155,7 @@ PUBLISHERS                                                       [table]
 
 Primary Key
 
-SYS_PK_10124                                               [primary key]
+SYS_PK_10127                                               [primary key]
 1   ID                                                            
 
 Foreign Keys
