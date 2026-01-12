@@ -14,6 +14,7 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvizAvailable;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,12 @@ final class GraphvizProcessExecutor extends AbstractGraphProcessExecutor {
     final List<String> command = createDiagramCommand();
     LOGGER.log(
         Level.INFO, new StringFormat("Generating diagram using Graphviz:\n%s", command.toString()));
+
+    try {
+      Files.deleteIfExists(outputFile);
+    } catch (final IOException e) {
+      LOGGER.log(Level.FINEST, e, new StringFormat("Could not delete: %s", outputFile));
+    }
 
     final ProcessExecutor processExecutor = new ProcessExecutor();
     processExecutor.setCommandLine(command);
