@@ -9,8 +9,8 @@
 package schemacrawler.tools.text.formatter.schema;
 
 import static java.util.Comparator.naturalOrder;
-import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
-import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
+import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
+import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;

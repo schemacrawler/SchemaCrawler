@@ -9,7 +9,7 @@
 package schemacrawler.tools.text.formatter.operation;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
+import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.tools.command.text.schema.options.SchemaTextDetailType.schema;
 
 import java.sql.ResultSet;
