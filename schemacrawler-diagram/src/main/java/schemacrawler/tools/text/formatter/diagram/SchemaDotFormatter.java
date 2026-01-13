@@ -8,8 +8,8 @@
 
 package schemacrawler.tools.text.formatter.diagram;
 
-import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
-import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
+import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
+import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.TableConstraintType.foreign_key;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;

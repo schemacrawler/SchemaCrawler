@@ -1,4 +1,4 @@
-SchemaCrawler 16.24.1
+SchemaCrawler 17.3.0
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -220,6 +220,17 @@ Options:
                               for the tables selected by grep, and shown in the
                               results
                             Optional, default is 0
+
+
+** Loader for modeling entities
+Command:
+loader:entitymodelsloader
+
+Options:
+      --entity-models   Analyzes the schema to identify entity models
+                        This can be a time consuming operation
+                        Optional, defaults to false
+Add loader options to the `load` command in the SchemaCrawler Shell
 
 
 ** Loader for catalog attributes, such as remarks or tags

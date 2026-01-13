@@ -36,6 +36,7 @@ public class AvailablePluginsTest {
             "testloader",
             "attributesloader",
             "countsloader",
+            "entitymodelsloader",
             "schemacrawlerloader"));
   }
 
