@@ -9,13 +9,13 @@
 package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.utility.MetaDataUtility.isPartial;
 
 import java.io.Serial;
 import java.sql.Connection;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
@@ -55,7 +55,7 @@ class LinterForeignKeySelfReference extends BaseLinter {
   protected void lint(final Table table, final Connection connections) {
     requireNonNull(table, "No table provided");
 
-    if (table instanceof PartialDatabaseObject || !table.isSelfReferencing()) {
+    if (isPartial(table) || !table.isSelfReferencing()) {
       return;
     }
 

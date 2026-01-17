@@ -9,6 +9,7 @@
 package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.utility.MetaDataUtility.isPartial;
 
 import java.io.Serial;
 import java.sql.Connection;
@@ -16,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
@@ -81,8 +81,7 @@ class LinterTableCycles extends BaseLinter {
       // That is, do not consider partial tables which are excluded by the limit
       final Table pkTable = foreignKey.getPrimaryKeyTable();
       final Table fkTable = foreignKey.getForeignKeyTable();
-      if (!(pkTable instanceof PartialDatabaseObject)
-          && !(fkTable instanceof PartialDatabaseObject)) {
+      if (!isPartial(pkTable) && !isPartial(fkTable)) {
         tablesGraph.addEdge(pkTable, fkTable);
       }
     }
