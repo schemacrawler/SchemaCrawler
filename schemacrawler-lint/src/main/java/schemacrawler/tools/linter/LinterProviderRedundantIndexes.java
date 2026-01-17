@@ -12,6 +12,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.Serial;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,6 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import schemacrawler.filter.TableTypesFilter;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
@@ -27,7 +29,6 @@ import schemacrawler.tools.lint.BaseLinterProvider;
 import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Linter;
-import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.CollectionsUtility;
 import us.fatehi.utility.property.PropertyName;
 
@@ -75,13 +76,13 @@ class LinterRedundantIndexes extends BaseLinter {
       return redundantIndexes;
     }
 
-    final Map<Index, List<String>> indexColumns = new HashMap<>(indexes.size());
+    final Map<Index, List<Column>> indexColumns = new HashMap<>(indexes.size());
     for (final Index index : indexes) {
-      indexColumns.put(index, MetaDataUtility.columnNames(index));
+      indexColumns.put(index, new ArrayList<>(index.getColumns()));
     }
 
-    for (final Entry<Index, List<String>> indexColumnEntry1 : indexColumns.entrySet()) {
-      for (final Entry<Index, List<String>> indexColumnEntry2 : indexColumns.entrySet()) {
+    for (final Entry<Index, List<Column>> indexColumnEntry1 : indexColumns.entrySet()) {
+      for (final Entry<Index, List<Column>> indexColumnEntry2 : indexColumns.entrySet()) {
         if (!indexColumnEntry1.equals(indexColumnEntry2)
             && CollectionsUtility.listStartsWith(
                 indexColumnEntry1.getValue(), indexColumnEntry2.getValue())) {

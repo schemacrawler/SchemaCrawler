@@ -9,6 +9,7 @@
 package schemacrawler.tools.text.formatter.base;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.utility.MetaDataUtility.isPartial;
 import static us.fatehi.utility.Utility.hasNoUpperCase;
 
 import java.io.PrintWriter;
@@ -19,7 +20,6 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.IdentifiersBuilder;
 import schemacrawler.schema.IndexColumn;
-import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
@@ -111,8 +111,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
   }
 
   protected boolean isTableFiltered(final Table table) {
-    return table.getAttribute("schemacrawler.filtered_out", false)
-        || table instanceof PartialDatabaseObject;
+    return table.getAttribute("schemacrawler.filtered_out", false) || isPartial(table);
   }
 
   protected boolean isVerbose() {
