@@ -15,6 +15,7 @@ SchemaCrawler release notes.
   - `TableReference::isOptional()`
   - `TableReference::getForeignKeyCardinality()`
 - Add `EntityModelUtility` with methods to obtain information useful in entity modeling
+- Remove unused methods from `MetaDataUtility`
 
 
 
