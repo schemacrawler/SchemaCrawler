@@ -12,7 +12,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.Serial;
 import java.sql.Connection;
-import schemacrawler.loader.utility.EntityModelUtility;
+import schemacrawler.ermodel.utility.EntityModelUtility;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;

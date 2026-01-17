@@ -1,7 +1,6 @@
 
 Available SchemaCrawler Catalog Loaders:
   schemacrawlerloader     Loader for SchemaCrawler metadata catalog
-  entitymodelsloader      Loader for modeling entities
   attributesloader        Loader for catalog attributes, such as remarks or tags
   countsloader            Loader for table row counts
   testloader              Loader for testing
