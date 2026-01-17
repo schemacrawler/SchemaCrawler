@@ -140,7 +140,7 @@ Primary Key
 Foreign Keys
 
                                        [foreign key, on delete restrict]
-  "Id" <--(1..many) "Celebrity Updates"."Celebrity Id"                              
+  "Id" <--(1..1) "Celebrity Updates"."Celebrity Id"                              
 
 Indexes
 
@@ -162,7 +162,7 @@ Primary Key
 Foreign Keys
 
                                        [foreign key, on delete restrict]
-  "Celebrity Id" (1..many)--> "Celebrities"."Id"                              
+  "Celebrity Id" (1..1)--> "Celebrities"."Id"                              
 
 
 
