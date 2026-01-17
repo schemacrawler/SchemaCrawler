@@ -9,22 +9,18 @@
 package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.utility.MetaDataUtility.allIndexCoumnNames;
-import static schemacrawler.utility.MetaDataUtility.foreignKeyColumnNames;
-import static schemacrawler.utility.MetaDataUtility.isView;
 
 import java.io.Serial;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import schemacrawler.loader.utility.EntityModelUtility;
 import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
 import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintSeverity;
-import us.fatehi.utility.CollectionsUtility;
+import us.fatehi.utility.OptionalBoolean;
 import us.fatehi.utility.property.PropertyName;
 
 public class LinterProviderForeignKeyWithNoIndexes extends BaseLinterProvider {
@@ -58,30 +54,14 @@ class LinterForeignKeyWithNoIndexes extends BaseLinter {
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    final List<ForeignKey> foreignKeysWithoutIndexes = findForeignKeysWithoutIndexes(table);
-    for (final ForeignKey foreignKey : foreignKeysWithoutIndexes) {
-      addTableLint(table, getSummary(), foreignKey);
+    if (table instanceof PartialDatabaseObject) {
+      return;
     }
-  }
 
-  private List<ForeignKey> findForeignKeysWithoutIndexes(final Table table) {
-    final List<ForeignKey> foreignKeysWithoutIndexes = new ArrayList<>();
-    if (!isView(table)) {
-      final Collection<List<String>> allIndexCoumns = allIndexCoumnNames(table);
-      for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
-        final List<String> foreignKeyColumns = foreignKeyColumnNames(foreignKey);
-        boolean hasIndex = false;
-        for (final List<String> indexColumns : allIndexCoumns) {
-          if (CollectionsUtility.listStartsWith(indexColumns, foreignKeyColumns)) {
-            hasIndex = true;
-            break;
-          }
-        }
-        if (!hasIndex) {
-          foreignKeysWithoutIndexes.add(foreignKey);
-        }
+    for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
+      if (EntityModelUtility.coveredByIndex(foreignKey) == OptionalBoolean.false_value) {
+        addTableLint(table, getSummary(), foreignKey);
       }
     }
-    return foreignKeysWithoutIndexes;
   }
 }

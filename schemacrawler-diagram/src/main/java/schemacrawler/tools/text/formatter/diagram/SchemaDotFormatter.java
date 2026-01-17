@@ -20,7 +20,6 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableColumns;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
-import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
@@ -31,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import schemacrawler.loader.utility.EntityModelUtility;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -428,7 +428,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     }
     for (final TableReference foreignKey : foreignKeys) {
       final boolean isForeignKey = foreignKey.getType() == foreign_key;
-      final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(foreignKey);
+      final ForeignKeyCardinality fkCardinality = EntityModelUtility.inferCardinality(foreignKey);
       boolean showRemarks = !options.isHideRemarks() && foreignKey.hasRemarks();
       for (final ColumnReference columnRef : foreignKey) {
         final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();

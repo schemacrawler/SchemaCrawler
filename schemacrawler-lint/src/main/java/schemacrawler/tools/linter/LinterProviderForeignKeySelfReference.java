@@ -9,15 +9,13 @@
 package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.utility.MetaDataUtility.isView;
 
 import java.io.Serial;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
@@ -57,26 +55,19 @@ class LinterForeignKeySelfReference extends BaseLinter {
   protected void lint(final Table table, final Connection connections) {
     requireNonNull(table, "No table provided");
 
-    final List<ForeignKey> selfReferencingForeignKeys = findSelfReferencingForeignKeys(table);
-    for (final ForeignKey foreignKey : selfReferencingForeignKeys) {
-      addTableLint(table, getSummary(), foreignKey);
+    if (table instanceof PartialDatabaseObject || !table.isSelfReferencing()) {
+      return;
     }
-  }
 
-  private List<ForeignKey> findSelfReferencingForeignKeys(final Table table) {
-    final List<ForeignKey> selfReferencingForeignKeys = new ArrayList<>();
-    if (table != null && !isView(table)) {
-      for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
-        for (final ColumnReference columnReference : foreignKey) {
-          final Column pkColumn = columnReference.getPrimaryKeyColumn();
-          final Column fkColumn = columnReference.getForeignKeyColumn();
-          if (pkColumn.equals(fkColumn)) {
-            selfReferencingForeignKeys.add(foreignKey);
-            break;
-          }
+    for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
+      for (final ColumnReference columnReference : foreignKey) {
+        final Column pkColumn = columnReference.getPrimaryKeyColumn();
+        final Column fkColumn = columnReference.getForeignKeyColumn();
+        if (pkColumn.equals(fkColumn)) {
+          addTableLint(table, getSummary(), foreignKey);
+          break;
         }
       }
     }
-    return selfReferencingForeignKeys;
   }
 }
