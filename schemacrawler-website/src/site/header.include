@@ -130,6 +130,7 @@
                     <a class="dropdown-item" href="diff.html">Diff</a>
                     <a class="dropdown-item" href="schemacrawler-grep.html">Grep</a>
                     <a class="dropdown-item" href="diagramming.html">Diagramming</a>
+                    <a class="dropdown-item" href="entity-modeling.html">Entity-Relationship (ER) Modeling</a>
                     <a class="dropdown-item" href="scripting.html">Scripting</a>
                     <a class="dropdown-item" href="lint.html">Lint</a>
                     <a class="dropdown-item" href="mcpserver.html">MCP Server</a>

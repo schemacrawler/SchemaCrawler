@@ -32,7 +32,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2026-01-08 13:39:29</td>
+		<td align='left'>2026-01-14 12:11:54</td>
 	</tr>
       </table>
     >
@@ -229,7 +229,7 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
-  "celebrityupdates_429b7ac":"celebrityid_dd42228c.start":w -> "celebrities_ea338200":"id_5c3cc73b.end":e [label=<SCHCRWLR_EA330DA1_D1A02217> style="solid" dir="both" arrowhead="teetee" arrowtail="crowtee"];
+  "celebrityupdates_429b7ac":"celebrityid_dd42228c.start":w -> "celebrities_ea338200":"id_5c3cc73b.end":e [label=<SCHCRWLR_EA330DA1_D1A02217> style="solid" dir="both" arrowhead="teetee" arrowtail="teetee"];
 
 
   /* "Celebrity Updates" -=-=-=-=-=-=-=-=-=-=-=-=-=- */

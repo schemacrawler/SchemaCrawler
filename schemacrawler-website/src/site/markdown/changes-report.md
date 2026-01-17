@@ -3,12 +3,19 @@
 SchemaCrawler release notes.
 
 <a name="v17.4.0"></a>
-## Release 17.4.0 - 2026-01-05
+## Release 17.4.0 - 2026-01-16
 - Drop support for Apache Derby, since the project has been discontinued
-- Infer 1..1 and 1..many cardinalities - fixes https://github.com/schemacrawler/SchemaCrawler/issues/2237
-- Add Table::isSelfReferencing() and TableReference::isSelfReferencing() for tables that reference themselves
-- Add Column::isPartOfSelfReferencingRelationship() and Column::isSignificant()
-- Add Table::getEntityType() which an an inference of how the table may be modeled as an entity
+- Infer 1..1 and 1..many cardinalities - fixes [issue #2237](https://github.com/schemacrawler/SchemaCrawler/issues/2237)
+- Add methods to identify table self-references
+  - `Table::isSelfReferencing()`
+  - `Column::isPartOfSelfReferencingRelationship()`
+  - `TableReference::isSelfReferencing()`
+- Add a number of entity model inferences to the catalog model
+  - `Column::isSignificant()`
+  - `TableReference::isOptional()`
+  - `TableReference::getForeignKeyCardinality()`
+- Add `EntityModelUtility` with methods to obtain information useful in entity modeling
+
 
 
 <a name="v17.3.0"></a>

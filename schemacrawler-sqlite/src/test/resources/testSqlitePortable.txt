@@ -133,7 +133,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  Id <--(1..many) "Celebrity Updates"."Celebrity Id"                              
+  Id <--(1..1) "Celebrity Updates"."Celebrity Id"                              
 
 
 
@@ -150,7 +150,7 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  "Celebrity Id" (1..many)--> Celebrities.Id                              
+  "Celebrity Id" (1..1)--> Celebrities.Id                              
 
 
 

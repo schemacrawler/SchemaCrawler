@@ -19,7 +19,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
 import schemacrawler.tools.commandline.command.AvailableCommands;
 import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
@@ -36,7 +38,6 @@ public class AvailablePluginsTest {
             "testloader",
             "attributesloader",
             "countsloader",
-            "entitymodelsloader",
             "schemacrawlerloader"));
   }
 

@@ -222,17 +222,6 @@ Options:
                             Optional, default is 0
 
 
-** Loader for modeling entities
-Command:
-loader:entitymodelsloader
-
-Options:
-      --entity-models   Analyzes the schema to identify entity models
-                        This can be a time consuming operation
-                        Optional, defaults to false
-Add loader options to the `load` command in the SchemaCrawler Shell
-
-
 ** Loader for catalog attributes, such as remarks or tags
 Command:
 loader:attributesloader

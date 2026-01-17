@@ -48,6 +48,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import schemacrawler.ermodel.model.ForeignKeyCardinality;
+import schemacrawler.ermodel.utility.EntityModelUtility;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -59,7 +61,6 @@ import schemacrawler.schema.DefinedObject;
 import schemacrawler.schema.DescribedObject;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyCardinality;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Grant;
 import schemacrawler.schema.Identifiers;
@@ -605,8 +606,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private void printColumnReferences(
       final boolean isForeignKey, final Table table, final TableReference foreignKey) {
-    final ForeignKeyCardinality fkCardinality =
-        MetaDataUtility.findForeignKeyCardinality(foreignKey);
+    final ForeignKeyCardinality fkCardinality = EntityModelUtility.inferCardinality(foreignKey);
     for (final ColumnReference columnRef : foreignKey) {
 
       final Column pkColumn = columnRef.getPrimaryKeyColumn();
