@@ -31,55 +31,27 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.vi
 
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 import us.fatehi.utility.datasource.DatabaseServerType;
 
 public final class SqlServerDatabaseConnector extends DatabaseConnector {
 
-  public SqlServerDatabaseConnector() {
-    super(
-        new DatabaseServerType("sqlserver", "Microsoft SQL Server"),
-        url -> url != null && url.startsWith("jdbc:sqlserver:"),
-        (informationSchemaViewsBuilder, connection) ->
-            informationSchemaViewsBuilder.fromResourceFolder("/sqlserver.information_schema"),
-        (schemaRetrievalOptionsBuilder, connection) ->
-            schemaRetrievalOptionsBuilder
-                .with(tableColumnsRetrievalStrategy, metadata_over_schemas)
-                .with(primaryKeysRetrievalStrategy, data_dictionary_over_schemas)
-                .with(foreignKeysRetrievalStrategy, data_dictionary_over_schemas)
-                .with(indexesRetrievalStrategy, data_dictionary_over_schemas)
-                .with(viewInformationRetrievalStrategy, data_dictionary_over_schemas)
-                .with(viewTableUsageRetrievalStrategy, data_dictionary_over_schemas)
-                .with(triggersRetrievalStrategy, data_dictionary_over_schemas)
-                .with(tableConstraintsRetrievalStrategy, data_dictionary_over_schemas)
-                .with(tableConstraintColumnsRetrievalStrategy, data_dictionary_over_schemas)
-                .with(tableCheckConstraintsRetrievalStrategy, data_dictionary_over_schemas)
-                .with(tableAdditionalAttributesRetrievalStrategy, data_dictionary_over_schemas)
-                .with(
-                    tableColumnAdditionalAttributesRetrievalStrategy, data_dictionary_over_schemas)
-                .with(routinesRetrievalStrategy, data_dictionary_over_schemas)
-                .with(routineReferencesRetrievalStrategy, data_dictionary_over_schemas)
-                .with(proceduresRetrievalStrategy, data_dictionary_over_schemas)
-                .with(procedureParametersRetrievalStrategy, data_dictionary_over_schemas)
-                .with(functionsRetrievalStrategy, data_dictionary_over_schemas)
-                .with(functionParametersRetrievalStrategy, data_dictionary_over_schemas),
-        limitOptionsBuilder ->
-            limitOptionsBuilder.includeSchemas(
-                new RegularExpressionRule(
-                    ".*\\.dbo", "model\\..*|master\\..*|msdb\\..*|tempdb\\..*|rdsadmin\\..*")),
-        () ->
-            DatabaseConnectionSourceBuilder.builder(
-                    "jdbc:sqlserver://${host}:${port};databaseName=${database}")
-                .withDefaultPort(1433)
-                .withDefaultUrlx("applicationName", "SchemaCrawler")
-                .withDefaultUrlx("encrypt", false)
-                .withConnectionInitializer(new SqlServerConnectionInitializer()));
-  }
+  private static DatabaseConnectorOptions databaseConnectorOptions() {
+    final DatabaseServerType dbServerType =
+        new DatabaseServerType("sqlserver", "Microsoft SQL Server");
 
-  @Override
-  public PluginCommand getHelpCommand() {
-    final PluginCommand pluginCommand = super.getHelpCommand();
+    final DatabaseConnectionSourceBuilder connectionSourceBuilder =
+        DatabaseConnectionSourceBuilder.builder(
+                "jdbc:sqlserver://${host}:${port};databaseName=${database}")
+            .withDefaultPort(1433)
+            .withDefaultUrlx("applicationName", "SchemaCrawler")
+            .withDefaultUrlx("encrypt", false)
+            .withConnectionInitializer(new SqlServerConnectionInitializer());
+
+    final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand(dbServerType);
     pluginCommand
         .addOption(
             "server",
@@ -99,6 +71,44 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
             "Be sure to also restrict your schemas to this database, "
                 + "by using an additional option,",
             "--schemas=<database>.dbo");
-    return pluginCommand;
+
+    return DatabaseConnectorOptionsBuilder.builder(dbServerType)
+        .withHelpCommand(pluginCommand)
+        .withUrlStartsWith("jdbc:sqlserver:")
+        .withInformationSchemaViewsFromResourceFolder("/sqlserver.information_schema")
+        .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
+        .withSchemaRetrievalOptionsBuilder(
+            (schemaRetrievalOptionsBuilder, connection) ->
+                schemaRetrievalOptionsBuilder
+                    .with(tableColumnsRetrievalStrategy, metadata_over_schemas)
+                    .with(primaryKeysRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(foreignKeysRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(indexesRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(viewInformationRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(viewTableUsageRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(triggersRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(tableConstraintsRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(tableConstraintColumnsRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(tableCheckConstraintsRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(tableAdditionalAttributesRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(
+                        tableColumnAdditionalAttributesRetrievalStrategy,
+                        data_dictionary_over_schemas)
+                    .with(routinesRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(routineReferencesRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(proceduresRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(procedureParametersRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(functionsRetrievalStrategy, data_dictionary_over_schemas)
+                    .with(functionParametersRetrievalStrategy, data_dictionary_over_schemas))
+        .withLimitOptionsBuilder(
+            limitOptionsBuilder ->
+                limitOptionsBuilder.includeSchemas(
+                    new RegularExpressionRule(
+                        ".*\\.dbo", "model\\..*|master\\..*|msdb\\..*|tempdb\\..*|rdsadmin\\..*")))
+        .build();
+  }
+
+  public SqlServerDatabaseConnector() {
+    super(databaseConnectorOptions());
   }
 }

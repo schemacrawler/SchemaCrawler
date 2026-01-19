@@ -6,10 +6,11 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.offline;
 
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 import us.fatehi.utility.datasource.DatabaseServerType;
@@ -19,19 +20,13 @@ public final class OfflineDatabaseConnector extends DatabaseConnector {
   public static final DatabaseServerType DB_SERVER_TYPE =
       new DatabaseServerType("offline", "SchemaCrawler Offline Catalog Snapshot");
 
-  public OfflineDatabaseConnector() {
-    super(
-        DB_SERVER_TYPE,
-        url -> url != null && url.startsWith("jdbc:offline:"),
-        (informationSchemaViewsBuilder, connection) -> {},
-        (schemaRetrievalOptionsBuilder, connection) -> {},
-        limitOptionsBuilder -> {},
-        () -> DatabaseConnectionSourceBuilder.builder("jdbc:offline:${database}"));
-  }
+  private static DatabaseConnectorOptions databaseConnectorOptions() {
+    final DatabaseServerType dbServerType = DB_SERVER_TYPE;
 
-  @Override
-  public PluginCommand getHelpCommand() {
-    final PluginCommand pluginCommand = super.getHelpCommand();
+    final DatabaseConnectionSourceBuilder connectionSourceBuilder =
+        DatabaseConnectionSourceBuilder.builder("jdbc:offline:${database}");
+
+    final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand(dbServerType);
     pluginCommand
         .addOption(
             "server",
@@ -41,6 +36,15 @@ public final class OfflineDatabaseConnector extends DatabaseConnector {
         .addOption("port", Integer.class, "Should be omitted")
         .addOption(
             "database", String.class, "File name and location of the database metadata snapshot");
-    return pluginCommand;
+
+    return DatabaseConnectorOptionsBuilder.builder(dbServerType)
+        .withHelpCommand(pluginCommand)
+        .withUrlStartsWith("jdbc:offline:")
+        .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
+        .build();
+  }
+
+  public OfflineDatabaseConnector() {
+    super(databaseConnectorOptions());
   }
 }
