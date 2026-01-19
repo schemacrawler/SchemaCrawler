@@ -2,6 +2,12 @@
 
 SchemaCrawler release notes.
 
+<a name="v17.5.0"></a>
+## Release 17.5.0 - 2026-01-19
+- Re-organize database connector options into a builder to avoid too many arguments
+- Allow for connection properties that are not published by the JDBC driver - fixes Core #40
+
+
 <a name="v17.4.0"></a>
 ## Release 17.4.0 - 2026-01-16
 - Drop support for Apache Derby, since the project has been discontinued

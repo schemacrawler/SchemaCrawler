@@ -13,35 +13,24 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ta
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 import us.fatehi.utility.datasource.DatabaseServerType;
 
 public final class PostgreSQLDatabaseConnector extends DatabaseConnector {
 
-  public PostgreSQLDatabaseConnector() {
-    super(
-        new DatabaseServerType("postgresql", "PostgreSQL"),
-        url -> url != null && url.startsWith("jdbc:postgresql:"),
-        (informationSchemaViewsBuilder, connection) ->
-            informationSchemaViewsBuilder.fromResourceFolder("/postgresql.information_schema"),
-        (schemaRetrievalOptionsBuilder, connection) ->
-            schemaRetrievalOptionsBuilder
-                .with(tableColumnsRetrievalStrategy, metadata_over_schemas)
-                .withEnumDataTypeHelper(new PostgreSQLEnumDataTypeHelper()),
-        limitOptionsBuilder ->
-            limitOptionsBuilder.includeSchemas(
-                new RegularExpressionExclusionRule("pg_catalog|information_schema")),
-        () ->
-            DatabaseConnectionSourceBuilder.builder("jdbc:postgresql://${host}:${port}/${database}")
-                .withDefaultPort(5432)
-                .withDefaultUrlx("ApplicationName", "SchemaCrawler")
-                .withDefaultUrlx("loggerLevel", "DEBUG"));
-  }
+  private static DatabaseConnectorOptions databaseConnectorOptions() {
+    final DatabaseServerType dbServerType = new DatabaseServerType("postgresql", "PostgreSQL");
 
-  @Override
-  public PluginCommand getHelpCommand() {
-    final PluginCommand pluginCommand = super.getHelpCommand();
+    final DatabaseConnectionSourceBuilder connectionSourceBuilder =
+        DatabaseConnectionSourceBuilder.builder("jdbc:postgresql://${host}:${port}/${database}")
+            .withDefaultPort(5432)
+            .withDefaultUrlx("ApplicationName", "SchemaCrawler")
+            .withDefaultUrlx("loggerLevel", "DEBUG");
+
+    final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand(dbServerType);
     pluginCommand
         .addOption(
             "server",
@@ -64,6 +53,25 @@ public final class PostgreSQLDatabaseConnector extends DatabaseConnector {
             String.class,
             "Database name%n"
                 + "Optional, uses the PGDATABASE environmental variable if available");
-    return pluginCommand;
+
+    return DatabaseConnectorOptionsBuilder.builder(dbServerType)
+        .withHelpCommand(pluginCommand)
+        .withUrlStartsWith("jdbc:postgresql:")
+        .withInformationSchemaViewsFromResourceFolder("/postgresql.information_schema")
+        .withSchemaRetrievalOptionsBuilder(
+            (schemaRetrievalOptionsBuilder, connection) ->
+                schemaRetrievalOptionsBuilder
+                    .with(tableColumnsRetrievalStrategy, metadata_over_schemas)
+                    .withEnumDataTypeHelper(new PostgreSQLEnumDataTypeHelper()))
+        .withLimitOptionsBuilder(
+            limitOptionsBuilder ->
+                limitOptionsBuilder.includeSchemas(
+                    new RegularExpressionExclusionRule("pg_catalog|information_schema")))
+        .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
+        .build();
+  }
+
+  public PostgreSQLDatabaseConnector() {
+    super(databaseConnectorOptions());
   }
 }
