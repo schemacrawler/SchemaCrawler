@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import schemacrawler.ermodel.model.ForeignKeyCardinality;
+import schemacrawler.ermodel.model.RelationshipCardinality;
 import schemacrawler.ermodel.utility.EntityModelUtility;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -252,7 +252,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     // No output required
   }
 
-  private String arrowheadFk(final ForeignKeyCardinality connectivity) {
+  private String arrowheadFk(final RelationshipCardinality connectivity) {
     if (!options.isShowForeignKeyCardinality()) {
       return "none";
     }
@@ -368,7 +368,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       final boolean isForeignKey,
       final String fkName,
       final ColumnReference columnRef,
-      final ForeignKeyCardinality fkCardinality,
+      final RelationshipCardinality fkCardinality,
       final boolean isPkColumnFiltered,
       final boolean isFkColumnFiltered,
       final boolean showRemarks,
@@ -428,7 +428,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     }
     for (final TableReference foreignKey : foreignKeys) {
       final boolean isForeignKey = foreignKey.getType() == foreign_key;
-      final ForeignKeyCardinality fkCardinality = EntityModelUtility.inferCardinality(foreignKey);
+      final RelationshipCardinality fkCardinality = EntityModelUtility.inferCardinality(foreignKey);
       boolean showRemarks = !options.isHideRemarks() && foreignKey.hasRemarks();
       for (final ColumnReference columnRef : foreignKey) {
         final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
