@@ -18,7 +18,7 @@
 
 > [!NOTE]  
 > * Please see the [SchemaCrawler website](https://www.schemacrawler.com/) for more details.
-> * Use the [SchemaCrawler MCP Server](https://github.com/schemacrawler/SchemaCrawler-MCP-Server-Usage) to get deep insights into your database
+> * Use the [SchemaCrawler AI MCP Server](https://github.com/schemacrawler/SchemaCrawler-AI-MCP-Server-Usage) to get deep insights into your database
 > * Explore the SchemaCrawler command-line with a [live online tutorial](https://killercoda.com/schemacrawler).
 
 ## About
