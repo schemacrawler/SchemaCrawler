@@ -6,7 +6,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>17.5.0</version>
+    <version>17.6.0</version>
   </parent>
   <artifactId>schemacrawler-docker</artifactId>
   <packaging>pom</packaging>
