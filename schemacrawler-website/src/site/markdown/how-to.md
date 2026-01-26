@@ -267,7 +267,7 @@ In order to use SchemaCrawler in your Apache Maven projects, add a dependency to
   <dependency>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler</artifactId>
-    <version>17.5.0</version>
+    <version>17.6.0</version>
   </dependency>
 </dependencies>
 ```

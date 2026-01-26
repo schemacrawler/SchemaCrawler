@@ -2,6 +2,13 @@
 
 SchemaCrawler release notes.
 
+
+<a name="v17.6.0"></a>
+## Release 17.6.0 - 2026-01-25
+- Reduce number of weak association matches
+- Add weak associations to `ERModel`
+
+
 <a name="v17.5.0"></a>
 ## Release 17.5.0 - 2026-01-0
 - Re-organize database connector options into a builder to avoid too many arguments
