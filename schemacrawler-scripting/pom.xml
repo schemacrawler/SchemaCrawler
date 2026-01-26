@@ -83,19 +83,19 @@
     <dependency>
       <groupId>org.graalvm.polyglot</groupId>
       <artifactId>polyglot</artifactId>
-      <version>25.0.1</version>
+      <version>25.0.2</version>
     </dependency>
     <dependency>
       <groupId>org.graalvm.polyglot</groupId>
       <artifactId>js</artifactId>
-      <version>25.0.1</version>
+      <version>25.0.2</version>
       <type>pom</type>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.graalvm.polyglot</groupId>
       <artifactId>python</artifactId>
-      <version>25.0.1</version>
+      <version>25.0.2</version>
       <type>pom</type>
       <scope>runtime</scope>
     </dependency>
