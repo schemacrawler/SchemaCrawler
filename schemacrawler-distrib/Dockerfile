@@ -8,17 +8,6 @@
 
 FROM bellsoft/liberica-openjdk-alpine:21
 
-LABEL \
-  "maintainer"="Sualeh Fatehi <sualeh@hotmail.com>" \
-  "org.opencontainers.image.authors"="Sualeh Fatehi <sualeh@hotmail.com>" \
-  "org.opencontainers.image.title"="SchemaCrawler" \
-  "org.opencontainers.image.description"="Free database schema discovery and comprehension tool" \
-  "org.opencontainers.image.url"="https://www.schemacrawler.com/" \
-  "org.opencontainers.image.source"="https://github.com/schemacrawler/SchemaCrawler" \
-  "org.opencontainers.image.vendor"="SchemaCrawler" \
-  "org.opencontainers.image.license"="EPL-2.0"
-
-
 # Install Graphviz as root user
 RUN \
   apk add --update --no-cache \
