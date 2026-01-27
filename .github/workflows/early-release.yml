@@ -59,7 +59,8 @@ jobs:
           --batch-mode \
           -Ddistrib \
           clean install
-
+        # Verify files
+        ls -l ./schemacrawler-distrib/target/_expanded-distribution/
 
 # CREATE GITHUB RELEASE
     - id: create-release
