@@ -36,7 +36,7 @@
     <module>schemacrawler-sqlite</module>
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-offline</module>
-  <!-- Additional modules -->
+    <!-- Additional modules -->
     <module>schemacrawler-docs</module>
     <module>schemacrawler-library-bom</module>
   </modules>
@@ -51,7 +51,6 @@
       </activation>
       <modules>
         <module>schemacrawler-distrib</module>
-        <module>schemacrawler-docker</module>
         <module>schemacrawler-website</module>
       </modules>
     </profile>
