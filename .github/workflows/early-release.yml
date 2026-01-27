@@ -14,7 +14,7 @@ env:
   DOCKER_IMAGE_NAME: schemacrawler/schemacrawler
   DOCKER_IMAGE_TAG: early-access-release
   DOCKERFILE_PATH: ./schemacrawler-distrib/Dockerfile
-  DOCKER_CONTEXT: ./schemacrawler-distrib/target/_expanded-distribution/
+  DOCKER_CONTEXT_PATH: ./schemacrawler-distrib/target/_expanded-distribution/
 
 jobs:
   build:
@@ -58,7 +58,6 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Ddistrib \
-          -Dskiptests \
           clean install
 
 
@@ -130,7 +129,7 @@ jobs:
       with:
         call: check
         file: ${{ env.DOCKERFILE_PATH }}
-        context: ${{ env.DOCKER_CONTEXT }}
+        context: ${{ env.DOCKER_CONTEXT_PATH }}
         load: false
         push: false
 
@@ -180,7 +179,7 @@ jobs:
       with:
         call: build
         file: ${{ env.DOCKERFILE_PATH }}
-        context: ${{ env.DOCKER_CONTEXT }}
+        context: ${{ env.DOCKER_CONTEXT_PATH }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
         platforms: |-
