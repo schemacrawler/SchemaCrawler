@@ -10,6 +10,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  DOCKER_IMAGE_NAME: schemacrawler/schemacrawler
+  DOCKER_IMAGE_TAG: early-access-release
+  DOCKERFILE_PATH: ./schemacrawler-distrib/Dockerfile
+  DOCKER_CONTEXT: ./schemacrawler-distrib/target/_expanded-distribution/
+
 jobs:
   build:
     name: Create Early Access Release
@@ -19,7 +25,7 @@ jobs:
       github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
-      id-token: write  # Required for OIDC authentication
+      id-token: write # Required for OIDC authentication
       contents: write # Required to create a new tag
     steps:
 
@@ -47,6 +53,7 @@ jobs:
       shell: bash
       run: |
         # Build
+        # ... and install (for later phase of Docker image tests)
         mvn \
           --no-transfer-progress \
           --batch-mode \
@@ -54,7 +61,29 @@ jobs:
           -Dskiptests \
           clean install
 
-# CREATE GITHUB RELEASE AND ADD ASSETS
+
+# CREATE GITHUB RELEASE
+    - id: create-release
+      name: Create GitHub early access release
+      uses: softprops/action-gh-release@v2
+      with:
+        target_commitish: ${{ github.sha }}
+        tag_name: ${{ env.DOCKER_IMAGE_TAG }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        name: ${{ env.DOCKER_IMAGE_TAG }}
+        draft: false
+        prerelease: true
+        body: |
+          SchemaCrawler early access release at last commit ${{ github.sha }}
+        generate_release_notes: true
+        files: |
+          ./schemacrawler-distrib/target/schemacrawler-17.6.0-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.6.0-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-17.6.0-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.6.0-bin.zip.SHA-512
+        overwrite_files: true
+
+# MOVE GITHUB TAG
     - id: install-gitsign
       name: Install gitsign for commit signing
       # See https://github.com/chainguard-dev/actions/blob/main/setup-gitsign/action.yml
@@ -73,30 +102,11 @@ jobs:
         # Confirm gitsign is installed
         gitsign --version
         # Move tag
-        git tag -d early-access-release || true
-        git push --delete origin early-access-release || true
-        git tag -a early-access-release -m "SchemaCrawler Early Access Release"
-        git push --follow-tags origin early-access-release
-        git show --no-patch early-access-release
-    - id: create-release
-      name: Create GitHub early access release
-      uses: softprops/action-gh-release@v2
-      with:
-        target_commitish: ${{ github.sha }}
-        tag_name: early-access-release
-        token: ${{ secrets.GITHUB_TOKEN }}
-        name: early-access-release
-        draft: false
-        prerelease: true
-        body: |
-          SchemaCrawler early access release at last commit ${{ github.sha }}
-        generate_release_notes: true
-        files: |
-          ./schemacrawler-distrib/target/schemacrawler-17.6.0-distribution.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.6.0-distribution.zip.SHA-512
-          ./schemacrawler-distrib/target/schemacrawler-17.6.0-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.6.0-bin.zip.SHA-512
-        overwrite_files: true
+        git tag -d ${{ env.DOCKER_IMAGE_TAG }} || true
+        git push --delete origin ${{ env.DOCKER_IMAGE_TAG }} || true
+        git tag -a ${{ env.DOCKER_IMAGE_TAG }} -m "SchemaCrawler AI Early Access Release"
+        git push --follow-tags origin ${{ env.DOCKER_IMAGE_TAG }}
+        git show --no-patch ${{ env.DOCKER_IMAGE_TAG }}
 
 # BUILD AND PUBLISH DOCKER IMAGE
     - id: setup-qemu
@@ -114,17 +124,72 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - id: build-docker-image
-      name: Build and Push Docker Image
+    - id: validate-build-configuration
+      name: Validate build configuration
       uses: docker/build-push-action@v6
       with:
-        file: ./schemacrawler-docker/Dockerfile
-        context: ./schemacrawler-distrib/target/_expanded-distribution
+        call: check
+        file: ${{ env.DOCKERFILE_PATH }}
+        context: ${{ env.DOCKER_CONTEXT }}
+        load: false
+        push: false
+
+    - id: meta
+      name: Set up Docker metadata
+      uses: docker/metadata-action@v5
+      with:
+        images: |
+          ${{ env.DOCKER_IMAGE_NAME }}
+        tags: |
+          type=raw,value=${{ env.DOCKER_IMAGE_TAG }},priority=1200
+        labels: |
+          maintainer=Sualeh Fatehi <sualeh@hotmail.com>
+          org.opencontainers.image.authors=Sualeh Fatehi <sualeh@hotmail.com>
+          org.opencontainers.image.vendor=SchemaCrawler
+          org.opencontainers.image.licenses=(EPL-2.0)
+          org.opencontainers.image.url=https://www.schemacrawler.com/
+          org.opencontainers.image.documentation=https://github.com/schemacrawler/SchemaCrawler-Usage
+
+    - id: build-docker-image
+      name: Build Docker image locally
+      uses: docker/build-push-action@v6
+      with:
+        call: build
+        file: ${{ env.DOCKERFILE_PATH }}
+        context: .
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        # Build just for runner platform
+        platforms: linux/amd64
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        annotations: ${{ steps.meta.outputs.annotations }}
+        load: true
+        push: false
+
+    - id: test-docker-image
+      name: Test Docker image build
+      shell: bash
+      run: |
+        # Run the Testcontainers integration test
+        # This will pull the Docker image, start it, and verify the health endpoint
+
+    - id: push-docker-image
+      name: Build and push Docker image
+      uses: docker/build-push-action@v6
+      with:
+        call: build
+        file: ${{ env.DOCKERFILE_PATH }}
+        context: ${{ env.DOCKER_CONTEXT }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
         platforms: |-
           linux/amd64
           linux/arm64
-        tags: |-
-          schemacrawler/schemacrawler:early-access-release
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        annotations: ${{ steps.meta.outputs.annotations }}
         sbom: true
         provenance: true
+        load: false
         push: true
