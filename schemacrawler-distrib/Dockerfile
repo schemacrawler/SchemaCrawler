@@ -34,9 +34,7 @@ WORKDIR /home/schcrwlr
 
 # Copy configuration and example files with rw-rw-r-- for the current user
 COPY \
-    --chown=schcrwlr:users \
     ./config/* \
-    ./sc.db \
     ./*.py \
     /home/schcrwlr/
 
