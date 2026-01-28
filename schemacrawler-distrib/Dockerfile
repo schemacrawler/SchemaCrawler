@@ -28,15 +28,21 @@ RUN \
 
 # Run the image as a non-root user, "schcrwlr"
 RUN \
-    adduser -u 1000 -S schcrwlr -G users
-USER schcrwlr
-WORKDIR /home/schcrwlr
+    adduser -S -u 1000 -G users schcrwlr \
+ && mkdir -p /home/schcrwlr \
+ && chown -R schcrwlr:users /home/schcrwlr
 
 # Copy configuration and example files with rw-rw-r-- for the current user
 COPY \
+    --chown=schcrwlr:users \
     ./config/* \
+    ./sc.db \
     ./*.py \
     /home/schcrwlr/
+
+# Change user
+USER schcrwlr
+WORKDIR /home/schcrwlr
 
 # Create .bashrc with aliases for SchemaCrawler
 RUN \
@@ -45,8 +51,8 @@ RUN \
  && echo 'export schemacrawler' \
     >> /home/schcrwlr/.profile \
  && cp /home/schcrwlr/.profile /home/schcrwlr/.bashrc \
- && echo 'PS1="\[\e[0;33m\]SchemaCrawler\[\e[m\]:\w\$ "'  >> ~/.bashrc \
+ && echo 'PS1="\[\e[0;33m\]SchemaCrawler\[\e[m\]:\w\$ "'  >> /home/schcrwlr/.bashrc \
  && echo 'echo "`schemacrawler --version`"' >> ~/.bashrc \
- && echo 'echo -e "\n\nUse the schemacrawler command.\n"' >> ~/.bashrc
+ && echo 'echo -e "\n\nUse the schemacrawler command.\n"' >> /home/schcrwlr/.bashrc
 
 CMD ["bash"]
