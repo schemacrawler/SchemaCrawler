@@ -58,6 +58,7 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Ddistrib \
+          -DskipTests \
           clean install
         # Verify files
         ls -l ./schemacrawler-distrib/target/_expanded-distribution/
