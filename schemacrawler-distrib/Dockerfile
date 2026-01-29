@@ -18,27 +18,27 @@ RUN \
 
 # Copy SchemaCrawler distribution from the build directory
 COPY . /opt/schemacrawler/
-# Ensure that the SchemaCrawler script is executable
+# Ensure that the SchemaCrawler script is executable and
+# configuration is available
 RUN \
-    chmod +rx /opt/schemacrawler/bin/schemacrawler.sh \
+    echo "Configure SchemaCrawler" \
+ && chmod +rx /opt/schemacrawler/bin/schemacrawler.sh \
  && mkdir -p /etc/bash_completion.d \
  && cp \
       /opt/schemacrawler/cli-support/schemacrawler-completion.bash \
-      /etc/bash_completion.d/schemacrawler
+      /etc/bash_completion.d/schemacrawler \
+ && mkdir -p /home/schcrwlr \
+ && cp \
+      /opt/schemacrawler/config/* \
+      /opt/schemacrawler/sc.db \
+      /opt/schemacrawler/*.py \
+      /home/schcrwlr/
 
 # Run the image as a non-root user, "schcrwlr"
 RUN \
     adduser -S -u 1000 -G users schcrwlr \
  && mkdir -p /home/schcrwlr \
  && chown -R schcrwlr:users /home/schcrwlr
-
-# Copy configuration and example files with rw-rw-r-- for the current user
-COPY \
-    --chown=schcrwlr:users \
-    ./config/* \
-    ./sc.db \
-    ./*.py \
-    /home/schcrwlr/
 
 # Change user
 USER schcrwlr
