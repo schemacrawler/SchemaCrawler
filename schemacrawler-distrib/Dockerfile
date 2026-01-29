@@ -30,7 +30,6 @@ RUN \
  && mkdir -p /home/schcrwlr \
  && cp \
       /opt/schemacrawler/config/* \
-      /opt/schemacrawler/sc.db \
       /opt/schemacrawler/*.py \
       /home/schcrwlr/
 
