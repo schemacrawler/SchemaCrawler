@@ -6,7 +6,7 @@
 # SPDX-License-Identifier: EPL-2.0
 # ========================================================================
 
-FROM bellsoft/liberica-openjdk-alpine:21
+FROM eclipse-temurin:21-jdk-alpine
 
 # Install Graphviz as root user
 RUN \
@@ -26,11 +26,18 @@ RUN \
  && mkdir -p /etc/bash_completion.d \
  && cp \
       /opt/schemacrawler/cli-support/schemacrawler-completion.bash \
-      /etc/bash_completion.d/schemacrawler \
+      /etc/bash_completion.d/schemacrawler
+RUN \
+    echo "Create SchemaCrawler home directory" \
  && mkdir -p /home/schcrwlr \
  && cp \
       /opt/schemacrawler/config/* \
+      /home/schcrwlr/ \
+ && cp \
       /opt/schemacrawler/*.py \
+      /home/schcrwlr/ \
+ && cp \
+      /opt/schemacrawler/sc.db \
       /home/schcrwlr/
 
 # Run the image as a non-root user, "schcrwlr"
