@@ -58,6 +58,7 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Ddistrib \
+          -DskipTests \
           clean install
     - id: show-distribiution
       name: Show distribution directory
