@@ -59,13 +59,14 @@ jobs:
           --batch-mode \
           -Ddistrib \
           clean install
-    - id: show-distribiution
+    - id: show-distrib
       name: Show distribution directory
       shell: bash
       run: |
         # Show distribution directory
         echo "Show distribution directory"
         ls -1R ./schemacrawler-distrib/target/_expanded-distribution
+
 
 # CREATE GITHUB RELEASE
     - id: create-release
@@ -154,16 +155,6 @@ jobs:
           org.opencontainers.image.licenses=(EPL-2.0)
           org.opencontainers.image.url=https://www.schemacrawler.com/
           org.opencontainers.image.documentation=https://github.com/schemacrawler/SchemaCrawler-Usage
-
-    - id: validate-build-configuration
-      name: Validate build configuration
-      uses: docker/build-push-action@v6
-      with:
-        call: check
-        file: ${{ env.DOCKERFILE_PATH }}
-        context: ${{ env.DOCKER_CONTEXT_PATH }}
-        load: false
-        push: false
 
     - id: build-docker-image
       name: Build Docker image locally
