@@ -178,7 +178,14 @@ jobs:
       shell: bash
       run: |
         # Run the Testcontainers integration test
-        # This will pull the Docker image, start it, and verify the health endpoint
+        # This will pull the Docker image, start and verify it
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -Dverify \
+          -Ddocker_image_tag=${{ env.DOCKER_IMAGE_TAG }} \
+          -pl schemacrawler-verify \
+          test
 
     - id: push-docker-image
       name: Build and push Docker image
