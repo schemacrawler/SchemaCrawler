@@ -1,0 +1,64 @@
+# ========================================================================
+# SchemaCrawler
+# http://www.schemacrawler.com
+# Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
+# All rights reserved.
+# SPDX-License-Identifier: EPL-2.0
+# ========================================================================
+
+FROM eclipse-temurin:21-jdk-alpine
+
+# Install Graphviz as root user
+RUN \
+  apk add --update --no-cache \
+  bash \
+  bash-completion \
+  graphviz \
+  ttf-freefont
+
+# Copy SchemaCrawler distribution from the build directory
+COPY . /opt/schemacrawler/
+# Ensure that the SchemaCrawler script is executable and
+# configuration is available
+RUN \
+    echo "Configure SchemaCrawler" \
+ && chmod +rx /opt/schemacrawler/bin/schemacrawler.sh \
+ && mkdir -p /etc/bash_completion.d \
+ && cp \
+      /opt/schemacrawler/cli-support/schemacrawler-completion.bash \
+      /etc/bash_completion.d/schemacrawler
+RUN \
+    echo "Create SchemaCrawler home directory" \
+ && mkdir -p /home/schcrwlr \
+ && cp \
+      /opt/schemacrawler/config/* \
+      /home/schcrwlr/ \
+ && cp \
+      /opt/schemacrawler/*.py \
+      /home/schcrwlr/ \
+ && cp \
+      /opt/schemacrawler/sc.db \
+      /home/schcrwlr/
+
+# Run the image as a non-root user, "schcrwlr"
+RUN \
+    adduser -S -u 1000 -G users schcrwlr \
+ && mkdir -p /home/schcrwlr \
+ && chown -R schcrwlr:users /home/schcrwlr
+
+# Change user
+USER schcrwlr
+WORKDIR /home/schcrwlr
+
+# Create .bashrc with aliases for SchemaCrawler
+RUN \
+    echo 'alias schemacrawler="/opt/schemacrawler/bin/schemacrawler.sh"' \
+    >> /home/schcrwlr/.profile \
+ && echo 'export schemacrawler' \
+    >> /home/schcrwlr/.profile \
+ && cp /home/schcrwlr/.profile /home/schcrwlr/.bashrc \
+ && echo 'PS1="\[\e[0;33m\]SchemaCrawler\[\e[m\]:\w\$ "'  >> /home/schcrwlr/.bashrc \
+ && echo 'echo "`schemacrawler --version`"' >> ~/.bashrc \
+ && echo 'echo -e "\n\nUse the schemacrawler command.\n"' >> /home/schcrwlr/.bashrc
+
+CMD ["bash"]
