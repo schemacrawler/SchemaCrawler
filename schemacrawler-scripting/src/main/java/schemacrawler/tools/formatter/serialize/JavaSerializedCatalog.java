@@ -10,25 +10,18 @@ package schemacrawler.tools.formatter.serialize;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Writer;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.schemacrawler.exceptions.IORuntimeException;
+import schemacrawler.utility.SerializedCatalogUtility;
 
 /** Decorates a database to allow for serialization to and from plain Java serialization. */
 public final class JavaSerializedCatalog implements CatalogSerializer {
 
   private static Catalog readCatalog(final InputStream in) {
     requireNonNull(in, "No input stream provided");
-    try (final CatalogModelInputStream objIn = new CatalogModelInputStream(in)) {
-      return (Catalog) objIn.readObject();
-    } catch (ClassNotFoundException | IOException e) {
-      throw new ExecutionRuntimeException("Cannot deserialize catalog", e);
-    }
+    return SerializedCatalogUtility.readCatalog(in);
   }
 
   private final Catalog catalog;
@@ -50,11 +43,7 @@ public final class JavaSerializedCatalog implements CatalogSerializer {
   @Override
   public void save(final OutputStream out) {
     requireNonNull(out, "No output stream provided");
-    try (final ObjectOutputStream objOut = new ObjectOutputStream(out)) {
-      objOut.writeObject(catalog);
-    } catch (final IOException e) {
-      throw new IORuntimeException("Could not serialize catalog", e);
-    }
+    SerializedCatalogUtility.saveCatalog(catalog, out);
   }
 
   /** {@inheritDoc} */
