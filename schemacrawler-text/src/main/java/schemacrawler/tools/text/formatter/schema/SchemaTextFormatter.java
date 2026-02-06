@@ -1157,7 +1157,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
             new ArrayList<>(trigger.getEventManipulationTypes());
         if (eventManipulationTypes != null
             && eventManipulationTypes.get(0) != EventManipulationType.unknown) {
-          if (timingBuffer.length() > 0) {
+          if (!timingBuffer.isEmpty()) {
             timingBuffer.append(SPACE);
           }
           for (final EventManipulationType eventManipulationType : eventManipulationTypes) {

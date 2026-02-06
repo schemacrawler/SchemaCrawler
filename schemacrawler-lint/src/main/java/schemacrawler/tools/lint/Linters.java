@@ -88,7 +88,7 @@ public final class Linters {
       }
     }
 
-    if (buffer.length() > 0) {
+    if (!buffer.isEmpty()) {
       buffer.insert(0, "Summary of schema lints:\n");
     }
 
