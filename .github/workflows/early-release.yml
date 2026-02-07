@@ -93,7 +93,7 @@ jobs:
     - id: install-gitsign
       name: Install gitsign for commit signing
       # See https://github.com/chainguard-dev/actions/blob/main/setup-gitsign/action.yml
-      uses: chainguard-dev/actions/setup-gitsign@18e5e3427cf9d6bcfbefe60dca48e40292f000c5
+      uses: chainguard-dev/actions/setup-gitsign@6f74cdeee55d70b03fa220746d6739dbbb3e9421
     - id: move-tag
       name: Move early-access-release tag
       env:
