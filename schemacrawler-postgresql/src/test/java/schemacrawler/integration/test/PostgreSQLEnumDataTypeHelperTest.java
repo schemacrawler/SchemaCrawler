@@ -16,6 +16,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes.enumerated_data_type;
 import static schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes.not_enumerated;
+import static schemacrawler.test.utility.crawl.LightColumnDataTypeUtility.enumColumnDataType;
+import static us.fatehi.test.utility.TestObjectUtility.mockConnection;
+import static us.fatehi.test.utility.TestObjectUtility.mockResultSet;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,16 +31,17 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.server.postgresql.PostgreSQLEnumDataTypeHelper;
 import schemacrawler.test.utility.DisableLogging;
-import us.fatehi.test.utility.TestObjectUtility;
+import schemacrawler.test.utility.crawl.LightColumn;
+import schemacrawler.test.utility.crawl.LightTable;
 
 @DisableLogging
 public class PostgreSQLEnumDataTypeHelperTest {
 
   @Test
   public void testGetEnumDataTypeInfo() throws Exception {
-    final Column column = mock(Column.class);
-    final ColumnDataType columnDataType = mockColumnDataType("enum_type", true);
-    final Connection connection = TestObjectUtility.mockConnection();
+    final Column column = LightColumn.newColumn(new LightTable("table"), "column");
+    final ColumnDataType columnDataType = enumColumnDataType();
+    final Connection connection = mockConnection();
 
     final PostgreSQLEnumDataTypeHelper helper = new PostgreSQLEnumDataTypeHelper();
     final EnumDataTypeInfo enumDataTypeInfo =
@@ -51,12 +56,12 @@ public class PostgreSQLEnumDataTypeHelperTest {
 
   @Test
   public void testGetEnumValues() throws Exception {
-    final Column column = mock(Column.class);
-    final ColumnDataType columnDataType = mockColumnDataType("enum_type", true);
-    final Connection connection = mock(Connection.class);
+    final Column column = LightColumn.newColumn(new LightTable("table"), "column");
+    final ColumnDataType columnDataType = enumColumnDataType();
+    final Connection connection = mockConnection();
     final Statement mockStatement = mock(Statement.class);
     final ResultSet mockResultSet =
-        TestObjectUtility.mockResultSet(
+        mockResultSet(
             "PostgreSQL enum",
             new String[] {"TYPE_CATALOG", "TYPE_SCHEMA", "TYPE_NAME", "ENUM_LABEL"},
             new Object[][] {
@@ -96,10 +101,9 @@ public class PostgreSQLEnumDataTypeHelperTest {
 
   @Test
   public void testSQLException() throws Exception {
-    final Column column = mock(Column.class);
-    final ColumnDataType columnDataType = mockColumnDataType("enum_type", true);
-    final Connection connection = mock(Connection.class);
-
+    final Column column = LightColumn.newColumn(new LightTable("table"), "column");
+    final ColumnDataType columnDataType = enumColumnDataType();
+    final Connection connection = mockConnection();
     when(connection.createStatement()).thenThrow(SQLException.class);
 
     final PostgreSQLEnumDataTypeHelper helper = new PostgreSQLEnumDataTypeHelper();
@@ -111,13 +115,5 @@ public class PostgreSQLEnumDataTypeHelperTest {
     final List<String> enumValues = enumDataTypeInfo.getEnumValues();
 
     assertThat(enumValues.size(), is(0));
-  }
-
-  private ColumnDataType mockColumnDataType(
-      final String columnDataTypeName, final boolean isEnumerated) {
-    final ColumnDataType columnDataType = mock(ColumnDataType.class);
-    when(columnDataType.getName()).thenReturn(columnDataTypeName);
-    when(columnDataType.isEnumerated()).thenReturn(isEnumerated);
-    return columnDataType;
   }
 }
