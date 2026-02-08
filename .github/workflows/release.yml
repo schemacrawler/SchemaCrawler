@@ -76,12 +76,12 @@ jobs:
       name: Upload artifacts for the release
       uses: actions/upload-artifact@v6
       with:
-        name: release-artifacts-v17.6.1
+        name: release-artifacts-v17.6.2
         path: |
-          ./schemacrawler-distrib/target/schemacrawler-17.6.1-distribution.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.6.1-distribution.zip.SHA-512
-          ./schemacrawler-distrib/target/schemacrawler-17.6.1-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.6.1-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-17.6.2-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.6.2-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-17.6.2-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.6.2-bin.zip.SHA-512
         retention-days: 2
     - id: create-release
       name: Create GitHub release
@@ -97,10 +97,10 @@ jobs:
           See the change history at https://www.schemacrawler.com/changes-report.html
         generate_release_notes: true
         files: |
-          ./schemacrawler-distrib/target/schemacrawler-17.6.1-distribution.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.6.1-distribution.zip.SHA-512
-          ./schemacrawler-distrib/target/schemacrawler-17.6.1-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.6.1-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-17.6.2-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.6.2-distribution.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-17.6.2-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.6.2-bin.zip.SHA-512
         overwrite_files: true
 
 # BUILD AND PUBLISH DOCKER IMAGE
