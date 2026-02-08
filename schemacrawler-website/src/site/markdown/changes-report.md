@@ -2,8 +2,13 @@
 
 SchemaCrawler release notes.
 
+<a name="v17.6.2"></a>
+## Release 17.6.2 - 2026-02-10
+- Mark attributes as required, instead of as optional
+
+
 <a name="v17.6.1"></a>
-## Release 17.6.0 - 2026-02-08
+## Release 17.6.1 - 2026-02-08
 - Make `ERModel` serializable
 - Add `ERModel` lookups for table references
 - Add entity attributes
