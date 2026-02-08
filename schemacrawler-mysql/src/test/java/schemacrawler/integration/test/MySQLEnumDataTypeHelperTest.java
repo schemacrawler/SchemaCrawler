@@ -10,7 +10,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes.enumerated_column;
 import static schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes.not_enumerated;
@@ -22,15 +22,18 @@ import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.server.mysql.MySQLEnumDataTypeHelper;
+import schemacrawler.test.utility.crawl.LightColumn;
+import schemacrawler.test.utility.crawl.LightColumnDataTypeUtility;
+import schemacrawler.test.utility.crawl.LightTable;
+import us.fatehi.test.utility.TestObjectUtility;
 
 public class MySQLEnumDataTypeHelperTest {
 
   @Test
   public void testGetEnumDataTypeInfo() throws Exception {
-    final Column column = mock(Column.class);
-    final ColumnDataType columnDataType = mock(ColumnDataType.class);
-    final Connection connection = mock(Connection.class);
-
+    final Connection connection = TestObjectUtility.mockConnection();
+    final Column column = spy(LightColumn.newColumn(new LightTable("table"), "column"));
+    final ColumnDataType columnDataType = LightColumnDataTypeUtility.columnDataType("VARCHAR");
     when(column.getAttribute("COLUMN_TYPE")).thenReturn("enum('Moe','Larry','Curly')");
 
     final MySQLEnumDataTypeHelper helper = new MySQLEnumDataTypeHelper();
@@ -49,9 +52,9 @@ public class MySQLEnumDataTypeHelperTest {
 
   @Test
   public void testBadEnumDataType() throws Exception {
-    final Column column = mock(Column.class);
-    final ColumnDataType columnDataType = mock(ColumnDataType.class);
-    final Connection connection = mock(Connection.class);
+    final Column column = spy(LightColumn.newColumn(new LightTable("table"), "column"));
+    final ColumnDataType columnDataType = LightColumnDataTypeUtility.enumColumnDataType();
+    final Connection connection = TestObjectUtility.mockConnection();
 
     for (final String badValue :
         new String[] {
