@@ -656,7 +656,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
                 ? formattingHelper.createLeftArrow()
                 : formattingHelper.createWeakLeftArrow();
         relationship =
-            "%s %s%s %s".formatted(pkColumnName, arrow, fkCardinality.toString(), fkHyperlink);
+            "%s %s%s %s".formatted(pkColumnName, arrow, fkCardinality.description(), fkHyperlink);
       } else {
         final String pkHyperlink;
         if (isPkColumnFiltered) {
@@ -669,7 +669,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
                 ? formattingHelper.createRightArrow()
                 : formattingHelper.createWeakRightArrow();
         relationship =
-            "%s %s%s %s".formatted(fkColumnName, fkCardinality.toString(), arrow, pkHyperlink);
+            "%s %s%s %s".formatted(fkColumnName, fkCardinality.description(), arrow, pkHyperlink);
       }
       formattingHelper.writeDetailRow(keySequenceString, relationship, "", false, false, "");
     }
