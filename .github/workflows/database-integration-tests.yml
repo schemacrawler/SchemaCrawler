@@ -55,7 +55,7 @@ jobs:
         remove-codeql: 'true'
         remove-docker-images: 'true'
     - id: restart-docker
-      name: Configure Docker data-root on workspace volume
+      name: Configure Docker data root on workspace volume
       shell: bash
       run: |
         set -euxo pipefail
@@ -73,13 +73,6 @@ jobs:
         docker info | grep -E 'Docker Root Dir'
         echo "Confirm Docker root free space:"
         df -h "$GITHUB_WORKSPACE/.docker-root"
-    - id: disk-space-before
-      name: Show disk space
-      shell: bash
-      run: |
-        # Show disk space
-        echo "Docker used space:"
-        sudo du -sh /var/lib/docker
         echo "Available storage:"
         df -h
     - id: prepare-maven-build
