@@ -55,14 +55,24 @@ jobs:
         remove-codeql: 'true'
         remove-docker-images: 'true'
     - id: restart-docker
-      name: Restart Docker
+      name: Configure Docker data-root on workspace volume
       shell: bash
       run: |
-        # Restart Docker to take into account additional disk space
-        # https://stackoverflow.com/a/71113148/100856
+        set -euxo pipefail
+        # Stop Docker
         sudo systemctl stop docker
         sudo rm -rf /var/lib/docker
+        # Put Docker storage on the large workspace mount
+        sudo mkdir -p "$GITHUB_WORKSPACE/.docker-root"
+        sudo chown root:root "$GITHUB_WORKSPACE/.docker-root"
+        # Configure daemon and start Docker
+        echo "{ \"data-root\": \"$GITHUB_WORKSPACE/.docker-root\" }" | sudo tee /etc/docker/daemon.json
         sudo systemctl start docker
+        # Check configured space
+        echo "Confirm Docker root directory:"
+        docker info | grep -E 'Docker Root Dir'
+        echo "Confirm Docker root free space:"
+        df -h "$GITHUB_WORKSPACE/.docker-root"
     - id: disk-space-before
       name: Show disk space
       shell: bash
@@ -71,7 +81,7 @@ jobs:
         echo "Docker used space:"
         sudo du -sh /var/lib/docker
         echo "Available storage:"
-        df -h        
+        df -h
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.6.1
