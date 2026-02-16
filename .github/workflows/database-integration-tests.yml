@@ -136,6 +136,22 @@ jobs:
             dbproject="dbtest"
         fi
         echo "dbproject=$dbproject"
+    - id: disk-space-after
+      name: Show disk space
+      shell: bash
+      run: |
+        # Check configured space
+        echo "Confirm Docker root directory:"
+        docker info | grep -E 'Docker Root Dir'
+        echo "Confirm Docker root free space:"
+        df -h "$GITHUB_WORKSPACE/.docker-root"
+        echo "Available storage:"
+        df -h
+    - id: build-test-databases
+      name: Build and run database tests
+      shell: bash
+      run: |
+        # Build
         mvn \
           --no-transfer-progress \
           --batch-mode \
@@ -144,15 +160,6 @@ jobs:
           --projects schemacrawler-dbtest,schemacrawler-$dbproject \
           --also-make \
           clean verify
-    - id: disk-space-after
-      name: Show disk space
-      shell: bash
-      run: |
-        # Show disk space
-        echo "Docker used space:"
-        sudo du -sh /var/lib/docker
-        echo "Available storage:"
-        df -h
     - id: gather-expected-results
       name: Gather expected results for failed tests
       if: always()
