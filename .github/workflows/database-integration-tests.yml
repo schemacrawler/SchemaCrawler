@@ -55,7 +55,7 @@ jobs:
         remove-codeql: 'true'
         remove-docker-images: 'true'
     - id: restart-docker
-      name: Configure Docker data root on workspace volume
+      name: Configure Docker .data-root on workspace volume
       shell: bash
       run: |
         set -euxo pipefail
@@ -77,7 +77,7 @@ jobs:
         df -h
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.6.1
+      uses: sualeh/prepare-maven-build@v1.7.0
       with:
         java-version: ${{ github.event.inputs.java_version || '17' }}
     - id: install-graphviz

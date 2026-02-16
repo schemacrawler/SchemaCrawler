@@ -41,7 +41,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.6.1
+      uses: sualeh/prepare-maven-build@v1.7.0
       with:
         java-version: 17
         gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
