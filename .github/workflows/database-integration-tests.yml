@@ -54,6 +54,14 @@ jobs:
         remove-haskell: 'true'
         remove-codeql: 'true'
         remove-docker-images: 'true'
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v1.7.0
+      with:
+        java-version: ${{ github.event.inputs.java_version || '17' }}
+    - id: install-graphviz
+      name: Install Graphviz
+      uses: sualeh/install-graphviz@v1.0.3
     - id: restart-docker
       name: Configure Docker .data-root on workspace volume
       shell: bash
@@ -65,6 +73,7 @@ jobs:
         # Put Docker storage on the large workspace mount
         sudo mkdir -p "$GITHUB_WORKSPACE/.docker-root"
         sudo chown root:root "$GITHUB_WORKSPACE/.docker-root"
+        sudo chmod -R ugo+rwx /home/runner/work/SchemaCrawler/SchemaCrawler/.docker-root || true
         # Configure daemon and start Docker
         echo "{ \"data-root\": \"$GITHUB_WORKSPACE/.docker-root\" }" | sudo tee /etc/docker/daemon.json
         sudo systemctl start docker
@@ -75,14 +84,6 @@ jobs:
         df -h "$GITHUB_WORKSPACE/.docker-root"
         echo "Available storage:"
         df -h
-    - id: prepare-maven-build
-      name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.7.0
-      with:
-        java-version: ${{ github.event.inputs.java_version || '17' }}
-    - id: install-graphviz
-      name: Install Graphviz
-      uses: sualeh/install-graphviz@v1.0.3
 
 # BUILD DEPENDENCIES
     - id: build-schemacrawler-core
