@@ -54,18 +54,27 @@ jobs:
         remove-haskell: 'true'
         remove-codeql: 'true'
         remove-docker-images: 'true'
-    - id: move-m2-repo
-      name: Move Maven Repo to Workspace
-      # The root partition is 100% full, so we must move .m2 to the large workspace partition
-      run: |
-        mkdir -p "$GITHUB_WORKSPACE/.maven-repository"
-        # Link the default location to the new workspace location
-        sudo ln -s "$GITHUB_WORKSPACE/.maven-repository" "$HOME/.m2"
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.7.1
       with:
         java-version: ${{ github.event.inputs.java_version || '17' }}
+    - id: move-m2-repo
+      name: Move Maven Repo to Workspace
+      run: |
+        # Ensure target parent exists
+        mkdir -p "$GITHUB_WORKSPACE"
+        # Move the existing .m2 directory to the workspace
+        # If it doesn't exist yet (rare but possible), create it there directly
+        if [ -d "$HOME/.m2" ]; then
+          mv "$HOME/.m2" "$GITHUB_WORKSPACE/.m2"
+        else
+          mkdir -p "$GITHUB_WORKSPACE/.m2"
+        fi
+        # Link the default location to the new workspace location
+        ln -s "$GITHUB_WORKSPACE/.m2" "$HOME/.m2"
+        # Verify the link
+        ls -la "$HOME/.m2"
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
