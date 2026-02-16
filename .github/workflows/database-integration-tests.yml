@@ -94,12 +94,11 @@ jobs:
         artifact: us.fatehi:schemacrawler:17.6.2
 
 # RUN DATABASE TESTS
-    - id: build-test-databases
-      name: Build and run database tests
+    - id: pull-images
+      name: Pull database Docker images
       shell: bash
       run: |
-        # Build
-        echo "Building code"
+        # Pull database Docker images
         echo "Downloading Docker image"
         if [ "${{ matrix.database }}" == "oracle" ]; then
             docker pull gvenzl/oracle-free:23.9-slim-faststart
