@@ -2,6 +2,12 @@
 
 SchemaCrawler release notes.
 
+<a name="v17.6.3"></a>
+## Release 17.6.3 - 2026-02-19
+- Fix issue with concurrent modifications
+- Rework the API for ERModel
+
+
 <a name="v17.6.2"></a>
 ## Release 17.6.2 - 2026-02-10
 - Mark attributes as required, instead of as optional
