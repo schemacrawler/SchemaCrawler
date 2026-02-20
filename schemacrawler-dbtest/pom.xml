@@ -76,7 +76,7 @@
     <dependency>
       <groupId>com.ing.data</groupId>
       <artifactId>cassandra-jdbc-wrapper</artifactId>
-      <version>4.16.1</version>
+      <version>4.16.2</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
