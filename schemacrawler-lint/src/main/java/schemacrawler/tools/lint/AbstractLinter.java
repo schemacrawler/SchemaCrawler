@@ -26,7 +26,7 @@ import us.fatehi.utility.string.StringFormat;
  * Evaluates a catalog and creates lints. This base class has core functionality for maintaining
  * state, but not for visiting a catalog. Includes code for dispatching a linter.
  */
-public abstract class AbstractLinter extends BaseCommand<LinterConfig, Void> implements Linter {
+public abstract class AbstractLinter extends BaseCommand<LinterConfig> implements Linter {
 
   private static final Logger LOGGER = Logger.getLogger(AbstractLinter.class.getName());
 

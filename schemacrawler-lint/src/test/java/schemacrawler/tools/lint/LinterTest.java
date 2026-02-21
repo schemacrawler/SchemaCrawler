@@ -88,7 +88,7 @@ public class LinterTest {
       if (linter.usesConnection()) {
         linter.setConnection(connection);
       }
-      linter.call();
+      linter.execute();
 
       assertThat(linter.getDescription(), is("Checks for empty tables with no data."));
       assertThat(linter.getLintCount(), is(10));
@@ -122,7 +122,7 @@ public class LinterTest {
       if (linter.usesConnection()) {
         linter.setConnection(connection);
       }
-      linter.call();
+      linter.execute();
 
       final List<Lint<? extends Serializable>> lints = new ArrayList<>(collector.getLints());
       lints.sort(LINT_COMPARATOR);
@@ -150,7 +150,7 @@ public class LinterTest {
       if (linter.usesConnection()) {
         linter.setConnection(connection);
       }
-      linter.call();
+      linter.execute();
 
       final List<Lint<? extends Serializable>> lints = new ArrayList<>(collector.getLints());
       assertThat(lints.size(), is(0));

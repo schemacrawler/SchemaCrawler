@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.lint;
 
 import java.io.Serializable;
@@ -48,7 +47,16 @@ public abstract class BaseLinter extends AbstractLinter {
   }
 
   @Override
-  public final Void call() {
+  public final void configure(final LinterConfig linterConfig) {
+    super.configure(linterConfig);
+    if (linterConfig != null) {
+      tableInclusionRule = linterConfig.getTableInclusionRule();
+      columnInclusionRule = linterConfig.getColumnInclusionRule();
+    }
+  }
+
+  @Override
+  public final void execute() {
     start(connection);
     for (final Table table : catalog.getTables()) {
       if (includeTable(table)) {
@@ -61,17 +69,6 @@ public abstract class BaseLinter extends AbstractLinter {
     }
     end(connection);
     catalog = null;
-
-    return null;
-  }
-
-  @Override
-  public final void configure(final LinterConfig linterConfig) {
-    super.configure(linterConfig);
-    if (linterConfig != null) {
-      tableInclusionRule = linterConfig.getTableInclusionRule();
-      columnInclusionRule = linterConfig.getColumnInclusionRule();
-    }
   }
 
   @Override

@@ -11,7 +11,7 @@ package schemacrawler.tools.lint;
 import schemacrawler.tools.executable.Command;
 import schemacrawler.tools.lint.config.LinterConfig;
 
-public interface Linter extends Command<LinterConfig, Void> {
+public interface Linter extends Command<LinterConfig> {
 
   boolean exceedsThreshold();
 

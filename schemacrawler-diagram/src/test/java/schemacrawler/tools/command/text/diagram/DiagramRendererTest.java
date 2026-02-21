@@ -85,7 +85,7 @@ public class DiagramRendererTest {
       scCommand.initialize();
       scCommand.checkAvailability();
 
-      scCommand.call();
+      scCommand.execute();
     }
 
     return tempFilePath;
