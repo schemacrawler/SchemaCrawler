@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.text.diagram;
 
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
@@ -25,7 +24,7 @@ public final class DiagramCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public DiagramRenderer newSchemaCrawlerCommand(final String command, final Config config) {
+  public DiagramRenderer newCommand(final String command, final Config config) {
     final PropertyName commandName = lookupSupportedCommand(command);
     if (commandName == null) {
       throw new IllegalArgumentException("Cannot support command, " + command);
