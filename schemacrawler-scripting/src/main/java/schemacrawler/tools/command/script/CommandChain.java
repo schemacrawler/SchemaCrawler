@@ -156,7 +156,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
 
     for (final SchemaCrawlerCommand<?> scCommand : scCommands) {
       try {
-        scCommand.call();
+        scCommand.execute();
       } catch (final SchemaCrawlerException e) {
         throw e;
       } catch (final Exception e) {

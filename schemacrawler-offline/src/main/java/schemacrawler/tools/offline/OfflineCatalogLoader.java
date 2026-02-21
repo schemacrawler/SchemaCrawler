@@ -34,7 +34,7 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
-  public void loadCatalog() {
+  public void execute() {
 
     if (isLoaded()) {
       return;

@@ -176,7 +176,7 @@ public final class Linters {
                 if (linter.usesConnection()) {
                   linter.setConnection(connection);
                 }
-                linter.call();
+                linter.execute();
               } catch (final Exception e) {
                 LOGGER.log(
                     Level.WARNING,
