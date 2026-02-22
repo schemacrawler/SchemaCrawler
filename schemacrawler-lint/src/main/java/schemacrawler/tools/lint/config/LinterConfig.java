@@ -8,22 +8,23 @@
 
 package schemacrawler.tools.lint.config;
 
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import java.beans.ConstructorProperties;
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import static us.fatehi.utility.Utility.requireNotBlank;
+
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
+import schemacrawler.schemacrawler.Options;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.ObjectToString;
 
-public final class LinterConfig implements Serializable, Comparable<LinterConfig> {
+public final class LinterConfig implements Options, Comparable<LinterConfig> {
 
   @Serial private static final long serialVersionUID = 83079182550531365L;
 
@@ -67,7 +68,7 @@ public final class LinterConfig implements Serializable, Comparable<LinterConfig
     this.tableExclusionPattern = tableExclusionPattern;
     this.columnInclusionPattern = columnInclusionPattern;
     this.columnExclusionPattern = columnExclusionPattern;
-    this.config = configMap == null ? new HashMap<>() : new HashMap<>(configMap);
+    config = configMap == null ? new HashMap<>() : new HashMap<>(configMap);
   }
 
   @Override
@@ -101,10 +102,7 @@ public final class LinterConfig implements Serializable, Comparable<LinterConfig
       return false;
     }
     final LinterConfig other = (LinterConfig) obj;
-    if (!Objects.equals(linterId, other.linterId)) {
-      return false;
-    }
-    if (severity != other.severity) {
+    if (!Objects.equals(linterId, other.linterId) || (severity != other.severity)) {
       return false;
     }
     return true;
