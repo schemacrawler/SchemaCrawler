@@ -8,23 +8,22 @@
 
 package schemacrawler.tools.lint.config;
 
+import static us.fatehi.utility.Utility.requireNotBlank;
+
 import java.beans.ConstructorProperties;
 import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import static us.fatehi.utility.Utility.requireNotBlank;
-
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
-import schemacrawler.schemacrawler.Options;
+import schemacrawler.tools.executable.CommandOptions;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.ObjectToString;
 
-public final class LinterConfig implements Options, Comparable<LinterConfig> {
+public final class LinterConfig implements CommandOptions, Comparable<LinterConfig> {
 
   @Serial private static final long serialVersionUID = 83079182550531365L;
 
