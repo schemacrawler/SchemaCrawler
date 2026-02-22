@@ -2,6 +2,12 @@
 
 SchemaCrawler release notes.
 
+
+<a name="v17.7.0"></a>
+## Release 17.7.0 - 2026-03-01
+- Use database connection source in commands instead of connection
+
+
 <a name="v17.6.3"></a>
 ## Release 17.6.3 - 2026-02-19
 - Fix issue with concurrent modifications
