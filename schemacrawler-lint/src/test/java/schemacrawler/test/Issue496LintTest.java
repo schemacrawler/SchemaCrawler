@@ -18,7 +18,6 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
-import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -69,12 +68,10 @@ public class Issue496LintTest {
     final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
     linters.initialize(linterRegistry);
 
-    try (final Connection connection = dataSource.get(); ) {
-      linters.lint(catalog, connection);
-      final Lints lintReport = linters.getLints();
+    linters.lint(catalog, dataSource);
+    final Lints lintReport = linters.getLints();
 
-      assertThat(lintReport.size(), is(0));
-    }
+    assertThat(lintReport.size(), is(0));
   }
 
   @Test
@@ -100,16 +97,14 @@ public class Issue496LintTest {
     final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
     linters.initialize(linterRegistry);
 
-    try (final Connection connection = dataSource.get(); ) {
-      linters.lint(catalog, connection);
-      final Lints lintReport = linters.getLints();
+    linters.lint(catalog, dataSource);
+    final Lints lintReport = linters.getLints();
 
-      assertThat(lintReport.size(), is(1));
-      assertThat(
-          lintReport.stream().map(Lint::toString).collect(toList()),
-          containsInAnyOrder(
-              "[catalog] cycles in table relationships: [PUBLIC.FOR_LINT.PUBLICATIONS,"
-                  + " PUBLIC.FOR_LINT.WRITERS]"));
-    }
+    assertThat(lintReport.size(), is(1));
+    assertThat(
+        lintReport.stream().map(Lint::toString).collect(toList()),
+        containsInAnyOrder(
+            "[catalog] cycles in table relationships: [PUBLIC.FOR_LINT.PUBLICATIONS,"
+                + " PUBLIC.FOR_LINT.WRITERS]"));
   }
 }

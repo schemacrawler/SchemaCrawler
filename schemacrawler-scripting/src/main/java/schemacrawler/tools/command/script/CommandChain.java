@@ -64,7 +64,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
 
     setCatalog(scCommand.getCatalog());
     if (usesConnection()) {
-      setConnection(scCommand.getConnection());
+      setDataSource(scCommand.getDataSource());
     }
     setIdentifiers(scCommand.getIdentifiers());
     setInformationSchemaViews(scCommand.getInformationSchemaViews());
@@ -119,7 +119,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
 
       scCommand.setCatalog(catalog);
       if (scCommand.usesConnection()) {
-        scCommand.setConnection(connection);
+        scCommand.setDataSource(getDataSource());
       }
       scCommand.setIdentifiers(identifiers);
       scCommand.setInformationSchemaViews(informationSchemaViews);

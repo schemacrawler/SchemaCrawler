@@ -20,7 +20,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -90,33 +89,31 @@ public class LintTest {
 
     linterConfigs.add(linterConfig);
 
-    try (final Connection connection = dataSource.get(); ) {
-      final Linters linters = new Linters(linterConfigs, true);
-      final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
-      linters.initialize(linterRegistry);
+    final Linters linters = new Linters(linterConfigs, true);
+    final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
+    linters.initialize(linterRegistry);
 
-      linters.lint(catalog, connection);
-      final Lints lintReport = linters.getLints();
-      assertThat(lintReport.size(), is(53));
+    linters.lint(catalog, dataSource);
+    final Lints lintReport = linters.getLints();
+    assertThat(lintReport.size(), is(53));
 
-      final TestWriter testout1 = new TestWriter();
-      try (final TestWriter out = testout1) {
-        for (final Lint<?> lint : lintReport) {
-          out.println(lint);
-        }
+    final TestWriter testout1 = new TestWriter();
+    try (final TestWriter out = testout1) {
+      for (final Lint<?> lint : lintReport) {
+        out.println(lint);
       }
-      assertThat(
-          outputOf(testout1),
-          hasSameContentAs(classpathResource(LINTS_OUTPUT + "schemacrawler.lints.txt")));
-
-      final TestWriter testout2 = new TestWriter();
-      try (final TestWriter out = testout2) {
-        out.println(linters.getLintSummary());
-      }
-      assertThat(
-          outputOf(testout2),
-          hasSameContentAs(classpathResource(LINTS_OUTPUT + "schemacrawler.lints.summary.txt")));
     }
+    assertThat(
+        outputOf(testout1),
+        hasSameContentAs(classpathResource(LINTS_OUTPUT + "schemacrawler.lints.txt")));
+
+    final TestWriter testout2 = new TestWriter();
+    try (final TestWriter out = testout2) {
+      out.println(linters.getLintSummary());
+    }
+    assertThat(
+        outputOf(testout2),
+        hasSameContentAs(classpathResource(LINTS_OUTPUT + "schemacrawler.lints.summary.txt")));
   }
 
   @Test
@@ -138,27 +135,25 @@ public class LintTest {
     assertThat("FOR_LINT schema not found", schema, notNullValue());
     assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(7));
 
-    try (final Connection connection = dataSource.get(); ) {
-      final LinterConfigs linterConfigs = new LinterConfigs(ConfigUtility.newConfig());
-      final Linters linters = new Linters(linterConfigs, true);
-      final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
-      linters.initialize(linterRegistry);
+    final LinterConfigs linterConfigs = new LinterConfigs(ConfigUtility.newConfig());
+    final Linters linters = new Linters(linterConfigs, true);
+    final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
+    linters.initialize(linterRegistry);
 
-      linters.lint(catalog, connection);
-      final Lints lintReport = linters.getLints();
-      assertThat(lintReport.size(), is(42));
+    linters.lint(catalog, dataSource);
+    final Lints lintReport = linters.getLints();
+    assertThat(lintReport.size(), is(42));
 
-      final TestWriter testout = new TestWriter();
-      try (final TestWriter out = testout) {
-        for (final Lint<?> lint : lintReport) {
-          out.println(lint);
-        }
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      for (final Lint<?> lint : lintReport) {
+        out.println(lint);
       }
-      assertThat(
-          outputOf(testout),
-          hasSameContentAs(
-              classpathResource(LINTS_OUTPUT + "schemacrawler.lints.excluded_columns.txt")));
     }
+    assertThat(
+        outputOf(testout),
+        hasSameContentAs(
+            classpathResource(LINTS_OUTPUT + "schemacrawler.lints.excluded_columns.txt")));
   }
 
   @Test
@@ -195,14 +190,12 @@ public class LintTest {
     final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
     linters.initialize(linterRegistry);
 
-    try (final Connection connection = dataSource.get(); ) {
-      linters.lint(catalog, connection);
-      final Lints lintReport = linters.getLints();
+    linters.lint(catalog, dataSource);
+    final Lints lintReport = linters.getLints();
 
-      assertThat(
-          lintReport.stream().findFirst().map(Lint::getMessage).orElse("No value found"),
-          startsWith(message));
-    }
+    assertThat(
+        lintReport.stream().findFirst().map(Lint::getMessage).orElse("No value found"),
+        startsWith(message));
   }
 
   @Test
@@ -229,13 +222,9 @@ public class LintTest {
 
     assertThat("All linters should be turned off", linters.size(), is(0));
 
-    try (final Connection connection = dataSource.get(); ) {
-      linters.lint(catalog, connection);
-      final Lints lintReport = linters.getLints();
-      assertThat(
-          "All linters should be turned off, so there should be no lints",
-          lintReport.size(),
-          is(0));
-    }
+    linters.lint(catalog, dataSource);
+    final Lints lintReport = linters.getLints();
+    assertThat(
+        "All linters should be turned off, so there should be no lints", lintReport.size(), is(0));
   }
 }
