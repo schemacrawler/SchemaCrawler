@@ -57,18 +57,22 @@ public abstract class BaseLinter extends AbstractLinter {
 
   @Override
   public final void execute() {
-    start(connection);
-    for (final Table table : catalog.getTables()) {
-      if (includeTable(table)) {
-        lint(table, connection);
-      } else {
-        LOGGER.log(
-            Level.FINE,
-            new StringFormat("Excluding table <%s> for lint <%s>", table, getLinterId()));
+    try (final Connection connection = getConnection(); ) {
+      start(connection);
+      for (final Table table : catalog.getTables()) {
+        if (includeTable(table)) {
+          lint(table, connection);
+        } else {
+          LOGGER.log(
+              Level.FINE,
+              new StringFormat("Excluding table <%s> for lint <%s>", table, getLinterId()));
+        }
       }
+      end(connection);
+      catalog = null;
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
-    end(connection);
-    catalog = null;
   }
 
   @Override

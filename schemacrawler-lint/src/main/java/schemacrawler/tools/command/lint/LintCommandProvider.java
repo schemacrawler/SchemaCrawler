@@ -6,11 +6,11 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.lint;
 
 import static schemacrawler.tools.command.lint.LintCommand.COMMAND;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
+
 import java.nio.file.Path;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
@@ -50,10 +50,9 @@ public class LintCommandProvider extends BaseCommandProvider {
         .addOption(
             "run-all-linters",
             boolean.class,
-            "Whether to run all linters, including running the ones "
-                + "that are not explicitly configured with their default settings%n"
-                + "Optional, defaults to true%n"
-                + "Corresponds to the configuration file setting: schemacrawler.lint.runalllinters");
+            "Whether to run all linters, including running the ones that are not explicitly"
+                + " configured with their default settings%nOptional, defaults to true%nCorresponds"
+                + " to the configuration file setting: schemacrawler.lint.runalllinters");
     return pluginCommand;
   }
 
@@ -70,7 +69,7 @@ public class LintCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public LintCommand newSchemaCrawlerCommand(final String command, final Config config) {
+  public LintCommand newCommand(final String command, final Config config) {
     if (!supportsCommand(command)) {
       throw new IllegalArgumentException("Cannot support command, " + command);
     }

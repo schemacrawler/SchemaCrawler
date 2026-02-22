@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.text.embeddeddiagram;
 
 import schemacrawler.tools.command.text.diagram.GraphExecutorFactory;
@@ -26,8 +25,7 @@ public final class EmbeddedDiagramCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public EmbeddedDiagramRenderer newSchemaCrawlerCommand(
-      final String command, final Config config) {
+  public EmbeddedDiagramRenderer newCommand(final String command, final Config config) {
     final PropertyName commandName = lookupSupportedCommand(command);
     if (commandName == null) {
       throw new IllegalArgumentException("Cannot support command, " + command);

@@ -11,7 +11,6 @@ package schemacrawler.tools.lint;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.LINTER_COMPARATOR;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +20,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.string.StringFormat;
 
 public final class Linters {
@@ -138,7 +138,7 @@ public final class Linters {
     }
   }
 
-  public void lint(final Catalog catalog, final Connection connection) {
+  public void lint(final Catalog catalog, final DatabaseConnectionSource dataSource) {
 
     // Check if initialized
     requireNonNull(linters, "No linters provided");
@@ -148,9 +148,9 @@ public final class Linters {
     }
 
     requireNonNull(catalog, "No catalog provided");
-    requireNonNull(connection, "No connection provided");
+    requireNonNull(dataSource, "No database connection source provided");
 
-    runLinters(catalog, connection);
+    runLinters(catalog, dataSource);
   }
 
   /**
@@ -162,7 +162,7 @@ public final class Linters {
     return linters.size();
   }
 
-  private void runLinters(final Catalog catalog, final Connection connection) {
+  private void runLinters(final Catalog catalog, final DatabaseConnectionSource dataSource) {
 
     linters.parallelStream()
         .forEach(
@@ -174,7 +174,7 @@ public final class Linters {
                 linter.initialize();
                 linter.setCatalog(catalog);
                 if (linter.usesConnection()) {
-                  linter.setConnection(connection);
+                  linter.setDataSource(dataSource);
                 }
                 linter.execute();
               } catch (final Exception e) {

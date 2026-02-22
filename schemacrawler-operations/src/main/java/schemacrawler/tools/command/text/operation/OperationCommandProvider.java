@@ -36,7 +36,7 @@ public final class OperationCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public OperationCommand newSchemaCrawlerCommand(final String command, final Config config) {
+  public OperationCommand newCommand(final String command, final Config config) {
     final PropertyName commandName;
     if (isNamedQuery(command, config)) {
       commandName = new PropertyName(command);

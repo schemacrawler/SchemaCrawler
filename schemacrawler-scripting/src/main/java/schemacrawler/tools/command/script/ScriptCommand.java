@@ -13,6 +13,7 @@ import static java.util.Objects.requireNonNull;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -79,7 +80,8 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
     try {
       final Charset inputCharset = outputOptions.getInputCharset();
       final InputResource inputResource = commandOptions.createInputResource().get();
-      try (final Reader reader = inputResource.openNewInputReader(inputCharset);
+      try (final Connection connection = getConnection();
+          final Reader reader = inputResource.openNewInputReader(inputCharset);
           final Writer writer = outputOptions.openNewOutputWriter(); ) {
 
         LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, %s", inputResource));

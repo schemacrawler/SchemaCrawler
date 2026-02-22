@@ -35,7 +35,7 @@ public class ScriptCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public ScriptCommand newSchemaCrawlerCommand(final String command, final Config config) {
+  public ScriptCommand newCommand(final String command, final Config config) {
     if (!supportsCommand(command)) {
       throw new IllegalArgumentException("Cannot support command, " + command);
     }

@@ -13,6 +13,7 @@ import static schemacrawler.schemacrawler.QueryUtility.executeAgainstTable;
 import static us.fatehi.utility.database.DatabaseUtility.createStatement;
 import static us.fatehi.utility.database.DatabaseUtility.executeSql;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -85,7 +86,8 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
               .withIdentifierQuotingStrategy(quote_all)
               .toOptions();
 
-      try (final Statement statement = createStatement(connection)) {
+      try (final Connection connection = getConnection();
+          final Statement statement = createStatement(connection)) {
         for (final Table table : getSortedTables(catalog)) {
           final boolean isAlphabeticalSortForTableColumns =
               commandOptions.isAlphabeticalSortForTableColumns();
@@ -102,7 +104,8 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
       }
     } else {
       final String sql = query.query();
-      try (final Statement statement = createStatement(connection);
+      try (final Connection connection = getConnection();
+          final Statement statement = createStatement(connection);
           final ResultSet results = executeSql(statement, sql)) {
         handler.handleData(query, results);
       } catch (final SQLException e) {

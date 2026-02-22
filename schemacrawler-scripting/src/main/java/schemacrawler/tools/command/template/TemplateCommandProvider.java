@@ -36,7 +36,7 @@ public class TemplateCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public TemplateCommand newSchemaCrawlerCommand(final String command, final Config config) {
+  public TemplateCommand newCommand(final String command, final Config config) {
     if (!supportsCommand(command)) {
       throw new IllegalArgumentException("Cannot support command, " + command);
     }

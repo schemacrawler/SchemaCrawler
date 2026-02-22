@@ -9,6 +9,7 @@
 package schemacrawler.tools.command.text.schema;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
+
 import schemacrawler.tools.command.text.schema.options.CommandProviderUtility;
 import schemacrawler.tools.command.text.schema.options.PortableType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
@@ -89,7 +90,7 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public SchemaTextRenderer newSchemaCrawlerCommand(final String command, final Config config) {
+  public SchemaTextRenderer newCommand(final String command, final Config config) {
     final PropertyName commandName = lookupSupportedCommand(command);
     if (commandName == null) {
       throw new IllegalArgumentException("Cannot support command, " + command);

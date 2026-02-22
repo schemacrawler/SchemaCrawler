@@ -18,7 +18,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.nio.file.Path;
-import java.sql.Connection;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
@@ -70,23 +69,21 @@ public class DiagramRendererTest {
             .withOutputFormatValue(outputFormat.getFormat())
             .withOutputFile(tempFilePath);
 
-    try (final Connection connection = dataSource.get(); ) {
-      scCommand.setOutputOptions(outputOptionsBuilder.toOptions());
-      if (scCommand.usesConnection()) {
-        scCommand.setConnection(connection);
-      }
-
-      final SchemaRetrievalOptions schemaRetrievalOptions =
-          SchemaCrawlerUtility.matchSchemaRetrievalOptions(dataSource);
-      scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
-      scCommand.setInformationSchemaViews(schemaRetrievalOptions.getInformationSchemaViews());
-
-      // Initialize, and check if the command is available
-      scCommand.initialize();
-      scCommand.checkAvailability();
-
-      scCommand.execute();
+    scCommand.setOutputOptions(outputOptionsBuilder.toOptions());
+    if (scCommand.usesConnection()) {
+      scCommand.setDataSource(dataSource);
     }
+
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaCrawlerUtility.matchSchemaRetrievalOptions(dataSource);
+    scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
+    scCommand.setInformationSchemaViews(schemaRetrievalOptions.getInformationSchemaViews());
+
+    // Initialize, and check if the command is available
+    scCommand.initialize();
+    scCommand.checkAvailability();
+
+    scCommand.execute();
 
     return tempFilePath;
   }

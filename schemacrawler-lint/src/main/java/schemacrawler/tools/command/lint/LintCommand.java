@@ -6,10 +6,10 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.lint;
 
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.command.lint.options.LintOptions;
@@ -58,7 +58,7 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
       final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
       linters.initialize(linterRegistry);
 
-      linters.lint(catalog, connection);
+      linters.lint(catalog, getDataSource());
 
       // Produce the lint report
       final Lints lints = linters.getLints();
