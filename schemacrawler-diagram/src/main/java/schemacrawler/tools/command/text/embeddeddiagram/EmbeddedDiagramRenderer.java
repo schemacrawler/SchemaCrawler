@@ -93,8 +93,9 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
       final Path baseHtmlFile = createTempFilePath(stem, html.getFormat());
       final Path baseSvgFile = createTempFilePath(stem, svg.getFormat());
 
-      executeCommand(new SchemaTextRenderer(command), baseHtmlFile, html);
-      executeCommand(new DiagramRenderer(command, graphExecutorFactory), baseSvgFile, svg);
+      final PropertyName commandName = getCommandName();
+      executeCommand(new SchemaTextRenderer(commandName), baseHtmlFile, html);
+      executeCommand(new DiagramRenderer(commandName, graphExecutorFactory), baseSvgFile, svg);
 
       // Interleave HTML and SVG
       try (final BufferedWriter finalHtmlFileWriter =

@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.nullValue;
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
-import schemacrawler.tools.catalogloader.CatalogLoader;
+import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.test.utility.TestDatabaseDriver;
 import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -25,7 +25,8 @@ public class OfflineCatalogLoaderTest {
 
   @Test
   public void connection() throws SQLException {
-    final CatalogLoader catalogLoader = new OfflineCatalogLoader();
+    final OfflineCatalogLoader catalogLoader =
+        new OfflineCatalogLoaderProvider().newCommand("offlineloader", ConfigUtility.newConfig());
 
     assertThat(catalogLoader.getDataSource(), is(nullValue()));
 
