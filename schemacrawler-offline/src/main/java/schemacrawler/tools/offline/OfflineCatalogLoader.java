@@ -8,7 +8,6 @@
 
 package schemacrawler.tools.offline;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.formatter.serialize.CatalogSerializationUtility.deserializeCatalog;
 import static schemacrawler.utility.MetaDataUtility.reduceCatalog;
 
@@ -26,7 +25,6 @@ import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandOptions;
 import schemacrawler.tools.offline.OfflineCatalogLoader.OfflineCatalogLoaderOptions;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
-import schemacrawler.tools.options.Config;
 import us.fatehi.utility.property.PropertyName;
 
 public final class OfflineCatalogLoader extends BaseCatalogLoader<OfflineCatalogLoaderOptions> {
@@ -35,8 +33,8 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader<OfflineCatalog
 
   private static final Logger LOGGER = Logger.getLogger(OfflineCatalogLoader.class.getName());
 
-  public OfflineCatalogLoader() {
-    super(new PropertyName("offlineloader", "Loader for offline databases"), -1);
+  OfflineCatalogLoader(final PropertyName name) {
+    super(name, -1);
   }
 
   @Override
@@ -80,11 +78,5 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader<OfflineCatalog
     }
 
     setCatalog(catalog);
-  }
-
-  @Override
-  public void setAdditionalConfiguration(final Config additionalConfig) {
-    requireNonNull(additionalConfig, "No config provided");
-    setCommandOptions(new OfflineCatalogLoaderOptions());
   }
 }

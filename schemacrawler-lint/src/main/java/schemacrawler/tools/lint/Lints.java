@@ -6,19 +6,18 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.lint;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.LINT_COMPARATOR;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Options;
@@ -107,7 +106,7 @@ public final class Lints implements Options, Iterable<Lint<? extends Serializabl
   private List<Lint<?>> getLints(final NamedObjectKey key) {
     final List<Lint<? extends Serializable>> lintsForKey = lintsByObject.get(key);
     if (lintsForKey == null) {
-      return Collections.emptyList();
+      return List.of();
     }
 
     final List<Lint<?>> lints = new ArrayList<>(lintsForKey);

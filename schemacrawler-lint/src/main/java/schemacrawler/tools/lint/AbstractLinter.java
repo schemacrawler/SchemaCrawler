@@ -66,7 +66,7 @@ public abstract class AbstractLinter extends BaseCommand<LinterConfig> implement
    */
   @Override
   public String getDescription() {
-    return command.getDescription();
+    return getCommandName().getDescription();
   }
 
   /**
@@ -82,7 +82,7 @@ public abstract class AbstractLinter extends BaseCommand<LinterConfig> implement
    */
   @Override
   public String getLinterId() {
-    return command.getName();
+    return getCommandName().getName();
   }
 
   /**

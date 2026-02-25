@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLFeatureNotSupportedException;
-import java.util.Collections;
+import java.util.Map;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -58,7 +58,7 @@ public class OfflineConnectionUtility {
         case "isClosed":
           return isClosed;
         case "getTypeMap":
-          return Collections.emptyMap();
+          return Map.of();
         case "hashCode":
           return offlineDatabasePath.hashCode();
         case "toString":

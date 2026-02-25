@@ -21,7 +21,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
@@ -93,8 +93,7 @@ public class GraphProcessExecutorTest {
 
     // Graphviz error due to bad input
     final GraphvizProcessExecutor processExecutor =
-        new GraphvizProcessExecutor(
-            dotFile, outputFile, diagramOutputFormat, Collections.emptyList());
+        new GraphvizProcessExecutor(dotFile, outputFile, diagramOutputFormat, List.of());
     processExecutor.run();
 
     assertThat(contentsOf(streams.err()), containsString("syntax error in line 1 near 'hello'"));

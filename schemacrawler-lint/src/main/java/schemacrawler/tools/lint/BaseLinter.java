@@ -11,7 +11,6 @@ package schemacrawler.tools.lint;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -75,11 +74,6 @@ public abstract class BaseLinter extends AbstractLinter {
     }
   }
 
-  @Override
-  public void initialize() {
-    // Default implementation - NO-OP
-  }
-
   protected final void addCatalogLint(final String message) {
     addLint(LintObjectType.catalog, catalog, message, null);
   }
@@ -104,7 +98,7 @@ public abstract class BaseLinter extends AbstractLinter {
 
   protected final List<Column> getColumns(final Table table) {
     if (table == null) {
-      return Collections.emptyList();
+      return List.of();
     }
 
     final List<Column> columns = new ArrayList<>(table.getColumns());

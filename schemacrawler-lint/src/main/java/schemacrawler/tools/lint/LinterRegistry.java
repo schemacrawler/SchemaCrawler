@@ -6,8 +6,9 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.lint;
+
+import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +21,6 @@ import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.registry.BasePluginRegistry;
 import us.fatehi.utility.property.PropertyName;
@@ -64,12 +64,8 @@ public final class LinterRegistry extends BasePluginRegistry implements LinterIn
   private final Map<String, LinterProvider> linterRegistry;
 
   private LinterRegistry() {
+    super("Linters");
     linterRegistry = loadLinterRegistry();
-  }
-
-  @Override
-  public String getName() {
-    return "Linters";
   }
 
   @Override

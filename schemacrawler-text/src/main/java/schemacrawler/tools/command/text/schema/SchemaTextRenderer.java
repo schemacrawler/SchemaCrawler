@@ -55,7 +55,8 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTex
   private SchemaTextDetailType getSchemaTextDetailType() {
     SchemaTextDetailType schemaTextDetailType;
     try {
-      schemaTextDetailType = SchemaTextDetailType.valueOf(command.getName());
+      final String command = getCommandName().getName();
+      schemaTextDetailType = SchemaTextDetailType.valueOf(command);
     } catch (final IllegalArgumentException e) {
       schemaTextDetailType = SchemaTextDetailType.schema;
     }
