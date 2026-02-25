@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -94,7 +93,7 @@ public final class GraalScriptExecutor implements ScriptExecutor {
     this.writer = requireNonNull(writer, "No output writer provided");
 
     if (context == null) {
-      this.context = Collections.emptyMap();
+      this.context = Map.of();
     } else {
       this.context = new HashMap<>(context);
     }
