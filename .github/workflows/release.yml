@@ -74,7 +74,7 @@ jobs:
 # CREATE GITHUB RELEASE AND ADD ASSETS
     - id: upload-artifacts
       name: Upload artifacts for the release
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: release-artifacts-v17.6.3
         path: |

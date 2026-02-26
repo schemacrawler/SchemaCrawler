@@ -196,7 +196,7 @@ jobs:
         .github/scripts/unit-tests-results-output.sh $(realpath .)
     - id: upload-unit-tests-results-output
       name: Upload expected results files
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       if: always()
       with:
         name: expected-results-${{ matrix.database }}
