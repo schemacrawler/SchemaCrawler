@@ -8,6 +8,8 @@
 
 package schemacrawler.tools.offline;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Collection;
 import java.util.List;
 import schemacrawler.tools.catalogloader.BaseCatalogLoaderProvider;
@@ -26,17 +28,10 @@ public class OfflineCatalogLoaderProvider extends BaseCatalogLoaderProvider {
   }
 
   @Override
-  public OfflineCatalogLoader newCommand(final String command, final Config config) {
-    if (config == null) {
-      throw new IllegalArgumentException("No config provided");
-    }
-    if (!NAME.getName().equals(command)) {
-      throw new IllegalArgumentException("Bad catalog loader command <%s>".formatted(command));
-    }
-
+  public OfflineCatalogLoader newCommand(final Config config) {
+    requireNonNull(config, "No config provided");
     final OfflineCatalogLoader loader = new OfflineCatalogLoader(NAME);
     loader.configure(new OfflineCatalogLoaderOptions());
-
     return loader;
   }
 }

@@ -79,4 +79,9 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader<OfflineCatalog
 
     setCatalog(catalog);
   }
+
+  @Override
+  public boolean usesConnection() {
+    return true;
+  }
 }

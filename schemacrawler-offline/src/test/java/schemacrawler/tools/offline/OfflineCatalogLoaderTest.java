@@ -26,7 +26,9 @@ public class OfflineCatalogLoaderTest {
   @Test
   public void connection() throws SQLException {
     final OfflineCatalogLoader catalogLoader =
-        new OfflineCatalogLoaderProvider().newCommand("offlineloader", ConfigUtility.newConfig());
+        (OfflineCatalogLoader)
+            new OfflineCatalogLoaderProvider()
+                .newCommand("offlineloader", ConfigUtility.newConfig());
 
     assertThat(catalogLoader.getDataSource(), is(nullValue()));
 
