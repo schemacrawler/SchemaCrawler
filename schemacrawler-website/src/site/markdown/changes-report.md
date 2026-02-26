@@ -6,6 +6,8 @@ SchemaCrawler release notes.
 <a name="v17.7.0"></a>
 ## Release 17.7.0 - 2026-03-01
 - Use database connection source in commands instead of connection
+- Use command pattern for catalog loaders
+- Remove deprecated methods
 
 
 <a name="v17.6.3"></a>

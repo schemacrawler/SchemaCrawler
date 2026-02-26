@@ -6,14 +6,12 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.text.diagram.options;
 
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.List;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputFormatState;
@@ -29,7 +27,6 @@ public enum DiagramOutputFormat implements OutputFormat {
   gv("DOT"),
   xdot("DOT", "xdot1.2", "xdot1.4"),
   cgimage("CGImage bitmap format"),
-  cmap("Client-side imagemap (deprecated)"),
   eps("Encapsulated PostScript"),
   exr("OpenEXR"),
   fig("FIG"),
@@ -76,9 +73,8 @@ public enum DiagramOutputFormat implements OutputFormat {
     if (outputFormat == null) {
       LOGGER.log(Level.CONFIG, new StringFormat("Unknown format <%s>, using default", format));
       return png;
-    } else {
-      return outputFormat;
     }
+    return outputFormat;
   }
 
   /**
