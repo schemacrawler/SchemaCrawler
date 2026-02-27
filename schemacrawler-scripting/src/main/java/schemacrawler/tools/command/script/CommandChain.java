@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.executable.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.Config;
@@ -32,7 +32,7 @@ import us.fatehi.utility.property.PropertyName;
  * Allows chaining multiple executables together, that produce different artifacts, such as an image
  * and a HTML file.
  */
-public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions> {
+public final class CommandChain extends AbstractSchemaCrawlerCommand<LanguageOptions> {
 
   private static final PropertyName COMMAND =
       new PropertyName(
@@ -64,7 +64,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
 
     setCatalog(scCommand.getCatalog());
     if (usesConnection()) {
-      setDataSource(scCommand.getDataSource());
+      setConnectionSource(scCommand.getConnectionSource());
     }
     setIdentifiers(scCommand.getIdentifiers());
     setInformationSchemaViews(scCommand.getInformationSchemaViews());
@@ -119,7 +119,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
 
       scCommand.setCatalog(catalog);
       if (scCommand.usesConnection()) {
-        scCommand.setDataSource(getDataSource());
+        scCommand.setConnectionSource(getConnectionSource());
       }
       scCommand.setIdentifiers(identifiers);
       scCommand.setInformationSchemaViews(informationSchemaViews);

@@ -98,14 +98,14 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
     // -- Schema output tests
     final String expectedResource = "testOracleWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "oracle")
   public void testOraclePortable(final TestContext testContext) throws Exception {
-    final DatabaseConnectionSource dataSource = getDataSource();
+    final DatabaseConnectionSource connectionSource = getConnectionSource();
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
@@ -133,7 +133,7 @@ public class WithoutPluginOracleTest extends BaseAdditionalDatabaseTest {
     // -- Schema output tests
     final String expectedResource = testContext.testMethodName() + ".txt";
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

@@ -37,19 +37,19 @@ public class ConnectionShellCommandsTest {
 
   @Test
   @WithTestDatabase
-  public void disconnect(final DatabaseConnectionSource dataSource) {
+  public void disconnect(final DatabaseConnectionSource connectionSource) {
     final ShellState state = new ShellState();
-    state.setDataSource(dataSource); // is-connected
+    state.setConnectionSource(connectionSource); // is-connected
 
     final String[] args = {};
 
-    assertThat(state.getDataSource(), is(not(nullValue())));
+    assertThat(state.getConnectionSource(), is(not(nullValue())));
 
     final DisconnectCommand optionsParser = new DisconnectCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
-    assertThat(state.getDataSource(), is(nullValue()));
+    assertThat(state.getConnectionSource(), is(nullValue()));
   }
 
   @Test
@@ -58,21 +58,21 @@ public class ConnectionShellCommandsTest {
 
     final String[] args = {};
 
-    assertThat(state.getDataSource(), is(nullValue()));
+    assertThat(state.getConnectionSource(), is(nullValue()));
 
     final DisconnectCommand optionsParser = new DisconnectCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
-    assertThat(state.getDataSource(), is(nullValue()));
+    assertThat(state.getConnectionSource(), is(nullValue()));
   }
 
   @Test
   @WithTestDatabase
   public void isConnected(
-      final DatabaseConnectionSource dataSource, final CapturedSystemStreams streams) {
+      final DatabaseConnectionSource connectionSource, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();
-    state.setDataSource(dataSource); // is-connected
+    state.setConnectionSource(connectionSource); // is-connected
 
     final String[] args = {"--is-connected"};
 

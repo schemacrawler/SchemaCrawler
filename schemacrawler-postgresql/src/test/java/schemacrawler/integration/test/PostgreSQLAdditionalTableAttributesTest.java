@@ -79,7 +79,7 @@ public class PostgreSQLAdditionalTableAttributesTest extends BaseAdditionalDatab
         postgreSQLDatabaseConnector.getSchemaRetrievalOptionsBuilder(connection).toOptions();
 
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(getDataSource(), schemaRetrievalOptions, options);
+        new SchemaCrawler(getConnectionSource(), schemaRetrievalOptions, options);
     final Catalog catalog = schemaCrawler.crawl();
 
     final Collection<Table> tables = catalog.getTables();

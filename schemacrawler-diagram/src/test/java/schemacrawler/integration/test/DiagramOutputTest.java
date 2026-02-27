@@ -79,7 +79,7 @@ public class DiagramOutputTest {
 
   private static void executableDiagram(
       final String command,
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final Catalog catalog,
       final DiagramOptions diagramOptions,
       final String testMethodName)
@@ -97,7 +97,7 @@ public class DiagramOutputTest {
     executable.setSchemaCrawlerOptions(
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
     executable.setAdditionalConfiguration(additionalConfig);
-    executable.setDataSource(dataSource);
+    executable.setConnectionSource(connectionSource);
     executable.setCatalog(catalog);
 
     // Generate diagram, so that we have something to look at, even if
@@ -107,14 +107,14 @@ public class DiagramOutputTest {
     // Check DOT file
     final String referenceFileName = testMethodName;
     assertThat(
-        outputOf(executableExecution(dataSource, executable, DiagramOutputFormat.scdot)),
+        outputOf(executableExecution(connectionSource, executable, DiagramOutputFormat.scdot)),
         hasSameContentAndTypeAs(
             classpathResource(DIAGRAM_OUTPUT + referenceFileName + ".dot"),
             DiagramOutputFormat.scdot));
   }
 
   private static Catalog getCatalog(
-      final DatabaseConnectionSource dataSource, final EnumDataTypeHelper enumHelper) {
+      final DatabaseConnectionSource connectionSource, final EnumDataTypeHelper enumHelper) {
     SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -124,7 +124,7 @@ public class DiagramOutputTest {
     schemaCrawlerOptions = schemaCrawlerOptions.withLimitOptions(limitOptionsBuilder.toOptions());
 
     SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaCrawlerUtility.matchSchemaRetrievalOptions(dataSource);
+        SchemaCrawlerUtility.matchSchemaRetrievalOptions(connectionSource);
     schemaRetrievalOptions =
         SchemaRetrievalOptionsBuilder.builder(schemaRetrievalOptions)
             .withEnumDataTypeHelper(enumHelper)
@@ -132,7 +132,10 @@ public class DiagramOutputTest {
 
     final Catalog catalog =
         SchemaCrawlerUtility.getCatalog(
-            dataSource, schemaRetrievalOptions, schemaCrawlerOptions, ConfigUtility.newConfig());
+            connectionSource,
+            schemaRetrievalOptions,
+            schemaCrawlerOptions,
+            ConfigUtility.newConfig());
     return catalog;
   }
 
@@ -157,13 +160,15 @@ public class DiagramOutputTest {
   @DisplayName("Diagram output to a bad directory")
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executableForDiagram_badOutputFile(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
-    final Catalog catalog = getCatalog(dataSource, EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER);
+    final Catalog catalog =
+        getCatalog(connectionSource, EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER);
 
     final SchemaCrawlerExecutable executable =
         new SchemaCrawlerExecutable(SchemaTextDetailType.details.name());
-    executable.setDataSource(dataSource);
+    executable.setConnectionSource(connectionSource);
     executable.setCatalog(catalog);
     final OutputOptionsBuilder outputOptionsBuilder =
         OutputOptionsBuilder.builder(executable.getOutputOptions())
@@ -171,7 +176,7 @@ public class DiagramOutputTest {
             .withOutputFile(Path.of("bad-path", "filename"));
 
     executable.setOutputOptions(outputOptionsBuilder.toOptions());
-    executable.setDataSource(dataSource);
+    executable.setConnectionSource(connectionSource);
     final ExecutionRuntimeException runtimeException =
         assertThrows(ExecutionRuntimeException.class, () -> executable.execute());
     final Throwable exception = runtimeException.getCause();
@@ -183,14 +188,15 @@ public class DiagramOutputTest {
   @DisplayName("Diagram with maximum output, including columns enum values")
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executableForDiagram_enum(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     final Catalog catalog =
         getCatalog(
-            dataSource,
+            connectionSource,
             (column, columnDataType, conn) -> {
               if ("FIRSTNAME".equals(column.getName())) {
                 return new EnumDataTypeInfo(enumerated_column, List.of("Tom", "Dick", "Harry"));
@@ -200,7 +206,7 @@ public class DiagramOutputTest {
 
     executableDiagram(
         SchemaTextDetailType.details.name(),
-        dataSource,
+        connectionSource,
         catalog,
         diagramOptions,
         testContext.testMethodName());
@@ -210,12 +216,14 @@ public class DiagramOutputTest {
   @DisplayName("Diagram with maximum output, including indexes with remarks")
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executableForDiagram_indexRemarks(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    final Catalog catalog = getCatalog(dataSource, EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER);
+    final Catalog catalog =
+        getCatalog(connectionSource, EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER);
     catalog
         .lookupTable(new SchemaReference("PUBLIC", "BOOKS"), "AUTHORS")
         .get()
@@ -225,7 +233,7 @@ public class DiagramOutputTest {
 
     executableDiagram(
         SchemaTextDetailType.details.name(),
-        dataSource,
+        connectionSource,
         catalog,
         diagramOptions,
         testContext.testMethodName());

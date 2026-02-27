@@ -95,7 +95,7 @@ public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
     // -- Schema output tests
     final String expectedResource = "testDB2WithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
@@ -128,7 +128,7 @@ public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
     // -- Schema output tests
     final String expectedResource = testContext.testMethodName() + ".txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

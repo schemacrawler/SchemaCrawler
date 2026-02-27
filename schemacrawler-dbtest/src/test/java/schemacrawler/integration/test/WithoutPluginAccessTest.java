@@ -17,12 +17,10 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.nio.file.Path;
 import java.util.regex.Pattern;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -38,10 +36,10 @@ public class WithoutPluginAccessTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws Exception {
-      Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-      final Path databaseFile = copyResourceToTempFile("/Books2010.accdb");
-      createDataSource(
-          "jdbc:ucanaccess://" + databaseFile + ";showSchema=true;sysSchema=true", null, null);
+    Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+    final Path databaseFile = copyResourceToTempFile("/Books2010.accdb");
+    createDataSource(
+        "jdbc:ucanaccess://" + databaseFile + ";showSchema=true;sysSchema=true", null, null);
   }
 
   @Test
@@ -66,7 +64,7 @@ public class WithoutPluginAccessTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testAccessWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

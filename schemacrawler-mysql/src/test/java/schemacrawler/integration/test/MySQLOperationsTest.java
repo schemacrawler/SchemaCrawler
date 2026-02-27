@@ -78,7 +78,7 @@ public class MySQLOperationsTest extends BaseAdditionalDatabaseTest {
   public void count(final TestContext testContext) throws Exception {
     runWithContentComparison(
         testContext.testMethodFullName(),
-        getDataSource(),
+        getConnectionSource(),
         InfoLevel.minimum,
         OperationType.count.name());
   }
@@ -87,7 +87,7 @@ public class MySQLOperationsTest extends BaseAdditionalDatabaseTest {
   public void dump(final TestContext testContext) throws Exception {
     runWithContentComparison(
         testContext.testMethodFullName(),
-        getDataSource(),
+        getConnectionSource(),
         InfoLevel.standard,
         OperationType.dump.name());
   }
@@ -95,16 +95,17 @@ public class MySQLOperationsTest extends BaseAdditionalDatabaseTest {
   @Test
   public void list(final TestContext testContext) throws Exception {
     runWithContentComparison(
-        testContext.testMethodFullName(), getDataSource(), InfoLevel.minimum, "list");
+        testContext.testMethodFullName(), getConnectionSource(), InfoLevel.minimum, "list");
   }
 
   @Test
   public void tablesample(final TestContext testContext) throws Exception {
-    runWithFileSizeCheck(getDataSource(), InfoLevel.standard, OperationType.tablesample.name());
+    runWithFileSizeCheck(
+        getConnectionSource(), InfoLevel.standard, OperationType.tablesample.name());
   }
 
   private void runExecutable(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final InfoLevel infoLevel,
       final String command,
       final Consumer<Path> outputAssertion)
@@ -122,13 +123,13 @@ public class MySQLOperationsTest extends BaseAdditionalDatabaseTest {
     executable.setSchemaCrawlerOptions(options);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final Path outputFile = executableExecution(dataSource, executable);
+    final Path outputFile = executableExecution(connectionSource, executable);
     outputAssertion.accept(outputFile);
   }
 
   private void runWithContentComparison(
       final String currentMethodFullName,
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final InfoLevel infoLevel,
       final String command)
       throws Exception {
@@ -137,11 +138,13 @@ public class MySQLOperationsTest extends BaseAdditionalDatabaseTest {
             assertThat(
                 outputOf(outputFile), hasSameContentAs(classpathResource(currentMethodFullName)));
 
-    runExecutable(dataSource, infoLevel, command, assertion);
+    runExecutable(connectionSource, infoLevel, command, assertion);
   }
 
   private void runWithFileSizeCheck(
-      final DatabaseConnectionSource dataSource, final InfoLevel infoLevel, final String command)
+      final DatabaseConnectionSource connectionSource,
+      final InfoLevel infoLevel,
+      final String command)
       throws Exception {
     final Consumer<Path> assertion =
         outputFile -> {
@@ -153,6 +156,6 @@ public class MySQLOperationsTest extends BaseAdditionalDatabaseTest {
           }
         };
 
-    runExecutable(dataSource, infoLevel, command, assertion);
+    runExecutable(connectionSource, infoLevel, command, assertion);
   }
 }

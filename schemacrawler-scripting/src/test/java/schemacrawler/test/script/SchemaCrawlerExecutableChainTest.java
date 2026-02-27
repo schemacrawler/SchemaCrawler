@@ -51,7 +51,7 @@ public class SchemaCrawlerExecutableChainTest {
   }
 
   @Test
-  public void executableChain(final DatabaseConnectionSource dataSource) throws Exception {
+  public void executableChain(final DatabaseConnectionSource connectionSource) throws Exception {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("script");
     final Path testOutputFile = IOUtility.createTempFilePath("sc", "data");
 
@@ -75,7 +75,7 @@ public class SchemaCrawlerExecutableChainTest {
     executable.setOutputOptions(outputOptions);
     executable.setAdditionalConfiguration(additionalConfig);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
-    executable.setDataSource(dataSource);
+    executable.setConnectionSource(connectionSource);
     executable.execute();
 
     assertThat(

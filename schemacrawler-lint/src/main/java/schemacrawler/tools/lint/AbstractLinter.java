@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.tools.executable.BaseCommand;
+import schemacrawler.tools.executable.AbstractCommand;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.property.PropertyName;
@@ -26,7 +26,7 @@ import us.fatehi.utility.string.StringFormat;
  * Evaluates a catalog and creates lints. This base class has core functionality for maintaining
  * state, but not for visiting a catalog. Includes code for dispatching a linter.
  */
-public abstract class AbstractLinter extends BaseCommand<LinterConfig> implements Linter {
+public abstract class AbstractLinter extends AbstractCommand<LinterConfig> implements Linter {
 
   private static final Logger LOGGER = Logger.getLogger(AbstractLinter.class.getName());
 

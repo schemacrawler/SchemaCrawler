@@ -86,7 +86,7 @@ public class InformixTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResultsResource = "testInformixWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResultsResource)));
   }
 }

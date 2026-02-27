@@ -71,7 +71,8 @@ public abstract class AbstractSpinThroughExecutableTest {
   @ParameterizedTest
   @EnumSource(SchemaTextDetailType.class)
   public void spinThroughExecutable(
-      final SchemaTextDetailType schemaTextDetailType, final DatabaseConnectionSource dataSource)
+      final SchemaTextDetailType schemaTextDetailType,
+      final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final SchemaRetrievalOptions schemaRetrievalOptions =
@@ -86,7 +87,7 @@ public abstract class AbstractSpinThroughExecutableTest {
                             outputFormat ->
                                 () -> {
                                   spinThroughExecutable(
-                                      dataSource,
+                                      connectionSource,
                                       schemaRetrievalOptions,
                                       infoLevel,
                                       outputFormat,
@@ -97,7 +98,7 @@ public abstract class AbstractSpinThroughExecutableTest {
   protected abstract Stream<? extends OutputFormat> outputFormats();
 
   private void spinThroughExecutable(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final SchemaRetrievalOptions schemaRetrievalOptions,
       final InfoLevel infoLevel,
       final OutputFormat outputFormat,
@@ -128,7 +129,7 @@ public abstract class AbstractSpinThroughExecutableTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
             classpathResource(SPIN_THROUGH_OUTPUT + referenceFile), outputFormat));
   }

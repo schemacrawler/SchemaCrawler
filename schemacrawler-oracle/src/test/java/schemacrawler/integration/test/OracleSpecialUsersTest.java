@@ -80,21 +80,21 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   @DisplayName("Oracle test for user CATUSER with just SELECT_CATALOG_ROLE")
   /** CATUSER can get metadata, but cannot run data queries. */
   public void testOracleSelectCatalogRoleUser() throws Exception {
-    try (final DatabaseConnectionSource dataSource =
+    try (final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.fromDataSource(catalogUserDataSource)) {
       final String expectedResource = "testOracleSelectCatalogRoleUser.txt";
-      testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
+      testOracleWithConnection(connectionSource, expectedResource, NUM_DATABASE_USERS, true);
 
       final DatabaseAccessException sqlException =
           assertThrows(
               DatabaseAccessException.class,
-              () -> testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt"));
+              () -> testSelectQuery(connectionSource, "testOracleWithConnectionQuery.txt"));
       assertThat(
           sqlException.getMessage(),
           matchesPattern(
               Pattern.compile(".*ORA-00942: table or view .* does not exist.*", Pattern.DOTALL)));
 
-      assertCatalogScope(dataSource, true, true);
+      assertCatalogScope(connectionSource, true, true);
     }
   }
 
@@ -103,28 +103,28 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   /** CATUSER can get metadata, but cannot run data queries. */
   public void testOracleSystemUser() throws Exception {
 
-    assertCatalogScope(getDataSource(), true, true);
+    assertCatalogScope(getConnectionSource(), true, true);
   }
 
   @Test
   @DisplayName("Oracle test for user NOTUSER with no access")
   /** NOTUSER cannot get metadata, nor run data queries. */
   public void testOracleWithNoAccessUser() throws Exception {
-    try (final DatabaseConnectionSource dataSource =
+    try (final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.fromDataSource(noAccessUserDataSource)) {
       final String expectedResource = "testOracleWithNoAccessUser.txt";
-      testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, false);
+      testOracleWithConnection(connectionSource, expectedResource, NUM_DATABASE_USERS, false);
 
       final DatabaseAccessException sqlException =
           assertThrows(
               DatabaseAccessException.class,
-              () -> testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt"));
+              () -> testSelectQuery(connectionSource, "testOracleWithConnectionQuery.txt"));
       assertThat(
           sqlException.getMessage(),
           matchesPattern(
               Pattern.compile(".*ORA-00942: table or view .* does not exist.*", Pattern.DOTALL)));
 
-      assertCatalogScope(dataSource, false, true);
+      assertCatalogScope(connectionSource, false, true);
     }
   }
 
@@ -132,14 +132,14 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   @DisplayName("Oracle test for user BOOKS who is the schema owner")
   /** BOOKS user can get metadata, and can run data queries. */
   public void testOracleWithSchemaOwnerUser() throws Exception {
-    try (final DatabaseConnectionSource dataSource =
+    try (final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.fromDataSource(schemaOwnerUserDataSource)) {
       final String expectedResource = "testOracleWithSchemaOwnerUser.txt";
-      testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
+      testOracleWithConnection(connectionSource, expectedResource, NUM_DATABASE_USERS, true);
 
-      testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
+      testSelectQuery(connectionSource, "testOracleWithConnectionQuery.txt");
 
-      assertCatalogScope(dataSource, false, true);
+      assertCatalogScope(connectionSource, false, true);
     }
   }
 
@@ -147,23 +147,25 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   @DisplayName("Oracle test for user SELUSER with just GRANT SELECT")
   /** SELUSER cannot get metadata, but can run data queries. */
   public void testOracleWithSelectGrantUser() throws Exception {
-    try (final DatabaseConnectionSource dataSource =
+    try (final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.fromDataSource(selectUserDataSource)) {
 
       final String expectedResource = "testOracleWithSelectGrantUser.txt";
-      testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, true);
+      testOracleWithConnection(connectionSource, expectedResource, NUM_DATABASE_USERS, true);
 
-      testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
+      testSelectQuery(connectionSource, "testOracleWithConnectionQuery.txt");
 
-      assertCatalogScope(dataSource, false, true);
+      assertCatalogScope(connectionSource, false, true);
     }
   }
 
   private void assertCatalogScope(
-      final DatabaseConnectionSource dataSource, final boolean dbaAccess, final boolean allAccess)
+      final DatabaseConnectionSource connectionSource,
+      final boolean dbaAccess,
+      final boolean allAccess)
       throws SQLException {
 
-    try (final Connection connection = dataSource.get(); ) {
+    try (final Connection connection = connectionSource.get(); ) {
       assertDataDictionaryAccess(
           new Query(
               "Select from DBA data dictionary tables",

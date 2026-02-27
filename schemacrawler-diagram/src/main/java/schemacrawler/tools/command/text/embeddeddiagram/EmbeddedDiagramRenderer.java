@@ -34,14 +34,14 @@ import schemacrawler.tools.command.text.diagram.DiagramRenderer;
 import schemacrawler.tools.command.text.diagram.GraphExecutorFactory;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.schema.SchemaTextRenderer;
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.executable.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.utility.property.PropertyName;
 
-public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptions> {
+public class EmbeddedDiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramOptions> {
 
   private static final Pattern svgInsertionPoint = Pattern.compile("<h2.*Tables.*h2>");
   private static final Pattern svgStart = Pattern.compile("<svg.*");

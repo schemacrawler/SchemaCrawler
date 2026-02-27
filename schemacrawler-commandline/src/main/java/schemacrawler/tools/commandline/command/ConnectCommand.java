@@ -142,10 +142,10 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
 
     // Connect using connection options provided from the command-line,
     // provided configuration, and database plugin defaults
-    final DatabaseConnectionSource databaseConnectionSource =
+    final DatabaseConnectionSource connectionSource =
         databaseConnector.newDatabaseConnectionSource(connectionOptions, userCredentials);
 
-    state.setDataSource(databaseConnectionSource);
+    state.setConnectionSource(connectionSource);
   }
 
   private UserCredentials getUserCredentials() {
@@ -179,7 +179,7 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
     LOGGER.log(Level.FINE, "Creating SchemaCrawler retrieval options builder");
 
     final Config config = state.getConfig();
-    try (final Connection connection = state.getDataSource().get(); ) {
+    try (final Connection connection = state.getConnectionSource().get(); ) {
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
           databaseConnector.getSchemaRetrievalOptionsBuilder(connection);
       state.setSchemaRetrievalOptions(

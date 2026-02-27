@@ -46,54 +46,54 @@ public abstract class AbstractWeakAssociationsTest {
   protected void weakAssociations_00(
       final OutputFormat outputFormat,
       final TestContext testContext,
-      final DatabaseConnectionSource dataSource)
+      final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("weak-associations", true);
 
-    assertWeakAssociations(testContext, dataSource, additionalConfig, false, outputFormat);
+    assertWeakAssociations(testContext, connectionSource, additionalConfig, false, outputFormat);
   }
 
   protected void weakAssociations_01(
       final OutputFormat outputFormat,
       final TestContext testContext,
-      final DatabaseConnectionSource dataSource)
+      final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("attributes-file", "/attributes-weakassociations.yaml");
 
-    assertWeakAssociations(testContext, dataSource, additionalConfig, false, outputFormat);
+    assertWeakAssociations(testContext, connectionSource, additionalConfig, false, outputFormat);
   }
 
   protected void weakAssociations_02(
       final OutputFormat outputFormat,
       final TestContext testContext,
-      final DatabaseConnectionSource dataSource)
+      final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
 
-    assertWeakAssociations(testContext, dataSource, additionalConfig, false, outputFormat);
+    assertWeakAssociations(testContext, connectionSource, additionalConfig, false, outputFormat);
   }
 
   protected void weakAssociations_03(
       final OutputFormat outputFormat,
       final TestContext testContext,
-      final DatabaseConnectionSource dataSource)
+      final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
 
-    assertWeakAssociations(testContext, dataSource, additionalConfig, true, outputFormat);
+    assertWeakAssociations(testContext, connectionSource, additionalConfig, true, outputFormat);
   }
 
   private void assertWeakAssociations(
       final TestContext testContext,
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final Config config,
       final boolean noRemarks,
       OutputFormat outputFormat)
@@ -118,13 +118,13 @@ public abstract class AbstractWeakAssociationsTest {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfig);
-    executable.setDataSource(dataSource);
+    executable.setConnectionSource(connectionSource);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     final String referenceFileName =
         WEAK_ASSOCIATIONS_OUTPUT + testContext.testMethodName() + "." + outputFormat.getFormat();
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(classpathResource(referenceFileName), outputFormat));
   }
 }

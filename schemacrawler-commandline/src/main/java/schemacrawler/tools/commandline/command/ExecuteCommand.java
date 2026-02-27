@@ -79,11 +79,11 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
       }
 
       final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
-      final DatabaseConnectionSource dataSource = state.getDataSource();
+      final DatabaseConnectionSource connectionSource = state.getConnectionSource();
       final Catalog catalog = state.getCatalog();
 
       executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
-      executable.setDataSource(dataSource);
+      executable.setConnectionSource(connectionSource);
       executable.setCatalog(catalog);
 
       executable.execute();

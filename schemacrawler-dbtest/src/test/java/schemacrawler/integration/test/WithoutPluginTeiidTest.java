@@ -36,7 +36,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @DisableLogging
 public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
 
-  private DatabaseConnectionSource dataSource;
+  private DatabaseConnectionSource connectionSource;
 
   @BeforeEach
   public void createDatabase() throws Exception {
@@ -61,7 +61,7 @@ public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
             .getResourceAsStream("teiid-vdb/stock-market-vdb.xml"));
 
     final Connection connection = server.getDriver().connect("jdbc:teiid:StockMarket", null);
-    dataSource = new ConnectionDatabaseConnectionSource(connection);
+    connectionSource = new ConnectionDatabaseConnectionSource(connection);
   }
 
   @Test
@@ -76,7 +76,7 @@ public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testTeiidDump.txt";
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
@@ -98,7 +98,7 @@ public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testTeiidWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

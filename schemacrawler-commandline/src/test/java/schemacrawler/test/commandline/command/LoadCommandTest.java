@@ -49,12 +49,12 @@ public class LoadCommandTest {
   private final String COMMAND_HELP = "command_help/";
 
   @Test
-  public void execute(final DatabaseConnectionSource dataSource) {
+  public void execute(final DatabaseConnectionSource connectionSource) {
     final String[] args = {"--info-level", "detailed", "--load-row-counts", "additional", "-extra"};
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
-    state.setDataSource(dataSource);
+    state.setConnectionSource(connectionSource);
     assertThat(state.getCatalog(), is(nullValue()));
 
     final LoadCommand optionsParser = new LoadCommand(state);
@@ -97,7 +97,7 @@ public class LoadCommandTest {
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
-    state.setDataSource(new ConnectionDatabaseConnectionSource(connection));
+    state.setConnectionSource(new ConnectionDatabaseConnectionSource(connection));
     assertThat(state.getCatalog(), is(nullValue()));
 
     final LoadCommand optionsParser = new LoadCommand(state);

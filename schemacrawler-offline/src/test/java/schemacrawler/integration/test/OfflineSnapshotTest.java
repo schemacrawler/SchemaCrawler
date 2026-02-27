@@ -160,20 +160,20 @@ public class OfflineSnapshotTest {
     final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder();
     schemaTextOptionsBuilder.noInfo(false);
 
-    final DatabaseConnectionSource dataSource =
+    final DatabaseConnectionSource connectionSource =
         newOfflineDatabaseConnectionSource(serializedCatalogFile);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-    executable.setDataSource(dataSource);
+    executable.setConnectionSource(connectionSource);
 
     final String expectedResource = "details.txt";
     executeExecutable(executable, OFFLINE_EXECUTABLE_OUTPUT + expectedResource);
   }
 
   @BeforeEach
-  public void serializeCatalog(final DatabaseConnectionSource dataSource) {
+  public void serializeCatalog(final DatabaseConnectionSource connectionSource) {
     try {
       final LimitOptionsBuilder limitOptionsBuilder =
           LimitOptionsBuilder.builder().includeAllRoutines();
@@ -186,7 +186,7 @@ public class OfflineSnapshotTest {
 
       final Catalog catalog =
           getCatalog(
-              dataSource,
+              connectionSource,
               SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
               schemaCrawlerOptions,
               ConfigUtility.newConfig());
@@ -212,7 +212,7 @@ public class OfflineSnapshotTest {
 
   private void executeExecutable(
       final SchemaCrawlerExecutable executable, final String referenceFileName) throws Exception {
-    final DatabaseConnectionSource dataSource =
+    final DatabaseConnectionSource connectionSource =
         newOfflineDatabaseConnectionSource(serializedCatalogFile);
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
@@ -221,7 +221,7 @@ public class OfflineSnapshotTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(referenceFileName)));
   }
 }

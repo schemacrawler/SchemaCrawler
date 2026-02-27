@@ -36,11 +36,12 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class ShellCommandSerializeCommandTest {
 
   @Test
-  public void shellSerializeJson(final DatabaseConnectionSource dataSource) throws IOException {
+  public void shellSerializeJson(final DatabaseConnectionSource connectionSource)
+      throws IOException {
 
     final SerializationFormat serializationFormat = SerializationFormat.json;
 
-    final ShellState state = createLoadedSchemaCrawlerShellState(dataSource);
+    final ShellState state = createLoadedSchemaCrawlerShellState(connectionSource);
 
     final Path testOutputFile =
         IOUtility.createTempFilePath("test", "." + serializationFormat.name());

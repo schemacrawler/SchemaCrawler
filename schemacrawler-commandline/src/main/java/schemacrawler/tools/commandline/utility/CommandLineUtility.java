@@ -91,8 +91,8 @@ public class CommandLineUtility {
 
       final boolean isConnectedState = state.isConnected();
       if (isConnectedState) {
-        final DatabaseConnectionSource dbConnectionSource = state.getDataSource();
-        try (final Connection connection = dbConnectionSource.get(); ) {
+        final DatabaseConnectionSource connectionSource = state.getConnectionSource();
+        try (final Connection connection = connectionSource.get(); ) {
           final ConnectionInfoBuilder builder = ConnectionInfoBuilder.builder(connection);
           final ProductVersion databaseInfo =
               new BaseProductVersion(builder.buildDatabaseInformation());

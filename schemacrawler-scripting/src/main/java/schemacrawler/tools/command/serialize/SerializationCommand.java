@@ -23,13 +23,13 @@ import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.command.serialize.options.SerializationOptions;
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.executable.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.formatter.serialize.CatalogSerializer;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.utility.property.PropertyName;
 
 /** Main executor for the serialization integration. */
-public final class SerializationCommand extends BaseSchemaCrawlerCommand<SerializationOptions> {
+public final class SerializationCommand extends AbstractSchemaCrawlerCommand<SerializationOptions> {
 
   static final PropertyName COMMAND =
       new PropertyName("serialize", "Create an offline catalog snapshot");

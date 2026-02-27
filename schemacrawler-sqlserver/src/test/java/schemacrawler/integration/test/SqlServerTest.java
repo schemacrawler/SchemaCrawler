@@ -116,7 +116,8 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final Catalog catalog = SchemaCrawlerUtility.getCatalog(getDataSource(), schemaCrawlerOptions);
+    final Catalog catalog =
+        SchemaCrawlerUtility.getCatalog(getConnectionSource(), schemaCrawlerOptions);
 
     assertThat(catalog.getTables(), hasSize(11));
     assertThat(catalog.getSynonyms(), hasSize(2));
@@ -151,7 +152,7 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
         databaseConnector.getSchemaRetrievalOptionsBuilder(connection).toOptions();
 
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(getDataSource(), schemaRetrievalOptions, schemaCrawlerOptions);
+        new SchemaCrawler(getConnectionSource(), schemaRetrievalOptions, schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
 
     final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
@@ -205,7 +206,7 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testSQLServerWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executableDetails)),
+        outputOf(executableExecution(getConnectionSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
 
     // -- Additional catalog tests
@@ -244,7 +245,7 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = testContext.testMethodName() + ".txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executableDetails)),
+        outputOf(executableExecution(getConnectionSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

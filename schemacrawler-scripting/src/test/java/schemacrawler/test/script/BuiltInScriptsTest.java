@@ -37,37 +37,40 @@ public class BuiltInScriptsTest {
 
   @Test
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
-  public void dbml(final TestContext testContext, final DatabaseConnectionSource dataSource)
+  public void dbml(final TestContext testContext, final DatabaseConnectionSource connectionSource)
       throws Exception {
     assertThat(
-        outputOf(scriptExecution(dataSource, "/scripts/dbml.py")),
+        outputOf(scriptExecution(connectionSource, "/scripts/dbml.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 
   @Test
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
-  public void markdown(final TestContext testContext, final DatabaseConnectionSource dataSource)
+  public void markdown(
+      final TestContext testContext, final DatabaseConnectionSource connectionSource)
       throws Exception {
     assertThat(
-        outputOf(scriptExecution(dataSource, "/scripts/markdown.py")),
+        outputOf(scriptExecution(connectionSource, "/scripts/markdown.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 
   @Test
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
-  public void mermaid(final TestContext testContext, final DatabaseConnectionSource dataSource)
+  public void mermaid(
+      final TestContext testContext, final DatabaseConnectionSource connectionSource)
       throws Exception {
     assertThat(
-        outputOf(scriptExecution(dataSource, "/scripts/mermaid.py")),
+        outputOf(scriptExecution(connectionSource, "/scripts/mermaid.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 
   @Test
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
-  public void plantuml(final TestContext testContext, final DatabaseConnectionSource dataSource)
+  public void plantuml(
+      final TestContext testContext, final DatabaseConnectionSource connectionSource)
       throws Exception {
     assertThat(
-        outputOf(scriptExecution(dataSource, "/scripts/plantuml.py")),
+        outputOf(scriptExecution(connectionSource, "/scripts/plantuml.py")),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 }

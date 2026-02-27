@@ -21,7 +21,7 @@ import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.executable.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.formatter.diagram.SchemaDotFormatter;
@@ -30,7 +30,7 @@ import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.property.PropertyName;
 
-public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptions> {
+public final class DiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramOptions> {
 
   private DiagramOutputFormat diagramOutputFormat;
   private final GraphExecutorFactory graphExecutorFactory;

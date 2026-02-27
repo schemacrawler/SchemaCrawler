@@ -47,7 +47,7 @@ public abstract class AbstractAlternateKeysTest {
 
   protected void assertAlternateKeys(
       final TestContext testContext,
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final OutputFormat outputFormat)
       throws Exception {
 
@@ -75,13 +75,13 @@ public abstract class AbstractAlternateKeysTest {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfig);
-    executable.setDataSource(dataSource);
+    executable.setConnectionSource(connectionSource);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     final String referenceFileName =
         ALTERNATE_KEYS_OUTPUT + testContext.testMethodName() + "." + outputFormat.getFormat();
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(classpathResource(referenceFileName), outputFormat));
   }
 }

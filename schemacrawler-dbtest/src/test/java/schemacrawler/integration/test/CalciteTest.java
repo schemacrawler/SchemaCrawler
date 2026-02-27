@@ -37,7 +37,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @DisableLogging
 public class CalciteTest extends BaseAdditionalDatabaseTest {
 
-  private DatabaseConnectionSource dataSource;
+  private DatabaseConnectionSource connectionSource;
 
   @BeforeEach
   public void createDatabase() throws Exception {
@@ -49,7 +49,7 @@ public class CalciteTest extends BaseAdditionalDatabaseTest {
     final Properties info = new Properties();
     info.put("model", directoryPath.toString());
     final Connection connection = DriverManager.getConnection("jdbc:calcite:", info);
-    dataSource = new ConnectionDatabaseConnectionSource(connection);
+    connectionSource = new ConnectionDatabaseConnectionSource(connection);
   }
 
   @Test
@@ -65,7 +65,7 @@ public class CalciteTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testCalciteDump.txt";
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
@@ -88,7 +88,7 @@ public class CalciteTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testCalciteWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

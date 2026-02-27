@@ -36,9 +36,9 @@ public class TempTablesTest extends BaseSqliteTest {
   @Test
   public void tempTables() throws Exception {
     final Path sqliteDbFile = createTestDatabase();
-    final DatabaseConnectionSource dataSource = createDataSourceFromFile(sqliteDbFile);
+    final DatabaseConnectionSource connectionSource = createDataSourceFromFile(sqliteDbFile);
 
-    try (final Connection connection = dataSource.get(); ) {
+    try (final Connection connection = connectionSource.get(); ) {
       SqlScript.executeScriptFromResource("/db/books/33_temp_tables_B.sql", connection);
     }
 
@@ -53,8 +53,8 @@ public class TempTablesTest extends BaseSqliteTest {
 
     final Catalog catalog =
         SchemaCrawlerUtility.getCatalog(
-            dataSource,
-            SchemaCrawlerUtility.matchSchemaRetrievalOptions(dataSource),
+            connectionSource,
+            SchemaCrawlerUtility.matchSchemaRetrievalOptions(connectionSource),
             schemaCrawlerOptions,
             ConfigUtility.newConfig());
     final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);

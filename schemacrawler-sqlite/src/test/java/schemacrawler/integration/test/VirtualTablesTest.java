@@ -89,7 +89,7 @@ public class VirtualTablesTest extends BaseSqliteTest {
       final InclusionRule tableInclusionRule)
       throws Exception {
 
-    final DatabaseConnectionSource dataSource =
+    final DatabaseConnectionSource connectionSource =
         createDataSourceFromResource("with_spellfix1_tables.db");
 
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -108,7 +108,7 @@ public class VirtualTablesTest extends BaseSqliteTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 }

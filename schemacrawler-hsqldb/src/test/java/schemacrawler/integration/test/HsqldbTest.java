@@ -9,6 +9,7 @@
 package schemacrawler.integration.test;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
+import static java.util.Objects.requireNonNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -27,11 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.Test;
-
-import static java.util.Objects.requireNonNull;
-
 import schemacrawler.Main;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -128,9 +125,10 @@ public class HsqldbTest {
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     requireNonNull(schemaRetrievalOptions, "No database specific override options provided");
 
-    final DatabaseConnectionSource dataSource = new ConnectionDatabaseConnectionSource(connection);
+    final DatabaseConnectionSource connectionSource =
+        new ConnectionDatabaseConnectionSource(connection);
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(dataSource, schemaRetrievalOptions, schemaCrawlerOptions);
+        new SchemaCrawler(connectionSource, schemaRetrievalOptions, schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
     assertThat(catalog, notNullValue());
 

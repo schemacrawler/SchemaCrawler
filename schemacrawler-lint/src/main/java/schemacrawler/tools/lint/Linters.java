@@ -138,7 +138,7 @@ public final class Linters {
     }
   }
 
-  public void lint(final Catalog catalog, final DatabaseConnectionSource dataSource) {
+  public void lint(final Catalog catalog, final DatabaseConnectionSource connectionSource) {
 
     // Check if initialized
     requireNonNull(linters, "No linters provided");
@@ -148,9 +148,9 @@ public final class Linters {
     }
 
     requireNonNull(catalog, "No catalog provided");
-    requireNonNull(dataSource, "No database connection source provided");
+    requireNonNull(connectionSource, "No database connection source provided");
 
-    runLinters(catalog, dataSource);
+    runLinters(catalog, connectionSource);
   }
 
   /**
@@ -162,7 +162,7 @@ public final class Linters {
     return linters.size();
   }
 
-  private void runLinters(final Catalog catalog, final DatabaseConnectionSource dataSource) {
+  private void runLinters(final Catalog catalog, final DatabaseConnectionSource connectionSource) {
 
     linters.parallelStream()
         .forEach(
@@ -174,7 +174,7 @@ public final class Linters {
                 linter.initialize();
                 linter.setCatalog(catalog);
                 if (linter.usesConnection()) {
-                  linter.setDataSource(dataSource);
+                  linter.setConnectionSource(connectionSource);
                 }
                 linter.execute();
               } catch (final Exception e) {

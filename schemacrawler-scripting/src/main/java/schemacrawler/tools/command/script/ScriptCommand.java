@@ -22,13 +22,13 @@ import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.script.options.ScriptLanguageType;
 import schemacrawler.tools.command.script.options.ScriptOptions;
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.executable.AbstractSchemaCrawlerCommand;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
 /** Main executor for the script engine integration. */
-public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions> {
+public final class ScriptCommand extends AbstractSchemaCrawlerCommand<ScriptOptions> {
 
   private static final Logger LOGGER = Logger.getLogger(ScriptCommand.class.getName());
 
