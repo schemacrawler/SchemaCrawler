@@ -70,7 +70,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
   private static void executableDiagram(
       final SchemaTextDetailType schemaTextDetailType,
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final SchemaCrawlerOptions options,
       final Config config,
       final DiagramOptions diagramOptions,
@@ -102,7 +102,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfig);
-    executable.setDataSource(dataSource);
+    executable.setConnectionSource(connectionSource);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     // Generate diagram, so that we have something to look at, even if
@@ -112,7 +112,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
     // Check DOT file
     final String referenceFileName = testMethodName;
     assertThat(
-        outputOf(executableExecution(dataSource, executable, DiagramOutputFormat.scdot)),
+        outputOf(executableExecution(connectionSource, executable, DiagramOutputFormat.scdot)),
         hasSameContentAndTypeAs(
             classpathResource(ADDITIONAL_DIAGRAM_OPTIONS_OUTPUT + referenceFileName + ".dot"),
             DiagramOutputFormat.scdot));
@@ -138,7 +138,8 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   @Test
   @DisplayName("No hanging foreign keys")
   public void executableAdditionalForDiagram_01(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
@@ -149,7 +150,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
     executableDiagram(
         SchemaTextDetailType.schema,
-        dataSource,
+        connectionSource,
         options,
         additionalConfig,
         diagramOptions,
@@ -159,7 +160,8 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   @Test
   @DisplayName("No hanging foreign keys; weak associations loaded; schema command")
   public void executableAdditionalForDiagram_02(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
@@ -171,7 +173,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
     executableDiagram(
         SchemaTextDetailType.schema,
-        dataSource,
+        connectionSource,
         options,
         additionalConfig,
         diagramOptions,
@@ -181,7 +183,8 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   @Test
   @DisplayName("No hanging foreign keys; weak associations loaded; brief command")
   public void executableAdditionalForDiagram_03(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(false).toOptions();
@@ -193,7 +196,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
     executableDiagram(
         SchemaTextDetailType.brief,
-        dataSource,
+        connectionSource,
         options,
         additionalConfig,
         diagramOptions,
@@ -203,7 +206,8 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   @Test
   @DisplayName("Allow hanging foreign keys; weak associations loaded; brief command")
   public void executableAdditionalForDiagram_04(
-      final TestContext testContext, final DatabaseConnectionSource dataSource) throws Exception {
+      final TestContext testContext, final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().showFilteredTables(true).toOptions();
@@ -215,7 +219,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
 
     executableDiagram(
         SchemaTextDetailType.brief,
-        dataSource,
+        connectionSource,
         options,
         additionalConfig,
         diagramOptions,

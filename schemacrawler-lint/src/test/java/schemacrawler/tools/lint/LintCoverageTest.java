@@ -38,13 +38,13 @@ public class LintCoverageTest {
   private Catalog catalog;
 
   @BeforeAll
-  public void createCatalog(final DatabaseConnectionSource dataSource) {
+  public void createCatalog(final DatabaseConnectionSource connectionSource) {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     catalog =
         getCatalog(
-            dataSource,
+            connectionSource,
             schemaRetrievalOptionsDefault,
             schemaCrawlerOptions,
             ConfigUtility.newConfig());

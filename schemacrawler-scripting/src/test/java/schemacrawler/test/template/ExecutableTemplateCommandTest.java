@@ -27,36 +27,40 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class ExecutableTemplateCommandTest {
 
   @Test
-  public void executableFreeMarker(final DatabaseConnectionSource dataSource) throws Exception {
+  public void executableFreeMarker(final DatabaseConnectionSource connectionSource)
+      throws Exception {
     assertThat(
         outputOf(
-            templateExecution(dataSource, TemplateLanguageType.freemarker, "/plaintextschema.ftl")),
+            templateExecution(
+                connectionSource, TemplateLanguageType.freemarker, "/plaintextschema.ftl")),
         hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
   @Test
-  public void executableMustache(final DatabaseConnectionSource dataSource) throws Exception {
+  public void executableMustache(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
         outputOf(
             templateExecution(
-                dataSource, TemplateLanguageType.mustache, "/plaintextschema.mustache")),
+                connectionSource, TemplateLanguageType.mustache, "/plaintextschema.mustache")),
         hasSameContentAs(classpathResource("executableForMustache.txt")));
   }
 
   @Test
-  public void executableThymeleaf(final DatabaseConnectionSource dataSource) throws Exception {
+  public void executableThymeleaf(final DatabaseConnectionSource connectionSource)
+      throws Exception {
     assertThat(
         outputOf(
             templateExecution(
-                dataSource, TemplateLanguageType.thymeleaf, "/plaintextschema.thymeleaf")),
+                connectionSource, TemplateLanguageType.thymeleaf, "/plaintextschema.thymeleaf")),
         hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
 
   @Test
-  public void executableVelocity(final DatabaseConnectionSource dataSource) throws Exception {
+  public void executableVelocity(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
         outputOf(
-            templateExecution(dataSource, TemplateLanguageType.velocity, "/plaintextschema.vm")),
+            templateExecution(
+                connectionSource, TemplateLanguageType.velocity, "/plaintextschema.vm")),
         hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 }

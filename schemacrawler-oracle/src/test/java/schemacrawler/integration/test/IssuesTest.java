@@ -79,7 +79,7 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
 
     // -- Schema output tests
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
@@ -129,7 +129,7 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
 
     // -- Schema output tests
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
@@ -162,7 +162,7 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
 
     // -- Schema output tests
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
@@ -196,7 +196,7 @@ public class IssuesTest extends BaseOracleWithConnectionTest {
 
     // -- Schema output tests
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

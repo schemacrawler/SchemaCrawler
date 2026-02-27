@@ -40,7 +40,8 @@ public class ExecuteCommandTest {
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executeBadCommand(
-      final DatabaseConnectionSource dataSource, final TestContext testContext) throws Exception {
+      final DatabaseConnectionSource connectionSource, final TestContext testContext)
+      throws Exception {
 
     class ExceptionHandler implements IExecutionExceptionHandler {
 
@@ -60,20 +61,13 @@ public class ExecuteCommandTest {
     }
     final ExceptionHandler exceptionHandler = new ExceptionHandler();
 
-    final CommandLine commandLine = createShellCommandLine(dataSource);
+    final CommandLine commandLine = createShellCommandLine(connectionSource);
     commandLine.setExecutionExceptionHandler(exceptionHandler);
 
     final Path testOutputFile = IOUtility.createTempFilePath("test", ".txt");
-    final String[] args =
-        new String[] {
-          "execute",
-          "-c",
-          "test",
-          "--unknown-parameter",
-          "some-value",
-          "-o",
-          testOutputFile.toString()
-        };
+    final String[] args = {
+      "execute", "-c", "test", "--unknown-parameter", "some-value", "-o", testOutputFile.toString()
+    };
 
     final int exitCode = commandLine.execute(args);
     assertThat(exitCode, is(1));
@@ -83,13 +77,13 @@ public class ExecuteCommandTest {
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executeSchemaCommand(
-      final DatabaseConnectionSource dataSource, final TestContext testContext) throws Exception {
+      final DatabaseConnectionSource connectionSource, final TestContext testContext)
+      throws Exception {
 
-    final CommandLine commandLine = createShellCommandLine(dataSource);
+    final CommandLine commandLine = createShellCommandLine(connectionSource);
 
     final Path testOutputFile = IOUtility.createTempFilePath("test", ".txt");
-    final String[] args =
-        new String[] {"execute", "-c", "schema", "--no-info", "-o", testOutputFile.toString()};
+    final String[] args = {"execute", "-c", "schema", "--no-info", "-o", testOutputFile.toString()};
 
     final int exitCode = commandLine.execute(args);
     assertThat(exitCode, is(0));
@@ -101,10 +95,11 @@ public class ExecuteCommandTest {
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executeTestCommand(
-      final DatabaseConnectionSource dataSource, final TestContext testContext) throws Exception {
+      final DatabaseConnectionSource connectionSource, final TestContext testContext)
+      throws Exception {
 
     int exitCode;
-    final CommandLine commandLine = createShellCommandLine(dataSource);
+    final CommandLine commandLine = createShellCommandLine(connectionSource);
 
     final Path testOutputFile1 = IOUtility.createTempFilePath("test", ".1.txt");
     exitCode =
@@ -149,8 +144,8 @@ public class ExecuteCommandTest {
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".4.txt")));
   }
 
-  private CommandLine createShellCommandLine(final DatabaseConnectionSource dataSource) {
-    final ShellState state = createLoadedSchemaCrawlerShellState(dataSource);
+  private CommandLine createShellCommandLine(final DatabaseConnectionSource connectionSource) {
+    final ShellState state = createLoadedSchemaCrawlerShellState(connectionSource);
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
     final CommandLine commandLine = newCommandLine(commands, new StateFactory(state));
     final CommandLine executeCommandLine =

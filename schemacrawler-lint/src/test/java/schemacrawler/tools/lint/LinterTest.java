@@ -48,13 +48,13 @@ public class LinterTest {
   private Catalog catalog;
 
   @BeforeAll
-  public void createCatalog(final DatabaseConnectionSource dataSource) {
+  public void createCatalog(final DatabaseConnectionSource connectionSource) {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     catalog =
         getCatalog(
-            dataSource,
+            connectionSource,
             schemaRetrievalOptionsDefault,
             schemaCrawlerOptions,
             ConfigUtility.newConfig());
@@ -63,7 +63,7 @@ public class LinterTest {
   }
 
   @Test
-  public void linterComparator(final DatabaseConnectionSource dataSource) {
+  public void linterComparator(final DatabaseConnectionSource connectionSource) {
 
     final LintCollector collector = new LintCollector();
     final Linter linter1 = new LinterProviderTableEmpty().newLinter(collector);
@@ -77,14 +77,14 @@ public class LinterTest {
   }
 
   @Test
-  public void linterCoverage(final DatabaseConnectionSource dataSource) throws Exception {
+  public void linterCoverage(final DatabaseConnectionSource connectionSource) throws Exception {
 
     final LintCollector collector = new LintCollector();
     final Linter linter = new LinterProviderTableEmpty().newLinter(collector);
     linter.initialize();
     linter.setCatalog(catalog);
     if (linter.usesConnection()) {
-      linter.setDataSource(dataSource);
+      linter.setConnectionSource(connectionSource);
     }
     linter.execute();
 
@@ -109,14 +109,14 @@ public class LinterTest {
   }
 
   @Test
-  public void linterForCrawlInfo(final DatabaseConnectionSource dataSource) throws Exception {
+  public void linterForCrawlInfo(final DatabaseConnectionSource connectionSource) throws Exception {
 
     final LintCollector collector = new LintCollector();
     final Linter linter = new LinterProviderForTest().newLinter(collector);
     linter.initialize();
     linter.setCatalog(catalog);
     if (linter.usesConnection()) {
-      linter.setDataSource(dataSource);
+      linter.setConnectionSource(connectionSource);
     }
     linter.execute();
 
@@ -131,7 +131,7 @@ public class LinterTest {
   }
 
   @Test
-  public void noOpLinter(final DatabaseConnectionSource dataSource) throws Exception {
+  public void noOpLinter(final DatabaseConnectionSource connectionSource) throws Exception {
 
     final LintCollector collector = new LintCollector();
     final Linter linter = LinterRegistry.getLinterRegistry().newLinter("bad-linter-id", collector);
@@ -141,7 +141,7 @@ public class LinterTest {
     linter.initialize();
     linter.setCatalog(catalog);
     if (linter.usesConnection()) {
-      linter.setDataSource(dataSource);
+      linter.setConnectionSource(connectionSource);
     }
     linter.execute();
 

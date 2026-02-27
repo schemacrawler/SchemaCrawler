@@ -83,7 +83,7 @@ public class SpinThroughOperationsExecutableTest {
       final OperationType operation,
       final InfoLevel infoLevel,
       final OutputFormat outputFormat,
-      final DatabaseConnectionSource dataSource)
+      final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     // Special case where no output is generated
@@ -114,7 +114,7 @@ public class SpinThroughOperationsExecutableTest {
     final String referenceFile =
         SPIN_THROUGH_OPERATIONS_OUTPUT + referenceFile(operation, infoLevel, outputFormat);
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(classpathResource(referenceFile), outputFormat));
   }
 }

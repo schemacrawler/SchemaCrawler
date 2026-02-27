@@ -107,7 +107,7 @@ public class AcrossDatabaseDataTypeTest extends BaseAdditionalDatabaseTest {
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final Catalog catalog = getCatalog(getDataSource(), schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(getConnectionSource(), schemaCrawlerOptions);
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

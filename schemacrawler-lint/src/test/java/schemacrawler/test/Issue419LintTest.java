@@ -38,14 +38,14 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class Issue419LintTest {
 
   @Test
-  public void issue419(final DatabaseConnectionSource dataSource) throws Exception {
+  public void issue419(final DatabaseConnectionSource connectionSource) throws Exception {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final Catalog catalog =
         getCatalog(
-            dataSource,
+            connectionSource,
             schemaRetrievalOptionsDefault,
             schemaCrawlerOptions,
             ConfigUtility.newConfig());
@@ -64,7 +64,7 @@ public class Issue419LintTest {
     final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
     linters.initialize(linterRegistry);
 
-    linters.lint(catalog, dataSource);
+    linters.lint(catalog, connectionSource);
     final Lints lintReport = linters.getLints();
 
     assertThat(lintReport.size(), is(1));

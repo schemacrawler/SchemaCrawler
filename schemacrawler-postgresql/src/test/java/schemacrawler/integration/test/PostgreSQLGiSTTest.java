@@ -30,11 +30,11 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.Identifiers;
+import schemacrawler.schema.IdentifiersBuilder;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.Identifiers;
-import schemacrawler.schema.IdentifiersBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
@@ -78,7 +78,7 @@ public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final Catalog catalog = getCatalog(getDataSource(), schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(getConnectionSource(), schemaCrawlerOptions);
     final Schema schema = catalog.lookupSchema("public").orElse(null);
     assertThat(schema, notNullValue());
     final Table table = catalog.lookupTable(schema, "prices").orElse(null);

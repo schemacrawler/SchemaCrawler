@@ -92,39 +92,39 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
   @Test
   @DisplayName("Issue #1139 - data-source - override connection initializer")
   public void showSchemaInDDLWithDataSource() throws Exception {
-    final DatabaseConnectionSource dataSource = getDataSource();
-    dataSource.setFirstConnectionInitializer(customConnectionInitializer);
+    final DatabaseConnectionSource connectionSource = getConnectionSource();
+    connectionSource.setFirstConnectionInitializer(customConnectionInitializer);
 
-    showSchemaInDDL(dataSource, "TEST1");
+    showSchemaInDDL(connectionSource, "TEST1");
   }
 
   @Test
   @DisplayName("Issue #1139 - multiple connection source - override connection initializer")
   @WithSystemProperty(key = "SC_SINGLE_THREADED", value = "false")
   public void showSchemaInDDLWithMultipleConnection() throws Exception {
-    final DatabaseConnectionSource dataSource =
+    final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
             dbContainer.getJdbcUrl(),
             new MultiUseUserCredentials("SYS AS SYSDBA", dbContainer.getPassword()));
-    dataSource.setFirstConnectionInitializer(customConnectionInitializer);
+    connectionSource.setFirstConnectionInitializer(customConnectionInitializer);
 
-    showSchemaInDDL(dataSource, "TEST2");
+    showSchemaInDDL(connectionSource, "TEST2");
   }
 
   @Test
   @DisplayName("Issue #1139 - single connection source - override connection initializer")
   @WithSystemProperty(key = "SC_SINGLE_THREADED", value = "true")
   public void showSchemaInDDLWithSingleConnection() throws Exception {
-    final DatabaseConnectionSource dataSource =
+    final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.newDatabaseConnectionSource(
             dbContainer.getJdbcUrl(),
             new MultiUseUserCredentials("SYS AS SYSDBA", dbContainer.getPassword()));
-    dataSource.setFirstConnectionInitializer(customConnectionInitializer);
+    connectionSource.setFirstConnectionInitializer(customConnectionInitializer);
 
-    showSchemaInDDL(dataSource, "TEST3");
+    showSchemaInDDL(connectionSource, "TEST3");
   }
 
-  private void showSchemaInDDL(final DatabaseConnectionSource dataSource, final String schema)
+  private void showSchemaInDDL(final DatabaseConnectionSource connectionSource, final String schema)
       throws Exception {
 
     final String createSchemaSql = IOUtility.readResourceFully("/db/books/01_schemas_C.sql");
@@ -168,7 +168,7 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
     // -- Schema output tests
     final String classpathResource = "showSchemaInDDL.%s.txt".formatted(schema);
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(classpathResource)));
   }
 }

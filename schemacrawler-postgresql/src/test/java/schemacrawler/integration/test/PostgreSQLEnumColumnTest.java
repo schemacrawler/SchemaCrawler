@@ -71,7 +71,7 @@ public class PostgreSQLEnumColumnTest extends BaseAdditionalDatabaseTest {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final Catalog catalog = getCatalog(getDataSource(), schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(getConnectionSource(), schemaCrawlerOptions);
     final Schema schema = catalog.lookupSchema("public").orElse(null);
     assertThat(schema, notNullValue());
     final Table table = catalog.lookupTable(schema, "person").orElse(null);
@@ -111,7 +111,7 @@ public class PostgreSQLEnumColumnTest extends BaseAdditionalDatabaseTest {
           DiagramOutputFormat.scdot, TextOutputFormat.text, TextOutputFormat.html
         }) {
       assertThat(
-          outputOf(executableExecution(getDataSource(), executable, outputFormat)),
+          outputOf(executableExecution(getConnectionSource(), executable, outputFormat)),
           hasSameContentAs(classpathResource("testColumnWithEnum." + outputFormat.getFormat())));
     }
   }
@@ -128,7 +128,7 @@ public class PostgreSQLEnumColumnTest extends BaseAdditionalDatabaseTest {
 
     for (final OutputFormat outputFormat :
         new OutputFormat[] {SerializationFormat.json, SerializationFormat.yaml}) {
-      final Path outputFile = executableExecution(getDataSource(), executable, outputFormat);
+      final Path outputFile = executableExecution(getConnectionSource(), executable, outputFormat);
       final List<String> enumOutput =
           lines(outputFile).filter(line -> line.contains("happy")).collect(Collectors.toList());
       assertThat(enumOutput, is(not(empty())));

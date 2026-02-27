@@ -31,7 +31,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public final class LintTestUtility {
 
   public static void executableLint(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final String linterConfigsResource,
       final Config additionalConfig,
       final String referenceFileName)
@@ -50,7 +50,7 @@ public final class LintTestUtility {
     }
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(referenceFileName + ".txt")));
   }
 

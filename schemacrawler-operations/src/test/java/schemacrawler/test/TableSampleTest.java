@@ -46,7 +46,8 @@ public class TableSampleTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void tableSampleJsonOutput(final DatabaseConnectionSource dataSource) throws Exception {
+  public void tableSampleJsonOutput(final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
     final OperationType operation = OperationType.tablesample;
     final OutputFormat outputFormat = OperationsOutputFormat.json;
@@ -70,7 +71,7 @@ public class TableSampleTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(config);
 
-    final Path outputFile = executableExecution(dataSource, executable, outputFormat);
+    final Path outputFile = executableExecution(connectionSource, executable, outputFormat);
 
     final Catalog catalog = executable.getCatalog();
     final int numTables = catalog.getTables().size();

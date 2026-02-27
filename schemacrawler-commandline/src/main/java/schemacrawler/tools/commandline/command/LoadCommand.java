@@ -104,7 +104,10 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       final Config additionalConfig = state.getConfig();
 
       return SchemaCrawlerUtility.getCatalog(
-          state.getDataSource(), schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
+          state.getConnectionSource(),
+          schemaRetrievalOptions,
+          schemaCrawlerOptions,
+          additionalConfig);
 
     } catch (final Exception e) {
       throw new ExecutionException(spec.commandLine(), "Cannot load catalog", e);

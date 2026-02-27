@@ -61,7 +61,8 @@ public class ListCommandOutputTest {
       value = TextOutputFormat.class,
       names = {"text", "html"})
   public void compareListOutput(
-      final OutputFormat outputFormat, final DatabaseConnectionSource dataSource) throws Exception {
+      final OutputFormat outputFormat, final DatabaseConnectionSource connectionSource)
+      throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
@@ -71,10 +72,15 @@ public class ListCommandOutputTest {
     final LimitOptions limitOptions = limitOptionsBuilder.toOptions();
 
     compareListOutput(
-        dataSource, limitOptions, tablesOutputTextOptions(), "list", outputFormat, "list_tables");
+        connectionSource,
+        limitOptions,
+        tablesOutputTextOptions(),
+        "list",
+        outputFormat,
+        "list_tables");
 
     compareListOutput(
-        dataSource, limitOptions, allOutputTextOptions(), "list", outputFormat, "list_all");
+        connectionSource, limitOptions, allOutputTextOptions(), "list", outputFormat, "list_all");
   }
 
   @BeforeAll
@@ -97,7 +103,7 @@ public class ListCommandOutputTest {
   }
 
   private void compareListOutput(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final LimitOptions limitOptions,
       final SchemaTextOptions textOptions,
       final String command,
@@ -121,7 +127,7 @@ public class ListCommandOutputTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(classpathResource(LIST_OUTPUT + referenceFile), outputFormat));
   }
 

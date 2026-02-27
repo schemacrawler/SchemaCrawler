@@ -101,7 +101,7 @@ public class SpecialNamesTest extends BaseAdditionalDatabaseTest {
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final DatabaseConnectionSource dataSource = getDataSource();
+    final DatabaseConnectionSource connectionSource = getConnectionSource();
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.noInfo();
@@ -113,7 +113,7 @@ public class SpecialNamesTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = testContext.testMethodFullName();
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

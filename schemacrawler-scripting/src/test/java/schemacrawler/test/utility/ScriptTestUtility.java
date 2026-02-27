@@ -48,8 +48,8 @@ public class ScriptTestUtility {
     return commandlineExecution(connectionInfo, "template", argsMap, "text");
   }
 
-  public static Path scriptExecution(final DatabaseConnectionSource dataSource, final String script)
-      throws Exception {
+  public static Path scriptExecution(
+      final DatabaseConnectionSource connectionSource, final String script) throws Exception {
 
     final SchemaRetrievalOptions schemaRetrievalOptions =
         SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
@@ -65,11 +65,11 @@ public class ScriptTestUtility {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
     executable.setOutputOptions(outputOptions);
 
-    return executableExecution(dataSource, executable, "text");
+    return executableExecution(connectionSource, executable, "text");
   }
 
   public static Path templateExecution(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final TemplateLanguageType templateLanguage,
       final String templateResource)
       throws Exception {
@@ -82,7 +82,7 @@ public class ScriptTestUtility {
     executable.setAdditionalConfiguration(additionalConfig);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
-    return executableExecution(dataSource, executable, "text");
+    return executableExecution(connectionSource, executable, "text");
   }
 
   private static Map<String, String> additionalArgsMap() {

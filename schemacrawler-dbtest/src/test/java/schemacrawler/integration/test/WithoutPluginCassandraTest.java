@@ -88,7 +88,7 @@ public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testCassandraWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

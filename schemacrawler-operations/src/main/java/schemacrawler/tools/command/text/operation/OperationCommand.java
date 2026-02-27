@@ -30,7 +30,7 @@ import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.command.text.operation.options.Operation;
 import schemacrawler.tools.command.text.operation.options.OperationOptions;
 import schemacrawler.tools.command.text.operation.options.OperationsOutputFormat;
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.executable.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.text.formatter.operation.DataJsonFormatter;
 import schemacrawler.tools.text.formatter.operation.DataTextFormatter;
 import schemacrawler.tools.text.formatter.operation.DataTraversalHandler;
@@ -38,7 +38,7 @@ import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 
-public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOptions> {
+public final class OperationCommand extends AbstractSchemaCrawlerCommand<OperationOptions> {
 
   private static final Logger LOGGER = Logger.getLogger(OperationCommand.class.getName());
 

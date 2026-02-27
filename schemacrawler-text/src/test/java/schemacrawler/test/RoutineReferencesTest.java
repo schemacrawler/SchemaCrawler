@@ -50,7 +50,7 @@ public class RoutineReferencesTest {
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void schemaTextOutput(
       final TextOutputFormat outputFormat,
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final TestContext testContext)
       throws Exception {
 
@@ -106,7 +106,7 @@ public class RoutineReferencesTest {
     executable.setAdditionalConfiguration(config);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAs(
             classpathResource(testContext.testMethodFullName() + "." + outputFormat.name())));
   }

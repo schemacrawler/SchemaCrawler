@@ -32,25 +32,26 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class ExecutableScriptCommandTest {
 
   @Test
-  public void executableJavaScript(final DatabaseConnectionSource dataSource) throws Exception {
+  public void executableJavaScript(final DatabaseConnectionSource connectionSource)
+      throws Exception {
     assertThat(
-        outputOf(scriptExecution(dataSource, "/plaintextschema.js")),
+        outputOf(scriptExecution(connectionSource, "/plaintextschema.js")),
         hasSameContentAs(classpathResource("script_output.txt")));
   }
 
   @Test
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
-  public void executablePython(final DatabaseConnectionSource dataSource) throws Exception {
+  public void executablePython(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
-        outputOf(scriptExecution(dataSource, "/plaintextschema.py")),
+        outputOf(scriptExecution(connectionSource, "/plaintextschema.py")),
         hasSameContentAs(classpathResource("script_output.txt")));
   }
 
   @Test
   @Disabled("Needs Ruby installed in GraalVM")
-  public void executableRuby(final DatabaseConnectionSource dataSource) throws Exception {
+  public void executableRuby(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
-        outputOf(scriptExecution(dataSource, "/plaintextschema.rb")),
+        outputOf(scriptExecution(connectionSource, "/plaintextschema.rb")),
         hasSameContentAs(classpathResource("script_output_rb.txt")));
   }
 }

@@ -62,7 +62,7 @@ public class DuckDBTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testDuckDBWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

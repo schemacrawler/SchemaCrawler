@@ -65,7 +65,7 @@ public class SQLiteExecutableTest extends BaseSqliteTest {
       final InfoLevel infoLevel, final String command, final Consumer<Path> outputAssertion)
       throws Exception {
     final Path sqliteDbFile = createTestDatabase();
-    final DatabaseConnectionSource dataSource = createDataSourceFromFile(sqliteDbFile);
+    final DatabaseConnectionSource connectionSource = createDataSourceFromFile(sqliteDbFile);
 
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
@@ -79,7 +79,7 @@ public class SQLiteExecutableTest extends BaseSqliteTest {
     executable.setSchemaCrawlerOptions(options);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final Path outputFile = executableExecution(dataSource, executable);
+    final Path outputFile = executableExecution(connectionSource, executable);
     outputAssertion.accept(outputFile);
   }
 

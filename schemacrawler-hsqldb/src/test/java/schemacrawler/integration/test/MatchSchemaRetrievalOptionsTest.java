@@ -35,9 +35,10 @@ public class MatchSchemaRetrievalOptionsTest {
 
   @DisplayName("Exception does not match URL + plugin found = use plugin")
   @Test
-  public void matchSchemaRetrievalOptions0A(final DatabaseConnectionSource dataSource)
+  public void matchSchemaRetrievalOptions0A(final DatabaseConnectionSource connectionSource)
       throws Exception {
-    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        matchSchemaRetrievalOptions(connectionSource);
     final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
     assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("hsqldb"));
   }
@@ -45,9 +46,10 @@ public class MatchSchemaRetrievalOptionsTest {
   @DisplayName("Exception does not match URL correctly + plugin found = use plugin")
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "newdb")
-  public void matchSchemaRetrievalOptions0B(final DatabaseConnectionSource dataSource)
+  public void matchSchemaRetrievalOptions0B(final DatabaseConnectionSource connectionSource)
       throws Exception {
-    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        matchSchemaRetrievalOptions(connectionSource);
     final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
     assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("hsqldb"));
   }
@@ -55,9 +57,10 @@ public class MatchSchemaRetrievalOptionsTest {
   @DisplayName("Exception matches URL + plugin found = use \"unknown\" plugin")
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void matchSchemaRetrievalOptions1(final DatabaseConnectionSource dataSource)
+  public void matchSchemaRetrievalOptions1(final DatabaseConnectionSource connectionSource)
       throws Exception {
-    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        matchSchemaRetrievalOptions(connectionSource);
     final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
     assertThat(databaseServerType.isUnknownDatabaseSystem(), is(true));
   }
@@ -68,11 +71,12 @@ public class MatchSchemaRetrievalOptionsTest {
 
     // Mock an Oracle connection - plugin is not found
     final String fakeOracleUrl = "jdbc:oracle:foo";
-    final DatabaseConnectionSource dataSource =
+    final DatabaseConnectionSource connectionSource =
         mockConnectionForUrl(fakeOracleUrl, "Mock Oracle connection");
 
     final InternalRuntimeException exception =
-        assertThrows(InternalRuntimeException.class, () -> matchSchemaRetrievalOptions(dataSource));
+        assertThrows(
+            InternalRuntimeException.class, () -> matchSchemaRetrievalOptions(connectionSource));
     assertThat(exception.getMessage(), containsString(fakeOracleUrl));
   }
 
@@ -83,10 +87,11 @@ public class MatchSchemaRetrievalOptionsTest {
 
     // Mock an Oracle connection - plugin is not found
     final String fakeOracleUrl = "jdbc:oracle:foo";
-    final DatabaseConnectionSource dataSource =
+    final DatabaseConnectionSource connectionSource =
         mockConnectionForUrl(fakeOracleUrl, "Mock Oracle connection");
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(dataSource);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        matchSchemaRetrievalOptions(connectionSource);
     final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
     assertThat(databaseServerType.isUnknownDatabaseSystem(), is(true));
   }
@@ -99,9 +104,9 @@ public class MatchSchemaRetrievalOptionsTest {
     final Connection connection = TestObjectUtility.mockConnection();
     when(connection.getMetaData()).thenReturn(databaseMetaData);
     when(connection.toString()).thenReturn(toString);
-    final DatabaseConnectionSource dataSource =
+    final DatabaseConnectionSource connectionSource =
         spy(LightCatalogUtility.lightDatabaseConnectionSource());
-    when(dataSource.get()).thenReturn(connection);
-    return dataSource;
+    when(connectionSource.get()).thenReturn(connection);
+    return connectionSource;
   }
 }

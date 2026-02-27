@@ -82,11 +82,11 @@ public class SystemCommandTest {
 
   @Test
   public void showConnected(
-      final DatabaseConnectionSource dataSource, final CapturedSystemStreams streams) {
+      final DatabaseConnectionSource connectionSource, final CapturedSystemStreams streams) {
     final String[] args = {"-C"};
 
     final ShellState state = new ShellState();
-    state.setDataSource(dataSource);
+    state.setConnectionSource(connectionSource);
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
@@ -100,7 +100,7 @@ public class SystemCommandTest {
     final Connection connection = mock(Connection.class);
 
     final ShellState state = new ShellState();
-    state.setDataSource(new ConnectionDatabaseConnectionSource(connection));
+    state.setConnectionSource(new ConnectionDatabaseConnectionSource(connection));
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());

@@ -83,8 +83,8 @@ public class EmbeddedSQLiteWrapper {
   }
 
   public Path executeForOutput(final String title, final OutputFormat extension) {
-    try (final DatabaseConnectionSource dataSource = createDatabaseConnectionSource()) {
-      return executeForOutput(dataSource, title, extension);
+    try (final DatabaseConnectionSource connectionSource = createDatabaseConnectionSource()) {
+      return executeForOutput(connectionSource, title, extension);
     } catch (final SQLException e) {
       throw new DatabaseAccessException("Could not run against SQLite database", e);
     } catch (final Exception e) {
@@ -118,7 +118,9 @@ public class EmbeddedSQLiteWrapper {
   }
 
   private Path executeForOutput(
-      final DatabaseConnectionSource dataSource, final String title, final OutputFormat extension) {
+      final DatabaseConnectionSource connectionSource,
+      final String title,
+      final OutputFormat extension) {
     try {
 
       final LimitOptions limitOptions =
@@ -137,7 +139,7 @@ public class EmbeddedSQLiteWrapper {
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setDataSource(dataSource);
+      executable.setConnectionSource(connectionSource);
       executable.execute();
 
       return diagramFile;

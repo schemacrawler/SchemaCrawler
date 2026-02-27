@@ -31,7 +31,7 @@ public class ShellState implements AutoCloseable {
   private Config commandOptions;
   private Config catalogLoaderOptions;
   private Catalog catalog;
-  private DatabaseConnectionSource dataSource;
+  private DatabaseConnectionSource connectionSource;
   private Throwable lastException;
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private SchemaRetrievalOptions schemaRetrievalOptions;
@@ -43,13 +43,13 @@ public class ShellState implements AutoCloseable {
   }
 
   public void disconnect() {
-    if (dataSource == null) {
+    if (connectionSource == null) {
       return;
     }
     try {
-      dataSource.close();
+      connectionSource.close();
       LOGGER.log(Level.INFO, new StringFormat("Closing database connections"));
-      dataSource = null;
+      connectionSource = null;
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Cannot close database connections");
     }
@@ -68,8 +68,8 @@ public class ShellState implements AutoCloseable {
     return config;
   }
 
-  public DatabaseConnectionSource getDataSource() {
-    return dataSource;
+  public DatabaseConnectionSource getConnectionSource() {
+    return connectionSource;
   }
 
   public Throwable getLastException() {
@@ -85,7 +85,7 @@ public class ShellState implements AutoCloseable {
   }
 
   public boolean isConnected() {
-    return dataSource != null;
+    return connectionSource != null;
   }
 
   public boolean isDeferCatalogLoad() {
@@ -124,8 +124,8 @@ public class ShellState implements AutoCloseable {
     }
   }
 
-  public void setDataSource(final DatabaseConnectionSource dataSource) {
-    this.dataSource = dataSource;
+  public void setConnectionSource(final DatabaseConnectionSource connectionSource) {
+    this.connectionSource = connectionSource;
   }
 
   public void setDeferCatalogLoad(final boolean isDeferCatalogLoad) {

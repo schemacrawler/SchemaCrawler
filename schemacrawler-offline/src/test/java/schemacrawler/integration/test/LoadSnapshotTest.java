@@ -53,7 +53,7 @@ public class LoadSnapshotTest {
   }
 
   @BeforeEach
-  public void serializeCatalog(final DatabaseConnectionSource dataSource) {
+  public void serializeCatalog(final DatabaseConnectionSource connectionSource) {
 
     try {
 
@@ -62,7 +62,7 @@ public class LoadSnapshotTest {
 
       final Catalog catalog =
           getCatalog(
-              dataSource,
+              connectionSource,
               schemaRetrievalOptionsDefault,
               schemaCrawlerOptions,
               ConfigUtility.newConfig());

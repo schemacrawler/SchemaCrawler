@@ -32,9 +32,9 @@ public class DiagramWeakAssociationsTest extends AbstractWeakAssociationsTest {
   public void weakAssociations_00(
       final OutputFormat outputFormat,
       final TestContext testContext,
-      final DatabaseConnectionSource dataSource)
+      final DatabaseConnectionSource connectionSource)
       throws Exception {
-    super.weakAssociations_00(outputFormat, testContext, dataSource);
+    super.weakAssociations_00(outputFormat, testContext, connectionSource);
   }
 
   @Override
@@ -46,9 +46,9 @@ public class DiagramWeakAssociationsTest extends AbstractWeakAssociationsTest {
   public void weakAssociations_01(
       final OutputFormat outputFormat,
       final TestContext testContext,
-      final DatabaseConnectionSource dataSource)
+      final DatabaseConnectionSource connectionSource)
       throws Exception {
-    super.weakAssociations_01(outputFormat, testContext, dataSource);
+    super.weakAssociations_01(outputFormat, testContext, connectionSource);
   }
 
   @Override
@@ -60,9 +60,9 @@ public class DiagramWeakAssociationsTest extends AbstractWeakAssociationsTest {
   public void weakAssociations_02(
       final OutputFormat outputFormat,
       final TestContext testContext,
-      final DatabaseConnectionSource dataSource)
+      final DatabaseConnectionSource connectionSource)
       throws Exception {
-    super.weakAssociations_02(outputFormat, testContext, dataSource);
+    super.weakAssociations_02(outputFormat, testContext, connectionSource);
   }
 
   @Override
@@ -74,8 +74,8 @@ public class DiagramWeakAssociationsTest extends AbstractWeakAssociationsTest {
   public void weakAssociations_03(
       final OutputFormat outputFormat,
       final TestContext testContext,
-      final DatabaseConnectionSource dataSource)
+      final DatabaseConnectionSource connectionSource)
       throws Exception {
-    super.weakAssociations_03(outputFormat, testContext, dataSource);
+    super.weakAssociations_03(outputFormat, testContext, connectionSource);
   }
 }

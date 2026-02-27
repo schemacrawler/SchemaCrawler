@@ -37,14 +37,14 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class CatalogJavaSerializationTest {
 
   @Test
-  public void catalogSerializationWithJava(final DatabaseConnectionSource dataSource)
+  public void catalogSerializationWithJava(final DatabaseConnectionSource connectionSource)
       throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog =
         getCatalog(
-            dataSource,
+            connectionSource,
             schemaRetrievalOptionsDefault,
             schemaCrawlerOptions,
             ConfigUtility.newConfig());
