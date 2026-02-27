@@ -94,7 +94,7 @@ public class WithoutPluginMySQLTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testMySQLWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executableDetails)),
+        outputOf(executableExecution(getConnectionSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
@@ -126,7 +126,7 @@ public class WithoutPluginMySQLTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = testContext.testMethodName() + ".txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executableDetails)),
+        outputOf(executableExecution(getConnectionSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

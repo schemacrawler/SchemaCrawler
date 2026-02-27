@@ -40,7 +40,7 @@ public class ForeignKeyWithoutReferencedPrimaryKeyTest extends BaseSqliteTest {
       final String currentMethodName, final String databaseSqlResource, final String command)
       throws Exception {
 
-    final DatabaseConnectionSource dataSource =
+    final DatabaseConnectionSource connectionSource =
         createDatabaseFromScriptInMemory(databaseSqlResource);
 
     final SchemaCrawlerOptions options =
@@ -53,7 +53,7 @@ public class ForeignKeyWithoutReferencedPrimaryKeyTest extends BaseSqliteTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(currentMethodName)));
   }
 }

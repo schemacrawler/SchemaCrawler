@@ -30,12 +30,13 @@ public class OfflineCatalogLoaderTest {
             new OfflineCatalogLoaderProvider()
                 .newCommand("offlineloader", ConfigUtility.newConfig());
 
-    assertThat(catalogLoader.getDataSource(), is(nullValue()));
+    assertThat(catalogLoader.getConnectionSource(), is(nullValue()));
 
     final Connection connection = new TestDatabaseDriver().connect("jdbc:test-db:test", null);
-    final DatabaseConnectionSource dataSource = new ConnectionDatabaseConnectionSource(connection);
-    catalogLoader.setDataSource(dataSource);
+    final DatabaseConnectionSource connectionSource =
+        new ConnectionDatabaseConnectionSource(connection);
+    catalogLoader.setConnectionSource(connectionSource);
 
-    assertThat(catalogLoader.getDataSource(), is(not(nullValue())));
+    assertThat(catalogLoader.getConnectionSource(), is(not(nullValue())));
   }
 }

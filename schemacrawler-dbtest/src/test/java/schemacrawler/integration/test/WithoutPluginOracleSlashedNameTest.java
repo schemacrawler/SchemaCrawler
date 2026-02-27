@@ -96,7 +96,7 @@ public class WithoutPluginOracleSlashedNameTest extends BaseAdditionalDatabaseTe
 
     final RuntimeException executionRuntimeException =
         assertThrows(
-            RuntimeException.class, () -> getCatalog(getDataSource(), schemaCrawlerOptions));
+            RuntimeException.class, () -> getCatalog(getConnectionSource(), schemaCrawlerOptions));
     final SQLException cause = (SQLException) executionRuntimeException.getCause().getCause();
     // ORA-01424: missing or illegal character following the escape character
     assertThat(cause.getSQLState(), is("22025"));

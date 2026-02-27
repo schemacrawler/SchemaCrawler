@@ -45,35 +45,36 @@ public class OperationsCommandsOutputTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void sortedColumnsOutput(final DatabaseConnectionSource dataSource) throws Exception {
+  public void sortedColumnsOutput(final DatabaseConnectionSource connectionSource)
+      throws Exception {
     final String queryCommand = "dump_tables_sorted_columns";
     final Config config = ConfigUtility.newConfig();
     config.put("schemacrawler.format.sort_alphabetically.table_columns", true);
     config.put(queryCommand, "SELECT ${columns} FROM ${table} ORDER BY ${basiccolumns}");
 
-    textOutputTest(queryCommand, dataSource, config);
+    textOutputTest(queryCommand, connectionSource, config);
   }
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void queryOutput(final DatabaseConnectionSource dataSource) throws Exception {
+  public void queryOutput(final DatabaseConnectionSource connectionSource) throws Exception {
     final String queryCommand = "all_tables";
     final Config config = ConfigUtility.newConfig();
     config.put(
         queryCommand,
         "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES ORDER BY TABLE_SCHEM, TABLE_NAME");
 
-    textOutputTest(queryCommand, dataSource, config);
+    textOutputTest(queryCommand, connectionSource, config);
   }
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void queryOverOutput(final DatabaseConnectionSource dataSource) throws Exception {
+  public void queryOverOutput(final DatabaseConnectionSource connectionSource) throws Exception {
     final String queryCommand = "dump_tables";
     final Config config = ConfigUtility.newConfig();
     config.put(queryCommand, "SELECT ${basiccolumns} FROM ${table} ORDER BY ${basiccolumns}");
 
-    textOutputTest(queryCommand, dataSource, config);
+    textOutputTest(queryCommand, connectionSource, config);
   }
 
   @ParameterizedTest
@@ -83,12 +84,13 @@ public class OperationsCommandsOutputTest {
       names = {"tablesample"})
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void operationOutput(
-      final OperationType operation, final DatabaseConnectionSource dataSource) throws Exception {
-    textOutputTest(operation.name(), dataSource, ConfigUtility.newConfig());
+      final OperationType operation, final DatabaseConnectionSource connectionSource)
+      throws Exception {
+    textOutputTest(operation.name(), connectionSource, ConfigUtility.newConfig());
   }
 
   private void textOutputTest(
-      final String command, final DatabaseConnectionSource dataSource, final Config config)
+      final String command, final DatabaseConnectionSource connectionSource, final Config config)
       throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
@@ -109,7 +111,7 @@ public class OperationsCommandsOutputTest {
     executable.setAdditionalConfiguration(config);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(OPERATION_COMMAND_OUTPUT + command + ".txt")));
   }
 }

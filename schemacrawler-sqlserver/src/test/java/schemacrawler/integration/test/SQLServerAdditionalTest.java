@@ -101,7 +101,7 @@ public class SQLServerAdditionalTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = testContext.testMethodFullName();
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

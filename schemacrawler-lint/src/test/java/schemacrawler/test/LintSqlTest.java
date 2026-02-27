@@ -22,8 +22,12 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class LintSqlTest {
 
   @Test
-  public void executableLintSQLReport(final DatabaseConnectionSource dataSource) throws Exception {
+  public void executableLintSQLReport(final DatabaseConnectionSource connectionSource)
+      throws Exception {
     executableLint(
-        dataSource, "/schemacrawler-linter-configs-sql.yaml", null, "executableLintSQLReport");
+        connectionSource,
+        "/schemacrawler-linter-configs-sql.yaml",
+        null,
+        "executableLintSQLReport");
   }
 }

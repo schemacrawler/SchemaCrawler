@@ -45,14 +45,18 @@ public class LintCommandTest {
   }
 
   @Test
-  public void executableLintReport(final DatabaseConnectionSource dataSource) throws Exception {
-    executableLint(dataSource, null, null, "executableForLint");
+  public void executableLintReport(final DatabaseConnectionSource connectionSource)
+      throws Exception {
+    executableLint(connectionSource, null, null, "executableForLint");
   }
 
   @Test
-  public void executableLintReportWithConfig(final DatabaseConnectionSource dataSource)
+  public void executableLintReportWithConfig(final DatabaseConnectionSource connectionSource)
       throws Exception {
     executableLint(
-        dataSource, "/schemacrawler-linter-configs-test.yaml", null, "executableForLintWithConfig");
+        connectionSource,
+        "/schemacrawler-linter-configs-test.yaml",
+        null,
+        "executableForLintWithConfig");
   }
 }

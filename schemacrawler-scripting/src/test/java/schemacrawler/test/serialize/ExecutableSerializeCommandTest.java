@@ -35,7 +35,8 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class ExecutableSerializeCommandTest {
 
   private static Path executeSerialize(
-      final DatabaseConnectionSource dataSource, final SerializationFormat serializationFormat)
+      final DatabaseConnectionSource connectionSource,
+      final SerializationFormat serializationFormat)
       throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
@@ -48,24 +49,29 @@ public class ExecutableSerializeCommandTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
-    return executableExecution(dataSource, executable, serializationFormat);
+    return executableExecution(connectionSource, executable, serializationFormat);
   }
 
   @Test
   @Disabled("Cannot compare files during testing, since a new file is generated")
-  public void executableSerializeJava(final DatabaseConnectionSource dataSource) throws Exception {
-    assertThat(fileHeaderOf(executeSerialize(dataSource, SerializationFormat.ser)), is("ACED"));
+  public void executableSerializeJava(final DatabaseConnectionSource connectionSource)
+      throws Exception {
+    assertThat(
+        fileHeaderOf(executeSerialize(connectionSource, SerializationFormat.ser)), is("ACED"));
   }
 
   @Test
-  public void executableSerializeJson(final DatabaseConnectionSource dataSource) throws Exception {
+  public void executableSerializeJson(final DatabaseConnectionSource connectionSource)
+      throws Exception {
     assertThat(
-        fileHeaderOf(executeSerialize(dataSource, SerializationFormat.json)),
+        fileHeaderOf(executeSerialize(connectionSource, SerializationFormat.json)),
         is(oneOf("7B0D", "7B0A")));
   }
 
   @Test
-  public void executableSerializeYaml(final DatabaseConnectionSource dataSource) throws Exception {
-    assertThat(fileHeaderOf(executeSerialize(dataSource, SerializationFormat.yaml)), is("2D2D"));
+  public void executableSerializeYaml(final DatabaseConnectionSource connectionSource)
+      throws Exception {
+    assertThat(
+        fileHeaderOf(executeSerialize(connectionSource, SerializationFormat.yaml)), is("2D2D"));
   }
 }

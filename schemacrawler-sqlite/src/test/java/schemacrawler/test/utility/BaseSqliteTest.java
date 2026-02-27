@@ -25,10 +25,10 @@ import us.fatehi.utility.datasource.MultiUseUserCredentials;
 public abstract class BaseSqliteTest {
 
   protected DatabaseConnectionSource createDatabaseFromScript(
-      final DatabaseConnectionSource dataSource, final String databaseSqlResource)
+      final DatabaseConnectionSource connectionSource, final String databaseSqlResource)
       throws Exception {
 
-    try (final Connection connection = dataSource.get()) {
+    try (final Connection connection = connectionSource.get()) {
 
       SqlScript.executeScriptFromResource(databaseSqlResource, connection);
 
@@ -39,14 +39,14 @@ public abstract class BaseSqliteTest {
       return null; // Appease compiler
     }
 
-    return dataSource;
+    return connectionSource;
   }
 
   protected DatabaseConnectionSource createDatabaseFromScriptInMemory(
       final String databaseSqlResource) throws Exception {
 
-    final DatabaseConnectionSource dataSource = createDataSourceInMemory();
-    return createDatabaseFromScript(dataSource, databaseSqlResource);
+    final DatabaseConnectionSource connectionSource = createDataSourceInMemory();
+    return createDatabaseFromScript(connectionSource, databaseSqlResource);
   }
 
   protected DatabaseConnectionSource createDataSourceFromFile(final Path sqliteDbFile) {

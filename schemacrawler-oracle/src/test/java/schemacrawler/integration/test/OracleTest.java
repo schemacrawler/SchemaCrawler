@@ -67,7 +67,7 @@ public class OracleTest extends BaseOracleWithConnectionTest {
 
   @Test
   public void testOraclePortable(final TestContext testContext) throws Exception {
-    final DatabaseConnectionSource dataSource = getDataSource();
+    final DatabaseConnectionSource connectionSource = getConnectionSource();
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
@@ -95,17 +95,17 @@ public class OracleTest extends BaseOracleWithConnectionTest {
     // -- Schema output tests
     final String expectedResource = testContext.testMethodName() + ".txt";
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
   @Test
   public void testOracleWithConnection() throws Exception {
-    final DatabaseConnectionSource dataSource = getDataSource();
+    final DatabaseConnectionSource connectionSource = getConnectionSource();
 
     final String expectedResource = "testOracleWithConnection.txt";
-    testOracleWithConnection(dataSource, expectedResource, NUM_DATABASE_USERS, false);
+    testOracleWithConnection(connectionSource, expectedResource, NUM_DATABASE_USERS, false);
 
-    testSelectQuery(dataSource, "testOracleWithConnectionQuery.txt");
+    testSelectQuery(connectionSource, "testOracleWithConnectionQuery.txt");
   }
 }

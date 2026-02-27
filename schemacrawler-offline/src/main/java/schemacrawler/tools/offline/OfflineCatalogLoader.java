@@ -21,13 +21,13 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
-import schemacrawler.tools.catalogloader.BaseCatalogLoader;
+import schemacrawler.tools.catalogloader.AbstractCatalogLoader;
 import schemacrawler.tools.executable.CommandOptions;
 import schemacrawler.tools.offline.OfflineCatalogLoader.OfflineCatalogLoaderOptions;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import us.fatehi.utility.property.PropertyName;
 
-public final class OfflineCatalogLoader extends BaseCatalogLoader<OfflineCatalogLoaderOptions> {
+public final class OfflineCatalogLoader extends AbstractCatalogLoader<OfflineCatalogLoaderOptions> {
 
   static record OfflineCatalogLoaderOptions() implements CommandOptions {}
 
@@ -45,7 +45,7 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader<OfflineCatalog
     }
 
     final Catalog catalog;
-    try (final Connection connection = getDataSource().get(); ) {
+    try (final Connection connection = getConnectionSource().get(); ) {
       if (connection == null) {
         return;
       }

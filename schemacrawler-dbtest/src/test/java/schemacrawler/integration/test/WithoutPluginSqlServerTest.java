@@ -104,7 +104,7 @@ public class WithoutPluginSqlServerTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testSQLServerWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executableDetails)),
+        outputOf(executableExecution(getConnectionSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 
@@ -137,7 +137,7 @@ public class WithoutPluginSqlServerTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = testContext.testMethodName() + ".txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executableDetails)),
+        outputOf(executableExecution(getConnectionSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

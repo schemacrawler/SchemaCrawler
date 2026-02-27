@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.executable.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.lint.LinterRegistry;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.Lints;
@@ -27,7 +27,7 @@ import schemacrawler.tools.lint.formatter.LintReportYamlGenerator;
 import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.ObjectToStringFormat;
 
-public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
+public class LintCommand extends AbstractSchemaCrawlerCommand<LintOptions> {
 
   private static final Logger LOGGER = Logger.getLogger(LintCommand.class.getName());
 
@@ -58,7 +58,7 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
       final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
       linters.initialize(linterRegistry);
 
-      linters.lint(catalog, getDataSource());
+      linters.lint(catalog, getConnectionSource());
 
       // Produce the lint report
       final Lints lints = linters.getLints();

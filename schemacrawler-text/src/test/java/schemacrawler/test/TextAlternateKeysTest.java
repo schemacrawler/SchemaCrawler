@@ -30,8 +30,8 @@ public class TextAlternateKeysTest extends AbstractAlternateKeysTest {
   public void alternateKeys_01(
       final OutputFormat outputFormat,
       final TestContext testContext,
-      final DatabaseConnectionSource dataSource)
+      final DatabaseConnectionSource connectionSource)
       throws Exception {
-    assertAlternateKeys(testContext, dataSource, outputFormat);
+    assertAlternateKeys(testContext, connectionSource, outputFormat);
   }
 }

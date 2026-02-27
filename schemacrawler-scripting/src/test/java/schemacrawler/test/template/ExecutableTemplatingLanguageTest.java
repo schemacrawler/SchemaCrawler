@@ -33,7 +33,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class ExecutableTemplatingLanguageTest {
 
   private static Path executableTemplateFromFile(
-      final DatabaseConnectionSource dataSource, final String language, final Path scriptFile)
+      final DatabaseConnectionSource connectionSource, final String language, final Path scriptFile)
       throws Exception {
 
     final Config additionalConfig = ConfigUtility.newConfig();
@@ -44,14 +44,14 @@ public class ExecutableTemplatingLanguageTest {
     executable.setAdditionalConfiguration(additionalConfig);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
-    return executableExecution(dataSource, executable, "text");
+    return executableExecution(connectionSource, executable, "text");
   }
 
   @Test
-  public void executableVelocity(final DatabaseConnectionSource dataSource) throws Exception {
+  public void executableVelocity(final DatabaseConnectionSource connectionSource) throws Exception {
     final Path scriptFile = copyResourceToTempFile("/plaintextschema.vm");
     assertThat(
-        outputOf(executableTemplateFromFile(dataSource, "velocity", scriptFile)),
+        outputOf(executableTemplateFromFile(connectionSource, "velocity", scriptFile)),
         hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 }

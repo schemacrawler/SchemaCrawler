@@ -37,8 +37,8 @@ public class LoadedShellCommandsTest {
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   @WithTestDatabase
   public void isLoaded(
-      final DatabaseConnectionSource dataSource, final CapturedSystemStreams streams) {
-    final ShellState state = createLoadedSchemaCrawlerShellState(dataSource);
+      final DatabaseConnectionSource connectionSource, final CapturedSystemStreams streams) {
+    final ShellState state = createLoadedSchemaCrawlerShellState(connectionSource);
 
     final String[] args = {"--is-loaded"};
 
@@ -53,9 +53,9 @@ public class LoadedShellCommandsTest {
   @Test
   @WithTestDatabase
   public void isNotConnected(
-      final DatabaseConnectionSource dataSource, final CapturedSystemStreams streams) {
+      final DatabaseConnectionSource connectionSource, final CapturedSystemStreams streams) {
     final ShellState state = new ShellState();
-    state.setDataSource(dataSource); // is-connected
+    state.setConnectionSource(connectionSource); // is-connected
 
     final String[] args = {"--is-loaded"};
 
@@ -70,8 +70,8 @@ public class LoadedShellCommandsTest {
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   @WithTestDatabase
-  public void sweepCatalog(final DatabaseConnectionSource dataSource) {
-    final ShellState state = createLoadedSchemaCrawlerShellState(dataSource);
+  public void sweepCatalog(final DatabaseConnectionSource connectionSource) {
+    final ShellState state = createLoadedSchemaCrawlerShellState(connectionSource);
 
     final String[] args = {};
 

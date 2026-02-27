@@ -45,13 +45,14 @@ public class TextCommandsOutputTest {
   @EnumSource(SchemaTextDetailType.class)
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void schemaTextOutput(
-      final SchemaTextDetailType schemaTextDetailType, final DatabaseConnectionSource dataSource)
+      final SchemaTextDetailType schemaTextDetailType,
+      final DatabaseConnectionSource connectionSource)
       throws Exception {
-    textOutputTest(schemaTextDetailType.name(), dataSource, ConfigUtility.newConfig());
+    textOutputTest(schemaTextDetailType.name(), connectionSource, ConfigUtility.newConfig());
   }
 
   private void textOutputTest(
-      final String command, final DatabaseConnectionSource dataSource, final Config config)
+      final String command, final DatabaseConnectionSource connectionSource, final Config config)
       throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
@@ -72,7 +73,7 @@ public class TextCommandsOutputTest {
     executable.setAdditionalConfiguration(config);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(TEXT_COMMAND_OUTPUT + command + ".txt")));
   }
 }

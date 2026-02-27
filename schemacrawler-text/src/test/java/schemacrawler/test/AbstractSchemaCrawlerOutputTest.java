@@ -91,7 +91,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   }
 
   @Test
-  public void compareHideConstraintNamesOutput(final DatabaseConnectionSource dataSource)
+  public void compareHideConstraintNamesOutput(final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
@@ -112,12 +112,12 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      compareHideConstraintNamesOutput(dataSource, textOptions, outputFormat);
+                      compareHideConstraintNamesOutput(connectionSource, textOptions, outputFormat);
                     }));
   }
 
   @Test
-  public void compareHideDatabaseObjectsOutput(final DatabaseConnectionSource dataSource)
+  public void compareHideDatabaseObjectsOutput(final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
@@ -135,7 +135,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                 outputFormat ->
                     () -> {
                       compareHideDatabaseObjectsOutput(
-                          dataSource,
+                          connectionSource,
                           textOptions,
                           outputFormat,
                           HIDE_DATABASE_OBJECTS_OUTPUT + "hidden_database_objects");
@@ -143,8 +143,8 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   }
 
   @Test
-  public void compareHideDependantDatabaseObjectsOutput(final DatabaseConnectionSource dataSource)
-      throws Exception {
+  public void compareHideDependantDatabaseObjectsOutput(
+      final DatabaseConnectionSource connectionSource) throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
@@ -165,7 +165,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                 outputFormat ->
                     () -> {
                       compareHideDatabaseObjectsOutput(
-                          dataSource,
+                          connectionSource,
                           textOptions,
                           outputFormat,
                           HIDE_DEPENDANT_DATABASE_OBJECTS_OUTPUT
@@ -177,7 +177,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   @EnumSource(IdentifierQuotingStrategy.class)
   public void compareIdentifierQuotingOutput(
       final IdentifierQuotingStrategy identifierQuotingStrategy,
-      final DatabaseConnectionSource dataSource)
+      final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
@@ -187,11 +187,12 @@ public abstract class AbstractSchemaCrawlerOutputTest {
         .showDatabaseInfo(false)
         .showJdbcDriverInfo(false);
 
-    compareIdentifierQuotingOutput(dataSource, textOptionsBuilder, identifierQuotingStrategy);
+    compareIdentifierQuotingOutput(connectionSource, textOptionsBuilder, identifierQuotingStrategy);
   }
 
   @Test
-  public void compareNoRemarksOutput(final DatabaseConnectionSource dataSource) throws Exception {
+  public void compareNoRemarksOutput(final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
@@ -206,12 +207,12 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      compareNoRemarksOutput(dataSource, textOptions, outputFormat);
+                      compareNoRemarksOutput(connectionSource, textOptions, outputFormat);
                     }));
   }
 
   @Test
-  public void compareNoSchemaColorsOutput(final DatabaseConnectionSource dataSource)
+  public void compareNoSchemaColorsOutput(final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
@@ -228,12 +229,13 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      compareNoSchemaColorsOutput(dataSource, textOptions, outputFormat);
+                      compareNoSchemaColorsOutput(connectionSource, textOptions, outputFormat);
                     }));
   }
 
   @Test
-  public void compareOrdinalOutput(final DatabaseConnectionSource dataSource) throws Exception {
+  public void compareOrdinalOutput(final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo().showJdbcDriverInfo();
@@ -245,27 +247,29 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      compareOrdinalOutput(dataSource, textOptions, outputFormat);
+                      compareOrdinalOutput(connectionSource, textOptions, outputFormat);
                     }));
   }
 
   @Test
-  public void comparePortableOutput(final DatabaseConnectionSource dataSource) throws Exception {
+  public void comparePortableOutput(final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
     assertAll(
         () -> {
-          comparePortableOutput(dataSource, null);
+          comparePortableOutput(connectionSource, null);
         },
         () -> {
-          comparePortableOutput(dataSource, PortableType.names);
+          comparePortableOutput(connectionSource, PortableType.names);
         },
         () -> {
-          comparePortableOutput(dataSource, PortableType.broad);
+          comparePortableOutput(connectionSource, PortableType.broad);
         });
   }
 
   @Test
-  public void compareRoutinesOutput(final DatabaseConnectionSource dataSource) throws Exception {
+  public void compareRoutinesOutput(final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
@@ -280,12 +284,12 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      compareRoutinesOutput(dataSource, textOptions, outputFormat);
+                      compareRoutinesOutput(connectionSource, textOptions, outputFormat);
                     }));
   }
 
   @Test
-  public void compareShowWeakAssociationsOutput(final DatabaseConnectionSource dataSource)
+  public void compareShowWeakAssociationsOutput(final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
@@ -298,12 +302,13 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      compareShowWeakAssociationsOutput(dataSource, textOptions, outputFormat);
+                      compareShowWeakAssociationsOutput(
+                          connectionSource, textOptions, outputFormat);
                     }));
   }
 
   @Test
-  public void compareTableRowCountOutput(final DatabaseConnectionSource dataSource)
+  public void compareTableRowCountOutput(final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
@@ -315,15 +320,15 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      compareTableRowCountOutput(dataSource, textOptions, outputFormat);
+                      compareTableRowCountOutput(connectionSource, textOptions, outputFormat);
                     }));
   }
 
   @DisplayName("Compare title output")
   @ParameterizedTest(name = "with command \"{0}\"")
   @ValueSource(strings = {"list", "schema"})
-  public void compareTitleOutput(final String command, final DatabaseConnectionSource dataSource)
-      throws Exception {
+  public void compareTitleOutput(
+      final String command, final DatabaseConnectionSource connectionSource) throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
@@ -338,12 +343,12 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      compareTitleOutput(dataSource, textOptions, command, outputFormat);
+                      compareTitleOutput(connectionSource, textOptions, command, outputFormat);
                     }));
   }
 
   @Test
-  public void compareUnqualifiedNamesOutput(final DatabaseConnectionSource dataSource)
+  public void compareUnqualifiedNamesOutput(final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
@@ -359,7 +364,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      compareUnqualifiedNamesOutput(dataSource, textOptions, outputFormat);
+                      compareUnqualifiedNamesOutput(connectionSource, textOptions, outputFormat);
                     }));
   }
 
@@ -371,7 +376,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   protected abstract Stream<? extends OutputFormat> outputFormats();
 
   private void compareHideConstraintNamesOutput(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final SchemaTextOptions textOptions,
       final OutputFormat outputFormat)
       throws Exception {
@@ -400,13 +405,13 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
             classpathResource(HIDE_CONSTRAINT_NAMES_OUTPUT + referenceFile), outputFormat));
   }
 
   private void compareHideDatabaseObjectsOutput(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final SchemaTextOptions textOptions,
       final OutputFormat outputFormat,
       final String referenceFileStem)
@@ -436,12 +441,12 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(classpathResource(referenceFile), outputFormat));
   }
 
   private void compareIdentifierQuotingOutput(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final SchemaTextOptionsBuilder textOptionsBuilder,
       final IdentifierQuotingStrategy identifierQuotingStrategy)
       throws Exception {
@@ -467,13 +472,13 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
             classpathResource(IDENTIFIER_QUOTING_OUTPUT + referenceFile), outputFormat));
   }
 
   private void compareNoRemarksOutput(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final SchemaTextOptions textOptions,
       final OutputFormat outputFormat)
       throws Exception {
@@ -497,13 +502,13 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
             classpathResource(NO_REMARKS_OUTPUT + referenceFile), outputFormat));
   }
 
   private void compareNoSchemaColorsOutput(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final SchemaTextOptions textOptions,
       final OutputFormat outputFormat)
       throws Exception {
@@ -524,13 +529,13 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
             classpathResource(NO_SCHEMA_COLORS_OUTPUT + referenceFile), outputFormat));
   }
 
   private void compareOrdinalOutput(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final SchemaTextOptions textOptions,
       final OutputFormat outputFormat)
       throws Exception {
@@ -559,12 +564,13 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(classpathResource(ORDINAL_OUTPUT + referenceFile), outputFormat));
   }
 
   private void comparePortableOutput(
-      final DatabaseConnectionSource dataSource, final PortableType portableType) throws Exception {
+      final DatabaseConnectionSource connectionSource, final PortableType portableType)
+      throws Exception {
 
     final String referenceFile =
         "portable.%s.txt".formatted(portableType == null ? "null" : portableType.name());
@@ -593,12 +599,12 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     final OutputFormat outputFormat = TextOutputFormat.text;
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(classpathResource(PORTABLE_OUTPUT + referenceFile), outputFormat));
   }
 
   private void compareRoutinesOutput(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final SchemaTextOptions textOptions,
       final OutputFormat outputFormat)
       throws Exception {
@@ -627,12 +633,12 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(classpathResource(ROUTINES_OUTPUT + referenceFile), outputFormat));
   }
 
   private void compareShowWeakAssociationsOutput(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final SchemaTextOptions textOptions,
       final OutputFormat outputFormat)
       throws Exception {
@@ -666,13 +672,13 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
             classpathResource(SHOW_WEAK_ASSOCIATIONS_OUTPUT + referenceFile), outputFormat));
   }
 
   private void compareTableRowCountOutput(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final SchemaTextOptions textOptions,
       final OutputFormat outputFormat)
       throws Exception {
@@ -704,13 +710,13 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
             classpathResource(TABLE_ROW_COUNT_OUTPUT + referenceFile), outputFormat));
   }
 
   private void compareTitleOutput(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final SchemaTextOptions textOptions,
       final String command,
       final OutputFormat outputFormat)
@@ -735,13 +741,13 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
             classpathResource(WITH_TITLE_OUTPUT + referenceFile), outputFormat));
   }
 
   private void compareUnqualifiedNamesOutput(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final SchemaTextOptions textOptions,
       final OutputFormat outputFormat)
       throws Exception {
@@ -770,7 +776,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
             classpathResource(UNQUALIFIED_NAMES_OUTPUT + referenceFile), outputFormat));
   }

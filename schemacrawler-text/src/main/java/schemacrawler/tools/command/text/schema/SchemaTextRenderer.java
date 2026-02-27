@@ -10,7 +10,7 @@ package schemacrawler.tools.command.text.schema;
 
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.executable.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.text.formatter.schema.SchemaListFormatter;
 import schemacrawler.tools.text.formatter.schema.SchemaTextFormatter;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
@@ -19,7 +19,7 @@ import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.property.PropertyName;
 
 /** Basic SchemaCrawler executor for text output. */
-public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTextOptions> {
+public final class SchemaTextRenderer extends AbstractSchemaCrawlerCommand<SchemaTextOptions> {
 
   public SchemaTextRenderer(final PropertyName command) {
     super(command);

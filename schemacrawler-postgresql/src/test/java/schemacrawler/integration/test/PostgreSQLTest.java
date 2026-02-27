@@ -108,7 +108,7 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResultsResource = "%s.txt".formatted(testContext.testMethodName());
     assertThat(
-        outputOf(executableExecution(getDataSource(), executableDetails)),
+        outputOf(executableExecution(getConnectionSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResultsResource)));
 
     // -- Additional catalog tests
@@ -176,7 +176,7 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = testContext.testMethodName() + ".txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executableDetails)),
+        outputOf(executableExecution(getConnectionSource(), executableDetails)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

@@ -68,7 +68,8 @@ public class LintOutputTest {
   @ParameterizedTest
   @EnumSource(LintReportOutputFormat.class)
   public void executableLintReportOutput(
-      final OutputFormat outputFormat, final DatabaseConnectionSource dataSource) throws Exception {
+      final OutputFormat outputFormat, final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
     final InfoLevel infoLevel = InfoLevel.standard;
 
@@ -88,7 +89,7 @@ public class LintOutputTest {
 
     final String referenceFile = TEXT_OUTPUT + "lint." + outputFormat.getFormat();
     assertThat(
-        outputOf(executableExecution(dataSource, executable, outputFormat)),
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAs(classpathResource(referenceFile)));
   }
 

@@ -55,7 +55,7 @@ public class AdditionalCasesTest extends BaseSqliteTest {
       final String currentMethodFullName, final String databaseSqlResource, final String command)
       throws Exception {
 
-    final DatabaseConnectionSource dataSource =
+    final DatabaseConnectionSource connectionSource =
         createDatabaseFromScriptInMemory(databaseSqlResource);
 
     final SchemaCrawlerOptions options =
@@ -68,7 +68,7 @@ public class AdditionalCasesTest extends BaseSqliteTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 }

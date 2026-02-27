@@ -80,7 +80,7 @@ public class MariaDBTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testMariaDBWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

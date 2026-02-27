@@ -42,7 +42,7 @@ public class Issue496LintTest {
   private static final Config config = ConfigUtility.newConfig();
 
   @Test
-  public void issue496(final DatabaseConnectionSource dataSource) throws Exception {
+  public void issue496(final DatabaseConnectionSource connectionSource) throws Exception {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
@@ -52,7 +52,7 @@ public class Issue496LintTest {
             .withLimitOptions(limitOptionsBuilder.toOptions());
 
     final Catalog catalog =
-        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
+        getCatalog(connectionSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -68,20 +68,21 @@ public class Issue496LintTest {
     final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
     linters.initialize(linterRegistry);
 
-    linters.lint(catalog, dataSource);
+    linters.lint(catalog, connectionSource);
     final Lints lintReport = linters.getLints();
 
     assertThat(lintReport.size(), is(0));
   }
 
   @Test
-  public void issue496_withoutInclude(final DatabaseConnectionSource dataSource) throws Exception {
+  public void issue496_withoutInclude(final DatabaseConnectionSource connectionSource)
+      throws Exception {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final Catalog catalog =
-        getCatalog(dataSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
+        getCatalog(connectionSource, schemaRetrievalOptionsDefault, schemaCrawlerOptions, config);
     assertThat(catalog, notNullValue());
     assertThat(catalog.getSchemas().size(), is(6));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
@@ -97,7 +98,7 @@ public class Issue496LintTest {
     final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
     linters.initialize(linterRegistry);
 
-    linters.lint(catalog, dataSource);
+    linters.lint(catalog, connectionSource);
     final Lints lintReport = linters.getLints();
 
     assertThat(lintReport.size(), is(1));

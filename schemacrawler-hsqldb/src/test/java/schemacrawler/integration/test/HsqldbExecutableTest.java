@@ -41,40 +41,41 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class HsqldbExecutableTest {
 
   @Test
-  public void count(final TestContext testContext, final DatabaseConnectionSource dataSource)
+  public void count(final TestContext testContext, final DatabaseConnectionSource connectionSource)
       throws Exception {
     runWithContentComparison(
         testContext.testMethodFullName(),
-        dataSource,
+        connectionSource,
         InfoLevel.minimum,
         OperationType.count.name());
   }
 
   @Test
-  public void dump(final TestContext testContext, final DatabaseConnectionSource dataSource)
+  public void dump(final TestContext testContext, final DatabaseConnectionSource connectionSource)
       throws Exception {
     runWithContentComparison(
         testContext.testMethodFullName(),
-        dataSource,
+        connectionSource,
         InfoLevel.standard,
         OperationType.dump.name());
   }
 
   @Test
-  public void list(final TestContext testContext, final DatabaseConnectionSource dataSource)
+  public void list(final TestContext testContext, final DatabaseConnectionSource connectionSource)
       throws Exception {
     runWithContentComparison(
-        testContext.testMethodFullName(), dataSource, InfoLevel.minimum, "list");
+        testContext.testMethodFullName(), connectionSource, InfoLevel.minimum, "list");
   }
 
   @Test
-  public void tablesample(final TestContext testContext, final DatabaseConnectionSource dataSource)
+  public void tablesample(
+      final TestContext testContext, final DatabaseConnectionSource connectionSource)
       throws Exception {
-    runWithFileSizeCheck(dataSource, InfoLevel.standard, OperationType.tablesample.name());
+    runWithFileSizeCheck(connectionSource, InfoLevel.standard, OperationType.tablesample.name());
   }
 
   private void runExecutable(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final InfoLevel infoLevel,
       final String command,
       final Consumer<Path> outputAssertion)
@@ -92,13 +93,13 @@ public class HsqldbExecutableTest {
     executable.setSchemaCrawlerOptions(options);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final Path outputFile = executableExecution(dataSource, executable);
+    final Path outputFile = executableExecution(connectionSource, executable);
     outputAssertion.accept(outputFile);
   }
 
   private void runWithContentComparison(
       final String currentMethodFullName,
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final InfoLevel infoLevel,
       final String command)
       throws Exception {
@@ -107,11 +108,13 @@ public class HsqldbExecutableTest {
             assertThat(
                 outputOf(outputFile), hasSameContentAs(classpathResource(currentMethodFullName)));
 
-    runExecutable(dataSource, infoLevel, command, assertion);
+    runExecutable(connectionSource, infoLevel, command, assertion);
   }
 
   private void runWithFileSizeCheck(
-      final DatabaseConnectionSource dataSource, final InfoLevel infoLevel, final String command)
+      final DatabaseConnectionSource connectionSource,
+      final InfoLevel infoLevel,
+      final String command)
       throws Exception {
     final Consumer<Path> assertion =
         outputFile -> {
@@ -123,6 +126,6 @@ public class HsqldbExecutableTest {
           }
         };
 
-    runExecutable(dataSource, infoLevel, command, assertion);
+    runExecutable(connectionSource, infoLevel, command, assertion);
   }
 }

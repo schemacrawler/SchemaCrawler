@@ -8,10 +8,10 @@
 
 package schemacrawler.tools.lint;
 
-import schemacrawler.tools.executable.Command;
+import schemacrawler.tools.executable.ExecutableCommand;
 import schemacrawler.tools.lint.config.LinterConfig;
 
-public interface Linter extends Command<LinterConfig> {
+public interface Linter extends ExecutableCommand<LinterConfig> {
 
   boolean exceedsThreshold();
 

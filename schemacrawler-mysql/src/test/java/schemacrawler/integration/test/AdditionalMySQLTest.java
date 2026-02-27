@@ -92,7 +92,7 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     assertThat(
-        outputOf(executableExecution(getDataSource(), executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(testContext.testMethodFullName())));
 
     // Additional programmatic test
@@ -145,12 +145,12 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder()
-            .fromOptions(matchSchemaRetrievalOptions(getDataSource()))
+            .fromOptions(matchSchemaRetrievalOptions(getConnectionSource()))
             .with(tableColumnsRetrievalStrategy, data_dictionary_all);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
 
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(getDataSource(), schemaRetrievalOptions, schemaCrawlerOptions);
+        new SchemaCrawler(getConnectionSource(), schemaRetrievalOptions, schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
 
     final Schema schema = catalog.lookupSchema("test").orElse(null);
@@ -178,7 +178,8 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
         schemaCrawlerOptionsWithMaximumSchemaInfoLevel.withLimitOptions(
             limitOptionsBuilder.toOptions());
 
-    final Catalog catalog = SchemaCrawlerUtility.getCatalog(getDataSource(), schemaCrawlerOptions);
+    final Catalog catalog =
+        SchemaCrawlerUtility.getCatalog(getConnectionSource(), schemaCrawlerOptions);
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

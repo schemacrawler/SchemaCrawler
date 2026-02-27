@@ -14,12 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.executable.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.scripting.options.LanguageOptions;
 import us.fatehi.utility.property.PropertyName;
 
 public final class TemplateCommand
-    extends BaseSchemaCrawlerCommand<LanguageOptions<TemplateLanguageType>> {
+    extends AbstractSchemaCrawlerCommand<LanguageOptions<TemplateLanguageType>> {
 
   static final PropertyName COMMAND =
       new PropertyName(

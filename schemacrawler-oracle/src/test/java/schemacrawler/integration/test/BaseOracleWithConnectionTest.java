@@ -50,7 +50,7 @@ import us.fatehi.utility.property.Property;
 public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabaseTest {
 
   protected void testOracleWithConnection(
-      final DatabaseConnectionSource dataSource,
+      final DatabaseConnectionSource connectionSource,
       final String expectedResource,
       final int numDatabaseUsers,
       final boolean noInfo)
@@ -84,7 +84,7 @@ public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabas
 
     // -- Schema output tests
     assertThat(
-        outputOf(executableExecution(dataSource, executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
 
     // -- Additional catalog tests
@@ -122,13 +122,14 @@ public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabas
   }
 
   protected void testSelectQuery(
-      final DatabaseConnectionSource dataSource, final String expectedResource) throws Exception {
+      final DatabaseConnectionSource connectionSource, final String expectedResource)
+      throws Exception {
     final SchemaCrawlerExecutable executable = executableOf("authors");
     final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("authors", "SELECT * FROM BOOKS.AUTHORS");
     executable.setAdditionalConfiguration(additionalConfig);
     assertThat(
-        outputOf(executableExecution(dataSource, executable, TextOutputFormat.text.name())),
+        outputOf(executableExecution(connectionSource, executable, TextOutputFormat.text.name())),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

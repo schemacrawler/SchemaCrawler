@@ -120,26 +120,26 @@ public final class CommandlineTestUtility {
   }
 
   public static ShellState createConnectedSchemaCrawlerShellState(
-      final DatabaseConnectionSource dataSource) {
+      final DatabaseConnectionSource connectionSource) {
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     state.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
-    state.setDataSource(dataSource); // is-connected
+    state.setConnectionSource(connectionSource); // is-connected
     return state;
   }
 
   public static ShellState createLoadedSchemaCrawlerShellState(
-      final DatabaseConnectionSource dataSource) {
+      final DatabaseConnectionSource connectionSource) {
 
     final Catalog catalog =
         getCatalog(
-            dataSource,
+            connectionSource,
             schemaRetrievalOptionsDefault,
             schemaCrawlerOptions,
             ConfigUtility.newConfig());
 
-    final ShellState state = createConnectedSchemaCrawlerShellState(dataSource);
+    final ShellState state = createConnectedSchemaCrawlerShellState(connectionSource);
     state.setCatalog(catalog); // is-loaded
     return state;
   }
