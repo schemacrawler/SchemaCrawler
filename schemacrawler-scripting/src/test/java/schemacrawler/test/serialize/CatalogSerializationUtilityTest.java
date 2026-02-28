@@ -29,9 +29,9 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
+import schemacrawler.tools.formatter.serialize.CatalogSerializationUtility;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.options.ConfigUtility;
-import schemacrawler.tools.formatter.serialize.CatalogSerializationUtility;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
@@ -52,21 +52,24 @@ public class CatalogSerializationUtilityTest {
     validateSchema(catalog);
 
     final Path testOutputFile = IOUtility.createTempFilePath("sc_serialization", "ser.gz");
-    try (final OutputStream out = Files.newOutputStream(testOutputFile, WRITE, CREATE, TRUNCATE_EXISTING);
-         final GZIPOutputStream gzipOut = new GZIPOutputStream(out)) {
+    try (final OutputStream out =
+            Files.newOutputStream(testOutputFile, WRITE, CREATE, TRUNCATE_EXISTING);
+        final GZIPOutputStream gzipOut = new GZIPOutputStream(out)) {
       final JavaSerializedCatalog javaSerializedCatalogForSave = new JavaSerializedCatalog(catalog);
       javaSerializedCatalogForSave.save(gzipOut);
     }
 
     // Deserialize using CatalogSerializationUtility
-    final Catalog catalogDeserialized = CatalogSerializationUtility.deserializeCatalog(testOutputFile);
+    final Catalog catalogDeserialized =
+        CatalogSerializationUtility.deserializeCatalog(testOutputFile);
     assertThat(catalogDeserialized, is(notNullValue()));
     validateSchema(catalogDeserialized);
   }
 
   @Test
   public void deserializeNullPath() {
-    assertThrows(NullPointerException.class, () -> CatalogSerializationUtility.deserializeCatalog(null));
+    assertThrows(
+        NullPointerException.class, () -> CatalogSerializationUtility.deserializeCatalog(null));
   }
 
   @Test
