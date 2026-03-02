@@ -65,14 +65,6 @@ public abstract class AbstractLinter extends AbstractCommand<LinterConfig> imple
    * @{@inheritDoc}
    */
   @Override
-  public String getDescription() {
-    return getCommandName().getDescription();
-  }
-
-  /**
-   * @{@inheritDoc}
-   */
-  @Override
   public final int getLintCount() {
     return lintCount;
   }

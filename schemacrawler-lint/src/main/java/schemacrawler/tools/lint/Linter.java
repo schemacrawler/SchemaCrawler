@@ -16,11 +16,6 @@ public interface Linter extends ExecutableCommand<LinterConfig> {
   boolean exceedsThreshold();
 
   /**
-   * @{@inheritDoc}
-   */
-  String getDescription();
-
-  /**
    * Gets the number of lints produced by this linter.
    *
    * @return Lint counts

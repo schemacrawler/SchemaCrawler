@@ -88,7 +88,6 @@ public class LinterTest {
     }
     linter.execute();
 
-    assertThat(linter.getDescription(), is("Checks for empty tables with no data."));
     assertThat(linter.getLintCount(), is(10));
     assertThat(linter.getLinterId(), is(linter.getClass().getCanonicalName()));
     assertThat(linter.getLinterInstanceId(), is(not(emptyString())));
