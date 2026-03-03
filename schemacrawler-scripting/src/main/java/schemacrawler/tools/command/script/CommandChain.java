@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.executable.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandRegistry;
@@ -87,18 +86,10 @@ public final class CommandChain extends AbstractSchemaCrawlerCommand<LanguageOpt
   }
 
   @Override
-  public void checkAvailability() {
-    // Check the availability of the chain, even though there may be no
-    // command in the chain until the actual point of execution
-    checkAvailabilityChain();
-  }
-
-  @Override
   public void execute() {
     checkCatalog();
 
     initializeChain();
-    checkAvailabilityChain();
     executeChain();
   }
 
@@ -130,21 +121,6 @@ public final class CommandChain extends AbstractSchemaCrawlerCommand<LanguageOpt
     } catch (final Exception e) {
       throw new ExecutionRuntimeException(
           "Cannot chain command, unknown command <%s>".formatted(command), e);
-    }
-  }
-
-  private void checkAvailabilityChain() {
-    if (scCommands.isEmpty()) {
-      LOGGER.log(Level.INFO, "No command to execute");
-      return;
-    }
-
-    for (final SchemaCrawlerCommand<?> scCommand : scCommands) {
-      try {
-        scCommand.checkAvailability();
-      } catch (final Exception e) {
-        throw new InternalRuntimeException("Command <%s> is not available".formatted(scCommand));
-      }
     }
   }
 
