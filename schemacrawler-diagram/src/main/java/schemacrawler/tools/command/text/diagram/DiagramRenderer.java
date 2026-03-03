@@ -42,11 +42,6 @@ public final class DiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramO
         requireNonNull(graphExecutorFactory, "No graph executor factory provided");
   }
 
-  @Override
-  public void checkAvailability() {
-    graphExecutorFactory.canGenerate(diagramOutputFormat);
-  }
-
   /** {@inheritDoc} */
   @Override
   public void execute() {
@@ -114,6 +109,7 @@ public final class DiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramO
   public void initialize() {
     super.initialize();
     diagramOutputFormat = DiagramOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
+    graphExecutorFactory.canGenerate(diagramOutputFormat);
   }
 
   @Override

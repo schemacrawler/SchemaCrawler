@@ -26,11 +26,6 @@ public final class SchemaTextRenderer extends AbstractSchemaCrawlerCommand<Schem
   }
 
   @Override
-  public void checkAvailability() {
-    // Text rendering is always available
-  }
-
-  @Override
   public void execute() {
     checkCatalog();
 

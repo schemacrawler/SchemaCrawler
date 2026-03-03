@@ -81,7 +81,6 @@ public class DiagramRendererTest {
 
     // Initialize, and check if the command is available
     scCommand.initialize();
-    scCommand.checkAvailability();
 
     scCommand.execute();
 

@@ -42,11 +42,6 @@ public class LintCommand extends AbstractSchemaCrawlerCommand<LintOptions> {
   }
 
   @Override
-  public void checkAvailability() {
-    // Lint is always available
-  }
-
-  @Override
   public void execute() {
     try {
       checkCatalog();

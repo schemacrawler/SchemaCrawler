@@ -79,11 +79,6 @@ public class EmbeddedDiagramRenderer extends AbstractSchemaCrawlerCommand<Diagra
   }
 
   @Override
-  public void checkAvailability() {
-    graphExecutorFactory.canGenerate(svg);
-  }
-
-  @Override
   public void execute() {
     checkCatalog();
 
@@ -121,6 +116,12 @@ public class EmbeddedDiagramRenderer extends AbstractSchemaCrawlerCommand<Diagra
     } catch (final Exception e) {
       throw new ExecutionRuntimeException(e);
     }
+  }
+
+  @Override
+  public void initialize() {
+    super.initialize();
+    graphExecutorFactory.canGenerate(svg);
   }
 
   @Override
@@ -165,7 +166,6 @@ public class EmbeddedDiagramRenderer extends AbstractSchemaCrawlerCommand<Diagra
 
     // Initialize, and check if the command is available
     scCommand.initialize();
-    scCommand.checkAvailability();
 
     // Prepare to execute
     scCommand.setCatalog(catalog);

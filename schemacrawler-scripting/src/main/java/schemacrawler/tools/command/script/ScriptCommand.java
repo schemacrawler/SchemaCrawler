@@ -42,34 +42,6 @@ public final class ScriptCommand extends AbstractSchemaCrawlerCommand<ScriptOpti
     super(COMMAND);
   }
 
-  @Override
-  public void checkAvailability() {
-
-    // Check availability of script
-    commandOptions
-        .createInputResource()
-        .orElseThrow(
-            () ->
-                new ConfigurationException(
-                    "Script not found <%s>".formatted(commandOptions.getScript())));
-
-    final ScriptLanguageType scriptingLanguage = commandOptions.getLanguage();
-    if (scriptingLanguage == null || scriptingLanguage == ScriptLanguageType.unknown) {
-      throw new InternalRuntimeException("Unknown scripting language");
-    }
-
-    // Use Graal Polyglot script executor
-    scriptExecutor = new GraalScriptExecutor(scriptingLanguage);
-    if (scriptExecutor.canGenerate()) {
-      LOGGER.log(Level.CONFIG, "Loaded Graal Polyglot script executor");
-      return;
-    }
-
-    // No suitable engine found
-    throw new InternalRuntimeException(
-        "Scripting engine not found for language <%s>".formatted(scriptingLanguage));
-  }
-
   /** {@inheritDoc} */
   @Override
   public void execute() {
@@ -99,6 +71,36 @@ public final class ScriptCommand extends AbstractSchemaCrawlerCommand<ScriptOpti
     } catch (final Exception e) {
       throw new InternalRuntimeException("Could not execute script", e);
     }
+  }
+
+  @Override
+  public void initialize() {
+
+    super.initialize();
+
+    // Check availability of script
+    commandOptions
+        .createInputResource()
+        .orElseThrow(
+            () ->
+                new ConfigurationException(
+                    "Script not found <%s>".formatted(commandOptions.getScript())));
+
+    final ScriptLanguageType scriptingLanguage = commandOptions.getLanguage();
+    if (scriptingLanguage == null || scriptingLanguage == ScriptLanguageType.unknown) {
+      throw new InternalRuntimeException("Unknown scripting language");
+    }
+
+    // Use Graal Polyglot script executor
+    scriptExecutor = new GraalScriptExecutor(scriptingLanguage);
+    if (scriptExecutor.canGenerate()) {
+      LOGGER.log(Level.CONFIG, "Loaded Graal Polyglot script executor");
+      return;
+    }
+
+    // No suitable engine found
+    throw new InternalRuntimeException(
+        "Scripting engine not found for language <%s>".formatted(scriptingLanguage));
   }
 
   @Override

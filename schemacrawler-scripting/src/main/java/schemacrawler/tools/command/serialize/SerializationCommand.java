@@ -38,12 +38,6 @@ public final class SerializationCommand extends AbstractSchemaCrawlerCommand<Ser
     super(COMMAND);
   }
 
-  @Override
-  public void checkAvailability() {
-    // Nothing additional to check at this point. The Command should be
-    // available after the class is loaded, and imports are resolved.
-  }
-
   /** {@inheritDoc} */
   @Override
   public void execute() {

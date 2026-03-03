@@ -47,11 +47,6 @@ public final class OperationCommand extends AbstractSchemaCrawlerCommand<Operati
   }
 
   @Override
-  public void checkAvailability() {
-    // Operations are always available
-  }
-
-  @Override
   public void execute() {
     checkCatalog();
 

@@ -29,12 +29,6 @@ public final class TemplateCommand
     super(COMMAND);
   }
 
-  @Override
-  public void checkAvailability() {
-    // Nothing to check at this point. The Command should be available
-    // after the class is loaded, and imports are resolved.
-  }
-
   /** {@inheritDoc} */
   @Override
   public void execute() {
