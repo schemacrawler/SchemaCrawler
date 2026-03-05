@@ -8,6 +8,7 @@ SchemaCrawler release notes.
 - Use database connection source in commands instead of connection
 - Use command pattern for catalog loaders
 - Remove deprecated methods
+- Add [Homebrew](https://brew.sh/) installer
 
 
 <a name="v17.6.3"></a>
