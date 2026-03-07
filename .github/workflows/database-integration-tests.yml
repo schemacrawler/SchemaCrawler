@@ -127,13 +127,13 @@ jobs:
             dbproject="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "postgresql" ]; then
             docker pull postgres:11.16-alpine
-            docker pull postgres:16.4-bookworm
+            docker pull postgres:17.6-bookworm
             dbproject="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "mysql" ]; then
             docker pull mysql:9.1.0
             dbproject="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "mariadb" ]; then
-            docker pull mariadb:11.6.2-noble
+            docker pull mariadb:11.8.5-noble
             dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "cassandra" ]; then
             docker pull cassandra:5.0.2
