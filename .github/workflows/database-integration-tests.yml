@@ -175,6 +175,12 @@ jobs:
           --projects schemacrawler-dbtest,schemacrawler-$dbproject \
           --also-make \
           clean verify
+    - id: docker-cleanup
+      name: Cleanup Docker artifacts
+      if: always()
+      run: |
+        docker stop $(docker ps -q) || true
+        docker system prune -a --volumes -f
     - id: gather-expected-results
       name: Gather expected results for failed tests
       if: always()
