@@ -818,6 +818,11 @@ _pg_stat_bgwriter
   system
   java.sql.Types: ARRAY
 
+{"key": "null/null/_pg_stat_checkpointer"}
+_pg_stat_checkpointer
+  system
+  java.sql.Types: ARRAY
+
 {"key": "null/null/_pg_stat_database"}
 _pg_stat_database
   system
@@ -1120,6 +1125,11 @@ _pg_user_mappings
 
 {"key": "null/null/_pg_views"}
 _pg_views
+  system
+  java.sql.Types: ARRAY
+
+{"key": "null/null/_pg_wait_events"}
+_pg_wait_events
   system
   java.sql.Types: ARRAY
 
