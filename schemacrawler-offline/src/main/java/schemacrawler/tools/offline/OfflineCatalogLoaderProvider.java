@@ -12,7 +12,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.List;
-import schemacrawler.tools.catalogloader.BaseCatalogLoaderProvider;
+import schemacrawler.tools.loader.catalog.BaseCatalogLoaderProvider;
 import schemacrawler.tools.offline.OfflineCatalogLoader.OfflineCatalogLoaderOptions;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.property.PropertyName;
