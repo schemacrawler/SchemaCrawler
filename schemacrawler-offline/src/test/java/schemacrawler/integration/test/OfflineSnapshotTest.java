@@ -18,7 +18,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineDatabaseConnectionSource;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static us.fatehi.test.utility.TestUtility.failTestSetup;
 import static us.fatehi.test.utility.TestUtility.flattenCommandlineArgs;
@@ -53,6 +52,7 @@ import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.OfflineDatabaseConnector;
+import schemacrawler.tools.offline.connectionsource.OfflineConnectionSourceUtility;
 import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.WithSystemProperty;
@@ -161,7 +161,7 @@ public class OfflineSnapshotTest {
     schemaTextOptionsBuilder.noInfo(false);
 
     final DatabaseConnectionSource connectionSource =
-        newOfflineDatabaseConnectionSource(serializedCatalogFile);
+        OfflineConnectionSourceUtility.newOfflineDatabaseConnectionSource(serializedCatalogFile);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -213,7 +213,7 @@ public class OfflineSnapshotTest {
   private void executeExecutable(
       final SchemaCrawlerExecutable executable, final String referenceFileName) throws Exception {
     final DatabaseConnectionSource connectionSource =
-        newOfflineDatabaseConnectionSource(serializedCatalogFile);
+        OfflineConnectionSourceUtility.newOfflineDatabaseConnectionSource(serializedCatalogFile);
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder.withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);

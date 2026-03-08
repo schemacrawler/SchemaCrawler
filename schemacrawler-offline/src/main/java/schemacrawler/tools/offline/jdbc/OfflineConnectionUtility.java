@@ -19,8 +19,9 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.util.Map;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import us.fatehi.utility.IOUtility;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.UtilityMarker;
 
+@UtilityMarker
 public class OfflineConnectionUtility {
 
   private static class OfflineConnectionInvocationHandler implements InvocationHandler {
@@ -80,8 +81,7 @@ public class OfflineConnectionUtility {
     }
   }
 
-  public static DatabaseConnectionSource newOfflineDatabaseConnectionSource(
-      final Path offlineDatabasePath) {
+  public static OfflineConnection newOfflineConnection(final Path offlineDatabasePath) {
     requireNonNull(offlineDatabasePath, "No offline catalog snapshot path provided");
 
     final Path absoluteOfflineDatabasePath = offlineDatabasePath.toAbsolutePath();
@@ -94,8 +94,9 @@ public class OfflineConnectionUtility {
             newProxyInstance(
                 OfflineConnectionUtility.class.getClassLoader(),
                 new Class[] {OfflineConnection.class},
-                new OfflineConnectionInvocationHandler(absoluteOfflineDatabasePath));
-    return new OfflineDatabaseConnectionSource(offlineConnection);
+                new OfflineConnectionUtility.OfflineConnectionInvocationHandler(
+                    absoluteOfflineDatabasePath));
+    return offlineConnection;
   }
 
   private OfflineConnectionUtility() {

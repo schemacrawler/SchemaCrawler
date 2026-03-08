@@ -8,7 +8,6 @@
 
 package schemacrawler.tools.offline.jdbc;
 
-import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineDatabaseConnectionSource;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Path;
@@ -22,6 +21,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.Version;
+import schemacrawler.tools.offline.connectionsource.OfflineConnectionSourceUtility;
 
 public class OfflineDriver implements Driver {
 
@@ -46,7 +46,7 @@ public class OfflineDriver implements Driver {
   public Connection connect(final String url, final Properties info) throws SQLException {
     if (acceptsURL(url)) {
       final String path = url.substring(JDBC_URL_PREFIX.length());
-      return newOfflineDatabaseConnectionSource(Path.of(path)).get();
+      return OfflineConnectionSourceUtility.newOfflineDatabaseConnectionSource(Path.of(path)).get();
     } else {
       return null;
     }

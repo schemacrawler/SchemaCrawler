@@ -6,11 +6,12 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.tools.offline.jdbc;
+package schemacrawler.tools.offline.connectionsource;
 
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
+import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 final class OfflineDatabaseConnectionSource implements DatabaseConnectionSource {
