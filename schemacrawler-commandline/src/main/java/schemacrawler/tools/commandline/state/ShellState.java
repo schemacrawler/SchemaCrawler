@@ -11,6 +11,7 @@ package schemacrawler.tools.commandline.state;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import schemacrawler.ermodel.model.ERModel;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.FilterOptions;
 import schemacrawler.schemacrawler.GrepOptions;
@@ -31,8 +32,12 @@ public class ShellState implements AutoCloseable {
   private Config commandOptions;
   private Config catalogLoaderOptions;
   private Catalog catalog;
+  private ERModel erModel;
+
   private DatabaseConnectionSource connectionSource;
+
   private Throwable lastException;
+
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private SchemaRetrievalOptions schemaRetrievalOptions;
   private boolean isDeferCatalogLoad;
@@ -70,6 +75,10 @@ public class ShellState implements AutoCloseable {
 
   public DatabaseConnectionSource getConnectionSource() {
     return connectionSource;
+  }
+
+  public ERModel getERModel() {
+    return erModel;
   }
 
   public Throwable getLastException() {
@@ -130,6 +139,10 @@ public class ShellState implements AutoCloseable {
 
   public void setDeferCatalogLoad(final boolean isDeferCatalogLoad) {
     this.isDeferCatalogLoad = isDeferCatalogLoad;
+  }
+
+  public void setERModel(ERModel erModel) {
+    this.erModel = erModel;
   }
 
   public void setLastException(final Throwable lastException) {

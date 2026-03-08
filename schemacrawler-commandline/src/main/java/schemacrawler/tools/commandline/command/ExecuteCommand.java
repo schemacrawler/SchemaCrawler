@@ -19,6 +19,7 @@ import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
+import schemacrawler.ermodel.model.ERModel;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -81,10 +82,12 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
       final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
       final DatabaseConnectionSource connectionSource = state.getConnectionSource();
       final Catalog catalog = state.getCatalog();
+      final ERModel erModel = state.getERModel();
 
       executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
       executable.setConnectionSource(connectionSource);
       executable.setCatalog(catalog);
+      executable.setERModel(erModel);
 
       executable.execute();
 

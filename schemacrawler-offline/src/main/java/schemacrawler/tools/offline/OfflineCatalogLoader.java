@@ -78,6 +78,7 @@ public final class OfflineCatalogLoader extends AbstractCatalogLoader<OfflineCat
     }
 
     setCatalog(catalog);
+    // NOTE: Catalog loaders do not build ER models, so the ER model is not set here
   }
 
   @Override
