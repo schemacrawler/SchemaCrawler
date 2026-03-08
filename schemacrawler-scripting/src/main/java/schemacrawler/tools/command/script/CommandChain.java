@@ -62,6 +62,7 @@ public final class CommandChain extends AbstractSchemaCrawlerCommand<LanguageOpt
     setOutputOptions(scCommand.getOutputOptions());
 
     setCatalog(scCommand.getCatalog());
+    setERModel(scCommand.getERModel());
     if (usesConnection()) {
       setConnectionSource(scCommand.getConnectionSource());
     }
@@ -109,6 +110,7 @@ public final class CommandChain extends AbstractSchemaCrawlerCommand<LanguageOpt
       }
 
       scCommand.setCatalog(catalog);
+      scCommand.setERModel(erModel);
       if (scCommand.usesConnection()) {
         scCommand.setConnectionSource(getConnectionSource());
       }

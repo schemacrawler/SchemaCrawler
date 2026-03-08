@@ -19,6 +19,7 @@ import picocli.CommandLine.Model;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
+import schemacrawler.ermodel.model.ERModel;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -90,8 +91,23 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       state.setCatalog(catalog);
       LOGGER.log(Level.INFO, "Loaded catalog");
 
+      final ERModel erModel = buildERModel();
+      state.setERModel(erModel);
+      LOGGER.log(Level.INFO, "Built ER model");
+
     } catch (final Exception e) {
       throw new ExecutionException(spec.commandLine(), "Cannot load catalog", e);
+    }
+  }
+
+  private ERModel buildERModel() {
+    try {
+      final Catalog catalog = state.getCatalog();
+      final Config additionalConfig = state.getConfig();
+      return SchemaCrawlerUtility.buildERModel(catalog, additionalConfig);
+
+    } catch (final Exception e) {
+      throw new ExecutionException(spec.commandLine(), "Cannot build ER model", e);
     }
   }
 
