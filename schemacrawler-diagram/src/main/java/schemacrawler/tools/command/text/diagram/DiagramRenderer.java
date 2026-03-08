@@ -76,6 +76,9 @@ public final class DiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramO
 
     final SchemaTraverser traverser = new SchemaTraverser();
     traverser.setCatalog(getCatalog());
+    if (hasERModel()) {
+      traverser.setERModel(getERModel());
+    }
     // Note: No need to set connection source on the command
     traverser.setHandler(formatter);
     traverser.setTablesComparator(

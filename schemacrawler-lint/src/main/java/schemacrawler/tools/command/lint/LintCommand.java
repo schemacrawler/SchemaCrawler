@@ -91,6 +91,9 @@ public class LintCommand extends AbstractSchemaCrawlerCommand<LintOptions> {
             new LintReportTextFormatter(commandOptions, outputOptions, identifiers);
         final LintReportTextGenerator textGenerator = new LintReportTextGenerator();
         textGenerator.setCatalog(getCatalog());
+        if (hasERModel()) {
+          textGenerator.setERModel(getERModel());
+        }
         textGenerator.setHandler(textFormatter);
         lintReportGenerator = textGenerator;
     }
