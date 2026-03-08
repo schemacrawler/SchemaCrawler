@@ -3,6 +3,13 @@
 SchemaCrawler release notes.
 
 
+<a name="v17.8.0"></a>
+## Release 17.8.0 - 2026-03-12
+
+- Add `KeyClass` to identify candidate keys
+- Add an ER model loader for implicit associations
+
+
 <a name="v17.7.0"></a>
 ## Release 17.7.0 - 2026-03-01
 - Use database connection source in commands instead of connection
