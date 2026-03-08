@@ -40,11 +40,9 @@ public class ConnectionShellCommandsTest {
   public void disconnect(final DatabaseConnectionSource connectionSource) {
     final ShellState state = new ShellState();
     state.setConnectionSource(connectionSource); // is-connected
-
-    final String[] args = {};
-
     assertThat(state.getConnectionSource(), is(not(nullValue())));
 
+    final String[] args = {};
     final DisconnectCommand optionsParser = new DisconnectCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
