@@ -32,7 +32,7 @@ public final class SchemaTextRenderer extends AbstractSchemaCrawlerCommand<Schem
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
 
     final SchemaTraverser traverser = new SchemaTraverser();
-    traverser.setCatalog(catalog);
+    traverser.setCatalog(getCatalog());
     traverser.setHandler(formatter);
     traverser.setTablesComparator(
         NamedObjectSort.getNamedObjectSort(commandOptions.isAlphabeticalSortForTables()));

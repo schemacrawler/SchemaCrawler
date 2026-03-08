@@ -58,7 +58,7 @@ public abstract class BaseLinter extends AbstractLinter {
   public final void execute() {
     try (final Connection connection = getConnection(); ) {
       start(connection);
-      for (final Table table : catalog.getTables()) {
+      for (final Table table : getCatalog().getTables()) {
         if (includeTable(table)) {
           lint(table, connection);
         } else {
@@ -68,19 +68,18 @@ public abstract class BaseLinter extends AbstractLinter {
         }
       }
       end(connection);
-      catalog = null;
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
   }
 
   protected final void addCatalogLint(final String message) {
-    addLint(LintObjectType.catalog, catalog, message, null);
+    addLint(LintObjectType.catalog, getCatalog(), message, null);
   }
 
   protected final <V extends Serializable> void addCatalogLint(
       final String message, final V value) {
-    addLint(LintObjectType.catalog, catalog, message, value);
+    addLint(LintObjectType.catalog, getCatalog(), message, value);
   }
 
   protected final void addTableLint(final Table table, final String message) {
@@ -121,11 +120,11 @@ public abstract class BaseLinter extends AbstractLinter {
     if (!hasCrawlInfo()) {
       return null;
     }
-    return catalog.getCrawlInfo();
+    return getCatalog().getCrawlInfo();
   }
 
   protected final boolean hasCrawlInfo() {
-    return catalog != null && catalog.getCrawlInfo() != null;
+    return hasCatalog() && getCatalog().getCrawlInfo() != null;
   }
 
   protected abstract void lint(Table table, Connection connection);

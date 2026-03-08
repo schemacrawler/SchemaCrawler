@@ -42,7 +42,7 @@ public final class TemplateCommand
 
     final Map<String, Object> context = new HashMap<>();
     context.put("title", outputOptions.getTitle());
-    context.put("catalog", catalog);
+    context.put("catalog", getCatalog());
     context.put("identifiers", identifiers);
 
     templateRenderer.setResourceFilename(commandOptions.getScript());

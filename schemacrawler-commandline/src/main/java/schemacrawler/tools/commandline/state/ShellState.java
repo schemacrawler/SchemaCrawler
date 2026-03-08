@@ -19,12 +19,12 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigUtility;
-import schemacrawler.tools.state.AbstractExecutableState;
-import schemacrawler.tools.state.ExecutableState;
+import schemacrawler.tools.state.AbstractExecutionState;
+import schemacrawler.tools.state.ExecutionState;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.string.StringFormat;
 
-public class ShellState extends AbstractExecutableState implements ExecutableState, AutoCloseable {
+public class ShellState extends AbstractExecutionState implements ExecutionState, AutoCloseable {
 
   private static final Logger LOGGER = Logger.getLogger(ShellState.class.getName());
 

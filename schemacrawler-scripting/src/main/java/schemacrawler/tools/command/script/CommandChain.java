@@ -109,8 +109,10 @@ public final class CommandChain extends AbstractSchemaCrawlerCommand<LanguageOpt
         return null;
       }
 
-      scCommand.setCatalog(catalog);
-      scCommand.setERModel(erModel);
+      scCommand.setCatalog(getCatalog());
+      if (hasERModel()) {
+        scCommand.setERModel(getERModel());
+      }
       if (scCommand.usesConnection()) {
         scCommand.setConnectionSource(getConnectionSource());
       }

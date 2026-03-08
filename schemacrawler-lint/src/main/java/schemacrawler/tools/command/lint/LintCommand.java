@@ -53,7 +53,7 @@ public class LintCommand extends AbstractSchemaCrawlerCommand<LintOptions> {
       final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
       linters.initialize(linterRegistry);
 
-      linters.lint(catalog, getConnectionSource());
+      linters.lint(getCatalog(), getConnectionSource());
 
       // Produce the lint report
       final Lints lints = linters.getLints();
@@ -90,7 +90,7 @@ public class LintCommand extends AbstractSchemaCrawlerCommand<LintOptions> {
         final LintReportTextFormatter textFormatter =
             new LintReportTextFormatter(commandOptions, outputOptions, identifiers);
         final LintReportTextGenerator textGenerator = new LintReportTextGenerator();
-        textGenerator.setCatalog(catalog);
+        textGenerator.setCatalog(getCatalog());
         textGenerator.setHandler(textFormatter);
         lintReportGenerator = textGenerator;
     }

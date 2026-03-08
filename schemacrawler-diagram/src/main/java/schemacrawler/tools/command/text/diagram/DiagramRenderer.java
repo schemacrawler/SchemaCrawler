@@ -75,7 +75,8 @@ public final class DiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramO
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler(dotFileOutputOptions);
 
     final SchemaTraverser traverser = new SchemaTraverser();
-    traverser.setCatalog(catalog);
+    traverser.setCatalog(getCatalog());
+    // Note: No need to set connection source on the command
     traverser.setHandler(formatter);
     traverser.setTablesComparator(
         NamedObjectSort.getNamedObjectSort(commandOptions.isAlphabeticalSortForTables()));

@@ -17,7 +17,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 import static schemacrawler.tools.lint.LintUtility.LINTER_COMPARATOR;
 import static schemacrawler.tools.lint.LintUtility.LINT_COMPARATOR;
@@ -101,10 +100,6 @@ public class LinterTest {
 
     // Get columns
     assertThat(((BaseLinter) linter).getColumns(null), is(empty()));
-    // Add catalog lint, but it will throw since the catalog is cleared after linting
-    assertThrows(
-        NullPointerException.class,
-        () -> ((BaseLinter) linter).addCatalogLint("Test catalog lint"));
   }
 
   @Test

@@ -168,9 +168,11 @@ public class EmbeddedDiagramRenderer extends AbstractSchemaCrawlerCommand<Diagra
     scCommand.initialize();
 
     // Prepare to execute
-    scCommand.setCatalog(catalog);
-    scCommand.setERModel(erModel);
-    // Note: No need to set connection on the command
+    scCommand.setCatalog(getCatalog());
+    if (hasERModel()) {
+      scCommand.setERModel(getERModel());
+    }
+    // Note: No need to set connection source on the command
 
     // Execute
     scCommand.execute();
