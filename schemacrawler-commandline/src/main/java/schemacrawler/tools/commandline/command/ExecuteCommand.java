@@ -19,8 +19,6 @@ import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
-import schemacrawler.ermodel.model.ERModel;
-import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
@@ -33,7 +31,6 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -80,14 +77,17 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
       }
 
       final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
-      final DatabaseConnectionSource connectionSource = state.getConnectionSource();
-      final Catalog catalog = state.getCatalog();
-      final ERModel erModel = state.getERModel();
 
       executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
-      executable.setConnectionSource(connectionSource);
-      executable.setCatalog(catalog);
-      executable.setERModel(erModel);
+      if (state.hasConnectionSource()) {
+        executable.setConnectionSource(state.getConnectionSource());
+      }
+      if (state.hasCatalog()) {
+        executable.setCatalog(state.getCatalog());
+      }
+      if (state.hasERModel()) {
+        executable.setERModel(state.getERModel());
+      }
 
       executable.execute();
 

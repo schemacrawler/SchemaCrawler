@@ -65,7 +65,7 @@ public final class OperationCommand extends AbstractSchemaCrawlerCommand<Operati
     handler.begin();
 
     handler.handleHeaderStart();
-    handler.handleHeader(catalog.getCrawlInfo());
+    handler.handleHeader(getCatalog().getCrawlInfo());
     handler.handleHeaderEnd();
 
     if (query.isQueryOver()) {
@@ -83,7 +83,7 @@ public final class OperationCommand extends AbstractSchemaCrawlerCommand<Operati
 
       try (final Connection connection = getConnection();
           final Statement statement = createStatement(connection)) {
-        for (final Table table : getSortedTables(catalog)) {
+        for (final Table table : getSortedTables(getCatalog())) {
           final boolean isAlphabeticalSortForTableColumns =
               commandOptions.isAlphabeticalSortForTableColumns();
           try (final ResultSet results =

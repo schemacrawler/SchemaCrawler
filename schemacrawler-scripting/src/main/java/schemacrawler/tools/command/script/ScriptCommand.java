@@ -61,7 +61,7 @@ public final class ScriptCommand extends AbstractSchemaCrawlerCommand<ScriptOpti
         // Set up the context
         final Map<String, Object> context = new HashMap<>();
         context.put("title", outputOptions.getTitle());
-        context.put("catalog", catalog);
+        context.put("catalog", getCatalog());
         context.put("connection", connection);
         context.put("chain", new CommandChain(this));
 

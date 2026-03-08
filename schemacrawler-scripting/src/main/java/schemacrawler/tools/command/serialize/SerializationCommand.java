@@ -52,7 +52,7 @@ public final class SerializationCommand extends AbstractSchemaCrawlerCommand<Ser
       final Class<CatalogSerializer> serializableCatalogClass =
           (Class<CatalogSerializer>) Class.forName(serializerClassName);
       catalogSerializer =
-          serializableCatalogClass.getDeclaredConstructor(Catalog.class).newInstance(catalog);
+          serializableCatalogClass.getDeclaredConstructor(Catalog.class).newInstance(getCatalog());
     } catch (final Exception e) {
       throw new InternalRuntimeException(
           "Could not instantiate catalog serializer<%s>".formatted(serializerClassName), e);

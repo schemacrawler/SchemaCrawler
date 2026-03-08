@@ -40,7 +40,7 @@ public final class OfflineCatalogLoader extends AbstractCatalogLoader<OfflineCat
   @Override
   public void execute() {
 
-    if (isLoaded()) {
+    if (hasCatalog()) {
       return;
     }
 

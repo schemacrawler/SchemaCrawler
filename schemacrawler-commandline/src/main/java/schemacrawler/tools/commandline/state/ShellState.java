@@ -11,8 +11,6 @@ package schemacrawler.tools.commandline.state;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.ermodel.model.ERModel;
-import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.FilterOptions;
 import schemacrawler.schemacrawler.GrepOptions;
 import schemacrawler.schemacrawler.LimitOptions;
@@ -21,21 +19,18 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigUtility;
+import schemacrawler.tools.state.AbstractExecutionState;
+import schemacrawler.tools.state.ExecutionState;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.string.StringFormat;
 
-public class ShellState implements AutoCloseable {
+public class ShellState extends AbstractExecutionState implements ExecutionState, AutoCloseable {
 
   private static final Logger LOGGER = Logger.getLogger(ShellState.class.getName());
 
   private Config baseConfig;
   private Config commandOptions;
   private Config catalogLoaderOptions;
-  private Catalog catalog;
-  private ERModel erModel;
-
-  private DatabaseConnectionSource connectionSource;
-
   private Throwable lastException;
 
   private SchemaCrawlerOptions schemaCrawlerOptions;
@@ -48,20 +43,17 @@ public class ShellState implements AutoCloseable {
   }
 
   public void disconnect() {
+    final DatabaseConnectionSource connectionSource = getConnectionSource();
     if (connectionSource == null) {
       return;
     }
     try {
       connectionSource.close();
       LOGGER.log(Level.INFO, new StringFormat("Closing database connections"));
-      connectionSource = null;
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Cannot close database connections");
     }
-  }
-
-  public Catalog getCatalog() {
-    return catalog;
+    clearConnectionSource();
   }
 
   public Config getConfig() {
@@ -71,14 +63,6 @@ public class ShellState implements AutoCloseable {
     config.merge(catalogLoaderOptions);
 
     return config;
-  }
-
-  public DatabaseConnectionSource getConnectionSource() {
-    return connectionSource;
-  }
-
-  public ERModel getERModel() {
-    return erModel;
   }
 
   public Throwable getLastException() {
@@ -94,7 +78,7 @@ public class ShellState implements AutoCloseable {
   }
 
   public boolean isConnected() {
-    return connectionSource != null;
+    return hasConnectionSource();
   }
 
   public boolean isDeferCatalogLoad() {
@@ -102,7 +86,7 @@ public class ShellState implements AutoCloseable {
   }
 
   public boolean isLoaded() {
-    return catalog != null;
+    return hasCatalog();
   }
 
   public void setBaseConfig(final Config baseConfig) {
@@ -111,10 +95,6 @@ public class ShellState implements AutoCloseable {
     } else {
       this.baseConfig = ConfigUtility.newConfig();
     }
-  }
-
-  public void setCatalog(final Catalog catalog) {
-    this.catalog = catalog;
   }
 
   public void setCatalogLoaderOptions(final Map<String, Object> catalogLoaderOptions) {
@@ -133,16 +113,8 @@ public class ShellState implements AutoCloseable {
     }
   }
 
-  public void setConnectionSource(final DatabaseConnectionSource connectionSource) {
-    this.connectionSource = connectionSource;
-  }
-
   public void setDeferCatalogLoad(final boolean isDeferCatalogLoad) {
     this.isDeferCatalogLoad = isDeferCatalogLoad;
-  }
-
-  public void setERModel(ERModel erModel) {
-    this.erModel = erModel;
   }
 
   public void setLastException(final Throwable lastException) {
@@ -158,14 +130,13 @@ public class ShellState implements AutoCloseable {
   }
 
   public void sweep() {
-    catalog = null;
+    disconnect();
+    super.clear();
     baseConfig = null;
     commandOptions = null;
     schemaCrawlerOptions = null;
     schemaRetrievalOptions = null;
     lastException = null;
-
-    disconnect();
   }
 
   /** Update SchemaCrawler options by reassignment. */
