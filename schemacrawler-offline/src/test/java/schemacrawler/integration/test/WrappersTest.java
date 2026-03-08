@@ -13,7 +13,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineDatabaseConnectionSource;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -22,6 +21,7 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import schemacrawler.tools.offline.connectionsource.OfflineConnectionSourceUtility;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 
 public class WrappersTest {
@@ -36,7 +36,9 @@ public class WrappersTest {
 
   @Test
   public void createStatement() {
-    final Connection connection = newOfflineDatabaseConnectionSource(offlineDatabasePath).get();
+    final Connection connection =
+        OfflineConnectionSourceUtility.newOfflineDatabaseConnectionSource(offlineDatabasePath)
+            .get();
 
     assertThrows(
         InvocationTargetException.class,
@@ -54,7 +56,9 @@ public class WrappersTest {
 
   @Test
   public void prepareCall() {
-    final Connection connection = newOfflineDatabaseConnectionSource(offlineDatabasePath).get();
+    final Connection connection =
+        OfflineConnectionSourceUtility.newOfflineDatabaseConnectionSource(offlineDatabasePath)
+            .get();
 
     assertThrows(
         InvocationTargetException.class,
@@ -72,7 +76,9 @@ public class WrappersTest {
 
   @Test
   public void prepareStatement() {
-    final Connection connection = newOfflineDatabaseConnectionSource(offlineDatabasePath).get();
+    final Connection connection =
+        OfflineConnectionSourceUtility.newOfflineDatabaseConnectionSource(offlineDatabasePath)
+            .get();
 
     assertThrows(
         InvocationTargetException.class,
@@ -94,7 +100,9 @@ public class WrappersTest {
 
   @Test
   public void testConnectionMethodsForCoverage() throws Exception {
-    final Connection connection = newOfflineDatabaseConnectionSource(offlineDatabasePath).get();
+    final Connection connection =
+        OfflineConnectionSourceUtility.newOfflineDatabaseConnectionSource(offlineDatabasePath)
+            .get();
 
     String methodName;
 
@@ -129,7 +137,9 @@ public class WrappersTest {
 
   @Test
   public void testConnectionMethodsNoArguments() {
-    final Connection connection = newOfflineDatabaseConnectionSource(offlineDatabasePath).get();
+    final Connection connection =
+        OfflineConnectionSourceUtility.newOfflineDatabaseConnectionSource(offlineDatabasePath)
+            .get();
 
     for (final String methodName :
         new String[] {
