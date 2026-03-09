@@ -35,6 +35,7 @@ public class AvailablePluginsTest {
             "weakassociationsloader",
             "testloader",
             "attributesloader",
+            "offlineloader",
             "countsloader",
             "primarycatalogloader"));
   }

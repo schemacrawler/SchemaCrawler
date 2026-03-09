@@ -20,7 +20,6 @@ import static schemacrawler.test.utility.DatabaseTestUtility.validateSchema;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.OutputStream;
-import java.lang.reflect.Constructor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.zip.GZIPOutputStream;
@@ -29,9 +28,9 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
-import schemacrawler.tools.formatter.serialize.CatalogSerializationUtility;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.options.ConfigUtility;
+import schemacrawler.utility.SerializedCatalogUtility;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
@@ -60,8 +59,7 @@ public class CatalogSerializationUtilityTest {
     }
 
     // Deserialize using CatalogSerializationUtility
-    final Catalog catalogDeserialized =
-        CatalogSerializationUtility.deserializeCatalog(testOutputFile);
+    final Catalog catalogDeserialized = SerializedCatalogUtility.deserializeCatalog(testOutputFile);
     assertThat(catalogDeserialized, is(notNullValue()));
     validateSchema(catalogDeserialized);
   }
@@ -69,14 +67,6 @@ public class CatalogSerializationUtilityTest {
   @Test
   public void deserializeNullPath() {
     assertThrows(
-        NullPointerException.class, () -> CatalogSerializationUtility.deserializeCatalog(null));
-  }
-
-  @Test
-  public void privateConstructor() throws Exception {
-    final Constructor<CatalogSerializationUtility> constructor =
-        CatalogSerializationUtility.class.getDeclaredConstructor();
-    constructor.setAccessible(true);
-    assertThat(constructor.newInstance(), is(notNullValue()));
+        NullPointerException.class, () -> SerializedCatalogUtility.deserializeCatalog(null));
   }
 }
