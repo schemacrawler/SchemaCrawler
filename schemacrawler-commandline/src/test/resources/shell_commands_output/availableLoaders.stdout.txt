@@ -2,6 +2,7 @@
 Available SchemaCrawler Catalog Loaders:
   attributesloader        Loader for catalog attributes, such as remarks or tags
   countsloader            Loader for table row counts
+  offlineloader           Loader for offline databases
   primarycatalogloader    Loader for SchemaCrawler metadata catalog
   testloader              Loader for testing
   weakassociationsloader  Loader for weak associations
