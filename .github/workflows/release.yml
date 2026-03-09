@@ -106,7 +106,7 @@ jobs:
 # BUILD AND PUBLISH DOCKER IMAGE
     - id: setup-qemu
       name: Setup QEMU
-      uses: docker/setup-qemu-action@v3
+      uses: docker/setup-qemu-action@v4
 
     - id: setup-buildx
       name: Setup Docker Buildx
