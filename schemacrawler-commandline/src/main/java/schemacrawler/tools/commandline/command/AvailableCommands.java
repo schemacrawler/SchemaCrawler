@@ -10,7 +10,7 @@ package schemacrawler.tools.commandline.command;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import schemacrawler.tools.executable.CommandRegistry;
+import schemacrawler.tools.command.CommandRegistry;
 import us.fatehi.utility.property.PropertyName;
 
 public class AvailableCommands extends BaseAvailableRegistryPlugins {
@@ -30,8 +30,8 @@ public class AvailableCommands extends BaseAvailableRegistryPlugins {
             String.join(
                 "\n",
                 "Show results of SQL <query>",
-                "The query itself can contain the variables ${table}, ${columns} "
-                    + "and ${tabletype}, or system properties referenced as ${<system-property-name>}",
+                "The query itself can contain the variables ${table}, ${columns} and ${tabletype},"
+                    + " or system properties referenced as ${<system-property-name>}",
                 "Queries without any variables are executed exactly once",
                 "Queries with variables are executed once for each table, "
                     + "with the variables substituted")));

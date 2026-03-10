@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
-import schemacrawler.tools.executable.CommandOptions;
+import schemacrawler.tools.command.CommandOptions;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigUtility;

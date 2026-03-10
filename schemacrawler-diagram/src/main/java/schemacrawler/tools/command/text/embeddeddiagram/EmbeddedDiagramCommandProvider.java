@@ -8,17 +8,17 @@
 
 package schemacrawler.tools.command.text.embeddeddiagram;
 
+import schemacrawler.tools.command.AbstractSchemaCrawlerCommandProvider;
 import schemacrawler.tools.command.text.diagram.GraphExecutorFactory;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.options.CommandProviderUtility;
-import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import us.fatehi.utility.property.PropertyName;
 
-public final class EmbeddedDiagramCommandProvider extends BaseCommandProvider {
+public final class EmbeddedDiagramCommandProvider extends AbstractSchemaCrawlerCommandProvider {
 
   public EmbeddedDiagramCommandProvider() {
     super(CommandProviderUtility.schemaTextCommands());

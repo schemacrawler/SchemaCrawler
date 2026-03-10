@@ -12,17 +12,17 @@ import static schemacrawler.tools.command.lint.LintCommand.COMMAND;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 
 import java.nio.file.Path;
+import schemacrawler.tools.command.AbstractSchemaCrawlerCommandProvider;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
-import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LinterHelp;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
-public class LintCommandProvider extends BaseCommandProvider {
+public class LintCommandProvider extends AbstractSchemaCrawlerCommandProvider {
 
   public LintCommandProvider() {
     super(COMMAND);

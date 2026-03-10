@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.tools.executable.AbstractCommand;
+import schemacrawler.tools.command.AbstractCommand;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.property.PropertyName;

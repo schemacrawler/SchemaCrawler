@@ -8,6 +8,6 @@
 
 package schemacrawler.tools.command.serialize.options;
 
-import schemacrawler.tools.executable.CommandOptions;
+import schemacrawler.tools.command.CommandOptions;
 
 public class SerializationOptions implements CommandOptions {}

@@ -8,9 +8,9 @@
 
 package schemacrawler.tools.command.text.schema;
 
+import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
-import schemacrawler.tools.executable.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.text.formatter.schema.SchemaListFormatter;
 import schemacrawler.tools.text.formatter.schema.SchemaTextFormatter;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
