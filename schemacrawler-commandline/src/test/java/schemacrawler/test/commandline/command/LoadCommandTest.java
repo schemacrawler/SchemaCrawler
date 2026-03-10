@@ -39,8 +39,8 @@ import us.fatehi.test.utility.extensions.CaptureLogs;
 import us.fatehi.test.utility.extensions.CapturedLogs;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
-import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @ResolveTestContext
 @WithTestDatabase
@@ -97,7 +97,7 @@ public class LoadCommandTest {
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
-    state.setConnectionSource(new ConnectionDatabaseConnectionSource(connection));
+    state.setConnectionSource(DatabaseConnectionSources.fromConnection(connection));
     assertThat(state.getCatalog(), is(nullValue()));
 
     final LoadCommand optionsParser = new LoadCommand(state);

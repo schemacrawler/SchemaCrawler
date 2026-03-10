@@ -31,8 +31,8 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.utility.extensions.WithSystemProperty;
-import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @DisableLogging
 public class CalciteTest extends BaseAdditionalDatabaseTest {
@@ -49,7 +49,7 @@ public class CalciteTest extends BaseAdditionalDatabaseTest {
     final Properties info = new Properties();
     info.put("model", directoryPath.toString());
     final Connection connection = DriverManager.getConnection("jdbc:calcite:", info);
-    connectionSource = new ConnectionDatabaseConnectionSource(connection);
+    connectionSource = DatabaseConnectionSources.fromConnection(connection);
   }
 
   @Test

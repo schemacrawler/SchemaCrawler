@@ -34,8 +34,8 @@ import us.fatehi.test.utility.extensions.CaptureSystemStreams;
 import us.fatehi.test.utility.extensions.CapturedSystemStreams;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
-import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @ResolveTestContext
 @WithTestDatabase
@@ -100,7 +100,7 @@ public class SystemCommandTest {
     final Connection connection = mock(Connection.class);
 
     final ShellState state = new ShellState();
-    state.setConnectionSource(new ConnectionDatabaseConnectionSource(connection));
+    state.setConnectionSource(DatabaseConnectionSources.fromConnection(connection));
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
