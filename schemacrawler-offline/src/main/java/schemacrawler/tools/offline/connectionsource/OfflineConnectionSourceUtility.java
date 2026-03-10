@@ -13,6 +13,7 @@ import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.offline.jdbc.OfflineConnectionUtility;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
 @UtilityMarker
 public class OfflineConnectionSourceUtility {
@@ -21,7 +22,7 @@ public class OfflineConnectionSourceUtility {
       final Path offlineDatabasePath) {
     final OfflineConnection offlineConnection =
         OfflineConnectionUtility.newOfflineConnection(offlineDatabasePath);
-    return new OfflineDatabaseConnectionSource(offlineConnection);
+    return DatabaseConnectionSources.fromConnection(offlineConnection);
   }
 
   private OfflineConnectionSourceUtility() {
