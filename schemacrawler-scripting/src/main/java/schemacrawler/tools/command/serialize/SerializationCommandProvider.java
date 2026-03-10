@@ -11,14 +11,14 @@ package schemacrawler.tools.command.serialize;
 import static schemacrawler.tools.command.serialize.SerializationCommand.COMMAND;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 
+import schemacrawler.tools.command.AbstractSchemaCrawlerCommandProvider;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.command.serialize.options.SerializationOptions;
-import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
-public class SerializationCommandProvider extends BaseCommandProvider {
+public class SerializationCommandProvider extends AbstractSchemaCrawlerCommandProvider {
 
   public SerializationCommandProvider() {
     super(COMMAND);

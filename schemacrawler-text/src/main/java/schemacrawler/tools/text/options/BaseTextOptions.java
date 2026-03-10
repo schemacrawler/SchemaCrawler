@@ -11,7 +11,7 @@ package schemacrawler.tools.text.options;
 import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.IdentifierQuotingStrategy;
-import schemacrawler.tools.executable.CommandOptions;
+import schemacrawler.tools.command.CommandOptions;
 
 public abstract class BaseTextOptions implements CommandOptions {
 

@@ -12,7 +12,7 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.util.Optional;
-import schemacrawler.tools.executable.CommandOptions;
+import schemacrawler.tools.command.CommandOptions;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
 

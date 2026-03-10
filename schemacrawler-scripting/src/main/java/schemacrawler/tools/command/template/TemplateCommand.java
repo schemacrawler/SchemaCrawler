@@ -13,8 +13,8 @@ import static java.util.Objects.requireNonNull;
 import java.util.HashMap;
 import java.util.Map;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
+import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
-import schemacrawler.tools.executable.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.scripting.options.LanguageOptions;
 import us.fatehi.utility.property.PropertyName;
 

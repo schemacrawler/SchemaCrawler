@@ -12,9 +12,9 @@ import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConf
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
-import schemacrawler.tools.executable.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.lint.LinterRegistry;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.Lints;

@@ -11,17 +11,17 @@ package schemacrawler.tools.command.text.operation;
 import java.util.ArrayList;
 import java.util.Collection;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.command.AbstractSchemaCrawlerCommandProvider;
 import schemacrawler.tools.command.text.operation.options.OperationOptions;
 import schemacrawler.tools.command.text.operation.options.OperationOptionsBuilder;
 import schemacrawler.tools.command.text.operation.options.OperationType;
 import schemacrawler.tools.command.text.operation.options.OperationsOutputFormat;
-import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import us.fatehi.utility.property.PropertyName;
 
-public final class OperationCommandProvider extends BaseCommandProvider {
+public final class OperationCommandProvider extends AbstractSchemaCrawlerCommandProvider {
 
   private static Collection<PropertyName> operationCommands() {
     final Collection<PropertyName> supportedCommands = new ArrayList<>();

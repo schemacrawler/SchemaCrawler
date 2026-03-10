@@ -11,15 +11,15 @@ package schemacrawler.tools.command.template;
 import static schemacrawler.tools.command.template.TemplateCommand.COMMAND;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 
+import schemacrawler.tools.command.AbstractSchemaCrawlerCommandProvider;
 import schemacrawler.tools.command.template.options.TemplateLanguageOptionsBuilder;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
-import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.scripting.options.LanguageOptions;
 
-public class TemplateCommandProvider extends BaseCommandProvider {
+public class TemplateCommandProvider extends AbstractSchemaCrawlerCommandProvider {
 
   public TemplateCommandProvider() {
     super(COMMAND);

@@ -8,7 +8,7 @@
 
 package schemacrawler.tools.lint;
 
-import schemacrawler.tools.executable.ExecutableCommand;
+import schemacrawler.tools.command.ExecutableCommand;
 import schemacrawler.tools.lint.config.LinterConfig;
 
 public interface Linter extends ExecutableCommand<LinterConfig> {
