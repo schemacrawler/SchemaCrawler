@@ -131,7 +131,7 @@ jobs:
 
     - id: meta
       name: Set up Docker metadata
-      uses: docker/metadata-action@v5
+      uses: docker/metadata-action@v6
       with:
         images: |
           ${{ env.DOCKER_IMAGE_NAME }}
