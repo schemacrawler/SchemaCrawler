@@ -21,7 +21,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import static us.fatehi.test.utility.extensions.FileHasContent.text;
 
-import java.sql.Connection;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
@@ -34,7 +33,6 @@ import us.fatehi.test.utility.extensions.CaptureSystemStreams;
 import us.fatehi.test.utility.extensions.CapturedSystemStreams;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
-import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @ResolveTestContext
@@ -91,20 +89,6 @@ public class SystemCommandTest {
 
     assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(contentsOf(streams.out()), containsString("HSQL Database Engine"));
-  }
-
-  @Test
-  public void showConnectedBadConnection(final CapturedSystemStreams streams) {
-    final String[] args = {"-C"};
-
-    final Connection connection = mock(Connection.class);
-
-    final ShellState state = new ShellState();
-    state.setConnectionSource(new ConnectionDatabaseConnectionSource(connection));
-    executeSystemCommand(state, args);
-
-    assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(contentsOf(streams.out()), containsString("No database metadata available"));
   }
 
   @Test

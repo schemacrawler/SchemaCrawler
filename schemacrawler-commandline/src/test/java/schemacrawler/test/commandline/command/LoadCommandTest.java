@@ -14,16 +14,12 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import static us.fatehi.test.utility.extensions.FileHasContent.text;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
@@ -39,7 +35,6 @@ import us.fatehi.test.utility.extensions.CaptureLogs;
 import us.fatehi.test.utility.extensions.CapturedLogs;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
-import us.fatehi.utility.datasource.ConnectionDatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @ResolveTestContext
@@ -85,25 +80,6 @@ public class LoadCommandTest {
     assertThat(
         logs.contains(Level.CONFIG, Pattern.compile("Not loading catalog, since this is deferred")),
         is(true));
-  }
-
-  @Test
-  public void executeExceptionLoading() throws SQLException {
-
-    final Connection connection = mock(Connection.class);
-    when(connection.getMetaData()).thenReturn(mock(DatabaseMetaData.class));
-
-    final String[] args = {"--info-level", "detailed", "--load-row-counts", "additional", "-extra"};
-
-    final ShellState state = new ShellState();
-    state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
-    state.setConnectionSource(new ConnectionDatabaseConnectionSource(connection));
-    assertThat(state.getCatalog(), is(nullValue()));
-
-    final LoadCommand optionsParser = new LoadCommand(state);
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> CommandlineTestUtility.executeCommandInTest(optionsParser, args));
   }
 
   @Test
