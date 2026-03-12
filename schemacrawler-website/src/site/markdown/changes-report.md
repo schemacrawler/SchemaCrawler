@@ -8,6 +8,7 @@ SchemaCrawler release notes.
 
 - Add `KeyClass` to identify candidate keys
 - Add an ER model loader for implicit associations
+- Load catalog and ER loaders statically and not via the service loader interface
 
 
 <a name="v17.7.0"></a>
