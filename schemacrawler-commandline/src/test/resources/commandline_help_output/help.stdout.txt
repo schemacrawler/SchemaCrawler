@@ -80,7 +80,6 @@ Specify the database password using one of these options
 
 For additional options, specific to individual database server plugins,
 run SchemaCrawler with: `-h servers`
-or from the SchemaCrawler interactive shell: `help servers`
 
 
 ** Limit database object metadata
@@ -278,7 +277,6 @@ Options:
 
 For additional options, specific to individual catalog loaders,
 run SchemaCrawler with: `-h loaders`
-or from the SchemaCrawler interactive shell: `help loaders`
 
 
 ** Show the commonly needed detail of the schema, including details of tables,
@@ -379,6 +377,5 @@ Options:
 
 For additional options, specific to individual SchemaCrawler commands,
 run SchemaCrawler with: `-h commands`
-or from the SchemaCrawler interactive shell: `help commands`
 
 

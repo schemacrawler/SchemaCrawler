@@ -31,8 +31,6 @@ public class AvailableCatalogLoadersCommand implements Runnable {
       System.out.println(
           "  run SchemaCrawler with options like: `-h loader:weakassociationsloader`");
       System.out.println(
-          "  or, from the SchemaCrawler interactive shell: `help loader:weakassociationsloader`");
-      System.out.println(
           "- Options for the catalog loaders should be provided with the `load` command");
     }
   }

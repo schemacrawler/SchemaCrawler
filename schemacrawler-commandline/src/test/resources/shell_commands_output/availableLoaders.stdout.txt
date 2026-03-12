@@ -9,5 +9,4 @@ Available SchemaCrawler Catalog Loaders:
 Notes:
 - For help on an individual catalog loader,
   run SchemaCrawler with options like: `-h loader:weakassociationsloader`
-  or, from the SchemaCrawler interactive shell: `help loader:weakassociationsloader`
 - Options for the catalog loaders should be provided with the `load` command
