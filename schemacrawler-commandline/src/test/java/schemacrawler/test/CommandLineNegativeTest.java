@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import schemacrawler.Main;
-import schemacrawler.test.utility.TestCatalogLoaderProvider;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import us.fatehi.test.utility.DatabaseConnectionInfo;
@@ -50,26 +49,6 @@ public class CommandLineNegativeTest {
 
     restoreSystemProperties(
         () -> {
-          System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
-          assertThrows(
-              SystemExitException.class,
-              () -> run(testContext, argsMapOverride, connectionInfo, streams));
-        });
-  }
-
-  @Test
-  public void mainForceCatalogError(
-      final TestContext testContext,
-      final DatabaseConnectionInfo connectionInfo,
-      final CapturedSystemStreams streams)
-      throws Exception {
-
-    final Map<String, String> argsMapOverride = new HashMap<>();
-
-    restoreSystemProperties(
-        () -> {
-          System.setProperty(
-              TestCatalogLoaderProvider.class.getName() + ".force-load-failure", "throw");
           System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
           assertThrows(
               SystemExitException.class,

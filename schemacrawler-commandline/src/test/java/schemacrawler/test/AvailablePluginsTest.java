@@ -33,7 +33,6 @@ public class AvailablePluginsTest {
         new AvailableCatalogLoaders(),
         containsInAnyOrder(
             "weakassociationsloader",
-            "testloader",
             "attributesloader",
             "offlineloader",
             "countsloader",
