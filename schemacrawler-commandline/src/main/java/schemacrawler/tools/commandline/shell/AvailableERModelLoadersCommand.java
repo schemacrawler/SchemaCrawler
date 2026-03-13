@@ -12,11 +12,11 @@ import picocli.CommandLine.Command;
 import schemacrawler.tools.commandline.command.AvailableERModelLoaders;
 
 @Command(
-    name = "loaders",
+    name = "ermodelloaders",
     header = "** List available ER model loaders",
     headerHeading = "",
     synopsisHeading = "Shell Command:%n",
-    customSynopsis = {"loaders"},
+    customSynopsis = {"ermodelloaders"},
     optionListHeading = "Options:%n")
 public class AvailableERModelLoadersCommand implements Runnable {
 

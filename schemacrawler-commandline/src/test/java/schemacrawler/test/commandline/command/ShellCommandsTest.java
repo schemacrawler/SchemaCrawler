@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.tools.commandline.shell.AvailableCatalogLoadersCommand;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
+import schemacrawler.tools.commandline.shell.AvailableERModelLoadersCommand;
 import schemacrawler.tools.commandline.shell.AvailableServersCommand;
 import schemacrawler.tools.commandline.shell.ExitCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
@@ -37,6 +38,19 @@ public class ShellCommandsTest {
   private static final String SHELL_COMMANDS_OUTPUT = "shell_commands_output/";
 
   @Test
+  public void availableCatalogLoaders(
+      final TestContext testContext, final CapturedSystemStreams streams) {
+    new AvailableCatalogLoadersCommand().run();
+
+    assertThat(outputOf(streams.err()), hasNoContent());
+    assertThat(
+        outputOf(streams.out()),
+        hasSameContentAs(
+            classpathResource(
+                SHELL_COMMANDS_OUTPUT + testContext.testMethodName() + ".stdout.txt")));
+  }
+
+  @Test
   public void availableCommands(
       final TestContext testContext, final CapturedSystemStreams streams) {
     new AvailableCommandsCommand().run();
@@ -50,8 +64,9 @@ public class ShellCommandsTest {
   }
 
   @Test
-  public void availableLoaders(final TestContext testContext, final CapturedSystemStreams streams) {
-    new AvailableCatalogLoadersCommand().run();
+  public void availableERModelLoaders(
+      final TestContext testContext, final CapturedSystemStreams streams) {
+    new AvailableERModelLoadersCommand().run();
 
     assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(
