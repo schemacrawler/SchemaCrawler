@@ -25,6 +25,7 @@ import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.scripting.options.LanguageOptions;
+import schemacrawler.tools.utility.ExecutionStateUtility;
 import us.fatehi.utility.property.PropertyName;
 
 /**
@@ -61,11 +62,7 @@ public final class CommandChain extends AbstractSchemaCrawlerCommand<LanguageOpt
     setSchemaCrawlerOptions(scCommand.getSchemaCrawlerOptions());
     setOutputOptions(scCommand.getOutputOptions());
 
-    setCatalog(scCommand.getCatalog());
-    setERModel(scCommand.getERModel());
-    if (usesConnection()) {
-      setConnectionSource(scCommand.getConnectionSource());
-    }
+    ExecutionStateUtility.transferState(scCommand, this);
     setIdentifiers(scCommand.getIdentifiers());
     setInformationSchemaViews(scCommand.getInformationSchemaViews());
   }
@@ -109,13 +106,7 @@ public final class CommandChain extends AbstractSchemaCrawlerCommand<LanguageOpt
         return null;
       }
 
-      scCommand.setCatalog(getCatalog());
-      if (hasERModel()) {
-        scCommand.setERModel(getERModel());
-      }
-      if (scCommand.usesConnection()) {
-        scCommand.setConnectionSource(getConnectionSource());
-      }
+      ExecutionStateUtility.transferState(this, scCommand);
       scCommand.setIdentifiers(identifiers);
       scCommand.setInformationSchemaViews(informationSchemaViews);
 

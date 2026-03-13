@@ -92,8 +92,9 @@ public class LintTest {
     final Linters linters = new Linters(linterConfigs, true);
     final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
     linters.initialize(linterRegistry);
-
-    linters.lint(catalog, connectionSource);
+    linters.setCatalog(catalog);
+    linters.setConnectionSource(connectionSource);
+    linters.lint();
     final Lints lintReport = linters.getLints();
     assertThat(lintReport.size(), is(53));
 
@@ -140,8 +141,9 @@ public class LintTest {
     final Linters linters = new Linters(linterConfigs, true);
     final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
     linters.initialize(linterRegistry);
-
-    linters.lint(catalog, connectionSource);
+    linters.setCatalog(catalog);
+    linters.setConnectionSource(connectionSource);
+    linters.lint();
     final Lints lintReport = linters.getLints();
     assertThat(lintReport.size(), is(42));
 
@@ -191,8 +193,9 @@ public class LintTest {
     final Linters linters = new Linters(linterConfigs, false);
     final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
     linters.initialize(linterRegistry);
-
-    linters.lint(catalog, connectionSource);
+    linters.setCatalog(catalog);
+    linters.setConnectionSource(connectionSource);
+    linters.lint();
     final Lints lintReport = linters.getLints();
 
     assertThat(
@@ -224,7 +227,9 @@ public class LintTest {
 
     assertThat("All linters should be turned off", linters.size(), is(0));
 
-    linters.lint(catalog, connectionSource);
+    linters.setCatalog(catalog);
+    linters.setConnectionSource(connectionSource);
+    linters.lint();
     final Lints lintReport = linters.getLints();
     assertThat(
         "All linters should be turned off, so there should be no lints", lintReport.size(), is(0));
