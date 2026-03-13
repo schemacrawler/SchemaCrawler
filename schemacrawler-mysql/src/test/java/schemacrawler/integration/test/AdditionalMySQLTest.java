@@ -18,7 +18,6 @@ import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_diction
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.tools.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
 import static us.fatehi.test.integration.utility.MySQLTestUtility.newMySQLContainer;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
@@ -50,6 +49,7 @@ import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.utility.DatabaseConnectorUtility;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.test.integration.utility.MySQLTestUtility;
 import us.fatehi.test.utility.TestWriter;
@@ -145,7 +145,8 @@ public class AdditionalMySQLTest extends BaseAdditionalDatabaseTest {
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         SchemaRetrievalOptionsBuilder.builder()
-            .fromOptions(matchSchemaRetrievalOptions(getConnectionSource()))
+            .fromOptions(
+                DatabaseConnectorUtility.matchSchemaRetrievalOptions(getConnectionSource()))
             .with(tableColumnsRetrievalStrategy, data_dictionary_all);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
 

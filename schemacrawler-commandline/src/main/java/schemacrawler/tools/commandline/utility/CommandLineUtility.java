@@ -31,6 +31,7 @@ import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.CommandRegistry;
 import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
 import schemacrawler.tools.commandline.command.AvailableCommands;
+import schemacrawler.tools.commandline.command.AvailableERModelLoaders;
 import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
 import schemacrawler.tools.commandline.command.AvailableServers;
 import schemacrawler.tools.commandline.state.ShellState;
@@ -186,6 +187,7 @@ public class CommandLineUtility {
     new AvailableJDBCDrivers().printHelp(System.out);
     new AvailableServers().printHelp(System.out);
     new AvailableCatalogLoaders().printHelp(System.out);
+    new AvailableERModelLoaders().printHelp(System.out);
     new AvailableCommands().printHelp(System.out);
   }
 

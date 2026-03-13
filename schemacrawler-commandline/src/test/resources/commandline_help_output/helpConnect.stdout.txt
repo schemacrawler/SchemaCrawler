@@ -40,6 +40,5 @@ Specify the database password using one of these options
 
 For additional options, specific to individual database server plugins,
 run SchemaCrawler with: `-h servers`
-or from the SchemaCrawler interactive shell: `help servers`
 
 

@@ -46,7 +46,6 @@ import us.fatehi.utility.string.StringFormat;
       "",
       "For additional options, specific to individual SchemaCrawler commands,",
       "run SchemaCrawler with: `-h commands`",
-      "or from the SchemaCrawler interactive shell: `help commands`"
     })
 public class ExecuteCommand extends BaseStateHolder implements Runnable {
 

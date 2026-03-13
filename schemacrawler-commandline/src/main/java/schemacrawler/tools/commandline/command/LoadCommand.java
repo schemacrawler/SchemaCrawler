@@ -44,7 +44,6 @@ import us.fatehi.utility.string.StringFormat;
       "",
       "For additional options, specific to individual catalog loaders,",
       "run SchemaCrawler with: `-h loaders`",
-      "or from the SchemaCrawler interactive shell: `help loaders`"
     })
 public class LoadCommand extends BaseStateHolder implements Runnable {
 

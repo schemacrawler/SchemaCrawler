@@ -14,7 +14,6 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
-import static schemacrawler.tools.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -25,6 +24,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.test.utility.crawl.LightCatalogUtility;
+import schemacrawler.tools.utility.DatabaseConnectorUtility;
 import us.fatehi.test.utility.TestObjectUtility;
 import us.fatehi.test.utility.extensions.WithSystemProperty;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -38,7 +38,7 @@ public class MatchSchemaRetrievalOptionsTest {
   public void matchSchemaRetrievalOptions0A(final DatabaseConnectionSource connectionSource)
       throws Exception {
     final SchemaRetrievalOptions schemaRetrievalOptions =
-        matchSchemaRetrievalOptions(connectionSource);
+        DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
     final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
     assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("hsqldb"));
   }
@@ -49,7 +49,7 @@ public class MatchSchemaRetrievalOptionsTest {
   public void matchSchemaRetrievalOptions0B(final DatabaseConnectionSource connectionSource)
       throws Exception {
     final SchemaRetrievalOptions schemaRetrievalOptions =
-        matchSchemaRetrievalOptions(connectionSource);
+        DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
     final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
     assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("hsqldb"));
   }
@@ -60,7 +60,7 @@ public class MatchSchemaRetrievalOptionsTest {
   public void matchSchemaRetrievalOptions1(final DatabaseConnectionSource connectionSource)
       throws Exception {
     final SchemaRetrievalOptions schemaRetrievalOptions =
-        matchSchemaRetrievalOptions(connectionSource);
+        DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
     final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
     assertThat(databaseServerType.isUnknownDatabaseSystem(), is(true));
   }
@@ -76,7 +76,8 @@ public class MatchSchemaRetrievalOptionsTest {
 
     final InternalRuntimeException exception =
         assertThrows(
-            InternalRuntimeException.class, () -> matchSchemaRetrievalOptions(connectionSource));
+            InternalRuntimeException.class,
+            () -> DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource));
     assertThat(exception.getMessage(), containsString(fakeOracleUrl));
   }
 
@@ -91,7 +92,7 @@ public class MatchSchemaRetrievalOptionsTest {
         mockConnectionForUrl(fakeOracleUrl, "Mock Oracle connection");
 
     final SchemaRetrievalOptions schemaRetrievalOptions =
-        matchSchemaRetrievalOptions(connectionSource);
+        DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
     final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
     assertThat(databaseServerType.isUnknownDatabaseSystem(), is(true));
   }

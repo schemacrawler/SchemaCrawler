@@ -49,6 +49,7 @@ import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.utility.DatabaseConnectorUtility;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.test.utility.TestUtility;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
@@ -124,7 +125,7 @@ public class DiagramOutputTest {
     schemaCrawlerOptions = schemaCrawlerOptions.withLimitOptions(limitOptionsBuilder.toOptions());
 
     SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaCrawlerUtility.matchSchemaRetrievalOptions(connectionSource);
+        DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
     schemaRetrievalOptions =
         SchemaRetrievalOptionsBuilder.builder(schemaRetrievalOptions)
             .withEnumDataTypeHelper(enumHelper)

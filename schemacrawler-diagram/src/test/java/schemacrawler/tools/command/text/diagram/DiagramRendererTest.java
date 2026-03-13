@@ -38,6 +38,7 @@ import schemacrawler.tools.command.text.embeddeddiagram.EmbeddedDiagramRenderer;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.utility.DatabaseConnectorUtility;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.test.utility.TestUtility;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
@@ -75,7 +76,7 @@ public class DiagramRendererTest {
     }
 
     final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaCrawlerUtility.matchSchemaRetrievalOptions(connectionSource);
+        DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
     scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
     scCommand.setInformationSchemaViews(schemaRetrievalOptions.getInformationSchemaViews());
 
@@ -130,7 +131,7 @@ public class DiagramRendererTest {
     schemaCrawlerOptions = schemaCrawlerOptions.withLimitOptions(limitOptionsBuilder.toOptions());
 
     SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaCrawlerUtility.matchSchemaRetrievalOptions(connectionSource);
+        DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
     schemaRetrievalOptions =
         SchemaRetrievalOptionsBuilder.builder(schemaRetrievalOptions).toOptions();
 

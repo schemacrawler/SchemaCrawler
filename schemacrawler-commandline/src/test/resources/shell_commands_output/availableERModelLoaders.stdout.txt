@@ -1,0 +1,9 @@
+
+Available ER Model Loaders:
+  implicitassociationsloader  Loader for implicit associations in ER Model
+  primarymodelloader          Loader for ER Model
+
+Notes:
+- For help on an individual ER model loader,
+  run SchemaCrawler with options like: `-h loader:implicitassociationsloader`
+- Options for the ER model loaders should be provided with the `load` command

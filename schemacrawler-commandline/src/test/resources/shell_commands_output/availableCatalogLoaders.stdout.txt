@@ -4,11 +4,9 @@ Available SchemaCrawler Catalog Loaders:
   countsloader            Loader for table row counts
   offlineloader           Loader for offline databases
   primarycatalogloader    Loader for SchemaCrawler metadata catalog
-  testloader              Loader for testing
   weakassociationsloader  Loader for weak associations
 
 Notes:
 - For help on an individual catalog loader,
   run SchemaCrawler with options like: `-h loader:weakassociationsloader`
-  or, from the SchemaCrawler interactive shell: `help loader:weakassociationsloader`
 - Options for the catalog loaders should be provided with the `load` command

@@ -111,6 +111,8 @@ public final class CommandLineHelpCommand implements Runnable {
             Stream.of("log", "config-file", "connect", "limit", "grep", "filter"),
             new AvailableCatalogLoaders()
                 .stream().map(PluginCommandType.loader::toPluginCommandName),
+            new AvailableERModelLoaders()
+                .stream().map(PluginCommandType.loader::toPluginCommandName),
             Stream.of("load"),
             new AvailableCommands().stream().map(PluginCommandType.command::toPluginCommandName),
             Stream.of("execute"))

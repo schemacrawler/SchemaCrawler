@@ -22,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.Test;
 import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
 import schemacrawler.tools.commandline.command.AvailableCommands;
+import schemacrawler.tools.commandline.command.AvailableERModelLoaders;
 import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
 import schemacrawler.tools.commandline.command.AvailableServers;
 
@@ -33,7 +34,6 @@ public class AvailablePluginsTest {
         new AvailableCatalogLoaders(),
         containsInAnyOrder(
             "weakassociationsloader",
-            "testloader",
             "attributesloader",
             "offlineloader",
             "countsloader",
@@ -46,6 +46,13 @@ public class AvailablePluginsTest {
         new AvailableCommands(),
         contains(
             "brief", "count", "details", "dump", "list", "schema", "tablesample", "test-command"));
+  }
+
+  @Test
+  public void availableERModelLoaders() {
+    assertThat(
+        new AvailableERModelLoaders(),
+        containsInAnyOrder("implicitassociationsloader", "primarymodelloader"));
   }
 
   @Test

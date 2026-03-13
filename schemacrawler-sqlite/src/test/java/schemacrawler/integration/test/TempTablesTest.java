@@ -26,6 +26,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.tools.options.ConfigUtility;
+import schemacrawler.tools.utility.DatabaseConnectorUtility;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.database.SqlScript;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -54,7 +55,7 @@ public class TempTablesTest extends BaseSqliteTest {
     final Catalog catalog =
         SchemaCrawlerUtility.getCatalog(
             connectionSource,
-            SchemaCrawlerUtility.matchSchemaRetrievalOptions(connectionSource),
+            DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource),
             schemaCrawlerOptions,
             ConfigUtility.newConfig());
     final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);

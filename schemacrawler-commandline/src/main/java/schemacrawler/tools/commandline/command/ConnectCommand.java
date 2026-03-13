@@ -57,7 +57,6 @@ import us.fatehi.utility.string.StringFormat;
       "",
       "For additional options, specific to individual database server plugins,",
       "run SchemaCrawler with: `-h servers`",
-      "or from the SchemaCrawler interactive shell: `help servers`"
     })
 public class ConnectCommand extends BaseStateHolder implements Runnable {
 

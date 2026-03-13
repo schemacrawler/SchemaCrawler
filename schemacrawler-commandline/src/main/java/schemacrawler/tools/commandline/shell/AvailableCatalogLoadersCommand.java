@@ -12,11 +12,11 @@ import picocli.CommandLine.Command;
 import schemacrawler.tools.commandline.command.AvailableCatalogLoaders;
 
 @Command(
-    name = "loaders",
+    name = "catalogloaders",
     header = "** List available SchemaCrawler catalog loaders",
     headerHeading = "",
     synopsisHeading = "Shell Command:%n",
-    customSynopsis = {"loaders"},
+    customSynopsis = {"catalogloaders"},
     optionListHeading = "Options:%n")
 public class AvailableCatalogLoadersCommand implements Runnable {
 
@@ -30,8 +30,6 @@ public class AvailableCatalogLoadersCommand implements Runnable {
       System.out.println("- For help on an individual catalog loader,");
       System.out.println(
           "  run SchemaCrawler with options like: `-h loader:weakassociationsloader`");
-      System.out.println(
-          "  or, from the SchemaCrawler interactive shell: `help loader:weakassociationsloader`");
       System.out.println(
           "- Options for the catalog loaders should be provided with the `load` command");
     }
