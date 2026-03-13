@@ -39,6 +39,7 @@ import schemacrawler.tools.command.text.schema.SchemaTextRenderer;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.utility.ExecutionStateUtility;
 import us.fatehi.utility.property.PropertyName;
 
 public class EmbeddedDiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramOptions> {
@@ -168,11 +169,7 @@ public class EmbeddedDiagramRenderer extends AbstractSchemaCrawlerCommand<Diagra
     scCommand.initialize();
 
     // Prepare to execute
-    scCommand.setCatalog(getCatalog());
-    if (hasERModel()) {
-      scCommand.setERModel(getERModel());
-    }
-    // Note: No need to set connection source on the command
+    ExecutionStateUtility.transferState(this, scCommand);
 
     // Execute
     scCommand.execute();

@@ -31,6 +31,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.utility.ExecutionStateUtility;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -76,18 +77,9 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
       }
 
       final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
-
       executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
-      if (state.hasConnectionSource()) {
-        executable.setConnectionSource(state.getConnectionSource());
-      }
-      if (state.hasCatalog()) {
-        executable.setCatalog(state.getCatalog());
-      }
-      if (state.hasERModel()) {
-        executable.setERModel(state.getERModel());
-      }
 
+      ExecutionStateUtility.transferState(state, executable);
       executable.execute();
 
     } catch (final Exception e) {

@@ -17,13 +17,13 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.schema.Catalog;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import schemacrawler.tools.state.AbstractExecutionState;
+import schemacrawler.tools.utility.ExecutionStateUtility;
 import us.fatehi.utility.string.StringFormat;
 
-public final class Linters {
+public final class Linters extends AbstractExecutionState {
 
   private static final Logger LOGGER = Logger.getLogger(Linters.class.getName());
 
@@ -138,7 +138,7 @@ public final class Linters {
     }
   }
 
-  public void lint(final Catalog catalog, final DatabaseConnectionSource connectionSource) {
+  public void lint() {
 
     // Check if initialized
     requireNonNull(linters, "No linters provided");
@@ -147,10 +147,7 @@ public final class Linters {
       return;
     }
 
-    requireNonNull(catalog, "No catalog provided");
-    requireNonNull(connectionSource, "No database connection source provided");
-
-    runLinters(catalog, connectionSource);
+    runLinters();
   }
 
   /**
@@ -162,7 +159,7 @@ public final class Linters {
     return linters.size();
   }
 
-  private void runLinters(final Catalog catalog, final DatabaseConnectionSource connectionSource) {
+  private void runLinters() {
 
     linters.parallelStream()
         .forEach(
@@ -172,10 +169,7 @@ public final class Linters {
                   new StringFormat("Linting with <%s>", linter.getLinterInstanceId()));
               try {
                 linter.initialize();
-                linter.setCatalog(catalog);
-                if (linter.usesConnection()) {
-                  linter.setConnectionSource(connectionSource);
-                }
+                ExecutionStateUtility.transferState(this, linter);
                 linter.execute();
               } catch (final Exception e) {
                 LOGGER.log(
