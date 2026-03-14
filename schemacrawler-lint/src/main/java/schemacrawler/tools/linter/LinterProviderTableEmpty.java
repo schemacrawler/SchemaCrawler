@@ -17,9 +17,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.filter.TableTypesFilter;
-import schemacrawler.schema.Table;
 import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.IdentifiersBuilder;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
@@ -66,7 +66,7 @@ class LinterTableEmpty extends BaseLinter {
   @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
-    requireNonNull(connection, "c");
+    requireNonNull(connection, "No connection provided");
 
     final Query query = new Query("Count", "SELECT COUNT(*) FROM ${table}");
     try {

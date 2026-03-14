@@ -12,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.sql.Connection;
@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.test.utility.WithTestDatabase;
-import schemacrawler.test.utility.crawl.LightCatalogUtility;
 import schemacrawler.tools.utility.DatabaseConnectorUtility;
 import us.fatehi.test.utility.TestObjectUtility;
 import us.fatehi.test.utility.extensions.WithSystemProperty;
@@ -105,8 +104,7 @@ public class MatchSchemaRetrievalOptionsTest {
     final Connection connection = TestObjectUtility.mockConnection();
     when(connection.getMetaData()).thenReturn(databaseMetaData);
     when(connection.toString()).thenReturn(toString);
-    final DatabaseConnectionSource connectionSource =
-        spy(LightCatalogUtility.lightDatabaseConnectionSource());
+    final DatabaseConnectionSource connectionSource = mock(DatabaseConnectionSource.class);
     when(connectionSource.get()).thenReturn(connection);
     return connectionSource;
   }
