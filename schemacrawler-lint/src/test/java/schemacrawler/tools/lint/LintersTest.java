@@ -477,7 +477,7 @@ public class LintersTest {
     assertThat(lintCollector.getLints().size(), is(1));
     assertThat(
         lintCollector.getLints().iterator().next().getMessage(),
-        is("primary key may not be a surrogate"));
+        is("primary key should not be a surrogate"));
   }
 
   @Test
