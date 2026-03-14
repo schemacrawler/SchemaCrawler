@@ -13,8 +13,6 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Serial;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
@@ -53,22 +51,11 @@ class LinterNullIntendedColumns extends BaseLinter {
   @Override
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
-
-    final List<Column> nullDefaultValueMayBeIntendedColumns =
-        findNullDefaultValueMayBeIntendedColumns(getColumns(table));
-    for (final Column column : nullDefaultValueMayBeIntendedColumns) {
-      addTableLint(table, getSummary(), column);
-    }
-  }
-
-  private List<Column> findNullDefaultValueMayBeIntendedColumns(final List<Column> columns) {
-    final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<>();
-    for (final Column column : columns) {
+    for (final Column column : getColumns(table)) {
       final String columnDefaultValue = column.getDefaultValue();
       if (!isBlank(columnDefaultValue) && "NULL".equalsIgnoreCase(columnDefaultValue.strip())) {
-        nullDefaultValueMayBeIntendedColumns.add(column);
+        addTableLint(table, getSummary(), column);
       }
     }
-    return nullDefaultValueMayBeIntendedColumns;
   }
 }

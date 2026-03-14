@@ -22,7 +22,6 @@ import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.server.mysql.MySQLEnumDataTypeHelper;
-import schemacrawler.test.utility.crawl.LightColumn;
 import schemacrawler.test.utility.crawl.LightColumnDataTypeUtility;
 import schemacrawler.test.utility.crawl.LightTable;
 import us.fatehi.test.utility.TestObjectUtility;
@@ -32,7 +31,7 @@ public class MySQLEnumDataTypeHelperTest {
   @Test
   public void testGetEnumDataTypeInfo() throws Exception {
     final Connection connection = TestObjectUtility.mockConnection();
-    final Column column = spy(LightColumn.newColumn(new LightTable("table"), "column"));
+    final Column column = spy(new LightTable("table").addColumn("column"));
     final ColumnDataType columnDataType = LightColumnDataTypeUtility.columnDataType("VARCHAR");
     when(column.getAttribute("COLUMN_TYPE")).thenReturn("enum('Moe','Larry','Curly')");
 
@@ -52,7 +51,7 @@ public class MySQLEnumDataTypeHelperTest {
 
   @Test
   public void testBadEnumDataType() throws Exception {
-    final Column column = spy(LightColumn.newColumn(new LightTable("table"), "column"));
+    final Column column = spy(new LightTable("table").addColumn("column"));
     final ColumnDataType columnDataType = LightColumnDataTypeUtility.enumColumnDataType();
     final Connection connection = TestObjectUtility.mockConnection();
 
