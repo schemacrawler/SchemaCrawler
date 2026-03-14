@@ -27,8 +27,6 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
-import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraintColumn;
@@ -66,10 +64,13 @@ import us.fatehi.test.utility.TestObjectUtility.Results;
 public class LintersTest {
 
   private Connection connection;
+  private LinterConfig linterConfig;
 
   @BeforeAll
-  public void setupConnection() {
+  public void setup() {
     connection = TestObjectUtility.mockConnection();
+    linterConfig =
+        new LinterConfig("test-linters", true, LintSeverity.high, 0, ".*", "", ".*", "", Map.of());
   }
 
   @Test
@@ -106,7 +107,7 @@ public class LintersTest {
 
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderColumnTypes().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table1 = new LightTable("TABLE1");
     table1.addDataColumn("COL", "TYPE1");
@@ -131,7 +132,7 @@ public class LintersTest {
   public void testForeignKeyMismatch() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderForeignKeyMismatch().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable pkTable = new LightTable("TEST_PKTABLE");
     final Column pkColumn = spy(pkTable.addColumn("PK_COLUMN"));
@@ -156,7 +157,7 @@ public class LintersTest {
   public void testForeignKeySelfReference() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderForeignKeySelfReference().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable fkTable = spy(new LightTable(new SchemaReference(), "TEST_TABLE"));
     when(fkTable.isSelfReferencing()).thenReturn(true);
@@ -178,7 +179,7 @@ public class LintersTest {
   public void testForeignKeyWithNoIndex() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderForeignKeyWithNoIndexes().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable pkTable = new LightTable("TEST_PKTABLE");
     final Column pkColumn = spy(pkTable.addColumn("PK_COLUMN"));
@@ -202,13 +203,14 @@ public class LintersTest {
   public void testNullColumnsInIndex() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderNullColumnsInIndex().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = spy(new LightTable(new SchemaReference(), "TEST_TABLE"));
-    final Index index = mockNamedObject(Index.class, "IDX");
+    final Index index = spy(LightCatalogUtility.lightNamedObject(Index.class, "IDX"));
     when(index.isUnique()).thenReturn(true);
 
-    final IndexColumn indexColumn = mockNamedObject(IndexColumn.class, "COL");
+    final IndexColumn indexColumn =
+        spy(LightCatalogUtility.lightNamedObject(IndexColumn.class, "COL"));
     when(indexColumn.isNullable()).thenReturn(true);
     when(indexColumn.isGenerated()).thenReturn(false);
     when(index.iterator()).thenReturn(List.of(indexColumn).iterator());
@@ -227,7 +229,7 @@ public class LintersTest {
   public void testNullIntendedColumns() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderNullIntendedColumns().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = new LightTable(new SchemaReference(), "TEST_TABLE");
     final Column column = spy(table.addColumn("TEST_COLUMN"));
@@ -246,17 +248,17 @@ public class LintersTest {
   public void testRedundantIndexes() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderRedundantIndexes().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = spy(new LightTable(new SchemaReference(), "TEST_TABLE"));
 
-    final IndexColumn idxCol1 = mockNamedObject(IndexColumn.class, "COL1");
-    final IndexColumn idxCol2 = mockNamedObject(IndexColumn.class, "COL2");
+    final IndexColumn idxCol1 = LightCatalogUtility.lightNamedObject(IndexColumn.class, "COL1");
+    final IndexColumn idxCol2 = LightCatalogUtility.lightNamedObject(IndexColumn.class, "COL2");
 
-    final Index index1 = mockNamedObject(Index.class, "IDX1");
+    final Index index1 = spy(LightCatalogUtility.lightNamedObject(Index.class, "IDX1"));
     when(index1.getColumns()).thenReturn(List.of(idxCol1, idxCol2));
 
-    final Index index2 = mockNamedObject(Index.class, "IDX2");
+    final Index index2 = spy(LightCatalogUtility.lightNamedObject(Index.class, "IDX2"));
     when(index2.getColumns()).thenReturn(List.of(idxCol1));
 
     when(table.getIndexes()).thenReturn(List.of(index1, index2));
@@ -271,14 +273,14 @@ public class LintersTest {
   public void testTableAllNullableColumns() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderTableAllNullableColumns().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = spy(new LightTable(new SchemaReference(), "TEST_TABLE"));
-    final Column pkCol = mockNamedObject(Column.class, "COL");
+    final Column pkCol = spy(LightCatalogUtility.lightNamedObject(Column.class, "COL"));
     when(pkCol.isPartOfPrimaryKey()).thenReturn(true);
     when(pkCol.isNullable()).thenReturn(false);
     when(table.getColumns()).thenReturn(List.of(pkCol));
-    final Column column = mockNamedObject(Column.class, "COL");
+    final Column column = spy(LightCatalogUtility.lightNamedObject(Column.class, "COL"));
     when(column.isPartOfPrimaryKey()).thenReturn(false);
     when(column.isNullable()).thenReturn(true);
     when(table.getColumns()).thenReturn(List.of(column));
@@ -295,7 +297,7 @@ public class LintersTest {
   public void testTableCycles() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderTableCycles().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final Table table1 = spy(new LightTable("TABLE1"));
     final Table table2 = spy(new LightTable("TABLE2"));
@@ -323,7 +325,7 @@ public class LintersTest {
   public void testTableEmpty() throws SQLException {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderTableEmpty().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = spy(new LightTable(new SchemaReference(), "TEST_TABLE"));
 
@@ -395,7 +397,7 @@ public class LintersTest {
   public void testTableWithIncrementingColumns() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderTableWithIncrementingColumns().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = new LightTable("TEST_TABLE");
     table.addColumn("COL1");
@@ -411,7 +413,7 @@ public class LintersTest {
   public void testTableWithNoIndexes() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderTableWithNoIndexes().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = new LightTable(new SchemaReference(), "TEST_TABLE");
     table.addColumn("ID");
@@ -427,7 +429,7 @@ public class LintersTest {
   public void testTableWithNoPrimaryKey() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderTableWithNoPrimaryKey().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = new LightTable(new SchemaReference(), "TEST_TABLE");
     table.addColumn("ID");
@@ -443,7 +445,7 @@ public class LintersTest {
   public void testTableWithNoRemarks() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderTableWithNoRemarks().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = new LightTable(new SchemaReference(), "TEST_TABLE");
     table.addColumn("ID");
@@ -461,7 +463,7 @@ public class LintersTest {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter =
         new LinterProviderTableWithNoSurrogatePrimaryKey().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = spy(new LightTable(new SchemaReference(), "TEST_TABLE"));
     final PrimaryKey pk = mock(PrimaryKey.class);
@@ -482,7 +484,7 @@ public class LintersTest {
   public void testTableWithPrimaryKeyNotFirst() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderTableWithPrimaryKeyNotFirst().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = spy(new LightTable(new SchemaReference(), "TEST_TABLE"));
     final PrimaryKey pk = mock(PrimaryKey.class);
@@ -503,7 +505,7 @@ public class LintersTest {
   public void testTableWithQuotedNames() throws SQLException {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderTableWithQuotedNames().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = new LightTable(new SchemaReference(), "TABLE WITH SPACES");
 
@@ -519,7 +521,7 @@ public class LintersTest {
   public void testTableWithSingleColumn() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderTableWithSingleColumn().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = new LightTable(new SchemaReference(), "TEST_TABLE");
     table.addColumn("ID");
@@ -534,7 +536,7 @@ public class LintersTest {
   public void testTooManyLobs() {
     final LintCollector lintCollector = new LintCollector();
     final Linter linter = new LinterProviderTooManyLobs().newLinter(lintCollector);
-    linter.configure(createConfig());
+    linter.configure(linterConfig);
 
     final LightTable table = new LightTable(new SchemaReference(), "TEST_TABLE");
     table.addDataColumn("COL1", "CLOB");
@@ -545,18 +547,5 @@ public class LintersTest {
     assertThat(lintCollector.getLints().size(), is(1));
     assertThat(
         lintCollector.getLints().iterator().next().getMessage(), is("too many binary objects"));
-  }
-
-  private LinterConfig createConfig() {
-    return new LinterConfig(
-        "test-linters", true, LintSeverity.high, 0, ".*", "", ".*", "", Map.of());
-  }
-
-  private <T extends NamedObject> T mockNamedObject(final Class<T> clazz, final String name) {
-    final T mock = mock(clazz);
-    final NamedObjectKey key = new NamedObjectKey(name);
-    when(mock.key()).thenReturn(key);
-    when(mock.getFullName()).thenReturn(name);
-    return mock;
   }
 }
