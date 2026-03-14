@@ -47,7 +47,7 @@ class LinterTableWithNoSurrogatePrimaryKey extends BaseLinter {
 
   @Override
   public String getSummary() {
-    return "primary key may not be a surrogate";
+    return "primary key should not be a surrogate";
   }
 
   @Override

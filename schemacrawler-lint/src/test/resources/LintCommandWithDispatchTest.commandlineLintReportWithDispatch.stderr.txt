@@ -14,7 +14,7 @@ Summary of schema lints:
   [medium]      3 - spaces in name, or reserved word
   [medium]      9 - incrementing columns
     [high]      1 - foreign key data type different from primary key
-    [high]      2 - primary key may not be a surrogate
+    [high]      2 - primary key should not be a surrogate
     [high]      3 - redundant index
 [critical]      1 - foreign key self-references primary key
 [critical]*     1 - no primary key

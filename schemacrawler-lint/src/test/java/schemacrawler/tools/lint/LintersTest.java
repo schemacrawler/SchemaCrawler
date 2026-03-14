@@ -8,7 +8,10 @@
 
 package schemacrawler.tools.lint;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -405,8 +408,48 @@ public class LintersTest {
 
     ((BaseLinter) linter).lint(table, connection);
 
-    assertThat(lintCollector.getLints().size(), is(2));
-    assertThat(lintCollector.getLints().iterator().next().getMessage(), is("incrementing columns"));
+    assertThat(
+        lintCollector.getLints(),
+        containsInAnyOrder(hasProperty("message", is("incrementing columns"))));
+  }
+
+  @Test
+  public void testTableWithIncrementingColumnsDataTypes() {
+    final LintCollector lintCollector = new LintCollector();
+    final Linter linter = new LinterProviderTableWithIncrementingColumns().newLinter(lintCollector);
+    linter.configure(linterConfig);
+
+    final LightTable table = new LightTable("TEST_TABLE");
+    table.addDataColumn("COL1", "INTEGER");
+    table.addDataColumn("COL2", "VARCHAR");
+
+    ((BaseLinter) linter).lint(table, connection);
+
+    assertThat(
+        lintCollector.getLints(),
+        containsInAnyOrder(
+            hasProperty("message", is("incrementing columns")),
+            hasProperty(
+                "message", containsString("incrementing columns don't have the same data-type"))));
+  }
+
+  @Test
+  public void testTableWithIncrementingColumnsSkipped() {
+    final LintCollector lintCollector = new LintCollector();
+    final Linter linter = new LinterProviderTableWithIncrementingColumns().newLinter(lintCollector);
+    linter.configure(linterConfig);
+
+    final LightTable table = new LightTable("TEST_TABLE");
+    table.addColumn("COL1");
+    table.addColumn("COL5");
+
+    ((BaseLinter) linter).lint(table, connection);
+
+    assertThat(
+        lintCollector.getLints(),
+        containsInAnyOrder(
+            hasProperty("message", is("incrementing columns")),
+            hasProperty("message", containsString("incrementing columns are not consecutive"))));
   }
 
   @Test
@@ -477,7 +520,7 @@ public class LintersTest {
     assertThat(lintCollector.getLints().size(), is(1));
     assertThat(
         lintCollector.getLints().iterator().next().getMessage(),
-        is("primary key may not be a surrogate"));
+        is("primary key should not be a surrogate"));
   }
 
   @Test
