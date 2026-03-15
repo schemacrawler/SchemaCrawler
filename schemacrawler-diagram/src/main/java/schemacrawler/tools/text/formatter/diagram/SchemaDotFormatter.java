@@ -13,13 +13,13 @@ import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.TableConstraintType.foreign_key;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideImplicitAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideIndexNames;
-import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideWeakAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideAlternateKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideForeignKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideImplicitAssociations;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableColumns;
-import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
@@ -396,7 +396,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
 
     final String associationName;
     if (isForeignKey && options.is(hideForeignKeyNames)
-        || !isForeignKey && options.is(hideWeakAssociationNames)) {
+        || !isForeignKey && options.is(hideImplicitAssociationNames)) {
       associationName = "";
     } else {
       associationName = fkName;
@@ -748,7 +748,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printWeakAssociations(final Table table) {
-    if (table == null || options.is(hideWeakAssociations)) {
+    if (table == null || options.is(hideImplicitAssociations)) {
       return;
     }
     final Collection<WeakAssociation> weakFks = table.getWeakAssociations();

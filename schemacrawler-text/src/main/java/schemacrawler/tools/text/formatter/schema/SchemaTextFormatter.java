@@ -14,25 +14,25 @@ import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideImplicitAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideIndexNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hidePrimaryKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideRoutineSpecificNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTableConstraintNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTriggerNames;
-import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideWeakAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideRoutines;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSequences;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSynonyms;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTables;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideAlternateKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideForeignKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideImplicitAssociations;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hidePrimaryKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideRoutineParameters;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableColumns;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
-import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 import static schemacrawler.utility.MetaDataUtility.getTypeName;
 import static schemacrawler.utility.MetaDataUtility.isView;
 import static us.fatehi.utility.Utility.isBlank;
@@ -1230,7 +1230,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printWeakAssociations(final Table table) {
-    if (table == null || options.is(hideWeakAssociations)) {
+    if (table == null || options.is(hideImplicitAssociations)) {
       LOGGER.log(Level.FINER, new StringFormat("Not showing weak association for <%s>", table));
       return;
     }
@@ -1252,7 +1252,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         formattingHelper.writeEmptyRow();
 
         String fkName = "";
-        if (!options.is(hideWeakAssociationNames)) {
+        if (!options.is(hideImplicitAssociationNames)) {
           LOGGER.log(
               Level.FINER,
               new StringFormat("Not showing weak associations name for <%s>", weakAssociation));
