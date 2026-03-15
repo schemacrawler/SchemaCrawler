@@ -9,6 +9,7 @@
 package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.ermodel.utility.EntityModelUtility.inferBridgeTable;
 import static schemacrawler.utility.MetaDataUtility.isView;
 
 import java.io.Serial;
@@ -20,6 +21,7 @@ import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
 import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.Linter;
+import us.fatehi.utility.OptionalBoolean;
 import us.fatehi.utility.property.PropertyName;
 
 public class LinterProviderTableAllNullableColumns extends BaseLinterProvider {
@@ -52,7 +54,11 @@ class LinterTableAllNullableColumns extends BaseLinter {
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    if (!isView(table) && hasAllNullableColumns(getColumns(table))) {
+    if (isView(table) || inferBridgeTable(table) == OptionalBoolean.true_value) {
+      return;
+    }
+
+    if (hasAllNullableColumns(getColumns(table))) {
       addTableLint(table, getSummary());
     }
   }
