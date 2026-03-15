@@ -33,12 +33,17 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
 
 public abstract class BaseSchemaTextOptionsBuilder<
         B extends BaseSchemaTextOptionsBuilder<B, O>, O extends SchemaTextOptions>
     extends BaseTextOptionsBuilder<BaseSchemaTextOptionsBuilder<B, O>, O> {
+
+  private static final Logger LOGGER =
+      Logger.getLogger(BaseSchemaTextOptionsBuilder.class.getName());
 
   private static final String SHOW_ORDINAL_NUMBERS =
       SCHEMACRAWLER_FORMAT_PREFIX + "show_ordinal_numbers";
@@ -102,6 +107,10 @@ public abstract class BaseSchemaTextOptionsBuilder<
     }
     // Backward compatibility - TO BE REMOVED
     if (hideDependantDatabaseObjects.get(HideDependantDatabaseObjectsType.hideWeakAssociations)) {
+      LOGGER.log(
+          Level.WARNING,
+          "Replace \"schemacrawler.format.hide_weakassociations\" with"
+              + " \"schemacrawler.format.hide_implicit_associations\"");
       hideDependantDatabaseObjects.put(
           HideDependantDatabaseObjectsType.hideImplicitAssociations, true);
     }
@@ -113,6 +122,10 @@ public abstract class BaseSchemaTextOptionsBuilder<
     }
     // Backward compatibility - TO BE REMOVED
     if (hideNames.get(HideDatabaseObjectNamesType.hideWeakAssociationNames)) {
+      LOGGER.log(
+          Level.WARNING,
+          "Replace \"schemacrawler.format.hide_weakassociation_names\" with"
+              + " \"schemacrawler.format.hide_implicit_association_names\"");
       hideNames.put(HideDatabaseObjectNamesType.hideImplicitAssociationNames, true);
     }
 
