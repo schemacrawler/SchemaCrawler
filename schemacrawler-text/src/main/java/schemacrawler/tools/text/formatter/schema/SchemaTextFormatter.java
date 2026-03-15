@@ -270,7 +270,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     printForeignKeys(table);
     if (!isBrief()) {
       printAlternateKeys(table);
-      printWeakAssociations(table);
+      printImplicitAssociations(table);
       printIndexes(table.getIndexes());
       printTriggers(table.getTriggers());
       printTableConstraints(table.getTableConstraints());
@@ -736,6 +736,43 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     }
   }
 
+  private void printImplicitAssociations(final Table table) {
+    if (table == null || options.is(hideImplicitAssociations)) {
+      LOGGER.log(Level.FINER, new StringFormat("Not showing weak association for <%s>", table));
+      return;
+    }
+
+    final Collection<WeakAssociation> weakAssociationsCollection = table.getWeakAssociations();
+    if (weakAssociationsCollection == null || weakAssociationsCollection.isEmpty()) {
+      return;
+    }
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Weak Associations", "section");
+
+    final List<WeakAssociation> weakAssociations = new ArrayList<>(weakAssociationsCollection);
+    weakAssociations.sort(naturalOrder());
+    for (final WeakAssociation weakAssociation : weakAssociations) {
+      if (weakAssociation != null) {
+        final String name = identifiers.quoteName(weakAssociation);
+
+        formattingHelper.writeEmptyRow();
+
+        String fkName = "";
+        if (!options.is(hideImplicitAssociationNames)) {
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat("Not showing weak associations name for <%s>", weakAssociation));
+          fkName = name;
+        }
+        final String fkDetails = "[weak association]";
+        formattingHelper.writeNameRow(fkName, fkDetails);
+        printRemarks(weakAssociation);
+        printColumnReferences(false, table, weakAssociation);
+      }
+    }
+  }
+
   private void printIndexes(final Collection<Index> indexesCollection) {
     if (indexesCollection.isEmpty() || options.is(hideIndexes)) {
       LOGGER.log(Level.FINER, "Not showing indexes");
@@ -1095,6 +1132,18 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     }
   }
 
+  private void printTableRowCount(final Table table) {
+    if (options.isHideTableRowCounts() || !hasRowCount(table)) {
+      return;
+    }
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Additional Information", "section");
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeNameRow(getRowCountMessage(table), "[row count]");
+  }
+
   private void printTableUsedByObjects(final Table table) {
     if (table == null) {
       return;
@@ -1121,18 +1170,6 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final String objectType = "[" + getTypeName(referencingObject).toLowerCase() + "]";
       formattingHelper.writeNameRow(objectName, objectType);
     }
-  }
-
-  private void printTableRowCount(final Table table) {
-    if (options.isHideTableRowCounts() || !hasRowCount(table)) {
-      return;
-    }
-
-    formattingHelper.writeEmptyRow();
-    formattingHelper.writeWideRow("Additional Information", "section");
-
-    formattingHelper.writeEmptyRow();
-    formattingHelper.writeNameRow(getRowCountMessage(table), "[row count]");
   }
 
   private void printTriggers(final Collection<Trigger> triggers) {
@@ -1226,43 +1263,6 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final String tableName = quoteName(usedTable);
       final String tableType = "[" + usedTable.getTableType() + "]";
       formattingHelper.writeNameRow(tableName, tableType);
-    }
-  }
-
-  private void printWeakAssociations(final Table table) {
-    if (table == null || options.is(hideImplicitAssociations)) {
-      LOGGER.log(Level.FINER, new StringFormat("Not showing weak association for <%s>", table));
-      return;
-    }
-
-    final Collection<WeakAssociation> weakAssociationsCollection = table.getWeakAssociations();
-    if (weakAssociationsCollection == null || weakAssociationsCollection.isEmpty()) {
-      return;
-    }
-
-    formattingHelper.writeEmptyRow();
-    formattingHelper.writeWideRow("Weak Associations", "section");
-
-    final List<WeakAssociation> weakAssociations = new ArrayList<>(weakAssociationsCollection);
-    weakAssociations.sort(naturalOrder());
-    for (final WeakAssociation weakAssociation : weakAssociations) {
-      if (weakAssociation != null) {
-        final String name = identifiers.quoteName(weakAssociation);
-
-        formattingHelper.writeEmptyRow();
-
-        String fkName = "";
-        if (!options.is(hideImplicitAssociationNames)) {
-          LOGGER.log(
-              Level.FINER,
-              new StringFormat("Not showing weak associations name for <%s>", weakAssociation));
-          fkName = name;
-        }
-        final String fkDetails = "[weak association]";
-        formattingHelper.writeNameRow(fkName, fkDetails);
-        printRemarks(weakAssociation);
-        printColumnReferences(false, table, weakAssociation);
-      }
     }
   }
 }

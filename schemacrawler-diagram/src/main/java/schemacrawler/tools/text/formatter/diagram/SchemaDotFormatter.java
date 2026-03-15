@@ -86,16 +86,6 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     // No output required
   }
 
-  @Override
-  public void handleInfo(final DatabaseInfo dbInfo) {
-    // No-op
-  }
-
-  @Override
-  public void handleInfo(final JdbcDriverInfo driverInfo) {
-    // No-op
-  }
-
   /**
    * Provides information on the database schema.
    *
@@ -186,7 +176,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     formattingHelper.println();
 
     printForeignKeys(table);
-    printWeakAssociations(table);
+    printImplicitAssociations(table);
 
     formattingHelper.println();
     formattingHelper.println();
@@ -200,6 +190,16 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   @Override
   public void handleColumnDataTypesStart() {
     // No output required
+  }
+
+  @Override
+  public void handleInfo(final DatabaseInfo dbInfo) {
+    // No-op
+  }
+
+  @Override
+  public void handleInfo(final JdbcDriverInfo driverInfo) {
+    // No-op
   }
 
   @Override
@@ -465,6 +465,14 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         showRemarks = false;
       }
     }
+  }
+
+  private void printImplicitAssociations(final Table table) {
+    if (table == null || options.is(hideImplicitAssociations)) {
+      return;
+    }
+    final Collection<WeakAssociation> weakFks = table.getWeakAssociations();
+    printForeignKeys(table, weakFks);
   }
 
   private void printIndexes(final Table table) {
@@ -745,13 +753,5 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
                         .make())
                 .render(html))
         .println();
-  }
-
-  private void printWeakAssociations(final Table table) {
-    if (table == null || options.is(hideImplicitAssociations)) {
-      return;
-    }
-    final Collection<WeakAssociation> weakFks = table.getWeakAssociations();
-    printForeignKeys(table, weakFks);
   }
 }
