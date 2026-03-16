@@ -9,30 +9,31 @@
 package schemacrawler.tools.text.formatter.schema;
 
 import static java.util.Comparator.naturalOrder;
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideImplicitAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideIndexNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hidePrimaryKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideRoutineSpecificNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTableConstraintNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTriggerNames;
-import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideWeakAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideRoutines;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSequences;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSynonyms;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTables;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideAlternateKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideForeignKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideImplicitAssociations;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hidePrimaryKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideRoutineParameters;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableColumns;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
-import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 import static schemacrawler.utility.MetaDataUtility.getTypeName;
 import static schemacrawler.utility.MetaDataUtility.isView;
 import static us.fatehi.utility.Utility.isBlank;
@@ -49,7 +50,6 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.ermodel.model.RelationshipCardinality;
-import schemacrawler.ermodel.utility.EntityModelUtility;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -89,6 +89,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.BaseTabularFormatter;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.NamedObjectSort;
@@ -113,6 +114,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     return textValue;
   }
 
+  private final ModelHelper modelHelper;
+
   /**
    * Text formatting of schema.
    *
@@ -125,8 +128,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final SchemaTextDetailType schemaTextDetailType,
       final SchemaTextOptions options,
       final OutputOptions outputOptions,
-      final Identifiers identifiers) {
+      final Identifiers identifiers,
+      final ModelHelper modelHelper) {
     super(schemaTextDetailType, options, outputOptions, identifiers);
+    this.modelHelper = requireNonNull(modelHelper, "No model helper provided");
   }
 
   /** {@inheritDoc} */
@@ -270,7 +275,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     printForeignKeys(table);
     if (!isBrief()) {
       printAlternateKeys(table);
-      printWeakAssociations(table);
+      printImplicitAssociations(table);
       printIndexes(table.getIndexes());
       printTriggers(table.getTriggers());
       printTableConstraints(table.getTableConstraints());
@@ -606,7 +611,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private void printColumnReferences(
       final boolean isForeignKey, final Table table, final TableReference foreignKey) {
-    final RelationshipCardinality fkCardinality = EntityModelUtility.inferCardinality(foreignKey);
+    final RelationshipCardinality fkCardinality = modelHelper.inferCardinality(foreignKey);
     for (final ColumnReference columnRef : foreignKey) {
 
       final Column pkColumn = columnRef.getPrimaryKeyColumn();
@@ -732,6 +737,43 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         printRemarks(foreignKey);
         printColumnReferences(true, table, foreignKey);
         printDependantObjectDefinition(foreignKey);
+      }
+    }
+  }
+
+  private void printImplicitAssociations(final Table table) {
+    if (table == null || options.is(hideImplicitAssociations)) {
+      LOGGER.log(Level.FINER, new StringFormat("Not showing weak association for <%s>", table));
+      return;
+    }
+
+    final Collection<WeakAssociation> weakAssociationsCollection = table.getWeakAssociations();
+    if (weakAssociationsCollection == null || weakAssociationsCollection.isEmpty()) {
+      return;
+    }
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Weak Associations", "section");
+
+    final List<WeakAssociation> weakAssociations = new ArrayList<>(weakAssociationsCollection);
+    weakAssociations.sort(naturalOrder());
+    for (final WeakAssociation weakAssociation : weakAssociations) {
+      if (weakAssociation != null) {
+        final String name = identifiers.quoteName(weakAssociation);
+
+        formattingHelper.writeEmptyRow();
+
+        String fkName = "";
+        if (!options.is(hideImplicitAssociationNames)) {
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat("Not showing weak associations name for <%s>", weakAssociation));
+          fkName = name;
+        }
+        final String fkDetails = "[weak association]";
+        formattingHelper.writeNameRow(fkName, fkDetails);
+        printRemarks(weakAssociation);
+        printColumnReferences(false, table, weakAssociation);
       }
     }
   }
@@ -1095,6 +1137,18 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     }
   }
 
+  private void printTableRowCount(final Table table) {
+    if (options.isHideTableRowCounts() || !hasRowCount(table)) {
+      return;
+    }
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Additional Information", "section");
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeNameRow(getRowCountMessage(table), "[row count]");
+  }
+
   private void printTableUsedByObjects(final Table table) {
     if (table == null) {
       return;
@@ -1121,18 +1175,6 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final String objectType = "[" + getTypeName(referencingObject).toLowerCase() + "]";
       formattingHelper.writeNameRow(objectName, objectType);
     }
-  }
-
-  private void printTableRowCount(final Table table) {
-    if (options.isHideTableRowCounts() || !hasRowCount(table)) {
-      return;
-    }
-
-    formattingHelper.writeEmptyRow();
-    formattingHelper.writeWideRow("Additional Information", "section");
-
-    formattingHelper.writeEmptyRow();
-    formattingHelper.writeNameRow(getRowCountMessage(table), "[row count]");
   }
 
   private void printTriggers(final Collection<Trigger> triggers) {
@@ -1226,43 +1268,6 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final String tableName = quoteName(usedTable);
       final String tableType = "[" + usedTable.getTableType() + "]";
       formattingHelper.writeNameRow(tableName, tableType);
-    }
-  }
-
-  private void printWeakAssociations(final Table table) {
-    if (table == null || options.is(hideWeakAssociations)) {
-      LOGGER.log(Level.FINER, new StringFormat("Not showing weak association for <%s>", table));
-      return;
-    }
-
-    final Collection<WeakAssociation> weakAssociationsCollection = table.getWeakAssociations();
-    if (weakAssociationsCollection == null || weakAssociationsCollection.isEmpty()) {
-      return;
-    }
-
-    formattingHelper.writeEmptyRow();
-    formattingHelper.writeWideRow("Weak Associations", "section");
-
-    final List<WeakAssociation> weakAssociations = new ArrayList<>(weakAssociationsCollection);
-    weakAssociations.sort(naturalOrder());
-    for (final WeakAssociation weakAssociation : weakAssociations) {
-      if (weakAssociation != null) {
-        final String name = identifiers.quoteName(weakAssociation);
-
-        formattingHelper.writeEmptyRow();
-
-        String fkName = "";
-        if (!options.is(hideWeakAssociationNames)) {
-          LOGGER.log(
-              Level.FINER,
-              new StringFormat("Not showing weak associations name for <%s>", weakAssociation));
-          fkName = name;
-        }
-        final String fkDetails = "[weak association]";
-        formattingHelper.writeNameRow(fkName, fkDetails);
-        printRemarks(weakAssociation);
-        printColumnReferences(false, table, weakAssociation);
-      }
     }
   }
 }

@@ -10,12 +10,12 @@ package schemacrawler.tools.command.text.schema.options;
 
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideImplicitAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideIndexNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hidePrimaryKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideRoutineSpecificNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTableConstraintNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideTriggerNames;
-import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideWeakAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideRoutines;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSchemas;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSequences;
@@ -23,22 +23,27 @@ import static schemacrawler.tools.command.text.schema.options.HideDatabaseObject
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTables;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideAlternateKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideForeignKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideImplicitAssociations;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hidePrimaryKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideRoutineParameters;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableColumns;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
-import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
 
 public abstract class BaseSchemaTextOptionsBuilder<
         B extends BaseSchemaTextOptionsBuilder<B, O>, O extends SchemaTextOptions>
     extends BaseTextOptionsBuilder<BaseSchemaTextOptionsBuilder<B, O>, O> {
+
+  private static final Logger LOGGER =
+      Logger.getLogger(BaseSchemaTextOptionsBuilder.class.getName());
 
   private static final String SHOW_ORDINAL_NUMBERS =
       SCHEMACRAWLER_FORMAT_PREFIX + "show_ordinal_numbers";
@@ -100,10 +105,28 @@ public abstract class BaseSchemaTextOptionsBuilder<
       final boolean isHidden = config.getBooleanValue(databaseObjectsType.getKey());
       hideDependantDatabaseObjects.put(databaseObjectsType, isHidden);
     }
+    // Backward compatibility - TO BE REMOVED
+    if (hideDependantDatabaseObjects.get(HideDependantDatabaseObjectsType.hideWeakAssociations)) {
+      LOGGER.log(
+          Level.WARNING,
+          "Replace \"schemacrawler.format.hide_weakassociations\" with"
+              + " \"schemacrawler.format.hide_implicit_associations\"");
+      hideDependantDatabaseObjects.put(
+          HideDependantDatabaseObjectsType.hideImplicitAssociations, true);
+    }
+
     for (final HideDatabaseObjectNamesType databaseObjectNamesType :
         HideDatabaseObjectNamesType.values()) {
       final boolean isHidden = config.getBooleanValue(databaseObjectNamesType.getKey());
       hideNames.put(databaseObjectNamesType, isHidden);
+    }
+    // Backward compatibility - TO BE REMOVED
+    if (hideNames.get(HideDatabaseObjectNamesType.hideWeakAssociationNames)) {
+      LOGGER.log(
+          Level.WARNING,
+          "Replace \"schemacrawler.format.hide_weakassociation_names\" with"
+              + " \"schemacrawler.format.hide_implicit_association_names\"");
+      hideNames.put(HideDatabaseObjectNamesType.hideImplicitAssociationNames, true);
     }
 
     // Override values from command line
@@ -194,6 +217,24 @@ public abstract class BaseSchemaTextOptionsBuilder<
 
   public final B noForeignKeys(final boolean value) {
     hideDependantDatabaseObjects.put(hideForeignKeys, value);
+    return (B) this;
+  }
+
+  public final B noImplicitAssociationNames() {
+    return noImplicitAssociationNames(true);
+  }
+
+  public final B noImplicitAssociationNames(final boolean value) {
+    hideNames.put(hideImplicitAssociationNames, value);
+    return (B) this;
+  }
+
+  public final B noImplicitAssociations() {
+    return noImplicitAssociations(true);
+  }
+
+  public final B noImplicitAssociations(final boolean value) {
+    hideDependantDatabaseObjects.put(hideImplicitAssociations, value);
     return (B) this;
   }
 
@@ -352,22 +393,24 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return (B) this;
   }
 
+  @Deprecated
   public final B noWeakAssociationNames() {
-    return noWeakAssociationNames(true);
+    return noImplicitAssociationNames(true);
   }
 
+  @Deprecated
   public final B noWeakAssociationNames(final boolean value) {
-    hideNames.put(hideWeakAssociationNames, value);
-    return (B) this;
+    return noImplicitAssociationNames(value);
   }
 
+  @Deprecated
   public final B noWeakAssociations() {
-    return noWeakAssociations(true);
+    return noImplicitAssociations(true);
   }
 
+  @Deprecated
   public final B noWeakAssociations(final boolean value) {
-    hideDependantDatabaseObjects.put(hideWeakAssociations, value);
-    return (B) this;
+    return noImplicitAssociations(value);
   }
 
   /** Corresponds to the --portable=&lt;value&gt; command-line argument. */

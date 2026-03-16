@@ -13,6 +13,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.text.formatter.schema.SchemaListFormatter;
 import schemacrawler.tools.text.formatter.schema.SchemaTextFormatter;
+import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.tools.utility.ExecutionStateUtility;
@@ -67,8 +68,10 @@ public final class SchemaTextRenderer extends AbstractSchemaCrawlerCommand<Schem
       formatter =
           new SchemaListFormatter(schemaTextDetailType, commandOptions, outputOptions, identifiers);
     } else {
+      final ModelHelper modelHelper = ModelHelper.from(this);
       formatter =
-          new SchemaTextFormatter(schemaTextDetailType, commandOptions, outputOptions, identifiers);
+          new SchemaTextFormatter(
+              schemaTextDetailType, commandOptions, outputOptions, identifiers, modelHelper);
     }
 
     return formatter;

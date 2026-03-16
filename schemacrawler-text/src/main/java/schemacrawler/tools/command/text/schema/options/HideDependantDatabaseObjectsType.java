@@ -17,7 +17,9 @@ public enum HideDependantDatabaseObjectsType {
   hideTableColumns("hide_table_columns"),
   hideTableConstraints("hide_constraints"),
   hideTriggers("hide_triggers"),
+  @Deprecated
   hideWeakAssociations("hide_weakassociations"),
+  hideImplicitAssociations("hide_implicit_associations"),
   ;
 
   private static final String SCHEMACRAWLER_FORMAT_PREFIX = "schemacrawler.format.";

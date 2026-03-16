@@ -8,18 +8,19 @@
 
 package schemacrawler.tools.text.formatter.diagram;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.TableConstraintType.foreign_key;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
+import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideImplicitAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideIndexNames;
-import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideWeakAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideAlternateKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideForeignKeys;
+import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideImplicitAssociations;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableColumns;
-import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideWeakAssociations;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
@@ -31,7 +32,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import schemacrawler.ermodel.model.RelationshipCardinality;
-import schemacrawler.ermodel.utility.EntityModelUtility;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -52,6 +52,7 @@ import schemacrawler.schemacrawler.exceptions.NotLoadedException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.Color;
@@ -62,6 +63,7 @@ import us.fatehi.utility.html.Tag;
 public final class SchemaDotFormatter extends BaseDotFormatter implements SchemaTraversalHandler {
 
   private final int tableColspan;
+  private final ModelHelper modelHelper;
 
   /**
    * Text formatting of schema.
@@ -75,25 +77,17 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       final SchemaTextDetailType schemaTextDetailType,
       final DiagramOptions options,
       final OutputOptions outputOptions,
-      final Identifiers identifiers) {
+      final Identifiers identifiers,
+      final ModelHelper modelHelper) {
     super(schemaTextDetailType, options, outputOptions, identifiers);
 
     tableColspan = options.isShowOrdinalNumbers() ? 4 : 3;
+    this.modelHelper = requireNonNull(modelHelper, "No model helper provided");
   }
 
   @Override
   public void handle(final ColumnDataType columnDataType) {
     // No output required
-  }
-
-  @Override
-  public void handleInfo(final DatabaseInfo dbInfo) {
-    // No-op
-  }
-
-  @Override
-  public void handleInfo(final JdbcDriverInfo driverInfo) {
-    // No-op
   }
 
   /**
@@ -186,7 +180,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     formattingHelper.println();
 
     printForeignKeys(table);
-    printWeakAssociations(table);
+    printImplicitAssociations(table);
 
     formattingHelper.println();
     formattingHelper.println();
@@ -200,6 +194,16 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   @Override
   public void handleColumnDataTypesStart() {
     // No output required
+  }
+
+  @Override
+  public void handleInfo(final DatabaseInfo dbInfo) {
+    // No-op
+  }
+
+  @Override
+  public void handleInfo(final JdbcDriverInfo driverInfo) {
+    // No-op
   }
 
   @Override
@@ -396,7 +400,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
 
     final String associationName;
     if (isForeignKey && options.is(hideForeignKeyNames)
-        || !isForeignKey && options.is(hideWeakAssociationNames)) {
+        || !isForeignKey && options.is(hideImplicitAssociationNames)) {
       associationName = "";
     } else {
       associationName = fkName;
@@ -428,7 +432,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     }
     for (final TableReference foreignKey : foreignKeys) {
       final boolean isForeignKey = foreignKey.getType() == foreign_key;
-      final RelationshipCardinality fkCardinality = EntityModelUtility.inferCardinality(foreignKey);
+      final RelationshipCardinality fkCardinality = modelHelper.inferCardinality(foreignKey);
       boolean showRemarks = !options.isHideRemarks() && foreignKey.hasRemarks();
       for (final ColumnReference columnRef : foreignKey) {
         final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
@@ -465,6 +469,14 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         showRemarks = false;
       }
     }
+  }
+
+  private void printImplicitAssociations(final Table table) {
+    if (table == null || options.is(hideImplicitAssociations)) {
+      return;
+    }
+    final Collection<WeakAssociation> weakFks = table.getWeakAssociations();
+    printForeignKeys(table, weakFks);
   }
 
   private void printIndexes(final Table table) {
@@ -745,13 +757,5 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
                         .make())
                 .render(html))
         .println();
-  }
-
-  private void printWeakAssociations(final Table table) {
-    if (table == null || options.is(hideWeakAssociations)) {
-      return;
-    }
-    final Collection<WeakAssociation> weakFks = table.getWeakAssociations();
-    printForeignKeys(table, weakFks);
   }
 }

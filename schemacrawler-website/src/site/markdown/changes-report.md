@@ -3,8 +3,14 @@
 SchemaCrawler release notes.
 
 
+<a name="v17.9.0"></a>
+## Release 17.9.0 - 2026-03-22
+
+- Prepare ER model API to be used in SchemaCrawler commands 
+
+
 <a name="v17.8.0"></a>
-## Release 17.8.0 - 2026-03-12
+## Release 17.8.0 - 2026-03-14
 
 - Add `KeyClass` to identify candidate keys
 - Add an ER model loader for implicit associations

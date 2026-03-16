@@ -25,7 +25,9 @@ import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.state.AbstractExecutionState;
 import schemacrawler.tools.text.formatter.diagram.SchemaDotFormatter;
+import schemacrawler.tools.traversal.ModelHelper;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
@@ -79,10 +81,16 @@ public class DotFormatterCoverageTest {
               .withOutputFormatValue(DiagramOutputFormat.scdot.name())
               .withOutputWriter(out);
 
+      final ModelHelper modelHelper = ModelHelper.from(new AbstractExecutionState() {});
+
       final OutputOptions outputOptions = outputOptionsBuilder.toOptions();
       final SchemaDotFormatter formatter =
           new SchemaDotFormatter(
-              SchemaTextDetailType.details, diagramOptions, outputOptions, Identifiers.STANDARD);
+              SchemaTextDetailType.details,
+              diagramOptions,
+              outputOptions,
+              Identifiers.STANDARD,
+              modelHelper);
 
       formatter.handle(table);
     }

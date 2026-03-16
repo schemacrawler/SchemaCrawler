@@ -30,7 +30,9 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.state.AbstractExecutionState;
 import schemacrawler.tools.text.formatter.schema.SchemaTextFormatter;
+import schemacrawler.tools.traversal.ModelHelper;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
@@ -113,9 +115,14 @@ public class TextFormatterCoverageTest {
               .withOutputWriter(out);
 
       final OutputOptions outputOptions = outputOptionsBuilder.toOptions();
+      final ModelHelper modelHelper = ModelHelper.from(new AbstractExecutionState() {});
       final SchemaTextFormatter formatter =
           new SchemaTextFormatter(
-              SchemaTextDetailType.details, textOptions, outputOptions, Identifiers.STANDARD);
+              SchemaTextDetailType.details,
+              textOptions,
+              outputOptions,
+              Identifiers.STANDARD,
+              modelHelper);
 
       formatterMethod.accept(formatter);
     }

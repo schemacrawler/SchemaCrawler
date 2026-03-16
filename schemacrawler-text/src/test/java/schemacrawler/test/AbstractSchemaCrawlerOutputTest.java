@@ -101,7 +101,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
         .showJdbcDriverInfo(true)
         .noPrimaryKeyNames()
         .noForeignKeyNames()
-        .noWeakAssociationNames()
+        .noImplicitAssociationNames()
         .noIndexNames()
         .noConstraintNames();
     textOptionsBuilder.noConstraintNames();
@@ -294,7 +294,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo().showJdbcDriverInfo();
-    textOptionsBuilder.noWeakAssociationNames();
+    textOptionsBuilder.noImplicitAssociationNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     assertAll(
