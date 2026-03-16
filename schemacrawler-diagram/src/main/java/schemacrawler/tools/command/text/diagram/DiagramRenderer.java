@@ -25,6 +25,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.formatter.diagram.SchemaDotFormatter;
+import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.tools.utility.ExecutionStateUtility;
@@ -144,6 +145,8 @@ public final class DiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramO
   private SchemaTraversalHandler getSchemaTraversalHandler(final OutputOptions outputOptions) {
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
 
-    return new SchemaDotFormatter(schemaTextDetailType, commandOptions, outputOptions, identifiers);
+    final ModelHelper modelHelper = ModelHelper.from(this);
+    return new SchemaDotFormatter(
+        schemaTextDetailType, commandOptions, outputOptions, identifiers, modelHelper);
   }
 }

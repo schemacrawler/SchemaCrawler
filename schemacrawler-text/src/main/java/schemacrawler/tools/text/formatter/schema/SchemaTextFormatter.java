@@ -9,6 +9,7 @@
 package schemacrawler.tools.text.formatter.schema;
 
 import static java.util.Comparator.naturalOrder;
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.DataTypeType.user_defined;
@@ -49,7 +50,6 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.ermodel.model.RelationshipCardinality;
-import schemacrawler.ermodel.utility.EntityModelUtility;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -89,6 +89,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.BaseTabularFormatter;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.NamedObjectSort;
@@ -113,6 +114,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     return textValue;
   }
 
+  private final ModelHelper modelHelper;
+
   /**
    * Text formatting of schema.
    *
@@ -125,8 +128,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final SchemaTextDetailType schemaTextDetailType,
       final SchemaTextOptions options,
       final OutputOptions outputOptions,
-      final Identifiers identifiers) {
+      final Identifiers identifiers,
+      final ModelHelper modelHelper) {
     super(schemaTextDetailType, options, outputOptions, identifiers);
+    this.modelHelper = requireNonNull(modelHelper, "No model helper provided");
   }
 
   /** {@inheritDoc} */
@@ -606,7 +611,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private void printColumnReferences(
       final boolean isForeignKey, final Table table, final TableReference foreignKey) {
-    final RelationshipCardinality fkCardinality = EntityModelUtility.inferCardinality(foreignKey);
+    final RelationshipCardinality fkCardinality = modelHelper.inferCardinality(foreignKey);
     for (final ColumnReference columnRef : foreignKey) {
 
       final Column pkColumn = columnRef.getPrimaryKeyColumn();
