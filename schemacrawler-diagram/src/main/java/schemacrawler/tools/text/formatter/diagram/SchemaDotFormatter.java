@@ -32,7 +32,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import schemacrawler.ermodel.model.RelationshipCardinality;
-import schemacrawler.ermodel.utility.EntityModelUtility;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -433,7 +432,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     }
     for (final TableReference foreignKey : foreignKeys) {
       final boolean isForeignKey = foreignKey.getType() == foreign_key;
-      final RelationshipCardinality fkCardinality = EntityModelUtility.inferCardinality(foreignKey);
+      final RelationshipCardinality fkCardinality = modelHelper.inferCardinality(foreignKey);
       boolean showRemarks = !options.isHideRemarks() && foreignKey.hasRemarks();
       for (final ColumnReference columnRef : foreignKey) {
         final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
