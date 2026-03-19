@@ -3,10 +3,12 @@
 SchemaCrawler release notes.
 
 
-<a name="v17.9.0"></a>
-## Release 17.9.0 - 2026-03-22
+<a name="v17.8.1"></a>
+## Release 17.8.1 - 2026-03-19
 
 - Prepare ER model API to be used in SchemaCrawler commands 
+- Add thread-safety checks for database connection sources
+- Reduce visibility where possible
 
 
 <a name="v17.8.0"></a>
