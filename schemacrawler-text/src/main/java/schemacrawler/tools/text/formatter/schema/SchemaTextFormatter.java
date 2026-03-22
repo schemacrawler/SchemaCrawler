@@ -1087,7 +1087,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final ForeignKey foreignKey = (ForeignKey) tableReference;
       fkDetails = "[foreign key" + makeFkRuleString(foreignKey) + "]";
       if (!options.is(hideForeignKeyNames)) {
-        LOGGER.log(Level.FINER, new StringFormat("Not showing foreign key names for <%s>", table));
+        LOGGER.log(
+            Level.FINER, new StringFormat("Not showing foreign key name for <%s>", tableReference));
         fkName = name;
       } else {
         fkName = "";
@@ -1097,7 +1098,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       if (!options.is(hideImplicitAssociationNames)) {
         LOGGER.log(
             Level.FINER,
-            new StringFormat("Not showing weak associations name for <%s>", tableReference));
+            new StringFormat("Not showing implicit association name for <%s>", tableReference));
         fkName = name;
       } else {
         fkName = "";
