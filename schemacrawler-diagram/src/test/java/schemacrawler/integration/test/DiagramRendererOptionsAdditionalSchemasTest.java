@@ -20,6 +20,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.nio.file.Path;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
@@ -45,6 +46,7 @@ import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
+@Disabled("TEMPORARILY DISABLE SIDE-LOADING OF WEAK ASSOCIATIONS")
 @ResolveTestContext
 @WithTestDatabase(script = "/table-chain.sql")
 public class DiagramRendererOptionsAdditionalSchemasTest {

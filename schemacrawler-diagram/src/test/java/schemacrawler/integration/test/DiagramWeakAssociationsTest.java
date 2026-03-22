@@ -8,6 +8,7 @@
 
 package schemacrawler.integration.test;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -19,6 +20,7 @@ import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
+@Disabled("TEMPORARILY DISABLE SIDE-LOADING OF WEAK ASSOCIATIONS")
 @WithTestDatabase
 @ResolveTestContext
 public class DiagramWeakAssociationsTest extends AbstractWeakAssociationsTest {

@@ -393,22 +393,22 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return (B) this;
   }
 
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public final B noWeakAssociationNames() {
     return noImplicitAssociationNames(true);
   }
 
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public final B noWeakAssociationNames(final boolean value) {
     return noImplicitAssociationNames(value);
   }
 
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public final B noWeakAssociations() {
     return noImplicitAssociations(true);
   }
 
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public final B noWeakAssociations(final boolean value) {
     return noImplicitAssociations(value);
   }

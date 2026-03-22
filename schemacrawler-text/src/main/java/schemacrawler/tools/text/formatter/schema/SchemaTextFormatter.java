@@ -709,10 +709,13 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private void printImplicitAssociations(final Table table) {
     if (table == null || options.is(hideImplicitAssociations)) {
-      LOGGER.log(Level.FINER, new StringFormat("Not showing weak association for <%s>", table));
+      LOGGER.log(
+          Level.FINER, new StringFormat("Not showing implicit associations for <%s>", table));
       return;
     }
-    printTableReferences(false, table, table.getWeakAssociations());
+    final Collection<? extends TableReference> implicitAssociations =
+        modelHelper.getImplicitAssociations(table);
+    printTableReferences(false, table, implicitAssociations);
   }
 
   private void printIndexes(final Collection<Index> indexesCollection) {

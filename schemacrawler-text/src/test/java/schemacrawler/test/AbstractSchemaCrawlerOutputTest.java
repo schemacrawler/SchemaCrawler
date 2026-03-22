@@ -663,7 +663,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     schemaTextOptionsBuilder.sortTables(true);
 
     final Config config = schemaTextOptionsBuilder.toConfig();
-    config.put("weak-associations", true);
+    config.put("implicit-associations", true);
 
     final SchemaCrawlerExecutable executable =
         new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());

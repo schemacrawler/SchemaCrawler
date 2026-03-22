@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.ermodel.model.RelationshipCardinality;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -57,9 +59,12 @@ import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.html.Tag;
+import us.fatehi.utility.string.StringFormat;
 
 /** Graphviz DOT formatting of schema. */
 public final class SchemaDotFormatter extends BaseDotFormatter implements SchemaTraversalHandler {
+
+  private static final Logger LOGGER = Logger.getLogger(BaseDotFormatter.class.getName());
 
   private final int tableColspan;
   private final ModelHelper modelHelper;
@@ -426,9 +431,13 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
 
   private void printImplicitAssociations(final Table table) {
     if (table == null || options.is(hideImplicitAssociations)) {
+      LOGGER.log(
+          Level.FINER, new StringFormat("Not showing implicit associations for <%s>", table));
       return;
     }
-    printTableReferences(table, table.getWeakAssociations());
+    final Collection<? extends TableReference> implicitAssociations =
+        modelHelper.getImplicitAssociations(table);
+    printTableReferences(table, implicitAssociations);
   }
 
   private void printIndexes(final Table table) {
