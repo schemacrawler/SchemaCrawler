@@ -39,6 +39,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
 import schemacrawler.tools.loader.catalog.CatalogLoaderRegistry;
+import schemacrawler.tools.loader.ermodel.ERModelLoaderRegistry;
 import us.fatehi.utility.database.ConnectionInfoBuilder;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.property.BaseProductVersion;
@@ -54,6 +55,12 @@ public class CommandLineUtility {
 
   public static final Supplier<Collection<PluginCommand>> catalogLoaderPluginHelpCommands =
       () -> CatalogLoaderRegistry.getCatalogLoaderRegistry().getHelpCommands();
+
+  public static final Supplier<Collection<PluginCommand>> erModelLoaderPluginCommands =
+      () -> ERModelLoaderRegistry.getERModelLoaderRegistry().getCommandLineCommands();
+
+  public static final Supplier<Collection<PluginCommand>> erModelLoaderPluginHelpCommands =
+      () -> ERModelLoaderRegistry.getERModelLoaderRegistry().getHelpCommands();
 
   public static final Supplier<Collection<PluginCommand>> commandPluginCommands =
       () -> CommandRegistry.getCommandRegistry().getCommandLineCommands();

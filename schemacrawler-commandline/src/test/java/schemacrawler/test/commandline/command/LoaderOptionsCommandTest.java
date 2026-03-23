@@ -12,6 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.createConnectedSchemaCrawlerShellState;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.erModelLoaderPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
@@ -69,6 +70,7 @@ public class LoaderOptionsCommandTest {
     final CommandLine loadCommandLine = commandLine.getSubcommands().getOrDefault("load", null);
     if (loadCommandLine != null) {
       addPluginCommands(loadCommandLine, catalogLoaderPluginCommands);
+      addPluginCommands(loadCommandLine, erModelLoaderPluginCommands);
       commandLine.addSubcommand(loadCommandLine);
     }
     return commandLine;

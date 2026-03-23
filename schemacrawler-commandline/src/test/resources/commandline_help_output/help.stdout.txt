@@ -1,4 +1,4 @@
-SchemaCrawler 17.7.0
+SchemaCrawler 17.8.1
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -221,17 +221,6 @@ Options:
                             Optional, default is 0
 
 
-** Loader for catalog attributes, such as remarks or tags
-Command:
-loader:attributesloader
-
-Options:
-      --attributes-file=<attributes-file>
-         Path to a YAML file with table and column attributes to add to the
-           schema
-Add loader options to the `load` command in the SchemaCrawler Shell
-
-
 ** Loader for table row counts
 Command:
 loader:countsloader
@@ -261,6 +250,30 @@ Options:
                               patterns
                             This can be a time consuming operation
                             Optional, defaults to false
+Add loader options to the `load` command in the SchemaCrawler Shell
+
+
+** Loader for ER model notes, such as remarks or tags and implicit associations
+Command:
+loader:attributesloader
+
+Options:
+      --attributes-file=<attributes-file>
+         Path to a YAML file with table and column attributes to add to the
+           schema
+Add loader options to the `load` command in the SchemaCrawler Shell
+
+
+** Loader for implicit associations in ER Model
+Command:
+loader:implicitassociationsloader
+
+Options:
+      --implicit-associations
+         Analyzes the schema to find implicit associations between entities,
+           based on naming patterns
+         This can be a time consuming operation
+         Optional, defaults to false
 Add loader options to the `load` command in the SchemaCrawler Shell
 
 
