@@ -235,24 +235,6 @@ Options:
 Add loader options to the `load` command in the SchemaCrawler Shell
 
 
-** Loader for weak associations
-Command:
-loader:weakassociationsloader
-
-Options:
-      --infer-extension-tables
-                            Infers extension tables that have similarly named
-                              primary keys, and reports them as weak
-                              associations
-                            Optional, defaults to false
-      --weak-associations   Analyzes the schema to find weak associations
-                              between tables, based on table and column naming
-                              patterns
-                            This can be a time consuming operation
-                            Optional, defaults to false
-Add loader options to the `load` command in the SchemaCrawler Shell
-
-
 ** Loader for ER model notes, such as remarks or tags and implicit associations
 Command:
 loader:attributesloader
@@ -273,6 +255,10 @@ Options:
          Analyzes the schema to find implicit associations between entities,
            based on naming patterns
          This can be a time consuming operation
+         Optional, defaults to false
+      --infer-extension-tables
+         Infers extension tables that have similarly named primary keys, and
+           reports them as implicit associations
          Optional, defaults to false
 Add loader options to the `load` command in the SchemaCrawler Shell
 

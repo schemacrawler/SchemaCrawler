@@ -32,8 +32,7 @@ public class AvailablePluginsTest {
   public void availableCatalogLoaders() {
     assertThat(
         new AvailableCatalogLoaders(),
-        containsInAnyOrder(
-            "weakassociationsloader", "offlineloader", "countsloader", "primarycatalogloader"));
+        containsInAnyOrder("offlineloader", "countsloader", "primarycatalogloader"));
   }
 
   @Test
