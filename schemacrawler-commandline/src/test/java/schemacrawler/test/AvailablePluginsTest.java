@@ -32,12 +32,7 @@ public class AvailablePluginsTest {
   public void availableCatalogLoaders() {
     assertThat(
         new AvailableCatalogLoaders(),
-        containsInAnyOrder(
-            "weakassociationsloader",
-            "attributesloader",
-            "offlineloader",
-            "countsloader",
-            "primarycatalogloader"));
+        containsInAnyOrder("offlineloader", "countsloader", "primarycatalogloader"));
   }
 
   @Test
@@ -52,7 +47,7 @@ public class AvailablePluginsTest {
   public void availableERModelLoaders() {
     assertThat(
         new AvailableERModelLoaders(),
-        containsInAnyOrder("implicitassociationsloader", "primarymodelloader"));
+        containsInAnyOrder("attributesloader", "implicitassociationsloader", "primarymodelloader"));
   }
 
   @Test

@@ -82,7 +82,6 @@ import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
-import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.exceptions.NotLoadedException;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
@@ -705,77 +704,18 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       LOGGER.log(Level.FINER, new StringFormat("Not showing foreign keys for <%s>", table));
       return;
     }
-
-    final Collection<ForeignKey> foreignKeysCollection = table.getForeignKeys();
-    if (foreignKeysCollection.isEmpty()) {
-      return;
-    }
-
-    formattingHelper.writeEmptyRow();
-    formattingHelper.writeWideRow("Foreign Keys", "section");
-
-    final List<ForeignKey> foreignKeys = new ArrayList<>(foreignKeysCollection);
-    Collections.sort(
-        foreignKeys,
-        NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForForeignKeys()));
-
-    for (final ForeignKey foreignKey : foreignKeys) {
-      if (foreignKey != null) {
-        final String name = identifiers.quoteName(foreignKey);
-        final String ruleString = makeFkRuleString(foreignKey);
-
-        formattingHelper.writeEmptyRow();
-
-        String fkName = "";
-        if (!options.is(hideForeignKeyNames)) {
-          LOGGER.log(
-              Level.FINER, new StringFormat("Not showing foreign key names for <%s>", table));
-          fkName = name;
-        }
-        final String fkDetails = "[foreign key" + ruleString + "]";
-        formattingHelper.writeNameRow(fkName, fkDetails);
-        printRemarks(foreignKey);
-        printColumnReferences(true, table, foreignKey);
-        printDependantObjectDefinition(foreignKey);
-      }
-    }
+    printTableReferences(true, table, table.getForeignKeys());
   }
 
   private void printImplicitAssociations(final Table table) {
     if (table == null || options.is(hideImplicitAssociations)) {
-      LOGGER.log(Level.FINER, new StringFormat("Not showing weak association for <%s>", table));
+      LOGGER.log(
+          Level.FINER, new StringFormat("Not showing implicit associations for <%s>", table));
       return;
     }
-
-    final Collection<WeakAssociation> weakAssociationsCollection = table.getWeakAssociations();
-    if (weakAssociationsCollection == null || weakAssociationsCollection.isEmpty()) {
-      return;
-    }
-
-    formattingHelper.writeEmptyRow();
-    formattingHelper.writeWideRow("Weak Associations", "section");
-
-    final List<WeakAssociation> weakAssociations = new ArrayList<>(weakAssociationsCollection);
-    weakAssociations.sort(naturalOrder());
-    for (final WeakAssociation weakAssociation : weakAssociations) {
-      if (weakAssociation != null) {
-        final String name = identifiers.quoteName(weakAssociation);
-
-        formattingHelper.writeEmptyRow();
-
-        String fkName = "";
-        if (!options.is(hideImplicitAssociationNames)) {
-          LOGGER.log(
-              Level.FINER,
-              new StringFormat("Not showing weak associations name for <%s>", weakAssociation));
-          fkName = name;
-        }
-        final String fkDetails = "[weak association]";
-        formattingHelper.writeNameRow(fkName, fkDetails);
-        printRemarks(weakAssociation);
-        printColumnReferences(false, table, weakAssociation);
-      }
-    }
+    final Collection<? extends TableReference> implicitAssociations =
+        modelHelper.getImplicitAssociations(table);
+    printTableReferences(false, table, implicitAssociations);
   }
 
   private void printIndexes(final Collection<Index> indexesCollection) {
@@ -1053,7 +993,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final String columnDetails;
 
       boolean emphasize = false;
-      if (column instanceof IndexColumn indexColumn) {
+      if (column instanceof final IndexColumn indexColumn) {
         columnDetails = indexColumn.getSortSequence().name();
       } else if (column instanceof TableConstraintColumn) {
         columnDetails = "";
@@ -1085,7 +1025,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         printTableColumnHidden(column);
         printTableColumnRemarks(column);
 
-        if (column instanceof DefinedObject object) {
+        if (column instanceof final DefinedObject object) {
           printDependantObjectDefinition(object);
         }
       }
@@ -1137,6 +1077,70 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     }
   }
 
+  private void printTableReference(
+      final boolean isForeignKey, final Table table, final TableReference tableReference) {
+    if (tableReference == null) {
+      return;
+    }
+
+    final String name = identifiers.quoteName(tableReference);
+    final String fkDetails;
+    final String fkName;
+    if (isForeignKey) {
+      final ForeignKey foreignKey = (ForeignKey) tableReference;
+      fkDetails = "[foreign key" + makeFkRuleString(foreignKey) + "]";
+      if (!options.is(hideForeignKeyNames)) {
+        LOGGER.log(
+            Level.FINER, new StringFormat("Not showing foreign key name for <%s>", tableReference));
+        fkName = name;
+      } else {
+        fkName = "";
+      }
+    } else {
+      fkDetails = "[weak association]";
+      if (!options.is(hideImplicitAssociationNames)) {
+        LOGGER.log(
+            Level.FINER,
+            new StringFormat("Not showing implicit association name for <%s>", tableReference));
+        fkName = name;
+      } else {
+        fkName = "";
+      }
+    }
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeNameRow(fkName, fkDetails);
+    printRemarks(tableReference);
+    printColumnReferences(isForeignKey, table, tableReference);
+    if (isForeignKey) {
+      printDependantObjectDefinition(tableReference);
+    }
+  }
+
+  private void printTableReferences(
+      final boolean isForeignKey,
+      final Table table,
+      final Collection<? extends TableReference> tableReferencesCollection) {
+    if (tableReferencesCollection == null || tableReferencesCollection.isEmpty()) {
+      return;
+    }
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow(isForeignKey ? "Foreign Keys" : "Weak Associations", "section");
+
+    final List<TableReference> tableReferences = new ArrayList<>(tableReferencesCollection);
+    if (isForeignKey) {
+      tableReferences.sort(
+          NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForForeignKeys()));
+    } else {
+      tableReferences.sort(naturalOrder());
+    }
+
+    for (final TableReference tableReference : tableReferences) {
+      printTableReference(isForeignKey, table, tableReference);
+    }
+  }
+
   private void printTableRowCount(final Table table) {
     if (options.isHideTableRowCounts() || !hasRowCount(table)) {
       return;
@@ -1162,7 +1166,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     Collections.sort(
         usedByObjects,
         Comparator.comparing(
-                (DatabaseObject databaseObject) ->
+                (final DatabaseObject databaseObject) ->
                     MetaDataUtility.getSimpleTypeName(databaseObject))
             .thenComparing(DatabaseObject::getFullName));
 

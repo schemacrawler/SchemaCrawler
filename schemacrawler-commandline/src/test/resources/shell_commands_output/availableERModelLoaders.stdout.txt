@@ -1,5 +1,7 @@
 
 Available ER Model Loaders:
+  attributesloader            Loader for ER model notes, such as remarks or
+                                tags and implicit associations
   implicitassociationsloader  Loader for implicit associations in ER Model
   primarymodelloader          Loader for ER Model
 

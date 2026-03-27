@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.ermodel.model.RelationshipCardinality;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -47,7 +49,6 @@ import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableReference;
-import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.exceptions.NotLoadedException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
@@ -58,9 +59,12 @@ import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.html.Tag;
+import us.fatehi.utility.string.StringFormat;
 
 /** Graphviz DOT formatting of schema. */
 public final class SchemaDotFormatter extends BaseDotFormatter implements SchemaTraversalHandler {
+
+  private static final Logger LOGGER = Logger.getLogger(BaseDotFormatter.class.getName());
 
   private final int tableColspan;
   private final ModelHelper modelHelper;
@@ -260,18 +264,18 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     if (!options.isShowForeignKeyCardinality()) {
       return "none";
     }
-    switch (connectivity) {
+    return switch (connectivity) {
       case zero_one:
-        return "teeodot";
+        yield "teeodot";
       case zero_many:
-        return "crowodot";
+        yield "crowodot";
       case one_one:
-        return "teetee";
+        yield "teetee";
       case one_many:
-        return "crowtee";
+        yield "crowtee";
       default: // Including "unknown"
-        return "box";
-    }
+        yield "box";
+    };
   }
 
   private String arrowheadPk() {
@@ -422,61 +426,18 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     if (table == null || options.is(hideForeignKeys)) {
       return;
     }
-    printForeignKeys(table, table.getForeignKeys());
-  }
-
-  private <R extends ColumnReference> void printForeignKeys(
-      final Table table, final Collection<? extends TableReference> foreignKeys) {
-    if (foreignKeys.isEmpty()) {
-      return;
-    }
-    for (final TableReference foreignKey : foreignKeys) {
-      final boolean isForeignKey = foreignKey.getType() == foreign_key;
-      final RelationshipCardinality fkCardinality = modelHelper.inferCardinality(foreignKey);
-      boolean showRemarks = !options.isHideRemarks() && foreignKey.hasRemarks();
-      for (final ColumnReference columnRef : foreignKey) {
-        final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
-        final Table dependentTable = columnRef.getForeignKeyColumn().getParent();
-
-        final boolean isPkColumnFiltered = isTableFiltered(referencedTable);
-        final boolean isFkColumnFiltered = isTableFiltered(dependentTable);
-
-        // Hide foreign keys to filtered tables
-        if (!options.isShowFilteredTables() && (isPkColumnFiltered || isFkColumnFiltered)) {
-          continue;
-        }
-
-        final String remarks;
-        if (showRemarks) {
-          remarks = foreignKey.getRemarks();
-        } else {
-          remarks = "";
-        }
-
-        if (table.equals(referencedTable) || isPkColumnFiltered && table.equals(dependentTable)) {
-          formattingHelper.append(
-              printColumnReference(
-                  isForeignKey,
-                  identifiers.quoteName(foreignKey.getName()),
-                  columnRef,
-                  fkCardinality,
-                  isPkColumnFiltered,
-                  isFkColumnFiltered,
-                  showRemarks,
-                  remarks));
-        }
-        // Show remarks only on the first reference
-        showRemarks = false;
-      }
-    }
+    printTableReferences(table, table.getForeignKeys());
   }
 
   private void printImplicitAssociations(final Table table) {
     if (table == null || options.is(hideImplicitAssociations)) {
+      LOGGER.log(
+          Level.FINER, new StringFormat("Not showing implicit associations for <%s>", table));
       return;
     }
-    final Collection<WeakAssociation> weakFks = table.getWeakAssociations();
-    printForeignKeys(table, weakFks);
+    final Collection<? extends TableReference> implicitAssociations =
+        modelHelper.getImplicitAssociations(table);
+    printTableReferences(table, implicitAssociations);
   }
 
   private void printIndexes(final Table table) {
@@ -717,6 +678,56 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       printTableColumnAutoIncremented(column);
       printTableColumnGenerated(column);
       printTableColumnRemarks(column);
+    }
+  }
+
+  private void printTableReference(final Table table, final TableReference tableReference) {
+    final boolean isForeignKey = tableReference.getType() == foreign_key;
+    final RelationshipCardinality fkCardinality = modelHelper.inferCardinality(tableReference);
+    boolean showRemarks = !options.isHideRemarks() && tableReference.hasRemarks();
+    for (final ColumnReference columnRef : tableReference) {
+      final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
+      final Table dependentTable = columnRef.getForeignKeyColumn().getParent();
+
+      final boolean isPkColumnFiltered = isTableFiltered(referencedTable);
+      final boolean isFkColumnFiltered = isTableFiltered(dependentTable);
+
+      // Hide foreign keys to filtered tables
+      if (!options.isShowFilteredTables() && (isPkColumnFiltered || isFkColumnFiltered)) {
+        continue;
+      }
+
+      final String remarks;
+      if (showRemarks) {
+        remarks = tableReference.getRemarks();
+      } else {
+        remarks = "";
+      }
+
+      if (table.equals(referencedTable) || isPkColumnFiltered && table.equals(dependentTable)) {
+        formattingHelper.append(
+            printColumnReference(
+                isForeignKey,
+                identifiers.quoteName(tableReference.getName()),
+                columnRef,
+                fkCardinality,
+                isPkColumnFiltered,
+                isFkColumnFiltered,
+                showRemarks,
+                remarks));
+      }
+      // Show remarks only on the first reference
+      showRemarks = false;
+    }
+  }
+
+  private void printTableReferences(
+      final Table table, final Collection<? extends TableReference> tableReferences) {
+    if (tableReferences == null || tableReferences.isEmpty()) {
+      return;
+    }
+    for (final TableReference tableReference : tableReferences) {
+      printTableReference(table, tableReference);
     }
   }
 

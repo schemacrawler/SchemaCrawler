@@ -12,6 +12,7 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.erModelLoaderPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCommandLineErrorMessage;
 import static us.fatehi.utility.Utility.isBlank;
@@ -61,6 +62,7 @@ public final class SchemaCrawlerShell {
       final CommandLine loadCommandLine = commandLine.getSubcommands().getOrDefault("load", null);
       if (loadCommandLine != null) {
         addPluginCommands(loadCommandLine, catalogLoaderPluginCommands);
+        addPluginCommands(loadCommandLine, erModelLoaderPluginCommands);
         commandLine.addSubcommand(loadCommandLine);
       }
       final CommandLine executeCommandLine =
