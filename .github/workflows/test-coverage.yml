@@ -89,7 +89,7 @@ jobs:
       name: Upload coverage report to Codecov
       if: contains(github.ref, 'main')
       continue-on-error: true
-      uses: codecov/codecov-action@v5
+      uses: codecov/codecov-action@v6
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         verbose: true
