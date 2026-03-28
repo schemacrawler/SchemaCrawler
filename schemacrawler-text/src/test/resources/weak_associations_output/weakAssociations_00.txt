@@ -120,7 +120,7 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
 
 Weak Associations
 
-SCHCRWLR_AFD2BA21_B8DA20C0                            [weak association]
+SCHCRWLR_B8DA20C0_AFD2BA21                            [weak association]
   PUBLISHERID (1..many)~~> PUBLIC.BOOKS.PUBLISHERS.ID                              
 
 Indexes
@@ -198,7 +198,7 @@ PK_COUPONS                                                 [primary key]
 
 Weak Associations
 
-SCHCRWLR_20BE6F95_3B49BEC4                            [weak association]
+SCHCRWLR_3B49BEC4_20BE6F95                            [weak association]
   ID <~~(0..many) PUBLIC."PUBLISHER SALES".SALES.COUPON_ID                              
 
 Indexes
@@ -281,7 +281,7 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
 
 Weak Associations
 
-SCHCRWLR_AFD2BA21_B8DA20C0                            [weak association]
+SCHCRWLR_B8DA20C0_AFD2BA21                            [weak association]
   ID <~~(1..many) PUBLIC.BOOKS.BOOKS.PUBLISHERID                              
 
 Indexes
@@ -369,7 +369,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 
 Weak Associations
 
-SCHCRWLR_20BE6F95_3B49BEC4                            [weak association]
+SCHCRWLR_3B49BEC4_20BE6F95                            [weak association]
   COUPON_ID (0..many)~~> PUBLIC.BOOKS.COUPONS.ID                              
 
 Indexes

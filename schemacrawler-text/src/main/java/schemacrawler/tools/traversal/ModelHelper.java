@@ -10,16 +10,13 @@ package schemacrawler.tools.traversal;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import schemacrawler.ermodel.model.ERModel;
-import schemacrawler.ermodel.model.Entity;
 import schemacrawler.ermodel.model.Relationship;
 import schemacrawler.ermodel.model.RelationshipCardinality;
-import schemacrawler.ermodel.model.TableReferenceRelationship;
-import schemacrawler.ermodel.utility.EntityModelUtility;
+import schemacrawler.ermodel.utility.ERModelUtility;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
 import schemacrawler.tools.state.ExecutionState;
@@ -32,7 +29,7 @@ public final class ModelHelper {
     if (state.hasERModel()) {
       erModel = state.getERModel();
     } else {
-      erModel = EntityModelUtility.buildEmptyERModel();
+      erModel = ERModelUtility.buildEmptyERModel();
     }
     return new ModelHelper(erModel);
   }
@@ -44,27 +41,9 @@ public final class ModelHelper {
   }
 
   public Collection<? extends TableReference> getImplicitAssociations(final Table table) {
-    if (table == null) {
-      return List.of();
-    }
-    final Entity entity = erModel.lookupEntity(table).orElse(null);
-    if (entity == null) {
-      return List.of();
-    }
-    final Collection<Relationship> implicitRelationships = entity.getImplicitRelationships();
-    if (implicitRelationships == null) {
-      return List.of();
-    }
-
-    final Collection<TableReference> tableReferences = new ArrayList<>();
-    for (final Relationship implicitRelationship : implicitRelationships) {
-      if (!(implicitRelationship instanceof final TableReferenceRelationship relationship)) {
-        continue;
-      }
-      final TableReference tableReference = relationship.getTableReference();
-      tableReferences.add(tableReference);
-    }
-    return List.copyOf(tableReferences);
+    final Collection<? extends TableReference> implicitAssociations =
+        ERModelUtility.collectImplicitAssociations(table, erModel);
+    return List.copyOf(implicitAssociations);
   }
 
   public RelationshipCardinality inferCardinality(final TableReference tableReference) {
@@ -76,7 +55,7 @@ public final class ModelHelper {
     if (lookedupRelationship.isEmpty()) {
       // Relationship may belong to a many-to-many relationship, so compute the
       // cardinality
-      return EntityModelUtility.inferCardinality(tableReference);
+      return ERModelUtility.inferCardinality(tableReference);
     }
     final RelationshipCardinality cardinality = lookedupRelationship.get().getType();
     return cardinality;
