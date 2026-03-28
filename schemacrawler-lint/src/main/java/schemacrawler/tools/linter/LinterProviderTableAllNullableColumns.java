@@ -9,7 +9,7 @@
 package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.ermodel.utility.EntityModelUtility.inferBridgeTable;
+import static schemacrawler.ermodel.utility.ERModelUtility.inferBridgeTable;
 import static schemacrawler.utility.MetaDataUtility.isView;
 
 import java.io.Serial;

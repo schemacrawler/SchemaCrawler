@@ -13,7 +13,7 @@ import static schemacrawler.utility.MetaDataUtility.isPartial;
 
 import java.io.Serial;
 import java.sql.Connection;
-import schemacrawler.ermodel.utility.EntityModelUtility;
+import schemacrawler.ermodel.utility.ERModelUtility;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
@@ -59,7 +59,7 @@ class LinterForeignKeyWithNoIndexes extends BaseLinter {
     }
 
     for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
-      if (EntityModelUtility.coveredByIndex(foreignKey) == OptionalBoolean.false_value) {
+      if (ERModelUtility.coveredByIndex(foreignKey) == OptionalBoolean.false_value) {
         addTableLint(table, getSummary(), foreignKey);
       }
     }
