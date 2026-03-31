@@ -34,7 +34,7 @@ See details on configuring lints on the [lints page](lint.html).
 
 ## Extending Metadata With Attributes
 
-See details of how to extend SchemaCrawler metadata with table and column metadata and [weak associations](weak-associations.html) with [attributes](attributes.html).
+See details of how to extend SchemaCrawler metadata with table and column metadata and [implicit associations](implicit-associations.html) with [attributes](attributes.html).
 
 
 ## Data Dictionary Extensions

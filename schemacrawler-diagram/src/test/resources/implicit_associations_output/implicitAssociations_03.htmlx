@@ -817,14 +817,14 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='3' class='section'>Weak Associations</td>
+		<td colspan='3' class='section'>Implicit Associations</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>multi_line_remarks</td>
-		<td class='description right'>[weak association]</td>
+		<td class='description right'>[implicit association]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
@@ -1132,14 +1132,14 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='3' class='section'>Weak Associations</td>
+		<td colspan='3' class='section'>Implicit Associations</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>multi_line_remarks</td>
-		<td class='description right'>[weak association]</td>
+		<td class='description right'>[implicit association]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
@@ -1983,14 +1983,14 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='3' class='section'>Weak Associations</td>
+		<td colspan='3' class='section'>Implicit Associations</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>multi_reference_remarks</td>
-		<td class='description right'>[weak association]</td>
+		<td class='description right'>[implicit association]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>

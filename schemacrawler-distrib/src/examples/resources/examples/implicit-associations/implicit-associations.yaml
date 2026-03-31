@@ -1,5 +1,8 @@
-name: schemacrawler.test.SchemaCrawlerTest
-weak-associations:
+# Copyright (c) Sualeh Fatehi
+# SPDX-License-Identifier: EPL-2.0
+
+name: catalog
+implicit-associations:
 - name: multi_line_remarks
   referenced-table:
     catalog: PUBLIC
@@ -12,9 +15,9 @@ weak-associations:
   column-references:
     ID: ID
   remarks:
-  - "Overwritten remarks line 1"
-  - "Overwritten remarks line 2"
-- name: multi_reference_remarks
+  - "Some remarks line 1"
+  - "Some remarks line 2"
+- name: multi_remarks_reference
   referenced-table:
     catalog: PUBLIC
     schema: PUBLISHER SALES
@@ -27,5 +30,5 @@ weak-associations:
     POSTALCODE: POSTALCODE
     COUNTRY: COUNTRY
   remarks:
-  - "Overwritten remarks line 1"
-  - "Overwritten remarks line 2"
+  - "Other remarks line 1"
+  - "Other remarks line 2"

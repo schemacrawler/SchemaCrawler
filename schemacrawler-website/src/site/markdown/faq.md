@@ -31,7 +31,7 @@
 ## SchemaCrawler Features
 
 1. [What is SchemaCrawler Lint?](#schema-lint)
-2. [What are weak associations?](#weak-associations)
+2. [What are implicit associations?](#implicit-associations)
 3. [Can SchemaCrawler be used with scripting languages?](#scripting)
 4. [Can SchemaCrawler be used programmatically?](#api)
 5. [Can SchemaCrawler be used integrated with other programs?](#integrations)
@@ -183,10 +183,10 @@ _For more details, look at the [SchemaCrawler Lint](lint.html) page._
 
 ---------
 
-### <a name="weak-associations">What are weak associations?</a>
+### <a name="implicit-associations">What are implicit associations?</a>
 
-Weak associations are inferred associations between tables, similar to foreign keys, even if there is no foreign key defined in the database schema between the tables.
-_For more details, look at the [Weak Associations](weak-associations.html) page._
+Implicit Associations are inferred associations between tables, similar to foreign keys, even if there is no foreign key defined in the database schema between the tables.
+_For more details, look at the [Implicit Associations](implicit-associations.html) page._
 
 ---------
 

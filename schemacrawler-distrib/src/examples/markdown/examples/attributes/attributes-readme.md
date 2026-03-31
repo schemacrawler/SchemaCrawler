@@ -15,4 +15,4 @@ with the `--attributes-file` command-line switch.
 4. Run `attributes.cmd attributes.yaml` (or `attributes.sh attributes.yaml` on Unix). 
 
 ## How to Experiment
-- Look at the `weak-associations` example to see how you can add weak associations to the schema
+- Look at the `implicit-associations` example to see how you can add implicit associations to the schema

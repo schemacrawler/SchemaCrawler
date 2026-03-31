@@ -158,7 +158,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   }
 
   @Test
-  @DisplayName("No hanging foreign keys; weak associations loaded; schema command")
+  @DisplayName("No hanging foreign keys; implicit associations loaded; schema command")
   public void executableAdditionalForDiagram_02(
       final TestContext testContext, final DatabaseConnectionSource connectionSource)
       throws Exception {
@@ -169,7 +169,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
     final SchemaCrawlerOptions options = greppedForTable3();
 
     final Config additionalConfig = ConfigUtility.newConfig();
-    additionalConfig.put("attributes-file", "/table-chain-weak-associations.yaml");
+    additionalConfig.put("attributes-file", "/table-chain-implicit-associations.yaml");
 
     executableDiagram(
         SchemaTextDetailType.schema,
@@ -181,7 +181,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   }
 
   @Test
-  @DisplayName("No hanging foreign keys; weak associations loaded; brief command")
+  @DisplayName("No hanging foreign keys; implicit associations loaded; brief command")
   public void executableAdditionalForDiagram_03(
       final TestContext testContext, final DatabaseConnectionSource connectionSource)
       throws Exception {
@@ -192,7 +192,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
     final SchemaCrawlerOptions options = greppedForTable3();
 
     final Config additionalConfig = ConfigUtility.newConfig();
-    additionalConfig.put("attributes-file", "/table-chain-weak-associations.yaml");
+    additionalConfig.put("attributes-file", "/table-chain-implicit-associations.yaml");
 
     executableDiagram(
         SchemaTextDetailType.brief,
@@ -204,7 +204,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
   }
 
   @Test
-  @DisplayName("Allow hanging foreign keys; weak associations loaded; brief command")
+  @DisplayName("Allow hanging foreign keys; implicit associations loaded; brief command")
   public void executableAdditionalForDiagram_04(
       final TestContext testContext, final DatabaseConnectionSource connectionSource)
       throws Exception {
@@ -215,7 +215,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
     final SchemaCrawlerOptions options = greppedForTable3();
 
     final Config additionalConfig = ConfigUtility.newConfig();
-    additionalConfig.put("attributes-file", "/table-chain-weak-associations.yaml");
+    additionalConfig.put("attributes-file", "/table-chain-implicit-associations.yaml");
 
     executableDiagram(
         SchemaTextDetailType.brief,

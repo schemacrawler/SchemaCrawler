@@ -29,12 +29,12 @@ Foreign Keys
 Z_FK_AUTHOR                                [foreign key, with no action]
   ID <--(1..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
-Weak Associations
+Implicit Associations
 
-2_weak_partial_fk                                     [weak association]
+2_weak_partial_fk                                 [implicit association]
   ID <~~ PRIVATE.LIBRARY.BOOKAUTHORS.AUTHORID                              
 
-1_weak                                                [weak association]
+1_weak                                            [implicit association]
   ID <~~(1..1) PUBLIC.BOOKS.BOOKS.ID                              
 
 Indexes
@@ -126,12 +126,12 @@ SYS_FK_10121                               [foreign key, with no action]
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
 
-Weak Associations
+Implicit Associations
 
-3_weak_partial_pk                                     [weak association]
+3_weak_partial_pk                                 [implicit association]
   ID (1..1)~~> PRIVATE.LIBRARY.BOOKS.ID                              
 
-1_weak                                                [weak association]
+1_weak                                            [implicit association]
   ID (1..1)~~> PUBLIC.BOOKS.AUTHORS.ID                              
 
 Indexes
@@ -368,9 +368,9 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE (1..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
   COUNTRY (1..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
 
-Weak Associations
+Implicit Associations
 
-8_weak_two_references                                 [weak association]
+8_weak_two_references                             [implicit association]
   POSTALCODE <~~ PRIVATE.ALLSALES.REGIONS.POSTALCODE                              
   COUNTRY <~~ PRIVATE.ALLSALES.REGIONS.COUNTRY                              
 

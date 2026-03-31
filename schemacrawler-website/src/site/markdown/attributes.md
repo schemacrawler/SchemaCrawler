@@ -1,7 +1,7 @@
 # Extensions with Catalog Attributes
 
 SchemaCrawler can read and incorporate user-provided metadata in the form of table, column 
-and foreign key remarks and attributes, and weak association definitions, and alternate key 
+and foreign key remarks and attributes, and implicit association definitions, and alternate key 
 specifications from a YAML file. 
 Examples of attributes file are shown below. Then you can run SchemaCrawler with a
 `--attributes-file <path>` command-line option. 
@@ -39,22 +39,22 @@ tables:
 If your JDBC driver does not support catalogs, you can omit the "catalog" key, and if it
 does not support schemas, you can omit the "schema" key.
 
-## Creating Weak Associations
+## Creating Implicit Associations
 
-You can create weak associations between columns of two tables (or even the same table)
-by creating a file like the one below. These weak associations will be shown in 
+You can create implicit associations between columns of two tables (or even the same table)
+by creating a file like the one below. These implicit associations will be shown in 
 SchemaCrawler output and diagrams.
 
-Weak associations can be between columns of tables of the SchemaCrawler schema and columns
+Implicit Associations can be between columns of tables of the SchemaCrawler schema and columns
 in external schemas. This is useful for tracking data lineage or other types of associations.
-You can provide remarks for weak associations which will also be shown in SchemaCrawler output.
+You can provide remarks for implicit associations which will also be shown in SchemaCrawler output.
 SchemaCrawler does not allow you to provide column references between two external tables.
 
-Also see more information on how SchemaCrawler can infer [weak associations](weak-associations.html).
+Also see more information on how SchemaCrawler can infer [implicit associations](implicit-associations.html).
 
 ```yaml
 name: catalog
-weak-associations:
+implicit-associations:
 - name: multi_line_remarks
   referenced-table:
     catalog: PUBLIC
@@ -90,7 +90,7 @@ weak-associations:
 
 You can annotate foreign keys in your schema with remarks. These remarks can be shown
 in SchemaCrawler diagrams and in other SchemaCrawler output. Use syntax like the one above,
-still using the "weak-associations" key. SchemaCrawler will find a foreign key match for 
+still using the "implicit-associations" key. SchemaCrawler will find a foreign key match for 
 the columns in the referenced and referencing tables, and will update the remarks on that
 foreign key.
 

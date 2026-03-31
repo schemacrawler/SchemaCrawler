@@ -11,7 +11,7 @@ package schemacrawler.integration.test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import schemacrawler.test.AbstractWeakAssociationsTest;
+import schemacrawler.test.AbstractImplicitAssociationsTest;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
@@ -21,61 +21,61 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
-public class DiagramWeakAssociationsTest extends AbstractWeakAssociationsTest {
+public class DiagramImplicitAssociationsTest extends AbstractImplicitAssociationsTest {
 
   @Override
-  @DisplayName("Inferred weak associations")
+  @DisplayName("Inferred implicit associations")
   @ParameterizedTest(name = "with output to {0}")
   @EnumSource(
       value = DiagramOutputFormat.class,
       names = {"scdot", "htmlx"})
-  public void weakAssociations_00(
+  public void implicitAssociations_00(
       final OutputFormat outputFormat,
       final TestContext testContext,
       final DatabaseConnectionSource connectionSource)
       throws Exception {
-    super.weakAssociations_00(outputFormat, testContext, connectionSource);
+    super.implicitAssociations_00(outputFormat, testContext, connectionSource);
   }
 
   @Override
-  @DisplayName("Weak associations loaded from catalog attributes file")
+  @DisplayName("Implicit Associations loaded from catalog attributes file")
   @ParameterizedTest(name = "with output to {0}")
   @EnumSource(
       value = DiagramOutputFormat.class,
       names = {"scdot", "htmlx"})
-  public void weakAssociations_01(
+  public void implicitAssociations_01(
       final OutputFormat outputFormat,
       final TestContext testContext,
       final DatabaseConnectionSource connectionSource)
       throws Exception {
-    super.weakAssociations_01(outputFormat, testContext, connectionSource);
+    super.implicitAssociations_01(outputFormat, testContext, connectionSource);
   }
 
   @Override
-  @DisplayName("Weak associations loaded with remarks")
+  @DisplayName("Implicit Associations loaded with remarks")
   @ParameterizedTest(name = "with output to {0}")
   @EnumSource(
       value = DiagramOutputFormat.class,
       names = {"scdot", "htmlx"})
-  public void weakAssociations_02(
+  public void implicitAssociations_02(
       final OutputFormat outputFormat,
       final TestContext testContext,
       final DatabaseConnectionSource connectionSource)
       throws Exception {
-    super.weakAssociations_02(outputFormat, testContext, connectionSource);
+    super.implicitAssociations_02(outputFormat, testContext, connectionSource);
   }
 
   @Override
-  @DisplayName("Weak associations loaded with remarks, but hiding remarks")
+  @DisplayName("Implicit Associations loaded with remarks, but hiding remarks")
   @ParameterizedTest(name = "with output to {0}")
   @EnumSource(
       value = DiagramOutputFormat.class,
       names = {"scdot", "htmlx"})
-  public void weakAssociations_03(
+  public void implicitAssociations_03(
       final OutputFormat outputFormat,
       final TestContext testContext,
       final DatabaseConnectionSource connectionSource)
       throws Exception {
-    super.weakAssociations_03(outputFormat, testContext, connectionSource);
+    super.implicitAssociations_03(outputFormat, testContext, connectionSource);
   }
 }

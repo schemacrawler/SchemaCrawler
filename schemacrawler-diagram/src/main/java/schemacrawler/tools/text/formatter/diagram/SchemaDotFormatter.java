@@ -325,7 +325,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     final boolean isPkColumnSignificant = isColumnSignificant(primaryKeyColumn);
     final boolean isFkColumnSignificant = isColumnSignificant(foreignKeyColumn);
 
-    // Primary key column in a weak association is not a significant column
+    // Primary key column in an implicit association is not a significant column
     // Hide hanging foreign keys when filtered tables are not shown
     if (!isPkColumnSignificant || !options.isShowFilteredTables() && !isFkColumnSignificant) {
       return "";

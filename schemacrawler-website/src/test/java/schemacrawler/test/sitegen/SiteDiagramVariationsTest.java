@@ -142,7 +142,7 @@ public class SiteDiagramVariationsTest {
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("--info-level", InfoLevel.standard.name());
-    argsMap.put("--weak-associations", Boolean.TRUE.toString());
+    argsMap.put("--implicit-associations", Boolean.TRUE.toString());
 
     run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }

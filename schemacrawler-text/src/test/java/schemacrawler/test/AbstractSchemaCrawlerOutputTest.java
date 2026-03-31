@@ -58,7 +58,8 @@ public abstract class AbstractSchemaCrawlerOutputTest {
 
   private static final String ORDINAL_OUTPUT = "ordinal_output/";
   private static final String TABLE_ROW_COUNT_OUTPUT = "table_row_count_output/";
-  private static final String SHOW_WEAK_ASSOCIATIONS_OUTPUT = "show_weak_associations_output/";
+  private static final String SHOW_IMPLICIT_ASSOCIATIONS_OUTPUT =
+      "show_implicit_associations_output/";
   private static final String HIDE_CONSTRAINT_NAMES_OUTPUT = "hide_constraint_names_output/";
   private static final String HIDE_DATABASE_OBJECTS_OUTPUT = "hide_database_objects_output/";
   private static final String HIDE_DEPENDANT_DATABASE_OBJECTS_OUTPUT =
@@ -77,7 +78,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   public void cleanAll() throws Exception {
     clean(ORDINAL_OUTPUT);
     clean(TABLE_ROW_COUNT_OUTPUT);
-    clean(SHOW_WEAK_ASSOCIATIONS_OUTPUT);
+    clean(SHOW_IMPLICIT_ASSOCIATIONS_OUTPUT);
     clean(HIDE_CONSTRAINT_NAMES_OUTPUT);
     clean(HIDE_DATABASE_OBJECTS_OUTPUT);
     clean(HIDE_DEPENDANT_DATABASE_OBJECTS_OUTPUT);
@@ -289,7 +290,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
   }
 
   @Test
-  public void compareShowWeakAssociationsOutput(final DatabaseConnectionSource connectionSource)
+  public void compareShowImplicitAssociationsOutput(final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
@@ -302,7 +303,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .map(
                 outputFormat ->
                     () -> {
-                      compareShowWeakAssociationsOutput(
+                      compareShowImplicitAssociationsOutput(
                           connectionSource, textOptions, outputFormat);
                     }));
   }
@@ -637,7 +638,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
         hasSameContentAndTypeAs(classpathResource(ROUTINES_OUTPUT + referenceFile), outputFormat));
   }
 
-  private void compareShowWeakAssociationsOutput(
+  private void compareShowImplicitAssociationsOutput(
       final DatabaseConnectionSource connectionSource,
       final SchemaTextOptions textOptions,
       final OutputFormat outputFormat)
@@ -674,7 +675,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
     assertThat(
         outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
-            classpathResource(SHOW_WEAK_ASSOCIATIONS_OUTPUT + referenceFile), outputFormat));
+            classpathResource(SHOW_IMPLICIT_ASSOCIATIONS_OUTPUT + referenceFile), outputFormat));
   }
 
   private void compareTableRowCountOutput(

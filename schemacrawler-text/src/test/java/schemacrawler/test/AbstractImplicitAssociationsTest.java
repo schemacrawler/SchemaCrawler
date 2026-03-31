@@ -34,16 +34,16 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
-public abstract class AbstractWeakAssociationsTest {
+public abstract class AbstractImplicitAssociationsTest {
 
-  private static final String WEAK_ASSOCIATIONS_OUTPUT = "weak_associations_output/";
+  private static final String IMPLICIT_ASSOCIATIONS_OUTPUT = "implicit_associations_output/";
 
   @BeforeAll
   public static void clean() throws Exception {
-    TestUtility.clean(WEAK_ASSOCIATIONS_OUTPUT);
+    TestUtility.clean(IMPLICIT_ASSOCIATIONS_OUTPUT);
   }
 
-  protected void weakAssociations_00(
+  protected void implicitAssociations_00(
       final OutputFormat outputFormat,
       final TestContext testContext,
       final DatabaseConnectionSource connectionSource)
@@ -52,46 +52,49 @@ public abstract class AbstractWeakAssociationsTest {
     final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("implicit-associations", true);
 
-    assertWeakAssociations(testContext, connectionSource, additionalConfig, false, outputFormat);
+    assertImplicitAssociations(
+        testContext, connectionSource, additionalConfig, false, outputFormat);
   }
 
-  protected void weakAssociations_01(
+  protected void implicitAssociations_01(
       final OutputFormat outputFormat,
       final TestContext testContext,
       final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final Config additionalConfig = ConfigUtility.newConfig();
-    additionalConfig.put("attributes-file", "/attributes-weakassociations.yaml");
+    additionalConfig.put("attributes-file", "/attributes-implicitassociations.yaml");
 
-    assertWeakAssociations(testContext, connectionSource, additionalConfig, false, outputFormat);
+    assertImplicitAssociations(
+        testContext, connectionSource, additionalConfig, false, outputFormat);
   }
 
-  protected void weakAssociations_02(
+  protected void implicitAssociations_02(
       final OutputFormat outputFormat,
       final TestContext testContext,
       final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final Config additionalConfig = ConfigUtility.newConfig();
-    additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
+    additionalConfig.put("attributes-file", "/attributes-implicitassociations-remarks.yaml");
 
-    assertWeakAssociations(testContext, connectionSource, additionalConfig, false, outputFormat);
+    assertImplicitAssociations(
+        testContext, connectionSource, additionalConfig, false, outputFormat);
   }
 
-  protected void weakAssociations_03(
+  protected void implicitAssociations_03(
       final OutputFormat outputFormat,
       final TestContext testContext,
       final DatabaseConnectionSource connectionSource)
       throws Exception {
 
     final Config additionalConfig = ConfigUtility.newConfig();
-    additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
+    additionalConfig.put("attributes-file", "/attributes-implicitassociations-remarks.yaml");
 
-    assertWeakAssociations(testContext, connectionSource, additionalConfig, true, outputFormat);
+    assertImplicitAssociations(testContext, connectionSource, additionalConfig, true, outputFormat);
   }
 
-  private void assertWeakAssociations(
+  private void assertImplicitAssociations(
       final TestContext testContext,
       final DatabaseConnectionSource connectionSource,
       final Config config,
@@ -122,7 +125,10 @@ public abstract class AbstractWeakAssociationsTest {
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
 
     final String referenceFileName =
-        WEAK_ASSOCIATIONS_OUTPUT + testContext.testMethodName() + "." + outputFormat.getFormat();
+        IMPLICIT_ASSOCIATIONS_OUTPUT
+            + testContext.testMethodName()
+            + "."
+            + outputFormat.getFormat();
     assertThat(
         outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(classpathResource(referenceFileName), outputFormat));

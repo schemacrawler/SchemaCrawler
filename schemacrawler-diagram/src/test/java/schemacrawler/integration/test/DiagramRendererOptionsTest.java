@@ -152,7 +152,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
-  @DisplayName("Diagram with ordinal numbers and weak associations")
+  @DisplayName("Diagram with ordinal numbers and implicit associations")
   public void executableForDiagram_01(
       final TestContext testContext, final DatabaseConnectionSource connectionSource)
       throws Exception {
@@ -169,7 +169,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connectionSource,
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
-        configWithWeakAssociations(),
+        configWithImplicitAssociations(),
         diagramOptions,
         testContext.testMethodName());
   }
@@ -190,7 +190,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connectionSource,
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
-        configWithWeakAssociations(),
+        configWithImplicitAssociations(),
         diagramOptions,
         testContext.testMethodName());
   }
@@ -211,7 +211,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connectionSource,
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
-        configWithWeakAssociations(),
+        configWithImplicitAssociations(),
         diagramOptions,
         testContext.testMethodName());
   }
@@ -229,7 +229,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connectionSource,
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
-        configWithWeakAssociations(),
+        configWithImplicitAssociations(),
         diagramOptions,
         testContext.testMethodName());
   }
@@ -511,7 +511,7 @@ public class DiagramRendererOptionsTest {
         testContext.testMethodName());
   }
 
-  private Config configWithWeakAssociations() {
+  private Config configWithImplicitAssociations() {
     final Config config = ConfigUtility.newConfig();
     config.put("implicit-associations", true);
     return config;

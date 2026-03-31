@@ -16,61 +16,61 @@ import schemacrawler.tools.options.OutputFormat;
 import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
-public class TextWeakAssociationsTest extends AbstractWeakAssociationsTest {
+public class TextImplicitAssociationsTest extends AbstractImplicitAssociationsTest {
 
   @Override
-  @DisplayName("Inferred weak associations")
+  @DisplayName("Inferred implicit associations")
   @ParameterizedTest(name = "with output to {0}")
   @EnumSource(
       value = TextOutputFormat.class,
       names = {"text", "html"})
-  public void weakAssociations_00(
+  public void implicitAssociations_00(
       final OutputFormat outputFormat,
       final TestContext testContext,
       final DatabaseConnectionSource connectionSource)
       throws Exception {
-    super.weakAssociations_00(outputFormat, testContext, connectionSource);
+    super.implicitAssociations_00(outputFormat, testContext, connectionSource);
   }
 
   @Override
-  @DisplayName("Weak associations loaded from catalog attributes file")
+  @DisplayName("Implicit Associations loaded from catalog attributes file")
   @ParameterizedTest(name = "with output to {0}")
   @EnumSource(
       value = TextOutputFormat.class,
       names = {"text", "html"})
-  public void weakAssociations_01(
+  public void implicitAssociations_01(
       final OutputFormat outputFormat,
       final TestContext testContext,
       final DatabaseConnectionSource connectionSource)
       throws Exception {
-    super.weakAssociations_01(outputFormat, testContext, connectionSource);
+    super.implicitAssociations_01(outputFormat, testContext, connectionSource);
   }
 
   @Override
-  @DisplayName("Weak associations loaded with remarks")
+  @DisplayName("Implicit Associations loaded with remarks")
   @ParameterizedTest(name = "with output to {0}")
   @EnumSource(
       value = TextOutputFormat.class,
       names = {"text", "html"})
-  public void weakAssociations_02(
+  public void implicitAssociations_02(
       final OutputFormat outputFormat,
       final TestContext testContext,
       final DatabaseConnectionSource connectionSource)
       throws Exception {
-    super.weakAssociations_02(outputFormat, testContext, connectionSource);
+    super.implicitAssociations_02(outputFormat, testContext, connectionSource);
   }
 
   @Override
-  @DisplayName("Weak associations loaded with remarks, but hiding remarks")
+  @DisplayName("Implicit Associations loaded with remarks, but hiding remarks")
   @ParameterizedTest(name = "with output to {0}")
   @EnumSource(
       value = TextOutputFormat.class,
       names = {"text", "html"})
-  public void weakAssociations_03(
+  public void implicitAssociations_03(
       final OutputFormat outputFormat,
       final TestContext testContext,
       final DatabaseConnectionSource connectionSource)
       throws Exception {
-    super.weakAssociations_03(outputFormat, testContext, connectionSource);
+    super.implicitAssociations_03(outputFormat, testContext, connectionSource);
   }
 }
