@@ -13,7 +13,6 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.DataTypeType.user_defined;
-import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideImplicitAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideIndexNames;
@@ -25,7 +24,6 @@ import static schemacrawler.tools.command.text.schema.options.HideDatabaseObject
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSequences;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSynonyms;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTables;
-import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideAlternateKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideForeignKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideImplicitAssociations;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
@@ -273,7 +271,6 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     printPrimaryKey(table.getPrimaryKey());
     printForeignKeys(table);
     if (!isBrief()) {
-      printAlternateKeys(table);
       printImplicitAssociations(table);
       printIndexes(table.getIndexes());
       printTriggers(table.getTriggers());
@@ -525,38 +522,6 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       ruleString = updateRuleString + deleteRuleString;
     }
     return ruleString;
-  }
-
-  private void printAlternateKeys(final Table table) {
-    if (table == null || options.is(hideAlternateKeys)) {
-      LOGGER.log(Level.FINER, "Not showing alternate keys");
-      return;
-    }
-
-    final Collection<PrimaryKey> alternateKeys = table.getAlternateKeys();
-    if (alternateKeys == null || alternateKeys.isEmpty()) {
-      return;
-    }
-    formattingHelper.writeEmptyRow();
-    formattingHelper.writeWideRow("Alternate Keys", "section");
-
-    formattingHelper.writeEmptyRow();
-
-    for (final TableConstraint alternateKey : alternateKeys) {
-      final String name = identifiers.quoteName(alternateKey);
-      final String akName;
-      if (!options.is(hideAlternateKeyNames)) {
-        LOGGER.log(
-            Level.FINER, new StringFormat("Not showing alternate key names for <%s>", table));
-        akName = name;
-      } else {
-        akName = "";
-      }
-      final String type = alternateKey.getType().getValue().toLowerCase();
-      formattingHelper.writeNameRow(akName, "[" + type + "]");
-      printRemarks(alternateKey);
-      printTableColumns(alternateKey.getConstrainedColumns(), false);
-    }
   }
 
   private void printColumnDataType(final ColumnDataType columnDataType) {

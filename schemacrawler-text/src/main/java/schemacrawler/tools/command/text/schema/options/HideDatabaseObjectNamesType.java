@@ -16,8 +16,6 @@ public enum HideDatabaseObjectNamesType {
   hideRoutineSpecificNames("hide_routine_specific_names"),
   hideTableConstraintNames("hide_constraint_names"),
   hideTriggerNames("hide_trigger_names"),
-  @Deprecated
-  hideWeakAssociationNames("hide_weakassociation_names"),
   hideImplicitAssociationNames("hide_implicit_association_names"),
   ;
 

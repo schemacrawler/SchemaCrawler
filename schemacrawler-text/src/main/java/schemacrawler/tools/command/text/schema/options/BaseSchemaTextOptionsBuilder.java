@@ -33,7 +33,6 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
@@ -105,28 +104,11 @@ public abstract class BaseSchemaTextOptionsBuilder<
       final boolean isHidden = config.getBooleanValue(databaseObjectsType.getKey());
       hideDependantDatabaseObjects.put(databaseObjectsType, isHidden);
     }
-    // Backward compatibility - TO BE REMOVED
-    if (hideDependantDatabaseObjects.get(HideDependantDatabaseObjectsType.hideWeakAssociations)) {
-      LOGGER.log(
-          Level.WARNING,
-          "Replace \"schemacrawler.format.hide_weakassociations\" with"
-              + " \"schemacrawler.format.hide_implicit_associations\"");
-      hideDependantDatabaseObjects.put(
-          HideDependantDatabaseObjectsType.hideImplicitAssociations, true);
-    }
 
     for (final HideDatabaseObjectNamesType databaseObjectNamesType :
         HideDatabaseObjectNamesType.values()) {
       final boolean isHidden = config.getBooleanValue(databaseObjectNamesType.getKey());
       hideNames.put(databaseObjectNamesType, isHidden);
-    }
-    // Backward compatibility - TO BE REMOVED
-    if (hideNames.get(HideDatabaseObjectNamesType.hideWeakAssociationNames)) {
-      LOGGER.log(
-          Level.WARNING,
-          "Replace \"schemacrawler.format.hide_weakassociation_names\" with"
-              + " \"schemacrawler.format.hide_implicit_association_names\"");
-      hideNames.put(HideDatabaseObjectNamesType.hideImplicitAssociationNames, true);
     }
 
     // Override values from command line
@@ -391,26 +373,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
   public final B noTriggers(final boolean value) {
     hideDependantDatabaseObjects.put(hideTriggers, value);
     return (B) this;
-  }
-
-  @Deprecated(forRemoval = true)
-  public final B noWeakAssociationNames() {
-    return noImplicitAssociationNames(true);
-  }
-
-  @Deprecated(forRemoval = true)
-  public final B noWeakAssociationNames(final boolean value) {
-    return noImplicitAssociationNames(value);
-  }
-
-  @Deprecated(forRemoval = true)
-  public final B noWeakAssociations() {
-    return noImplicitAssociations(true);
-  }
-
-  @Deprecated(forRemoval = true)
-  public final B noWeakAssociations(final boolean value) {
-    return noImplicitAssociations(value);
   }
 
   /** Corresponds to the --portable=&lt;value&gt; command-line argument. */

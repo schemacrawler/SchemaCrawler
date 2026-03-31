@@ -513,7 +513,7 @@ public class DiagramRendererOptionsTest {
 
   private Config configWithWeakAssociations() {
     final Config config = ConfigUtility.newConfig();
-    config.put("weak-associations", true);
+    config.put("implicit-associations", true);
     return config;
   }
 }

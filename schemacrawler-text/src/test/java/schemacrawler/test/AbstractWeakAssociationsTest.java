@@ -50,7 +50,7 @@ public abstract class AbstractWeakAssociationsTest {
       throws Exception {
 
     final Config additionalConfig = ConfigUtility.newConfig();
-    additionalConfig.put("weak-associations", true);
+    additionalConfig.put("implicit-associations", true);
 
     assertWeakAssociations(testContext, connectionSource, additionalConfig, false, outputFormat);
   }

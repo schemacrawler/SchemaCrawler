@@ -12,11 +12,9 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.TableConstraintType.foreign_key;
-import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideAlternateKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideImplicitAssociationNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideIndexNames;
-import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideAlternateKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideForeignKeys;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideImplicitAssociations;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
@@ -42,12 +40,10 @@ import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schemacrawler.exceptions.NotLoadedException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
@@ -175,7 +171,6 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     if (isVerbose()) {
       printIndexes(table);
     }
-    printAlternateKeys(table);
     printTableRowCount(table);
 
     formattingHelper.append("      </table>").println();
@@ -312,64 +307,6 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       portIds[1] = nodeId;
     }
     return portIds;
-  }
-
-  private void printAlternateKeys(final Table table) {
-    if (table == null || options.is(hideAlternateKeys)) {
-      return;
-    }
-
-    final Collection<PrimaryKey> alternateKeys = table.getAlternateKeys();
-    if (alternateKeys == null || alternateKeys.isEmpty()) {
-      return;
-    }
-
-    formattingHelper.append("\t<hr/>").append(System.lineSeparator());
-
-    for (final TableConstraint alternateKey : alternateKeys) {
-      final String name = identifiers.quoteName(alternateKey);
-      final String akName;
-      if (!options.is(hideAlternateKeyNames)) {
-        akName = name;
-      } else {
-        akName = "";
-      }
-
-      String columnsList = getColumnsListAsString(alternateKey, identifiers);
-      if (!isBlank(columnsList)) {
-        columnsList = " (" + columnsList + ")";
-      }
-      final String constraintText = "\u2022 %s%s [alternate key]".formatted(akName, columnsList);
-
-      formattingHelper
-          .append(
-              tableRow()
-                  .make()
-                  .addInnerTag(
-                      tableCell()
-                          .withEscapedText(constraintText)
-                          .withAlignment(Alignment.left)
-                          .withColumnSpan(tableColspan)
-                          .make())
-                  .render(html))
-          .println();
-
-      if (alternateKey.hasRemarks()) {
-        formattingHelper
-            .append(
-                tableRow()
-                    .make()
-                    .addInnerTag(
-                        tableCell()
-                            .withEscapedText(alternateKey.getRemarks())
-                            .withAlignment(Alignment.left)
-                            .withBackground(Color.fromRGB(0xF4, 0xF4, 0xF4))
-                            .withColumnSpan(tableColspan)
-                            .make())
-                    .render(html))
-            .println();
-      }
-    }
   }
 
   private String printColumnReference(
