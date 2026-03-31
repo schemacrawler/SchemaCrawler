@@ -29,10 +29,10 @@ public class EmbeddedSQLiteWrapperTest extends BaseSqliteTest {
 
   @Test
   public void djangoExcluded(final TestContext testContext) throws Exception {
-    weakAssociations(testContext, "/django_schema.sql");
+    implicitAssociations(testContext, "/django_schema.sql");
   }
 
-  private void weakAssociations(final TestContext testContext, final String databaseSqlResource)
+  private void implicitAssociations(final TestContext testContext, final String databaseSqlResource)
       throws Exception {
 
     final String currentMethodFullName = testContext.testMethodFullName();

@@ -29,6 +29,13 @@ Foreign Keys
 Z_FK_AUTHOR                                [foreign key, with no action]
   ID <--(1..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
+Implicit Associations
+
+multi_line_remarks                                [implicit association]
+Overwritten remarks line 1
+Overwritten remarks line 2
+  ID <~~(1..1) PUBLIC.BOOKS.BOOKS.ID                              
+
 Indexes
 
 PK_AUTHORS                                                [unique index]
@@ -118,10 +125,12 @@ SYS_FK_10121                               [foreign key, with no action]
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
 
-Weak Associations
+Implicit Associations
 
-SCHCRWLR_B8DA20C0_AFD2BA21                            [weak association]
-  PUBLISHERID (1..many)~~> PUBLIC.BOOKS.PUBLISHERS.ID                              
+multi_line_remarks                                [implicit association]
+Overwritten remarks line 1
+Overwritten remarks line 2
+  ID (1..1)~~> PUBLIC.BOOKS.AUTHORS.ID                              
 
 Indexes
 
@@ -195,11 +204,6 @@ Primary Key
 
 PK_COUPONS                                                 [primary key]
   ID                                                            
-
-Weak Associations
-
-SCHCRWLR_3B49BEC4_20BE6F95                            [weak association]
-  ID <~~(0..many) PUBLIC."PUBLISHER SALES".SALES.COUPON_ID                              
 
 Indexes
 
@@ -278,11 +282,6 @@ Foreign Keys
 
 FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
   ID <--(1..many) PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                              
-
-Weak Associations
-
-SCHCRWLR_B8DA20C0_AFD2BA21                            [weak association]
-  ID <~~(1..many) PUBLIC.BOOKS.BOOKS.PUBLISHERID                              
 
 Indexes
 
@@ -367,10 +366,13 @@ FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE (1..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
   COUNTRY (1..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
 
-Weak Associations
+Implicit Associations
 
-SCHCRWLR_3B49BEC4_20BE6F95                            [weak association]
-  COUPON_ID (0..many)~~> PUBLIC.BOOKS.COUPONS.ID                              
+multi_reference_remarks                           [implicit association]
+Overwritten remarks line 1
+Overwritten remarks line 2
+  POSTALCODE <~~ PRIVATE.ALLSALES.REGIONS.POSTALCODE                              
+  COUNTRY <~~ PRIVATE.ALLSALES.REGIONS.COUNTRY                              
 
 Indexes
 

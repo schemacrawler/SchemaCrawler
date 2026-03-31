@@ -1062,7 +1062,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         fkName = "";
       }
     } else {
-      fkDetails = "[weak association]";
+      fkDetails = "[implicit association]";
       if (!options.is(hideImplicitAssociationNames)) {
         LOGGER.log(
             Level.FINER,
@@ -1091,7 +1091,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     }
 
     formattingHelper.writeEmptyRow();
-    formattingHelper.writeWideRow(isForeignKey ? "Foreign Keys" : "Weak Associations", "section");
+    formattingHelper.writeWideRow(
+        isForeignKey ? "Foreign Keys" : "Implicit Associations", "section");
 
     final List<TableReference> tableReferences = new ArrayList<>(tableReferencesCollection);
     if (isForeignKey) {

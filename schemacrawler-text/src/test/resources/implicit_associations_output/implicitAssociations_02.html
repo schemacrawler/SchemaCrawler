@@ -338,6 +338,28 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='3' class='section'>Implicit Associations</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>multi_line_remarks</td>
+		<td class='description right'>[implicit association]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='remarks'>Overwritten remarks line 1
+Overwritten remarks line 2</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID ⇜(1..1) <a href='#books_f4a675c8'>PUBLIC.BOOKS.BOOKS.ID</a></td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='3' class='section'>Indexes</td>
 	</tr>
 	<tr>
@@ -673,18 +695,22 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='3' class='section'>Weak Associations</td>
+		<td colspan='3' class='section'>Implicit Associations</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SCHCRWLR_B8DA20C0_AFD2BA21</td>
-		<td class='description right'>[weak association]</td>
+		<td colspan='2' class='name'>multi_line_remarks</td>
+		<td class='description right'>[implicit association]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='remarks'>Overwritten remarks line 1
+Overwritten remarks line 2</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>PUBLISHERID (1..many)⇝ <a href='#publishers_8037d535'>PUBLIC.BOOKS.PUBLISHERS.ID</a></td>
+		<td class='minwidth'>ID (1..1)⇝ <a href='#authors_f521e766'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -943,24 +969,6 @@ along with the latest updated information</td>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>ID</td>
-		<td class='minwidth'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='3' class='section'>Weak Associations</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SCHCRWLR_3B49BEC4_20BE6F95</td>
-		<td class='description right'>[weak association]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ID ⇜(0..many) <a href='#sales_751e68cc'>PUBLIC."PUBLISHER SALES".SALES.COUPON_ID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1241,24 +1249,6 @@ along with the latest updated information</td>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>ID ←(1..many) <a href='#βιβλία_3cecb755'>PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ</a></td>
-		<td class='minwidth'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='3' class='section'>Weak Associations</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SCHCRWLR_B8DA20C0_AFD2BA21</td>
-		<td class='description right'>[weak association]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ID ⇜(1..many) <a href='#books_f4a675c8'>PUBLIC.BOOKS.BOOKS.PUBLISHERID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1573,18 +1563,27 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='3' class='section'>Weak Associations</td>
+		<td colspan='3' class='section'>Implicit Associations</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SCHCRWLR_3B49BEC4_20BE6F95</td>
-		<td class='description right'>[weak association]</td>
+		<td colspan='2' class='name'>multi_reference_remarks</td>
+		<td class='description right'>[implicit association]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='remarks'>Overwritten remarks line 1
+Overwritten remarks line 2</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>COUPON_ID (0..many)⇝ <a href='#coupons_54c3042b'>PUBLIC.BOOKS.COUPONS.ID</a></td>
+		<td class='minwidth'>POSTALCODE ⇜ PRIVATE.ALLSALES.REGIONS.POSTALCODE</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>COUNTRY ⇜ PRIVATE.ALLSALES.REGIONS.COUNTRY</td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>

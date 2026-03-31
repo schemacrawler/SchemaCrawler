@@ -1,6 +1,6 @@
 name: schemacrawler.test.SchemaCrawlerTest
-weak-associations:
-  # 1. Happy path - good weak association
+implicit-associations:
+  # 1. Happy path - good implicit association
   - name: 1_weak
     referenced-table:
       catalog: PUBLIC

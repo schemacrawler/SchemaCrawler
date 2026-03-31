@@ -1,5 +1,5 @@
 name: catalog
-weak-associations:
+implicit-associations:
 - name: Test 1
   # PK column and FK column not significant
   referenced-table:
