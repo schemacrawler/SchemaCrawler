@@ -95,7 +95,7 @@ public class DiagramRendererOptionsAdditionalSchemasTest {
     additionalConfig.merge(config);
     additionalConfig.merge(diagramOptionsBuilder.toConfig());
     additionalConfig.put("schemacrawler.format.hide_foreignkey_names", true);
-    additionalConfig.put("schemacrawler.format.hide_weakassociation_names", true);
+    additionalConfig.put("schemacrawler.format.hide_implicit_association_names", true);
     additionalConfig.put("schemacrawler.format.hide_remarks", true);
 
     final String command = schemaTextDetailType.name();
