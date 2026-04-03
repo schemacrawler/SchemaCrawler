@@ -9,5 +9,5 @@ output in the schema diagrams as a dotted line, and are also output in the text 
 You can use the `--implicit-associations=true` to infer and
 display implicit associations on schema diagrams and text output.
 
-In addition, you can [define your own weak attributes in an attributes file](attributes.html) 
+In addition, you can [define your own implicit attributes in an attributes file](attributes.html) 
 and have them loaded in and displayed in SchemaCrawler output.

@@ -3,6 +3,14 @@
 SchemaCrawler release notes.
 
 
+<a name="v17.10.0"></a>
+## Release 17.10.0 - 2026-04-03
+
+- Replace "weak association" terminology with "implicit association"
+- Remove deprecated weak association classes and methods
+- Add implicit associations to ER model
+
+
 <a name="v17.9.0"></a>
 ## Release 17.9.0 - 2026-03-28
 
