@@ -38,6 +38,8 @@
       <fileset dir="${distribution.assembly}">
         <include name="schemacrawler.cmd" />
         <include name="schemacrawler.sh" />
+        <include name="testdb.cmd" />
+        <include name="testdb.sh" />
       </fileset>
     </copy>
     <copy todir="${schemacrawler.expanded-distribution}/bin">
