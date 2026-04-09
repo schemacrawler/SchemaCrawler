@@ -61,13 +61,6 @@
       eol="lf"
       eof="remove"/>
 
-    <copy todir="${schemacrawler.expanded-distribution}/logos">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-website/src/site/resources/images">
-        <include name="schemacrawler_logo.*" />
-        <include name="schemacrawler_banner.*" />
-      </fileset>
-    </copy>
-
     <copy todir="${schemacrawler.expanded-distribution}"
       flatten="true"
       overwrite="true">
