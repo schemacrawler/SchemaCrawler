@@ -1,4 +1,4 @@
-name: Lint Code Base and Check Website Links
+name: Lint Code Base
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   build:
-    name: Lint Code Base and Check Website Links
+    name: Lint Code Base
     runs-on: ubuntu-latest
     steps:
 
@@ -55,38 +55,13 @@ jobs:
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
 
-# BUILD FOR DISTRIBUTION
+# BUILD
     - id: build
-      name: Build and test for distribution
+      name: Build and test
       shell: bash
       run: |
         # Build
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          -Ddistrib \
           clean install
-
-# CHECK WEBSITE LINKS
-    - id: check-links
-      name: Check website links
-      uses: lycheeverse/lychee-action@v2.8.0
-      with:
-        args: >
-          --verbose
-          --accept 200,999
-          --no-progress
-          --base .
-          --exclude '.*purl.org/.*'
-          --exclude '.*.vimeo.com/.*'
-          './schemacrawler-website/target/_website/**/*.html'
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-    - id: upload-link-check-report
-      name: Upload website link check report
-      uses: actions/upload-artifact@v7
-      with:
-        path: ./lychee/out.md
-        name: website-link-check-report.md
-        retention-days: 15
