@@ -3,7 +3,7 @@
  * http://www.schemacrawler.com
  * Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
  * All rights reserved.
- * SPDX-License-Identifier: CC-BY-NC-4.0
+ * SPDX-License-Identifier: EPL-2.0
  */
 
 package schemacrawler.verification_test;
