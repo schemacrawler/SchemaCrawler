@@ -17,12 +17,9 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.clickhouse.ClickHouseContainer;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
-
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -34,6 +31,7 @@ import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.test.integration.utility.ClickHouseTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 
 @DisableLogging
@@ -41,11 +39,9 @@ import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 @Testcontainers(disabledWithoutDocker = true)
 public class ClickHouseTest extends BaseAdditionalDatabaseTest {
 
-  private static final DockerImageName imageName =
-      DockerImageName.parse("clickhouse/clickhouse-server").withTag("26.2");
-
   @Container
-  private final JdbcDatabaseContainer<?> dbContainer = new ClickHouseContainer(imageName);
+  private final JdbcDatabaseContainer<?> dbContainer =
+      ClickHouseTestUtility.newClickhouseContainer();
 
   @BeforeEach
   public void createDatabase() {
