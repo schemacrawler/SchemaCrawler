@@ -40,6 +40,7 @@ jobs:
         - firebird
         - informix
         - trino
+        - clickhouse
     runs-on: ubuntu-latest
     steps:
 
@@ -107,7 +108,7 @@ jobs:
       uses: sualeh/build-maven-dependency@v1.0.8
       with:
         repository: schemacrawler/SchemaCrawler-Core
-        artifact: us.fatehi:schemacrawler:17.10.0
+        artifact: us.fatehi:schemacrawler:17.10.1
 
 # RUN DATABASE TESTS
     - id: pull-images
@@ -146,6 +147,9 @@ jobs:
             dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "trino" ]; then
             docker pull trinodb/trino:470
+            dbproject="dbtest"
+        elif [ "${{ matrix.database }}" == "clickhouse" ]; then
+            docker pull clickhouse/clickhouse-server:26.2
             dbproject="dbtest"
         else
             dbproject="dbtest"
