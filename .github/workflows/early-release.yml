@@ -20,9 +20,10 @@ jobs:
   build:
     name: Create Early Access Release
     if: |
-      (github.event.pull_request.merged == true &&
+      github.actor != 'dependabot[bot]' &&
+      ((github.event.pull_request.merged == true &&
       github.event.pull_request.base.ref == 'main') ||
-      github.event_name == 'workflow_dispatch'
+      github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     permissions:
       id-token: write # Required for OIDC authentication
@@ -71,7 +72,7 @@ jobs:
 # CREATE GITHUB RELEASE
     - id: create-release
       name: Create GitHub early access release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v2.6.1
       with:
         target_commitish: ${{ github.sha }}
         tag_name: ${{ env.DOCKER_IMAGE_TAG }}
