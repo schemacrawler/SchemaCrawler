@@ -72,7 +72,7 @@ jobs:
 # CREATE GITHUB RELEASE
     - id: create-release
       name: Create GitHub early access release
-      uses: softprops/action-gh-release@v2.6.1
+      uses: softprops/action-gh-release@v3
       with:
         target_commitish: ${{ github.sha }}
         tag_name: ${{ env.DOCKER_IMAGE_TAG }}
