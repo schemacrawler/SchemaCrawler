@@ -160,18 +160,6 @@ public final class ScriptSupport {
     return indexes;
   }
 
-  public String oneLineText(final String text) {
-    if (isBlank(text)) {
-      return "";
-    }
-    return text.replace("\\R", "\n")
-        .lines()
-        .map(String::trim)
-        .filter(line -> !line.isEmpty())
-        .reduce((left, right) -> left + " " + right)
-        .orElse("");
-  }
-
   public String primaryKeyColumns(final ForeignKey foreignKey) {
     if (foreignKey == null) {
       return "";
