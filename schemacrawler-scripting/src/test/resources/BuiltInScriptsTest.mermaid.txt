@@ -62,3 +62,6 @@ erDiagram
   "PUBLIC.BOOKS.CUSTOMERDATA [weak entity]" ||--|{ "PUBLIC.BOOKS.CUSTOMERS [strong entity]" : "foreign key"
   "PUBLIC.BOOKS.Celebrity Updates [sub-type]" ||--|| "PUBLIC.BOOKS.Celebrities [strong entity]" : "foreign key"
   "PUBLIC.BOOKS.ΒΙΒΛΊΑ [strong entity]" ||--|{ "PUBLIC.BOOKS.PUBLISHERS [strong entity]" : "foreign key"
+  "PUBLIC.PUBLISHER SALES.SALES [not an entity]" ||--o{ "PUBLIC.BOOKS.BOOKS [strong entity]" : "foreign key"
+  "PUBLIC.PUBLISHER SALES.SALES [not an entity]" ||--|{ "PUBLIC.PUBLISHER SALES.REGIONS [strong entity]" : "foreign key"
+  "PUBLIC.PUBLISHER SALES.SALES [not an entity]" ||--o{ "PUBLIC.PUBLISHER SALES.SALESDATA [not an entity]" : "foreign key"
