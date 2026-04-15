@@ -1,0 +1,229 @@
+/*
+ * SchemaCrawler
+ * http://www.schemacrawler.com
+ * Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
+ * All rights reserved.
+ * SPDX-License-Identifier: EPL-2.0
+ */
+
+package schemacrawler.tools.command.script;
+
+import static java.util.stream.Collectors.toList;
+import static us.fatehi.utility.Utility.isBlank;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnReference;
+import schemacrawler.schema.CrawlInfo;
+import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.IdentifierQuotingStrategy;
+import schemacrawler.schema.Identifiers;
+import schemacrawler.schema.IdentifiersBuilder;
+import schemacrawler.schema.Index;
+import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.PrimaryKey;
+import schemacrawler.schema.Table;
+import schemacrawler.utility.MetaDataUtility;
+import us.fatehi.utility.property.ProductVersion;
+
+public final class ScriptSupport {
+
+  public enum ColumnRole {
+    PRIMARY_KEY,
+    FOREIGN_KEY,
+    UNIQUE,
+    NORMAL
+  }
+
+  private static final String GENERATED_FK_PREFIX = "SCHCRWLR_";
+
+  private final Catalog catalog;
+  private final Identifiers defaultIdentifiers;
+  private final Identifiers quotedIdentifiers;
+
+  public ScriptSupport(final Catalog catalog) {
+    this.catalog = Objects.requireNonNull(catalog, "No catalog provided");
+    defaultIdentifiers = IdentifiersBuilder.builder().toOptions();
+    quotedIdentifiers =
+        IdentifiersBuilder.builder()
+            .withIdentifierQuotingStrategy(IdentifierQuotingStrategy.quote_all)
+            .toOptions();
+  }
+
+  public List<ColumnReference> columnReferences(final ForeignKey foreignKey) {
+    final List<ColumnReference> refs = new ArrayList<>();
+    if (foreignKey == null || foreignKey.getColumnReferences() == null) {
+      return refs;
+    }
+    refs.addAll(foreignKey.getColumnReferences());
+    return refs;
+  }
+
+  public ColumnRole columnRole(final Column column) {
+    Objects.requireNonNull(column, "No column provided");
+    if (column.isPartOfPrimaryKey()) {
+      return ColumnRole.PRIMARY_KEY;
+    }
+    if (column.isPartOfForeignKey()) {
+      return ColumnRole.FOREIGN_KEY;
+    }
+    if (column.isPartOfUniqueIndex()) {
+      return ColumnRole.UNIQUE;
+    }
+    return ColumnRole.NORMAL;
+  }
+
+  public String columnsList(final Index index) {
+    if (index == null) {
+      return "";
+    }
+    return MetaDataUtility.getColumnsListAsString(index, defaultIdentifiers);
+  }
+
+  public String columnsList(final PrimaryKey primaryKey) {
+    if (primaryKey == null) {
+      return "";
+    }
+    return MetaDataUtility.getColumnsListAsString(primaryKey, defaultIdentifiers);
+  }
+
+  public String columnTypeDisplay(final Column column) {
+    if (column == null || column.getColumnDataType() == null) {
+      return "";
+    }
+    return safe(column.getColumnDataType().toString());
+  }
+
+  public String columnTypeName(final Column column) {
+    if (column == null || column.getColumnDataType() == null) {
+      return "";
+    }
+    return safe(column.getColumnDataType().getName());
+  }
+
+  public String crawlTimestamp() {
+    if (catalog.getCrawlInfo() == null) {
+      return "";
+    }
+    return safe(String.valueOf(catalog.getCrawlInfo().getCrawlTimestamp()));
+  }
+
+  public String databaseVersion() {
+    final CrawlInfo crawlInfo = catalog.getCrawlInfo();
+    if (crawlInfo == null) {
+      return "";
+    }
+    final ProductVersion databaseVersion = crawlInfo.getDatabaseVersion();
+    if (databaseVersion == null) {
+      return "";
+    }
+    return databaseVersion.toString();
+  }
+
+  public String foreignKeyColumns(final ForeignKey foreignKey) {
+    if (foreignKey == null) {
+      return "";
+    }
+    return MetaDataUtility.joinColumns(
+        foreignKey.getConstrainedColumns(), false, quotedIdentifiers);
+  }
+
+  public Table foreignKeyTable(final ForeignKey foreignKey) {
+    return foreignKey == null ? null : foreignKey.getForeignKeyTable();
+  }
+
+  public boolean hasName(final ForeignKey foreignKey) {
+    if (foreignKey == null) {
+      return false;
+    }
+    final String name = foreignKey.getName();
+    return !isBlank(name) && !name.startsWith(GENERATED_FK_PREFIX);
+  }
+
+  public boolean isView(final Table table) {
+    return table != null && table.getTableType() != null && table.getTableType().isView();
+  }
+
+  public List<Index> nonPrimaryIndexes(final Table table) {
+    final List<Index> indexes = new ArrayList<>();
+    if (table == null || table.getIndexes() == null || table.getIndexes().isEmpty()) {
+      return indexes;
+    }
+    for (final Index index : table.getIndexes()) {
+      if (!isPrimaryKeyEquivalentIndex(table, index)) {
+        indexes.add(index);
+      }
+    }
+    return indexes;
+  }
+
+  public String oneLineText(final String text) {
+    if (isBlank(text)) {
+      return "";
+    }
+    return text.replace("\\R", "\n")
+        .lines()
+        .map(String::trim)
+        .filter(line -> !line.isEmpty())
+        .reduce((left, right) -> left + " " + right)
+        .orElse("");
+  }
+
+  public String primaryKeyColumns(final ForeignKey foreignKey) {
+    if (foreignKey == null) {
+      return "";
+    }
+    final List<Column> pkColumns =
+        foreignKey.getColumnReferences().stream()
+            .map(ColumnReference::getPrimaryKeyColumn)
+            .collect(toList());
+    return MetaDataUtility.joinColumns(pkColumns, false, quotedIdentifiers);
+  }
+
+  public Table primaryKeyTable(final ForeignKey foreignKey) {
+    return foreignKey == null ? null : foreignKey.getPrimaryKeyTable();
+  }
+
+  public String quotedColumnsList(final Index index) {
+    if (index == null) {
+      return "";
+    }
+    return MetaDataUtility.getColumnsListAsString(index, quotedIdentifiers);
+  }
+
+  public String quotedColumnsList(final PrimaryKey primaryKey) {
+    if (primaryKey == null) {
+      return "";
+    }
+    return MetaDataUtility.getColumnsListAsString(primaryKey, quotedIdentifiers);
+  }
+
+  public String schemacrawlerVersion() {
+    if (catalog.getCrawlInfo() == null
+        || catalog.getCrawlInfo().getSchemaCrawlerVersion() == null) {
+      return "";
+    }
+    return safe(catalog.getCrawlInfo().getSchemaCrawlerVersion().toString());
+  }
+
+  public String slug(final NamedObject namedObject) {
+    if (namedObject == null || namedObject.key() == null) {
+      return "";
+    }
+    return safe(namedObject.key().slug());
+  }
+
+  private boolean isPrimaryKeyEquivalentIndex(final Table table, final Index index) {
+    if (table == null || index == null || !table.hasPrimaryKey()) {
+      return false;
+    }
+    return Objects.equals(columnsList(table.getPrimaryKey()), columnsList(index));
+  }
+
+  private String safe(final String text) {
+    return text == null ? "" : text;
+  }
+}

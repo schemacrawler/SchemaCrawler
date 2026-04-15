@@ -58,7 +58,6 @@ Current price for the book
 
 ### Celebrities (table)
 
-
 ### Columns
 - **Id** (INTEGER)
 - NAME (VARCHAR)
@@ -66,12 +65,9 @@ Current price for the book
 ### Primary Key
 - PK_Celebrities ("Id") 
 
-### Indexes
-
 
 
 ### COUPONS (table)
-
 
 ### Columns
 - **ID** (INTEGER)
@@ -82,26 +78,9 @@ Current price for the book
 ### Primary Key
 - PK_COUPONS (ID) 
 
-### Indexes
-
-
-
-### CUSTOMERDATA (table)
-
-
-### Columns
-- **ID** (INTEGER)
-- DATA (PUBLIC.BOOKS.VALID_STRING)
-
-### Primary Key
-- PK_CUSTOMERDATA (ID) 
-
-### Indexes
-
 
 
 ### CUSTOMERS (table)
-
 
 ### Columns
 - **ID** (INTEGER)
@@ -111,8 +90,6 @@ Current price for the book
 
 ### Primary Key
 - PK_CUSTOMERS (ID) 
-
-### Indexes
 
 
 
@@ -126,9 +103,7 @@ Unique (internal) id for book publisher
 Name of book publisher
 
 ### Primary Key
-- SYS_PK_10124 (ID) 
-
-### Indexes
+- SYS_PK_10127 (ID) 
 
 
 
@@ -143,17 +118,16 @@ along with the latest updated information
 
 ### Indexes
 - Z_FK_AUTHOR (AUTHORID)
-- SYS_FK_10118 (BOOKID)
+- SYS_FK_10121 (BOOKID)
 - UIDX_BOOKAUTHORS (BOOKID, AUTHORID) (unique index)
 
 ### Foreign Keys
 - Z_FK_AUTHOR (*AUTHORID* --> **AUTHORS.ID**)
-- SYS_FK_10118 (*BOOKID* --> **BOOKS.ID**)
+- SYS_FK_10121 (*BOOKID* --> **BOOKS.ID**)
 
 
 
 ### Celebrity Updates (table)
-
 
 ### Columns
 - **Celebrity Id** (INTEGER)
@@ -162,15 +136,30 @@ along with the latest updated information
 ### Primary Key
 - PK Celebrity Updates ("Celebrity Id") 
 
+### Foreign Keys
+- SYS_FK_10131 (*Celebrity Id* --> **"Celebrities"."Id"**)
+
+
+
+### CUSTOMERDATA (table)
+
+### Columns
+- **CUSTOMERID** (INTEGER)
+- **DATAID** (INTEGER)
+- DATA (PUBLIC.BOOKS.VALID_STRING)
+
+### Primary Key
+- PK_CUSTOMERDATA (CUSTOMERID, DATAID) 
+
 ### Indexes
+- FK_CUSTOMER (CUSTOMERID)
 
 ### Foreign Keys
-- SYS_FK_10128 (*Celebrity Id* --> **"Celebrities"."Id"**)
+- FK_CUSTOMER (*CUSTOMERID* --> **CUSTOMERS.ID**)
 
 
 
 ### ΒΙΒΛΊΑ (table)
-
 
 ### Columns
 - **ΜΟΝΑΔΙΚΌΣ** (SMALLINT)
@@ -191,7 +180,6 @@ along with the latest updated information
 
 ### AUTHORSLIST (view)
 
-
 ### Columns
 - ID (INTEGER)
 - FIRSTNAME (VARCHAR)
@@ -203,7 +191,6 @@ along with the latest updated information
 
 ### REGIONS (table)
 
-
 ### Columns
 - CITY (VARCHAR)
 - STATE (VARCHAR)
@@ -213,12 +200,9 @@ along with the latest updated information
 ### Primary Key
 - PK_CUSTOMERS (POSTALCODE, COUNTRY) 
 
-### Indexes
-
 
 
 ### SALESDATA (table)
-
 
 ### Columns
 - SALESDATAID (INTEGER)
@@ -230,7 +214,6 @@ along with the latest updated information
 
 
 ### SALES (table)
-
 
 ### Columns
 - *POSTALCODE* (VARCHAR)

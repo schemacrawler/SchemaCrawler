@@ -2,36 +2,19 @@
 # SPDX-License-Identifier: EPL-2.0
 
 import re
-import java
 
-# Import Java classes explicitly using java.type
-TableRelationshipType = java.type("schemacrawler.schema.TableRelationshipType")
-IdentifiersBuilder = java.type("schemacrawler.schemacrawler.IdentifiersBuilder")
-IdentifierQuotingStrategy = java.type("schemacrawler.schemacrawler.IdentifierQuotingStrategy")
-MetaDataUtility = java.type("schemacrawler.utility.MetaDataUtility")
-
-if title:
-    project_name = title
-else:
-    project_name = catalog.getCrawlInfo().getRunId()
-
-print('Project "' + project_name + '" {')
-print('  database_type: "' + re.sub(r'\"', '',
-                                   catalog.getCrawlInfo().getDatabaseVersion().toString()) + '"')
+print('Project "' + title + '" {')
+print('  database_type: "' + re.sub(r'\"', '', support.databaseVersion()) + '"')
 print("  Note: '''")
 print(catalog.getCrawlInfo())
 print("  '''")
 print("}")
 
-identifiers = (IdentifiersBuilder.builder()
-               .withIdentifierQuotingStrategy(IdentifierQuotingStrategy.quote_all)
-               .toOptions())
-
 # Columns
 for table in catalog.getTables():
     print('Table "' + re.sub(r'\"', '', table.getFullName()) + '" {')
     for column in table.getColumns():
-        print('  "' + column.getName() + '" "' + column.getColumnDataType().getName() + '"',
+        print('  "' + column.getName() + '" "' + support.columnTypeName(column) + '"',
               end='')
         # Column attributes
         print(' [', end='')
@@ -54,16 +37,13 @@ for table in catalog.getTables():
         if table.hasPrimaryKey():
             primaryKey = table.getPrimaryKey()
             print('    ('
-                  + MetaDataUtility.getColumnsListAsString(primaryKey, identifiers) + ') '
+                  + support.quotedColumnsList(primaryKey) + ') '
                   + '[pk]')
-        if not table.getIndexes().isEmpty():
-            for index in table.getIndexes():
-                if (table.hasPrimaryKey() and
-                    MetaDataUtility.getColumnsListAsString(table.getPrimaryKey(), identifiers) ==
-                    MetaDataUtility.getColumnsListAsString(index, identifiers)):
-                    continue
+        indexes = support.nonPrimaryIndexes(table)
+        if not indexes.isEmpty():
+            for index in indexes:
                 print('    ('
-                      + MetaDataUtility.getColumnsListAsString(index, identifiers) + ')',
+                      + support.quotedColumnsList(index) + ')',
                       end='')
                 print(' [name: "' + index.getName() + '"', end='')
                 if index.isUnique():
@@ -77,21 +57,14 @@ for table in catalog.getTables():
 for table in catalog.getTables():
     for fk in table.getExportedForeignKeys():
         print('Ref "' + fk.getName() + '" {')
-        pkTable = None
-        fkTable = None
-        for columnReference in fk.getColumnReferences():
-            pkTable = columnReference.getPrimaryKeyColumn().getParent()
-            fkTable = columnReference.getForeignKeyColumn().getParent()
+        pkTable = support.primaryKeyTable(fk)
+        fkTable = support.foreignKeyTable(fk)
         print('  "' \
               + re.sub(r'\"', '', pkTable.getFullName()) + '".('
-              + MetaDataUtility.getColumnsListAsString(fk,
-                                                       TableRelationshipType.parent,
-                                                       identifiers)
+              + support.primaryKeyColumns(fk)
               + ') < "'
               + re.sub(r'\"', '', fkTable.getFullName()) + '".('
-              + MetaDataUtility.getColumnsListAsString(fk,
-                                                       TableRelationshipType.child,
-                                                       identifiers)
+              + support.foreignKeyColumns(fk)
               + ')', end='')
         print(
             ' [update: ' + fk.getUpdateRule().toString() + ', delete: ' + fk.getDeleteRule().toString() + ']',

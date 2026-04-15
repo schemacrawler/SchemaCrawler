@@ -15,8 +15,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledOnOs;
-import org.junit.jupiter.api.condition.OS;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.test.utility.extensions.AssertNoSystemOutOutput;
@@ -28,10 +26,6 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @AssertNoSystemOutOutput
 @ResolveTestContext
 @WithTestDatabase
-@EnabledOnOs(
-    value = {OS.WINDOWS},
-    architectures = {"x64", "x86_64", "amd64"},
-    disabledReason = "Does not run on Windows ARM")
 @DisableLogging
 public class BuiltInScriptsTest {
 
