@@ -64,13 +64,10 @@ for entity in er_model.getEntities():
     print('  }')
     print('')
 
-for entity in er_model.getEntities():
-    for relationship in entity.getRelationships():
-        left_entity = relationship.getLeftEntity()
-        right_entity = relationship.getRightEntity()
-        if entity != left_entity:
-            continue
-        cardinality = relationship.getType()
-        cardinality_symbol = symbol_for(cardinality)
-        label = label_for(relationship)
-        print(f'  {name_for(left_entity)} {cardinality_symbol} {name_for(right_entity)} : "{label}"')
+for relationship in er_model.getRelationships():
+    left_entity = relationship.getLeftEntity()
+    right_entity = relationship.getRightEntity()
+    cardinality = relationship.getType()
+    cardinality_symbol = symbol_for(cardinality)
+    label = label_for(relationship)
+    print(f'  {name_for(left_entity)} {cardinality_symbol} {name_for(right_entity)} : "{label}"')
