@@ -83,7 +83,7 @@ public final class ScriptSupport {
     return column.getColumnDataType().getName();
   }
 
-  public String foreignKeyColumns(final ForeignKey foreignKey) {
+  public String fkColumns(final ForeignKey foreignKey) {
     if (foreignKey == null) {
       return "";
     }
@@ -112,7 +112,7 @@ public final class ScriptSupport {
     return indexes;
   }
 
-  public String primaryKeyColumns(final ForeignKey foreignKey) {
+  public String pkColumns(final ForeignKey foreignKey) {
     if (foreignKey == null) {
       return "";
     }
