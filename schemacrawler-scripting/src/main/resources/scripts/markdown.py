@@ -1,7 +1,7 @@
 # Copyright (c) Sualeh Fatehi
 # SPDX-License-Identifier: EPL-2.0
 
-print('# ' + title)
+print(f'# {title}')
 
 print('')
 for schema in catalog.getSchemas():
@@ -10,34 +10,26 @@ for schema in catalog.getSchemas():
     if not tables:
         continue
 
-    print('## ' + schema.getFullName())
+    print(f'## {schema.getFullName()}')
 
     print('')
     for table in tables:
-        print('### ' + table.getName(), end="")
-        if not support.isView(table):
-            print(' (table)', end='')
-        else:
-            print(' (view)', end='')
-        print('')
+        table_type = 'view' if support.isView(table) else 'table'
+        print(f'### {table.getName()} ({table_type})')
         if table.hasRemarks():
             print(table.getRemarks())
 
         print('')
         print('### Columns')
         for column in table.getColumns():
-            print('- ', end='')
             column_role = support.columnRole(column).name()
             if column_role == 'PRIMARY_KEY':
-                print('**', end='')
+                col_name = f'**{column.getName()}**'
             elif column_role == 'FOREIGN_KEY':
-                print('*', end='')
-            print(column.getName(), end='')
-            if column_role == 'PRIMARY_KEY':
-                print('**', end='')
-            elif column_role == 'FOREIGN_KEY':
-                print('*', end='')
-            print(' (' + support.columnTypeDisplay(column) + ')', end='')
+                col_name = f'*{column.getName()}*'
+            else:
+                col_name = column.getName()
+            print(f'- {col_name} ({support.columnTypeDisplay(column)})', end='')
             column_remarks = column.getRemarks()
             if column_remarks:
                 print('    ')
@@ -48,20 +40,15 @@ for schema in catalog.getSchemas():
             print('')
             print('### Primary Key')
             primaryKey = table.getPrimaryKey()
-            print('- ' + primaryKey.getName() + ' (' +
-                  support.columnsList(primaryKey) + ') ')
+            print(f'- {primaryKey.getName()} ({support.columnsList(primaryKey)}) ')
 
         indexes = support.nonPrimaryIndexes(table)
         if not indexes.isEmpty():
             print('')
             print('### Indexes')
             for index in indexes:
-                print('- ' + index.getName() + ' (' +
-                      support.columnsList(index) + ')',
-                      end='')
-                if index.isUnique():
-                    print(' (unique index)', end='')
-                print('')
+                unique = ' (unique index)' if index.isUnique() else ''
+                print(f'- {index.getName()} ({support.columnsList(index)}){unique}')
 
         foreign_keys = table.getImportedForeignKeys()
         if not foreign_keys.isEmpty():
@@ -69,13 +56,10 @@ for schema in catalog.getSchemas():
             print('### Foreign Keys')
             for fk in foreign_keys:
                 for columnReference in support.columnReferences(fk):
-                    print('- ', end='')
-                    if support.hasName(fk):
-                        print(fk.getName(), end='')
+                    fk_name = fk.getName() if support.hasName(fk) else ''
                     pkColumn = columnReference.getPrimaryKeyColumn()
                     fkColumn = columnReference.getForeignKeyColumn()
-                    print(' (*' + fkColumn.getName() + '* --> **' + pkColumn.getShortName() + "**)", end='')
-                    print('')
+                    print(f'- {fk_name} (*{fkColumn.getName()}* --> **{pkColumn.getShortName()}**)')
 
         print('')
         print('')

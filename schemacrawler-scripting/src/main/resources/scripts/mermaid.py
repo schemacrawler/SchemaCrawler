@@ -27,7 +27,7 @@ def symbol_for(cardinality):
 def name_for(entity):
     entity_name = entity.getFullName().replace('"', '')
     entity_type = entity.getType().description()
-    return '"' + entity_name + ' [' + entity_type + ']"'
+    return f'"{entity_name} [{entity_type}]"'
 
 def label_for(relationship):
     """Generate relationship label indicating bridge tables."""
