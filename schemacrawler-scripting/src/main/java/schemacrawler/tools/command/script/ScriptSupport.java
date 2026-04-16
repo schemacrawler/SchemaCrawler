@@ -103,10 +103,6 @@ public final class ScriptSupport {
     return !isBlank(name) && !name.startsWith(GENERATED_FK_PREFIX);
   }
 
-  public boolean isView(final Table table) {
-    return table != null && table.getTableType() != null && table.getTableType().isView();
-  }
-
   public List<Index> nonPrimaryIndexes(final Table table) {
     final List<Index> indexes = new ArrayList<>();
     if (table == null || table.getIndexes() == null || table.getIndexes().isEmpty()) {
@@ -133,6 +129,10 @@ public final class ScriptSupport {
 
   public Table primaryKeyTable(final ForeignKey foreignKey) {
     return foreignKey == null ? null : foreignKey.getPrimaryKeyTable();
+  }
+
+  public String type(final Table table) {
+    return MetaDataUtility.getSimpleTypeName(table).toString();
   }
 
   private boolean isPrimaryKeyEquivalentIndex(final Table table, final Index index) {

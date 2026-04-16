@@ -48,8 +48,7 @@ for schema in catalog.getSchemas():
     print(f'$schema("{support.cleanFullName(schema)}", "{schema.key().slug()}") {{')
     print('')
     for table in catalog.getTables(schema):
-        table_macro = '$view' if support.isView(table) else '$table'
-        print(f'{table_macro}("{support.cleanName(table)}", "{table.key().slug()}") {{')
+        print(f'${support.type(table)}("{support.cleanName(table)}", "{table.key().slug()}") {{')
         for column in table.getColumns():
             if column.isPartOfPrimaryKey():
                 col_macro = '  $pk'

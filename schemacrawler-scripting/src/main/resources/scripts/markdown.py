@@ -14,8 +14,7 @@ for schema in catalog.getSchemas():
 
     print('')
     for table in tables:
-        table_type = 'view' if support.isView(table) else 'table'
-        print(f'### {table.getName()} ({table_type})')
+        print(f'### {table.getName()} ({support.type(table)})')
         if table.hasRemarks():
             print(table.getRemarks())
 
