@@ -22,10 +22,9 @@ for schema in catalog.getSchemas():
         print('')
         print('### Columns')
         for column in table.getColumns():
-            column_role = support.columnRole(column).name()
-            if column_role == 'PRIMARY_KEY':
+            if column.isPartOfPrimaryKey():
                 col_name = f'**{column.getName()}**'
-            elif column_role == 'FOREIGN_KEY':
+            elif column.isPartOfForeignKey():
                 col_name = f'*{column.getName()}*'
             else:
                 col_name = column.getName()

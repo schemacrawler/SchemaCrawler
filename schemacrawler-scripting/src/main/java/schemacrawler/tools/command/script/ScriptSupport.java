@@ -31,13 +31,6 @@ import us.fatehi.utility.property.ProductVersion;
 
 public final class ScriptSupport {
 
-  public enum ColumnRole {
-    PRIMARY_KEY,
-    FOREIGN_KEY,
-    UNIQUE,
-    NORMAL
-  }
-
   private static final String GENERATED_FK_PREFIX = "SCHCRWLR_";
 
   private final Catalog catalog;
@@ -58,20 +51,6 @@ public final class ScriptSupport {
     }
     refs.addAll(foreignKey.getColumnReferences());
     return refs;
-  }
-
-  public ColumnRole columnRole(final Column column) {
-    Objects.requireNonNull(column, "No column provided");
-    if (column.isPartOfPrimaryKey()) {
-      return ColumnRole.PRIMARY_KEY;
-    }
-    if (column.isPartOfForeignKey()) {
-      return ColumnRole.FOREIGN_KEY;
-    }
-    if (column.isPartOfUniqueIndex()) {
-      return ColumnRole.UNIQUE;
-    }
-    return ColumnRole.NORMAL;
   }
 
   public String columns(final Index index) {
