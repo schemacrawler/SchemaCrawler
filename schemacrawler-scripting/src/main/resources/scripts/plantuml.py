@@ -81,14 +81,16 @@ for schema in catalog.getSchemas():
 # Foreign keys
 for table in catalog.getTables():
     for fk in table.getExportedForeignKeys():
-        pkTable = fk.getPrimaryKeyTable()
-        fkTable = fk.getForeignKeyTable()
+        pk_table = fk.getPrimaryKeyTable()
+        fk_table = fk.getForeignKeyTable()
+        pk_schema_slug = pk_table.getSchema().key().slug()
+        pk_table_slug = pk_table.key().slug()
+        fk_schema_slug = fk_table.getSchema().key().slug()        
+        fk_table_slug = fk_table.key().slug()
         for columnReference in fk.getColumnReferences():
-            pkColumn = columnReference.getPrimaryKeyColumn()
-            fkColumn = columnReference.getForeignKeyColumn()
-            pk_schema_slug = pkTable.getSchema().key().slug()
-            fk_schema_slug = fkTable.getSchema().key().slug()
-            print(f'{pk_schema_slug}.{pkTable.key().slug()}::{support.cleanName(pkColumn)}  ||--o{{ {fk_schema_slug}.{fkTable.key().slug()}::{support.cleanName(fkColumn)}', end='')
+            pk_col_name = support.cleanName(columnReference.getPrimaryKeyColumn())
+            fk_col_name = support.cleanName(columnReference.getForeignKeyColumn())
+            print(f'{pk_schema_slug}.{pk_table_slug}::{pk_col_name}  ||--o{{ {fk_schema_slug}.{fk_table_slug}::{fk_col_name}', end='')
             if support.hasName(fk):
                 print(f' : {fk.getName()}', end='')
             print('')

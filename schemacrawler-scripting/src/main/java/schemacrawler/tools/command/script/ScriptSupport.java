@@ -91,10 +91,6 @@ public final class ScriptSupport {
         foreignKey.getConstrainedColumns(), false, quotedIdentifiers);
   }
 
-  public Table foreignKeyTable(final ForeignKey foreignKey) {
-    return foreignKey == null ? null : foreignKey.getForeignKeyTable();
-  }
-
   public boolean hasName(final ForeignKey foreignKey) {
     if (foreignKey == null) {
       return false;
@@ -125,10 +121,6 @@ public final class ScriptSupport {
             .map(ColumnReference::getPrimaryKeyColumn)
             .collect(toList());
     return MetaDataUtility.joinColumns(pkColumns, false, quotedIdentifiers);
-  }
-
-  public Table primaryKeyTable(final ForeignKey foreignKey) {
-    return foreignKey == null ? null : foreignKey.getPrimaryKeyTable();
   }
 
   public String type(final Table table) {

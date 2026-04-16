@@ -53,7 +53,7 @@ for entity in er_model.getEntities():
     print(f'  {name_for(entity)} {{')
     for entity_attribute in entity.getEntityAttributes():
         entity_attribute_name = entity_attribute.getName()
-        attribute_type = entity_attribute.getType().toString()
+        attribute_type = entity_attribute.getType()
         attribute_has_remarks = entity_attribute.hasRemarks()
         print(f'    {attribute_type} {strip_name(entity_attribute_name)}', end='')
         if attribute_has_remarks:

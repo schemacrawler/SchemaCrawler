@@ -50,14 +50,12 @@ for table in catalog.getTables():
 for table in catalog.getTables():
     for fk in table.getExportedForeignKeys():
         print(f'Ref "{fk.getName()}" {{')
-        pkTable = support.primaryKeyTable(fk)
-        fkTable = support.foreignKeyTable(fk)
-        pk_name = support.cleanFullName(pkTable)
-        fk_name = support.cleanFullName(fkTable)
+        pk_table_name = support.cleanFullName(fk.getPrimaryKeyTable())
+        fk_table_name = support.cleanFullName(fk.getForeignKeyTable())
         pk_cols = support.primaryKeyColumns(fk)
         fk_cols = support.foreignKeyColumns(fk)
-        print(f'  "{pk_name}".({pk_cols}) < "{fk_name}".({fk_cols})', end='')
-        print(f' [update: {fk.getUpdateRule().toString()}, delete: {fk.getDeleteRule().toString()}]', end='')
+        print(f'  "{pk_table_name}".({pk_cols}) < "{fk_table_name}".({fk_cols})', end='')
+        print(f' [update: {fk.getUpdateRule()}, delete: {fk.getDeleteRule()}]', end='')
         print()
         print("}")
         print('')
