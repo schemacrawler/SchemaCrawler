@@ -4,7 +4,7 @@
 import re
 
 
-def clean_name(name):
+def strip_name(name):
     """Clean up names since Mermaid only allows alphanumeric identifiers"""
     namepattern = r'[^-\d\w]'
     cleanedname = re.sub(namepattern, '', name)
@@ -55,7 +55,7 @@ for entity in er_model.getEntities():
         entity_attribute_name = entity_attribute.getName()
         attribute_type = entity_attribute.getType().toString()
         attribute_has_remarks = entity_attribute.hasRemarks()
-        print(f'    {attribute_type} {clean_name(entity_attribute_name)}', end='')
+        print(f'    {attribute_type} {strip_name(entity_attribute_name)}', end='')
         if attribute_has_remarks:
             remarks = ' '.join(entity_attribute.getRemarks().splitlines())
             print(f' "{remarks}"', end='')

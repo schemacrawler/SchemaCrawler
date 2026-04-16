@@ -14,10 +14,8 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
-import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.IdentifierQuotingStrategy;
 import schemacrawler.schema.Identifiers;
@@ -27,17 +25,14 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.MetaDataUtility;
-import us.fatehi.utility.property.ProductVersion;
 
 public final class ScriptSupport {
 
   private static final String GENERATED_FK_PREFIX = "SCHCRWLR_";
 
-  private final Catalog catalog;
   private final Identifiers quotedIdentifiers;
 
-  public ScriptSupport(final Catalog catalog) {
-    this.catalog = Objects.requireNonNull(catalog, "No catalog provided");
+  public ScriptSupport() {
     quotedIdentifiers =
         IdentifiersBuilder.builder()
             .withIdentifierQuotingStrategy(IdentifierQuotingStrategy.quote_all)
@@ -86,25 +81,6 @@ public final class ScriptSupport {
       return "";
     }
     return column.getColumnDataType().getName();
-  }
-
-  public String crawlTimestamp() {
-    if (catalog.getCrawlInfo() == null) {
-      return "";
-    }
-    return catalog.getCrawlInfo().getCrawlTimestamp().toString();
-  }
-
-  public String databaseVersion() {
-    final CrawlInfo crawlInfo = catalog.getCrawlInfo();
-    if (crawlInfo == null) {
-      return "";
-    }
-    final ProductVersion databaseVersion = crawlInfo.getDatabaseVersion();
-    if (databaseVersion == null) {
-      return "";
-    }
-    return databaseVersion.toString();
   }
 
   public String foreignKeyColumns(final ForeignKey foreignKey) {
@@ -157,14 +133,6 @@ public final class ScriptSupport {
 
   public Table primaryKeyTable(final ForeignKey foreignKey) {
     return foreignKey == null ? null : foreignKey.getPrimaryKeyTable();
-  }
-
-  public String schemacrawlerVersion() {
-    if (catalog.getCrawlInfo() == null
-        || catalog.getCrawlInfo().getSchemaCrawlerVersion() == null) {
-      return "";
-    }
-    return catalog.getCrawlInfo().getSchemaCrawlerVersion().toString();
   }
 
   private boolean isPrimaryKeyEquivalentIndex(final Table table, final Index index) {

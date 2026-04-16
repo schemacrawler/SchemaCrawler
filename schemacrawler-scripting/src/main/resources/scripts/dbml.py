@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: EPL-2.0
 
 print(f'Project "{title}" {{')
-print(f'  database_type: "{support.databaseVersion()}"')
+print(f'  database_type: "{crawl_info.databaseVersion()}"')
 print("  Note: '''")
 print(catalog.getCrawlInfo())
 print("  '''")

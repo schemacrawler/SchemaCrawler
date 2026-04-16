@@ -69,7 +69,8 @@ public final class ScriptCommand extends AbstractSchemaCrawlerCommand<ScriptOpti
         context.put("er_model", getERModel());
         context.put("connection", connection);
         context.put("chain", new CommandChain(this));
-        context.put("support", new ScriptSupport(catalog));
+        context.put("support", new ScriptSupport());
+        context.put("crawl_info", new CrawlInfoSupport(catalog.getCrawlInfo()));
 
         scriptExecutor.initialize(context, reader, writer);
         scriptExecutor.run();
