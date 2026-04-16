@@ -1,11 +1,6 @@
 # Copyright (c) Sualeh Fatehi
 # SPDX-License-Identifier: EPL-2.0
 
-
-def clean(name):
-    return name.replace('"', '')
-
-
 print("@startuml")
 print("""
 !theme plain
@@ -50,11 +45,11 @@ print('')
 for schema in catalog.getSchemas():
     if not catalog.getTables(schema):
         continue
-    print(f'$schema("{clean(schema.getFullName())}", "{schema.key().slug()}") {{')
+    print(f'$schema("{support.cleanFullName(schema)}", "{schema.key().slug()}") {{')
     print('')
     for table in catalog.getTables(schema):
         table_macro = '$view' if support.isView(table) else '$table'
-        print(f'{table_macro}("{clean(table.getName())}", "{table.key().slug()}") {{')
+        print(f'{table_macro}("{support.cleanName(table)}", "{table.key().slug()}") {{')
         for column in table.getColumns():
             if column.isPartOfPrimaryKey():
                 col_macro = '  $pk'
@@ -94,7 +89,7 @@ for table in catalog.getTables():
             fkColumn = columnReference.getForeignKeyColumn()
             pk_schema_slug = pkTable.getSchema().key().slug()
             fk_schema_slug = fkTable.getSchema().key().slug()
-            print(f'{pk_schema_slug}.{pkTable.key().slug()}::{clean(pkColumn.getName())}  ||--o{{ {fk_schema_slug}.{fkTable.key().slug()}::{clean(fkColumn.getName())}', end='')
+            print(f'{pk_schema_slug}.{pkTable.key().slug()}::{support.cleanName(pkColumn)}  ||--o{{ {fk_schema_slug}.{fkTable.key().slug()}::{support.cleanName(fkColumn)}', end='')
             if support.hasName(fk):
                 print(f' : {fk.getName()}', end='')
             print('')

@@ -23,6 +23,7 @@ import schemacrawler.schema.IdentifierQuotingStrategy;
 import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.IdentifiersBuilder;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.MetaDataUtility;
@@ -41,6 +42,20 @@ public final class ScriptSupport {
         IdentifiersBuilder.builder()
             .withIdentifierQuotingStrategy(IdentifierQuotingStrategy.quote_all)
             .toOptions();
+  }
+
+  public String cleanFullName(final NamedObject namedObject) {
+    if (namedObject == null) {
+      return "";
+    }
+    return namedObject.getFullName().replace("\"", "");
+  }
+
+  public String cleanName(final NamedObject namedObject) {
+    if (namedObject == null) {
+      return "";
+    }
+    return namedObject.getName().replace("\"", "");
   }
 
   public List<ColumnReference> columnReferences(final ForeignKey foreignKey) {

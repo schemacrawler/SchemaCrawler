@@ -1,13 +1,8 @@
 # Copyright (c) Sualeh Fatehi
 # SPDX-License-Identifier: EPL-2.0
 
-
-def clean(name):
-    return name.replace('"', '')
-
-
 print(f'Project "{title}" {{')
-print(f'  database_type: "{clean(support.databaseVersion())}"')
+print(f'  database_type: "{support.databaseVersion()}"')
 print("  Note: '''")
 print(catalog.getCrawlInfo())
 print("  '''")
@@ -15,7 +10,7 @@ print("}")
 
 # Columns
 for table in catalog.getTables():
-    print(f'Table "{clean(table.getFullName())}" {{')
+    print(f'Table "{support.cleanFullName(table)}" {{')
     for column in table.getColumns():
         print(f'  "{column.getName()}" "{support.columnType(column)}"', end='')
         # Column attributes
@@ -57,8 +52,8 @@ for table in catalog.getTables():
         print(f'Ref "{fk.getName()}" {{')
         pkTable = support.primaryKeyTable(fk)
         fkTable = support.foreignKeyTable(fk)
-        pk_name = clean(pkTable.getFullName())
-        fk_name = clean(fkTable.getFullName())
+        pk_name = support.cleanFullName(pkTable)
+        fk_name = support.cleanFullName(fkTable)
         pk_cols = support.primaryKeyColumns(fk)
         fk_cols = support.foreignKeyColumns(fk)
         print(f'  "{pk_name}".({pk_cols}) < "{fk_name}".({fk_cols})', end='')
@@ -70,8 +65,8 @@ print('')
 
 # Table groups
 for schema in catalog.getSchemas():
-    print(f'TableGroup "{clean(schema.getFullName())} " {{')
+    print(f'TableGroup "{support.cleanFullName(schema)} " {{')
     for table in catalog.getTables(schema):
-        print(f'  "{clean(table.getFullName())}"')
+        print(f'  "{support.cleanFullName(table)}"')
     print('}')
     print('')
