@@ -71,14 +71,14 @@ public final class ScriptSupport {
     if (column == null || column.getColumnDataType() == null) {
       return "";
     }
-    return safe(column.getColumnDataType().getName());
+    return column.getColumnDataType().getName();
   }
 
   public String crawlTimestamp() {
     if (catalog.getCrawlInfo() == null) {
       return "";
     }
-    return safe(String.valueOf(catalog.getCrawlInfo().getCrawlTimestamp()));
+    return catalog.getCrawlInfo().getCrawlTimestamp().toString();
   }
 
   public String databaseVersion() {
@@ -150,14 +150,14 @@ public final class ScriptSupport {
         || catalog.getCrawlInfo().getSchemaCrawlerVersion() == null) {
       return "";
     }
-    return safe(catalog.getCrawlInfo().getSchemaCrawlerVersion().toString());
+    return catalog.getCrawlInfo().getSchemaCrawlerVersion().toString();
   }
 
   public String slug(final NamedObject namedObject) {
     if (namedObject == null || namedObject.key() == null) {
       return "";
     }
-    return safe(namedObject.key().slug());
+    return namedObject.key().slug();
   }
 
   private boolean isPrimaryKeyEquivalentIndex(final Table table, final Index index) {
@@ -165,9 +165,5 @@ public final class ScriptSupport {
       return false;
     }
     return Objects.equals(columns(table.getPrimaryKey()), columns(index));
-  }
-
-  private String safe(final String text) {
-    return text == null ? "" : text;
   }
 }
