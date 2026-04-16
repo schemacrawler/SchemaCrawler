@@ -41,12 +41,10 @@ public final class ScriptSupport {
   private static final String GENERATED_FK_PREFIX = "SCHCRWLR_";
 
   private final Catalog catalog;
-  private final Identifiers defaultIdentifiers;
   private final Identifiers quotedIdentifiers;
 
   public ScriptSupport(final Catalog catalog) {
     this.catalog = Objects.requireNonNull(catalog, "No catalog provided");
-    defaultIdentifiers = IdentifiersBuilder.builder().toOptions();
     quotedIdentifiers =
         IdentifiersBuilder.builder()
             .withIdentifierQuotingStrategy(IdentifierQuotingStrategy.quote_all)
@@ -76,18 +74,18 @@ public final class ScriptSupport {
     return ColumnRole.NORMAL;
   }
 
-  public String columnsList(final Index index) {
+  public String columns(final Index index) {
     if (index == null) {
       return "";
     }
-    return MetaDataUtility.getColumnsListAsString(index, defaultIdentifiers);
+    return MetaDataUtility.getColumnsListAsString(index, quotedIdentifiers);
   }
 
-  public String columnsList(final PrimaryKey primaryKey) {
+  public String columns(final PrimaryKey primaryKey) {
     if (primaryKey == null) {
       return "";
     }
-    return MetaDataUtility.getColumnsListAsString(primaryKey, defaultIdentifiers);
+    return MetaDataUtility.getColumnsListAsString(primaryKey, quotedIdentifiers);
   }
 
   public String columnTypeDisplay(final Column column) {
@@ -175,20 +173,6 @@ public final class ScriptSupport {
     return foreignKey == null ? null : foreignKey.getPrimaryKeyTable();
   }
 
-  public String quotedColumnsList(final Index index) {
-    if (index == null) {
-      return "";
-    }
-    return MetaDataUtility.getColumnsListAsString(index, quotedIdentifiers);
-  }
-
-  public String quotedColumnsList(final PrimaryKey primaryKey) {
-    if (primaryKey == null) {
-      return "";
-    }
-    return MetaDataUtility.getColumnsListAsString(primaryKey, quotedIdentifiers);
-  }
-
   public String schemacrawlerVersion() {
     if (catalog.getCrawlInfo() == null
         || catalog.getCrawlInfo().getSchemaCrawlerVersion() == null) {
@@ -208,7 +192,7 @@ public final class ScriptSupport {
     if (table == null || index == null || !table.hasPrimaryKey()) {
       return false;
     }
-    return Objects.equals(columnsList(table.getPrimaryKey()), columnsList(index));
+    return Objects.equals(columns(table.getPrimaryKey()), columns(index));
   }
 
   private String safe(final String text) {

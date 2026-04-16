@@ -17,11 +17,11 @@ Contact details for book authors
 - COUNTRY (VARCHAR)
 
 ### Primary Key
-- PK_AUTHORS (ID) 
+- PK_AUTHORS ("ID") 
 
 ### Indexes
-- IDX_B_AUTHORS (LASTNAME, FIRSTNAME)
-- IDX_A_AUTHORS (CITY, STATE, POSTALCODE, COUNTRY)
+- IDX_B_AUTHORS ("LASTNAME", "FIRSTNAME")
+- IDX_A_AUTHORS ("CITY", "STATE", "POSTALCODE", "COUNTRY")
 
 
 
@@ -45,11 +45,11 @@ Current price for the book
 - *PREVIOUSEDITIONID* (INTEGER)
 
 ### Primary Key
-- PK_BOOKS (ID) 
+- PK_BOOKS ("ID") 
 
 ### Indexes
-- U_PREVIOUSEDITION (PREVIOUSEDITIONID) (unique index)
-- FK_PREVIOUSEDITION (PREVIOUSEDITIONID)
+- U_PREVIOUSEDITION ("PREVIOUSEDITIONID") (unique index)
+- FK_PREVIOUSEDITION ("PREVIOUSEDITIONID")
 
 ### Foreign Keys
 - FK_PREVIOUSEDITION (*PREVIOUSEDITIONID* --> **BOOKS.ID**)
@@ -76,7 +76,7 @@ Current price for the book
 - BOOKS (PUBLIC.BOOKS."VARCHAR(20) ARRAY[10]")
 
 ### Primary Key
-- PK_COUPONS (ID) 
+- PK_COUPONS ("ID") 
 
 
 
@@ -89,7 +89,7 @@ Current price for the book
 - AGE (PUBLIC.BOOKS.AGE_TYPE)
 
 ### Primary Key
-- PK_CUSTOMERS (ID) 
+- PK_CUSTOMERS ("ID") 
 
 
 
@@ -103,7 +103,7 @@ Unique (internal) id for book publisher
 Name of book publisher
 
 ### Primary Key
-- SYS_PK_10127 (ID) 
+- SYS_PK_10127 ("ID") 
 
 
 
@@ -117,9 +117,9 @@ along with the latest updated information
 - SOMEDATA (VARCHAR)
 
 ### Indexes
-- Z_FK_AUTHOR (AUTHORID)
-- SYS_FK_10121 (BOOKID)
-- UIDX_BOOKAUTHORS (BOOKID, AUTHORID) (unique index)
+- Z_FK_AUTHOR ("AUTHORID")
+- SYS_FK_10121 ("BOOKID")
+- UIDX_BOOKAUTHORS ("BOOKID", "AUTHORID") (unique index)
 
 ### Foreign Keys
 - Z_FK_AUTHOR (*AUTHORID* --> **AUTHORS.ID**)
@@ -149,10 +149,10 @@ along with the latest updated information
 - DATA (PUBLIC.BOOKS.VALID_STRING)
 
 ### Primary Key
-- PK_CUSTOMERDATA (CUSTOMERID, DATAID) 
+- PK_CUSTOMERDATA ("CUSTOMERID", "DATAID") 
 
 ### Indexes
-- FK_CUSTOMER (CUSTOMERID)
+- FK_CUSTOMER ("CUSTOMERID")
 
 ### Foreign Keys
 - FK_CUSTOMER (*CUSTOMERID* --> **CUSTOMERS.ID**)
@@ -168,10 +168,10 @@ along with the latest updated information
 - *ΕΚΔΌΤΗΣ* (SMALLINT)
 
 ### Primary Key
-- PK_ΒΙΒΛΊΑ (ΜΟΝΑΔΙΚΌΣ) 
+- PK_ΒΙΒΛΊΑ ("ΜΟΝΑΔΙΚΌΣ") 
 
 ### Indexes
-- FK_ΒΙΒΛΊΑ_PUBLISHERS (ΕΚΔΌΤΗΣ)
+- FK_ΒΙΒΛΊΑ_PUBLISHERS ("ΕΚΔΌΤΗΣ")
 
 ### Foreign Keys
 - FK_ΒΙΒΛΊΑ_PUBLISHERS (*ΕΚΔΌΤΗΣ* --> **PUBLISHERS.ID**)
@@ -198,7 +198,7 @@ along with the latest updated information
 - **COUNTRY** (VARCHAR)
 
 ### Primary Key
-- PK_CUSTOMERS (POSTALCODE, COUNTRY) 
+- PK_CUSTOMERS ("POSTALCODE", "COUNTRY") 
 
 
 
@@ -209,7 +209,7 @@ along with the latest updated information
 - YEARLYAMOUNT (DOUBLE)
 
 ### Indexes
-- UQ_CUSTOMERS (SALESDATAID) (unique index)
+- UQ_CUSTOMERS ("SALESDATAID") (unique index)
 
 
 
@@ -225,9 +225,9 @@ along with the latest updated information
 - *SALESDATAID* (INTEGER)
 
 ### Indexes
-- FK_SALES_BOOK (BOOKID)
-- FK_SALES_SALESDATA (SALESDATAID)
-- FK_SALES_REGIONS (POSTALCODE, COUNTRY)
+- FK_SALES_BOOK ("BOOKID")
+- FK_SALES_SALESDATA ("SALESDATAID")
+- FK_SALES_REGIONS ("POSTALCODE", "COUNTRY")
 
 ### Foreign Keys
 - FK_SALES_BOOK (*BOOKID* --> **BOOKS.ID**)

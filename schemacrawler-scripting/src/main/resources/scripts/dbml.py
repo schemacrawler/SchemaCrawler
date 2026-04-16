@@ -38,11 +38,11 @@ for table in catalog.getTables():
         print('  indexes {')
         if table.hasPrimaryKey():
             primaryKey = table.getPrimaryKey()
-            print(f'    ({support.quotedColumnsList(primaryKey)}) [pk]')
+            print(f'    ({support.columns(primaryKey)}) [pk]')
         indexes = support.nonPrimaryIndexes(table)
         if not indexes.isEmpty():
             for index in indexes:
-                print(f'    ({support.quotedColumnsList(index)})', end='')
+                print(f'    ({support.columns(index)})', end='')
                 print(f' [name: "{index.getName()}"', end='')
                 if index.isUnique():
                     print(', unique', end='')

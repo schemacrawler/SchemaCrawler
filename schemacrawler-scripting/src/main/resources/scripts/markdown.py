@@ -40,7 +40,7 @@ for schema in catalog.getSchemas():
             print('')
             print('### Primary Key')
             primaryKey = table.getPrimaryKey()
-            print(f'- {primaryKey.getName()} ({support.columnsList(primaryKey)}) ')
+            print(f'- {primaryKey.getName()} ({support.columns(primaryKey)}) ')
 
         indexes = support.nonPrimaryIndexes(table)
         if not indexes.isEmpty():
@@ -48,7 +48,7 @@ for schema in catalog.getSchemas():
             print('### Indexes')
             for index in indexes:
                 unique = ' (unique index)' if index.isUnique() else ''
-                print(f'- {index.getName()} ({support.columnsList(index)}){unique}')
+                print(f'- {index.getName()} ({support.columns(index)}){unique}')
 
         foreign_keys = table.getImportedForeignKeys()
         if not foreign_keys.isEmpty():
