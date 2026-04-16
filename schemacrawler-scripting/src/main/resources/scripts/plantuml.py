@@ -63,7 +63,7 @@ for schema in catalog.getSchemas():
             else:
                 col_macro = '  $column'
             not_null = 'NOT NULL' if not column.isNullable() else ''
-            print(f'{col_macro}("{column.getName()}"): {support.columnTypeName(column)} {not_null}')
+            print(f'{col_macro}("{column.getName()}"): {support.columnType(column)} {not_null}')
         print('}')
         print('')
         if table.hasRemarks():

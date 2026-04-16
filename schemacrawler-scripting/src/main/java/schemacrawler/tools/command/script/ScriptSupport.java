@@ -88,14 +88,7 @@ public final class ScriptSupport {
     return MetaDataUtility.getColumnsListAsString(primaryKey, quotedIdentifiers);
   }
 
-  public String columnTypeDisplay(final Column column) {
-    if (column == null || column.getColumnDataType() == null) {
-      return "";
-    }
-    return safe(column.getColumnDataType().toString());
-  }
-
-  public String columnTypeName(final Column column) {
+  public String columnType(final Column column) {
     if (column == null || column.getColumnDataType() == null) {
       return "";
     }

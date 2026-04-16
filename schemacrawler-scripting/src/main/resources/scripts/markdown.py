@@ -29,7 +29,7 @@ for schema in catalog.getSchemas():
                 col_name = f'*{column.getName()}*'
             else:
                 col_name = column.getName()
-            print(f'- {col_name} ({support.columnTypeDisplay(column)})', end='')
+            print(f'- {col_name} ({support.columnType(column)})', end='')
             column_remarks = column.getRemarks()
             if column_remarks:
                 print('    ')

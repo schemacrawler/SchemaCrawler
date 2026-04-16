@@ -17,7 +17,7 @@ print("}")
 for table in catalog.getTables():
     print(f'Table "{clean(table.getFullName())}" {{')
     for column in table.getColumns():
-        print(f'  "{column.getName()}" "{support.columnTypeName(column)}"', end='')
+        print(f'  "{column.getName()}" "{support.columnType(column)}"', end='')
         # Column attributes
         print(' [', end='')
         if not column.isNullable():

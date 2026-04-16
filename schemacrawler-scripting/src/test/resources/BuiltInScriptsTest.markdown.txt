@@ -72,8 +72,8 @@ Current price for the book
 ### Columns
 - **ID** (INTEGER)
 - DATA (CLOB)
-- COUPONS (PUBLIC.BOOKS."INTEGER ARRAY")
-- BOOKS (PUBLIC.BOOKS."VARCHAR(20) ARRAY[10]")
+- COUPONS (INTEGER ARRAY)
+- BOOKS (VARCHAR(20) ARRAY[10])
 
 ### Primary Key
 - PK_COUPONS ("ID") 
@@ -84,9 +84,9 @@ Current price for the book
 
 ### Columns
 - **ID** (INTEGER)
-- FIRSTNAME (PUBLIC.BOOKS.NAME_TYPE)
-- LASTNAME (PUBLIC.BOOKS.NAME_TYPE)
-- AGE (PUBLIC.BOOKS.AGE_TYPE)
+- FIRSTNAME (NAME_TYPE)
+- LASTNAME (NAME_TYPE)
+- AGE (AGE_TYPE)
 
 ### Primary Key
 - PK_CUSTOMERS ("ID") 
@@ -146,7 +146,7 @@ along with the latest updated information
 ### Columns
 - **CUSTOMERID** (INTEGER)
 - **DATAID** (INTEGER)
-- DATA (PUBLIC.BOOKS.VALID_STRING)
+- DATA (VALID_STRING)
 
 ### Primary Key
 - PK_CUSTOMERDATA ("CUSTOMERID", "DATAID") 
