@@ -23,7 +23,6 @@ import schemacrawler.schema.IdentifierQuotingStrategy;
 import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.IdentifiersBuilder;
 import schemacrawler.schema.Index;
-import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.MetaDataUtility;
@@ -151,13 +150,6 @@ public final class ScriptSupport {
       return "";
     }
     return catalog.getCrawlInfo().getSchemaCrawlerVersion().toString();
-  }
-
-  public String slug(final NamedObject namedObject) {
-    if (namedObject == null || namedObject.key() == null) {
-      return "";
-    }
-    return namedObject.key().slug();
   }
 
   private boolean isPrimaryKeyEquivalentIndex(final Table table, final Index index) {

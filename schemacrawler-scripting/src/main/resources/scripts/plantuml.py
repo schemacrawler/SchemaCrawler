@@ -50,11 +50,11 @@ print('')
 for schema in catalog.getSchemas():
     if not catalog.getTables(schema):
         continue
-    print(f'$schema("{clean(schema.getFullName())}", "{support.slug(schema)}") {{')
+    print(f'$schema("{clean(schema.getFullName())}", "{schema.key().slug()}") {{')
     print('')
     for table in catalog.getTables(schema):
         table_macro = '$view' if support.isView(table) else '$table'
-        print(f'{table_macro}("{clean(table.getName())}", "{support.slug(table)}") {{')
+        print(f'{table_macro}("{clean(table.getName())}", "{table.key().slug()}") {{')
         for column in table.getColumns():
             if column.isPartOfPrimaryKey():
                 col_macro = '  $pk'
@@ -67,13 +67,13 @@ for schema in catalog.getSchemas():
         print('}')
         print('')
         if table.hasRemarks():
-            print(f'note left of {support.slug(table)} #LemonChiffon')
+            print(f'note left of {table.key().slug()} #LemonChiffon')
             print(table.getRemarks())
             print('end note')
             print('')
         for column in table.getColumns():
             if column.hasRemarks():
-                print(f'note right of {support.slug(table)}::{column.getName()} #LightCyan')
+                print(f'note right of {table.key().slug()}::{column.getName()} #LightCyan')
                 print(column.getRemarks())
                 print('end note')
                 print('')
@@ -92,9 +92,9 @@ for table in catalog.getTables():
         for columnReference in fk.getColumnReferences():
             pkColumn = columnReference.getPrimaryKeyColumn()
             fkColumn = columnReference.getForeignKeyColumn()
-            pk_schema = pkTable.getSchema().key().slug()
-            fk_schema = fkTable.getSchema().key().slug()
-            print(f'{pk_schema}.{support.slug(pkTable)}::{clean(pkColumn.getName())}  ||--o{{ {fk_schema}.{support.slug(fkTable)}::{clean(fkColumn.getName())}', end='')
+            pk_schema_slug = pkTable.getSchema().key().slug()
+            fk_schema_slug = fkTable.getSchema().key().slug()
+            print(f'{pk_schema_slug}.{pkTable.key().slug()}::{clean(pkColumn.getName())}  ||--o{{ {fk_schema_slug}.{fkTable.key().slug()}::{clean(fkColumn.getName())}', end='')
             if support.hasName(fk):
                 print(f' : {fk.getName()}', end='')
             print('')
