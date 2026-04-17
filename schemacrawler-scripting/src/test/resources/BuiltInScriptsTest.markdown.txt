@@ -123,7 +123,7 @@ along with the latest updated information
 
 ### Foreign Keys
 - Z_FK_AUTHOR (*AUTHORID* --> **AUTHORS.ID**)
-- SYS_FK_10121 (*BOOKID* --> **BOOKS.ID**)
+-  (*BOOKID* --> **BOOKS.ID**)
 
 
 
@@ -137,7 +137,7 @@ along with the latest updated information
 - PK Celebrity Updates ("Celebrity Id") 
 
 ### Foreign Keys
-- SYS_FK_10131 (*Celebrity Id* --> **"Celebrities"."Id"**)
+-  (*Celebrity Id* --> **"Celebrities"."Id"**)
 
 
 
