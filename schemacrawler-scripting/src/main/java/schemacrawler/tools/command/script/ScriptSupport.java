@@ -9,11 +9,11 @@
 package schemacrawler.tools.command.script;
 
 import static java.util.stream.Collectors.toList;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
@@ -27,8 +27,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.utility.MetaDataUtility;
 
 public final class ScriptSupport {
-
-  private static final String GENERATED_FK_PREFIX = "SCHCRWLR_";
 
   private final Identifiers quotedIdentifiers;
 
@@ -92,11 +90,7 @@ public final class ScriptSupport {
   }
 
   public boolean hasName(final ForeignKey foreignKey) {
-    if (foreignKey == null) {
-      return false;
-    }
-    final String name = foreignKey.getName();
-    return !isBlank(name) && !name.startsWith(GENERATED_FK_PREFIX);
+    return !MetaDataUtility.isSystemGeneratedForeignKeyName(foreignKey);
   }
 
   public List<Index> nonPrimaryIndexes(final Table table) {
