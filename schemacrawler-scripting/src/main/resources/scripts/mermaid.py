@@ -2,10 +2,9 @@
 # SPDX-License-Identifier: EPL-2.0
 
 import re
-import java
 
 
-def clean_name(name):
+def strip_name(name):
     """Clean up names since Mermaid only allows alphanumeric identifiers"""
     namepattern = r'[^-\d\w]'
     cleanedname = re.sub(namepattern, '', name)
@@ -28,7 +27,7 @@ def symbol_for(cardinality):
 def name_for(entity):
     entity_name = entity.getFullName().replace('"', '')
     entity_type = entity.getType().description()
-    return '"' + entity_name + ' [' + entity_type + ']"'
+    return f'"{entity_name} [{entity_type}]"'
 
 def label_for(relationship):
     """Generate relationship label indicating bridge tables."""
@@ -54,9 +53,9 @@ for entity in er_model.getEntities():
     print(f'  {name_for(entity)} {{')
     for entity_attribute in entity.getEntityAttributes():
         entity_attribute_name = entity_attribute.getName()
-        attribute_type = entity_attribute.getType().toString()
+        attribute_type = entity_attribute.getType()
         attribute_has_remarks = entity_attribute.hasRemarks()
-        print(f'    {attribute_type} {clean_name(entity_attribute_name)}', end='')
+        print(f'    {attribute_type} {strip_name(entity_attribute_name)}', end='')
         if attribute_has_remarks:
             remarks = ' '.join(entity_attribute.getRemarks().splitlines())
             print(f' "{remarks}"', end='')

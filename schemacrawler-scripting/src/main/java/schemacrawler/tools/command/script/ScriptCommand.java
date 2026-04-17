@@ -9,6 +9,7 @@
 package schemacrawler.tools.command.script;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Reader;
 import java.io.Writer;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
@@ -59,12 +61,16 @@ public final class ScriptCommand extends AbstractSchemaCrawlerCommand<ScriptOpti
         LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, %s", inputResource));
 
         // Set up the context
+        final String title = title();
+        final Catalog catalog = getCatalog();
         final Map<String, Object> context = new HashMap<>();
-        context.put("title", outputOptions.getTitle());
-        context.put("catalog", getCatalog());
+        context.put("title", title);
+        context.put("catalog", catalog);
         context.put("er_model", getERModel());
         context.put("connection", connection);
         context.put("chain", new CommandChain(this));
+        context.put("support", new ScriptSupport());
+        context.put("crawl_info", new CrawlInfoSupport(catalog.getCrawlInfo()));
 
         scriptExecutor.initialize(context, reader, writer);
         scriptExecutor.run();
@@ -107,5 +113,13 @@ public final class ScriptCommand extends AbstractSchemaCrawlerCommand<ScriptOpti
   @Override
   public boolean usesConnection() {
     return true;
+  }
+
+  private String title() {
+    final String requestedTitle = outputOptions.getTitle();
+    if (!isBlank(requestedTitle)) {
+      return requestedTitle;
+    }
+    return "Database Schema";
   }
 }
