@@ -64,11 +64,11 @@
     <copy todir="${schemacrawler.expanded-distribution}"
       flatten="true"
       overwrite="true">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-scripting">
-        <include name="**/mermaid.py" />
-        <include name="**/dbml.py" />
-        <include name="**/plantuml.py" />
-        <include name="**/markdown.py" />
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-scripting/src/main">
+        <include name="**/mermaid.*" />
+        <include name="**/dbml.*" />
+        <include name="**/plantuml.*" />
+        <include name="**/markdown.*" />
       </fileset>
     </copy>
     <fixcrlf
