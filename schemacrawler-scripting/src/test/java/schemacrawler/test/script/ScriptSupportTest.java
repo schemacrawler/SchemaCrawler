@@ -13,6 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static schemacrawler.test.utility.crawl.LightCatalogUtility.lightNamedObject;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -39,8 +40,7 @@ public class ScriptSupportTest {
     final LightTable lightTable = new LightTable("tablename");
     assertThat(scriptSupport.cleanFullName(lightTable), is("tablename"));
 
-    final NamedObject quotedObject = mock(NamedObject.class);
-    when(quotedObject.getFullName()).thenReturn("\"schema\".\"table\"");
+    final NamedObject quotedObject = lightNamedObject(NamedObject.class, "\"schema\".\"table\"");
     assertThat(scriptSupport.cleanFullName(quotedObject), is("schema.table"));
   }
 
@@ -51,8 +51,7 @@ public class ScriptSupportTest {
     final LightTable lightTable = new LightTable("tablename");
     assertThat(scriptSupport.cleanName(lightTable), is("tablename"));
 
-    final NamedObject quotedObject = mock(NamedObject.class);
-    when(quotedObject.getName()).thenReturn("\"tablename\"");
+    final NamedObject quotedObject = lightNamedObject(NamedObject.class, "\"tablename\"");
     assertThat(scriptSupport.cleanName(quotedObject), is("tablename"));
   }
 
@@ -215,8 +214,7 @@ public class ScriptSupportTest {
   public void stripName() {
     assertThat(scriptSupport.stripName(null), is(""));
 
-    final NamedObject namedObject = mock(NamedObject.class);
-    when(namedObject.getName()).thenReturn("abc[^\\d\\w\\-]xyz");
+    final NamedObject namedObject = lightNamedObject(NamedObject.class, "abc[^\\d\\w\\-]xyz");
     assertThat(scriptSupport.stripName(namedObject), is("abcxyz"));
   }
 
