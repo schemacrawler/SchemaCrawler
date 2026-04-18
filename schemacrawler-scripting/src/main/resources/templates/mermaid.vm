@@ -1,0 +1,50 @@
+#macro(name_for $entity)
+$support.cleanFullName($entity) [$entity.getType().description()]#end
+##-----
+erDiagram
+
+## Entities
+#foreach ($entity in $er_model.getEntities())
+  #[["]]##name_for($entity)#[["]]# {
+    #foreach ($entity_attribute in $entity.getEntityAttributes())
+      #set($cleaned = $support.stripName($entity_attribute))
+      #if(!$cleaned || $cleaned == "")
+        #set($cleaned = "UNKNOWN")
+      #end      
+      #set($remarks = "")
+      #if($entity_attribute.hasRemarks())
+        #set($remarks = ' "' + $support.remarks$($entity_attribute) + '"')        
+      #end
+    $entity_attribute.getType() $cleaned$remarks
+    #end
+  }
+
+#end
+## Relationships
+#foreach ($relationship in $er_model.getRelationships())
+  #set($cardinality = $relationship.getType())
+  #set($cardinality_name = $cardinality.name())
+  #set($cardinality_symbol = "||--o{")
+  #if($cardinality_name == "unknown")
+    #set($cardinality_symbol = "||--||")
+  #elseif($cardinality_name == "zero_one")
+    #set($cardinality_symbol = "||--o|")
+  #elseif($cardinality_name == "zero_many")
+    #set($cardinality_symbol = "||--o{")
+  #elseif($cardinality_name == "one_one")
+    #set($cardinality_symbol = "||--||")
+  #elseif($cardinality_name == "one_many")
+    #set($cardinality_symbol = "||--|{")
+  #elseif($cardinality_name == "many_many")
+    #set($cardinality_symbol = "}o--o{")
+  #end
+  #set($label = "foreign key")
+  #if($cardinality_name == "many_many")
+    #set($label = "via bridge table $relationship.getName()")
+  #elseif($relationship.getLeftEntity() == $relationship.getRightEntity())
+    #set($label = "self-reference")
+  #elseif($relationship.hasRemarks())
+    #set($label = $support.remarks($relationship))
+  #end
+  #[["]]##name_for($relationship.getLeftEntity())#[["]]# $cardinality_symbol #[["]]##name_for($relationship.getRightEntity())#[["]]# : "$label"
+#end

@@ -1,0 +1,61 @@
+# $title
+
+#foreach ($schema in $catalog.getSchemas())
+#set($tables = $catalog.getTables($schema))
+#if($tables && !$tables.isEmpty())
+#[[##]]# $schema.getFullName()
+
+#foreach ($table in $tables)
+#[[###]]# $table.getName() ($support.type($table))
+#if($table.hasRemarks())
+$table.getRemarks()
+#end
+
+#[[###]]# Columns
+#foreach ($column in $table.getColumns())
+#if($column.isPartOfPrimaryKey())
+#set($col_name = "**$column.getName()**")
+#elseif($column.isPartOfForeignKey())
+#set($col_name = "*$column.getName()*")
+#else
+#set($col_name = "$column.getName()")
+#end
+- $col_name ($support.columnType($column))#if($column.getRemarks())    #end
+#if($column.getRemarks())$support.indent($column.getRemarks(), 4)#end
+#end
+
+#if($table.hasPrimaryKey())
+#[[###]]# Primary Key
+#set($primaryKey = $table.getPrimaryKey())
+- $primaryKey.getName() ($support.columns($primaryKey))
+
+#end
+#set($indexes = $support.nonPrimaryIndexes($table))
+#if(!$indexes.isEmpty())
+#[[###]]# Indexes
+#foreach ($index in $indexes)
+- $index.getName() ($support.columns($index))#if($index.isUnique()) (unique index)#end
+#end
+
+#end
+#set($foreign_keys = $table.getImportedForeignKeys())
+#if(!$foreign_keys.isEmpty())
+#[[###]]# Foreign Keys
+#foreach ($fk in $foreign_keys)
+#foreach ($columnReference in $support.columnReferences($fk))
+#set($fk_name = "")
+#if($support.hasName($fk))
+#set($fk_name = $fk.getName())
+#end
+#set($pkColumn = $columnReference.getPrimaryKeyColumn())
+#set($fkColumn = $columnReference.getForeignKeyColumn())
+- $fk_name (*$fkColumn.getName()* --> **$pkColumn.getShortName()**)
+#end
+#end
+
+#end
+
+
+#end
+#end
+#end

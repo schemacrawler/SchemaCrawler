@@ -7,10 +7,10 @@ SET SCHEMA $schema.fullName;
 
 #foreach($table in $catalog.getTables($schema))
 #if ($table.tableType == "table")
-CREATE TABLE $identifiers.quoteName($table)
+CREATE TABLE $table.getFullName()
 (
 #foreach($column in $table.columns)
-  $identifiers.quoteName($column) $column.columnDataType#if(!$column.isNullable()) NOT NULL#end#if($foreach.count < $table.columns.size()),#end
+  $column.getName() $column.columnDataType#if(!$column.isNullable()) NOT NULL#end#if($foreach.count < $table.columns.size()),#end
 #end
 );
 

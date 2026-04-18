@@ -6,10 +6,11 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.test.script;
+package schemacrawler.test.template;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.ScriptTestUtility.scriptExecution;
+import static schemacrawler.test.utility.ScriptTestUtility.templateExecution;
+import static schemacrawler.tools.command.template.options.TemplateLanguageType.velocity;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
@@ -18,45 +19,38 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.test.utility.extensions.AssertNoSystemOutOutput;
-import us.fatehi.test.utility.extensions.ResolveTestContext;
-import us.fatehi.test.utility.extensions.WithSystemProperty;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @AssertNoSystemOutOutput
-@ResolveTestContext
 @WithTestDatabase
 @DisableLogging
-public class BuiltInScriptsTest {
+public class BuiltInTemplatesTest {
 
   @Test
-  @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
   public void dbml(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
-        outputOf(scriptExecution(connectionSource, "/scripts/dbml.py")),
+        outputOf(templateExecution(connectionSource, velocity, "/templates/dbml.vm")),
         hasSameContentAs(classpathResource("BuiltIn.dbml.txt")));
   }
 
   @Test
-  @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
   public void markdown(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
-        outputOf(scriptExecution(connectionSource, "/scripts/markdown.py")),
+        outputOf(templateExecution(connectionSource, velocity, "/templates/markdown.vm")),
         hasSameContentAs(classpathResource("BuiltIn.markdown.txt")));
   }
 
   @Test
-  @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
   public void mermaid(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
-        outputOf(scriptExecution(connectionSource, "/scripts/mermaid.py")),
+        outputOf(templateExecution(connectionSource, velocity, "/templates/mermaid.vm")),
         hasSameContentAs(classpathResource("BuiltIn.mermaid.txt")));
   }
 
   @Test
-  @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
   public void plantuml(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
-        outputOf(scriptExecution(connectionSource, "/scripts/plantuml.py")),
+        outputOf(templateExecution(connectionSource, velocity, "/templates/plantuml.vm")),
         hasSameContentAs(classpathResource("BuiltIn.plantuml.txt")));
   }
 }

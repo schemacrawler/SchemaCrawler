@@ -17,7 +17,7 @@ Contact details for book authors
 - COUNTRY (VARCHAR)
 
 ### Primary Key
-- PK_AUTHORS ("ID") 
+- PK_AUTHORS ("ID")
 
 ### Indexes
 - IDX_B_AUTHORS ("LASTNAME", "FIRSTNAME")
@@ -30,22 +30,22 @@ Details for published books
 
 ### Columns
 - **ID** (INTEGER)    
-Unique (internal) id for book
+    Unique (internal) id for book
 - TITLE (VARCHAR)    
-Book title
+    Book title
 - DESCRIPTION (VARCHAR)    
-Book description
+    Book description
     (Usually the blurb from the book jacket or promotional materials)
 - PUBLISHERID (INTEGER)    
-Foreign key to the book publisher
+    Foreign key to the book publisher
 - PUBLICATIONDATE (DATE)    
-Book publication date
+    Book publication date
 - PRICE (DOUBLE)    
-Current price for the book
+    Current price for the book
 - *PREVIOUSEDITIONID* (INTEGER)
 
 ### Primary Key
-- PK_BOOKS ("ID") 
+- PK_BOOKS ("ID")
 
 ### Indexes
 - U_PREVIOUSEDITION ("PREVIOUSEDITIONID") (unique index)
@@ -63,7 +63,7 @@ Current price for the book
 - NAME (VARCHAR)
 
 ### Primary Key
-- PK_Celebrities ("Id") 
+- PK_Celebrities ("Id")
 
 
 
@@ -76,7 +76,7 @@ Current price for the book
 - BOOKS (VARCHAR(20) ARRAY[10])
 
 ### Primary Key
-- PK_COUPONS ("ID") 
+- PK_COUPONS ("ID")
 
 
 
@@ -89,7 +89,7 @@ Current price for the book
 - AGE (AGE_TYPE)
 
 ### Primary Key
-- PK_CUSTOMERS ("ID") 
+- PK_CUSTOMERS ("ID")
 
 
 
@@ -98,12 +98,12 @@ List of book publishers
 
 ### Columns
 - **ID** (INTEGER)    
-Unique (internal) id for book publisher
+    Unique (internal) id for book publisher
 - PUBLISHER (VARCHAR)    
-Name of book publisher
+    Name of book publisher
 
 ### Primary Key
-- SYS_PK_10127 ("ID") 
+- SYS_PK_10127 ("ID")
 
 
 
@@ -134,7 +134,7 @@ along with the latest updated information
 - UPDATE (VARCHAR)
 
 ### Primary Key
-- PK Celebrity Updates ("Celebrity Id") 
+- PK Celebrity Updates ("Celebrity Id")
 
 ### Foreign Keys
 -  (*Celebrity Id* --> **"Celebrities"."Id"**)
@@ -149,7 +149,7 @@ along with the latest updated information
 - DATA (VALID_STRING)
 
 ### Primary Key
-- PK_CUSTOMERDATA ("CUSTOMERID", "DATAID") 
+- PK_CUSTOMERDATA ("CUSTOMERID", "DATAID")
 
 ### Indexes
 - FK_CUSTOMER ("CUSTOMERID")
@@ -168,7 +168,7 @@ along with the latest updated information
 - *ΕΚΔΌΤΗΣ* (SMALLINT)
 
 ### Primary Key
-- PK_ΒΙΒΛΊΑ ("ΜΟΝΑΔΙΚΌΣ") 
+- PK_ΒΙΒΛΊΑ ("ΜΟΝΑΔΙΚΌΣ")
 
 ### Indexes
 - FK_ΒΙΒΛΊΑ_PUBLISHERS ("ΕΚΔΌΤΗΣ")
@@ -198,7 +198,7 @@ along with the latest updated information
 - **COUNTRY** (VARCHAR)
 
 ### Primary Key
-- PK_CUSTOMERS ("POSTALCODE", "COUNTRY") 
+- PK_CUSTOMERS ("POSTALCODE", "COUNTRY")
 
 
 
