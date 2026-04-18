@@ -12,7 +12,7 @@ for schema in catalog.getSchemas():
 	if not tables:
 		continue
 
-	print(f'# Schema: {schema}')
+	print()
 	print()
 
 	for table in tables:
@@ -20,13 +20,14 @@ for schema in catalog.getSchemas():
 		if table.hasRemarks():
 			print(f'# {support.remarks(table)}')
 		print(f'"{table.getName()}"')
+		print(f'# {table.getFullName()}')	
 		print('-' * max(20, len(table.getName()) + 2))
 
 		for column in table.getColumns():
-			if column.hasRemarks():
-				modifiers.append(f'  # {support.remarks(column)}')
-			col_name = column.getName()
-			col_type = f'{column.getColumnDataType().getDatabaseSpecificTypeName()}{column.getWidth()}'
+			col_name = f'"{column.getName()}"'
+			col_type = f'"{column.getColumnDataType().getDatabaseSpecificTypeName()}{column.getWidth()}"'
+			if column.hasDefaultValue():
+				col_type = col_type + f'="{column.getDefaultValue()}"'
 			modifiers = []
 			if column.isPartOfPrimaryKey():
 				modifiers.append('PK')
@@ -41,10 +42,12 @@ for schema in catalog.getSchemas():
 			if column.isPartOfForeignKey():
 				ref_table_name = column.getReferencedColumn().getParent().getName()
 				ref_col_name = column.getReferencedColumn().getName()
-				modifiers.append(f'FK >- "{ref_table_name}"."{ref_col_name}"')				
+				modifiers.append(f'FK >- "{ref_table_name}"."{ref_col_name}"')
+			if column.hasRemarks():
+				modifiers.append(f'  # {support.remarks(column)}')								
 			col_mods = ' '.join(modifiers)
 
-			print(f'  "{col_name}" "{col_type}"', end='')
+			print(f'  {col_name} {col_type}', end='')
 			if col_mods:
 				print(f' {col_mods}')
 			else:
