@@ -19,7 +19,7 @@ for schema in catalog.getSchemas():
 
 		if table.hasRemarks():
 			print(f'# {support.remarks(table)}')
-		print(f'"{table.getName()}"')
+		print(f'"{table.getName()}" as {table.key().slug()}')
 		print(f'# {table.getFullName()}')	
 		print('-' * max(20, len(table.getName()) + 2))
 
@@ -40,9 +40,9 @@ for schema in catalog.getSchemas():
 			if column.isAutoIncremented():
 				modifiers.append('AUTOINCREMENT')
 			if column.isPartOfForeignKey():
-				ref_table_name = column.getReferencedColumn().getParent().getName()
+				ref_table_slug = column.getReferencedColumn().getParent().key().slug()
 				ref_col_name = column.getReferencedColumn().getName()
-				modifiers.append(f'FK >- "{ref_table_name}"."{ref_col_name}"')
+				modifiers.append(f'FK >- {ref_table_slug}."{ref_col_name}"')
 			if column.hasRemarks():
 				modifiers.append(f'  # {support.remarks(column)}')								
 			col_mods = ' '.join(modifiers)
