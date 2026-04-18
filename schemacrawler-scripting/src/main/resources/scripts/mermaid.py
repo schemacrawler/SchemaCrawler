@@ -1,13 +1,9 @@
 # Copyright (c) Sualeh Fatehi
 # SPDX-License-Identifier: EPL-2.0
 
-import re
-
-
-def strip_name(name):
+def strip_name(entity):
     """Clean up names since Mermaid only allows alphanumeric identifiers"""
-    namepattern = r'[^-\d\w]'
-    cleanedname = re.sub(namepattern, '', name)
+    cleanedname = support.stripName(entity)
     if not cleanedname:
         cleanedname = "UNKNOWN"
     return cleanedname
@@ -25,7 +21,7 @@ def symbol_for(cardinality):
     return card_map.get(cardinality.name(), '||--o{')
 
 def name_for(entity):
-    entity_name = entity.getFullName().replace('"', '')
+    entity_name = support.cleanFullName(entity)
     entity_type = entity.getType().description()
     return f'"{entity_name} [{entity_type}]"'
 
@@ -39,7 +35,7 @@ def label_for(relationship):
     elif left_entity == right_entity:
         return "self-reference"
     elif relationship.hasRemarks():
-        remarks = ' '.join(relationship.getRemarks().splitlines())
+        remarks = support.remarks(relationship)
         return remarks
     else:
         return 'foreign key'
@@ -52,12 +48,10 @@ print('')
 for entity in er_model.getEntities():
     print(f'  {name_for(entity)} {{')
     for entity_attribute in entity.getEntityAttributes():
-        entity_attribute_name = entity_attribute.getName()
         attribute_type = entity_attribute.getType()
-        attribute_has_remarks = entity_attribute.hasRemarks()
-        print(f'    {attribute_type} {strip_name(entity_attribute_name)}', end='')
-        if attribute_has_remarks:
-            remarks = ' '.join(entity_attribute.getRemarks().splitlines())
+        print(f'    {attribute_type} {strip_name(entity_attribute)}', end='')
+        if entity_attribute.hasRemarks():
+            remarks = support.remarks(entity_attribute)
             print(f' "{remarks}"', end='')
         print()
     print('  }')

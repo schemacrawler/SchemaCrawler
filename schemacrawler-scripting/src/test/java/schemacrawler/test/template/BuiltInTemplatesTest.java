@@ -19,48 +19,38 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.test.utility.extensions.AssertNoSystemOutOutput;
-import us.fatehi.test.utility.extensions.ResolveTestContext;
-import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @AssertNoSystemOutOutput
-@ResolveTestContext
 @WithTestDatabase
 @DisableLogging
-public class BuiltInScriptsTest {
+public class BuiltInTemplatesTest {
 
   @Test
-  public void dbml(final TestContext testContext, final DatabaseConnectionSource connectionSource)
-      throws Exception {
+  public void dbml(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
         outputOf(templateExecution(connectionSource, velocity, "/templates/dbml.vm")),
-        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+        hasSameContentAs(classpathResource("BuiltIn.dbml.txt")));
   }
 
   @Test
-  public void markdown(
-      final TestContext testContext, final DatabaseConnectionSource connectionSource)
-      throws Exception {
+  public void markdown(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
         outputOf(templateExecution(connectionSource, velocity, "/templates/markdown.vm")),
-        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+        hasSameContentAs(classpathResource("BuiltIn.markdown.txt")));
   }
 
   @Test
-  public void mermaid(
-      final TestContext testContext, final DatabaseConnectionSource connectionSource)
-      throws Exception {
+  public void mermaid(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
         outputOf(templateExecution(connectionSource, velocity, "/templates/mermaid.vm")),
-        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+        hasSameContentAs(classpathResource("BuiltIn.mermaid.txt")));
   }
 
   @Test
-  public void plantuml(
-      final TestContext testContext, final DatabaseConnectionSource connectionSource)
-      throws Exception {
+  public void plantuml(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
         outputOf(templateExecution(connectionSource, velocity, "/templates/plantuml.vm")),
-        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+        hasSameContentAs(classpathResource("BuiltIn.plantuml.txt")));
   }
 }

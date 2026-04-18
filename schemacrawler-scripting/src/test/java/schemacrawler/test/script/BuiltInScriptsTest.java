@@ -19,7 +19,6 @@ import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.WithTestDatabase;
 import us.fatehi.test.utility.extensions.AssertNoSystemOutOutput;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
-import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.test.utility.extensions.WithSystemProperty;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
@@ -31,40 +30,33 @@ public class BuiltInScriptsTest {
 
   @Test
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
-  public void dbml(final TestContext testContext, final DatabaseConnectionSource connectionSource)
-      throws Exception {
+  public void dbml(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
         outputOf(scriptExecution(connectionSource, "/scripts/dbml.py")),
-        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+        hasSameContentAs(classpathResource("BuiltIn.dbml.txt")));
   }
 
   @Test
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
-  public void markdown(
-      final TestContext testContext, final DatabaseConnectionSource connectionSource)
-      throws Exception {
+  public void markdown(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
         outputOf(scriptExecution(connectionSource, "/scripts/markdown.py")),
-        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+        hasSameContentAs(classpathResource("BuiltIn.markdown.txt")));
   }
 
   @Test
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
-  public void mermaid(
-      final TestContext testContext, final DatabaseConnectionSource connectionSource)
-      throws Exception {
+  public void mermaid(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
         outputOf(scriptExecution(connectionSource, "/scripts/mermaid.py")),
-        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+        hasSameContentAs(classpathResource("BuiltIn.mermaid.txt")));
   }
 
   @Test
   @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
-  public void plantuml(
-      final TestContext testContext, final DatabaseConnectionSource connectionSource)
-      throws Exception {
+  public void plantuml(final DatabaseConnectionSource connectionSource) throws Exception {
     assertThat(
         outputOf(scriptExecution(connectionSource, "/scripts/plantuml.py")),
-        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+        hasSameContentAs(classpathResource("BuiltIn.plantuml.txt")));
   }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
+import schemacrawler.schema.DescribedObject;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.IdentifierQuotingStrategy;
 import schemacrawler.schema.Identifiers;
@@ -92,6 +93,13 @@ public final class ScriptSupport {
     return !MetaDataUtility.isSystemGeneratedForeignKeyName(foreignKey);
   }
 
+  public String indent(final String text, final int indent) {
+    if (text == null) {
+      return "";
+    }
+    return text.indent(indent);
+  }
+
   public List<Index> nonPrimaryIndexes(final Table table) {
     final List<Index> indexes = new ArrayList<>();
     if (table == null || table.getIndexes() == null || table.getIndexes().isEmpty()) {
@@ -116,11 +124,24 @@ public final class ScriptSupport {
     return MetaDataUtility.joinColumns(pkColumns, false, quotedIdentifiers);
   }
 
-  public String indent(final String text, final int indent) {
-    if (text == null) {
+  /**
+   * Puts remarks on a single line.
+   *
+   * @param describedObject Object with remarks
+   * @return Remarks on a single line
+   */
+  public String remarks(final DescribedObject describedObject) {
+    if (describedObject == null || !describedObject.hasRemarks()) {
       return "";
     }
-    return text.indent(indent);
+    return describedObject.getRemarks().replaceAll("\\R", " ").replace('"', '\'').strip();
+  }
+
+  public String stripName(final NamedObject namedObject) {
+    if (namedObject == null) {
+      return "";
+    }
+    return namedObject.getName().replace("[^\\d\\w\\-]", "");
   }
 
   public String type(final Table table) {
