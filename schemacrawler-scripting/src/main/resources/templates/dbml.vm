@@ -1,3 +1,5 @@
+## Copyright (c) Sualeh Fatehi
+## SPDX-License-Identifier: EPL-2.0
 Project "$title" {
   database_type: "$crawl_info.databaseVersion()"
   note: '''

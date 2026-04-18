@@ -59,4 +59,12 @@ public class BuiltInScriptsTest {
         outputOf(scriptExecution(connectionSource, "/scripts/plantuml.py")),
         hasSameContentAs(classpathResource("BuiltIn.plantuml.txt")));
   }
+
+  @Test
+  @WithSystemProperty(key = "python.console.encoding", value = "UTF-8")
+  public void quickdbd(final DatabaseConnectionSource connectionSource) throws Exception {
+    assertThat(
+        outputOf(scriptExecution(connectionSource, "/scripts/quickdbd.py")),
+        hasSameContentAs(classpathResource("BuiltIn.quickdbd.txt")));
+  }
 }
