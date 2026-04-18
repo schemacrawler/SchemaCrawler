@@ -28,17 +28,18 @@ for schema in catalog.getSchemas():
             else:
                 col_name = column.getName()
             print(f'- {col_name} ({support.columnType(column)})', end='')
-            column_remarks = column.getRemarks()
+            column_remarks = support.indent(column.getRemarks(), 4)
             if column_remarks:
                 print('    ')
-                print('\n    '.join(column_remarks.splitlines()), end='')
-            print()
+                print(f'{column_remarks}', end='')
+            else:
+                print()
 
         if table.hasPrimaryKey():
             print('')
             print('### Primary Key')
             primaryKey = table.getPrimaryKey()
-            print(f'- {primaryKey.getName()} ({support.columns(primaryKey)}) ')
+            print(f'- {primaryKey.getName()} ({support.columns(primaryKey)})')
 
         indexes = support.nonPrimaryIndexes(table)
         if not indexes.isEmpty():

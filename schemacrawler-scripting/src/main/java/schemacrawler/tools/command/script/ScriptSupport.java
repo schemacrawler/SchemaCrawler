@@ -13,7 +13,6 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
@@ -115,6 +114,13 @@ public final class ScriptSupport {
             .map(ColumnReference::getPrimaryKeyColumn)
             .collect(toList());
     return MetaDataUtility.joinColumns(pkColumns, false, quotedIdentifiers);
+  }
+
+  public String indent(final String text, final int indent) {
+    if (text == null) {
+      return "";
+    }
+    return text.indent(indent);
   }
 
   public String type(final Table table) {

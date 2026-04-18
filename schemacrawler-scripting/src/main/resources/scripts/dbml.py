@@ -5,6 +5,7 @@ print(f'Project "{title}" {{')
 print(f'  database_type: "{crawl_info.databaseVersion()}"')
 print(f"  note: '''\n{catalog.getCrawlInfo()}\n'''")
 print("}")
+print()
 
 # Columns
 for table in catalog.getTables():
@@ -21,7 +22,7 @@ for table in catalog.getTables():
 		if column.hasDefaultValue():
 			print(f', default: "{column.getDefaultValue()}"', end='')
 		if column.hasRemarks():
-			print(f",  note: '''{column.getRemarks()}'''", end='')
+			print(f", note: '''{column.getRemarks()}'''", end='')
 		print(']', end='')
 		print()
 	# Primary keys and indexes

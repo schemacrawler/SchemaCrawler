@@ -9,11 +9,15 @@
 package schemacrawler.tools.command.template;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.HashMap;
 import java.util.Map;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
+import schemacrawler.tools.command.script.CrawlInfoSupport;
+import schemacrawler.tools.command.script.ScriptSupport;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.scripting.options.LanguageOptions;
 import us.fatehi.utility.property.PropertyName;
@@ -40,11 +44,15 @@ public final class TemplateCommand
 
     final TemplateRenderer templateRenderer = newTemplateRenderer(languageType);
 
+    // Set up the context
+    final String title = title();
+    final Catalog catalog = getCatalog();
     final Map<String, Object> context = new HashMap<>();
-    context.put("title", outputOptions.getTitle());
-    context.put("catalog", getCatalog());
+    context.put("title", title);
+    context.put("catalog", catalog);
     context.put("er_model", getERModel());
-    context.put("identifiers", identifiers);
+    context.put("support", new ScriptSupport());
+    context.put("crawl_info", new CrawlInfoSupport(catalog.getCrawlInfo()));
 
     templateRenderer.setResourceFilename(commandOptions.getScript());
     templateRenderer.setContext(context);
@@ -69,5 +77,13 @@ public final class TemplateCommand
       throw new InternalRuntimeException(
           "Could not instantiate template renderer for <%s>".formatted(languageType), e);
     }
+  }
+
+  private String title() {
+    final String requestedTitle = outputOptions.getTitle();
+    if (!isBlank(requestedTitle)) {
+      return requestedTitle;
+    }
+    return "Database Schema";
   }
 }

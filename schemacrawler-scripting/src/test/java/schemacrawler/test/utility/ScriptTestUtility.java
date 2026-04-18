@@ -74,6 +74,9 @@ public class ScriptTestUtility {
       final String templateResource)
       throws Exception {
 
+    final OutputOptions outputOptions =
+        OutputOptionsBuilder.builder().title("FROM TEST: Database Schema Diagram").toOptions();
+
     final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("template", templateResource);
     additionalConfig.put("templating-language", templateLanguage.name());
@@ -81,6 +84,7 @@ public class ScriptTestUtility {
     final SchemaCrawlerExecutable executable = executableOf("template");
     executable.setAdditionalConfiguration(additionalConfig);
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
+    executable.setOutputOptions(outputOptions);
 
     return executableExecution(connectionSource, executable, "text");
   }
