@@ -53,4 +53,11 @@ public class BuiltInTemplatesTest {
         outputOf(templateExecution(connectionSource, velocity, "/templates/plantuml.vm")),
         hasSameContentAs(classpathResource("BuiltIn.plantuml.txt")));
   }
+
+  @Test
+  public void quickdbd(final DatabaseConnectionSource connectionSource) throws Exception {
+    assertThat(
+        outputOf(templateExecution(connectionSource, velocity, "/templates/quickdbd.vm")),
+        hasSameContentAs(classpathResource("BuiltIn.quickdbd.txt")));
+  }
 }

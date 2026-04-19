@@ -1,11 +1,14 @@
+## Copyright (c) Sualeh Fatehi
+## SPDX-License-Identifier: EPL-2.0
 #macro(name_for $entity)
 $support.cleanFullName($entity) [$entity.getType().description()]#end
+#set ($Q = '"')
 ##-----
 erDiagram
 
 ## Entities
 #foreach ($entity in $er_model.getEntities())
-  #[["]]##name_for($entity)#[["]]# {
+  $Q#name_for($entity)$Q {
     #foreach ($entity_attribute in $entity.getEntityAttributes())
       #set($cleaned = $support.stripName($entity_attribute))
       #if(!$cleaned || $cleaned == "")
@@ -46,5 +49,5 @@ erDiagram
   #elseif($relationship.hasRemarks())
     #set($label = $support.remarks($relationship))
   #end
-  #[["]]##name_for($relationship.getLeftEntity())#[["]]# $cardinality_symbol #[["]]##name_for($relationship.getRightEntity())#[["]]# : "$label"
+  $Q#name_for($relationship.getLeftEntity())$Q $cardinality_symbol $Q#name_for($relationship.getRightEntity())$Q : "$label"
 #end
