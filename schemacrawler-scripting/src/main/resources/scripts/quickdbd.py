@@ -21,7 +21,7 @@ for schema in catalog.getSchemas():
 			print(f'# {support.remarks(table)}')
 		print(f'"{table.getName()}" as {table.key().slug()}')
 		print(f'# {table.getFullName()}')	
-		print('-' * max(20, len(table.getName()) + 2))
+		print('------')
 
 		for column in table.getColumns():
 			col_name = f'"{column.getName()}"'
