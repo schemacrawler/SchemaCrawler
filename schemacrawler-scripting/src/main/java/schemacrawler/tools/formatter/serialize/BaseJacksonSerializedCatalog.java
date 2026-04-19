@@ -58,7 +58,8 @@ import tools.jackson.databind.ser.std.SimpleBeanPropertyFilter;
 import tools.jackson.databind.ser.std.SimpleFilterProvider;
 
 /** Decorates a database to allow for serialization to and from plain Java serialization. */
-public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer {
+public abstract sealed class BaseJacksonSerializedCatalog implements CatalogSerializer
+    permits CompactSerializedCatalog, JsonSerializedCatalog, YamlSerializedCatalog {
 
   private static class IgnoreExceptionBeanPropertyFilter extends SimpleBeanPropertyFilter {
 
@@ -103,7 +104,7 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
   protected static Catalog readCatalog(final InputStream in) {
     requireNonNull(in, "No input stream provided");
     try {
-      final ObjectMapper mapper = newConfiguredObjectMapper(JsonMapper.builder());
+      final ObjectMapper mapper = newConfiguredObjectMapper(JsonMapper.builder(), true);
       final Catalog catalog = mapper.readValue(in, Catalog.class);
       return catalog;
     } catch (final JacksonException e) {
@@ -112,10 +113,14 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
   }
 
   private static ObjectMapper newConfiguredObjectMapper(
-      final MapperBuilder<? extends ObjectMapper, ?> mapperBuilder) {
+      final MapperBuilder<? extends ObjectMapper, ?> mapperBuilder, final boolean indented) {
 
     requireNonNull(mapperBuilder, "No mapper builder provided");
-    mapperBuilder.enable(ORDER_MAP_ENTRIES_BY_KEYS, INDENT_OUTPUT, USE_EQUALITY_FOR_OBJECT_ID);
+    if (indented) {
+      mapperBuilder.enable(ORDER_MAP_ENTRIES_BY_KEYS, INDENT_OUTPUT, USE_EQUALITY_FOR_OBJECT_ID);
+    } else {
+      mapperBuilder.enable(ORDER_MAP_ENTRIES_BY_KEYS, USE_EQUALITY_FOR_OBJECT_ID);
+    }
     mapperBuilder.disable(FAIL_ON_NULL_FOR_PRIMITIVES);
     mapperBuilder.enable(INCLUDE_SOURCE_IN_LOCATION, IGNORE_UNDEFINED);
     mapperBuilder.enable(IGNORE_UNKNOWN);
@@ -202,12 +207,16 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
   public void save(final Writer out) {
     requireNonNull(out, "No writer provided");
     try {
-      final ObjectMapper mapper = newConfiguredObjectMapper(newMapperBuilder());
+      final ObjectMapper mapper = newConfiguredObjectMapper(newMapperBuilder(), isIndented());
       mapper.writeValue(out, this);
       // Jackson will flush and close the stream
     } catch (final JacksonException e) {
       throw new ExecutionRuntimeException("Could not serialize catalog", e);
     }
+  }
+
+  protected boolean isIndented() {
+    return true;
   }
 
   protected abstract MapperBuilder<? extends ObjectMapper, ?> newMapperBuilder();

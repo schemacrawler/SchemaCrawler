@@ -11,8 +11,7 @@ package schemacrawler.tools.command.template;
 import java.util.Map;
 import schemacrawler.tools.options.OutputOptions;
 
-
-public interface TemplateRenderer {
+public sealed interface TemplateRenderer permits BaseTemplateRenderer {
 
   void execute();
 
