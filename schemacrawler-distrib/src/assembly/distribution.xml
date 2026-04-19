@@ -69,6 +69,7 @@
         <include name="**/dbml.*" />
         <include name="**/plantuml.*" />
         <include name="**/markdown.*" />
+        <include name="**/quickdbd*" />
       </fileset>
     </copy>
     <fixcrlf
