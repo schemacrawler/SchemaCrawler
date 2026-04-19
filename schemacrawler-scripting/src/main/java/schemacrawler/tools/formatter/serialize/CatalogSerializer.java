@@ -12,7 +12,8 @@ import java.io.OutputStream;
 import java.io.Writer;
 import schemacrawler.schema.Catalog;
 
-public interface CatalogSerializer {
+public sealed interface CatalogSerializer
+    permits JavaSerializedCatalog, BaseJacksonSerializedCatalog {
 
   /**
    * Gets the catalog wrapped by ths savable.

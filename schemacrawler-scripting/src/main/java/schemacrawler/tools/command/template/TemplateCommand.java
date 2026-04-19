@@ -14,7 +14,6 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.HashMap;
 import java.util.Map;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.command.script.CrawlInfoSupport;
 import schemacrawler.tools.command.script.ScriptSupport;
@@ -42,7 +41,7 @@ public final class TemplateCommand
     // Find if the language type is valid, or throw an exception
     final TemplateLanguageType languageType = commandOptions.getLanguage();
 
-    final TemplateRenderer templateRenderer = newTemplateRenderer(languageType);
+    final TemplateRenderer templateRenderer = languageType.newRenderer();
 
     // Set up the context
     final String title = title();
@@ -64,19 +63,6 @@ public final class TemplateCommand
   @Override
   public boolean usesConnection() {
     return true;
-  }
-
-  private TemplateRenderer newTemplateRenderer(final TemplateLanguageType languageType) {
-    try {
-      final String templateRendererClassName = languageType.getTemplateRendererClassName();
-      final Class<TemplateRenderer> templateRendererClass =
-          (Class<TemplateRenderer>) Class.forName(templateRendererClassName);
-      final TemplateRenderer templateRenderer = templateRendererClass.newInstance();
-      return templateRenderer;
-    } catch (final Exception e) {
-      throw new InternalRuntimeException(
-          "Could not instantiate template renderer for <%s>".formatted(languageType), e);
-    }
   }
 
   private String title() {

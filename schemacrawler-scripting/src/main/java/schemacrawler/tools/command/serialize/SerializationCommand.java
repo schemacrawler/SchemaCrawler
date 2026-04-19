@@ -18,9 +18,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.util.zip.GZIPOutputStream;
-import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
-import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.command.serialize.options.SerializationOptions;
@@ -46,17 +44,7 @@ public final class SerializationCommand extends AbstractSchemaCrawlerCommand<Ser
     final SerializationFormat serializationFormat =
         SerializationFormat.fromFormat(outputOptions.getOutputFormatValue());
 
-    final String serializerClassName = serializationFormat.getSerializerClassName();
-    final CatalogSerializer catalogSerializer;
-    try {
-      final Class<CatalogSerializer> serializableCatalogClass =
-          (Class<CatalogSerializer>) Class.forName(serializerClassName);
-      catalogSerializer =
-          serializableCatalogClass.getDeclaredConstructor(Catalog.class).newInstance(getCatalog());
-    } catch (final Exception e) {
-      throw new InternalRuntimeException(
-          "Could not instantiate catalog serializer<%s>".formatted(serializerClassName), e);
-    }
+    final CatalogSerializer catalogSerializer = serializationFormat.newSerializer(getCatalog());
 
     if (serializationFormat.isBinaryFormat()) {
       // Force a file to be created for binary formats such as Java serialization

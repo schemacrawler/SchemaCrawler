@@ -6,16 +6,15 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.command.template;
 
-import java.util.Map;
 import static java.util.Objects.requireNonNull;
+
+import java.util.Map;
 import schemacrawler.tools.options.OutputOptions;
 
-
-
-public abstract class BaseTemplateRenderer implements TemplateRenderer {
+public abstract sealed class BaseTemplateRenderer implements TemplateRenderer
+    permits FreeMarkerRenderer, MustacheRenderer, ThymeleafRenderer, VelocityRenderer {
 
   private Map<String, Object> context;
   private OutputOptions outputOptions;
