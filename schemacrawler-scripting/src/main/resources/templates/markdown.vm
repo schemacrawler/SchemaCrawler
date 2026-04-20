@@ -28,8 +28,12 @@ $table.getRemarks()
 
 #if($table.hasPrimaryKey())
 #[[###]]# Primary Key
-#set($primaryKey = $table.getPrimaryKey())
-- $primaryKey.getName() ($support.columns($primaryKey))
+#set($pk = $table.getPrimaryKey())
+#set($pk_name = "")
+#if($support.hasName($pk))
+#set($pk_name = "$pk.getName() ")
+#end
+- $pk_name($support.columns($pk))
 
 #end
 #set($indexes = $support.nonPrimaryIndexes($table))
@@ -47,11 +51,11 @@ $table.getRemarks()
 #foreach ($columnReference in $support.columnReferences($fk))
 #set($fk_name = "")
 #if($support.hasName($fk))
-#set($fk_name = $fk.getName())
+#set($fk_name = "$fk.getName() ")
 #end
 #set($pkColumn = $columnReference.getPrimaryKeyColumn())
 #set($fkColumn = $columnReference.getForeignKeyColumn())
-- $fk_name (*$fkColumn.getName()* --> **$pkColumn.getShortName()**)
+- $fk_name(*$fkColumn.getName()* --> **$pkColumn.getShortName()**)
 #end
 #end
 

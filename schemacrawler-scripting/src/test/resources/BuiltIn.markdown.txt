@@ -103,7 +103,7 @@ List of book publishers
     Name of book publisher
 
 ### Primary Key
-- SYS_PK_10127 ("ID")
+- ("ID")
 
 
 
@@ -123,7 +123,7 @@ along with the latest updated information
 
 ### Foreign Keys
 - Z_FK_AUTHOR (*AUTHORID* --> **AUTHORS.ID**)
--  (*BOOKID* --> **BOOKS.ID**)
+- (*BOOKID* --> **BOOKS.ID**)
 
 
 
@@ -137,7 +137,7 @@ along with the latest updated information
 - PK Celebrity Updates ("Celebrity Id")
 
 ### Foreign Keys
--  (*Celebrity Id* --> **"Celebrities"."Id"**)
+- (*Celebrity Id* --> **"Celebrities"."Id"**)
 
 
 
