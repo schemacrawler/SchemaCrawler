@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DescribedObject;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.IdentifierQuotingStrategy;
@@ -89,8 +90,8 @@ public final class ScriptSupport {
         foreignKey.getConstrainedColumns(), false, quotedIdentifiers);
   }
 
-  public boolean hasName(final ForeignKey foreignKey) {
-    return !MetaDataUtility.isSystemGeneratedForeignKeyName(foreignKey);
+  public boolean hasName(final DatabaseObject dbObject) {
+    return !MetaDataUtility.hasSystemGeneratedName(dbObject);
   }
 
   public String indent(final String text, final int indent) {

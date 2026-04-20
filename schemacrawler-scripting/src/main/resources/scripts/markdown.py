@@ -38,8 +38,9 @@ for schema in catalog.getSchemas():
         if table.hasPrimaryKey():
             print('')
             print('### Primary Key')
-            primaryKey = table.getPrimaryKey()
-            print(f'- {primaryKey.getName()} ({support.columns(primaryKey)})')
+            pk = table.getPrimaryKey()
+            pk_name = f"{pk.getName()} " if support.hasName(pk) else ''
+            print(f'- {pk_name}({support.columns(pk)})')
 
         indexes = support.nonPrimaryIndexes(table)
         if not indexes.isEmpty():
@@ -55,10 +56,10 @@ for schema in catalog.getSchemas():
             print('### Foreign Keys')
             for fk in foreign_keys:
                 for columnReference in support.columnReferences(fk):
-                    fk_name = fk.getName() if support.hasName(fk) else ''
+                    fk_name = f"{fk.getName()} " if support.hasName(fk) else ''
                     pkColumn = columnReference.getPrimaryKeyColumn()
                     fkColumn = columnReference.getForeignKeyColumn()
-                    print(f'- {fk_name} (*{fkColumn.getName()}* --> **{pkColumn.getShortName()}**)')
+                    print(f'- {fk_name}(*{fkColumn.getName()}* --> **{pkColumn.getShortName()}**)')
 
         print('')
         print('')
