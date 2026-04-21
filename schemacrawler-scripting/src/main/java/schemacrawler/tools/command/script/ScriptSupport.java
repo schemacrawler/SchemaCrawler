@@ -189,6 +189,21 @@ public final class ScriptSupport {
     return namedObject.getName().replace("[^\\d\\w\\-]", "");
   }
 
+  public TableReference tableReference(final Column column) {
+    if (MetaDataUtility.isPartial(column) || !column.isPartOfForeignKey()) {
+      return null;
+    }
+    final Table table = column.getParent();
+    for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
+      for (final ColumnReference columnReference : foreignKey) {
+        if (column.equals(columnReference.getForeignKeyColumn())) {
+          return foreignKey;
+        }
+      }
+    }
+    return null;
+  }
+
   public String type(final Table table) {
     return MetaDataUtility.getSimpleTypeName(table).toString();
   }
