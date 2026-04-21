@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
+import schemacrawler.ermodel.model.Relationship;
 import schemacrawler.ermodel.model.RelationshipCardinality;
 import schemacrawler.ermodel.utility.ERModelUtility;
 import schemacrawler.schema.Column;
@@ -52,19 +53,28 @@ public final class ScriptSupport {
   /**
    * Show cardinality symbol, from PK to FK column.
    *
+   * @param rel Foreign key
+   * @return Cardinality symbol, from PK to FK column
+   */
+  public String cardinalitySymbol(final Relationship rel) {
+    final RelationshipCardinality cardinality;
+    if (rel == null) {
+      cardinality = RelationshipCardinality.unknown;
+    } else {
+      cardinality = rel.getType();
+    }
+    return cardinalitySymbol(cardinality);
+  }
+
+  /**
+   * Show cardinality symbol, from PK to FK column.
+   *
    * @param fk Foreign key
    * @return Cardinality symbol, from PK to FK column
    */
   public String cardinalitySymbol(final TableReference fk) {
     final RelationshipCardinality cardinality = ERModelUtility.inferCardinality(fk);
-    return switch (cardinality) {
-      case zero_one -> "||--o|";
-      case zero_many -> "||--o{";
-      case one_one -> "||--||";
-      case one_many -> "||--|{";
-      case many_many -> "}o--o{"; // bridge table implied
-      default -> "||--o{";
-    };
+    return cardinalitySymbol(cardinality);
   }
 
   public String cleanFullName(final NamedObject namedObject) {
@@ -181,6 +191,17 @@ public final class ScriptSupport {
 
   public String type(final Table table) {
     return MetaDataUtility.getSimpleTypeName(table).toString();
+  }
+
+  private String cardinalitySymbol(final RelationshipCardinality cardinality) {
+    return switch (cardinality) {
+      case zero_one -> "||--o|";
+      case zero_many -> "||--o{";
+      case one_one -> "||--||";
+      case one_many -> "||--|{";
+      case many_many -> "}o--o{"; // bridge table implied
+      default -> "||--o{";
+    };
   }
 
   private boolean isPrimaryKeyEquivalentIndex(final Table table, final Index index) {
