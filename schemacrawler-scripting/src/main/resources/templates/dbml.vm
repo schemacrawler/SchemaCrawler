@@ -41,7 +41,12 @@ Ref "$fk.getName()" {
 #set($fk_table_name = $support.cleanFullName($fk.getForeignKeyTable()))
 #set($pk_cols = $support.pkColumns($fk))
 #set($fk_cols = $support.fkColumns($fk))
-  "$pk_table_name".($pk_cols) < "$fk_table_name".($fk_cols) [update: $fk.getUpdateRule(), delete: $fk.getDeleteRule()]
+#if($support.isToMany($fk))
+#set($cardinality = "<")
+#else
+#set($cardinality = "-")
+#end
+  "$pk_table_name".($pk_cols) $cardinality "$fk_table_name".($fk_cols) [update: $fk.getUpdateRule(), delete: $fk.getDeleteRule()]
 }
 
 #end

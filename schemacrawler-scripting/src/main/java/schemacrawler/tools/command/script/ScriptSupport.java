@@ -9,8 +9,12 @@
 package schemacrawler.tools.command.script;
 
 import static java.util.stream.Collectors.toList;
+import static schemacrawler.ermodel.model.RelationshipCardinality.many_many;
+import static schemacrawler.ermodel.model.RelationshipCardinality.one_many;
+import static schemacrawler.ermodel.model.RelationshipCardinality.zero_many;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
 import schemacrawler.ermodel.model.RelationshipCardinality;
@@ -106,6 +110,11 @@ public final class ScriptSupport {
       return "";
     }
     return text.indent(indent);
+  }
+
+  public boolean isToMany(final TableReference fk) {
+    final RelationshipCardinality cardinality = ERModelUtility.inferCardinality(fk);
+    return EnumSet.of(many_many, one_many, zero_many).contains(cardinality);
   }
 
   public List<Index> nonPrimaryIndexes(final Table table) {
