@@ -48,15 +48,13 @@ $table.getRemarks()
 #if(!$foreign_keys.isEmpty())
 #[[###]]# Foreign Keys
 #foreach ($fk in $foreign_keys)
-#foreach ($columnReference in $support.columnReferences($fk))
 #set($fk_name = "")
 #if($support.hasName($fk))
 #set($fk_name = "$fk.getName() ")
 #end
-#set($pkColumn = $columnReference.getPrimaryKeyColumn())
-#set($fkColumn = $columnReference.getForeignKeyColumn())
-- $fk_name(*$fkColumn.getName()* --> **$pkColumn.getShortName()**)
-#end
+#set($pk_cols = $support.pkColumns($fk))
+#set($fk_cols = $support.fkColumns($fk))
+- $fk_name([$fk_cols] --> [$pk_cols])
 #end
 
 #end
