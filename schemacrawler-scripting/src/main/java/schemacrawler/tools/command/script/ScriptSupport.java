@@ -49,6 +49,24 @@ public final class ScriptSupport {
     return ERModelUtility.inferCardinality(fk);
   }
 
+  /**
+   * Show cardinality symbol, from PK to FK column.
+   *
+   * @param fk Foreign key
+   * @return Cardinality symbol, from PK to FK column
+   */
+  public String cardinalitySymbol(final TableReference fk) {
+    final RelationshipCardinality cardinality = ERModelUtility.inferCardinality(fk);
+    return switch (cardinality) {
+      case zero_one -> "||--o|";
+      case zero_many -> "||--o{";
+      case one_one -> "||--||";
+      case one_many -> "||--|{";
+      case many_many -> "}o--o{"; // bridge table implied
+      default -> "||--o{";
+    };
+  }
+
   public String cleanFullName(final NamedObject namedObject) {
     if (namedObject == null) {
       return "";

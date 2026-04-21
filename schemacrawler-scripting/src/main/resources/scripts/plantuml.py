@@ -89,7 +89,8 @@ for table in catalog.getTables():
         for columnReference in fk.getColumnReferences():
             pk_col_name = support.cleanName(columnReference.getPrimaryKeyColumn())
             fk_col_name = support.cleanName(columnReference.getForeignKeyColumn())
-            print(f'{pk_schema_slug}.{pk_table_slug}::{pk_col_name} ||--o{{ {fk_schema_slug}.{fk_table_slug}::{fk_col_name}', end='')
+            cardinality = support.cardinalitySymbol(fk)
+            print(f'{pk_schema_slug}.{pk_table_slug}::{pk_col_name} {cardinality} {fk_schema_slug}.{fk_table_slug}::{fk_col_name}', end='')
             if support.hasName(fk):
                 print(f' : {fk.getName()}', end='')
             print()
