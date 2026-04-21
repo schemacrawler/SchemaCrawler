@@ -52,7 +52,7 @@ Details for published books
 - FK_PREVIOUSEDITION ("PREVIOUSEDITIONID")
 
 ### Foreign Keys
-- FK_PREVIOUSEDITION (("PREVIOUSEDITIONID") --> ("ID"))
+- FK_PREVIOUSEDITION (("PREVIOUSEDITIONID") (0..1)--> ("ID"))
 
 
 
@@ -122,8 +122,8 @@ along with the latest updated information
 - UIDX_BOOKAUTHORS ("BOOKID", "AUTHORID") (unique index)
 
 ### Foreign Keys
-- Z_FK_AUTHOR (("AUTHORID") --> ("ID"))
-- (("BOOKID") --> ("ID"))
+- Z_FK_AUTHOR (("AUTHORID") (1..many)--> ("ID"))
+- (("BOOKID") (1..many)--> ("ID"))
 
 
 
@@ -137,7 +137,7 @@ along with the latest updated information
 - PK Celebrity Updates ("Celebrity Id")
 
 ### Foreign Keys
-- (("Celebrity Id") --> ("Id"))
+- (("Celebrity Id") (1..1)--> ("Id"))
 
 
 
@@ -155,7 +155,7 @@ along with the latest updated information
 - FK_CUSTOMER ("CUSTOMERID")
 
 ### Foreign Keys
-- FK_CUSTOMER (("CUSTOMERID") --> ("ID"))
+- FK_CUSTOMER (("CUSTOMERID") (1..many)--> ("ID"))
 
 
 
@@ -174,7 +174,7 @@ along with the latest updated information
 - FK_ΒΙΒΛΊΑ_PUBLISHERS ("ΕΚΔΌΤΗΣ")
 
 ### Foreign Keys
-- FK_ΒΙΒΛΊΑ_PUBLISHERS (("ΕΚΔΌΤΗΣ") --> ("ID"))
+- FK_ΒΙΒΛΊΑ_PUBLISHERS (("ΕΚΔΌΤΗΣ") (1..many)--> ("ID"))
 
 
 
@@ -230,9 +230,9 @@ along with the latest updated information
 - FK_SALES_REGIONS ("POSTALCODE", "COUNTRY")
 
 ### Foreign Keys
-- FK_SALES_BOOK (("BOOKID") --> ("ID"))
-- FK_SALES_SALESDATA (("SALESDATAID") --> ("SALESDATAID"))
-- FK_SALES_REGIONS (("POSTALCODE", "COUNTRY") --> ("POSTALCODE", "COUNTRY"))
+- FK_SALES_BOOK (("BOOKID") (0..many)--> ("ID"))
+- FK_SALES_SALESDATA (("SALESDATAID") (0..many)--> ("SALESDATAID"))
+- FK_SALES_REGIONS (("POSTALCODE", "COUNTRY") (1..many)--> ("POSTALCODE", "COUNTRY"))
 
 
 

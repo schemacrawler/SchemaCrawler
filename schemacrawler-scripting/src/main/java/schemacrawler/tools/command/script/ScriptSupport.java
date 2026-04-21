@@ -13,6 +13,8 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import schemacrawler.ermodel.model.RelationshipCardinality;
+import schemacrawler.ermodel.utility.ERModelUtility;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.DatabaseObject;
@@ -25,6 +27,7 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 import schemacrawler.utility.MetaDataUtility;
 
 public final class ScriptSupport {
@@ -36,6 +39,10 @@ public final class ScriptSupport {
         IdentifiersBuilder.builder()
             .withIdentifierQuotingStrategy(IdentifierQuotingStrategy.quote_all)
             .toOptions();
+  }
+
+  public RelationshipCardinality cardinality(final TableReference fk) {
+    return ERModelUtility.inferCardinality(fk);
   }
 
   public String cleanFullName(final NamedObject namedObject) {

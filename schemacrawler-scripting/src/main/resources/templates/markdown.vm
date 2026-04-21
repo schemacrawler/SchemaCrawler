@@ -54,7 +54,8 @@ $table.getRemarks()
                     #end
                     #set($pk_cols = $support.pkColumns($fk))
                     #set($fk_cols = $support.fkColumns($fk))
-- $fk_name(($fk_cols) --> ($pk_cols))
+                    #set($cardinality = $support.cardinality($fk).description())
+- $fk_name(($fk_cols) $cardinality--> ($pk_cols))
                 #end
 
             #end
