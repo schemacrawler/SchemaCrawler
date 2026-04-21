@@ -11,53 +11,53 @@ Project "$title" {
 ## Columns
 #foreach ($table in $catalog.getTables())
 Table "$support.cleanFullName($table)" {
-#if ($table.hasRemarks())
+  #if ($table.hasRemarks())
   note: '''$table.getRemarks()'''
-#end
-#foreach ($column in $table.getColumns())
+  #end
+  #foreach ($column in $table.getColumns())
   "$column.getName()" "$support.columnType($column)" [#if(!$column.isNullable())not #end#set($pad = "")null#if($column.hasDefaultValue()), default: "$column.getDefaultValue()"#end#if($column.hasRemarks()), note: '''$column.getRemarks()'''#end]
-#end
-#if($table.hasPrimaryKey() || !$table.getIndexes().isEmpty())
+  #end
+  #if($table.hasPrimaryKey() || !$table.getIndexes().isEmpty())
   indexes {
-#if($table.hasPrimaryKey())
+    #if($table.hasPrimaryKey())
     ($support.columns($table.getPrimaryKey())) [pk]
-#end
-#set($indexes = $support.nonPrimaryIndexes($table))
-#if(!$indexes.isEmpty())
-#foreach($index in $indexes)
+    #end
+    #set($indexes = $support.nonPrimaryIndexes($table))
+    #if(!$indexes.isEmpty())
+      #foreach($index in $indexes)
     ($support.columns($index)) [name: "$index.getName()"#if($index.isUnique()), unique#end]
-#end
-#end
+      #end
+    #end
   }
-#end
+  #end
 }
 
 #end
 ## Foreign keys
 #foreach ($table in $catalog.getTables())
-#foreach ($fk in $table.getExportedForeignKeys())
+  #foreach ($fk in $table.getExportedForeignKeys())
 Ref "$fk.getName()" {
-#set($pk_table_name = $support.cleanFullName($fk.getPrimaryKeyTable()))
-#set($fk_table_name = $support.cleanFullName($fk.getForeignKeyTable()))
-#set($pk_cols = $support.pkColumns($fk))
-#set($fk_cols = $support.fkColumns($fk))
-#if($support.isToMany($fk))
-#set($cardinality = "<")
-#else
-#set($cardinality = "-")
-#end
+  #set($pk_table_name = $support.cleanFullName($fk.getPrimaryKeyTable()))
+  #set($fk_table_name = $support.cleanFullName($fk.getForeignKeyTable()))
+  #set($pk_cols = $support.pkColumns($fk))
+  #set($fk_cols = $support.fkColumns($fk))
+  #if($support.isToMany($fk))
+    #set($cardinality = "<")
+  #else
+    #set($cardinality = "-")
+  #end
   "$pk_table_name".($pk_cols) $cardinality "$fk_table_name".($fk_cols) [update: $fk.getUpdateRule(), delete: $fk.getDeleteRule()]
 }
 
-#end
+  #end
 #end
 
 ## Table groups
 #foreach ($schema in $catalog.getSchemas())
 TableGroup "$support.cleanFullName($schema) " {
-#foreach ($table in $catalog.getTables($schema))
+  #foreach ($table in $catalog.getTables($schema))
   "$support.cleanFullName($table)"
-#end
+  #end
 }
 
 #end
