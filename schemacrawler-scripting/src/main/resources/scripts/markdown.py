@@ -58,7 +58,7 @@ for schema in catalog.getSchemas():
         fk_name = f"{fk.getName()} " if support.hasName(fk) else ''
         pk_cols = support.pkColumns(fk)
         fk_cols = support.fkColumns(fk)
-        print(f'- {fk_name}([{fk_cols}] --> [{pk_cols}])')
+        print(f'- {fk_name}(({fk_cols}) --> ({pk_cols})')
 
     print()
     print()
