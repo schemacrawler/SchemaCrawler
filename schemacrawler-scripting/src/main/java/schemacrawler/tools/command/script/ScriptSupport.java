@@ -9,10 +9,17 @@
 package schemacrawler.tools.command.script;
 
 import static java.util.stream.Collectors.toList;
+import static schemacrawler.ermodel.model.RelationshipCardinality.many_many;
+import static schemacrawler.ermodel.model.RelationshipCardinality.one_many;
+import static schemacrawler.ermodel.model.RelationshipCardinality.zero_many;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
+import schemacrawler.ermodel.model.Relationship;
+import schemacrawler.ermodel.model.RelationshipCardinality;
+import schemacrawler.ermodel.utility.ERModelUtility;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.DatabaseObject;
@@ -25,6 +32,7 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 import schemacrawler.utility.MetaDataUtility;
 
 public final class ScriptSupport {
@@ -36,6 +44,37 @@ public final class ScriptSupport {
         IdentifiersBuilder.builder()
             .withIdentifierQuotingStrategy(IdentifierQuotingStrategy.quote_all)
             .toOptions();
+  }
+
+  public RelationshipCardinality cardinality(final TableReference fk) {
+    return ERModelUtility.inferCardinality(fk);
+  }
+
+  /**
+   * Show cardinality symbol, from PK to FK column.
+   *
+   * @param rel Foreign key
+   * @return Cardinality symbol, from PK to FK column
+   */
+  public String cardinalitySymbol(final Relationship rel) {
+    final RelationshipCardinality cardinality;
+    if (rel == null) {
+      cardinality = RelationshipCardinality.unknown;
+    } else {
+      cardinality = rel.getType();
+    }
+    return cardinalitySymbol(cardinality);
+  }
+
+  /**
+   * Show cardinality symbol, from PK to FK column.
+   *
+   * @param fk Foreign key
+   * @return Cardinality symbol, from PK to FK column
+   */
+  public String cardinalitySymbol(final TableReference fk) {
+    final RelationshipCardinality cardinality = ERModelUtility.inferCardinality(fk);
+    return cardinalitySymbol(cardinality);
   }
 
   public String cleanFullName(final NamedObject namedObject) {
@@ -101,6 +140,11 @@ public final class ScriptSupport {
     return text.indent(indent);
   }
 
+  public boolean isToMany(final TableReference fk) {
+    final RelationshipCardinality cardinality = ERModelUtility.inferCardinality(fk);
+    return EnumSet.of(many_many, one_many, zero_many).contains(cardinality);
+  }
+
   public List<Index> nonPrimaryIndexes(final Table table) {
     final List<Index> indexes = new ArrayList<>();
     if (table == null || table.getIndexes() == null || table.getIndexes().isEmpty()) {
@@ -145,8 +189,34 @@ public final class ScriptSupport {
     return namedObject.getName().replace("[^\\d\\w\\-]", "");
   }
 
+  public TableReference tableReference(final Column column) {
+    if (MetaDataUtility.isPartial(column) || !column.isPartOfForeignKey()) {
+      return null;
+    }
+    final Table table = column.getParent();
+    for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
+      for (final ColumnReference columnReference : foreignKey) {
+        if (column.equals(columnReference.getForeignKeyColumn())) {
+          return foreignKey;
+        }
+      }
+    }
+    return null;
+  }
+
   public String type(final Table table) {
     return MetaDataUtility.getSimpleTypeName(table).toString();
+  }
+
+  private String cardinalitySymbol(final RelationshipCardinality cardinality) {
+    return switch (cardinality) {
+      case zero_one -> "||--o|";
+      case zero_many -> "||--o{";
+      case one_one -> "||--||";
+      case one_many -> "||--|{";
+      case many_many -> "}o--o{"; // bridge table implied
+      default -> "||--o{";
+    };
   }
 
   private boolean isPrimaryKeyEquivalentIndex(final Table table, final Index index) {

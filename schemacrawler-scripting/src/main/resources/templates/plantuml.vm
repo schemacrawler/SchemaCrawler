@@ -94,7 +94,8 @@ end note
     #foreach($columnReference in $fk.getColumnReferences())
       #set($pkColName = $support.cleanName($columnReference.getPrimaryKeyColumn()))
       #set($fkColName = $support.cleanName($columnReference.getForeignKeyColumn()))
-$pkSchemaSlug.$pkTableSlug::$pkColName ||--o{ $fkSchemaSlug.$fkTableSlug::$fkColName#if($support.hasName($fk)) : $fk.getName()#end
+      #set($cardinality = $support.cardinalitySymbol($fk))
+$pkSchemaSlug.$pkTableSlug::$pkColName $cardinality $fkSchemaSlug.$fkTableSlug::$fkColName#if($support.hasName($fk)) : $fk.getName()#end
     #end
   #end
 #end

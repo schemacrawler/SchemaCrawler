@@ -8,18 +8,6 @@ def strip_name(entity):
         cleanedname = "UNKNOWN"
     return cleanedname
 
-def symbol_for(cardinality):
-    """Map `RelationshipCardinality` enum to Mermaid notation."""
-    card_map = {
-        'unknown':     '||--||',    # Default to 1:1 or adjust
-        'zero_one':    '||--o|',
-        'zero_many':   '||--o{',
-        'one_one':     '||--||',
-        'one_many':    '||--|{',
-        'many_many':   '}o--o{'  # (bridge table implied)
-    }
-    return card_map.get(cardinality.name(), '||--o{')
-
 def name_for(entity):
     entity_name = support.cleanFullName(entity)
     entity_type = entity.getType().description()
@@ -61,6 +49,6 @@ for relationship in er_model.getRelationships():
     left_entity = relationship.getLeftEntity()
     right_entity = relationship.getRightEntity()
     cardinality = relationship.getType()
-    cardinality_symbol = symbol_for(cardinality)
+    cardinality_symbol = support.cardinalitySymbol(relationship)
     label = label_for(relationship)
     print(f'  {name_for(left_entity)} {cardinality_symbol} {name_for(right_entity)} : "{label}"')
