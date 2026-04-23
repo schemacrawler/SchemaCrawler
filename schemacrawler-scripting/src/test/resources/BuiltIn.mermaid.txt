@@ -1,3 +1,6 @@
+---
+title: "FROM TEST: Database Schema Diagram"
+---
 erDiagram
 
   "PUBLIC.BOOKS.AUTHORS [strong entity]" {

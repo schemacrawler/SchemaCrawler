@@ -30,6 +30,11 @@ def label_for(relationship):
 
 # -----------
 
+if title:
+  print('---')
+  print(f'title: "{title}"')
+  print('---')
+
 print('erDiagram')
 print('')
 
