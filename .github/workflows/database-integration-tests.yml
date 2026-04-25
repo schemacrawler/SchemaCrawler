@@ -11,9 +11,7 @@ on:
           - 17
           - 25
   push:
-  pull_request:
-    branches:
-      - main
+
   schedule:
     - cron: '21 21 * * *'
 

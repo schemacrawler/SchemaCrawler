@@ -3,9 +3,6 @@ name: Build with Dependencies
 on:
   workflow_dispatch:
   push:
-  pull_request:
-    branches:
-      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

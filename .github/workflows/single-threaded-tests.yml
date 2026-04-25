@@ -3,9 +3,7 @@ name: Single-Threaded Database Integration Tests
 on:
   workflow_dispatch:
   push:
-  pull_request:
-    branches:
-      - main
+
   schedule:
     - cron: '20 20 * * *'
 
