@@ -12,10 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import schemacrawler.schema.IdentifierQuotingStrategy;
-import schemacrawler.schemacrawler.OptionsBuilder;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigOptionsBuilder;
 import schemacrawler.tools.options.ConfigUtility;
+import us.fatehi.utility.OptionsBuilder;
 
 public abstract class BaseTextOptionsBuilder<
         B extends BaseTextOptionsBuilder<B, O>, O extends BaseTextOptions>

@@ -20,8 +20,8 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Options;
 import us.fatehi.utility.Multimap;
+import us.fatehi.utility.Options;
 
 /** Immutable collection of lints, with lookup methods useful for reporting. */
 // Contrast with the internal lint collector, which is mutable, and shared

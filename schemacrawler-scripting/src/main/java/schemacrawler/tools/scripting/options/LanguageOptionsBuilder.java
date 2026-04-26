@@ -11,10 +11,10 @@ package schemacrawler.tools.scripting.options;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
-import schemacrawler.schemacrawler.OptionsBuilder;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigOptionsBuilder;
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.OptionsBuilder;
 
 public abstract class LanguageOptionsBuilder<
         L extends LanguageType<?>, O extends LanguageOptions<L>>
