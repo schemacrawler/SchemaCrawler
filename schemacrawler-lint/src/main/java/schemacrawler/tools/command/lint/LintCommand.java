@@ -24,7 +24,6 @@ import schemacrawler.tools.lint.formatter.LintReportJsonGenerator;
 import schemacrawler.tools.lint.formatter.LintReportTextFormatter;
 import schemacrawler.tools.lint.formatter.LintReportTextGenerator;
 import schemacrawler.tools.lint.formatter.LintReportYamlGenerator;
-import schemacrawler.tools.utility.ExecutionStateUtility;
 import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.ObjectToStringFormat;
 
@@ -53,7 +52,7 @@ public class LintCommand extends AbstractSchemaCrawlerCommand<LintOptions> {
       final Linters linters = new Linters(linterConfigs, commandOptions.isRunAllLinters());
       final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
       linters.initialize(linterRegistry);
-      ExecutionStateUtility.transferState(this, linters);
+      transferState(linters);
       linters.lint();
 
       // Produce the lint report
@@ -91,7 +90,7 @@ public class LintCommand extends AbstractSchemaCrawlerCommand<LintOptions> {
         final LintReportTextFormatter textFormatter =
             new LintReportTextFormatter(commandOptions, outputOptions, identifiers);
         final LintReportTextGenerator textGenerator = new LintReportTextGenerator();
-        ExecutionStateUtility.transferState(this, textGenerator);
+        transferState(textGenerator);
         textGenerator.setHandler(textFormatter);
         lintReportGenerator = textGenerator;
     }

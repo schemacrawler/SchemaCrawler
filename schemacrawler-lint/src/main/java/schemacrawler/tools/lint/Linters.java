@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.state.AbstractExecutionState;
-import schemacrawler.tools.utility.ExecutionStateUtility;
 import us.fatehi.utility.string.StringFormat;
 
 public final class Linters extends AbstractExecutionState {
@@ -169,7 +168,7 @@ public final class Linters extends AbstractExecutionState {
                   new StringFormat("Linting with <%s>", linter.getLinterInstanceId()));
               try {
                 linter.initialize();
-                ExecutionStateUtility.transferState(this, linter);
+                transferState(linter);
                 linter.execute();
               } catch (final Exception e) {
                 LOGGER.log(
