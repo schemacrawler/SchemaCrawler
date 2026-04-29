@@ -26,7 +26,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.MetadataResultSet;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
@@ -34,13 +33,14 @@ import schemacrawler.tools.command.text.operation.options.Operation;
 import schemacrawler.tools.command.text.operation.options.OperationOptions;
 import schemacrawler.tools.command.text.operation.options.OperationType;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.utility.BinaryData;
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.JsonGenerator;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.cfg.MapperBuilder;
 import us.fatehi.utility.InclusionCounts;
 import us.fatehi.utility.Utility;
+import us.fatehi.utility.database.ColumnDataIndicator;
+import us.fatehi.utility.database.DataResultSet;
 import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.string.StringFormat;
 
@@ -235,25 +235,25 @@ public abstract class BaseJacksonFormatter implements DataTraversalHandler {
       final InclusionCounts retrievalCounts = new InclusionCounts(name.toLowerCase());
       generator.writeName("data");
       generator.writeStartArray();
-      try (final MetadataResultSet dataRows = new MetadataResultSet(rows, name)) {
-        dataRows.setShowLobs(options.isShowLobs());
+      try (final DataResultSet dataRows = new DataResultSet(rows)) {
+        dataRows.setReadLargeData(options.isShowLobs());
         dataRows.setMaxRows(options.getMaxRows());
         while (dataRows.next()) {
           retrievalCounts.count();
           generator.writeStartObject();
-          final String[] columnNames = dataRows.getColumnNames();
+          final List<String> columnNames = dataRows.getColumnNames();
           final List<Object> currentRow = dataRows.row();
-          for (int i = 0; i < columnNames.length; i++) {
+          for (int i = 0; i < columnNames.size(); i++) {
             final Object element = currentRow.get(i);
             final String elementData;
             if (element == null) {
               elementData = null;
-            } else if (element instanceof BinaryData) {
+            } else if (element instanceof ColumnDataIndicator) {
               elementData = "<BINARY DATA>";
             } else {
               elementData = element.toString();
             }
-            generator.writeStringProperty(columnNames[i], elementData);
+            generator.writeStringProperty(columnNames.get(i), elementData);
           }
           generator.writeEndObject();
           retrievalCounts.countIncluded();

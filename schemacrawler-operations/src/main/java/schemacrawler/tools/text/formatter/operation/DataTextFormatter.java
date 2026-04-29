@@ -14,13 +14,11 @@ import static schemacrawler.tools.command.text.schema.options.SchemaTextDetailTy
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.MetadataResultSet;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.tools.command.text.operation.options.Operation;
@@ -31,6 +29,7 @@ import schemacrawler.tools.text.formatter.base.BaseTabularFormatter;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.InclusionCounts;
+import us.fatehi.utility.database.DataResultSet;
 import us.fatehi.utility.database.DatabaseUtility;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.string.StringFormat;
@@ -153,8 +152,8 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
 
     final String name = "Data for %s for <%s>".formatted(operation, title);
     final InclusionCounts retrievalCounts = new InclusionCounts(name.toLowerCase());
-    try (final MetadataResultSet dataRows = new MetadataResultSet(rows, name)) {
-      dataRows.setShowLobs(options.isShowLobs());
+    try (final DataResultSet dataRows = new DataResultSet(rows)) {
+      dataRows.setReadLargeData(options.isShowLobs());
       dataRows.setMaxRows(options.getMaxRows());
 
       formattingHelper.writeRowHeader(quoteColumnNames(dataRows.getColumnNames()));
@@ -183,10 +182,11 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
     }
   }
 
-  private String[] quoteColumnNames(final String[] columnNames) {
-    final String[] quotedColumnNames = Arrays.copyOf(columnNames, columnNames.length);
-    for (int i = 0; i < columnNames.length; i++) {
-      final String columnName = columnNames[i];
+  private String[] quoteColumnNames(final List<String> columnNames) {
+    final int columnCount = columnNames.size();
+    final String[] quotedColumnNames = columnNames.toArray(new String[0]);
+    for (int i = 0; i < columnCount; i++) {
+      final String columnName = quotedColumnNames[i];
       final String quotedColumnName = identifiers.quoteName(columnName);
       quotedColumnNames[i] = quotedColumnName;
     }
