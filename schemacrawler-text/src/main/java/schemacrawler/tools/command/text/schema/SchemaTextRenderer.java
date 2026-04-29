@@ -16,7 +16,6 @@ import schemacrawler.tools.text.formatter.schema.SchemaTextFormatter;
 import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
-import schemacrawler.tools.utility.ExecutionStateUtility;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.property.PropertyName;
 
@@ -34,7 +33,7 @@ public final class SchemaTextRenderer extends AbstractSchemaCrawlerCommand<Schem
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
 
     final SchemaTraverser traverser = new SchemaTraverser();
-    ExecutionStateUtility.transferState(this, traverser);
+    transferState(traverser);
     traverser.setHandler(formatter);
     traverser.setTablesComparator(
         NamedObjectSort.getNamedObjectSort(commandOptions.isAlphabeticalSortForTables()));

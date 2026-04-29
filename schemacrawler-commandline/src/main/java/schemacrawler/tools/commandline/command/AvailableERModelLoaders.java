@@ -8,7 +8,7 @@
 
 package schemacrawler.tools.commandline.command;
 
-import schemacrawler.tools.loader.ermodel.ERModelLoaderRegistry;
+import schemacrawler.loader.ermodel.ERModelLoaderRegistry;
 
 public class AvailableERModelLoaders extends BaseAvailableRegistryPlugins {
 

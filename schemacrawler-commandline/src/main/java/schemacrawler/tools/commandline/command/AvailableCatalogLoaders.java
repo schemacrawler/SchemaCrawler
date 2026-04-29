@@ -8,7 +8,7 @@
 
 package schemacrawler.tools.commandline.command;
 
-import schemacrawler.tools.loader.catalog.CatalogLoaderRegistry;
+import schemacrawler.loader.catalog.CatalogLoaderRegistry;
 
 public class AvailableCatalogLoaders extends BaseAvailableRegistryPlugins {
 

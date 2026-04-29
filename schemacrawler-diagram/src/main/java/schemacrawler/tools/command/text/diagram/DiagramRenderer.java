@@ -28,7 +28,6 @@ import schemacrawler.tools.text.formatter.diagram.SchemaDotFormatter;
 import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
-import schemacrawler.tools.utility.ExecutionStateUtility;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.property.PropertyName;
 
@@ -77,7 +76,7 @@ public final class DiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramO
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler(dotFileOutputOptions);
 
     final SchemaTraverser traverser = new SchemaTraverser();
-    ExecutionStateUtility.transferState(this, traverser);
+    transferState(traverser);
     // Note: No need to set connection source on the command
     traverser.setHandler(formatter);
     traverser.setTablesComparator(

@@ -19,7 +19,7 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
-import schemacrawler.utility.BinaryData;
+import us.fatehi.utility.database.ColumnDataIndicator;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagBuilder;
@@ -251,7 +251,7 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
       final TagBuilder tableCell = tableCell().withEscapedText(toString(element));
       if (element == null) {
         tableCell.withStyleClass("data_null");
-      } else if (element instanceof BinaryData) {
+      } else if (element instanceof ColumnDataIndicator) {
         tableCell.withStyleClass("data_binary");
       } else if (element instanceof Number) {
         tableCell.withStyleClass("data_number");

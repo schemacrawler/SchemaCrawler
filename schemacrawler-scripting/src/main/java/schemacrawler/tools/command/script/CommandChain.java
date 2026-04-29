@@ -25,7 +25,6 @@ import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.scripting.options.LanguageOptions;
-import schemacrawler.tools.utility.ExecutionStateUtility;
 import us.fatehi.utility.property.PropertyName;
 
 /**
@@ -62,7 +61,7 @@ public final class CommandChain extends AbstractSchemaCrawlerCommand<LanguageOpt
     setSchemaCrawlerOptions(scCommand.getSchemaCrawlerOptions());
     setOutputOptions(scCommand.getOutputOptions());
 
-    ExecutionStateUtility.transferState(scCommand, this);
+    scCommand.transferState(this);
     setIdentifiers(scCommand.getIdentifiers());
     setInformationSchemaViews(scCommand.getInformationSchemaViews());
   }
@@ -106,7 +105,7 @@ public final class CommandChain extends AbstractSchemaCrawlerCommand<LanguageOpt
         return null;
       }
 
-      ExecutionStateUtility.transferState(this, scCommand);
+      transferState(scCommand);
       scCommand.setIdentifiers(identifiers);
       scCommand.setInformationSchemaViews(informationSchemaViews);
 
