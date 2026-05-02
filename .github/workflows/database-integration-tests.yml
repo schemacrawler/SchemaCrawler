@@ -53,11 +53,6 @@ jobs:
         remove-haskell: 'true'
         remove-codeql: 'true'
         remove-docker-images: 'true'
-    - id: prepare-maven-build
-      name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.7.2
-      with:
-        java-version: ${{ github.event.inputs.java_version || '17' }}
     - id: move-m2-repo
       name: Move Maven Repo to Workspace
       run: |
@@ -74,6 +69,11 @@ jobs:
         ln -s "$GITHUB_WORKSPACE/.m2" "$HOME/.m2"
         # Verify the link
         ls -la "$HOME/.m2"
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v1.7.2
+      with:
+        java-version: ${{ github.event.inputs.java_version || '17' }}
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
@@ -210,3 +210,4 @@ jobs:
         name: expected-results-${{ matrix.database }}
         path: ./unit_tests_results_output.zip
         retention-days: 5
+        if-no-files-found: ignore
