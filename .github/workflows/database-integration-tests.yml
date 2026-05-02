@@ -53,27 +53,23 @@ jobs:
         remove-haskell: 'true'
         remove-codeql: 'true'
         remove-docker-images: 'true'
-    - id: move-m2-repo
-      name: Move Maven Repo to Workspace
+    - id: checkout-code
+      name: Checkout code
+      uses: actions/checkout@v6
+    - id: move-m2-to-workspace
+      name: Move Maven local repository to workspace
+      shell: bash
       run: |
-        # Ensure target parent exists
-        mkdir -p "$GITHUB_WORKSPACE"
-        # Move the existing .m2 directory to the workspace
-        # If it doesn't exist yet (rare but possible), create it there directly
-        if [ -d "$HOME/.m2" ]; then
-          mv "$HOME/.m2" "$GITHUB_WORKSPACE/.m2"
-        else
-          mkdir -p "$GITHUB_WORKSPACE/.m2"
-        fi
-        # Link the default location to the new workspace location
+        mkdir -p "$GITHUB_WORKSPACE/.m2"
+        rm -rf "$HOME/.m2"
         ln -s "$GITHUB_WORKSPACE/.m2" "$HOME/.m2"
-        # Verify the link
-        ls -la "$HOME/.m2"
-    - id: prepare-maven-build
-      name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.7.2
+    - id: setup-java
+      name: Set up JDK
+      uses: actions/setup-java@v5
       with:
+        distribution: temurin
         java-version: ${{ github.event.inputs.java_version || '17' }}
+        cache: maven
     - id: install-graphviz
       name: Install Graphviz
       uses: sualeh/install-graphviz@v1.0.3
