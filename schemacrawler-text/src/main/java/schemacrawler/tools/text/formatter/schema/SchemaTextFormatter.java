@@ -369,7 +369,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
           "is JDBC compliant", Boolean.toString(driverInfo.isJdbcCompliant()), Alignment.inherit);
       formattingHelper.writeNameValueRow(
           "supported JDBC version",
-          "%d.%d".formatted(driverInfo.getJdbcMajorVersion(), driverInfo.getJdbcMinorVersion()),
+          driverInfo.getJdbcVersionNumber().toString(),
           Alignment.inherit);
     }
     formattingHelper.writeObjectEnd();
