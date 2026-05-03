@@ -85,8 +85,9 @@ jobs:
         # Expose dot binary and shared libraries to subsequent steps
         echo "$GRAPHVIZ_DIR/usr/bin" >> "$GITHUB_PATH"
         echo "LD_LIBRARY_PATH=$GRAPHVIZ_DIR/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> "$GITHUB_ENV"
-        # Verify dot is reachable via PATH (GITHUB_PATH changes take effect in subsequent steps only)
+        # Verify dot is reachable via PATH (GITHUB_PATH and GITHUB_ENV changes take effect in subsequent steps only)
         export PATH="$GRAPHVIZ_DIR/usr/bin:$PATH"
+        export LD_LIBRARY_PATH="$GRAPHVIZ_DIR/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
         dot -V
     - id: restart-docker
       name: Configure Docker .data-root on workspace volume
