@@ -72,7 +72,10 @@ jobs:
         cache: maven
     - id: install-graphviz
       name: Install Graphviz
-      uses: sualeh/install-graphviz@v1.0.3
+      shell: bash
+      # Skip apt update — runner image already has a current apt cache,
+      # and apt update writes large index files to root that trigger ENOSPC
+      run: sudo apt-get install -y --no-install-recommends graphviz
     - id: restart-docker
       name: Configure Docker .data-root on workspace volume
       shell: bash
