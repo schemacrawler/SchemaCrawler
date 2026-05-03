@@ -47,7 +47,7 @@ jobs:
       name: Maximize build space
       uses: easimon/maximize-build-space@master
       with:
-        root-reserve-mb: '4096'
+        root-reserve-mb: '6144'
         remove-dotnet: 'true'
         remove-android: 'true'
         remove-haskell: 'true'
@@ -71,28 +71,8 @@ jobs:
         java-version: ${{ github.event.inputs.java_version || '17' }}
         cache: maven
     - id: install-graphviz
-      name: Install Graphviz on workspace volume
-      shell: bash
-      run: |
-        set -euxo pipefail
-        GRAPHVIZ_DIR="$GITHUB_WORKSPACE/.graphviz"
-        mkdir -p "$GRAPHVIZ_DIR"
-        cd "$GRAPHVIZ_DIR"
-        # Use apt-get download (not install) to extract to workspace, not root —
-        # sudo apt-get install would write to /usr on the small root partition
-        apt-get download graphviz libgvc6 libcgraph6 libcdt5 libpathplan4
-        for f in *.deb; do dpkg-deb -x "$f" .; done
-        # Expose dot binary and shared libraries to subsequent steps
-        echo "$GRAPHVIZ_DIR/usr/bin" >> "$GITHUB_PATH"
-        echo "LD_LIBRARY_PATH=$GRAPHVIZ_DIR/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> "$GITHUB_ENV"
-        # Override the compiled-in plugin search path so dot finds its rendering plugins
-        # (libgvc.so.6 defaults to the system path /usr/lib/x86_64-linux-gnu/graphviz, which is absent here)
-        echo "GVBINDIR=$GRAPHVIZ_DIR/usr/lib/x86_64-linux-gnu/graphviz" >> "$GITHUB_ENV"
-        # Verify dot is reachable via PATH and can render (GITHUB_PATH and GITHUB_ENV changes take effect in subsequent steps only)
-        export PATH="$GRAPHVIZ_DIR/usr/bin:$PATH"
-        export LD_LIBRARY_PATH="$GRAPHVIZ_DIR/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-        export GVBINDIR="$GRAPHVIZ_DIR/usr/lib/x86_64-linux-gnu/graphviz"
-        echo 'digraph{a->b}' | dot -Tsvg > /dev/null
+      name: Install Graphviz
+      uses: sualeh/install-graphviz@v1.0.3
     - id: restart-docker
       name: Configure Docker .data-root on workspace volume
       shell: bash
