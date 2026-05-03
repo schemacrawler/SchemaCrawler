@@ -71,11 +71,28 @@ jobs:
         java-version: ${{ github.event.inputs.java_version || '17' }}
         cache: maven
     - id: install-graphviz
-      name: Install Graphviz
+      name: Install Graphviz on workspace volume
       shell: bash
-      # Skip apt update — runner image already has a current apt cache,
-      # and apt update writes large index files to root that trigger ENOSPC
-      run: sudo apt-get install -y --no-install-recommends graphviz
+      run: |
+        set -euxo pipefail
+        GRAPHVIZ_DIR="$GITHUB_WORKSPACE/.graphviz"
+        mkdir -p "$GRAPHVIZ_DIR"
+        cd "$GRAPHVIZ_DIR"
+        # Use apt-get download (not install): downloads .deb files to the current
+        # directory (workspace), so no writes to the root filesystem at all
+        apt-get download graphviz libgvc6 libcgraph6 libcdt5 libpathplan4
+        for f in *.deb; do dpkg-deb -x "$f" .; done
+        # Expose dot binary and shared libraries to subsequent steps
+        echo "$GRAPHVIZ_DIR/usr/bin" >> "$GITHUB_PATH"
+        echo "LD_LIBRARY_PATH=$GRAPHVIZ_DIR/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> "$GITHUB_ENV"
+        # Override the compiled-in plugin search path — libgvc.so.6 defaults to the
+        # system path /usr/lib/x86_64-linux-gnu/graphviz, which is absent here
+        echo "GVBINDIR=$GRAPHVIZ_DIR/usr/lib/x86_64-linux-gnu/graphviz" >> "$GITHUB_ENV"
+        # Verify (GITHUB_PATH and GITHUB_ENV only take effect in subsequent steps)
+        export PATH="$GRAPHVIZ_DIR/usr/bin:$PATH"
+        export LD_LIBRARY_PATH="$GRAPHVIZ_DIR/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        export GVBINDIR="$GRAPHVIZ_DIR/usr/lib/x86_64-linux-gnu/graphviz"
+        echo 'digraph{a->b}' | dot -Tsvg > /dev/null
     - id: restart-docker
       name: Configure Docker .data-root on workspace volume
       shell: bash
