@@ -54,6 +54,6 @@ class LinterForTest extends BaseLinter {
   protected void start(final Connection connection) {
     addCatalogLint("Test lint for the whole catalog, without a value");
     final CrawlInfo crawlInfo = getCrawlInfo();
-    addCatalogLint("Test lint for database", crawlInfo.getDatabaseVersion());
+    addCatalogLint("Test lint for database", crawlInfo.getDatabaseVersion().getProductName());
   }
 }
