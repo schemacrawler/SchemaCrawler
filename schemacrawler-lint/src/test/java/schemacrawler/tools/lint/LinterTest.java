@@ -38,7 +38,6 @@ import schemacrawler.tools.linter.LinterProviderCatalogSql;
 import schemacrawler.tools.linter.LinterProviderTableEmpty;
 import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.property.ProductVersion;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @WithTestDatabase
@@ -121,7 +120,7 @@ public class LinterTest {
 
     final Serializable value = lints.get(0).getValue();
 
-    assertThat(value, is(instanceOf(ProductVersion.class)));
+    assertThat(value, is(instanceOf(String.class)));
   }
 
   @Test
