@@ -9,7 +9,6 @@
 package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.utility.MetaDataUtility.isView;
 
 import java.io.Serial;
 import java.sql.Connection;
@@ -64,7 +63,7 @@ class LinterForeignKeyMismatch extends BaseLinter {
 
   private List<ForeignKey> findMismatchedForeignKeys(final Table table) {
     final List<ForeignKey> mismatchedForeignKeys = new ArrayList<>();
-    if (table != null && !isView(table)) {
+    if (table != null && !table.getTableType().isView()) {
       for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
         for (final ColumnReference columnReference : foreignKey) {
           final Column pkColumn = columnReference.getPrimaryKeyColumn();
