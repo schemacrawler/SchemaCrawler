@@ -1,6 +1,6 @@
 [catalog] column with same name but different data types: ID [BIGINT, INTEGER]
 [catalog] cycles in table relationships: [PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS]
-[catalog] Test lint for database: HSQL Database Engine 2.7.4
+[catalog] Test lint for database: HSQL Database Engine
 [catalog] Test lint for the whole catalog, without a value
 [PUBLIC.FOR_LINT."Global Counts"] no primary key
 [PUBLIC.FOR_LINT."Global Counts"] primary key should not be a surrogate
