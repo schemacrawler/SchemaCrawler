@@ -33,7 +33,6 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
 import static schemacrawler.utility.MetaDataUtility.getTypeName;
-import static schemacrawler.utility.MetaDataUtility.isView;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
@@ -1221,23 +1220,21 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printViewTableUsage(final Table table) {
-    if (table == null || !isView(table)) {
-      return;
-    }
-    final View view = (View) table;
-    final Collection<Table> tableUsage = view.getTableUsage();
-    if (tableUsage.isEmpty()) {
-      return;
-    }
+    if (table instanceof final View view) {
+      final Collection<Table> tableUsage = view.getTableUsage();
+      if (tableUsage.isEmpty()) {
+        return;
+      }
 
-    formattingHelper.writeEmptyRow();
-    formattingHelper.writeWideRow("Table Usage", "section");
+      formattingHelper.writeEmptyRow();
+      formattingHelper.writeWideRow("Table Usage", "section");
 
-    formattingHelper.writeEmptyRow();
-    for (final Table usedTable : tableUsage) {
-      final String tableName = quoteName(usedTable);
-      final String tableType = "[" + usedTable.getTableType() + "]";
-      formattingHelper.writeNameRow(tableName, tableType);
+      formattingHelper.writeEmptyRow();
+      for (final Table usedTable : tableUsage) {
+        final String tableName = quoteName(usedTable);
+        final String tableType = "[" + usedTable.getTableType() + "]";
+        formattingHelper.writeNameRow(tableName, tableType);
+      }
     }
   }
 }

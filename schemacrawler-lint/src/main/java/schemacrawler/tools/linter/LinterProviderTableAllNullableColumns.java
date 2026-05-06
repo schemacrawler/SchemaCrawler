@@ -10,7 +10,6 @@ package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.ermodel.utility.ERModelUtility.inferBridgeTable;
-import static schemacrawler.utility.MetaDataUtility.isView;
 
 import java.io.Serial;
 import java.sql.Connection;
@@ -54,7 +53,7 @@ class LinterTableAllNullableColumns extends BaseLinter {
   protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    if (isView(table) || inferBridgeTable(table) == OptionalBoolean.true_value) {
+    if (table.getTableType().isView() || inferBridgeTable(table) == OptionalBoolean.true_value) {
       return;
     }
 
