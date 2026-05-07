@@ -16,8 +16,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import schemacrawler.schema.Table;
 import schemacrawler.schema.Identifiers;
+import schemacrawler.schema.Table;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintSeverity;
@@ -112,8 +112,8 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
       final List<Lint<?>> lintsById = new ArrayList<>(multiMap.get(severity));
       for (final Lint<?> lint : lintsById) {
         final Object lintValue = lint.getValue();
-        if (lintValue instanceof Boolean boolean1) {
-          if (boolean1) {
+        if (lintValue instanceof Boolean booleanValue) {
+          if (booleanValue) {
             formattingHelper.writeRow("", lint.getMessage(), "");
           }
         } else {
