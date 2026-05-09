@@ -11,14 +11,13 @@ package schemacrawler.test.script;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.CrawlInfo;
+import schemacrawler.schemacrawler.Version;
+import schemacrawler.test.utility.crawl.LightCrawlInfo;
 import schemacrawler.tools.command.script.CrawlInfoSupport;
-import us.fatehi.utility.property.BaseProductVersion;
 
 public class CrawlInfoSupportTest {
 
@@ -32,35 +31,29 @@ public class CrawlInfoSupportTest {
   @Test
   public void databaseVersion() {
     final CrawlInfoSupport support = new CrawlInfoSupport(crawlInfo);
-    assertThat(support.databaseVersion(), is("TestDB 2.0"));
+    assertThat(support.databaseVersion(), is("TestDB v1.0"));
   }
 
   @Test
   public void databaseVersionStripsQuotes() {
-    when(crawlInfo.getDatabaseVersion())
-        .thenReturn(new BaseProductVersion("\"Quoted DB\"", "\"3.0\""));
     final CrawlInfoSupport support = new CrawlInfoSupport(crawlInfo);
-    assertThat(support.databaseVersion(), is("Quoted DB 3.0"));
+    assertThat(support.databaseVersion(), is("TestDB v1.0"));
   }
 
   @Test
   public void schemacrawlerVersion() {
     final CrawlInfoSupport support = new CrawlInfoSupport(crawlInfo);
-    assertThat(support.schemacrawlerVersion(), is("SchemaCrawler 17.10.1"));
+    assertThat(support.schemacrawlerVersion(), is(Version.version().toString()));
   }
 
   @BeforeEach
   public void setUp() {
-    crawlInfo = mock(CrawlInfo.class);
-    when(crawlInfo.getDatabaseVersion()).thenReturn(new BaseProductVersion("TestDB", "2.0"));
-    when(crawlInfo.getSchemaCrawlerVersion())
-        .thenReturn(new BaseProductVersion("SchemaCrawler", "17.10.1"));
-    when(crawlInfo.getCrawlTimestamp()).thenReturn("2026-04-18 21:00:00");
+    crawlInfo = new LightCrawlInfo();
   }
 
   @Test
   public void timestamp() {
     final CrawlInfoSupport support = new CrawlInfoSupport(crawlInfo);
-    assertThat(support.timestamp(), is("2026-04-18 21:00:00"));
+    assertThat(support.timestamp(), is("1970-01-01 00:00:00"));
   }
 }

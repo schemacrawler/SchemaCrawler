@@ -13,7 +13,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -30,12 +29,12 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
-import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.crawl.LightCatalogUtility;
+import schemacrawler.test.utility.crawl.LightColumn;
 import schemacrawler.test.utility.crawl.LightForeignKey;
+import schemacrawler.test.utility.crawl.LightPrimaryKey;
 import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.linter.LinterProviderCatalogSql;
@@ -508,12 +507,11 @@ public class LintersTest {
         new LinterProviderTableWithNoSurrogatePrimaryKey().newLinter(lintCollector);
     linter.configure(linterConfig);
 
-    final LightTable table = spy(new LightTable(new SchemaReference(), "TEST_TABLE"));
-    final PrimaryKey pk = mock(PrimaryKey.class);
-    final TableConstraintColumn col1 = mock(TableConstraintColumn.class);
-    final TableConstraintColumn col2 = mock(TableConstraintColumn.class);
-    when(pk.getConstrainedColumns()).thenReturn(List.of(col1, col2));
-    when(table.getPrimaryKey()).thenReturn(pk);
+    final LightTable table = new LightTable(new SchemaReference(), "TEST_TABLE");
+    final LightColumn column = table.addColumn("COL11");
+    final Column[] columns = {table.addColumn("PK11"), table.addColumn("PK2")};
+    final LightPrimaryKey pk = new LightPrimaryKey(columns);
+    table.setPrimaryKey(pk);
 
     ((BaseLinter) linter).lint(table, connection);
 
@@ -529,13 +527,9 @@ public class LintersTest {
     final Linter linter = new LinterProviderTableWithPrimaryKeyNotFirst().newLinter(lintCollector);
     linter.configure(linterConfig);
 
-    final LightTable table = spy(new LightTable(new SchemaReference(), "TEST_TABLE"));
-    final PrimaryKey pk = mock(PrimaryKey.class);
-    final TableConstraintColumn col = mock(TableConstraintColumn.class);
-    when(col.getTableConstraintOrdinalPosition()).thenReturn(1);
-    when(col.getOrdinalPosition()).thenReturn(3);
-    when(pk.getConstrainedColumns()).thenReturn(List.of(col));
-    when(table.getPrimaryKey()).thenReturn(pk);
+    final LightTable table = new LightTable(new SchemaReference(), "TEST_TABLE");
+    final LightPrimaryKey pk = new LightPrimaryKey(null, null, table.addColumn("COL3"));
+    table.setPrimaryKey(pk);
 
     ((BaseLinter) linter).lint(table, connection);
 

@@ -121,8 +121,7 @@ public final class DiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramO
 
   private String extractErrorMessage(final Exception e) {
     final String errorMessage;
-    final boolean isSchemaCrawlerException = e instanceof SchemaCrawlerException;
-    if (isSchemaCrawlerException) {
+    if (e instanceof SchemaCrawlerException) {
       errorMessage = e.getMessage();
     } else {
       errorMessage = "Could not generate diagram" + e.getMessage();
