@@ -99,10 +99,10 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
           DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
       final DatabaseConnector databaseConnector;
 
-      if (connectionOptions instanceof DatabaseUrlConnectionOptions options1) {
+      if (connectionOptions instanceof final DatabaseUrlConnectionOptions options1) {
         final String connectionUrl = options1.connectionUrl();
         databaseConnector = databaseConnectorRegistry.findDatabaseConnectorFromUrl(connectionUrl);
-      } else if (connectionOptions instanceof DatabaseServerHostConnectionOptions options) {
+      } else if (connectionOptions instanceof final DatabaseServerHostConnectionOptions options) {
         final String databaseSystemIdentifier = options.databaseSystemIdentifier();
         if (!databaseConnectorRegistry.hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
           throw new ConfigurationException(

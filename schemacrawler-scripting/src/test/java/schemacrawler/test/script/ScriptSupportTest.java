@@ -26,6 +26,7 @@ import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.test.utility.crawl.LightColumn;
 import schemacrawler.test.utility.crawl.LightForeignKey;
+import schemacrawler.test.utility.crawl.LightPrimaryKey;
 import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.tools.command.script.ScriptSupport;
 
@@ -95,8 +96,7 @@ public class ScriptSupportTest {
 
     // Positive test for columns(PrimaryKey)
     final LightColumn pkCol = table.addColumn("PK_COL");
-    final PrimaryKey primaryKey = mock(PrimaryKey.class);
-    when(primaryKey.getConstrainedColumns()).thenReturn((List) List.of(pkCol));
+    final PrimaryKey primaryKey = new LightPrimaryKey(pkCol);
     assertThat(support.columns(primaryKey), containsString("PK_COL"));
   }
 
@@ -142,8 +142,8 @@ public class ScriptSupportTest {
 
     assertThat(support.hasName(fk), is(true));
 
-    final PrimaryKey pk = mock(PrimaryKey.class);
-    when(pk.getName()).thenReturn("PK_TABLE");
+    final LightTable table = new LightTable("PK_TABLE");
+    final PrimaryKey pk = new LightPrimaryKey(table.addColumn("PKCOL"));
 
     assertThat(support.hasName(pk), is(true));
   }
@@ -162,8 +162,7 @@ public class ScriptSupportTest {
     when(tableWithNullIndexes.getIndexes()).thenReturn(null);
     assertThat(support.nonPrimaryIndexes(tableWithNullIndexes).isEmpty(), is(true));
 
-    final Table tableWithNoIndexes = mock(Table.class);
-    when(tableWithNoIndexes.getIndexes()).thenReturn(List.of());
+    final Table tableWithNoIndexes = new LightTable("TABLE1");
     assertThat(support.nonPrimaryIndexes(tableWithNoIndexes).isEmpty(), is(true));
 
     // Use LightColumn (raw cast) so isColumnDataTypeKnown() returns true for all
@@ -181,8 +180,7 @@ public class ScriptSupportTest {
     assertThat(support.nonPrimaryIndexes(tableWithoutPrimaryKey), is(List.of(indexNoPk)));
 
     // pkEquivalentIndex shares the same column (COL1) as the primary key
-    final PrimaryKey primaryKey = mock(PrimaryKey.class);
-    when(primaryKey.getConstrainedColumns()).thenReturn((List) List.of(col1));
+    final PrimaryKey primaryKey = new LightPrimaryKey(col1);
 
     final Index pkEquivalentIndex = mock(Index.class);
     when(pkEquivalentIndex.getColumns()).thenReturn((List) List.of(col1));

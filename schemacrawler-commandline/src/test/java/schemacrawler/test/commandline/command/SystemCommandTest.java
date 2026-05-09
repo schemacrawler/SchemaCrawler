@@ -12,7 +12,7 @@ import static java.util.regex.Pattern.DOTALL;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.matchesPattern;
-import static org.mockito.Mockito.mock;
+import static schemacrawler.test.utility.crawl.LightCatalogUtility.lightCatalog;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.contentsOf;
@@ -24,7 +24,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.text;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.schema.Catalog;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.commandline.shell.SystemCommand;
@@ -106,7 +105,7 @@ public class SystemCommandTest {
     final String[] args = {"-L"};
 
     final ShellState state = new ShellState();
-    state.setCatalog(mock(Catalog.class));
+    state.setCatalog(lightCatalog());
     executeSystemCommand(state, args);
 
     // Error stream may have some messages on Java 21, due to how tests are set up

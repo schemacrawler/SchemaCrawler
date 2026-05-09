@@ -137,7 +137,7 @@ public final class CommandLineHelpCommand implements Runnable {
       if (isAvailabilityCommand) {
         final CommandSpec commandSpec = subCommand.getCommandSpec();
         final Object userObject = commandSpec.userObject();
-        if (userObject instanceof Runnable runnable) {
+        if (userObject instanceof final Runnable runnable) {
           runnable.run();
         }
       }
