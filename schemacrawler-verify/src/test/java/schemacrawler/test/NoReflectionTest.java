@@ -8,10 +8,4 @@
 
 package schemacrawler.test;
 
-public class ArchitectureTest extends BaseArchitectureTest {
-
-  @Override
-  protected String classesSpecification() {
-    return "schemacrawler..";
-  }
-}
+public class NoReflectionTest extends BaseNoReflectionTest {}
