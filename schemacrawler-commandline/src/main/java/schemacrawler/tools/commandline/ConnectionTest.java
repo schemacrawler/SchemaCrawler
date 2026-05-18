@@ -12,6 +12,7 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.util.Map;
+import java.util.ServiceConfigurationError;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import picocli.CommandLine;
@@ -50,7 +51,9 @@ public final class ConnectionTest {
       Throwable throwable = null;
       try {
         executeCommandLine(commandLine);
-      } catch (final Throwable e) {
+      } catch (final Exception | ServiceConfigurationError | LinkageError e) {
+        // Catch errors for missing third-party jars;
+        // other errors (e.g. OutOfMemoryError) are intentionally not caught here
         throwable = e;
       }
       System.out.printf("%n%n");
