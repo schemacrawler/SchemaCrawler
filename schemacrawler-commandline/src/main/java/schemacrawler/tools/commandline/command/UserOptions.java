@@ -8,12 +8,13 @@
 
 package schemacrawler.tools.commandline.command;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 
@@ -88,17 +89,21 @@ public final class UserOptions {
       return null;
     }
 
-    String user = null;
-    try {
-      final List<String> lines = Files.readAllLines(userFile);
-      if (!lines.isEmpty()) {
-        user = lines.get(0);
-      }
-    } catch (final IOException e) {
-      throw new IORuntimeException("User could not be read from file <%s>".formatted(userFile), e);
+    final Path normalizedUserFile = userFile.toAbsolutePath().normalize();
+    if (!Files.isRegularFile(normalizedUserFile) || !Files.isReadable(normalizedUserFile)) {
+      throw new IORuntimeException(
+          "User could not be read from file <%s> - path is not a readable regular file"
+              .formatted(normalizedUserFile));
     }
 
-    return user;
+    try {
+      try (final BufferedReader reader = Files.newBufferedReader(normalizedUserFile, UTF_8)) {
+        return reader.readLine();
+      }
+    } catch (final IOException e) {
+      throw new IORuntimeException(
+          "User could not be read from file <%s>".formatted(normalizedUserFile), e);
+    }
   }
 
   private String getUserPrompted() {

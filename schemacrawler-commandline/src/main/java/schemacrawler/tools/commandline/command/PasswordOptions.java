@@ -8,12 +8,13 @@
 
 package schemacrawler.tools.commandline.command;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 
@@ -88,18 +89,21 @@ public final class PasswordOptions {
       return null;
     }
 
-    String password = null;
+    final Path normalizedPasswordFile = passwordFile.toAbsolutePath().normalize();
+    if (!Files.isRegularFile(normalizedPasswordFile) || !Files.isReadable(normalizedPasswordFile)) {
+      throw new IORuntimeException(
+          "Password could not be read from file <%s> - path is not a readable regular file"
+              .formatted(normalizedPasswordFile));
+    }
+
     try {
-      final List<String> lines = Files.readAllLines(passwordFile);
-      if (!lines.isEmpty()) {
-        password = lines.get(0);
+      try (final BufferedReader reader = Files.newBufferedReader(normalizedPasswordFile, UTF_8)) {
+        return reader.readLine();
       }
     } catch (final IOException e) {
       throw new IORuntimeException(
-          "Password could not be read from file <%s>".formatted(passwordFile), e);
+          "Password could not be read from file <%s>".formatted(normalizedPasswordFile), e);
     }
-
-    return password;
   }
 
   private String getPasswordPrompted() {

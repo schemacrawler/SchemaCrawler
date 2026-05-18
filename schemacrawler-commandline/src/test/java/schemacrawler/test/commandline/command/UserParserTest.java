@@ -164,4 +164,18 @@ public class UserParserTest {
     commandLine.parseArgs(args);
     assertThrows(CommandLine.ParameterException.class, () -> optionsParser.getUserCredentials());
   }
+
+  @Test
+  public void userDirectoryPath() throws Exception {
+    final Path path = Files.createTempDirectory("user-dir");
+    final File file = path.toFile();
+    file.deleteOnExit();
+
+    final String[] args = {"--user:file", file.getAbsolutePath()};
+
+    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
+    commandLine.parseArgs(args);
+    assertThrows(CommandLine.ParameterException.class, () -> optionsParser.getUserCredentials());
+  }
 }
