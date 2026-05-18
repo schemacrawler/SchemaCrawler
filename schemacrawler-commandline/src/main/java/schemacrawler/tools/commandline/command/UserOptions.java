@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.exceptions.IORuntimeException;
+import us.fatehi.utility.ioresource.FileInputResource;
 
 public final class UserOptions {
 
@@ -89,20 +90,20 @@ public final class UserOptions {
       return null;
     }
 
-    final Path normalizedUserFile = userFile.toAbsolutePath().normalize();
-    if (!Files.isRegularFile(normalizedUserFile) || !Files.isReadable(normalizedUserFile)) {
-      throw new IORuntimeException(
-          "User could not be read from file <%s> - path is not a readable regular file"
-              .formatted(normalizedUserFile));
-    }
-
     try {
-      try (final BufferedReader reader = Files.newBufferedReader(normalizedUserFile, UTF_8)) {
+      final FileInputResource inputResource = new FileInputResource(userFile);
+      try (final BufferedReader reader = inputResource.openNewInputReader(UTF_8)) {
         return reader.readLine();
       }
     } catch (final IOException e) {
-      throw new IORuntimeException(
-          "User could not be read from file <%s>".formatted(normalizedUserFile), e);
+      // FileInputResource throws IOException for unreadable, non-regular, AND empty files.
+      // If the path is a readable regular file the only reason for the exception is that it is
+      // empty, which means no credential was supplied - return null in that case.
+      final Path path = userFile.toAbsolutePath().normalize();
+      if (Files.isRegularFile(path) && Files.isReadable(path)) {
+        return null;
+      }
+      throw new IORuntimeException("User could not be read from file <%s>".formatted(userFile), e);
     }
   }
 
