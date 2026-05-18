@@ -9,6 +9,7 @@
 package schemacrawler.tools.commandline.utility;
 
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -59,7 +60,7 @@ public final class GenerateCliSupport {
       boolean isErrored = false;
 
       outputDir = createOutputDirectory();
-      final Path completionScript = outputDir.resolve(completionScriptFilename).toAbsolutePath();
+      final Path completionScript = createCompletionScriptPath();
 
       if (generateAsciiDoc()) {
         isErrored = true;
@@ -80,6 +81,34 @@ public final class GenerateCliSupport {
         throw new IORuntimeException("Could not create output directory", e);
       }
       return outputDir.toAbsolutePath();
+    }
+
+    private Path createCompletionScriptPath() {
+      final Path outputDirPath = outputDir.toAbsolutePath().normalize();
+      final String filename =
+          completionScriptFilename == null ? "" : completionScriptFilename.trim();
+      final Path scriptFileName;
+      try {
+        scriptFileName = Path.of(filename);
+      } catch (final InvalidPathException e) {
+        throw new IllegalArgumentException(
+            "Completion script file name is invalid <%s>".formatted(completionScriptFilename), e);
+      }
+
+      if (filename.isEmpty()
+          || scriptFileName.isAbsolute()
+          || scriptFileName.getNameCount() != 1
+          || ".".equals(scriptFileName.toString())
+          || "..".equals(scriptFileName.toString())) {
+        throw new IllegalArgumentException(
+            "Completion script file name must be a simple file name");
+      }
+
+      final Path completionScript = outputDirPath.resolve(scriptFileName).normalize();
+      if (!completionScript.startsWith(outputDirPath)) {
+        throw new IllegalArgumentException("Completion script path resolves outside output directory");
+      }
+      return completionScript;
     }
 
     private CommandLine createCommandLine(final Object commands) {
