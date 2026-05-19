@@ -19,11 +19,11 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasNoContent;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.test.utility.extensions.CaptureSystemStreams;
 import us.fatehi.test.utility.extensions.CapturedSystemStreams;
@@ -63,18 +63,18 @@ public class GraphProcessExecutorTest {
         is(not(nullValue())));
 
     // DOT file not readable
-    final IORuntimeException exception1 =
+    final UncheckedIOException exception1 =
         assertThrows(
-            IORuntimeException.class,
+            UncheckedIOException.class,
             () ->
                 new TestGraphProcessExecutor(
                     IOUtility.createTempFilePath("sc", "data"), outputFile, diagramOutputFormat));
     assertThat(exception1.getMessage(), containsString("Cannot read DOT file"));
 
     // Output file not writable
-    final IORuntimeException exception2 =
+    final UncheckedIOException exception2 =
         assertThrows(
-            IORuntimeException.class,
+            UncheckedIOException.class,
             () ->
                 new TestGraphProcessExecutor(
                     dotFile, Path.of("/not_a_directory/unwritable_file.dat"), diagramOutputFormat));

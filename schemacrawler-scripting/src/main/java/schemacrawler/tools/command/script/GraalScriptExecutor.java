@@ -14,6 +14,7 @@ import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.io.UncheckedIOException;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +24,6 @@ import java.util.logging.Logger;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
-import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.command.script.options.ScriptLanguageType;
 
 /** Main executor for the Graal Polyglot integration. */
@@ -121,7 +121,7 @@ public final class GraalScriptExecutor implements ScriptExecutor {
       // Evaluate the script
       graalPolyglotContext.eval(sourceCode);
     } catch (final IOException e) {
-      throw new IORuntimeException(e.getMessage(), e);
+      throw new UncheckedIOException(e.getMessage(), e);
     }
   }
 }

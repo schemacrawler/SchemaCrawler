@@ -12,6 +12,8 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.List;
@@ -25,7 +27,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.DatabaseAccessException;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
@@ -112,7 +113,9 @@ public class EmbeddedSQLiteWrapper {
     final Path databaseFile =
         requireNonNull(dbFile, "No database file path provided").normalize().toAbsolutePath();
     if (!isFileReadable(databaseFile)) {
-      throw new IORuntimeException("Could not read database file <%s>".formatted(dbFile));
+      final IOException cause =
+          new IOException("Could not read database file <%s>".formatted(dbFile));
+      throw new UncheckedIOException(cause);
     }
     return databaseFile;
   }

@@ -10,7 +10,7 @@ package schemacrawler.integration.test;
 
 import static java.nio.file.Files.createDirectories;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
-import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -22,6 +22,7 @@ import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBui
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
+import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
@@ -37,7 +38,6 @@ import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
@@ -181,8 +181,8 @@ public class DiagramOutputTest {
     final ExecutionRuntimeException runtimeException =
         assertThrows(ExecutionRuntimeException.class, () -> executable.execute());
     final Throwable exception = runtimeException.getCause();
-    assertThat(exception, instanceOf(IORuntimeException.class));
-    assertThat(exception.getMessage(), startsWith("Cannot write output file"));
+    assertThat(exception, instanceOf(UncheckedIOException.class));
+    assertThat(exception.getMessage(), containsString("Cannot write output file"));
   }
 
   @Test

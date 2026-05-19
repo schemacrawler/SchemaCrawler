@@ -13,9 +13,9 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import picocli.CommandLine.Option;
-import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import us.fatehi.utility.ioresource.FileInputResource;
 
 public final class PasswordOptions {
@@ -95,7 +95,7 @@ public final class PasswordOptions {
         return reader.readLine();
       }
     } catch (final IOException e) {
-      throw new IORuntimeException(
+      throw new UncheckedIOException(
           "Password could not be read from file <%s>".formatted(passwordFile), e);
     }
   }
