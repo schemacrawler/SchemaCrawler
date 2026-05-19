@@ -27,7 +27,7 @@ public class UserParserTest {
 
   @Test
   public void noArgs() {
-    final String[] args = new String[0];
+    final String[] args = {};
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null);
@@ -77,6 +77,20 @@ public class UserParserTest {
   }
 
   @Test
+  public void userDirectoryPath() throws Exception {
+    final Path path = Files.createTempDirectory("user-dir");
+    final File file = path.toFile();
+    file.deleteOnExit();
+
+    final String[] args = {"--user:file", file.getAbsolutePath()};
+
+    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
+    commandLine.parseArgs(args);
+    assertThrows(CommandLine.ParameterException.class, () -> optionsParser.getUserCredentials());
+  }
+
+  @Test
   public void userEmptyEnv() {
     final String[] args = {"--user:env", "NO_ENV"};
 
@@ -102,12 +116,7 @@ public class UserParserTest {
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
-    final UserCredentials options = optionsParser.getUserCredentials();
-
-    assertThat(options.hasPassword(), is(false));
-    assertThat(options.hasUser(), is(false));
-    assertThat(options.password(), is(nullValue()));
-    assertThat(options.user(), is(nullValue()));
+    assertThrows(CommandLine.ParameterException.class, () -> optionsParser.getUserCredentials());
   }
 
   @Test
