@@ -13,9 +13,9 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import picocli.CommandLine.Option;
-import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import us.fatehi.utility.ioresource.FileInputResource;
 
 public final class UserOptions {
@@ -95,7 +95,8 @@ public final class UserOptions {
         return reader.readLine();
       }
     } catch (final IOException e) {
-      throw new IORuntimeException("User could not be read from file <%s>".formatted(userFile), e);
+      throw new UncheckedIOException(
+          "User could not be read from file <%s>".formatted(userFile), e);
     }
   }
 

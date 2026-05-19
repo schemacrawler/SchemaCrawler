@@ -9,6 +9,7 @@
 package schemacrawler.tools.commandline.utility;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -18,7 +19,6 @@ import picocli.AutoComplete;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.codegen.docgen.manpage.ManPageGenerator;
-import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLineCommands;
 import schemacrawler.tools.commandline.command.ConfigFileCommand;
@@ -77,7 +77,7 @@ public final class GenerateCliSupport {
       try {
         Files.createDirectories(outputDir);
       } catch (final IOException e) {
-        throw new IORuntimeException("Could not create output directory", e);
+        throw new UncheckedIOException("Could not create output directory", e);
       }
       return outputDir.toAbsolutePath();
     }

@@ -14,9 +14,9 @@ import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
@@ -60,7 +60,7 @@ public final class DiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramO
     try {
       dotFile = createTempFilePath("schemacrawler.", "dot");
     } catch (final IOException e) {
-      throw new IORuntimeException("Could not create temporary DOT file", e);
+      throw new UncheckedIOException("Could not create temporary DOT file", e);
     }
     final OutputOptions dotFileOutputOptions;
     if (diagramOutputFormat == scdot) {

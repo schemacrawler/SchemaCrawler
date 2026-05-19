@@ -24,11 +24,11 @@ import static us.fatehi.utility.IOUtility.createTempFilePath;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.command.SchemaCrawlerCommand;
@@ -110,7 +110,7 @@ public class EmbeddedDiagramRenderer extends AbstractSchemaCrawlerCommand<Diagra
         copy(newBufferedReader(finalHtmlFile, UTF_8), writer);
       }
     } catch (final IOException e) {
-      throw new IORuntimeException("Could not create embedded diagram", e);
+      throw new UncheckedIOException("Could not create embedded diagram", e);
     } catch (final SchemaCrawlerException e) {
       throw e;
     } catch (final Exception e) {

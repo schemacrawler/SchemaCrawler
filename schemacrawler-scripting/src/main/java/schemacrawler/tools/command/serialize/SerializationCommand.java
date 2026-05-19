@@ -15,10 +15,10 @@ import static java.nio.file.StandardOpenOption.WRITE;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UncheckedIOException;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.util.zip.GZIPOutputStream;
-import schemacrawler.schemacrawler.exceptions.IORuntimeException;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import schemacrawler.tools.command.serialize.options.SerializationOptions;
@@ -57,7 +57,7 @@ public final class SerializationCommand extends AbstractSchemaCrawlerCommand<Ser
           new GZIPOutputStream(newOutputStream(outputFile, WRITE, CREATE, TRUNCATE_EXISTING))) {
         catalogSerializer.save(out);
       } catch (final IOException e) {
-        throw new IORuntimeException("Could not save catalog", e);
+        throw new UncheckedIOException("Could not save catalog", e);
       }
     } else {
       final Writer out = outputOptions.openNewOutputWriter();
