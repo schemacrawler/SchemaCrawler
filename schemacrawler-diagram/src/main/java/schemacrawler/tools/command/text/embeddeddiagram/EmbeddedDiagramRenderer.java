@@ -9,24 +9,20 @@
 package schemacrawler.tools.command.text.embeddeddiagram;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedReader;
-import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.htmlx;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.svg;
 import static schemacrawler.tools.command.text.schema.options.TextOutputFormat.html;
-import static us.fatehi.utility.IOUtility.createTempFilePath;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.UncheckedIOException;
-import java.io.Writer;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
@@ -42,6 +38,8 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.utility.property.PropertyName;
 
 public class EmbeddedDiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramOptions> {
+
+  private static final Logger LOGGER = Logger.getLogger(EmbeddedDiagramRenderer.class.getName());
 
   private static final Pattern svgInsertionPoint = Pattern.compile("<h2.*Tables.*h2>");
 
@@ -59,32 +57,40 @@ public class EmbeddedDiagramRenderer extends AbstractSchemaCrawlerCommand<Diagra
     checkCatalog();
 
     try {
-      final String stem = "schemacrawler";
-      final Path finalHtmlFile = createTempFilePath(stem, htmlx.getFormat());
-      final Path baseHtmlFile = createTempFilePath(stem, html.getFormat());
-      final Path baseSvgFile = createTempFilePath(stem, svg.getFormat());
+      final Path tempDir = Files.createTempDirectory("schemacrawler");
+      final Path baseHtmlFile = tempDir.resolve("base." + html.getFormat());
+      final Path baseSvgFile = tempDir.resolve("base." + svg.getFormat());
 
-      final PropertyName commandName = getCommandName();
-      executeCommand(new SchemaTextRenderer(commandName), baseHtmlFile, html);
-      executeCommand(new DiagramRenderer(commandName, graphExecutorFactory), baseSvgFile, svg);
+      try {
+        final PropertyName commandName = getCommandName();
+        executeCommand(new SchemaTextRenderer(commandName), baseHtmlFile, html);
+        executeCommand(new DiagramRenderer(commandName, graphExecutorFactory), baseSvgFile, svg);
 
-      // Interleave HTML and SVG
-      try (final BufferedWriter finalHtmlFileWriter =
-              newBufferedWriter(finalHtmlFile, UTF_8, WRITE, CREATE, TRUNCATE_EXISTING);
-          final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile, UTF_8)) {
-        final SVGInserter svgInserter = new SVGInserter(baseSvgFile);
-        String line;
-        while ((line = baseHtmlFileReader.readLine()) != null) {
-          if (svgInsertionPoint.matcher(line).matches()) {
-            svgInserter.insert(finalHtmlFileWriter);
+        // Interleave HTML and SVG, writing directly to the output writer
+        try (final BufferedWriter writer = new BufferedWriter(outputOptions.openNewOutputWriter());
+            final BufferedReader baseHtmlReader = newBufferedReader(baseHtmlFile, UTF_8)) {
+          final SVGInserter svgInserter = new SVGInserter(baseSvgFile);
+          boolean svgInserted = false;
+          String line;
+          while ((line = baseHtmlReader.readLine()) != null) {
+            if (!svgInserted && svgInsertionPoint.matcher(line).matches()) {
+              svgInserter.insert(writer);
+              svgInserted = true;
+            }
+            writer.append(line).append(System.lineSeparator());
           }
-          finalHtmlFileWriter.append(line).append(System.lineSeparator());
+          if (!svgInserted) {
+            LOGGER.log(Level.WARNING, "SVG insertion point not found; embedded diagram is missing");
+          }
         }
-      }
-
-      try (final Writer writer = outputOptions.openNewOutputWriter();
-          final Reader reader = newBufferedReader(finalHtmlFile, UTF_8); ) {
-        reader.transferTo(writer);
+      } finally {
+        try {
+          deleteIfExists(baseHtmlFile);
+          deleteIfExists(baseSvgFile);
+          deleteIfExists(tempDir);
+        } catch (final IOException e) {
+          LOGGER.log(Level.WARNING, "Could not delete temp files in " + tempDir, e);
+        }
       }
     } catch (final IOException e) {
       throw new UncheckedIOException("Could not create embedded diagram", e);
