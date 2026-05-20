@@ -18,12 +18,12 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.htmlx;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.svg;
 import static schemacrawler.tools.command.text.schema.options.TextOutputFormat.html;
-import static us.fatehi.utility.IOUtility.copy;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.UncheckedIOException;
 import java.io.Writer;
 import java.nio.file.Path;
@@ -44,30 +44,6 @@ import us.fatehi.utility.property.PropertyName;
 public class EmbeddedDiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramOptions> {
 
   private static final Pattern svgInsertionPoint = Pattern.compile("<h2.*Tables.*h2>");
-  private static final Pattern svgStart = Pattern.compile("<svg.*");
-
-  private static void insertSvg(
-      final BufferedWriter finalHtmlFileWriter, final BufferedReader baseSvgFileReader)
-      throws IOException {
-    finalHtmlFileWriter.append(System.lineSeparator());
-    boolean skipLines = true;
-    boolean isSvgStart = false;
-    String line;
-    while ((line = baseSvgFileReader.readLine()) != null) {
-      if (skipLines) {
-        isSvgStart = svgStart.matcher(line).matches();
-        skipLines = !isSvgStart;
-      }
-      if (!skipLines) {
-        if (isSvgStart) {
-          line = "<svg";
-          isSvgStart = false;
-        }
-        finalHtmlFileWriter.append(line).append(System.lineSeparator());
-      }
-    }
-    finalHtmlFileWriter.append(System.lineSeparator());
-  }
 
   private final GraphExecutorFactory graphExecutorFactory;
 
@@ -95,19 +71,20 @@ public class EmbeddedDiagramRenderer extends AbstractSchemaCrawlerCommand<Diagra
       // Interleave HTML and SVG
       try (final BufferedWriter finalHtmlFileWriter =
               newBufferedWriter(finalHtmlFile, UTF_8, WRITE, CREATE, TRUNCATE_EXISTING);
-          final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile, UTF_8);
-          final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile, UTF_8)) {
+          final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile, UTF_8)) {
+        final SVGInserter svgInserter = new SVGInserter(baseSvgFile);
         String line;
         while ((line = baseHtmlFileReader.readLine()) != null) {
           if (svgInsertionPoint.matcher(line).matches()) {
-            insertSvg(finalHtmlFileWriter, baseSvgFileReader);
+            svgInserter.insert(finalHtmlFileWriter);
           }
           finalHtmlFileWriter.append(line).append(System.lineSeparator());
         }
       }
 
-      try (final Writer writer = outputOptions.openNewOutputWriter()) {
-        copy(newBufferedReader(finalHtmlFile, UTF_8), writer);
+      try (final Writer writer = outputOptions.openNewOutputWriter();
+          final Reader reader = newBufferedReader(finalHtmlFile, UTF_8); ) {
+        reader.transferTo(writer);
       }
     } catch (final IOException e) {
       throw new UncheckedIOException("Could not create embedded diagram", e);
