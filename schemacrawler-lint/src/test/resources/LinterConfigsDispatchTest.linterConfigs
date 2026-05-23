@@ -3,6 +3,8 @@
 
 # LinterConfigs as JSON
 [ {
+  "id" : "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey",
+  "run" : true,
   "severity" : "critical",
   "threshold" : 2,
   "config" : {
@@ -21,13 +23,11 @@
     "schemacrawler.lint.run-all-linters" : true
   },
   "columnInclusionRule" : {
-    "include" : ".*",
-    "exclude" : ""
+    "exclusionPattern" : "",
+    "inclusionPattern" : ".*"
   },
-  "linterId" : "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey",
-  "runLinter" : true,
   "tableInclusionRule" : {
-    "include" : ".*",
-    "exclude" : ""
+    "exclusionPattern" : "",
+    "inclusionPattern" : ".*"
   }
 } ]

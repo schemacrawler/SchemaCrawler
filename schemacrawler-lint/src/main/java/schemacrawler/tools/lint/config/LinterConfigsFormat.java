@@ -8,11 +8,21 @@
 
 package schemacrawler.tools.lint.config;
 
-import java.lang.reflect.Field;
+import static tools.jackson.core.StreamWriteFeature.IGNORE_UNKNOWN;
+import static tools.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS;
+import static tools.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
+import static tools.jackson.databind.SerializationFeature.INDENT_OUTPUT;
+import static tools.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
+import static tools.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID;
+
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.lint.LintSeverity;
@@ -49,48 +59,16 @@ public final class LinterConfigsFormat implements Supplier<String> {
 
   static final class ConfigSerializer extends StdSerializer<Config> {
 
-    private static final Logger LOGGER = Logger.getLogger(ConfigSerializer.class.getName());
-
     ConfigSerializer() {
       super(Config.class);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void serialize(
         final Config config, final JsonGenerator gen, final SerializationContext provider)
         throws JacksonException {
-      try {
-        final Field field = Config.class.getDeclaredField("configMap");
-        field.setAccessible(true);
-        final Map<String, Object> configMap = (Map<String, Object>) field.get(config);
-        provider.writeValue(gen, configMap);
-      } catch (final ReflectiveOperationException e) {
-        LOGGER.log(Level.WARNING, "Could not access Config.configMap via reflection", e);
-        gen.writeString(config.toString());
-      }
-    }
-  }
-
-  static final class InclusionRuleSerializer extends StdSerializer<InclusionRule> {
-    InclusionRuleSerializer() {
-      super(InclusionRule.class);
-    }
-
-    @Override
-    public void serialize(
-        final InclusionRule rule, final JsonGenerator gen, final SerializationContext provider)
-        throws JacksonException {
-      if (rule instanceof final RegularExpressionRule regexRule) {
-        gen.writeStartObject();
-        gen.writeName("include");
-        gen.writeString(regexRule.getInclusionPattern().pattern());
-        gen.writeName("exclude");
-        gen.writeString(regexRule.getExclusionPattern().pattern());
-        gen.writeEndObject();
-      } else {
-        gen.writeString(rule.toString());
-      }
+      final Map<String, Object> configMap = config.getSubMap("");
+      provider.writeValue(gen, configMap);
     }
   }
 
@@ -111,26 +89,35 @@ public final class LinterConfigsFormat implements Supplier<String> {
     }
   }
 
-  @JsonSerialize(using = InclusionRuleSerializer.class)
-  private abstract static class InclusionRuleMixin {}
-
+  @JsonPropertyOrder({
+    "id",
+    "run",
+    "severity",
+    "threshold",
+    "table-inclusion-pattern",
+    "table-exclusion-pattern",
+    "column-inclusion-pattern",
+    "column-exclusion-pattern",
+    "config"
+  })
   private abstract static class LinterConfigMixin {
-    @JsonSerialize(using = InclusionRuleSerializer.class)
+
     abstract InclusionRule getColumnInclusionRule();
 
     @JsonSerialize(using = ConfigSerializer.class)
     abstract Config getConfig();
 
-    @tools.jackson.databind.annotation.JsonSerialize
+    @JsonSerialize
+    @JsonProperty("id")
     abstract String getLinterId();
 
     abstract LintSeverity getSeverity();
 
-    @JsonSerialize(using = InclusionRuleSerializer.class)
     abstract InclusionRule getTableInclusionRule();
 
     abstract int getThreshold();
 
+    @JsonProperty("run")
     abstract boolean isRunLinter();
   }
 
@@ -144,9 +131,9 @@ public final class LinterConfigsFormat implements Supplier<String> {
         JsonMapper.builder()
             .addMixIn(LinterConfigs.class, LinterConfigsMixin.class)
             .addMixIn(LinterConfig.class, LinterConfigMixin.class)
-            .addMixIn(InclusionRule.class, InclusionRuleMixin.class)
-            .enable(tools.jackson.databind.SerializationFeature.INDENT_OUTPUT)
-            .enable(tools.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS)
+            .enable(IGNORE_UNKNOWN)
+            .enable(ORDER_MAP_ENTRIES_BY_KEYS, INDENT_OUTPUT, USE_EQUALITY_FOR_OBJECT_ID)
+            .enable(SORT_PROPERTIES_ALPHABETICALLY, ACCEPT_CASE_INSENSITIVE_ENUMS)
             .build();
   }
 
