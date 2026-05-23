@@ -116,7 +116,7 @@ public final class LinterConfigsFormat implements Supplier<String> {
   @Override
   public String get() {
     if (linterConfigs == null) {
-      return "null";
+      return "";
     }
     try {
       return MAPPER.writeValueAsString(linterConfigs);
