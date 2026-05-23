@@ -56,8 +56,8 @@ import schemacrawler.tools.options.Config;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
-import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.property.Property;
+import us.fatehi.utility.string.ObjectToStringFunction;
 
 @DisableLogging
 @HeavyDatabaseTest("postgresql")
@@ -122,7 +122,7 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
     final Map<String, Map<?, ?>> tableMap = new HashMap<>();
     tableMap.put(table.getFullName(), table.getAttributes());
     assertThat(
-        outputOf(text(ObjectToString.toString(tableMap))),
+        outputOf(text(new ObjectToStringFunction().apply(tableMap))),
         hasSameContentAs(classpathResource("tableAttributes.json")));
 
     final Column column = table.lookupColumn("firstname").get();

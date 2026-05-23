@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.UUID;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
-import us.fatehi.utility.ObjectToString;
+import us.fatehi.utility.string.SimpleToStringFunction;
 
 public final class Lint<V extends Serializable> implements Serializable {
 
@@ -123,7 +123,7 @@ public final class Lint<V extends Serializable> implements Serializable {
 
   public String getValueAsString() {
     if (hasValue()) {
-      return ObjectToString.listOrObjectToString(value);
+      return new SimpleToStringFunction().apply(value);
     }
     return "";
   }

@@ -19,13 +19,13 @@ import schemacrawler.tools.lint.LinterRegistry;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.lint.config.LinterConfigs;
+import schemacrawler.tools.lint.config.LinterConfigsFormat;
 import schemacrawler.tools.lint.formatter.LintReportGenerator;
 import schemacrawler.tools.lint.formatter.LintReportJsonGenerator;
 import schemacrawler.tools.lint.formatter.LintReportTextFormatter;
 import schemacrawler.tools.lint.formatter.LintReportTextGenerator;
 import schemacrawler.tools.lint.formatter.LintReportYamlGenerator;
 import us.fatehi.utility.property.PropertyName;
-import us.fatehi.utility.string.ObjectToStringFormat;
 
 public class LintCommand extends AbstractSchemaCrawlerCommand<LintOptions> {
 
@@ -48,7 +48,7 @@ public class LintCommand extends AbstractSchemaCrawlerCommand<LintOptions> {
 
       // Lint the catalog
       final LinterConfigs linterConfigs = readLinterConfigs(commandOptions);
-      LOGGER.log(Level.FINEST, new ObjectToStringFormat(linterConfigs));
+      LOGGER.log(Level.FINEST, new LinterConfigsFormat(linterConfigs));
       final Linters linters = new Linters(linterConfigs, commandOptions.isRunAllLinters());
       final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
       linters.initialize(linterRegistry);

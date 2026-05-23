@@ -8,7 +8,6 @@
 
 package schemacrawler.tools.text.formatter.base.helper;
 
-import static us.fatehi.utility.ObjectToString.arrayToList;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.anchor;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
@@ -16,14 +15,13 @@ import static us.fatehi.utility.html.TagBuilder.tableHeaderCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
 
 import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import us.fatehi.utility.database.ColumnDataIndicator;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagBuilder;
 import us.fatehi.utility.html.TagOutputFormat;
+import us.fatehi.utility.string.SimpleToStringFunction;
 
 /** Methods to format entire rows of output as HTML. */
 abstract class BaseTextFormattingHelper implements TextFormattingHelper {
@@ -37,27 +35,6 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
       dashedSeparator.append(pattern);
     }
     return dashedSeparator.toString();
-  }
-
-  private static String toString(final Object dataElement) {
-    if (dataElement == null) {
-      return "NULL";
-    }
-    if (dataElement.getClass().isArray()) {
-      return arrayToList(dataElement).toString();
-    } else if (dataElement instanceof Number number) {
-      if (number.doubleValue() == number.longValue()) {
-        return number.toString();
-      } else {
-        // Avoid floating-point imprecision across operating systems
-        final int scale = 2;
-        BigDecimal roundedNumber = new BigDecimal(number.toString());
-        roundedNumber = roundedNumber.setScale(scale, RoundingMode.HALF_UP);
-        return roundedNumber.toString();
-      }
-    }
-
-    return dataElement.toString();
   }
 
   protected final PrintWriter out;
@@ -248,7 +225,8 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
     }
     final Tag row = tableRow().make();
     for (final Object element : columnData) {
-      final TagBuilder tableCell = tableCell().withEscapedText(toString(element));
+      final String elementString = new SimpleToStringFunction(true).apply(element);
+      final TagBuilder tableCell = tableCell().withEscapedText(elementString);
       if (element == null) {
         tableCell.withStyleClass("data_null");
       } else if (element instanceof ColumnDataIndicator) {

@@ -24,6 +24,7 @@ import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
+import schemacrawler.tools.lint.config.LinterConfigsFormat;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.AssertNoSystemErrOutput;
 import us.fatehi.test.utility.extensions.AssertNoSystemOutOutput;
@@ -66,7 +67,14 @@ public class LinterConfigsDispatchTest {
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
+      out.write("# LinterConfigs::toString");
+      out.println();
       out.write(linterConfigs.toString());
+      out.println();
+      out.println();
+      out.write("# LinterConfigs as JSON");
+      out.println();
+      out.write(new LinterConfigsFormat(linterConfigs).get());
     }
     assertThat(
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));

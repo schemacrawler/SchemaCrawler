@@ -144,10 +144,7 @@ public class SystemCommandTest {
     executeSystemCommand(state, args);
 
     assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(
-        contentsOf(streams.out()),
-        matchesPattern(
-            Pattern.compile(".*\"@object\": \"schemacrawler.tools.options.Config\".*", DOTALL)));
+    assertThat(contentsOf(streams.out()), matchesPattern(Pattern.compile(".*\\{ \\}.*", DOTALL)));
   }
 
   @Test

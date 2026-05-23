@@ -10,6 +10,7 @@ package schemacrawler.test.script;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalToCompressingWhiteSpace;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.StringReader;
@@ -42,7 +43,7 @@ public class ScriptExecutorTest {
     assertThat(scriptExecutor.canGenerate(), is(true));
 
     scriptExecutor.run();
-    assertThat(writer.toString().replaceAll("\\R", ""), is("Hello, World!"));
+    assertThat(writer.toString(), equalToCompressingWhiteSpace("Hello, World!"));
   }
 
   @Test

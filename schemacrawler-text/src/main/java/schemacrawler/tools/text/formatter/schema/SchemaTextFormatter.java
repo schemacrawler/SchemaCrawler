@@ -89,9 +89,9 @@ import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.NamedObjectSort;
-import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.property.Property;
+import us.fatehi.utility.string.SimpleToStringFunction;
 import us.fatehi.utility.string.StringFormat;
 
 /** Text formatting of schema. */
@@ -314,9 +314,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       formattingHelper.writeObjectStart();
       for (final Property property : serverInfo) {
         final String name = property.getName();
-        final Object value = property.getValue();
-        formattingHelper.writeNameValueRow(
-            name, ObjectToString.listOrObjectToString(value), Alignment.inherit);
+        final String valueString = new SimpleToStringFunction().apply(property.getValue());
+        formattingHelper.writeNameValueRow(name, valueString, Alignment.inherit);
       }
       formattingHelper.writeObjectEnd();
     }
@@ -338,9 +337,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       formattingHelper.writeObjectStart();
       for (final Property property : dbProperties) {
         final String name = property.getDescription();
-        final Object value = property.getValue();
-        formattingHelper.writeNameValueRow(
-            name, ObjectToString.listOrObjectToString(value), Alignment.inherit);
+        final String valueString = new SimpleToStringFunction().apply(property.getValue());
+        formattingHelper.writeNameValueRow(name, valueString, Alignment.inherit);
       }
       formattingHelper.writeObjectEnd();
     }
@@ -740,7 +738,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeNameRow(driverProperty.getName(), "[driver property]");
     formattingHelper.writeDescriptionRow(driverProperty.getDescription());
     formattingHelper.writeDescriptionRow(details.toString());
-    formattingHelper.writeDetailRow("", "value", ObjectToString.listOrObjectToString(value));
+    formattingHelper.writeDetailRow("", "value", value);
   }
 
   private void printPrimaryKey(final PrimaryKey primaryKey) {
