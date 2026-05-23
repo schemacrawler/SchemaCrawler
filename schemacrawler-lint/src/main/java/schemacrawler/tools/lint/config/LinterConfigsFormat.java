@@ -15,14 +15,12 @@ import static tools.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static tools.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
 import static tools.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.lint.LintSeverity;
@@ -72,23 +70,6 @@ public final class LinterConfigsFormat implements Supplier<String> {
     }
   }
 
-  static final class LinterConfigsSerializer extends StdSerializer<LinterConfigs> {
-    LinterConfigsSerializer() {
-      super(LinterConfigs.class);
-    }
-
-    @Override
-    public void serialize(
-        final LinterConfigs configs, final JsonGenerator gen, final SerializationContext provider)
-        throws JacksonException {
-      gen.writeStartArray();
-      for (final LinterConfig config : configs) {
-        provider.writeValue(gen, config);
-      }
-      gen.writeEndArray();
-    }
-  }
-
   @JsonPropertyOrder({
     "id",
     "run",
@@ -121,15 +102,11 @@ public final class LinterConfigsFormat implements Supplier<String> {
     abstract boolean isRunLinter();
   }
 
-  @JsonSerialize(using = LinterConfigsSerializer.class)
-  private abstract static class LinterConfigsMixin {}
-
   private static final ObjectMapper MAPPER;
 
   static {
     MAPPER =
         JsonMapper.builder()
-            .addMixIn(LinterConfigs.class, LinterConfigsMixin.class)
             .addMixIn(LinterConfig.class, LinterConfigMixin.class)
             .enable(IGNORE_UNKNOWN)
             .enable(ORDER_MAP_ENTRIES_BY_KEYS, INDENT_OUTPUT, USE_EQUALITY_FOR_OBJECT_ID)
