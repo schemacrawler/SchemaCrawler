@@ -23,7 +23,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
-import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.options.Config;
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.JsonGenerator;
@@ -83,20 +82,12 @@ public final class LinterConfigsFormat implements Supplier<String> {
   })
   private abstract static class LinterConfigMixin {
 
-    abstract InclusionRule getColumnInclusionRule();
-
     @JsonSerialize(using = ConfigSerializer.class)
     abstract Config getConfig();
 
     @JsonSerialize
     @JsonProperty("id")
     abstract String getLinterId();
-
-    abstract LintSeverity getSeverity();
-
-    abstract InclusionRule getTableInclusionRule();
-
-    abstract int getThreshold();
 
     @JsonProperty("run")
     abstract boolean isRunLinter();
