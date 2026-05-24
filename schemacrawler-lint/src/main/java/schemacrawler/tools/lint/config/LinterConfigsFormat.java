@@ -17,7 +17,6 @@ import static tools.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJEC
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import java.util.Map;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,12 +24,9 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.options.Config;
 import tools.jackson.core.JacksonException;
-import tools.jackson.core.JsonGenerator;
 import tools.jackson.databind.ObjectMapper;
-import tools.jackson.databind.SerializationContext;
 import tools.jackson.databind.annotation.JsonSerialize;
 import tools.jackson.databind.json.JsonMapper;
-import tools.jackson.databind.ser.std.StdSerializer;
 
 /**
  * A lazy {@link Supplier Supplier&lt;String&gt;} that serializes a {@link LinterConfigs} instance
@@ -54,21 +50,6 @@ import tools.jackson.databind.ser.std.StdSerializer;
  */
 public final class LinterConfigsFormat implements Supplier<String> {
 
-  static final class ConfigSerializer extends StdSerializer<Config> {
-
-    ConfigSerializer() {
-      super(Config.class);
-    }
-
-    @Override
-    public void serialize(
-        final Config config, final JsonGenerator gen, final SerializationContext provider)
-        throws JacksonException {
-      final Map<String, Object> configMap = config.getSubMap("");
-      provider.writeValue(gen, configMap);
-    }
-  }
-
   @JsonPropertyOrder({
     "id",
     "run",
@@ -81,9 +62,6 @@ public final class LinterConfigsFormat implements Supplier<String> {
     "config"
   })
   private abstract static class LinterConfigMixin {
-
-    @JsonSerialize(using = ConfigSerializer.class)
-    abstract Config getConfig();
 
     @JsonSerialize
     @JsonProperty("id")

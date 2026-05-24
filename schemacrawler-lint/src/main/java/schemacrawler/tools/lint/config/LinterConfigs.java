@@ -23,7 +23,7 @@ public class LinterConfigs implements Iterable<LinterConfig> {
 
   public LinterConfigs(final Config config) {
     linterConfigs = new ArrayList<>();
-    this.config = requireNonNull(config, "No configuration provided").getSubMap("");
+    this.config = requireNonNull(config, "No configuration provided").getMap();
   }
 
   public void add(final LinterConfig linterConfig) {

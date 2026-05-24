@@ -8,19 +8,21 @@
   "severity" : "critical",
   "threshold" : 2,
   "config" : {
-    "schemacrawler.format.identifier_quoting_strategy" : "quote_if_special_characters_and_reserved_words",
-    "schemacrawler.format.no_schema_colors" : false,
-    "schemacrawler.format.no_schemacrawler_info" : false,
-    "schemacrawler.format.show_database_info" : false,
-    "schemacrawler.format.show_jdbc_driver_info" : false,
-    "schemacrawler.format.show_unqualified_names" : false,
-    "schemacrawler.format.sort_alphabetically.routine_columns" : false,
-    "schemacrawler.format.sort_alphabetically.routines" : false,
-    "schemacrawler.format.sort_alphabetically.table_columns" : false,
-    "schemacrawler.format.sort_alphabetically.tables" : true,
-    "schemacrawler.lint.lint-dispatch" : "none",
-    "schemacrawler.lint.linter-configs" : "",
-    "schemacrawler.lint.run-all-linters" : true
+    "map" : {
+      "schemacrawler.format.identifier_quoting_strategy" : "quote_if_special_characters_and_reserved_words",
+      "schemacrawler.format.no_schema_colors" : false,
+      "schemacrawler.format.no_schemacrawler_info" : false,
+      "schemacrawler.format.show_database_info" : false,
+      "schemacrawler.format.show_jdbc_driver_info" : false,
+      "schemacrawler.format.show_unqualified_names" : false,
+      "schemacrawler.format.sort_alphabetically.routine_columns" : false,
+      "schemacrawler.format.sort_alphabetically.routines" : false,
+      "schemacrawler.format.sort_alphabetically.table_columns" : false,
+      "schemacrawler.format.sort_alphabetically.tables" : true,
+      "schemacrawler.lint.lint-dispatch" : "none",
+      "schemacrawler.lint.linter-configs" : "",
+      "schemacrawler.lint.run-all-linters" : true
+    }
   },
   "columnInclusionRule" : {
     "exclusionPattern" : "",
