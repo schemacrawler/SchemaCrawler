@@ -21,7 +21,6 @@ import schemacrawler.tools.command.CommandOptions;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigUtility;
-import us.fatehi.utility.ObjectToString;
 
 public final class LinterConfig implements CommandOptions, Comparable<LinterConfig> {
 
@@ -142,7 +141,7 @@ public final class LinterConfig implements CommandOptions, Comparable<LinterConf
 
   @Override
   public String toString() {
-    return ObjectToString.toString(this);
+    return linterId;
   }
 
   void setContext(final Map<String, Object> config) {

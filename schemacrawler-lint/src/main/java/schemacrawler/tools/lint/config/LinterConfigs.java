@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.lint.config;
 
 import static java.util.Objects.requireNonNull;
@@ -15,14 +14,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.ObjectToString;
 
 public class LinterConfigs implements Iterable<LinterConfig> {
 
   private final List<LinterConfig> linterConfigs;
-
   private final Map<String, Object> config;
 
   public LinterConfigs(final Config config) {
@@ -48,6 +44,6 @@ public class LinterConfigs implements Iterable<LinterConfig> {
 
   @Override
   public String toString() {
-    return ObjectToString.toString(this);
+    return linterConfigs.toString();
   }
 }
