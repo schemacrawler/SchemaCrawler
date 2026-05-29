@@ -60,6 +60,17 @@ erDiagram
     string STATE
   }
 
+  "PUBLIC.PUBLISHER SALES.SALES [not an entity]" {
+    integer COUPON_ID
+    date PERIODENDDATE
+    decimal TOTALAMOUNT
+  }
+
+  "PUBLIC.PUBLISHER SALES.SALESDATA [not an entity]" {
+    integer SALESDATAID
+    decimal YEARLYAMOUNT
+  }
+
   "PUBLIC.BOOKS.AUTHORS [strong entity]" }o--o{ "PUBLIC.BOOKS.BOOKS [strong entity]" : "via bridge table BOOKAUTHORS"
   "PUBLIC.BOOKS.BOOKS [strong entity]" ||--o| "PUBLIC.BOOKS.BOOKS [strong entity]" : "self-reference"
   "PUBLIC.BOOKS.CUSTOMERDATA [weak entity]" ||--|{ "PUBLIC.BOOKS.CUSTOMERS [strong entity]" : "foreign key"

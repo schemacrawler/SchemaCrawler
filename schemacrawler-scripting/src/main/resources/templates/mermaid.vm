@@ -12,7 +12,7 @@ title: "$title"
 erDiagram
 
 ## Entities
-#foreach ($entity in $er_model.getEntities())
+#foreach ($entity in $support.entities($er_model))
   $Q#name_for($entity)$Q {
     #foreach ($entity_attribute in $entity.getEntityAttributes())
       #set($cleaned = $support.stripName($entity_attribute))
