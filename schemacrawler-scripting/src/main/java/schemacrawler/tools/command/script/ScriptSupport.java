@@ -14,9 +14,13 @@ import static schemacrawler.ermodel.model.RelationshipCardinality.one_many;
 import static schemacrawler.ermodel.model.RelationshipCardinality.zero_many;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
+import schemacrawler.ermodel.model.ERModel;
+import schemacrawler.ermodel.model.Entity;
+import schemacrawler.ermodel.model.EntityType;
 import schemacrawler.ermodel.model.Relationship;
 import schemacrawler.ermodel.model.RelationshipCardinality;
 import schemacrawler.ermodel.utility.ERModelUtility;
@@ -119,6 +123,15 @@ public final class ScriptSupport {
       return "";
     }
     return column.getColumnDataType().getName();
+  }
+
+  public Collection<Entity> entities(final ERModel model) {
+    if (model == null) {
+      return List.of();
+    }
+    final List<Entity> allEntities = new ArrayList<>(model.getEntities());
+    allEntities.addAll(model.getEntitiesByType(EntityType.non_entity));
+    return List.copyOf(allEntities);
   }
 
   public String fkColumns(final ForeignKey foreignKey) {

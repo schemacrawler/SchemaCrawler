@@ -1,5 +1,7 @@
 ---
 title: "FROM TEST: Database Schema Diagram"
+config:
+  theme: base
 ---
 erDiagram
 
@@ -58,6 +60,17 @@ erDiagram
   "PUBLIC.PUBLISHER SALES.REGIONS [strong entity]" {
     string CITY
     string STATE
+  }
+
+  "PUBLIC.PUBLISHER SALES.SALES [not an entity]" {
+    integer COUPON_ID
+    date PERIODENDDATE
+    decimal TOTALAMOUNT
+  }
+
+  "PUBLIC.PUBLISHER SALES.SALESDATA [not an entity]" {
+    integer SALESDATAID
+    decimal YEARLYAMOUNT
   }
 
   "PUBLIC.BOOKS.AUTHORS [strong entity]" }o--o{ "PUBLIC.BOOKS.BOOKS [strong entity]" : "via bridge table BOOKAUTHORS"
