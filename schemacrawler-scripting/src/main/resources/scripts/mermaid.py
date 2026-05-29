@@ -30,10 +30,13 @@ def label_for(relationship):
 
 # -----------
 
+
+print('---')
 if title:
-  print('---')
   print(f'title: "{title}"')
-  print('---')
+print('config:')
+print('  theme: base')
+print('---')
 
 print('erDiagram')
 print('')

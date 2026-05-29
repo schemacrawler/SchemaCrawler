@@ -4,11 +4,13 @@
 $support.cleanFullName($entity) [$entity.getType().description()]#end
 #set ($Q = '"')
 ##-----
+---
 #if($title)
----
 title: "$title"
----
 #end
+config:
+  theme: base
+---
 erDiagram
 
 ## Entities

@@ -1,5 +1,7 @@
 ---
 title: "FROM TEST: Database Schema Diagram"
+config:
+  theme: base
 ---
 erDiagram
 
