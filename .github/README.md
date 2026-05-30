@@ -3,7 +3,7 @@
 
 [![Build with Dependencies](https://github.com/schemacrawler/SchemaCrawler/actions/workflows/build-with-dependencies.yml/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions/workflows/build-with-dependencies.yml)
 [![Database Integration Tests](https://github.com/schemacrawler/SchemaCrawler/actions/workflows/database-integration-tests.yml/badge.svg?branch=main)](https://github.com/schemacrawler/SchemaCrawler/actions/workflows/database-integration-tests.yml)
-[![Codacy Coverage](https://img.shields.io/codacy/coverage/84c0a068ce9349f2bcaa07b5977bd932)](https://app.codacy.com/gh/schemacrawler/SchemaCrawler/dashboard)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/84c0a068ce9349f2bcaa07b5977bd932)](https://app.codacy.com/gh/schemacrawler/SchemaCrawler/dashboard)
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler?color=FFDAB9)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 ![GitHub Repo stars](https://img.shields.io/github/stars/schemacrawler/schemacrawler?style=social)
