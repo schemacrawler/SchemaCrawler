@@ -41,7 +41,7 @@ print('---')
 print('erDiagram')
 print('')
 
-for entity in support.entities(er_model):
+for entity in support.entities():
     print(f'  {name_for(entity)} {{')
     for entity_attribute in entity.getEntityAttributes():
         attribute_type = entity_attribute.getType()

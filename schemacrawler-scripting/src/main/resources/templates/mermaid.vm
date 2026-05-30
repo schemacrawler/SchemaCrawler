@@ -14,7 +14,7 @@ config:
 erDiagram
 
 ## Entities
-#foreach ($entity in $support.entities($er_model))
+#foreach ($entity in $support.entities())
   $Q#name_for($entity)$Q {
     #foreach ($entity_attribute in $entity.getEntityAttributes())
       #set($cleaned = $support.stripName($entity_attribute))

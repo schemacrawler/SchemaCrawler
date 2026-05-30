@@ -12,15 +12,17 @@ import static java.util.stream.Collectors.toList;
 import static schemacrawler.ermodel.model.RelationshipCardinality.many_many;
 import static schemacrawler.ermodel.model.RelationshipCardinality.one_many;
 import static schemacrawler.ermodel.model.RelationshipCardinality.zero_many;
+import static schemacrawler.utility.MetaDataUtility.getSimpleTypeName;
+import static schemacrawler.utility.MetaDataUtility.isPartial;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import schemacrawler.ermodel.model.ERModel;
 import schemacrawler.ermodel.model.Entity;
-import schemacrawler.ermodel.model.EntityType;
 import schemacrawler.ermodel.model.Relationship;
 import schemacrawler.ermodel.model.RelationshipCardinality;
 import schemacrawler.ermodel.utility.ERModelUtility;
@@ -37,9 +39,11 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
+import schemacrawler.tools.state.AbstractExecutionState;
 import schemacrawler.utility.MetaDataUtility;
+import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 
-public final class ScriptSupport {
+public final class ScriptSupport extends AbstractExecutionState {
 
   private final Identifiers quotedIdentifiers;
 
@@ -125,12 +129,23 @@ public final class ScriptSupport {
     return column.getColumnDataType().getName();
   }
 
-  public Collection<Entity> entities(final ERModel model) {
-    if (model == null) {
+  public Collection<Entity> entities() {
+    if (!hasERModel()) {
       return List.of();
     }
-    final List<Entity> allEntities = new ArrayList<>(model.getEntities());
-    allEntities.addAll(model.getEntitiesByType(EntityType.non_entity));
+    final ERModel erModel = getERModel();
+    final List<Entity> allEntities = new ArrayList<>(erModel.getEntities());
+    for (final Table table : erModel.getUnmodeledTables()) {
+      if (isPartial(table) || getSimpleTypeName(table) == SimpleDatabaseObjectType.view) {
+        continue;
+      }
+      final Optional<Entity> optionalEntity = erModel.lookupEntity(table);
+      if (optionalEntity.isEmpty()) {
+        continue;
+      }
+      final Entity entity = optionalEntity.get();
+      allEntities.add(entity);
+    }
     return List.copyOf(allEntities);
   }
 

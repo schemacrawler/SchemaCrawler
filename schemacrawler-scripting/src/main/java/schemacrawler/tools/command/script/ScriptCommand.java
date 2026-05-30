@@ -63,13 +63,15 @@ public final class ScriptCommand extends AbstractSchemaCrawlerCommand<ScriptOpti
         // Set up the context
         final String title = title();
         final Catalog catalog = getCatalog();
+        final ScriptSupport support = new ScriptSupport();
+        transferState(support);
         final Map<String, Object> context = new HashMap<>();
         context.put("title", title);
         context.put("catalog", catalog);
         context.put("er_model", getERModel());
         context.put("connection", connection);
         context.put("chain", new CommandChain(this));
-        context.put("support", new ScriptSupport());
+        context.put("support", support);
         context.put("crawl_info", new CrawlInfoSupport(catalog.getCrawlInfo()));
 
         scriptExecutor.initialize(context, reader, writer);
