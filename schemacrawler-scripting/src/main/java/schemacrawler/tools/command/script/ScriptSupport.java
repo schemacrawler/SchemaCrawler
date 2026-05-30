@@ -21,6 +21,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.ermodel.model.ERModel;
 import schemacrawler.ermodel.model.Entity;
 import schemacrawler.ermodel.model.Relationship;
@@ -42,8 +44,11 @@ import schemacrawler.schema.TableReference;
 import schemacrawler.tools.state.AbstractExecutionState;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
+import us.fatehi.utility.string.StringFormat;
 
 public final class ScriptSupport extends AbstractExecutionState {
+
+  private static final Logger LOGGER = Logger.getLogger(CommandChain.class.getName());
 
   private final Identifiers quotedIdentifiers;
 
@@ -137,10 +142,12 @@ public final class ScriptSupport extends AbstractExecutionState {
     final List<Entity> allEntities = new ArrayList<>(erModel.getEntities());
     for (final Table table : erModel.getUnmodeledTables()) {
       if (isPartial(table) || getSimpleTypeName(table) == SimpleDatabaseObjectType.view) {
+        LOGGER.log(Level.FINE, new StringFormat("Excluding table <%s>", table));
         continue;
       }
       final Optional<Entity> optionalEntity = erModel.lookupEntity(table);
       if (optionalEntity.isEmpty()) {
+        LOGGER.log(Level.FINE, new StringFormat("Entity not found for table <%s>", table));
         continue;
       }
       final Entity entity = optionalEntity.get();

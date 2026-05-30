@@ -30,4 +30,9 @@ public final class CrawlInfoSupport {
   public String timestamp() {
     return crawlInfo.getCrawlTimestamp();
   }
+
+  @Override
+  public String toString() {
+    return crawlInfo.toString();
+  }
 }
