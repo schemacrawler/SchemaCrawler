@@ -46,11 +46,13 @@ public final class TemplateCommand
     // Set up the context
     final String title = title();
     final Catalog catalog = getCatalog();
+    final ScriptSupport support = new ScriptSupport();
+    transferState(support);
     final Map<String, Object> context = new HashMap<>();
     context.put("title", title);
     context.put("catalog", catalog);
     context.put("er_model", getERModel());
-    context.put("support", new ScriptSupport());
+    context.put("support", support);
     context.put("crawl_info", new CrawlInfoSupport(catalog.getCrawlInfo()));
 
     templateRenderer.setResourceFilename(commandOptions.getScript());

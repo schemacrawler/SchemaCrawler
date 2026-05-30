@@ -8,11 +8,6 @@ def strip_name(entity):
         cleanedname = "UNKNOWN"
     return cleanedname
 
-def name_for(entity):
-    entity_name = support.cleanFullName(entity)
-    entity_type = entity.getType().description()
-    return f'"{entity_name} [{entity_type}]"'
-
 def label_for(relationship):
     """Generate relationship label indicating bridge tables."""
     cardinality = relationship.getType()
@@ -37,12 +32,18 @@ if title:
 print('config:')
 print('  theme: base')
 print('---')
-
+  
 print('erDiagram')
 print('')
+print('  classDef strong_entity stroke:#283593;')
+print('  classDef subtype stroke:#1976D2;')
+print('  classDef weak_entity stroke:#1976D2;')
+print('  classDef unknown stroke:#AAAAAA;')
+print('  classDef non_entity stroke:#AAAAAA;')
+print('')
 
-for entity in support.entities(er_model):
-    print(f'  {name_for(entity)} {{')
+for entity in support.entities():
+    print(f'  "{support.cleanFullName(entity)}":::{entity.getType()} {{')
     for entity_attribute in entity.getEntityAttributes():
         attribute_type = entity_attribute.getType()
         print(f'    {attribute_type} {strip_name(entity_attribute)}', end='')
@@ -59,4 +60,4 @@ for relationship in er_model.getRelationships():
     cardinality = relationship.getType()
     cardinality_symbol = support.cardinalitySymbol(relationship)
     label = label_for(relationship)
-    print(f'  {name_for(left_entity)} {cardinality_symbol} {name_for(right_entity)} : "{label}"')
+    print(f'  "{support.cleanFullName(left_entity)}" {cardinality_symbol} "{support.cleanFullName(right_entity)}" : "{label}"')

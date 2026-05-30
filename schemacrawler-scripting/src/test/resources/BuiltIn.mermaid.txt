@@ -5,7 +5,13 @@ config:
 ---
 erDiagram
 
-  "PUBLIC.BOOKS.AUTHORS [strong entity]" {
+  classDef strong_entity stroke:#283593;
+  classDef subtype stroke:#1976D2;
+  classDef weak_entity stroke:#1976D2;
+  classDef unknown stroke:#AAAAAA;
+  classDef non_entity stroke:#AAAAAA;
+
+  "PUBLIC.BOOKS.AUTHORS":::strong_entity {
     string FIRSTNAME
     string LASTNAME
     string ADDRESS1
@@ -16,7 +22,7 @@ erDiagram
     string COUNTRY
   }
 
-  "PUBLIC.BOOKS.BOOKS [strong entity]" {
+  "PUBLIC.BOOKS.BOOKS":::strong_entity {
     string TITLE "Book title"
     string DESCRIPTION "Book description (Usually the blurb from the book jacket or promotional materials)"
     integer PUBLISHERID "Foreign key to the book publisher"
@@ -24,60 +30,60 @@ erDiagram
     decimal PRICE "Current price for the book"
   }
 
-  "PUBLIC.BOOKS.COUPONS [strong entity]" {
+  "PUBLIC.BOOKS.COUPONS":::strong_entity {
     string DATA
     other COUPONS
     other BOOKS
   }
 
-  "PUBLIC.BOOKS.CUSTOMERDATA [weak entity]" {
+  "PUBLIC.BOOKS.CUSTOMERDATA":::weak_entity {
     string DATA
   }
 
-  "PUBLIC.BOOKS.CUSTOMERS [strong entity]" {
+  "PUBLIC.BOOKS.CUSTOMERS":::strong_entity {
     string FIRSTNAME
     string LASTNAME
     integer AGE
   }
 
-  "PUBLIC.BOOKS.Celebrities [strong entity]" {
+  "PUBLIC.BOOKS.Celebrities":::strong_entity {
     string NAME
   }
 
-  "PUBLIC.BOOKS.Celebrity Updates [sub-type]" {
+  "PUBLIC.BOOKS.Celebrity Updates":::subtype {
     string UPDATE
   }
 
-  "PUBLIC.BOOKS.PUBLISHERS [strong entity]" {
+  "PUBLIC.BOOKS.PUBLISHERS":::strong_entity {
     string PUBLISHER "Name of book publisher"
   }
 
-  "PUBLIC.BOOKS.ΒΙΒΛΊΑ [strong entity]" {
+  "PUBLIC.BOOKS.ΒΙΒΛΊΑ":::strong_entity {
     string ΤΊΤΛΟΣ
     string ΠΕΡΙΓΡΑΦΉ
   }
 
-  "PUBLIC.PUBLISHER SALES.REGIONS [strong entity]" {
+  "PUBLIC.PUBLISHER SALES.REGIONS":::strong_entity {
     string CITY
     string STATE
   }
 
-  "PUBLIC.PUBLISHER SALES.SALES [not an entity]" {
+  "PUBLIC.PUBLISHER SALES.SALESDATA":::non_entity {
+    integer SALESDATAID
+    decimal YEARLYAMOUNT
+  }
+
+  "PUBLIC.PUBLISHER SALES.SALES":::non_entity {
     integer COUPON_ID
     date PERIODENDDATE
     decimal TOTALAMOUNT
   }
 
-  "PUBLIC.PUBLISHER SALES.SALESDATA [not an entity]" {
-    integer SALESDATAID
-    decimal YEARLYAMOUNT
-  }
-
-  "PUBLIC.BOOKS.AUTHORS [strong entity]" }o--o{ "PUBLIC.BOOKS.BOOKS [strong entity]" : "via bridge table BOOKAUTHORS"
-  "PUBLIC.BOOKS.BOOKS [strong entity]" ||--o| "PUBLIC.BOOKS.BOOKS [strong entity]" : "self-reference"
-  "PUBLIC.BOOKS.CUSTOMERDATA [weak entity]" ||--|{ "PUBLIC.BOOKS.CUSTOMERS [strong entity]" : "foreign key"
-  "PUBLIC.BOOKS.Celebrity Updates [sub-type]" ||--|| "PUBLIC.BOOKS.Celebrities [strong entity]" : "foreign key"
-  "PUBLIC.BOOKS.ΒΙΒΛΊΑ [strong entity]" ||--|{ "PUBLIC.BOOKS.PUBLISHERS [strong entity]" : "foreign key"
-  "PUBLIC.PUBLISHER SALES.SALES [not an entity]" ||--o{ "PUBLIC.BOOKS.BOOKS [strong entity]" : "foreign key"
-  "PUBLIC.PUBLISHER SALES.SALES [not an entity]" ||--|{ "PUBLIC.PUBLISHER SALES.REGIONS [strong entity]" : "foreign key"
-  "PUBLIC.PUBLISHER SALES.SALES [not an entity]" ||--o{ "PUBLIC.PUBLISHER SALES.SALESDATA [not an entity]" : "foreign key"
+  "PUBLIC.BOOKS.AUTHORS" }o--o{ "PUBLIC.BOOKS.BOOKS" : "via bridge table BOOKAUTHORS"
+  "PUBLIC.BOOKS.BOOKS" ||--o| "PUBLIC.BOOKS.BOOKS" : "self-reference"
+  "PUBLIC.BOOKS.CUSTOMERDATA" ||--|{ "PUBLIC.BOOKS.CUSTOMERS" : "foreign key"
+  "PUBLIC.BOOKS.Celebrity Updates" ||--|| "PUBLIC.BOOKS.Celebrities" : "foreign key"
+  "PUBLIC.BOOKS.ΒΙΒΛΊΑ" ||--|{ "PUBLIC.BOOKS.PUBLISHERS" : "foreign key"
+  "PUBLIC.PUBLISHER SALES.SALES" ||--o{ "PUBLIC.BOOKS.BOOKS" : "foreign key"
+  "PUBLIC.PUBLISHER SALES.SALES" ||--|{ "PUBLIC.PUBLISHER SALES.REGIONS" : "foreign key"
+  "PUBLIC.PUBLISHER SALES.SALES" ||--o{ "PUBLIC.PUBLISHER SALES.SALESDATA" : "foreign key"
