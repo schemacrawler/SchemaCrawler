@@ -63,6 +63,20 @@ public final class OperationOptionsBuilder
     return this;
   }
 
+  /**
+   * Show LOB data, or not.
+   *
+   * @param value Whether to show LOB data.
+   * @return Builder
+   */
+  public OperationOptionsBuilder maxRows(final int value) {
+    maxRows = value;
+    if (maxRows < 0) {
+      maxRows = Integer.MAX_VALUE;
+    }
+    return this;
+  }
+
   public OperationOptionsBuilder showLobs() {
     return showLobs(true);
   }
@@ -75,20 +89,6 @@ public final class OperationOptionsBuilder
    */
   public OperationOptionsBuilder showLobs(final boolean value) {
     isShowLobs = value;
-    return this;
-  }
-
-  /**
-   * Show LOB data, or not.
-   *
-   * @param value Whether to show LOB data.
-   * @return Builder
-   */
-  public OperationOptionsBuilder maxRows(final int value) {
-    maxRows = value;
-    if (maxRows < 0) {
-      maxRows = Integer.MAX_VALUE;
-    }
     return this;
   }
 
