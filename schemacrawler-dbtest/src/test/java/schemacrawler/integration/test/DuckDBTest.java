@@ -32,10 +32,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.utility.IOUtility;
 
 @DisableLogging
-@DisabledOnOs(
-    value = OS.WINDOWS,
-    architectures = {"arm64"},
-    disabledReason = "DuckDB does not run on Windows ARM")
+@DisabledOnOs(value = OS.WINDOWS, disabledReason = "DuckDB does not run on Windows ARM")
 public class DuckDBTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
