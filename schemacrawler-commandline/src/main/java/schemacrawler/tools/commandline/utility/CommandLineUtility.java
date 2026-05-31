@@ -9,7 +9,6 @@
 package schemacrawler.tools.commandline.utility;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.PrintWriter;
@@ -173,6 +172,21 @@ public class CommandLineUtility {
 
   public static void printCommandLineErrorMessage(
       final String errorMessage, final ShellState state) {
+
+    final String errorHelpMessage =
+        """
+        Run SchemaCrawler again with just the
+        -h
+        option for help
+
+        Or, run SchemaCrawler again with an additional
+        --log-level=CONFIG
+        option for details on the error
+
+        Additional resources are on the SchemaCrawler website
+        https://www.schemacrawler.com
+        """;
+
     System.err.printf("%s%n%n", Version.version());
     if (!isBlank(errorMessage)) {
       System.err.printf("Error: %s%n%n", errorMessage);
@@ -180,7 +194,7 @@ public class CommandLineUtility {
       System.err.printf("Error: Unknown error%n%n");
     }
 
-    System.err.println(readResourceFully("/command-line-error.footer.txt"));
+    System.err.println(errorHelpMessage);
 
     System.err.println();
     System.err.println(CommandLineUtility.getEnvironment(state));
