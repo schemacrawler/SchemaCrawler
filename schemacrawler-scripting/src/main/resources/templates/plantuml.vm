@@ -95,7 +95,7 @@ end note
       #set($pkColName = $support.cleanName($columnReference.getPrimaryKeyColumn()))
       #set($fkColName = $support.cleanName($columnReference.getForeignKeyColumn()))
       #set($cardinality = $support.cardinalitySymbol($fk))
-$pkSchemaSlug.$pkTableSlug::$pkColName $cardinality $fkSchemaSlug.$fkTableSlug::$fkColName#if($support.hasName($fk)) : $fk.getName()#end
+$fkSchemaSlug.$fkTableSlug::$fkColName $cardinality $pkSchemaSlug.$pkTableSlug::$pkColName#if($support.hasName($fk)) : $fk.getName()#end
     #end
   #end
 #end
