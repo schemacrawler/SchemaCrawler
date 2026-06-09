@@ -80,10 +80,10 @@ erDiagram
   }
 
   "PUBLIC.BOOKS.AUTHORS" }o--o{ "PUBLIC.BOOKS.BOOKS" : "via bridge table BOOKAUTHORS"
-  "PUBLIC.BOOKS.BOOKS" ||--o| "PUBLIC.BOOKS.BOOKS" : "self-reference"
-  "PUBLIC.BOOKS.CUSTOMERDATA" ||--|{ "PUBLIC.BOOKS.CUSTOMERS" : "foreign key"
+  "PUBLIC.BOOKS.BOOKS" |o--|| "PUBLIC.BOOKS.BOOKS" : "self-reference"
+  "PUBLIC.BOOKS.CUSTOMERDATA" }|--|| "PUBLIC.BOOKS.CUSTOMERS" : "foreign key"
   "PUBLIC.BOOKS.Celebrity Updates" ||--|| "PUBLIC.BOOKS.Celebrities" : "foreign key"
-  "PUBLIC.BOOKS.ΒΙΒΛΊΑ" ||--|{ "PUBLIC.BOOKS.PUBLISHERS" : "foreign key"
-  "PUBLIC.PUBLISHER SALES.SALES" ||--o{ "PUBLIC.BOOKS.BOOKS" : "foreign key"
-  "PUBLIC.PUBLISHER SALES.SALES" ||--|{ "PUBLIC.PUBLISHER SALES.REGIONS" : "foreign key"
-  "PUBLIC.PUBLISHER SALES.SALES" ||--o{ "PUBLIC.PUBLISHER SALES.SALESDATA" : "foreign key"
+  "PUBLIC.BOOKS.ΒΙΒΛΊΑ" }|--|| "PUBLIC.BOOKS.PUBLISHERS" : "foreign key"
+  "PUBLIC.PUBLISHER SALES.SALES" }o--|| "PUBLIC.BOOKS.BOOKS" : "foreign key"
+  "PUBLIC.PUBLISHER SALES.SALES" }|--|| "PUBLIC.PUBLISHER SALES.REGIONS" : "foreign key"
+  "PUBLIC.PUBLISHER SALES.SALES" }o--|| "PUBLIC.PUBLISHER SALES.SALESDATA" : "foreign key"
