@@ -13,18 +13,25 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
 import static schemacrawler.test.utility.crawl.LightCatalogUtility.lightNamedObject;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import schemacrawler.ermodel.model.Relationship;
+import schemacrawler.ermodel.model.RelationshipCardinality;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectKey;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 import schemacrawler.test.utility.crawl.LightColumn;
+import schemacrawler.test.utility.crawl.LightColumnReference;
 import schemacrawler.test.utility.crawl.LightForeignKey;
 import schemacrawler.test.utility.crawl.LightPrimaryKey;
 import schemacrawler.test.utility.crawl.LightTable;
@@ -33,6 +40,110 @@ import schemacrawler.tools.command.script.ScriptSupport;
 public class ScriptSupportTest {
 
   private final ScriptSupport support = new ScriptSupport();
+
+  @Test
+  public void cardinality() {
+    // Null FK → unknown
+    assertThat(support.cardinality(null), is(RelationshipCardinality.unknown));
+
+    // FK whose table is a PartialDatabaseObject → unknown
+    final Table partialTable =
+        mock(Table.class, withSettings().extraInterfaces(PartialDatabaseObject.class));
+    final TableReference fkWithPartialTable = mock(TableReference.class);
+    when(fkWithPartialTable.getForeignKeyTable()).thenReturn(partialTable);
+    assertThat(support.cardinality(fkWithPartialTable), is(RelationshipCardinality.unknown));
+
+    // Non-unique (no PK/index on FK table) + non-optional
+    // (LightForeignKey.isOptional() = false)
+    // → one_many
+    final LightTable pkTable = new LightTable("pk_table");
+    final LightTable fkTableOneMay = new LightTable("fk_table_one_many");
+    final LightColumn fkCol1 = fkTableOneMay.addColumn("fk_col");
+    final LightColumn pkCol1 = pkTable.addColumn("pk_col1");
+    final LightForeignKey fkOneMay = new LightForeignKey("FK_ONE_MANY", fkCol1, pkCol1);
+    assertThat(support.cardinality(fkOneMay), is(RelationshipCardinality.one_many));
+
+    // Unique (FK col matches FK-table's PK) + non-optional → one_one
+    final LightTable fkTableOneOne = new LightTable("fk_table_one_one");
+    final LightColumn fkCol2 = fkTableOneOne.addColumn("fk_col");
+    final LightColumn pkCol2 = pkTable.addColumn("pk_col2");
+    fkTableOneOne.setPrimaryKey(new LightPrimaryKey(fkCol2));
+    final LightForeignKey fkOneOne = new LightForeignKey("FK_ONE_ONE", fkCol2, pkCol2);
+    assertThat(support.cardinality(fkOneOne), is(RelationshipCardinality.one_one));
+
+    // Non-unique + optional (mocked TableReference) → zero_many
+    final LightTable fkTableZeroMany = new LightTable("fk_table_zero_many");
+    final LightColumn fkCol3 = fkTableZeroMany.addColumn("fk_col");
+    final LightColumn pkCol3 = pkTable.addColumn("pk_col3");
+    final LightColumnReference colRef3 = new LightColumnReference(fkCol3, pkCol3);
+    final TableReference optionalFkZeroMany = mock(TableReference.class);
+    when(optionalFkZeroMany.getForeignKeyTable()).thenReturn(fkTableZeroMany);
+    when(optionalFkZeroMany.isOptional()).thenReturn(true);
+    when(optionalFkZeroMany.getColumnReferences()).thenReturn(List.of(colRef3));
+    when(optionalFkZeroMany.key()).thenReturn(new NamedObjectKey("schema", "FK_ZERO_MANY"));
+    assertThat(support.cardinality(optionalFkZeroMany), is(RelationshipCardinality.zero_many));
+
+    // Unique (FK col matches FK-table's PK) + optional → zero_one
+    final LightTable fkTableZeroOne = new LightTable("fk_table_zero_one");
+    final LightColumn fkCol4 = fkTableZeroOne.addColumn("fk_col");
+    final LightColumn pkCol4 = pkTable.addColumn("pk_col4");
+    fkTableZeroOne.setPrimaryKey(new LightPrimaryKey(fkCol4));
+    final LightColumnReference colRef4 = new LightColumnReference(fkCol4, pkCol4);
+    final TableReference optionalFkZeroOne = mock(TableReference.class);
+    when(optionalFkZeroOne.getForeignKeyTable()).thenReturn(fkTableZeroOne);
+    when(optionalFkZeroOne.isOptional()).thenReturn(true);
+    when(optionalFkZeroOne.getColumnReferences()).thenReturn(List.of(colRef4));
+    when(optionalFkZeroOne.key()).thenReturn(new NamedObjectKey("schema", "FK_ZERO_ONE"));
+    assertThat(support.cardinality(optionalFkZeroOne), is(RelationshipCardinality.zero_one));
+  }
+
+  @Test
+  public void cardinalitySymbolForRelationship() {
+    // Null relationship falls back to unknown → default Mermaid symbol
+    assertThat(support.cardinalitySymbol((Relationship) null), is("}o--||"));
+
+    final Relationship rel = mock(Relationship.class);
+
+    when(rel.getType()).thenReturn(RelationshipCardinality.unknown);
+    assertThat(support.cardinalitySymbol(rel), is("}o--||"));
+
+    when(rel.getType()).thenReturn(RelationshipCardinality.zero_one);
+    assertThat(support.cardinalitySymbol(rel), is("|o--||"));
+
+    when(rel.getType()).thenReturn(RelationshipCardinality.zero_many);
+    assertThat(support.cardinalitySymbol(rel), is("}o--||"));
+
+    when(rel.getType()).thenReturn(RelationshipCardinality.one_one);
+    assertThat(support.cardinalitySymbol(rel), is("||--||"));
+
+    when(rel.getType()).thenReturn(RelationshipCardinality.one_many);
+    assertThat(support.cardinalitySymbol(rel), is("}|--||"));
+
+    when(rel.getType()).thenReturn(RelationshipCardinality.many_many);
+    assertThat(support.cardinalitySymbol(rel), is("}o--o{"));
+  }
+
+  @Test
+  public void cardinalitySymbolForTableReference() {
+    // Null FK → unknown cardinality → default Mermaid symbol
+    assertThat(support.cardinalitySymbol((TableReference) null), is("}o--||"));
+
+    // Non-unique, non-optional FK → one_many
+    final LightTable pkTableSym = new LightTable("pk_table_sym");
+    final LightTable fkTableOneMay = new LightTable("fk_table_sym_one_many");
+    final LightColumn fkCol1 = fkTableOneMay.addColumn("fk_col");
+    final LightColumn pkCol1 = pkTableSym.addColumn("pk_col1");
+    final LightForeignKey fkOneMay = new LightForeignKey("FK_SYM_ONE_MANY", fkCol1, pkCol1);
+    assertThat(support.cardinalitySymbol(fkOneMay), is("}|--||"));
+
+    // Unique (FK col = PK), non-optional FK → one_one
+    final LightTable fkTableOneOne = new LightTable("fk_table_sym_one_one");
+    final LightColumn fkCol2 = fkTableOneOne.addColumn("fk_col");
+    final LightColumn pkCol2 = pkTableSym.addColumn("pk_col2");
+    fkTableOneOne.setPrimaryKey(new LightPrimaryKey(fkCol2));
+    final LightForeignKey fkOneOne = new LightForeignKey("FK_SYM_ONE_ONE", fkCol2, pkCol2);
+    assertThat(support.cardinalitySymbol(fkOneOne), is("||--||"));
+  }
 
   @Test
   public void cleanFullName() {
@@ -152,6 +263,54 @@ public class ScriptSupportTest {
   public void indent() {
     assertThat(support.indent(null, 2), is(""));
     assertThat(support.indent("x", 2), is("  x\n"));
+  }
+
+  @Test
+  public void isToMany() {
+    // Null FK → unknown cardinality → not to-many
+    assertThat(support.isToMany(null), is(false));
+
+    final LightTable pkTableToMany = new LightTable("pk_table_to_many");
+
+    // Non-unique, non-optional → one_many → to-many
+    final LightTable fkTableOneMay = new LightTable("fk_table_to_many_one_many");
+    final LightColumn fkCol1 = fkTableOneMay.addColumn("fk_col");
+    final LightColumn pkCol1 = pkTableToMany.addColumn("pk_col1");
+    final LightForeignKey fkOneMay = new LightForeignKey("FK_TO_MANY_ONE_MANY", fkCol1, pkCol1);
+    assertThat(support.isToMany(fkOneMay), is(true));
+
+    // Non-unique, optional → zero_many → to-many
+    final LightTable fkTableZeroMany = new LightTable("fk_table_to_many_zero_many");
+    final LightColumn fkCol2 = fkTableZeroMany.addColumn("fk_col");
+    final LightColumn pkCol2 = pkTableToMany.addColumn("pk_col2");
+    final LightColumnReference colRef2 = new LightColumnReference(fkCol2, pkCol2);
+    final TableReference optionalFkZeroMany = mock(TableReference.class);
+    when(optionalFkZeroMany.getForeignKeyTable()).thenReturn(fkTableZeroMany);
+    when(optionalFkZeroMany.isOptional()).thenReturn(true);
+    when(optionalFkZeroMany.getColumnReferences()).thenReturn(List.of(colRef2));
+    when(optionalFkZeroMany.key()).thenReturn(new NamedObjectKey("schema", "FK_TO_MANY_ZERO_MANY"));
+    assertThat(support.isToMany(optionalFkZeroMany), is(true));
+
+    // Unique (FK col = PK), non-optional → one_one → not to-many
+    final LightTable fkTableOneOne = new LightTable("fk_table_to_many_one_one");
+    final LightColumn fkCol3 = fkTableOneOne.addColumn("fk_col");
+    final LightColumn pkCol3 = pkTableToMany.addColumn("pk_col3");
+    fkTableOneOne.setPrimaryKey(new LightPrimaryKey(fkCol3));
+    final LightForeignKey fkOneOne = new LightForeignKey("FK_TO_MANY_ONE_ONE", fkCol3, pkCol3);
+    assertThat(support.isToMany(fkOneOne), is(false));
+
+    // Unique (FK col = PK), optional → zero_one → not to-many
+    final LightTable fkTableZeroOne = new LightTable("fk_table_to_many_zero_one");
+    final LightColumn fkCol4 = fkTableZeroOne.addColumn("fk_col");
+    final LightColumn pkCol4 = pkTableToMany.addColumn("pk_col4");
+    fkTableZeroOne.setPrimaryKey(new LightPrimaryKey(fkCol4));
+    final LightColumnReference colRef4 = new LightColumnReference(fkCol4, pkCol4);
+    final TableReference optionalFkZeroOne = mock(TableReference.class);
+    when(optionalFkZeroOne.getForeignKeyTable()).thenReturn(fkTableZeroOne);
+    when(optionalFkZeroOne.isOptional()).thenReturn(true);
+    when(optionalFkZeroOne.getColumnReferences()).thenReturn(List.of(colRef4));
+    when(optionalFkZeroOne.key()).thenReturn(new NamedObjectKey("schema", "FK_TO_MANY_ZERO_ONE"));
+    assertThat(support.isToMany(optionalFkZeroOne), is(false));
   }
 
   @Test

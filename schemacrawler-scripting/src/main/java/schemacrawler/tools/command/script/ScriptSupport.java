@@ -243,14 +243,21 @@ public final class ScriptSupport extends AbstractExecutionState {
     return MetaDataUtility.getSimpleTypeName(table).toString();
   }
 
+  /**
+   * This cardinality symbol syntax is used by Mermaid. When the graph is generated, the foreign key
+   * is on the left and the primary key is on the right.
+   *
+   * @param cardinality Relationship cardinality
+   * @return Mermaid cardinality symbol from foreign key to primary key
+   */
   private String cardinalitySymbol(final RelationshipCardinality cardinality) {
     return switch (cardinality) {
-      case zero_one -> "||--o|";
-      case zero_many -> "||--o{";
+      case zero_one -> "|o--||";
+      case zero_many -> "}o--||";
       case one_one -> "||--||";
-      case one_many -> "||--|{";
+      case one_many -> "}|--||";
       case many_many -> "}o--o{"; // bridge table implied
-      default -> "||--o{";
+      default -> "}o--||";
     };
   }
 
