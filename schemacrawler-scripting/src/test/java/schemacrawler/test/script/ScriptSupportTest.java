@@ -10,16 +10,24 @@ package schemacrawler.test.script;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.withSettings;
+import static schemacrawler.test.utility.crawl.LightCatalogUtility.lightCatalog;
 import static schemacrawler.test.utility.crawl.LightCatalogUtility.lightNamedObject;
 
+import java.util.Collection;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import schemacrawler.ermodel.implementation.ERModelBuilder;
+import schemacrawler.ermodel.model.ERModel;
+import schemacrawler.ermodel.model.Entity;
 import schemacrawler.ermodel.model.Relationship;
 import schemacrawler.ermodel.model.RelationshipCardinality;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
@@ -30,6 +38,8 @@ import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
+import schemacrawler.schema.TableType;
+import schemacrawler.schema.View;
 import schemacrawler.test.utility.crawl.LightColumn;
 import schemacrawler.test.utility.crawl.LightColumnReference;
 import schemacrawler.test.utility.crawl.LightForeignKey;
@@ -225,6 +235,36 @@ public class ScriptSupportTest {
   }
 
   @Test
+  public void entities() {
+    // No ER model set → empty
+    assertThat(support.entities().isEmpty(), is(true));
+
+    // Strong entity table (table with PK) → entity included in result
+    final LightTable entityTable = new LightTable("ENTITY_TABLE");
+    final LightColumn pkCol = entityTable.addColumn("ID");
+    entityTable.setPrimaryKey(new LightPrimaryKey(pkCol));
+    final Catalog catalogWithEntity = lightCatalog(entityTable);
+    final ERModel erModelWithEntity = ERModelBuilder.builder(catalogWithEntity).build();
+    final ScriptSupport supportWithEntity = new ScriptSupport();
+    supportWithEntity.setERModel(erModelWithEntity);
+    final Collection<Entity> entities = supportWithEntity.entities();
+    assertThat(entities.size(), is(1));
+    assertThat(entities.iterator().next().getTable(), is(entityTable));
+
+    // View table → excluded from result
+    final View mockView = mock(View.class);
+    when(mockView.key()).thenReturn(new NamedObjectKey("schema", "MOCK_VIEW"));
+    when(mockView.getImportedForeignKeys()).thenReturn(List.of());
+    when(mockView.getColumns()).thenReturn(List.of());
+    when(mockView.getTableType()).thenReturn(new TableType("VIEW"));
+    final Catalog catalogWithView = lightCatalog(mockView);
+    final ERModel erModelWithView = ERModelBuilder.builder(catalogWithView).build();
+    final ScriptSupport supportWithView = new ScriptSupport();
+    supportWithView.setERModel(erModelWithView);
+    assertThat(supportWithView.entities().isEmpty(), is(true));
+  }
+
+  @Test
   public void foreignKeyColumns() {
     assertThat(support.fkColumns(null), is(""));
 
@@ -386,6 +426,36 @@ public class ScriptSupportTest {
 
     final NamedObject namedObject = lightNamedObject(NamedObject.class, "abc[^\\d\\w\\-]xyz");
     assertThat(support.stripName(namedObject), is("abcxyz"));
+  }
+
+  @Test
+  public void tableReference() {
+    // Null column → null (isPartial(null) short-circuits to true)
+    assertThat(support.tableReference(null), is(nullValue()));
+
+    // Partial column → null
+    final Column partialColumn =
+        mock(Column.class, withSettings().extraInterfaces(PartialDatabaseObject.class));
+    assertThat(support.tableReference(partialColumn), is(nullValue()));
+
+    // LightColumn (isPartOfForeignKey() = false) → null
+    final LightTable table = new LightTable("t");
+    final LightColumn notFkCol = table.addColumn("col");
+    assertThat(support.tableReference(notFkCol), is(nullValue()));
+
+    // Column is part of an FK, and the matching FK column reference is found →
+    // returns the FK
+    final LightTable pkTable = new LightTable("pk_table");
+    final LightColumn pkCol = pkTable.addColumn("pk_col");
+    final LightTable fkTable = spy(new LightTable("fk_table"));
+    final Column fkCol = mock(Column.class);
+    when(fkCol.isPartOfForeignKey()).thenReturn(true);
+    when(fkCol.getParent()).thenReturn(fkTable);
+    final LightColumnReference colRef = new LightColumnReference(fkCol, pkCol);
+    final ForeignKey fk = mock(ForeignKey.class);
+    when(fk.iterator()).thenAnswer(inv -> List.of(colRef).iterator());
+    when(fkTable.getImportedForeignKeys()).thenReturn(List.of(fk));
+    assertThat(support.tableReference(fkCol), is(fk));
   }
 
   @Test
