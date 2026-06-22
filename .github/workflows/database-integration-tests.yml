@@ -55,7 +55,7 @@ jobs:
         remove-docker-images: 'true'
     - id: checkout-code
       name: Checkout code
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - id: move-m2-to-workspace
       name: Move Maven local repository to workspace
       shell: bash
