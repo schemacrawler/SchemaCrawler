@@ -105,7 +105,7 @@ jobs:
       uses: sualeh/build-maven-dependency@v1.0.8
       with:
         repository: schemacrawler/SchemaCrawler-Core
-        artifact: us.fatehi:schemacrawler:17.11.3
+        artifact: us.fatehi:schemacrawler:17.11.4
 
 # RUN DATABASE TESTS
     - id: pull-images
