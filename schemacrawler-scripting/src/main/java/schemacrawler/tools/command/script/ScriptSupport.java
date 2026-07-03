@@ -8,6 +8,6 @@
 
 package schemacrawler.tools.command.script;
 
-import schemacrawler.tools.state.AbstractExecutionState;
+import schemacrawler.tools.utility.AbstractTextSupport;
 
-public final class ScriptSupport extends AbstractExecutionState {}
+public final class ScriptSupport extends AbstractTextSupport {}
