@@ -22,7 +22,7 @@ COPY . /opt/schemacrawler/
 # configuration is available
 RUN \
     echo "Configure SchemaCrawler" \
- && chmod +rx /opt/schemacrawler/bin/schemacrawler.sh \
+ && chmod +rx /opt/schemacrawler/bin/*.sh \
  && mkdir -p /etc/bash_completion.d \
  && cp \
       /opt/schemacrawler/cli-support/schemacrawler-completion.bash \
