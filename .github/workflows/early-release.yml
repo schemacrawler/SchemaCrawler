@@ -68,27 +68,7 @@ jobs:
         echo "Show distribution directory"
         ls -1R ./schemacrawler-distrib/target/_expanded-distribution
 
-
-# CREATE GITHUB RELEASE
-    - id: create-release
-      name: Create GitHub early access release
-      uses: softprops/action-gh-release@v3
-      with:
-        target_commitish: ${{ github.sha }}
-        tag_name: ${{ env.DOCKER_IMAGE_TAG }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-        name: ${{ env.DOCKER_IMAGE_TAG }}
-        draft: false
-        prerelease: true
-        body: |
-          SchemaCrawler early access release at last commit ${{ github.sha }}
-        generate_release_notes: true
-        files: |
-          ./schemacrawler-distrib/target/schemacrawler-17.11.4-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.11.4-bin.zip.SHA-512
-        overwrite_files: true
-
-# MOVE GITHUB TAG
+# MOVE GITHUB TAG AND CREATE GITHUB RELEASE
     - id: install-gitsign
       name: Install gitsign for commit signing
       # See https://github.com/chainguard-dev/actions/blob/main/setup-gitsign/action.yml
@@ -98,20 +78,33 @@ jobs:
       env:
         GITSIGN_CONNECTOR_ID: "https://github.com/login/oauth"
         GITSIGN_TOKEN_PROVIDER: "github-actions"
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        TAG: ${{ env.DOCKER_IMAGE_TAG }}
+        SHA: ${{ github.sha }}
       shell: bash
       run: |
-        # Move early-access-release tag
-        # Set up user
-        git config user.name "Sualeh Fatehi"
-        git config user.email "sualeh@hotmail.com"
-        # Confirm gitsign is installed
-        gitsign --version
-        # Move tag
-        git tag -d ${{ env.DOCKER_IMAGE_TAG }} || true
-        git push --delete origin ${{ env.DOCKER_IMAGE_TAG }} || true
-        git tag -a ${{ env.DOCKER_IMAGE_TAG }} -m "SchemaCrawler AI Early Access Release"
-        git push --follow-tags origin ${{ env.DOCKER_IMAGE_TAG }}
-        git show --no-patch ${{ env.DOCKER_IMAGE_TAG }}
+      set -euo pipefail
+      ## Set username
+      git config user.name "Sualeh Fatehi"
+      git config user.email "sualeh@hotmail.com"
+      ## Verify that gitsign is available
+      gitsign --version
+      ## Delete previous early release and its tag
+      gh release delete "$TAG" -y || true
+      git push origin --delete "$TAG" || true
+      git tag -d "$TAG" || true
+      ## Re-tag to last commit
+      git tag -a "$TAG" -m "SchemaCrawler AI Early Access Release"
+      git push origin "$TAG"
+      ## Create pre-release and add files
+      gh release create "$TAG" \
+        --title "$TAG" \
+        --prerelease \
+        --notes "SchemaCrawler early access release at last commit $SHA"
+      gh release upload "$TAG" \
+        ./schemacrawler-distrib/target/schemacrawler-17.11.4-bin.zip \
+        ./schemacrawler-distrib/target/schemacrawler-17.11.4-bin.zip.SHA-512 \
+        --clobber
 
 # BUILD AND PUBLISH DOCKER IMAGE
     - id: setup-qemu
