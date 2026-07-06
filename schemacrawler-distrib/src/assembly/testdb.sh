@@ -5,4 +5,4 @@
 SCRIPT_PATH=$(readlink -f "$0")
 SC_DIR=$(dirname "$SCRIPT_PATH")/..
 
-java -cp "$SC_DIR"/lib/* schemacrawler.testdb.TestSchemaCreatorMain "$@"
+java -cp "$SC_DIR"/lib/*:"$SC_DIR"/config schemacrawler.testdb.TestSchemaCreatorMain "$@"
