@@ -44,7 +44,7 @@ end legend
 #[[$]]#schema("$support.cleanFullName($schema)", "$schema.key().slug()") {
 
       #foreach ($table in $catalog.getTables($schema))
-$${support.type($table)}("$support.cleanName($table)", "$table.key().slug()") {
+$${support.simpleTypeName($table)}("$support.cleanName($table)", "$table.key().slug()") {
           #foreach ($column in $table.getColumns())
             #set($col_macro = "  #[[$]]#column")
             #if($column.isPartOfPrimaryKey())
@@ -95,7 +95,7 @@ end note
       #set($pkColName = $support.cleanName($columnReference.getPrimaryKeyColumn()))
       #set($fkColName = $support.cleanName($columnReference.getForeignKeyColumn()))
       #set($cardinality = $support.cardinalitySymbol($fk))
-$fkSchemaSlug.$fkTableSlug::$fkColName $cardinality $pkSchemaSlug.$pkTableSlug::$pkColName#if($support.hasName($fk)) : $fk.getName()#end
+$fkSchemaSlug.$fkTableSlug::$fkColName $cardinality $pkSchemaSlug.$pkTableSlug::$pkColName#if($support.hasUserDefinedName($fk)) : $fk.getName()#end
     #end
   #end
 #end

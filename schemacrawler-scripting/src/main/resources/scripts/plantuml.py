@@ -48,7 +48,7 @@ for schema in catalog.getSchemas():
     print(f'$schema("{support.cleanFullName(schema)}", "{schema.key().slug()}") {{')
     print()
     for table in catalog.getTables(schema):
-        print(f'${support.type(table)}("{support.cleanName(table)}", "{table.key().slug()}") {{')
+        print(f'${support.simpleTypeName(table)}("{support.cleanName(table)}", "{table.key().slug()}") {{')
         for column in table.getColumns():
             if column.isPartOfPrimaryKey():
                 col_macro = '  $pk'
@@ -91,7 +91,7 @@ for table in catalog.getTables():
             fk_col_name = support.cleanName(columnReference.getForeignKeyColumn())
             cardinality = support.cardinalitySymbol(fk)
             print(f'{fk_schema_slug}.{fk_table_slug}::{fk_col_name} {cardinality} {pk_schema_slug}.{pk_table_slug}::{pk_col_name}', end='')
-            if support.hasName(fk):
+            if support.hasUserDefinedName(fk):
                 print(f' : {fk.getName()}', end='')
             print()
 print()

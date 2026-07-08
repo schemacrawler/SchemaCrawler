@@ -27,7 +27,7 @@ erDiagram
       #end      
       #set($remarks = "")
       #if($entity_attribute.hasRemarks())
-        #set($remarks = ' "' + $support.remarks$($entity_attribute) + '"')        
+        #set($remarks = ' "' + $support.singleLineRemarks($entity_attribute) + '"')        
       #end
     $entity_attribute.getType() $cleaned$remarks
     #end
@@ -45,7 +45,7 @@ erDiagram
   #elseif($relationship.getLeftEntity() == $relationship.getRightEntity())
     #set($label = "self-reference")
   #elseif($relationship.hasRemarks())
-    #set($label = $support.remarks($relationship))
+    #set($label = $support.singleLineRemarks($relationship))
   #end
   $Q$support.cleanFullName($relationship.getLeftEntity())$Q $cardinality_symbol $Q$support.cleanFullName($relationship.getRightEntity())$Q : "$label"
 #end
