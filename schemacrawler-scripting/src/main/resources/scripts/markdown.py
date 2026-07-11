@@ -14,7 +14,7 @@ for schema in catalog.getSchemas():
 
   print()
   for table in tables:
-    print(f'### {table.getName()} ({support.type(table)})')
+    print(f'### {table.getName()} ({support.simpleTypeName(table)})')
     if table.hasRemarks():
       print(table.getRemarks())
 
@@ -39,7 +39,7 @@ for schema in catalog.getSchemas():
       print()
       print('### Primary Key')
       pk = table.getPrimaryKey()
-      pk_name = f"{pk.getName()} " if support.hasName(pk) else ''
+      pk_name = f"{pk.getName()} " if support.hasUserDefinedName(pk) else ''
       print(f'- {pk_name}({support.columns(pk)})')
 
     indexes = support.nonPrimaryIndexes(table)
@@ -55,7 +55,7 @@ for schema in catalog.getSchemas():
       print()
       print('### Foreign Keys')
       for fk in foreign_keys:
-        fk_name = f"{fk.getName()} " if support.hasName(fk) else ''
+        fk_name = f"{fk.getName()} " if support.hasUserDefinedName(fk) else ''
         pk_cols = support.pkColumns(fk)
         fk_cols = support.fkColumns(fk)
         cardinality = support.cardinality(fk).description()

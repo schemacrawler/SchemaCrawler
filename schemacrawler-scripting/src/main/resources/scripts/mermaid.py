@@ -18,7 +18,7 @@ def label_for(relationship):
     elif left_entity == right_entity:
         return "self-reference"
     elif relationship.hasRemarks():
-        remarks = support.remarks(relationship)
+        remarks = support.singleLineRemarks(relationship)
         return remarks
     else:
         return 'foreign key'
@@ -48,7 +48,7 @@ for entity in support.entities():
         attribute_type = entity_attribute.getType()
         print(f'    {attribute_type} {strip_name(entity_attribute)}', end='')
         if entity_attribute.hasRemarks():
-            remarks = support.remarks(entity_attribute)
+            remarks = support.singleLineRemarks(entity_attribute)
             print(f' "{remarks}"', end='')
         print()
     print('  }')

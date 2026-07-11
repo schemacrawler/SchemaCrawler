@@ -8,7 +8,7 @@
 #[[##]]# $schema.getFullName()
 
         #foreach ($table in $tables)
-#[[###]]# $table.getName() ($support.type($table))
+#[[###]]# $table.getName() ($support.simpleTypeName($table))
             #if($table.hasRemarks())
 $table.getRemarks()
             #end
@@ -30,7 +30,7 @@ $table.getRemarks()
 #[[###]]# Primary Key
                 #set($pk = $table.getPrimaryKey())
                 #set($pk_name = "")
-                #if($support.hasName($pk))
+                #if($support.hasUserDefinedName($pk))
                     #set($pk_name = "$pk.getName() ")
                 #end
 - $pk_name($support.columns($pk))
@@ -49,7 +49,7 @@ $table.getRemarks()
 #[[###]]# Foreign Keys
                 #foreach ($fk in $foreign_keys)
                     #set($fk_name = "")
-                    #if($support.hasName($fk))
+                    #if($support.hasUserDefinedName($fk))
                         #set($fk_name = "$fk.getName() ")
                     #end
                     #set($pk_cols = $support.pkColumns($fk))

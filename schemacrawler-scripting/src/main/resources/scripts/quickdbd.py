@@ -31,7 +31,7 @@ for schema in catalog.getSchemas():
 	for table in tables:
 
 		if table.hasRemarks():
-			print(f'# {support.remarks(table)}')
+			print(f'# {support.singleLineRemarks(table)}')
 		print(f'"{table.getName()}" as {table.key().slug()}')
 		print(f'# {table.getFullName()}')	
 		print('------')
@@ -60,7 +60,7 @@ for schema in catalog.getSchemas():
 				cardinality_symbol = symbol_for(cardinality)
 				modifiers.append(f'FK {cardinality_symbol} {ref_table_slug}."{ref_col_name}"')
 			if column.hasRemarks():
-				modifiers.append(f'  # {support.remarks(column)}')								
+				modifiers.append(f'  # {support.singleLineRemarks(column)}')
 			col_mods = ' '.join(modifiers)
 
 			print(f'  {col_name} {col_type}', end='')

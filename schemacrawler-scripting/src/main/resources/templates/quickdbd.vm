@@ -10,7 +10,7 @@
     #foreach ($table in $tables)
 
       #if ($table.hasRemarks())
-#[[#]]# $support.remarks($table)
+#[[#]]# $support.singleLineRemarks($table)
       #end
 $Q$table.getName()$Q as $table.key().slug()
 #[[#]]# $table.getFullName()
@@ -58,7 +58,7 @@ $Q$table.getName()$Q as $table.key().slug()
       #set ($modifiers = "$modifiers FK $cardinality_symbol $ref_table_slug.$Q$ref_col_name$Q")
     #end
     #if ($column.hasRemarks())
-      #set ($modifiers = "$modifiers   #[[#]]# $support.remarks($column)")
+      #set ($modifiers = "$modifiers   #[[#]]# $support.singleLineRemarks($column)")
     #end
   $col_name $col_type#if ($modifiers)$modifiers#end
       #end
