@@ -50,6 +50,11 @@
       </dependency>
       <dependency>
         <groupId>us.fatehi</groupId>
+        <artifactId>schemacrawler-scribe</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>us.fatehi</groupId>
         <artifactId>schemacrawler-lint</artifactId>
         <version>${project.version}</version>
       </dependency>
