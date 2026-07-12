@@ -11,7 +11,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>17.11.5</version>
+    <version>17.11.4</version>
   </parent>
   <artifactId>schemacrawler-aggregator</artifactId>
   <packaging>pom</packaging>
@@ -24,6 +24,7 @@
     <module>schemacrawler-diagram</module>
     <module>schemacrawler-operations</module>
     <module>schemacrawler-scripting</module>
+    <module>schemacrawler-scribe</module>
     <module>schemacrawler-commandline</module>
     <module>schemacrawler-lint</module>
     <!-- Database plugins -->

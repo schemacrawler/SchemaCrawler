@@ -6,7 +6,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>17.11.5</version>
+    <version>17.11.4</version>
   </parent>
   <artifactId>schemacrawler-distrib</artifactId>
   <packaging>jar</packaging>
@@ -60,6 +60,11 @@
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-scripting</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-scribe</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
