@@ -15,24 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.io.Writer;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.scribe.command.options.SchemaScribeOptions;
 import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
-import schemacrawler.scribe.output.ScribeOutputContext;
-import schemacrawler.scribe.renderer.ScribeRenderer;
-import schemacrawler.scribe.renderer.ScribeSupport;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -41,7 +30,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class SchemaScribeCommandTest {
 
   @Test
-  public void executeRendersWithRegisteredRenderer(
+  public void executeThrowsWhenFormatIsNotSupported(
       final DatabaseConnectionSource connectionSource, @TempDir final Path tempDir)
       throws Exception {
     final Catalog catalog =
@@ -55,19 +44,11 @@ public class SchemaScribeCommandTest {
             .withOutputFile(zipFile)
             .withOutputFormatValue("stub")
             .toOptions());
-    final SchemaScribeOptions options = SchemaScribeOptionsBuilder.builder().toOptions();
-    command.configure(options);
+    command.configure(SchemaScribeOptionsBuilder.builder().toOptions());
 
-    final ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
-    final URLClassLoader stubClassLoader = newStubRendererClassLoader(tempDir, originalClassLoader);
-    Thread.currentThread().setContextClassLoader(stubClassLoader);
-    try {
-      final ExecutionRuntimeException exception =
-          assertThrows(ExecutionRuntimeException.class, command::execute);
-      assertThat(exception.getMessage(), containsString("No Scribe renderer"));
-    } finally {
-      Thread.currentThread().setContextClassLoader(originalClassLoader);
-    }
+    final ExecutionRuntimeException exception =
+        assertThrows(ExecutionRuntimeException.class, command::execute);
+    assertThat(exception.getMessage(), containsString("No Scribe renderer for output format"));
     assertThat(Files.exists(zipFile), is(false));
   }
 
@@ -88,16 +69,9 @@ public class SchemaScribeCommandTest {
             .toOptions());
     command.configure(SchemaScribeOptionsBuilder.builder().withExpandedOutput(true).toOptions());
 
-    final ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
-    final URLClassLoader stubClassLoader = newStubRendererClassLoader(tempDir, originalClassLoader);
-    Thread.currentThread().setContextClassLoader(stubClassLoader);
-    try {
-      final ExecutionRuntimeException exception =
-          assertThrows(ExecutionRuntimeException.class, command::execute);
-      assertThat(exception.getMessage(), containsString("No Scribe renderer"));
-    } finally {
-      Thread.currentThread().setContextClassLoader(originalClassLoader);
-    }
+    final ExecutionRuntimeException exception =
+        assertThrows(ExecutionRuntimeException.class, command::execute);
+    assertThat(exception.getMessage(), containsString("No Scribe renderer for output format"));
 
     assertThat(Files.exists(outputDir), is(false));
     assertThat(Files.exists(tempDir.resolve("out-dir.zip")), is(false));
@@ -137,45 +111,5 @@ public class SchemaScribeCommandTest {
     final ExecutionRuntimeException exception =
         assertThrows(ExecutionRuntimeException.class, command::execute);
     assertThat(exception.getMessage(), containsString("No database connection source provided"));
-  }
-
-  private URLClassLoader newStubRendererClassLoader(final Path tempDir, final ClassLoader parent)
-      throws IOException {
-    final Path servicesDir = tempDir.resolve("META-INF/services");
-    Files.createDirectories(servicesDir);
-    Files.writeString(
-        servicesDir.resolve("schemacrawler.scribe.renderer.ScribeRenderer"),
-        StubScribeRenderer.class.getName(),
-        StandardCharsets.UTF_8,
-        StandardOpenOption.CREATE,
-        StandardOpenOption.TRUNCATE_EXISTING);
-    final URL[] urls = {tempDir.toUri().toURL()};
-    return new URLClassLoader(urls, parent);
-  }
-
-  /** Test-only renderer, registered dynamically via an isolated classloader per test. */
-  public static final class StubScribeRenderer implements ScribeRenderer {
-
-    static volatile ScribeSupport lastHelper;
-    static volatile SchemaScribeOptions lastOptions;
-
-    @Override
-    public String getSupportedOutputFormat() {
-      return "stub";
-    }
-
-    @Override
-    public void render(
-        final ScribeSupport support,
-        final SchemaScribeOptions options,
-        final ScribeOutputContext output) {
-      lastHelper = support;
-      lastOptions = options;
-      try (Writer writer = output.openWriter("index.txt")) {
-        writer.write("stub");
-      } catch (final IOException e) {
-        throw new UncheckedIOException(e);
-      }
-    }
   }
 }
