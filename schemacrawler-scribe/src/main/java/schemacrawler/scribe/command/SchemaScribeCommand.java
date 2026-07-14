@@ -12,11 +12,10 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.scribe.command.options.SchemaScribeOptions;
 import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
-import schemacrawler.scribe.okf.OkfScribeRenderer;
+import schemacrawler.scribe.command.options.ScribeOutputFormat;
 import schemacrawler.scribe.output.ScribeOutputContext;
 import schemacrawler.scribe.output.ScribeOutputContextFactory;
 import schemacrawler.scribe.renderer.ScribeRenderer;
@@ -52,10 +51,6 @@ public final class SchemaScribeCommand extends AbstractSchemaCrawlerCommand<Sche
   public void execute() {
     checkCatalog();
 
-    // OutputOptionsBuilder always resolves a non-blank format (falling back to the
-    // output
-    // file's extension, or "text"), so there is no blank-format case to guard
-    // against here.
     final String outputFormat = getOutputOptions().getOutputFormatValue();
     final String title = getOutputOptions().getTitle();
 
@@ -88,8 +83,9 @@ public final class SchemaScribeCommand extends AbstractSchemaCrawlerCommand<Sche
   }
 
   private ScribeRenderer lookupRenderer(final String outputFormat) {
-    if ("okf".equals(outputFormat)) {
-    	return new OkfScribeRenderer();
+    final ScribeOutputFormat scribeOutputFormat = ScribeOutputFormat.fromFormatOrNull(outputFormat);
+    if (scribeOutputFormat != null) {
+      return scribeOutputFormat.newRenderer();
     }
     throw new ExecutionRuntimeException(
         "No Scribe renderer for output format <%s>".formatted(outputFormat));

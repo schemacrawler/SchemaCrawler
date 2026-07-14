@@ -12,10 +12,7 @@ import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.scribe.command.options.SchemaScribeOptions;
 import schemacrawler.scribe.output.ScribeOutputContext;
 
-/**
- * Service-provider interface for a Scribe report output format. Each output format is a separate
- * module that registers an implementation of this interface via {@link java.util.ServiceLoader}.
- */
+/** Renderer abstraction for a Scribe report output format. */
 public interface ScribeRenderer {
 
   /**

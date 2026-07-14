@@ -11,15 +11,11 @@ package schemacrawler.scribe.command;
 import static schemacrawler.scribe.command.SchemaScribeCommand.COMMAND;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.ServiceLoader;
-
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.scribe.command.options.SchemaScribeOptions;
 import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
-import schemacrawler.scribe.renderer.ScribeRenderer;
+import schemacrawler.scribe.command.options.ScribeOutputFormat;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
@@ -29,21 +25,10 @@ import schemacrawler.tools.options.OutputOptions;
 public final class SchemaScribeCommandProvider extends AbstractSchemaCrawlerCommandProvider {
 
   /**
-   * Builds a help footer listing whichever {@link ScribeRenderer} modules are on the classpath for
-   * this run, for use with the global {@code --output-format} option. There is no static,
-   * compile-time list of formats since renderer formats are discovered only via {@link
-   * ServiceLoader} at runtime, by design — the core module never depends on, or knows about, any
-   * specific renderer module.
-   *
-   * @return Help footer lines listing the currently-registered output formats
+   * @return Help footer lines listing Scribe output formats.
    */
   private static String[] outputFormatsFooter() {
-    final List<String> formats = new ArrayList<>();
-    final ClassLoader classLoader = SchemaScribeCommandProvider.class.getClassLoader();
-    for (final ScribeRenderer renderer : ServiceLoader.load(ScribeRenderer.class, classLoader)) {
-      formats.add(renderer.getSupportedOutputFormat());
-    }
-    Collections.sort(formats);
+    final List<String> formats = ScribeOutputFormat.supportedFormats();
     if (formats.isEmpty()) {
       return new String[0];
     }
@@ -60,8 +45,8 @@ public final class SchemaScribeCommandProvider extends AbstractSchemaCrawlerComm
   /**
    * {@inheritDoc}
    *
-   * <p>Note: The currently-registered output formats are listed in this command's help footer,
-   * built dynamically (see {@link #outputFormatsFooter()}).
+   * <p>Note: Supported output formats are listed in this command's help footer (see {@link
+   * #outputFormatsFooter()}).
    */
   @Override
   public PluginCommand getCommandLineCommand() {
@@ -102,6 +87,6 @@ public final class SchemaScribeCommandProvider extends AbstractSchemaCrawlerComm
       return false;
     }
     final String format = outputOptions.getOutputFormatValue();
-    return "okf".equals(format);
+    return ScribeOutputFormat.isSupportedFormat(format);
   }
 }
