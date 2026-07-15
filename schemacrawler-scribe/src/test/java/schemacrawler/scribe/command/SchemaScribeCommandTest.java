@@ -48,7 +48,7 @@ public class SchemaScribeCommandTest {
 
     final ExecutionRuntimeException exception =
         assertThrows(ExecutionRuntimeException.class, command::execute);
-    assertThat(exception.getMessage(), containsString("No Scribe renderer for output format"));
+    assertThat(exception.getMessage(), containsString("Generate a database schema report bundle"));
     assertThat(Files.exists(zipFile), is(false));
   }
 
@@ -71,7 +71,7 @@ public class SchemaScribeCommandTest {
 
     final ExecutionRuntimeException exception =
         assertThrows(ExecutionRuntimeException.class, command::execute);
-    assertThat(exception.getMessage(), containsString("No Scribe renderer for output format"));
+    assertThat(exception.getMessage(), containsString("Generate a database schema report bundle"));
 
     assertThat(Files.exists(outputDir), is(false));
     assertThat(Files.exists(tempDir.resolve("out-dir.zip")), is(false));

@@ -44,7 +44,7 @@ public class SchemaScribeCommandProviderTest {
   public void supportsOutputFormatOnlyForKnownFormat() {
     final SchemaScribeCommandProvider provider = new SchemaScribeCommandProvider();
     final OutputOptions unsupportedOutputOptions =
-        OutputOptionsBuilder.builder().withOutputFormatValue("text").toOptions();
+        OutputOptionsBuilder.builder().withOutputFormatValue("unsupported").toOptions();
     final OutputOptions supportedOutputOptions =
         OutputOptionsBuilder.builder().withOutputFormatValue("okf").toOptions();
     assertThat(provider.supportsOutputFormat("scribe", unsupportedOutputOptions), is(false));

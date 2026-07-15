@@ -35,11 +35,16 @@ public class ScribeOutputFormatTest {
 
   @Test
   public void rejectsUnknownFormat() {
-    assertThat(ScribeOutputFormat.isSupportedFormat("text"), is(false));
+    assertThat(ScribeOutputFormat.isSupportedFormat("unsupported"), is(false));
   }
 
   @Test
   public void supportsKnownFormatCaseInsensitively() {
     assertThat(ScribeOutputFormat.isSupportedFormat("OKF"), is(true));
+  }
+
+  @Test
+  public void supportsText() {
+    assertThat(ScribeOutputFormat.isSupportedFormat("text"), is(true));
   }
 }

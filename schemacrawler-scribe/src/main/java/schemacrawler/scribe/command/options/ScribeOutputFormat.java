@@ -27,10 +27,8 @@ public enum ScribeOutputFormat {
   }
 
   public static ScribeOutputFormat fromFormatOrNull(final String format) {
-    if (isBlank(format)) {
-      return null;
-    }
-    if ("text".equals(format)) {
+    // Handle defaults
+    if (isBlank(format) || "text".equals(format)) {
       return okf;
     }
     for (final ScribeOutputFormat outputFormat : values()) {
@@ -38,6 +36,7 @@ public enum ScribeOutputFormat {
         return outputFormat;
       }
     }
+    // Return null if a bad, non-empty format is returned
     return null;
   }
 
