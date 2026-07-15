@@ -83,12 +83,8 @@ public final class SchemaScribeCommand extends AbstractSchemaCrawlerCommand<Sche
   }
 
   private ScribeRenderer lookupRenderer(final String outputFormat) {
-    final ScribeOutputFormat scribeOutputFormat = ScribeOutputFormat.fromFormatOrNull(outputFormat);
-    if (scribeOutputFormat != null) {
-      return scribeOutputFormat.newRenderer();
-    }
-    throw new ExecutionRuntimeException(
-        "No Scribe renderer for output format <%s>".formatted(outputFormat));
+    final ScribeOutputFormat scribeOutputFormat = ScribeOutputFormat.fromFormat(outputFormat);
+    return scribeOutputFormat.newRenderer();
   }
 
   private Lints runLint() {
