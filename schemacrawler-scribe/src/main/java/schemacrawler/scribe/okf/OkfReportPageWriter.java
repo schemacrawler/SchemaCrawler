@@ -8,13 +8,14 @@
 
 package schemacrawler.scribe.okf;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.scribe.model.CrossReferenceModelFactory;
@@ -93,8 +94,12 @@ public final class OkfReportPageWriter {
     model.put("routines", routines);
 
     templateRenderer.writeTemplate("root-index.ftl", model, ROOT_INDEX_PATH);
-    templateRenderer.writeTemplate("tables-index.ftl", model, TABLES_INDEX_PATH);
-    templateRenderer.writeTemplate("routines-index.ftl", model, ROUTINES_INDEX_PATH);
+    if (!tablesAndViews.isEmpty()) {
+      templateRenderer.writeTemplate("tables-index.ftl", model, TABLES_INDEX_PATH);
+    }
+    if (!routines.isEmpty()) {
+      templateRenderer.writeTemplate("routines-index.ftl", model, ROUTINES_INDEX_PATH);
+    }
     templateRenderer.writeTemplate("reports-index.ftl", model, REPORTS_INDEX_PATH);
   }
 
