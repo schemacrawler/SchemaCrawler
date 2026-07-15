@@ -17,20 +17,20 @@ import schemacrawler.scribe.okf.OkfScribeRenderer;
 public class ScribeOutputFormatTest {
 
   @Test
+  public void acceptsBlank() {
+    assertThat(ScribeOutputFormat.isSupportedFormat("  "), is(true));
+  }
+
+  @Test
+  public void acceptsNull() {
+    assertThat(ScribeOutputFormat.isSupportedFormat(null), is(true));
+  }
+
+  @Test
   public void createsRendererForKnownFormat() {
     assertThat(
         ScribeOutputFormat.fromFormatOrNull("okf").newRenderer() instanceof OkfScribeRenderer,
         is(true));
-  }
-
-  @Test
-  public void rejectsBlank() {
-    assertThat(ScribeOutputFormat.isSupportedFormat("  "), is(false));
-  }
-
-  @Test
-  public void rejectsNull() {
-    assertThat(ScribeOutputFormat.isSupportedFormat(null), is(false));
   }
 
   @Test
