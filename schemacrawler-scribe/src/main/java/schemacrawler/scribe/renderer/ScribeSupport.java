@@ -49,7 +49,6 @@ import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.state.ExecutionState;
 import schemacrawler.tools.utility.AbstractTextSupport;
 import schemacrawler.utility.MetaDataUtility;
-import us.fatehi.utility.property.ProductVersion;
 
 /**
  * Single source of truth for all catalog, ER model, lint, and message data used by Scribe
@@ -240,8 +239,8 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   /**
-   * Gets the database product title, without version. Uses the report title from the options when
-   * set.
+   * Gets the report title. Uses the report title from the options when set, otherwise a localized
+   * default title.
    *
    * @return Database or report title
    */
@@ -249,8 +248,7 @@ public final class ScribeSupport extends AbstractTextSupport {
     if (!isBlank(options.getTitle())) {
       return options.getTitle();
     }
-    final ProductVersion databaseVersion = getCatalog().getCrawlInfo().getDatabaseVersion();
-    return databaseVersion == null ? "" : databaseVersion.getProductName();
+    return messages.labelDatabaseSchema();
   }
 
   public EntityModelType entityModelType(final Table table) {

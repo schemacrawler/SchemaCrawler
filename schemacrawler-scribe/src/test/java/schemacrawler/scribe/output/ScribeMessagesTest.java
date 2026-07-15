@@ -34,6 +34,7 @@ public class ScribeMessagesTest {
     assertThat(messages.labelStoredProcedure(), is("Stored Procedure"));
     assertThat(messages.labelDatabaseProduct(), is("Database product"));
     assertThat(messages.labelDatabaseVersion(), is("Database version"));
+    assertThat(messages.labelDatabaseSchema(), is("Database Schema"));
     assertThat(messages.labelTables(), is("Tables"));
     assertThat(messages.labelEntityModelType(), is("Entity model type"));
     assertThat(messages.valueEntityModelTypeBridgeTable(), is("Bridge table"));
@@ -43,18 +44,21 @@ public class ScribeMessagesTest {
   public void frenchIsLocalized() {
     final ScribeMessages messages = new ScribeMessages(Locale.FRENCH);
     assertThat(messages.sectionColumns(), is(not("Columns")));
+    assertThat(messages.labelDatabaseSchema(), is(not("Database Schema")));
   }
 
   @Test
   public void germanIsLocalized() {
     final ScribeMessages messages = new ScribeMessages(Locale.GERMAN);
     assertThat(messages.sectionColumns(), is(not("Columns")));
+    assertThat(messages.labelDatabaseSchema(), is(not("Database Schema")));
   }
 
   @Test
   public void spanishIsLocalized() {
     final ScribeMessages messages = new ScribeMessages(Locale.forLanguageTag("es"));
     assertThat(messages.sectionColumns(), is(not("Columns")));
+    assertThat(messages.labelDatabaseSchema(), is(not("Database Schema")));
   }
 
   @Test

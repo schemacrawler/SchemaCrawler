@@ -158,6 +158,10 @@ public final class ScribeMessages {
     return message("label.database_version");
   }
 
+  public String labelDatabaseSchema() {
+    return message("label.database_schema");
+  }
+
   public String labelEntityModelType() {
     return message("label.entity_model_type");
   }

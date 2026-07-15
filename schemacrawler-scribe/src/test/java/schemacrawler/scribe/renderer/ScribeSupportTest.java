@@ -53,6 +53,18 @@ public class ScribeSupportTest {
     final ScribeSupport support = newHelper(catalog, options);
 
     assertThat(support.messages().sectionColumns(), is("Colonnes"));
+    assertThat(support.databaseTitle(), is("Schéma de base de données"));
+  }
+
+  @Test
+  public void explicitTitleIsPreserved(final DatabaseConnectionSource connectionSource) {
+    final Catalog catalog = catalog(connectionSource);
+    final SchemaScribeOptions options =
+        SchemaScribeOptionsBuilder.builder().withTitle("Custom Title").toOptions();
+
+    final ScribeSupport support = newHelper(catalog, options);
+
+    assertThat(support.databaseTitle(), is("Custom Title"));
   }
 
   @Test
