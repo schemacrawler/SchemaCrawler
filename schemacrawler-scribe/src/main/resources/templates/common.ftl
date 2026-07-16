@@ -14,20 +14,3 @@
 <#macro routineLink routine pathPrefix="../routines/">
 [${routine.fullName}](${pathPrefix}${routine.key().slug()}.md)<#rt>
 </#macro>
-<#macro lintsTable lints>
-<@common.markdownTableHeader headers=[msg.headerName(), msg.sectionDescription(), msg.headerValue()] />
-<#list lints as lint>
-<#assign objectRef>
-<#if lint.objectType?string == 'table'>
-<@common.tableFullNameLink tableFullName=lint.objectName tableKey=lint.objectKey/>
-<#else>
-${lint.objectName}<#rt>
-</#if>
-</#assign>
-<@common.markdownTableRow values=[
-  objectRef,
-  lint.message,
-  lint.valueAsString
-] />
-</#list>
-</#macro>

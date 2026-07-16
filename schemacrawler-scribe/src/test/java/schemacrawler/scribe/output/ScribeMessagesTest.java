@@ -66,6 +66,13 @@ public class ScribeMessagesTest {
   }
 
   @Test
+  public void portugueseIsLocalized() {
+    final ScribeMessages messages = new ScribeMessages(Locale.forLanguageTag("pt"));
+    assertThat(messages.sectionColumns(), is(not("Columns")));
+    assertThat(messages.labelDatabaseSchema(), is(not("Database Schema")));
+  }
+
+  @Test
   public void unknownLocaleFallsBackToEnglish() {
     final ScribeMessages messages = new ScribeMessages(Locale.forLanguageTag("xx"));
     assertThat(messages.sectionColumns(), is("Columns"));
@@ -82,7 +89,8 @@ public class ScribeMessagesTest {
         new String[] {
           "ScribeMessages_fr.properties",
           "ScribeMessages_de.properties",
-          "ScribeMessages_es.properties"
+          "ScribeMessages_es.properties",
+          "ScribeMessages_pt.properties"
         }) {
       final Set<String> localizedKeys = loadKeys(bundleFile);
       assertThat(bundleFile, localizedKeys, is(englishKeys));
