@@ -8,21 +8,25 @@
 
 package schemacrawler.scribe.okf;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
-
+import java.util.stream.Collectors;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.scribe.model.CrossReferenceModelFactory;
-import schemacrawler.scribe.model.LintModel;
-import schemacrawler.scribe.model.LintModelFactory;
 import schemacrawler.scribe.renderer.ScribeMessages;
 import schemacrawler.scribe.renderer.ScribeSupport;
+import schemacrawler.tools.lint.Lint;
+import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.lint.Lints;
 import us.fatehi.utility.string.StringFormat;
 
 /** Writes OKF index and report pages. */
@@ -108,10 +112,18 @@ public final class OkfReportPageWriter {
       LOGGER.log(Level.FINE, new StringFormat("Writing lint report to <%s>", LINT_PATH));
     }
 
-    final LintModel lintModel = LintModelFactory.createLintModel(support);
+    final Lints lints = support.lints();
+    if (lints == null) {
+      return;
+    }
+
+    final SortedMap<LintSeverity, List<Lint<?>>> lintsBySeverity =
+        new TreeMap<>(Comparator.reverseOrder());
+    lintsBySeverity.putAll(lints.stream().collect(Collectors.groupingBy(Lint::getSeverity)));
+
     final Map<String, Object> model = makeModel();
-    model.put("lintCount", lintModel.lintCount());
-    model.put("lintGroups", lintModel.lintGroups());
+    model.put("lintCount", lints.size());
+    model.put("lintsBySeverity", lintsBySeverity);
 
     templateRenderer.writeTemplate("lint.ftl", model, LINT_PATH);
   }

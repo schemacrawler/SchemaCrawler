@@ -1,18 +1,23 @@
 <#import "common.ftl" as common>
+
 # ${msg.sectionLintIssues()}
 
-${lintCount?c} issue(s) found.
+<#list lintsBySeverity as severity, lints>
+<#-- ## ${support.severityMessage(severity)} -->
 
-<#list lintGroups as group>
-## ${group.linterId}
-
-<@common.markdownTableHeader headers=[msg.headerName(), "Severity", msg.sectionDescription()] />
-<#list group.entries as entry>
-<#assign objectRef><#if entry.table??><@common.tableLink table=entry.table pathPrefix="../tables/"/><#else>${entry.objectName}</#if></#assign>
+<@common.markdownTableHeader headers=[msg.headerName(), msg.sectionDescription(), msg.headerValue()] />
+<#list lints as lint>
+<#assign objectRef>
+<#if lint.objectType?string == 'table'>
+<@common.tableFullNameLink tableFullName=lint.objectName tableKey=lint.objectKey/>
+<#else>
+${lint.objectName}<#rt>
+</#if>
+</#assign>
 <@common.markdownTableRow values=[
   objectRef,
-  entry.severity,
-  entry.message
+  lint.message,
+  lint.valueAsString
 ] />
 </#list>
 
