@@ -45,11 +45,11 @@ import schemacrawler.schema.TypedObject;
 import schemacrawler.schema.View;
 import schemacrawler.scribe.command.options.SchemaScribeOptions;
 import schemacrawler.tools.lint.Lint;
+import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.state.ExecutionState;
 import schemacrawler.tools.utility.AbstractTextSupport;
 import schemacrawler.utility.MetaDataUtility;
-import us.fatehi.utility.property.ProductVersion;
 
 /**
  * Single source of truth for all catalog, ER model, lint, and message data used by Scribe
@@ -240,8 +240,8 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   /**
-   * Gets the database product title, without version. Uses the report title from the options when
-   * set.
+   * Gets the report title. Uses the report title from the options when set, otherwise a localized
+   * default title.
    *
    * @return Database or report title
    */
@@ -249,8 +249,7 @@ public final class ScribeSupport extends AbstractTextSupport {
     if (!isBlank(options.getTitle())) {
       return options.getTitle();
     }
-    final ProductVersion databaseVersion = getCatalog().getCrawlInfo().getDatabaseVersion();
-    return databaseVersion == null ? "" : databaseVersion.getProductName();
+    return messages.labelDatabaseSchema();
   }
 
   public EntityModelType entityModelType(final Table table) {
@@ -487,6 +486,25 @@ public final class ScribeSupport extends AbstractTextSupport {
    */
   public Lints lints() {
     return lints;
+  }
+
+  /**
+   * Gets a localized lint severity label for report headings.
+   *
+   * @param severity Lint severity
+   * @return Localized severity label, or empty when severity is {@code null}
+   */
+  public String severityMessage(final LintSeverity severity) {
+    if (severity == null) {
+      return "";
+    }
+
+    return switch (severity) {
+      case low -> messages.lintSeverityLow();
+      case medium -> messages.lintSeverityMedium();
+      case high -> messages.lintSeverityHigh();
+      case critical -> messages.lintSeverityCritical();
+    };
   }
 
   public String localizedEntityModelType(final Table table) {

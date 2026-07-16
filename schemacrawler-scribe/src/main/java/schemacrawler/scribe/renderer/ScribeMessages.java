@@ -158,6 +158,10 @@ public final class ScribeMessages {
     return message("label.database_version");
   }
 
+  public String labelDatabaseSchema() {
+    return message("label.database_schema");
+  }
+
   public String labelEntityModelType() {
     return message("label.entity_model_type");
   }
@@ -240,6 +244,22 @@ public final class ScribeMessages {
 
   public String lintNullDefault() {
     return message("lint.null_default");
+  }
+
+  public String lintSeverityCritical() {
+    return message("lint.severity.critical");
+  }
+
+  public String lintSeverityHigh() {
+    return message("lint.severity.high");
+  }
+
+  public String lintSeverityLow() {
+    return message("lint.severity.low");
+  }
+
+  public String lintSeverityMedium() {
+    return message("lint.severity.medium");
   }
 
   public String lintSingleColumn() {

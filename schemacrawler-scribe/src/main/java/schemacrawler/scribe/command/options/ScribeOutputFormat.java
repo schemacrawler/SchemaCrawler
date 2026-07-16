@@ -18,24 +18,34 @@ import schemacrawler.scribe.renderer.ScribeRenderer;
 public enum ScribeOutputFormat {
   okf;
 
-  public static boolean isSupportedFormat(final String format) {
-    return fromFormatOrNull(format) != null;
-  }
-
-  public static List<String> supportedFormats() {
-    return List.of(okf.name());
+  public static ScribeOutputFormat fromFormat(final String format) {
+    ScribeOutputFormat scribeFormat = fromFormatOrNull(format);
+    if (scribeFormat != null) {
+      return scribeFormat;
+    }
+    return okf;
   }
 
   public static ScribeOutputFormat fromFormatOrNull(final String format) {
-    if (isBlank(format)) {
-      return null;
+    // Handle defaults
+    if (isBlank(format) || "text".equals(format)) {
+      return okf;
     }
     for (final ScribeOutputFormat outputFormat : values()) {
       if (outputFormat.name().equalsIgnoreCase(format)) {
         return outputFormat;
       }
     }
+    // Return null if a bad, non-empty format is returned
     return null;
+  }
+
+  public static boolean isSupportedFormat(final String format) {
+    return fromFormatOrNull(format) != null;
+  }
+
+  public static List<String> supportedFormats() {
+    return List.of(okf.name());
   }
 
   public ScribeRenderer newRenderer() {

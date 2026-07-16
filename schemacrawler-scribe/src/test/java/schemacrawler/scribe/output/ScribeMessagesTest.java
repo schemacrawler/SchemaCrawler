@@ -34,8 +34,13 @@ public class ScribeMessagesTest {
     assertThat(messages.labelStoredProcedure(), is("Stored Procedure"));
     assertThat(messages.labelDatabaseProduct(), is("Database product"));
     assertThat(messages.labelDatabaseVersion(), is("Database version"));
+    assertThat(messages.labelDatabaseSchema(), is("Database Schema"));
     assertThat(messages.labelTables(), is("Tables"));
     assertThat(messages.labelEntityModelType(), is("Entity model type"));
+    assertThat(messages.lintSeverityLow(), is("Severity low"));
+    assertThat(messages.lintSeverityMedium(), is("Severity medium"));
+    assertThat(messages.lintSeverityHigh(), is("Severity high"));
+    assertThat(messages.lintSeverityCritical(), is("Severity critical"));
     assertThat(messages.valueEntityModelTypeBridgeTable(), is("Bridge table"));
   }
 
@@ -43,18 +48,28 @@ public class ScribeMessagesTest {
   public void frenchIsLocalized() {
     final ScribeMessages messages = new ScribeMessages(Locale.FRENCH);
     assertThat(messages.sectionColumns(), is(not("Columns")));
+    assertThat(messages.labelDatabaseSchema(), is(not("Database Schema")));
   }
 
   @Test
   public void germanIsLocalized() {
     final ScribeMessages messages = new ScribeMessages(Locale.GERMAN);
     assertThat(messages.sectionColumns(), is(not("Columns")));
+    assertThat(messages.labelDatabaseSchema(), is(not("Database Schema")));
   }
 
   @Test
   public void spanishIsLocalized() {
     final ScribeMessages messages = new ScribeMessages(Locale.forLanguageTag("es"));
     assertThat(messages.sectionColumns(), is(not("Columns")));
+    assertThat(messages.labelDatabaseSchema(), is(not("Database Schema")));
+  }
+
+  @Test
+  public void portugueseIsLocalized() {
+    final ScribeMessages messages = new ScribeMessages(Locale.forLanguageTag("pt"));
+    assertThat(messages.sectionColumns(), is(not("Columns")));
+    assertThat(messages.labelDatabaseSchema(), is(not("Database Schema")));
   }
 
   @Test
@@ -74,7 +89,8 @@ public class ScribeMessagesTest {
         new String[] {
           "ScribeMessages_fr.properties",
           "ScribeMessages_de.properties",
-          "ScribeMessages_es.properties"
+          "ScribeMessages_es.properties",
+          "ScribeMessages_pt.properties"
         }) {
       final Set<String> localizedKeys = loadKeys(bundleFile);
       assertThat(bundleFile, localizedKeys, is(englishKeys));

@@ -56,6 +56,13 @@ public class OkfLocalizationTest {
     assertLocalizedHeading(connectionSource, tempDir, Locale.forLanguageTag("es"));
   }
 
+  @Test
+  public void portugueseLocale(
+      final DatabaseConnectionSource connectionSource, @TempDir final Path tempDir)
+      throws Exception {
+    assertLocalizedHeading(connectionSource, tempDir, Locale.forLanguageTag("pt"));
+  }
+
   private void assertLocalizedHeading(
       final DatabaseConnectionSource connectionSource, final Path tempDir, final Locale locale)
       throws Exception {

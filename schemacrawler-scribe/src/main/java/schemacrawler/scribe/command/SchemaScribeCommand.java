@@ -39,7 +39,7 @@ public final class SchemaScribeCommand extends AbstractSchemaCrawlerCommand<Sche
   private static final Logger LOGGER = Logger.getLogger(SchemaScribeCommand.class.getName());
 
   static final PropertyName COMMAND =
-      new PropertyName("scribe", "Generate a multi-file schema report bundle");
+      new PropertyName("scribe", "Generate a database schema report bundle");
 
   /** Creates the Scribe command. */
   public SchemaScribeCommand() {
@@ -53,6 +53,12 @@ public final class SchemaScribeCommand extends AbstractSchemaCrawlerCommand<Sche
 
     final String outputFormat = getOutputOptions().getOutputFormatValue();
     final String title = getOutputOptions().getTitle();
+
+    final boolean supportedFormat = ScribeOutputFormat.isSupportedFormat(outputFormat);
+    if (!supportedFormat) {
+      throw new ExecutionRuntimeException(
+          "Output format <%s> not supported for command <%s>".formatted(outputFormat, command));
+    }
 
     final SchemaScribeOptions options =
         SchemaScribeOptionsBuilder.builder()
@@ -83,12 +89,8 @@ public final class SchemaScribeCommand extends AbstractSchemaCrawlerCommand<Sche
   }
 
   private ScribeRenderer lookupRenderer(final String outputFormat) {
-    final ScribeOutputFormat scribeOutputFormat = ScribeOutputFormat.fromFormatOrNull(outputFormat);
-    if (scribeOutputFormat != null) {
-      return scribeOutputFormat.newRenderer();
-    }
-    throw new ExecutionRuntimeException(
-        "No Scribe renderer for output format <%s>".formatted(outputFormat));
+    final ScribeOutputFormat scribeOutputFormat = ScribeOutputFormat.fromFormat(outputFormat);
+    return scribeOutputFormat.newRenderer();
   }
 
   private Lints runLint() {

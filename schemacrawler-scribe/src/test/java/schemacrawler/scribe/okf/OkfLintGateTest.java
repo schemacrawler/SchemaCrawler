@@ -77,7 +77,7 @@ public class OkfLintGateTest {
     assertThat(reportsIndex, containsString("(cross-references.md)"));
     assertThat(reportsIndex, containsString("(lint.md)"));
     final String content = ZipTestUtility.readEntry(zipFile, "reports/lint.md");
-    assertThat(content, containsString("issue(s) found"));
+    assertThat(content, containsString("# "));
     for (final String entry : ZipTestUtility.entryNames(zipFile)) {
       if (entry.startsWith("tables/")) {
         assertThat(

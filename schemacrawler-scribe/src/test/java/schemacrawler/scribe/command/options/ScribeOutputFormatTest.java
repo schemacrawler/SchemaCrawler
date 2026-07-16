@@ -17,6 +17,16 @@ import schemacrawler.scribe.okf.OkfScribeRenderer;
 public class ScribeOutputFormatTest {
 
   @Test
+  public void acceptsBlank() {
+    assertThat(ScribeOutputFormat.isSupportedFormat("  "), is(true));
+  }
+
+  @Test
+  public void acceptsNull() {
+    assertThat(ScribeOutputFormat.isSupportedFormat(null), is(true));
+  }
+
+  @Test
   public void createsRendererForKnownFormat() {
     assertThat(
         ScribeOutputFormat.fromFormatOrNull("okf").newRenderer() instanceof OkfScribeRenderer,
@@ -24,22 +34,17 @@ public class ScribeOutputFormatTest {
   }
 
   @Test
-  public void rejectsBlank() {
-    assertThat(ScribeOutputFormat.isSupportedFormat("  "), is(false));
-  }
-
-  @Test
-  public void rejectsNull() {
-    assertThat(ScribeOutputFormat.isSupportedFormat(null), is(false));
-  }
-
-  @Test
   public void rejectsUnknownFormat() {
-    assertThat(ScribeOutputFormat.isSupportedFormat("text"), is(false));
+    assertThat(ScribeOutputFormat.isSupportedFormat("unsupported"), is(false));
   }
 
   @Test
   public void supportsKnownFormatCaseInsensitively() {
     assertThat(ScribeOutputFormat.isSupportedFormat("OKF"), is(true));
+  }
+
+  @Test
+  public void supportsText() {
+    assertThat(ScribeOutputFormat.isSupportedFormat("text"), is(true));
   }
 }

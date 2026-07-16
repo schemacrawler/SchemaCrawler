@@ -17,6 +17,7 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
 import java.util.List;
+import java.util.Locale;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
@@ -24,6 +25,7 @@ import schemacrawler.scribe.command.options.SchemaScribeOptions;
 import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.WithTestDatabase;
+import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.state.ExecutionState;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
@@ -60,5 +62,26 @@ public class ScribeSupportLintTest {
 
     final Table knownTable = support.allTablesAndViews().get(0);
     assertThat(support.lintIssues(knownTable), is(not(nullValue())));
+  }
+
+  @Test
+  public void severityMessagesAreLocalized(final DatabaseConnectionSource connectionSource) {
+    final Catalog catalog =
+        getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
+
+    final SchemaScribeOptions englishOptions =
+        SchemaScribeOptionsBuilder.builder().withLocale(Locale.ENGLISH).toOptions();
+    final SchemaScribeOptions frenchOptions =
+        SchemaScribeOptionsBuilder.builder().withLocale(Locale.FRENCH).toOptions();
+
+    final ExecutionState englishExecutionState = new StubExecutionState(catalog);
+    final ExecutionState frenchExecutionState = new StubExecutionState(catalog);
+    final ScribeSupport englishSupport =
+        new ScribeSupport(englishExecutionState, englishOptions, new Lints(List.of()));
+    final ScribeSupport frenchSupport =
+        new ScribeSupport(frenchExecutionState, frenchOptions, new Lints(List.of()));
+
+    assertThat(englishSupport.severityMessage(LintSeverity.medium), is("Severity medium"));
+    assertThat(frenchSupport.severityMessage(LintSeverity.medium), is("Sévérité moyenne"));
   }
 }

@@ -26,8 +26,6 @@ import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.scribe.command.options.SchemaScribeOptions;
 import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
 import schemacrawler.scribe.model.CrossReferenceEntry;
-import schemacrawler.scribe.model.LintEntry;
-import schemacrawler.scribe.model.LintGroup;
 import schemacrawler.scribe.output.ScribeOutputContext;
 import schemacrawler.scribe.output.ZipScribeOutputContext;
 import schemacrawler.scribe.renderer.ScribeSupport;
@@ -37,6 +35,7 @@ import schemacrawler.test.utility.crawl.LightRoutine;
 import schemacrawler.test.utility.crawl.LightRoutineParameter;
 import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.test.utility.crawl.LightTrigger;
+import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.state.ExecutionState;
 import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
@@ -101,11 +100,7 @@ public class OkfTemplateCompilationTest {
     final Path zipFile = tempDir.resolve("okf-lint-template.zip");
     final String resourcePath = "reports/lint.md";
     final Map<String, Object> model = baseModel(support, resourcePath);
-    model.put("lintCount", 1);
-    final LintEntry lintEntry =
-        new LintEntry("PUBLIC.BOOKS.books", table, "warning", "Sample lint issue");
-    final LintGroup lintGroup = new LintGroup("sample-linter", List.of(lintEntry));
-    model.put("lintGroups", List.of(lintGroup));
+    model.put("lintsBySeverity", Map.of(LintSeverity.medium, List.of()));
 
     try (ScribeOutputContext output = new ZipScribeOutputContext(zipFile)) {
       new OkfTemplateRenderer(output).writeTemplate("lint.ftl", model, resourcePath);
@@ -113,9 +108,7 @@ public class OkfTemplateCompilationTest {
 
     final String content = ZipTestUtility.readEntry(zipFile, resourcePath);
     assertThat(content, containsString("# " + support.messages().sectionLintIssues()));
-    assertThat(content, containsString("1 issue(s) found."));
-    assertThat(content, containsString("## sample-linter"));
-    assertThat(content, containsString("Sample lint issue"));
+    assertThat(content, containsString("## " + support.severityMessage(LintSeverity.medium)));
     assertThat(ZipTestUtility.hasEntry(zipFile, resourcePath), is(true));
   }
 
