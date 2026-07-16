@@ -274,3 +274,18 @@ ${definitionText}
 </#list>
 </#if>
 </#if>
+
+<#-- ==================== LINTS SECTION ==================== -->
+<#assign lints = support.lintIssues(table)>
+<#if lints?has_content>
+## ${msg.sectionLintIssues()}
+
+<@common.markdownTableHeader headers=[msg.headerName(), msg.sectionDescription(), msg.headerValue()] />
+<#list lints as lint>
+<@common.markdownTableRow values=[
+  support.severityMessage(lint.severity),
+  lint.message,
+  lint.valueAsString
+] />
+</#list>
+</#if>
