@@ -3,7 +3,7 @@
 # ${msg.sectionLintIssues()}
 
 <#list lintsBySeverity as severity, lints>
-<#-- ## ${support.severityMessage(severity)} -->
+## ${support.severityMessage(severity)}
 
 <@common.markdownTableHeader headers=[msg.headerName(), msg.sectionDescription(), msg.headerValue()] />
 <#list lints as lint>

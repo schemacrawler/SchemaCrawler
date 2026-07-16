@@ -37,6 +37,10 @@ public class ScribeMessagesTest {
     assertThat(messages.labelDatabaseSchema(), is("Database Schema"));
     assertThat(messages.labelTables(), is("Tables"));
     assertThat(messages.labelEntityModelType(), is("Entity model type"));
+    assertThat(messages.lintSeverityLow(), is("Severity low"));
+    assertThat(messages.lintSeverityMedium(), is("Severity medium"));
+    assertThat(messages.lintSeverityHigh(), is("Severity high"));
+    assertThat(messages.lintSeverityCritical(), is("Severity critical"));
     assertThat(messages.valueEntityModelTypeBridgeTable(), is("Bridge table"));
   }
 

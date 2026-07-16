@@ -246,6 +246,22 @@ public final class ScribeMessages {
     return message("lint.null_default");
   }
 
+  public String lintSeverityCritical() {
+    return message("lint.severity.critical");
+  }
+
+  public String lintSeverityHigh() {
+    return message("lint.severity.high");
+  }
+
+  public String lintSeverityLow() {
+    return message("lint.severity.low");
+  }
+
+  public String lintSeverityMedium() {
+    return message("lint.severity.medium");
+  }
+
   public String lintSingleColumn() {
     return message("lint.single_column");
   }

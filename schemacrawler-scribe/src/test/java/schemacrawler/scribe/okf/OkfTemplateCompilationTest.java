@@ -35,6 +35,7 @@ import schemacrawler.test.utility.crawl.LightRoutine;
 import schemacrawler.test.utility.crawl.LightRoutineParameter;
 import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.test.utility.crawl.LightTrigger;
+import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.state.ExecutionState;
 import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
@@ -99,7 +100,7 @@ public class OkfTemplateCompilationTest {
     final Path zipFile = tempDir.resolve("okf-lint-template.zip");
     final String resourcePath = "reports/lint.md";
     final Map<String, Object> model = baseModel(support, resourcePath);
-    model.put("lintsBySeverity", Map.of());
+    model.put("lintsBySeverity", Map.of(LintSeverity.medium, List.of()));
 
     try (ScribeOutputContext output = new ZipScribeOutputContext(zipFile)) {
       new OkfTemplateRenderer(output).writeTemplate("lint.ftl", model, resourcePath);
@@ -107,6 +108,7 @@ public class OkfTemplateCompilationTest {
 
     final String content = ZipTestUtility.readEntry(zipFile, resourcePath);
     assertThat(content, containsString("# " + support.messages().sectionLintIssues()));
+    assertThat(content, containsString("## " + support.severityMessage(LintSeverity.medium)));
     assertThat(ZipTestUtility.hasEntry(zipFile, resourcePath), is(true));
   }
 

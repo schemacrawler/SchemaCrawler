@@ -45,6 +45,7 @@ import schemacrawler.schema.TypedObject;
 import schemacrawler.schema.View;
 import schemacrawler.scribe.command.options.SchemaScribeOptions;
 import schemacrawler.tools.lint.Lint;
+import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.state.ExecutionState;
 import schemacrawler.tools.utility.AbstractTextSupport;
@@ -485,6 +486,25 @@ public final class ScribeSupport extends AbstractTextSupport {
    */
   public Lints lints() {
     return lints;
+  }
+
+  /**
+   * Gets a localized lint severity label for report headings.
+   *
+   * @param severity Lint severity
+   * @return Localized severity label, or empty when severity is {@code null}
+   */
+  public String severityMessage(final LintSeverity severity) {
+    if (severity == null) {
+      return "";
+    }
+
+    return switch (severity) {
+      case low -> messages.lintSeverityLow();
+      case medium -> messages.lintSeverityMedium();
+      case high -> messages.lintSeverityHigh();
+      case critical -> messages.lintSeverityCritical();
+    };
   }
 
   public String localizedEntityModelType(final Table table) {
