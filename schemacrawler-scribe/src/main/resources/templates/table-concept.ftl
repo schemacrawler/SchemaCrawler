@@ -1,7 +1,7 @@
 <#import "mermaid.ftl" as mermaid>
 <#import "common.ftl" as common>
 ---
-${support.frontMatter(table)}
+${support.frontMatter(table)}<#rt>
 ---
 
 <#-- ==================== PAGE SETUP ==================== -->
@@ -259,8 +259,8 @@ ${definitionText}
 <#assign type = support.simpleTypeName(usedByObject)>
 <#if type == "table" || type == "view">
 - <@common.tableLink table=usedByObject/>
-<#elseif type == "table" || type == "view">
-- [${usedByObject.fullName}](../routines/${usedByObject.key().slug()}.md)
+<#elseif type == "routine" || type == "function">
+- <@common.routineLink routine=usedByObject/>
 <#else>
 - ${usedByObject.fullName}
 </#if>

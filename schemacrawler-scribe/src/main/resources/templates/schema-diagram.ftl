@@ -1,3 +1,7 @@
+---
+${support.reportFrontMatter("Database Schema Diagram", "Diagram of the entire database schema")}<#rt>
+---
+
 # ${msg.sectionDiagram()}
 
 

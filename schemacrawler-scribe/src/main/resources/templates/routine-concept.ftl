@@ -1,6 +1,6 @@
 <#import "common.ftl" as common>
 ---
-${support.frontMatter(routine)}
+${support.frontMatter(routine)}<#rt>
 ---
 
 <#-- ==================== PAGE SETUP ==================== -->

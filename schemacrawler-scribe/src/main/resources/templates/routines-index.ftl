@@ -1,5 +1,5 @@
 <#import "common.ftl" as common>
-
+<#-- ==================== ROUTINES INDEX ==================== -->
 # ${msg.navRoutines()}
 
 <#list catalog.schemas as schema>
@@ -18,7 +18,7 @@
 <#elseif routineType?contains("procedure")>
 <#assign routineTypeLabel = msg.labelStoredProcedure()>
 </#if>
-- ${routineTypeLabel}: <@common.routineLink routine=routine pathPrefix="./"/>
+- ${routineTypeLabel}: <@common.routineLink routine=routine/>
 </#if>
 </#list>
 </#list>

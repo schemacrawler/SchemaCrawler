@@ -1,4 +1,8 @@
 <#import "common.ftl" as common>
+---
+${support.reportFrontMatter("Cross-references", "Cross-references between database objects")}<#rt>
+---
+
 # ${msg.sectionCrossReferences()}
 
 <#if crossReferenceEntries?has_content>
@@ -8,7 +12,7 @@
 <#if entry.databaseObjectType?string == "table" || entry.databaseObjectType?string == "view">
 <@common.tableLink table=entry.databaseObject/>
 <#elseif entry.databaseObjectType?string == "procedure" || entry.databaseObjectType?string == "function">
-<@common.routineLink routine=entry.databaseObject pathPrefix="../routines/"/>
+<@common.routineLink routine=entry.databaseObject/>
 <#else>
 ${entry.databaseObjectName}
 </#if>
@@ -17,7 +21,7 @@ ${entry.databaseObjectName}
 <#if entry.usedByDatabaseObjectType?string == "table" || entry.usedByDatabaseObjectType?string == "view">
 <@common.tableLink table=entry.usedByDatabaseObject/>
 <#elseif entry.usedByDatabaseObjectType?string == "procedure" || entry.usedByDatabaseObjectType?string == "function">
-<@common.routineLink routine=entry.usedByDatabaseObject pathPrefix="../routines/"/>
+<@common.routineLink routine=entry.usedByDatabaseObject/>
 <#else>
 ${entry.usedByDatabaseObjectName}
 </#if>

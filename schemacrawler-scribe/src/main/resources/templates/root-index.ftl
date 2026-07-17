@@ -1,7 +1,4 @@
----
-title: ${(title!support.databaseTitle())?json_string}
----
-
+<#-- ==================== MAIN INDEX ==================== -->
 # ${title!support.databaseTitle()}
 
 ## ${msg.sectionMetadata()}
@@ -21,10 +18,6 @@ title: ${(title!support.databaseTitle())?json_string}
 ## ${msg.navRoutines()}
 
 - [${msg.navRoutines()}](routines/index.md)
-
-## reports/
-
-- [reports/](reports/index.md)
 
 <#if support.isLintEnabled()>
 ## ${msg.navLint()}

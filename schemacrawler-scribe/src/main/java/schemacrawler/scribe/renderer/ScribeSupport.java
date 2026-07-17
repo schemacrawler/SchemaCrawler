@@ -328,6 +328,8 @@ public final class ScribeSupport extends AbstractTextSupport {
     frontMatter.put("title", object.getFullName());
     if (object.hasRemarks()) {
       frontMatter.put("description", object.getRemarks());
+    } else {
+      frontMatter.put("description", "Description of " + simpleTypeName);
     }
     if (object instanceof final TypedObject typedObject) {
       frontMatter.put("complete_type", typedObject.getType().toString());
@@ -488,25 +490,6 @@ public final class ScribeSupport extends AbstractTextSupport {
     return lints;
   }
 
-  /**
-   * Gets a localized lint severity label for report headings.
-   *
-   * @param severity Lint severity
-   * @return Localized severity label, or empty when severity is {@code null}
-   */
-  public String severityMessage(final LintSeverity severity) {
-    if (severity == null) {
-      return "";
-    }
-
-    return switch (severity) {
-      case low -> messages.lintSeverityLow();
-      case medium -> messages.lintSeverityMedium();
-      case high -> messages.lintSeverityHigh();
-      case critical -> messages.lintSeverityCritical();
-    };
-  }
-
   public String localizedEntityModelType(final Table table) {
     return switch (entityModelType(table)) {
       case non_entity -> messages.valueEntityModelTypeNonEntity();
@@ -608,6 +591,37 @@ public final class ScribeSupport extends AbstractTextSupport {
     return getERModel().lookupRelationship(tableReference).map(Relationship::getType);
   }
 
+  public String reportFrontMatter(final String providedTitle, final String providedDescription) {
+
+    final String title;
+    if (isBlank(providedTitle)) {
+      title = "Report";
+    } else {
+      title = providedTitle;
+    }
+
+    final String description;
+    if (isBlank(providedDescription)) {
+      description = "Report";
+    } else {
+      description = providedDescription;
+    }
+
+    final Map<String, Object> frontMatter = new LinkedHashMap<>();
+    frontMatter.put("type", "report");
+    frontMatter.put("title", title);
+    frontMatter.put("description", description);
+
+    if (hasCatalog()) {
+      final Catalog catalog = getCatalog();
+      final CrawlInfo crawlInfo = catalog.getCrawlInfo();
+      frontMatter.put("timestamp", crawlInfo.getCrawlTimestamp());
+      frontMatter.put("run_id", crawlInfo.getRunId());
+    }
+
+    return mapper.writeValueAsString(frontMatter);
+  }
+
   /**
    * Gets the deduplicated number of routines in the catalog.
    *
@@ -671,6 +685,25 @@ public final class ScribeSupport extends AbstractTextSupport {
     }
     final String sentence = text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
     return sentence;
+  }
+
+  /**
+   * Gets a localized lint severity label for report headings.
+   *
+   * @param severity Lint severity
+   * @return Localized severity label, or empty when severity is {@code null}
+   */
+  public String severityMessage(final LintSeverity severity) {
+    if (severity == null) {
+      return "";
+    }
+
+    return switch (severity) {
+      case low -> messages.lintSeverityLow();
+      case medium -> messages.lintSeverityMedium();
+      case high -> messages.lintSeverityHigh();
+      case critical -> messages.lintSeverityCritical();
+    };
   }
 
   /**
