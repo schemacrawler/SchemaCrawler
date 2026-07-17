@@ -92,7 +92,7 @@ jobs:
         ## Delete previous early release and its tag
         gh release delete "$TAG" -y || true
         git push origin --delete "$TAG" || true
-        git tag -d "$TAG" || true
+        git rev-parse -q --verify "refs/tags/$TAG" >/dev/null && git tag -d "$TAG" || true
         ## Re-tag to last commit
         git tag -a "$TAG" -m "SchemaCrawler AI Early Access Release"
         git push origin "$TAG"
