@@ -1,4 +1,10 @@
 <#import "common.ftl" as common>
+---
+type: report
+title: Cross-references
+description: Cross-references between database objects
+---
+
 # ${msg.sectionCrossReferences()}
 
 <#if crossReferenceEntries?has_content>

@@ -1,4 +1,9 @@
 <#import "common.ftl" as common>
+---
+type: report
+title: Database Lints
+description: Details of database schema design issues (lints)
+---
 
 # ${msg.sectionLintIssues()}
 

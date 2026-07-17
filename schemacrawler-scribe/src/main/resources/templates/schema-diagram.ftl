@@ -1,3 +1,8 @@
+---
+type: report
+title: Database Schema Diagram
+description: Diagram of the entire database schema
+---
 # ${msg.sectionDiagram()}
 
 
