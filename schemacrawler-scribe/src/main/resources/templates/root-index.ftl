@@ -1,7 +1,4 @@
----
-title: ${(title!support.databaseTitle())?json_string}
----
-
+<#-- ==================== MAIN INDEX ==================== -->
 # ${title!support.databaseTitle()}
 
 ## ${msg.sectionMetadata()}

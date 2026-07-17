@@ -1,5 +1,5 @@
 <#import "common.ftl" as common>
-
+<#-- ==================== TABLES INDEX ==================== -->
 # ${msg.navTables()}
 
 <#list catalog.schemas as schema>

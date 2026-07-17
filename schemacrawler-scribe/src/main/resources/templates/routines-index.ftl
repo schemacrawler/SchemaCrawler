@@ -1,5 +1,5 @@
 <#import "common.ftl" as common>
-
+<#-- ==================== ROUTINES INDEX ==================== -->
 # ${msg.navRoutines()}
 
 <#list catalog.schemas as schema>
