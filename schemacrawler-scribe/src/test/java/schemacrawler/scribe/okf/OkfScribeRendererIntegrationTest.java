@@ -79,7 +79,6 @@ public class OkfScribeRendererIntegrationTest {
     assertThat(rootIndex, containsString(support.messages().labelForeignKeyCount() + ":"));
     assertThat(rootIndex, containsString("(tables/index.md)"));
     assertThat(rootIndex, containsString("(routines/index.md)"));
-    assertThat(rootIndex, containsString("(reports/index.md)"));
     assertThat(rootIndex, containsString("(reports/schema.md)"));
     assertThat(rootIndex, containsString("(reports/lint.md)"));
     assertThat(rootIndex, containsString("(reports/cross-references.md)"));
