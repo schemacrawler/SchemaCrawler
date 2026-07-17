@@ -5,12 +5,12 @@
 <#macro markdownTableRow values>
 | <#list values as v>${v}<#sep> | </#list> |
 </#macro>
-<#macro tableLink table pathPrefix="/tables/">
+<#macro tableLink table pathPrefix="../tables/">
 [${table.fullName}](${pathPrefix}${table.key().slug()}.md)<#rt>
 </#macro>
-<#macro tableFullNameLink tableFullName tableKey pathPrefix="/tables/">
+<#macro tableFullNameLink tableFullName tableKey pathPrefix="../tables/">
 [${tableFullName}](${pathPrefix}${tableKey.slug()}.md)<#rt>
 </#macro>
-<#macro routineLink routine pathPrefix="/routines/">
+<#macro routineLink routine pathPrefix="../routines/">
 [${routine.fullName}](${pathPrefix}${routine.key().slug()}.md)<#rt>
 </#macro>

@@ -13,22 +13,22 @@
 
 ## ${msg.navTables()}
 
-- [${msg.navTables()}](/tables/index.md)
+- [${msg.navTables()}](tables/index.md)
 
 ## ${msg.navRoutines()}
 
-- [${msg.navRoutines()}](/routines/index.md)
+- [${msg.navRoutines()}](routines/index.md)
 
 <#if support.isLintEnabled()>
 ## ${msg.navLint()}
 
-- [${msg.navLint()}](/reports/lint.md)
+- [${msg.navLint()}](reports/lint.md)
 </#if>
 
 ## ${msg.sectionDiagram()}
 
-- [${msg.sectionDiagram()}](/reports/schema.md)
+- [${msg.sectionDiagram()}](reports/schema.md)
 
 ## ${msg.sectionCrossReferences()}
 
-- [${msg.sectionCrossReferences()}](/reports/cross-references.md)
+- [${msg.sectionCrossReferences()}](reports/cross-references.md)
