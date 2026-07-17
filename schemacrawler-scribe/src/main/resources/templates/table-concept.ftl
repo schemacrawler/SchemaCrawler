@@ -259,8 +259,8 @@ ${definitionText}
 <#assign type = support.simpleTypeName(usedByObject)>
 <#if type == "table" || type == "view">
 - <@common.tableLink table=usedByObject/>
-<#elseif type == "table" || type == "view">
-- [${usedByObject.fullName}](../routines/${usedByObject.key().slug()}.md)
+<#elseif type == "routine" || type == "function">
+- <@common.routineLink routine=usedByObject/>
 <#else>
 - ${usedByObject.fullName}
 </#if>
