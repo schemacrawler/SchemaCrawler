@@ -11,7 +11,7 @@
 ## ${schemaName}
 <#assign hasTablesInSchema = true>
 </#if>
-- <#if support.isView(table)>${msg.labelView()}<#else>${msg.labelTable()}</#if>: <@common.tableLink table=table pathPrefix="./"/>
+- <#if support.isView(table)>${msg.labelView()}<#else>${msg.labelTable()}</#if>: <@common.tableLink table=table/>
 </#if>
 </#list>
 </#list>

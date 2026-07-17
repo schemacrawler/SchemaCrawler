@@ -1,8 +1,6 @@
 <#import "common.ftl" as common>
 ---
-type: report
-title: Database Lints
-description: Details of database schema design issues (lints)
+${support.reportFrontMatter("Database Lints", "Details of database schema design issues (lints)")}<#rt>
 ---
 
 # ${msg.sectionLintIssues()}

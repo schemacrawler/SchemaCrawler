@@ -1,8 +1,7 @@
 ---
-type: report
-title: Database Schema Diagram
-description: Diagram of the entire database schema
+${support.reportFrontMatter("Database Schema Diagram", "Diagram of the entire database schema")}<#rt>
 ---
+
 # ${msg.sectionDiagram()}
 
 

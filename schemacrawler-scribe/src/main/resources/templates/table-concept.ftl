@@ -1,7 +1,7 @@
 <#import "mermaid.ftl" as mermaid>
 <#import "common.ftl" as common>
 ---
-${support.frontMatter(table)}
+${support.frontMatter(table)}<#rt>
 ---
 
 <#-- ==================== PAGE SETUP ==================== -->
