@@ -30,7 +30,7 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
  * though {@code SchemaScribeCommandProviderTest} (which only calls {@code getCommandLineCommand()}
  * directly) would not catch it.
  */
-public class SchemaScribeCommandLineAssemblyTest {
+public class ScribeCommandLineAssemblyTest {
 
   @Command(name = "execute")
   private static final class DummyExecuteCommand {
@@ -40,8 +40,7 @@ public class SchemaScribeCommandLineAssemblyTest {
   @Test
   public void scribeCommandMixesInWithoutCollidingWithGlobalOutputOptions() {
     final CommandLine commandLine = new CommandLine(new DummyExecuteCommand());
-    final PluginCommand scribePluginCommand =
-        new SchemaScribeCommandProvider().getCommandLineCommand();
+    final PluginCommand scribePluginCommand = new ScribeCommandProvider().getCommandLineCommand();
 
     CommandLineUtility.addPluginCommands(commandLine, () -> List.of(scribePluginCommand));
 

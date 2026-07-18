@@ -21,8 +21,8 @@ import java.util.Locale;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.scribe.command.options.SchemaScribeOptions;
-import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
+import schemacrawler.scribe.command.options.ScribeOptions;
+import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.lint.LintSeverity;
@@ -37,8 +37,7 @@ public class ScribeSupportLintTest {
   public void lintDisabled(final DatabaseConnectionSource connectionSource) {
     final Catalog catalog =
         getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().withIncludeLint(false).toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().withIncludeLint(false).toOptions();
 
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
@@ -51,8 +50,7 @@ public class ScribeSupportLintTest {
   public void lintEnabled(final DatabaseConnectionSource connectionSource) {
     final Catalog catalog =
         getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().withIncludeLint(true).toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().withIncludeLint(true).toOptions();
 
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
@@ -69,10 +67,10 @@ public class ScribeSupportLintTest {
     final Catalog catalog =
         getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
 
-    final SchemaScribeOptions englishOptions =
-        SchemaScribeOptionsBuilder.builder().withLocale(Locale.ENGLISH).toOptions();
-    final SchemaScribeOptions frenchOptions =
-        SchemaScribeOptionsBuilder.builder().withLocale(Locale.FRENCH).toOptions();
+    final ScribeOptions englishOptions =
+        ScribeOptionsBuilder.builder().withLocale(Locale.ENGLISH).toOptions();
+    final ScribeOptions frenchOptions =
+        ScribeOptionsBuilder.builder().withLocale(Locale.FRENCH).toOptions();
 
     final ExecutionState englishExecutionState = new StubExecutionState(catalog);
     final ExecutionState frenchExecutionState = new StubExecutionState(catalog);

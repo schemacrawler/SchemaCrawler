@@ -9,7 +9,7 @@
 package schemacrawler.scribe.renderer;
 
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
-import schemacrawler.scribe.command.options.SchemaScribeOptions;
+import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.output.ScribeOutputContext;
 
 /** Renderer abstraction for a Scribe report output format. */
@@ -32,6 +32,6 @@ public interface ScribeRenderer {
    * @param output ZIP or filesystem output context
    * @throws SchemaCrawlerException On rendering failure
    */
-  void render(ScribeSupport support, SchemaScribeOptions options, ScribeOutputContext output)
+  void render(ScribeSupport support, ScribeOptions options, ScribeOutputContext output)
       throws SchemaCrawlerException;
 }

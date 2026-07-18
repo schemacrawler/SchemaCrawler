@@ -15,14 +15,14 @@ import java.util.Objects;
 import schemacrawler.tools.command.CommandOptions;
 
 /** Immutable options for the Scribe command. */
-public final class SchemaScribeOptions implements CommandOptions {
+public final class ScribeOptions implements CommandOptions {
 
   private final boolean expandedOutput;
   private final boolean includeLint;
   private final Locale locale;
   private final String title;
 
-  SchemaScribeOptions(
+  ScribeOptions(
       final String title,
       final boolean includeLint,
       final Locale locale,
@@ -41,7 +41,7 @@ public final class SchemaScribeOptions implements CommandOptions {
     if (obj == null || getClass() != obj.getClass()) {
       return false;
     }
-    final SchemaScribeOptions other = (SchemaScribeOptions) obj;
+    final ScribeOptions other = (ScribeOptions) obj;
     return includeLint == other.includeLint
         && expandedOutput == other.expandedOutput
         && Objects.equals(locale, other.locale)

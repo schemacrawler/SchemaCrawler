@@ -29,8 +29,8 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.scribe.command.options.SchemaScribeOptions;
-import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
+import schemacrawler.scribe.command.options.ScribeOptions;
+import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.test.utility.crawl.LightCatalogUtility;
@@ -47,8 +47,8 @@ public class ScribeSupportTest {
   @Test
   public void frenchLocale(final DatabaseConnectionSource connectionSource) {
     final Catalog catalog = catalog(connectionSource);
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().withLocale(Locale.FRENCH).toOptions();
+    final ScribeOptions options =
+        ScribeOptionsBuilder.builder().withLocale(Locale.FRENCH).toOptions();
 
     final ScribeSupport support = newHelper(catalog, options);
 
@@ -59,8 +59,8 @@ public class ScribeSupportTest {
   @Test
   public void explicitTitleIsPreserved(final DatabaseConnectionSource connectionSource) {
     final Catalog catalog = catalog(connectionSource);
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().withTitle("Custom Title").toOptions();
+    final ScribeOptions options =
+        ScribeOptionsBuilder.builder().withTitle("Custom Title").toOptions();
 
     final ScribeSupport support = newHelper(catalog, options);
 
@@ -70,7 +70,7 @@ public class ScribeSupportTest {
   @Test
   public void markdownEscaping(final DatabaseConnectionSource connectionSource) {
     final Catalog catalog = catalog(connectionSource);
-    final SchemaScribeOptions options = SchemaScribeOptionsBuilder.builder().toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
     final ScribeSupport support = newHelper(catalog, options);
 
     final String escaped = support.escapeMarkdown("A|B\nC*D");
@@ -83,7 +83,7 @@ public class ScribeSupportTest {
     final LightTable table = new LightTable(schema, "order details");
     final LightRoutine routine = new LightRoutine(schema, "find order");
     final Catalog catalog = LightCatalogUtility.lightCatalog(table);
-    final SchemaScribeOptions options = SchemaScribeOptionsBuilder.builder().toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
     final ScribeSupport support =
         new ScribeSupport(new StubExecutionState(catalog), options, new Lints(List.of()));
 
@@ -104,7 +104,7 @@ public class ScribeSupportTest {
   @Test
   public void statsAndCrossReferences(final DatabaseConnectionSource connectionSource) {
     final Catalog catalog = catalog(connectionSource);
-    final SchemaScribeOptions options = SchemaScribeOptionsBuilder.builder().toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
 
     final ScribeSupport support = newHelper(catalog, options);
 
@@ -161,7 +161,7 @@ public class ScribeSupportTest {
     return getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
   }
 
-  private ScribeSupport newHelper(final Catalog catalog, final SchemaScribeOptions options) {
+  private ScribeSupport newHelper(final Catalog catalog, final ScribeOptions options) {
     final ExecutionState executionState = new StubExecutionState(catalog);
     return new ScribeSupport(executionState, options, new Lints(List.of()));
   }

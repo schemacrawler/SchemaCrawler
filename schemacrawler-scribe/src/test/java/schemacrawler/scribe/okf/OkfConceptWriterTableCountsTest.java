@@ -23,8 +23,8 @@ import org.junit.jupiter.api.io.TempDir;
 import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.scribe.command.options.SchemaScribeOptions;
-import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
+import schemacrawler.scribe.command.options.ScribeOptions;
+import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.scribe.output.ScribeOutputContext;
 import schemacrawler.scribe.output.ZipScribeOutputContext;
 import schemacrawler.scribe.renderer.ScribeSupport;
@@ -53,8 +53,8 @@ public class OkfConceptWriterTableCountsTest {
             schemaCrawlerOptionsWithMaximumSchemaInfoLevel,
             config);
 
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().withLocale(Locale.FRENCH).toOptions();
+    final ScribeOptions options =
+        ScribeOptionsBuilder.builder().withLocale(Locale.FRENCH).toOptions();
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
 

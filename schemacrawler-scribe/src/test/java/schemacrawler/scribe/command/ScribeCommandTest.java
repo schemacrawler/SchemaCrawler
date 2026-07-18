@@ -21,13 +21,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
+import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
-public class SchemaScribeCommandTest {
+public class ScribeCommandTest {
 
   @Test
   public void executeThrowsWhenFormatIsNotSupported(
@@ -37,14 +37,14 @@ public class SchemaScribeCommandTest {
         getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
     final Path zipFile = tempDir.resolve("out.zip");
 
-    final SchemaScribeCommand command = new SchemaScribeCommand();
+    final ScribeCommand command = new ScribeCommand();
     command.setCatalog(catalog);
     command.setOutputOptions(
         OutputOptionsBuilder.builder()
             .withOutputFile(zipFile)
             .withOutputFormatValue("stub")
             .toOptions());
-    command.configure(SchemaScribeOptionsBuilder.builder().toOptions());
+    command.configure(ScribeOptionsBuilder.builder().toOptions());
 
     final ExecutionRuntimeException exception =
         assertThrows(ExecutionRuntimeException.class, command::execute);
@@ -60,14 +60,14 @@ public class SchemaScribeCommandTest {
         getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
     final Path outputDir = tempDir.resolve("out-dir");
 
-    final SchemaScribeCommand command = new SchemaScribeCommand();
+    final ScribeCommand command = new ScribeCommand();
     command.setCatalog(catalog);
     command.setOutputOptions(
         OutputOptionsBuilder.builder()
             .withOutputFile(outputDir)
             .withOutputFormatValue("stub")
             .toOptions());
-    command.configure(SchemaScribeOptionsBuilder.builder().withExpandedOutput(true).toOptions());
+    command.configure(ScribeOptionsBuilder.builder().withExpandedOutput(true).toOptions());
 
     final ExecutionRuntimeException exception =
         assertThrows(ExecutionRuntimeException.class, command::execute);
@@ -82,14 +82,14 @@ public class SchemaScribeCommandTest {
       final DatabaseConnectionSource connectionSource, @TempDir final Path tempDir) {
     final Catalog catalog =
         getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
-    final SchemaScribeCommand command = new SchemaScribeCommand();
+    final ScribeCommand command = new ScribeCommand();
     command.setCatalog(catalog);
     command.setOutputOptions(
         OutputOptionsBuilder.builder()
             .withOutputFile(tempDir.resolve("out.zip"))
             .withOutputFormatValue("no-such-format")
             .toOptions());
-    command.configure(SchemaScribeOptionsBuilder.builder().toOptions());
+    command.configure(ScribeOptionsBuilder.builder().toOptions());
 
     assertThrows(ExecutionRuntimeException.class, command::execute);
   }
@@ -97,7 +97,7 @@ public class SchemaScribeCommandTest {
   @Test
   public void executeWithLintEnabledRequiresConnection(
       final DatabaseConnectionSource connectionSource, @TempDir final Path tempDir) {
-    final SchemaScribeCommand command = new SchemaScribeCommand();
+    final ScribeCommand command = new ScribeCommand();
     final Catalog catalog =
         getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
     command.setCatalog(catalog);
@@ -106,7 +106,7 @@ public class SchemaScribeCommandTest {
             .withOutputFile(tempDir.resolve("out.zip"))
             .withOutputFormatValue("stub")
             .toOptions());
-    command.configure(SchemaScribeOptionsBuilder.builder().withIncludeLint(true).toOptions());
+    command.configure(ScribeOptionsBuilder.builder().withIncludeLint(true).toOptions());
 
     final ExecutionRuntimeException exception =
         assertThrows(ExecutionRuntimeException.class, command::execute);
