@@ -71,14 +71,14 @@ public final class ZipScribeOutputContext implements ScribeOutputContext {
 
   /** {@inheritDoc} */
   @Override
-  public OutputStream openStream(final String relativePath) throws IOException {
+  public OutputStream openNewOutputStream(final String relativePath) throws IOException {
     zipOut.putNextEntry(new ZipEntry(relativePath));
     return new EntryOutputStream(zipOut);
   }
 
   /** {@inheritDoc} */
   @Override
-  public Writer openWriter(final String relativePath) throws IOException {
+  public Writer openNewOutputWriter(final String relativePath) throws IOException {
     zipOut.putNextEntry(new ZipEntry(relativePath));
     return new BufferedWriter(
         new OutputStreamWriter(new EntryOutputStream(zipOut), StandardCharsets.UTF_8));

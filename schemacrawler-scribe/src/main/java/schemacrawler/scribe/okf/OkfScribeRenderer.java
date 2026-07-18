@@ -26,7 +26,9 @@ public final class OkfScribeRenderer implements ScribeRenderer {
   public void render(
       final ScribeSupport support, final ScribeOptions options, final ScribeOutputContext output)
       throws SchemaCrawlerException {
+
     final OkfTemplateRenderer templateRenderer = new OkfTemplateRenderer(output);
+
     final OkfConceptPageWriter conceptPageWriter =
         new OkfConceptPageWriter(support, templateRenderer);
     conceptPageWriter.writeConceptPages();

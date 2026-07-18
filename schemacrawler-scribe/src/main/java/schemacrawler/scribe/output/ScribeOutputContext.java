@@ -26,7 +26,7 @@ public interface ScribeOutputContext extends Closeable {
    * @return Output stream for the new entry
    * @throws IOException On an I/O error
    */
-  OutputStream openStream(String relativePath) throws IOException;
+  OutputStream openNewOutputStream(String relativePath) throws IOException;
 
   /**
    * Opens a UTF-8 writer for a new entry at the given ZIP-relative path.
@@ -35,5 +35,5 @@ public interface ScribeOutputContext extends Closeable {
    * @return Writer for the new entry
    * @throws IOException On an I/O error
    */
-  Writer openWriter(String relativePath) throws IOException;
+  Writer openNewOutputWriter(String relativePath) throws IOException;
 }

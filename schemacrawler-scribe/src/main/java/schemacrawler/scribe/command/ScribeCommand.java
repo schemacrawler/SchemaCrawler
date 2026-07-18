@@ -66,7 +66,7 @@ public final class ScribeCommand extends AbstractSchemaCrawlerCommand<ScribeOpti
             .withTitle(title)
             .toOptions();
 
-    final Path outputPath = getOutputOptions().getOutputFile("zip");
+    final Path outputPath = getOutputOptions().getOutputFile("");
     final Lints lints = options.isIncludeLint() ? runLint() : new Lints(List.of());
     final ScribeSupport support = new ScribeSupport(this, options, lints);
 

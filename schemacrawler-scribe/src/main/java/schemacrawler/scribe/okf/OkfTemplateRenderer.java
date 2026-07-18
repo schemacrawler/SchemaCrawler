@@ -9,15 +9,7 @@
 package schemacrawler.scribe.okf;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
-import java.util.Map;
-import java.util.Optional;
-
 import static java.util.Objects.requireNonNull;
-
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import freemarker.cache.TemplateLoader;
@@ -26,6 +18,13 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import freemarker.template.TemplateNotFoundException;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.util.Map;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.scribe.output.ScribeOutputContext;
 import us.fatehi.utility.ioresource.InputResource;
@@ -34,6 +33,8 @@ import us.fatehi.utility.string.StringFormat;
 
 /** Renders FreeMarker templates and writes pages to the output context. */
 public final class OkfTemplateRenderer {
+
+  private static final Logger LOGGER = Logger.getLogger(OkfTemplateRenderer.class.getName());
 
   private final Configuration configuration;
   private final ScribeOutputContext output;
@@ -45,7 +46,7 @@ public final class OkfTemplateRenderer {
 
   public void writeTemplate(
       final String templateName, final Map<String, Object> model, final String relativePath) {
-    try (final Writer writer = output.openWriter(relativePath)) {
+    try (final Writer writer = output.openNewOutputWriter(relativePath)) {
       final Template template = configuration.getTemplate(templateName);
       template.process(model, writer);
     } catch (final IOException | TemplateException e) {
@@ -87,19 +88,20 @@ public final class OkfTemplateRenderer {
           throw new TemplateNotFoundException(
               templateSource.toString(), null, "Template input resource not found");
         }
+        LOGGER.log(Level.FINE, new StringFormat("Reading FreeMarker template <%s>", inputResource));
         return inputResource.openNewInputReader(UTF_8);
       }
     }
 
-    final Configuration configuration = new Configuration(Configuration.VERSION_2_3_34);
-    configuration.setTemplateLoader(new OkfTemplateLoader());
-    configuration.setDefaultEncoding("UTF-8");
+    final Configuration cfg = new Configuration(Configuration.VERSION_2_3_34);
+    cfg.setTemplateLoader(new OkfTemplateLoader());
+    cfg.setDefaultEncoding("UTF-8");
     // Localization is handled with the helper messages
-    configuration.setLocalizedLookup(false);
-    configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-    configuration.setLogTemplateExceptions(true);
-    configuration.setWrapUncheckedExceptions(true);
-    configuration.setBooleanFormat("c");
-    return configuration;
+    cfg.setLocalizedLookup(false);
+    cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+    cfg.setLogTemplateExceptions(true);
+    cfg.setWrapUncheckedExceptions(true);
+    cfg.setBooleanFormat("c");
+    return cfg;
   }
 }

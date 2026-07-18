@@ -8,6 +8,8 @@
 
 package schemacrawler.scribe.output;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
@@ -36,7 +38,7 @@ public final class FileScribeOutputContext implements ScribeOutputContext {
    * @throws IOException On an I/O error
    */
   public FileScribeOutputContext(final Path rootDirectory) throws IOException {
-    this.rootDirectory = rootDirectory;
+    this.rootDirectory = requireNonNull(rootDirectory, "No root directory provided");
     Files.createDirectories(rootDirectory);
     LOGGER.log(
         Level.INFO, new StringFormat("Writing expanded Scribe output to <%s>", rootDirectory));
@@ -50,7 +52,7 @@ public final class FileScribeOutputContext implements ScribeOutputContext {
 
   /** {@inheritDoc} */
   @Override
-  public OutputStream openStream(final String relativePath) throws IOException {
+  public OutputStream openNewOutputStream(final String relativePath) throws IOException {
     final Path file = resolve(relativePath);
     return Files.newOutputStream(
         file, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
@@ -58,7 +60,7 @@ public final class FileScribeOutputContext implements ScribeOutputContext {
 
   /** {@inheritDoc} */
   @Override
-  public Writer openWriter(final String relativePath) throws IOException {
+  public Writer openNewOutputWriter(final String relativePath) throws IOException {
     final Path file = resolve(relativePath);
     return Files.newBufferedWriter(
         file,

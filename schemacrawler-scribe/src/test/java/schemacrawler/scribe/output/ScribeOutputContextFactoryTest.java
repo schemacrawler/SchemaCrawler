@@ -23,7 +23,7 @@ public class ScribeOutputContextFactoryTest {
   @Test
   public void appendsZipExtensionWhenMissing(@TempDir final Path tempDir) throws IOException {
     final Path outputPath = tempDir.resolve("report");
-    try (ScribeOutputContext context = ScribeOutputContextFactory.create(outputPath, false)) {
+    try (final ScribeOutputContext context = ScribeOutputContextFactory.create(outputPath, false)) {
       assertThat(context, instanceOf(ZipScribeOutputContext.class));
     }
     assertThat(Files.exists(tempDir.resolve("report.zip")), is(true));

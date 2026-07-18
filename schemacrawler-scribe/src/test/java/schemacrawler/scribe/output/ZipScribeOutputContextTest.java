@@ -29,10 +29,10 @@ public class ZipScribeOutputContextTest {
     final Path zipFile = tempDir.resolve("report.zip");
 
     try (ZipScribeOutputContext context = new ZipScribeOutputContext(zipFile)) {
-      try (Writer writer = context.openWriter("index.txt")) {
+      try (Writer writer = context.openNewOutputWriter("index.txt")) {
         writer.write("hello index");
       }
-      try (Writer writer = context.openWriter("tables/books.txt")) {
+      try (Writer writer = context.openNewOutputWriter("tables/books.txt")) {
         writer.write("hello table");
       }
     }

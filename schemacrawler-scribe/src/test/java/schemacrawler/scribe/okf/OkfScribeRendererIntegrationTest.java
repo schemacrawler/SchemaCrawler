@@ -48,7 +48,7 @@ public class OkfScribeRendererIntegrationTest {
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
 
     final Path zipFile = tempDir.resolve("okf.zip");
-    try (ScribeOutputContext output = ScribeOutputContextFactory.create(zipFile, false)) {
+    try (final ScribeOutputContext output = ScribeOutputContextFactory.create(zipFile, false)) {
       new OkfScribeRenderer().render(support, options, output);
     }
 

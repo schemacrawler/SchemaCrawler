@@ -43,7 +43,7 @@ public final class FreeMarkerRenderer extends BaseTemplateRenderer {
           freemarker.log.Logger.LIBRARY_NAME_JUL);
 
       // Create a new instance of the configuration
-      final Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
+      final Configuration cfg = new Configuration(Configuration.VERSION_2_3_34);
 
       final TemplateLoader ctl = new ClassTemplateLoader(FreeMarkerRenderer.class, "/");
       final TemplateLoader ftl = new FileTemplateLoader(new File(templatePath));

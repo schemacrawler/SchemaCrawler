@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -21,8 +22,6 @@ import us.fatehi.utility.string.StringFormat;
 public final class ScribeOutputContextFactory {
 
   private static final Logger LOGGER = Logger.getLogger(ScribeOutputContextFactory.class.getName());
-
-  private static final String ZIP_EXTENSION = ".zip";
 
   /**
    * Creates a new output context for the given output path, choosing between expanded file/folder
@@ -43,10 +42,11 @@ public final class ScribeOutputContextFactory {
   }
 
   private static Path ensureZipExtension(final Path outputPath) {
-    if (outputPath.getFileName().toString().toLowerCase().endsWith(ZIP_EXTENSION)) {
+    if ("zip".equals(IOUtility.getFileExtension(outputPath))) {
       return outputPath;
     }
-    return outputPath.resolveSibling(outputPath.getFileName().toString() + ZIP_EXTENSION);
+    final String outputFileName = "%s.zip".formatted(outputPath.getFileName().toString());
+    return outputPath.resolveSibling(outputFileName);
   }
 
   private ScribeOutputContextFactory() {
