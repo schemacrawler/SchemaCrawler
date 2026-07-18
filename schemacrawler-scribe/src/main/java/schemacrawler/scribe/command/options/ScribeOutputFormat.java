@@ -13,10 +13,12 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.List;
 import schemacrawler.scribe.okf.OkfScribeRenderer;
 import schemacrawler.scribe.renderer.ScribeRenderer;
+import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.OutputFormatState;
 
 /** Supported Scribe output formats and their renderer constructors. */
-public enum ScribeOutputFormat {
-  okf;
+public enum ScribeOutputFormat implements OutputFormat {
+  okf("Google Open Knowledge Format (OKF) bundle");
 
   public static ScribeOutputFormat fromFormat(final String format) {
     ScribeOutputFormat scribeFormat = fromFormatOrNull(format);
@@ -48,9 +50,35 @@ public enum ScribeOutputFormat {
     return List.of(okf.name());
   }
 
+  private final OutputFormatState outputFormatState;
+
+  ScribeOutputFormat(final String description) {
+    outputFormatState = new OutputFormatState(name(), description);
+  }
+
+  @Override
+  public String getDescription() {
+    return outputFormatState.getDescription();
+  }
+
+  @Override
+  public String getFormat() {
+    return outputFormatState.getFormat();
+  }
+
+  @Override
+  public List<String> getFormats() {
+    return outputFormatState.getFormats();
+  }
+
   public ScribeRenderer newRenderer() {
     return switch (this) {
       case okf -> new OkfScribeRenderer();
     };
+  }
+
+  @Override
+  public String toString() {
+    return outputFormatState.toString();
   }
 }

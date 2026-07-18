@@ -8,13 +8,12 @@
 
 package schemacrawler.scribe.command;
 
-import static schemacrawler.scribe.command.SchemaScribeCommand.COMMAND;
+import static schemacrawler.scribe.command.ScribeCommand.COMMAND;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 
-import java.util.List;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.scribe.command.options.SchemaScribeOptions;
-import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
+import schemacrawler.scribe.command.options.ScribeOptions;
+import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.scribe.command.options.ScribeOutputFormat;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -22,23 +21,10 @@ import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
 /** Registers the Scribe command with the SchemaCrawler command line. */
-public final class SchemaScribeCommandProvider extends AbstractSchemaCrawlerCommandProvider {
-
-  /**
-   * @return Help footer lines listing Scribe output formats.
-   */
-  private static String[] outputFormatsFooter() {
-    final List<String> formats = ScribeOutputFormat.supportedFormats();
-    if (formats.isEmpty()) {
-      return new String[0];
-    }
-    return new String[] {
-      "Scribe report output formats (for --output-format): %s".formatted(String.join(", ", formats))
-    };
-  }
+public final class ScribeCommandProvider extends AbstractSchemaCrawlerCommandProvider {
 
   /** Creates the Scribe command provider, supporting only the {@code scribe} command. */
-  public SchemaScribeCommandProvider() {
+  public ScribeCommandProvider() {
     super(COMMAND);
   }
 
@@ -51,7 +37,13 @@ public final class SchemaScribeCommandProvider extends AbstractSchemaCrawlerComm
   @Override
   public PluginCommand getCommandLineCommand() {
     final PluginCommand pluginCommand =
-        newPluginCommand(COMMAND, null, SchemaScribeCommandProvider::outputFormatsFooter);
+        newPluginCommand(
+            COMMAND,
+            () ->
+                new String[] {
+                  "For more information, see https://www.schemacrawler.com/scribe.html"
+                },
+            () -> new String[] {});
     pluginCommand
         .addOption(
             "language",
@@ -67,15 +59,26 @@ public final class SchemaScribeCommandProvider extends AbstractSchemaCrawlerComm
     return pluginCommand;
   }
 
+  @Override
+  public PluginCommand getHelpCommand() {
+    final PluginCommand pluginCommand = getCommandLineCommand();
+    pluginCommand.addOption(
+        "output-format",
+        ScribeOutputFormat.class,
+        "Supported bundle formats",
+        "<output-format> is one of ${COMPLETION-CANDIDATES}",
+        "Optional");
+    return pluginCommand;
+  }
+
   /** {@inheritDoc} */
   @Override
-  public SchemaScribeCommand newCommand(final String command, final Config config) {
+  public ScribeCommand newCommand(final String command, final Config config) {
     if (!supportsCommand(command)) {
       throw new ExecutionRuntimeException("Unsupported command <%s>".formatted(command));
     }
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().fromConfig(config).toOptions();
-    final SchemaScribeCommand scribeCommand = new SchemaScribeCommand();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().fromConfig(config).toOptions();
+    final ScribeCommand scribeCommand = new ScribeCommand();
     scribeCommand.configure(options);
     return scribeCommand;
   }
@@ -83,10 +86,6 @@ public final class SchemaScribeCommandProvider extends AbstractSchemaCrawlerComm
   /** {@inheritDoc} */
   @Override
   public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
-    if (outputOptions == null) {
-      return false;
-    }
-    final String format = outputOptions.getOutputFormatValue();
-    return ScribeOutputFormat.isSupportedFormat(format);
+    return supportsOutputFormat(command, outputOptions, ScribeOutputFormat::isSupportedFormat);
   }
 }

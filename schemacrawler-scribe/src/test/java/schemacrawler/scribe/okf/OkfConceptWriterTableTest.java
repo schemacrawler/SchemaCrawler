@@ -27,8 +27,8 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.scribe.command.options.SchemaScribeOptions;
-import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
+import schemacrawler.scribe.command.options.ScribeOptions;
+import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.scribe.output.ScribeOutputContext;
 import schemacrawler.scribe.output.ZipScribeOutputContext;
 import schemacrawler.scribe.renderer.JsonUtility;
@@ -68,7 +68,7 @@ public class OkfConceptWriterTableTest {
       throws Exception {
     final Catalog catalog =
         getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
-    final SchemaScribeOptions options = SchemaScribeOptionsBuilder.builder().toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
     final ScribeMessages msg = support.messages();
@@ -129,7 +129,7 @@ public class OkfConceptWriterTableTest {
       throws Exception {
     final Catalog catalog =
         getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
-    final SchemaScribeOptions options = SchemaScribeOptionsBuilder.builder().toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
 

@@ -23,8 +23,8 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.scribe.command.options.SchemaScribeOptions;
-import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
+import schemacrawler.scribe.command.options.ScribeOptions;
+import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.scribe.model.CrossReferenceEntry;
 import schemacrawler.scribe.output.ScribeOutputContext;
 import schemacrawler.scribe.output.ZipScribeOutputContext;
@@ -53,7 +53,7 @@ public class OkfTemplateCompilationTest {
   }
 
   private static ScribeSupport newScribeSupport(final Catalog catalog) {
-    final SchemaScribeOptions options = SchemaScribeOptionsBuilder.builder().toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
     final ExecutionState executionState = new StubExecutionState(catalog);
     return new ScribeSupport(executionState, options, new Lints(List.of()));
   }

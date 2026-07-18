@@ -17,8 +17,8 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOpti
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Catalog;
-import schemacrawler.scribe.command.options.SchemaScribeOptions;
-import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
+import schemacrawler.scribe.command.options.ScribeOptions;
+import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.lint.Lints;
@@ -35,7 +35,7 @@ public class ScribeSupportRowCountsTest {
   public void hasRowCountsFalseByDefault(final DatabaseConnectionSource connectionSource) {
     final Catalog catalog =
         getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
-    final SchemaScribeOptions options = SchemaScribeOptionsBuilder.builder().toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
 
@@ -52,7 +52,7 @@ public class ScribeSupportRowCountsTest {
             schemaRetrievalOptionsDefault,
             schemaCrawlerOptionsWithMaximumSchemaInfoLevel,
             config);
-    final SchemaScribeOptions options = SchemaScribeOptionsBuilder.builder().toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
 

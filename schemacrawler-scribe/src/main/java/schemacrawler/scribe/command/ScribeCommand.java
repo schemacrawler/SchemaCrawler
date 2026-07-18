@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.scribe.command.options.SchemaScribeOptions;
-import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
+import schemacrawler.scribe.command.options.ScribeOptions;
+import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.scribe.command.options.ScribeOutputFormat;
 import schemacrawler.scribe.output.ScribeOutputContext;
 import schemacrawler.scribe.output.ScribeOutputContextFactory;
@@ -34,15 +34,15 @@ import us.fatehi.utility.string.StringFormat;
  * Generates a multi-file Scribe schema report, packaged as a ZIP file by default, or written as
  * expanded files and folders when the {@code --expanded-output} option is set.
  */
-public final class SchemaScribeCommand extends AbstractSchemaCrawlerCommand<SchemaScribeOptions> {
+public final class ScribeCommand extends AbstractSchemaCrawlerCommand<ScribeOptions> {
 
-  private static final Logger LOGGER = Logger.getLogger(SchemaScribeCommand.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ScribeCommand.class.getName());
 
   static final PropertyName COMMAND =
       new PropertyName("scribe", "Generate a database schema report bundle");
 
   /** Creates the Scribe command. */
-  public SchemaScribeCommand() {
+  public ScribeCommand() {
     super(COMMAND);
   }
 
@@ -60,8 +60,8 @@ public final class SchemaScribeCommand extends AbstractSchemaCrawlerCommand<Sche
           "Output format <%s> not supported for command <%s>".formatted(outputFormat, command));
     }
 
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder()
+    final ScribeOptions options =
+        ScribeOptionsBuilder.builder()
             .fromOptions(getCommandOptions())
             .withTitle(title)
             .toOptions();

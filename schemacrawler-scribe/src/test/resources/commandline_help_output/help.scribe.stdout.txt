@@ -1,0 +1,16 @@
+** Generate a database schema report bundle
+For more information, see https://www.schemacrawler.com/scribe.html
+      --expanded-output   Whether to write the report as expanded files and
+                            folders instead of a single ZIP archive
+      --include-lint      Whether to include lint results in the report
+      --language=<language>
+                          BCP 47 language tag for localized report text, for
+                            example, fr or de-DE; the default is the system
+                            locale
+      --output-format=<output-format>
+                          Supported bundle formats
+                          Use one of [okf] Google Open Knowledge Format (OKF)
+                            bundle
+Add command options to the `execute` command in the SchemaCrawler Shell
+
+

@@ -20,8 +20,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.scribe.command.options.SchemaScribeOptions;
-import schemacrawler.scribe.command.options.SchemaScribeOptionsBuilder;
+import schemacrawler.scribe.command.options.ScribeOptions;
+import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.scribe.output.ScribeOutputContext;
 import schemacrawler.scribe.output.ZipScribeOutputContext;
 import schemacrawler.scribe.renderer.ScribeMessages;
@@ -68,8 +68,7 @@ public class OkfLocalizationTest {
       throws Exception {
     final Catalog catalog =
         getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().withLocale(locale).toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().withLocale(locale).toOptions();
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
     final ScribeMessages msg = support.messages();

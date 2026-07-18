@@ -17,10 +17,10 @@ import schemacrawler.tools.options.ConfigOptionsBuilder;
 import schemacrawler.tools.options.ConfigUtility;
 import us.fatehi.utility.OptionsBuilder;
 
-/** Builder for immutable {@link SchemaScribeOptions}. */
-public final class SchemaScribeOptionsBuilder
-    implements OptionsBuilder<SchemaScribeOptionsBuilder, SchemaScribeOptions>,
-        ConfigOptionsBuilder<SchemaScribeOptionsBuilder, SchemaScribeOptions> {
+/** Builder for immutable {@link ScribeOptions}. */
+public final class ScribeOptionsBuilder
+    implements OptionsBuilder<ScribeOptionsBuilder, ScribeOptions>,
+        ConfigOptionsBuilder<ScribeOptionsBuilder, ScribeOptions> {
 
   private static final String SCHEMACRAWLER_SCRIBE = "schemacrawler.scribe.";
 
@@ -48,8 +48,8 @@ public final class SchemaScribeOptionsBuilder
    *
    * @return New builder
    */
-  public static SchemaScribeOptionsBuilder builder() {
-    return new SchemaScribeOptionsBuilder();
+  public static ScribeOptionsBuilder builder() {
+    return new ScribeOptionsBuilder();
   }
 
   /**
@@ -67,7 +67,7 @@ public final class SchemaScribeOptionsBuilder
 
   private String title;
 
-  private SchemaScribeOptionsBuilder() {
+  private ScribeOptionsBuilder() {
     // Use the default field values
     includeLint = false;
     locale = Locale.getDefault();
@@ -77,7 +77,7 @@ public final class SchemaScribeOptionsBuilder
 
   /** {@inheritDoc} */
   @Override
-  public SchemaScribeOptionsBuilder fromConfig(final Config config) {
+  public ScribeOptionsBuilder fromConfig(final Config config) {
     if (config == null) {
       return this;
     }
@@ -92,7 +92,7 @@ public final class SchemaScribeOptionsBuilder
 
   /** {@inheritDoc} */
   @Override
-  public SchemaScribeOptionsBuilder fromOptions(final SchemaScribeOptions options) {
+  public ScribeOptionsBuilder fromOptions(final ScribeOptions options) {
     if (options == null) {
       return this;
     }
@@ -115,8 +115,8 @@ public final class SchemaScribeOptionsBuilder
 
   /** {@inheritDoc} */
   @Override
-  public SchemaScribeOptions toOptions() {
-    return new SchemaScribeOptions(title, includeLint, locale, expandedOutput);
+  public ScribeOptions toOptions() {
+    return new ScribeOptions(title, includeLint, locale, expandedOutput);
   }
 
   /**
@@ -125,7 +125,7 @@ public final class SchemaScribeOptionsBuilder
    * @param value Whether to write expanded output
    * @return Builder
    */
-  public SchemaScribeOptionsBuilder withExpandedOutput(final boolean value) {
+  public ScribeOptionsBuilder withExpandedOutput(final boolean value) {
     expandedOutput = value;
     return this;
   }
@@ -136,7 +136,7 @@ public final class SchemaScribeOptionsBuilder
    * @param value Whether to include lint results
    * @return Builder
    */
-  public SchemaScribeOptionsBuilder withIncludeLint(final boolean value) {
+  public ScribeOptionsBuilder withIncludeLint(final boolean value) {
     includeLint = value;
     return this;
   }
@@ -147,7 +147,7 @@ public final class SchemaScribeOptionsBuilder
    * @param value Locale for the report
    * @return Builder
    */
-  public SchemaScribeOptionsBuilder withLocale(final Locale value) {
+  public ScribeOptionsBuilder withLocale(final Locale value) {
     locale = value == null ? Locale.getDefault() : value;
     return this;
   }
@@ -158,7 +158,7 @@ public final class SchemaScribeOptionsBuilder
    * @param value Report title
    * @return Builder
    */
-  public SchemaScribeOptionsBuilder withTitle(final String value) {
+  public ScribeOptionsBuilder withTitle(final String value) {
     title = trimToEmpty(value);
     return this;
   }

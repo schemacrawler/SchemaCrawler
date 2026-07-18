@@ -43,7 +43,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TypedObject;
 import schemacrawler.schema.View;
-import schemacrawler.scribe.command.options.SchemaScribeOptions;
+import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Lints;
@@ -70,7 +70,7 @@ public final class ScribeSupport extends AbstractTextSupport {
 
   private final Lints lints;
   private final ScribeMessages messages;
-  private final SchemaScribeOptions options;
+  private final ScribeOptions options;
   private final List<ForeignKey> allForeignKeys;
   private final Map<NamedObjectKey, List<ForeignKey>> childForeignKeysByTable;
   private final Map<NamedObjectKey, List<ForeignKey>> parentForeignKeysByTable;
@@ -86,7 +86,7 @@ public final class ScribeSupport extends AbstractTextSupport {
    * @param options Scribe options
    */
   public ScribeSupport(
-      final ExecutionState executionState, final SchemaScribeOptions options, final Lints lints) {
+      final ExecutionState executionState, final ScribeOptions options, final Lints lints) {
     requireNonNull(executionState, "No execution state provided");
     this.options = requireNonNull(options, "No Scribe options provided");
     this.lints = requireNonNull(lints, "No lints provided");

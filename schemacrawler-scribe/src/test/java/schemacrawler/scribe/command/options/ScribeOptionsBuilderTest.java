@@ -16,11 +16,11 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigUtility;
 
-public class SchemaScribeOptionsBuilderTest {
+public class ScribeOptionsBuilderTest {
 
   @Test
   public void defaults() {
-    final SchemaScribeOptions options = SchemaScribeOptionsBuilder.builder().toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
     assertThat(options.getTitle(), is(""));
     assertThat(options.isIncludeLint(), is(false));
     assertThat(options.getLocale(), is(Locale.getDefault()));
@@ -29,22 +29,21 @@ public class SchemaScribeOptionsBuilderTest {
 
   @Test
   public void withLocale() {
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().withLocale(Locale.FRENCH).toOptions();
+    final ScribeOptions options =
+        ScribeOptionsBuilder.builder().withLocale(Locale.FRENCH).toOptions();
     assertThat(options.getLocale(), is(Locale.FRENCH));
   }
 
   @Test
   public void withTitle() {
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().withTitle("My Report").toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().withTitle("My Report").toOptions();
     assertThat(options.getTitle(), is("My Report"));
   }
 
   @Test
   public void withExpandedOutput() {
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().withExpandedOutput(true).toOptions();
+    final ScribeOptions options =
+        ScribeOptionsBuilder.builder().withExpandedOutput(true).toOptions();
     assertThat(options.isExpandedOutput(), is(true));
   }
 
@@ -56,8 +55,7 @@ public class SchemaScribeOptionsBuilderTest {
     config.put("schemacrawler.scribe.language", "fr");
     config.put("schemacrawler.scribe.expanded-output", true);
 
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().fromConfig(config).toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().fromConfig(config).toOptions();
 
     assertThat(options.isIncludeLint(), is(true));
     assertThat(options.getLocale(), is(Locale.FRENCH));
@@ -75,8 +73,7 @@ public class SchemaScribeOptionsBuilderTest {
     config.put("language", "fr");
     config.put("expanded-output", true);
 
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().fromConfig(config).toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().fromConfig(config).toOptions();
 
     assertThat(options.isIncludeLint(), is(true));
     assertThat(options.getLocale(), is(Locale.FRENCH));
@@ -89,8 +86,7 @@ public class SchemaScribeOptionsBuilderTest {
     config.put("schemacrawler.scribe.expanded-output", false);
     config.put("expanded-output", true);
 
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().fromConfig(config).toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().fromConfig(config).toOptions();
 
     assertThat(options.isExpandedOutput(), is(true));
   }
@@ -98,8 +94,7 @@ public class SchemaScribeOptionsBuilderTest {
   @Test
   public void fromConfigWithAbsentLocaleUsesDefault() {
     final Config config = ConfigUtility.newConfig();
-    final SchemaScribeOptions options =
-        SchemaScribeOptionsBuilder.builder().fromConfig(config).toOptions();
+    final ScribeOptions options = ScribeOptionsBuilder.builder().fromConfig(config).toOptions();
     assertThat(options.getLocale(), is(Locale.getDefault()));
   }
 }
