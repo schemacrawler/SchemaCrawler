@@ -19,6 +19,7 @@ import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOption
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -29,8 +30,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
-import schemacrawler.scribe.output.ScribeOutputContext;
-import schemacrawler.scribe.output.ZipScribeOutputContext;
 import schemacrawler.scribe.renderer.JsonUtility;
 import schemacrawler.scribe.renderer.ScribeMessages;
 import schemacrawler.scribe.renderer.ScribeSupport;
@@ -82,14 +81,12 @@ public class OkfConceptWriterTableTest {
     }
     assertThat(target, is(notNullValue()));
 
-    final Path zipFile = tempDir.resolve("okf.zip");
-    try (ScribeOutputContext output = new ZipScribeOutputContext(zipFile)) {
-      new OkfConceptPageWriter(support, output).writeTableConcept(target);
-    }
+    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
+        .writeTableConcept(target);
 
     final String resourcePath = "tables/" + target.key().slug() + ".md";
-    assertThat(ZipTestUtility.hasEntry(zipFile, resourcePath), is(true));
-    final String content = ZipTestUtility.readEntry(zipFile, resourcePath);
+    assertThat(Files.exists(tempDir.resolve(resourcePath)), is(true));
+    final String content = Files.readString(tempDir.resolve(resourcePath));
 
     final int frontMatterStart = content.indexOf("---");
     final int frontMatterEnd = content.indexOf("---", frontMatterStart + 3);
@@ -136,13 +133,11 @@ public class OkfConceptWriterTableTest {
     final Table table = support.allTables().get(0);
     final Table tableWithNullSchemaName = withNullSchemaName(table);
 
-    final Path zipFile = tempDir.resolve("okf-null-schema.zip");
-    try (ScribeOutputContext output = new ZipScribeOutputContext(zipFile)) {
-      new OkfConceptPageWriter(support, output).writeTableConcept(tableWithNullSchemaName);
-    }
+    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
+        .writeTableConcept(tableWithNullSchemaName);
 
     final String resourcePath = "tables/" + tableWithNullSchemaName.key().slug() + ".md";
-    final String content = ZipTestUtility.readEntry(zipFile, resourcePath);
+    final String content = Files.readString(tempDir.resolve(resourcePath));
     assertThat(content, containsString("schema:"));
     assertThat(content, containsString("complete_type:"));
   }

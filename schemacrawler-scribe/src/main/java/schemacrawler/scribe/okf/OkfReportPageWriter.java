@@ -90,15 +90,15 @@ public final class OkfReportPageWriter {
       LOGGER.log(Level.FINE, new StringFormat("Writing OKF index files"));
     }
 
-    final List<Table> tablesAndViews = support.allTablesAndViews();
+    final List<Table> tables = support.allTables();
     final List<Routine> routines = support.allRoutines();
 
     final Map<String, Object> model = makeModel();
-    model.put("tables", tablesAndViews);
+    model.put("tables", tables);
     model.put("routines", routines);
 
     templateRenderer.writeTemplate("root-index.ftl", model, ROOT_INDEX_PATH);
-    if (!tablesAndViews.isEmpty()) {
+    if (!tables.isEmpty()) {
       templateRenderer.writeTemplate("tables-index.ftl", model, TABLES_INDEX_PATH);
     }
     if (!routines.isEmpty()) {

@@ -9,8 +9,6 @@
 package schemacrawler.scribe.okf;
 
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
-import schemacrawler.scribe.command.options.ScribeOptions;
-import schemacrawler.scribe.output.ScribeOutputContext;
 import schemacrawler.scribe.renderer.ScribeRenderer;
 import schemacrawler.scribe.renderer.ScribeSupport;
 
@@ -18,15 +16,11 @@ import schemacrawler.scribe.renderer.ScribeSupport;
 public final class OkfScribeRenderer implements ScribeRenderer {
 
   @Override
-  public String getSupportedOutputFormat() {
-    return "okf";
-  }
-
-  @Override
-  public void render(
-      final ScribeSupport support, final ScribeOptions options, final ScribeOutputContext output)
+  public void render(final ScribeSupport support, final BundleDirectoryOutput outputDirectory)
       throws SchemaCrawlerException {
-    final OkfTemplateRenderer templateRenderer = new OkfTemplateRenderer(output);
+
+    final OkfTemplateRenderer templateRenderer = new OkfTemplateRenderer(outputDirectory);
+
     final OkfConceptPageWriter conceptPageWriter =
         new OkfConceptPageWriter(support, templateRenderer);
     conceptPageWriter.writeConceptPages();

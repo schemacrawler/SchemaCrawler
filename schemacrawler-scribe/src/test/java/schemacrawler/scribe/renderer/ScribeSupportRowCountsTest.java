@@ -9,6 +9,7 @@
 package schemacrawler.scribe.renderer;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
@@ -32,18 +33,20 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 public class ScribeSupportRowCountsTest {
 
   @Test
-  public void hasRowCountsFalseByDefault(final DatabaseConnectionSource connectionSource) {
+  public void rowCountsAreUnavailableByDefault(final DatabaseConnectionSource connectionSource) {
     final Catalog catalog =
         getCatalog(connectionSource.get(), schemaCrawlerOptionsWithMaximumSchemaInfoLevel);
     final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
 
-    assertThat(support.hasRowCounts(), is(false));
+    for (final var table : support.allTables()) {
+      assertThat(support.rowCount(table), is(-1L));
+    }
   }
 
   @Test
-  public void hasRowCountsTrueWhenLoaded(final DatabaseConnectionSource connectionSource) {
+  public void rowCountsAreLoadedWhenEnabled(final DatabaseConnectionSource connectionSource) {
     final Config config = ConfigUtility.newConfig();
     config.put("load-row-counts", true);
     final Catalog catalog =
@@ -56,6 +59,14 @@ public class ScribeSupportRowCountsTest {
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
 
-    assertThat(support.hasRowCounts(), is(true));
+    boolean foundAvailableRowCount = false;
+    for (final var table : support.allTables()) {
+      final long rowCount = support.rowCount(table);
+      if (rowCount >= 0) {
+        assertThat(rowCount, is(greaterThanOrEqualTo(0L)));
+        foundAvailableRowCount = true;
+      }
+    }
+    assertThat(foundAvailableRowCount, is(true));
   }
 }

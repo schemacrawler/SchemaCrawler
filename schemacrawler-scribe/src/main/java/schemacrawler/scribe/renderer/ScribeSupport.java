@@ -9,39 +9,27 @@
 package schemacrawler.scribe.renderer;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.scribe.renderer.JsonUtility.mapper;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Predicate;
-import schemacrawler.ermodel.model.ERModel;
 import schemacrawler.ermodel.model.Entity;
 import schemacrawler.ermodel.model.EntityType;
-import schemacrawler.ermodel.model.Relationship;
-import schemacrawler.ermodel.model.RelationshipCardinality;
+import schemacrawler.loader.ermodel.summary.ERModelStats;
 import schemacrawler.loader.utility.TableRowCountsUtility;
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
-import schemacrawler.schema.TypedObject;
 import schemacrawler.schema.View;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.tools.lint.Lint;
@@ -49,7 +37,6 @@ import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.state.ExecutionState;
 import schemacrawler.tools.utility.AbstractTextSupport;
-import schemacrawler.utility.MetaDataUtility;
 
 /**
  * Single source of truth for all catalog, ER model, lint, and message data used by Scribe
@@ -71,12 +58,8 @@ public final class ScribeSupport extends AbstractTextSupport {
   private final Lints lints;
   private final ScribeMessages messages;
   private final ScribeOptions options;
-  private final List<ForeignKey> allForeignKeys;
-  private final Map<NamedObjectKey, List<ForeignKey>> childForeignKeysByTable;
-  private final Map<NamedObjectKey, List<ForeignKey>> parentForeignKeysByTable;
-  private final Map<NamedObjectKey, List<Table>> referencedTablesByTable;
-
-  private final Map<NamedObjectKey, List<Table>> referencingTablesByTable;
+  private final ScribeRelationsIndex relationsIndex;
+  private final ScribeCatalogStats catalogStats;
 
   /**
    * Creates the Scribe support instance, transferring catalog, ER model, and connection state from
@@ -92,50 +75,12 @@ public final class ScribeSupport extends AbstractTextSupport {
     this.lints = requireNonNull(lints, "No lints provided");
 
     executionState.transferState(this);
-
-    final Map<NamedObjectKey, List<ForeignKey>> child = new HashMap<>();
-    final Map<NamedObjectKey, List<ForeignKey>> parent = new HashMap<>();
-    final Map<NamedObjectKey, List<Table>> referenced = new HashMap<>();
-    final Map<NamedObjectKey, List<Table>> referencing = new HashMap<>();
-    final Map<NamedObjectKey, ForeignKey> deduplicatedForeignKeys = new LinkedHashMap<>();
-
-    for (final Table table : getCatalog().getTables()) {
-      final List<ForeignKey> imported = List.copyOf(table.getImportedForeignKeys());
-      final List<ForeignKey> exported = List.copyOf(table.getExportedForeignKeys());
-      child.put(table.key(), imported);
-      parent.put(table.key(), exported);
-
-      final List<Table> referencedTablesForTable = new ArrayList<>();
-      for (final ForeignKey foreignKey : imported) {
-        referencedTablesForTable.add(foreignKey.getPrimaryKeyTable());
-        deduplicatedForeignKeys.putIfAbsent(foreignKey.key(), foreignKey);
-      }
-      referenced.put(table.key(), List.copyOf(referencedTablesForTable));
-
-      final List<Table> referencingTablesForTable = new ArrayList<>();
-      for (final ForeignKey foreignKey : exported) {
-        referencingTablesForTable.add(foreignKey.getForeignKeyTable());
-        deduplicatedForeignKeys.putIfAbsent(foreignKey.key(), foreignKey);
-      }
-      referencing.put(table.key(), List.copyOf(referencingTablesForTable));
-    }
-
-    childForeignKeysByTable = Map.copyOf(child);
-    parentForeignKeysByTable = Map.copyOf(parent);
-    referencedTablesByTable = Map.copyOf(referenced);
-    referencingTablesByTable = Map.copyOf(referencing);
-    allForeignKeys = List.copyOf(deduplicatedForeignKeys.values());
+    relationsIndex = new ScribeRelationsIndex(getCatalog());
+    catalogStats =
+        new ScribeCatalogStats(
+            getCatalog(), hasERModel() ? Optional.of(getERModel()) : Optional.empty());
 
     messages = new ScribeMessages(options.getLocale());
-  }
-
-  /**
-   * Gets all foreign keys in the catalog, deduplicated.
-   *
-   * @return Deduplicated foreign keys
-   */
-  public List<ForeignKey> allForeignKeys() {
-    return allForeignKeys;
   }
 
   /**
@@ -150,60 +95,14 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   /**
-   * Gets all tables (not views), sorted alphabetically by full name.
-   *
-   * @return Sorted tables
-   */
-  public List<Table> allTables() {
-    return sortedTables(table -> !isView(table));
-  }
-
-  /**
    * Gets all tables and views, sorted alphabetically by full name.
    *
    * @return Sorted tables and views
    */
-  public List<Table> allTablesAndViews() {
-    return sortedTables(table -> true);
-  }
-
-  /**
-   * Gets all views, sorted alphabetically by full name.
-   *
-   * @return Sorted views
-   */
-  public List<Table> allViews() {
-    return sortedTables(this::isView);
-  }
-
-  /**
-   * Gets all many-to-many bridge tables in the ER model, sorted alphabetically by full name.
-   *
-   * @return Bridge tables, empty when no ER model is available
-   */
-  public List<Table> bridgeTables() {
-    if (!hasERModel()) {
-      return List.of();
-    }
-    final List<Table> tables = new ArrayList<>();
-    for (final Table table : getCatalog().getTables()) {
-      if (isBridgeTable(table)) {
-        tables.add(table);
-      }
-    }
+  public List<Table> allTables() {
+    final List<Table> tables = new ArrayList<>(getCatalog().getTables());
     tables.sort(Comparator.comparing(Table::getFullName));
     return List.copyOf(tables);
-  }
-
-  /**
-   * Gets the routines that call a given routine. JDBC exposes no portable caller graph, so this
-   * always returns an empty collection.
-   *
-   * @param routine Routine
-   * @return Empty collection
-   */
-  public Collection<Routine> calledByRoutines(final Routine routine) {
-    return List.of();
   }
 
   /**
@@ -213,30 +112,17 @@ public final class ScribeSupport extends AbstractTextSupport {
    * @return Child foreign keys, or an empty collection when the table is {@code null}
    */
   public Collection<ForeignKey> childForeignKeys(final Table table) {
-    return lookup(childForeignKeysByTable, table);
-  }
-
-  /**
-   * Gets the total number of columns across all tables and views.
-   *
-   * @return Column count
-   */
-  public int columnCount() {
-    int count = 0;
-    for (final Table table : getCatalog().getTables()) {
-      count += table.getColumns().size();
-    }
-    return count;
+    return relationsIndex.childForeignKeys(table);
   }
 
   /**
    * Gets the timestamp of the SchemaCrawler run that produced the catalog. Scribe does not generate
-   * its own as-of date; this is the same value as {@link #runTimestamp()}.
+   * its own as-of date.
    *
    * @return Crawl timestamp
    */
   public Instant crawlTimestamp() {
-    return runTimestamp();
+    return getCatalog().getCrawlInfo().getCrawlTimestampInstant();
   }
 
   /**
@@ -252,7 +138,7 @@ public final class ScribeSupport extends AbstractTextSupport {
     return messages.labelDatabaseSchema();
   }
 
-  public EntityModelType entityModelType(final Table table) {
+  private EntityModelType entityModelType(final Table table) {
     if (table == null || !hasERModel()) {
       return EntityModelType.unknown;
     }
@@ -272,13 +158,7 @@ public final class ScribeSupport extends AbstractTextSupport {
     };
   }
 
-  /**
-   * Gets the entity type of a table's ER model entity.
-   *
-   * @param table Table
-   * @return Entity type, empty when no ER model is available or the table is not modeled
-   */
-  public Optional<EntityType> entityType(final Table table) {
+  private Optional<EntityType> entityType(final Table table) {
     if (table == null || !hasERModel()) {
       return Optional.empty();
     }
@@ -286,23 +166,16 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   public String escapeMarkdown(final String input) {
-    if (isBlank(input)) {
-      return "";
-    }
+    return ScribeFormatting.escapeMarkdown(input);
+  }
 
-    final StringBuilder sb = new StringBuilder(input.length() * 2);
-    input
-        .replaceAll("\\R", " ")
-        .codePoints()
-        .forEach(
-            cp -> {
-              if (isMarkdownSpecial(cp)) {
-                sb.append('\\');
-              }
-              sb.appendCodePoint(cp);
-            });
-
-    return sb.toString().replaceAll("\\R", "");
+  /**
+   * Gets the ER model statistics, or {@code null} if no ER model is available.
+   *
+   * @return ER model stats, or {@code null}
+   */
+  public ERModelStats erModelStats() {
+    return catalogStats.erModelStats().orElse(null);
   }
 
   /**
@@ -311,106 +184,15 @@ public final class ScribeSupport extends AbstractTextSupport {
    * @return Foreign key count
    */
   public int foreignKeyCount() {
-    return allForeignKeys.size();
+    return catalogStats.foreignKeyCount();
   }
 
   public String frontMatter(final DatabaseObject object) {
-    if (object == null) {
-      return "";
-    }
-
-    final List<String> tags = new ArrayList<>();
-
-    final Map<String, Object> frontMatter = new LinkedHashMap<>();
-    final String simpleTypeName = MetaDataUtility.getSimpleTypeName(object).toString();
-    tags.add(simpleTypeName);
-    frontMatter.put("type", simpleTypeName);
-    frontMatter.put("title", object.getFullName());
-    if (object.hasRemarks()) {
-      frontMatter.put("description", object.getRemarks());
-    } else {
-      frontMatter.put("description", "Description of " + simpleTypeName);
-    }
-    if (object instanceof final TypedObject typedObject) {
-      frontMatter.put("complete_type", typedObject.getType().toString());
-    }
-    frontMatter.put("schema", object.getSchema().getFullName());
-    frontMatter.put("name", object.getName());
-
-    if (object instanceof final Table table) {
-      frontMatter.put("resource", "catalog://tables/" + encodeFullName(object));
-      if (!table.hasPrimaryKey()) {
-        tags.add("no_primary_key");
-      }
-      if (table.hasTriggers()) {
-        tags.add("has_triggers");
-      }
-
-      frontMatter.put("column_count", table.getColumns().size());
-      frontMatter.put("foreign_key_count", table.getReferencedTables().size());
-      frontMatter.put("index_count", table.getIndexes().size());
-      frontMatter.put("trigger_count", table.getTriggers().size());
-
-      if (table.isSelfReferencing()) {
-        tags.add("self_referencing");
-      }
-
-      final long rowCount = rowCount(table);
-      if (rowCount >= 0) {
-        frontMatter.put("row_count", rowCount);
-        if (rowCount == 0) {
-          tags.add("empty_table");
-        }
-      }
-      if (hasERModel()) {
-        final ERModel erModel = getERModel();
-        final Optional<Entity> lookupEntity = erModel.lookupEntity(table);
-        if (lookupEntity.isPresent()) {
-          final Entity entity = lookupEntity.get();
-          final EntityType entityType = entity.getType();
-          if (entityType != EntityType.unknown) {
-            frontMatter.put("entity_type", entityType.description());
-            tags.add(entityType.name());
-          }
-        }
-        if (erModel.lookupByBridgeTable(table).isPresent()) {
-          tags.add("bridge_table");
-        }
-      }
-    }
-
-    if (object instanceof final Routine routine) {
-      frontMatter.put("resource", "catalog://routines/" + encodeFullName(object));
-      frontMatter.put("parameter_count", routine.getParameters().size());
-    }
-
-    frontMatter.put("tags", tags);
-
-    if (hasCatalog()) {
-      final Catalog catalog = getCatalog();
-      final CrawlInfo crawlInfo = catalog.getCrawlInfo();
-      frontMatter.put("timestamp", crawlInfo.getCrawlTimestamp());
-      frontMatter.put("run_id", crawlInfo.getRunId());
-    }
-
-    return mapper.writeValueAsString(frontMatter);
-  }
-
-  /**
-   * Checks whether any table in the catalog has a row count available. Row counts are only present
-   * when the catalog was crawled with row-count loading enabled upstream (see {@link
-   * #rowCount(Table)}); this is a catalog-wide convenience for renderers deciding whether to show a
-   * row-count column/section at all.
-   *
-   * @return Whether any table has a row count available
-   */
-  public boolean hasRowCounts() {
-    for (final Table table : getCatalog().getTables()) {
-      if (TableRowCountsUtility.hasRowCount(table)) {
-        return true;
-      }
-    }
-    return false;
+    return ScribeObjectFrontMatterBuilder.build(
+        object,
+        hasCatalog() ? Optional.of(getCatalog()) : Optional.empty(),
+        hasERModel() ? Optional.of(getERModel()) : Optional.empty(),
+        this::rowCount);
   }
 
   /**
@@ -521,41 +303,13 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   /**
-   * Gets tables that have neither imported nor exported foreign keys.
-   *
-   * @return Orphan tables, sorted alphabetically by full name
-   */
-  public List<Table> orphanTables() {
-    final List<Table> orphans = new ArrayList<>();
-    for (final Table table : allTables()) {
-      if (childForeignKeys(table).isEmpty() && parentForeignKeys(table).isEmpty()) {
-        orphans.add(table);
-      }
-    }
-    return List.copyOf(orphans);
-  }
-
-  /**
    * Gets the foreign keys where the given table holds the referenced primary key (the parent side).
    *
    * @param table Table
    * @return Parent foreign keys, or an empty collection when the table is {@code null}
    */
   public Collection<ForeignKey> parentForeignKeys(final Table table) {
-    return lookup(parentForeignKeysByTable, table);
-  }
-
-  /**
-   * Gets the ordered primary key columns of a table.
-   *
-   * @param table Table
-   * @return Primary key columns, empty if the table has no primary key
-   */
-  public List<Column> primaryKeyColumns(final Table table) {
-    if (table == null || !table.hasPrimaryKey()) {
-      return List.of();
-    }
-    return List.copyOf(table.getPrimaryKey().getConstrainedColumns());
+    return relationsIndex.parentForeignKeys(table);
   }
 
   /**
@@ -565,7 +319,7 @@ public final class ScribeSupport extends AbstractTextSupport {
    * @return Referenced tables, or an empty collection when the table is {@code null}
    */
   public Collection<Table> referencedTables(final Table table) {
-    return lookup(referencedTablesByTable, table);
+    return relationsIndex.referencedTables(table);
   }
 
   /**
@@ -575,51 +329,14 @@ public final class ScribeSupport extends AbstractTextSupport {
    * @return Referencing tables, or an empty collection when the table is {@code null}
    */
   public Collection<Table> referencingTables(final Table table) {
-    return lookup(referencingTablesByTable, table);
-  }
-
-  /**
-   * Gets the ER model relationship type for a table reference.
-   *
-   * @param tableReference Table reference
-   * @return Relationship cardinality, empty when no ER model is available
-   */
-  public Optional<RelationshipCardinality> relationshipType(final TableReference tableReference) {
-    if (tableReference == null || !hasERModel()) {
-      return Optional.empty();
-    }
-    return getERModel().lookupRelationship(tableReference).map(Relationship::getType);
+    return relationsIndex.referencingTables(table);
   }
 
   public String reportFrontMatter(final String providedTitle, final String providedDescription) {
-
-    final String title;
-    if (isBlank(providedTitle)) {
-      title = "Report";
-    } else {
-      title = providedTitle;
-    }
-
-    final String description;
-    if (isBlank(providedDescription)) {
-      description = "Report";
-    } else {
-      description = providedDescription;
-    }
-
-    final Map<String, Object> frontMatter = new LinkedHashMap<>();
-    frontMatter.put("type", "report");
-    frontMatter.put("title", title);
-    frontMatter.put("description", description);
-
-    if (hasCatalog()) {
-      final Catalog catalog = getCatalog();
-      final CrawlInfo crawlInfo = catalog.getCrawlInfo();
-      frontMatter.put("timestamp", crawlInfo.getCrawlTimestamp());
-      frontMatter.put("run_id", crawlInfo.getRunId());
-    }
-
-    return mapper.writeValueAsString(frontMatter);
+    return ScribeReportFrontMatterBuilder.build(
+        providedTitle,
+        providedDescription,
+        hasCatalog() ? Optional.of(getCatalog()) : Optional.empty());
   }
 
   /**
@@ -628,7 +345,7 @@ public final class ScribeSupport extends AbstractTextSupport {
    * @return Routine count
    */
   public int routineCount() {
-    return getCatalog().getRoutines().size();
+    return catalogStats.routineCount();
   }
 
   /**
@@ -661,30 +378,8 @@ public final class ScribeSupport extends AbstractTextSupport {
     return rowCount;
   }
 
-  /**
-   * Gets the unique identifier of the SchemaCrawler run that produced the catalog.
-   *
-   * @return Run id
-   */
-  public String runId() {
-    return getCatalog().getCrawlInfo().getRunId();
-  }
-
-  /**
-   * Gets the timestamp of the SchemaCrawler run that produced the catalog.
-   *
-   * @return Run timestamp
-   */
-  public Instant runTimestamp() {
-    return getCatalog().getCrawlInfo().getCrawlTimestampInstant();
-  }
-
   public String sentenceCase(final String text) {
-    if (isBlank(text)) {
-      return "";
-    }
-    final String sentence = text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
-    return sentence;
+    return ScribeFormatting.sentenceCase(text);
   }
 
   /**
@@ -725,13 +420,7 @@ public final class ScribeSupport extends AbstractTextSupport {
    * @return Table count
    */
   public int tableCount() {
-    int count = 0;
-    for (final Table table : getCatalog().getTables()) {
-      if (!isView(table)) {
-        count++;
-      }
-    }
-    return count;
+    return catalogStats.tableCount();
   }
 
   /**
@@ -762,13 +451,7 @@ public final class ScribeSupport extends AbstractTextSupport {
     return List.copyOf(used);
   }
 
-  /**
-   * Gets the views that use a table.
-   *
-   * @param table Table
-   * @return Views that use the table
-   */
-  public Collection<Table> usedByViews(final Table table) {
+  private Collection<Table> usedByViews(final Table table) {
     if (table == null) {
       return List.of();
     }
@@ -787,58 +470,6 @@ public final class ScribeSupport extends AbstractTextSupport {
    * @return View count
    */
   public int viewCount() {
-    int count = 0;
-    for (final Table table : getCatalog().getTables()) {
-      if (isView(table)) {
-        count++;
-      }
-    }
-    return count;
-  }
-
-  private String encodeFullName(final DatabaseObject databaseObject) {
-    if (databaseObject == null) {
-      return "";
-    }
-    return URLEncoder.encode(databaseObject.getFullName(), StandardCharsets.UTF_8)
-        .replace("+", "%20");
-  }
-
-  private boolean isMarkdownSpecial(final int cp) {
-    return cp == '\\'
-        || cp == '`'
-        || cp == '*'
-        || cp == '_'
-        || cp == '{'
-        || cp == '}'
-        || cp == '['
-        || cp == ']'
-        || cp == '('
-        || cp == ')'
-        || cp == '#'
-        || cp == '+'
-        || cp == '-'
-        || cp == '.'
-        || cp == '!'
-        || cp == '|'
-        || cp == '>';
-  }
-
-  private <T> Collection<T> lookup(final Map<NamedObjectKey, List<T>> map, final Table table) {
-    if (table == null) {
-      return List.of();
-    }
-    return map.getOrDefault(table.key(), List.of());
-  }
-
-  private List<Table> sortedTables(final Predicate<Table> filter) {
-    final List<Table> tables = new ArrayList<>();
-    for (final Table table : getCatalog().getTables()) {
-      if (filter.test(table)) {
-        tables.add(table);
-      }
-    }
-    tables.sort(Comparator.comparing(Table::getFullName));
-    return List.copyOf(tables);
+    return catalogStats.viewCount();
   }
 }

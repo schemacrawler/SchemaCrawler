@@ -16,8 +16,7 @@ import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.scribe.command.options.ScribeOutputFormat;
-import schemacrawler.scribe.output.ScribeOutputContext;
-import schemacrawler.scribe.output.ScribeOutputContextFactory;
+import schemacrawler.scribe.okf.BundleDirectoryOutput;
 import schemacrawler.scribe.renderer.ScribeRenderer;
 import schemacrawler.scribe.renderer.ScribeSupport;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
@@ -66,15 +65,15 @@ public final class ScribeCommand extends AbstractSchemaCrawlerCommand<ScribeOpti
             .withTitle(title)
             .toOptions();
 
-    final Path outputPath = getOutputOptions().getOutputFile("zip");
+    final Path outputPath = getOutputOptions().getOutputFile("");
     final Lints lints = options.isIncludeLint() ? runLint() : new Lints(List.of());
     final ScribeSupport support = new ScribeSupport(this, options, lints);
 
     final ScribeRenderer renderer = lookupRenderer(outputFormat);
 
-    try (final ScribeOutputContext output =
-        ScribeOutputContextFactory.create(outputPath, options.isExpandedOutput())) {
-      renderer.render(support, options, output);
+    try (final BundleDirectoryOutput outputDirectory =
+        new BundleDirectoryOutput(outputPath, options.isExpandedOutput())) {
+      renderer.render(support, outputDirectory);
     } catch (final Exception e) {
       throw new ExecutionRuntimeException("Could not generate Scribe report", e);
     }

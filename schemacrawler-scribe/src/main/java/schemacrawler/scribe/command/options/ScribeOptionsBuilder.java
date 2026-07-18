@@ -24,17 +24,6 @@ public final class ScribeOptionsBuilder
 
   private static final String SCHEMACRAWLER_SCRIBE = "schemacrawler.scribe.";
 
-  // Bare names, exactly matching SchemaScribeCommandProvider's .addOption(...)
-  // names: real CLI
-  // parsing (CommandLineUtility.matchedOptionValues()) stores matched option
-  // values in Config
-  // under these bare keys, not the schemacrawler.scribe.* prefixed keys below. A
-  // --config-file
-  // properties file, on the other hand, conventionally uses the prefixed keys.
-  // fromConfig() checks
-  // the bare CLI key first, per the same pattern LintOptionsBuilder uses ("honor
-  // command-line
-  // option first").
   private static final String CLI_EXPANDED_OUTPUT = "expanded-output";
   private static final String CLI_INCLUDE_LINT = "include-lint";
   private static final String CLI_LANGUAGE = "language";

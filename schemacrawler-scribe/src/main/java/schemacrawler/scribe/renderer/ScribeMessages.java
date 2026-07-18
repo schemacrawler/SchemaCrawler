@@ -34,22 +34,6 @@ public final class ScribeMessages {
     }
   }
 
-  public String datatablesLanguageJson() {
-    return message("datatables.language_json");
-  }
-
-  public String erBridgeTable() {
-    return message("er.bridge_table");
-  }
-
-  public String erEntityType() {
-    return message("er.entity_type");
-  }
-
-  public String erRelationshipType() {
-    return message("er.relationship_type");
-  }
-
   public String headerAttribute() {
     return message("header.attribute");
   }
@@ -58,36 +42,12 @@ public final class ScribeMessages {
     return message("header.auto_incremented");
   }
 
-  public String headerBodyType() {
-    return message("header.body_type");
-  }
-
-  public String headerChildFkCount() {
-    return message("header.child_fk_count");
-  }
-
-  public String headerColumnCount() {
-    return message("header.column_count");
-  }
-
   public String headerDefault() {
     return message("header.default");
   }
 
-  public String headerDeleteRule() {
-    return message("header.delete_rule");
-  }
-
-  public String headerFk() {
-    return message("header.fk");
-  }
-
   public String headerGenerated() {
     return message("header.generated");
-  }
-
-  public String headerHidden() {
-    return message("header.hidden");
   }
 
   public String headerMode() {
@@ -102,32 +62,12 @@ public final class ScribeMessages {
     return message("header.nullable");
   }
 
-  public String headerParentFkCount() {
-    return message("header.parent_fk_count");
-  }
-
-  public String headerPk() {
-    return message("header.pk");
-  }
-
   public String headerRemarks() {
     return message("header.remarks");
   }
 
-  public String headerReturnType() {
-    return message("header.return_type");
-  }
-
-  public String headerTriggerCount() {
-    return message("header.trigger_count");
-  }
-
   public String headerType() {
     return message("header.type");
-  }
-
-  public String headerUnique() {
-    return message("header.unique");
   }
 
   public String headerValue() {
@@ -140,10 +80,6 @@ public final class ScribeMessages {
 
   public String labelChildFkCount() {
     return message("label.child_fk_count");
-  }
-
-  public String labelColumn() {
-    return message("label.column");
   }
 
   public String labelColumnCount() {
@@ -166,16 +102,72 @@ public final class ScribeMessages {
     return message("label.entity_model_type");
   }
 
+  public String labelEntityCount() {
+    return message("label.entity_count");
+  }
+
+  public String labelStrongEntityCount() {
+    return message("label.strong_entity_count");
+  }
+
+  public String labelWeakEntityCount() {
+    return message("label.weak_entity_count");
+  }
+
+  public String labelSubtypeEntityCount() {
+    return message("label.subtype_entity_count");
+  }
+
+  public String labelNonEntityCount() {
+    return message("label.non_entity_count");
+  }
+
+  public String labelUnknownEntityCount() {
+    return message("label.unknown_entity_count");
+  }
+
+  public String labelRelationshipCount() {
+    return message("label.relationship_count");
+  }
+
+  public String labelOneToOneRelationshipCount() {
+    return message("label.one_to_one_relationship_count");
+  }
+
+  public String labelOneToManyRelationshipCount() {
+    return message("label.one_to_many_relationship_count");
+  }
+
+  public String labelZeroToOneRelationshipCount() {
+    return message("label.zero_to_one_relationship_count");
+  }
+
+  public String labelZeroToManyRelationshipCount() {
+    return message("label.zero_to_many_relationship_count");
+  }
+
+  public String labelManyToManyRelationshipCount() {
+    return message("label.many_to_many_relationship_count");
+  }
+
+  public String labelUnknownRelationshipCount() {
+    return message("label.unknown_relationship_count");
+  }
+
+  public String labelImplicitRelationshipCount() {
+    return message("label.implicit_relationship_count");
+  }
+
+  public String labelUnmodeledTableCount() {
+    return message("label.unmodeled_table_count");
+  }
+
   public String labelForeignKeyCount() {
     return message("label.foreign_key_count");
   }
 
   public String labelFunction() {
     return message("label.function");
-  }
-
-  public String labelIndex() {
-    return message("label.index");
   }
 
   public String labelReferencedBy() {
@@ -230,22 +222,6 @@ public final class ScribeMessages {
     return message("label.views");
   }
 
-  public String lintImpliedRelationships() {
-    return message("lint.implied_relationships");
-  }
-
-  public String lintIncrementingColumns() {
-    return message("lint.incrementing_columns");
-  }
-
-  public String lintNoIndexes() {
-    return message("lint.no_indexes");
-  }
-
-  public String lintNullDefault() {
-    return message("lint.null_default");
-  }
-
   public String lintSeverityCritical() {
     return message("lint.severity.critical");
   }
@@ -262,28 +238,8 @@ public final class ScribeMessages {
     return message("lint.severity.medium");
   }
 
-  public String lintSingleColumn() {
-    return message("lint.single_column");
-  }
-
-  public String navColumns() {
-    return message("nav.columns");
-  }
-
-  public String navConstraints() {
-    return message("nav.constraints");
-  }
-
-  public String navCrossReferences() {
-    return message("nav.cross_references");
-  }
-
   public String navLint() {
     return message("nav.lint");
-  }
-
-  public String navRelationships() {
-    return message("nav.relationships");
   }
 
   public String navRoutines() {
@@ -296,10 +252,6 @@ public final class ScribeMessages {
 
   public String sectionAttributes() {
     return message("section.attributes");
-  }
-
-  public String sectionBridgeTables() {
-    return message("section.bridge_tables");
   }
 
   public String sectionCheckConstraints() {
@@ -318,16 +270,12 @@ public final class ScribeMessages {
     return message("section.definition");
   }
 
-  public String sectionDescription() {
-    return message("section.description");
+  public String headerDescription() {
+    return message("header.description");
   }
 
   public String sectionDiagram() {
     return message("section.diagram");
-  }
-
-  public String sectionErContext() {
-    return message("section.er_context");
   }
 
   public String sectionForeignKeys() {
@@ -346,6 +294,10 @@ public final class ScribeMessages {
     return message("section.metadata");
   }
 
+  public String sectionErModel() {
+    return message("section.er_model");
+  }
+
   public String sectionParameters() {
     return message("section.parameters");
   }
@@ -356,10 +308,6 @@ public final class ScribeMessages {
 
   public String sectionTriggers() {
     return message("section.triggers");
-  }
-
-  public String sectionUsedBy() {
-    return message("section.used_by");
   }
 
   public String triggerAttributeActionOrder() {
@@ -386,10 +334,6 @@ public final class ScribeMessages {
     return message("trigger.attribute.timing");
   }
 
-  public String valueCallerTrackingUnavailable() {
-    return message("value.caller_tracking_unavailable");
-  }
-
   public String valueEntityModelTypeBridgeTable() {
     return message("value.entity_model_type.bridge_table");
   }
@@ -406,20 +350,12 @@ public final class ScribeMessages {
     return message("value.entity_model_type.subtype");
   }
 
-  public String valueEntityModelTypeUnknown() {
-    return message("value.entity_model_type.unknown");
-  }
-
   public String valueEntityModelTypeWeakEntity() {
     return message("value.entity_model_type.weak_entity");
   }
 
   public String valueNa() {
     return message("value.na");
-  }
-
-  public String valueNo() {
-    return message("value.no");
   }
 
   public String valueUniqueIndex() {
