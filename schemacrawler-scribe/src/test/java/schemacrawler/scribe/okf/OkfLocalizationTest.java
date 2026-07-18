@@ -79,7 +79,8 @@ public class OkfLocalizationTest {
         break;
       }
     }
-    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir)).writeTableConcept(table);
+    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, false))
+        .writeTableConcept(table);
 
     final String content =
         Files.readString(tempDir.resolve("tables/" + table.key().slug() + ".md"));

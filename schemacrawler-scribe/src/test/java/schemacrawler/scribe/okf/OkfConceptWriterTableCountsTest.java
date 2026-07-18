@@ -66,7 +66,8 @@ public class OkfConceptWriterTableCountsTest {
     }
     assertThat(target, is(notNullValue()));
 
-    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir)).writeTableConcept(target);
+    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, false))
+        .writeTableConcept(target);
 
     final String content =
         Files.readString(tempDir.resolve("tables/" + target.key().slug() + ".md"));

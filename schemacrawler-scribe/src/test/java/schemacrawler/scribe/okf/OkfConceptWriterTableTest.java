@@ -81,7 +81,8 @@ public class OkfConceptWriterTableTest {
     }
     assertThat(target, is(notNullValue()));
 
-    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir)).writeTableConcept(target);
+    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, false))
+        .writeTableConcept(target);
 
     final String resourcePath = "tables/" + target.key().slug() + ".md";
     assertThat(Files.exists(tempDir.resolve(resourcePath)), is(true));
@@ -132,7 +133,7 @@ public class OkfConceptWriterTableTest {
     final Table table = support.allTables().get(0);
     final Table tableWithNullSchemaName = withNullSchemaName(table);
 
-    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir))
+    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, false))
         .writeTableConcept(tableWithNullSchemaName);
 
     final String resourcePath = "tables/" + tableWithNullSchemaName.key().slug() + ".md";
