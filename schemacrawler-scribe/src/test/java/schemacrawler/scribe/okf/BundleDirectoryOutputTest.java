@@ -10,7 +10,7 @@ package schemacrawler.scribe.okf;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -19,9 +19,8 @@ public class BundleDirectoryOutputTest {
 
   @Test
   public void resolveRejectsPathThatEscapesRoot(@TempDir final Path tempDir) throws Exception {
-    final Path root = tempDir.resolve("bundle-root");
-    final BundleDirectoryOutput output = new BundleDirectoryOutput(root, true);
-
-    assertThrows(IOException.class, () -> output.toWrite("../outside.md"));
+    try (final BundleDirectoryOutput output = new BundleDirectoryOutput(tempDir, true)) {
+      assertThrows(UncheckedIOException.class, () -> output.toWrite("../outside.md"));
+    }
   }
 }

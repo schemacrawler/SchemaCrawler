@@ -76,6 +76,11 @@ public final class GenerateCliSupport {
 
     protected Path createOutputDirectory() {
       try {
+        if (IOUtility.isOutsideWorkingDirectory(outputDir)) {
+          throw new IOException(
+              "Attempt to write outside current working directory to path <%s>"
+                  .formatted(outputDir));
+        }
         Files.createDirectories(outputDir);
       } catch (final IOException e) {
         throw new UncheckedIOException("Could not create output directory", e);
