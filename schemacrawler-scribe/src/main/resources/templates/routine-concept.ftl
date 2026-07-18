@@ -11,7 +11,7 @@ ${support.frontMatter(routine)}<#rt>
 
 <#-- ==================== DESCRIPTION SECTION ==================== -->
 <#if routine.remarks?has_content>
-## ${msg.sectionDescription()}
+## ${msg.headerDescription()}
 
 ${routine.remarks}
 

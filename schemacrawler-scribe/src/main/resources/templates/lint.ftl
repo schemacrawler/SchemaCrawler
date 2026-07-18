@@ -8,7 +8,7 @@ ${support.reportFrontMatter("Database Lints", "Details of database schema design
 <#list lintsBySeverity as severity, lints>
 ## ${support.severityMessage(severity)}
 
-<@common.markdownTableHeader headers=[msg.headerName(), msg.sectionDescription(), msg.headerValue()] />
+<@common.markdownTableHeader headers=[msg.headerName(), msg.headerDescription(), msg.headerValue()] />
 <#list lints as lint>
 <#assign objectRef>
 <#if lint.objectType?string == 'table'>

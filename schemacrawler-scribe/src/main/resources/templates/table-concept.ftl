@@ -15,7 +15,7 @@ ${support.frontMatter(table)}<#rt>
 
 <#-- ==================== DESCRIPTION SECTION ==================== -->
 <#if table.remarks?has_content>
-## ${msg.sectionDescription()}
+## ${msg.headerDescription()}
 
 ${table.remarks}
 
@@ -280,7 +280,7 @@ ${definitionText}
 <#if lints?has_content>
 ## ${msg.sectionLintIssues()}
 
-<@common.markdownTableHeader headers=[msg.headerName(), msg.sectionDescription(), msg.headerValue()] />
+<@common.markdownTableHeader headers=[msg.headerName(), msg.headerDescription(), msg.headerValue()] />
 <#list lints as lint>
 <@common.markdownTableRow values=[
   support.severityMessage(lint.severity),

@@ -210,8 +210,8 @@ public final class ScribeMessages {
     return message("section.definition");
   }
 
-  public String sectionDescription() {
-    return message("section.description");
+  public String headerDescription() {
+    return message("header.description");
   }
 
   public String sectionDiagram() {
