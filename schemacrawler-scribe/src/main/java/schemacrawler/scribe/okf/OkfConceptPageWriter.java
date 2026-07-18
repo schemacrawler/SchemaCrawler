@@ -16,7 +16,6 @@ import java.util.Map;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
-import schemacrawler.scribe.output.ScribeOutputContext;
 import schemacrawler.scribe.renderer.ScribeSupport;
 
 /** Writes OKF concept pages for tables/views and routines. */
@@ -31,8 +30,9 @@ public final class OkfConceptPageWriter {
     this.templateRenderer = requireNonNull(templateRenderer, "No template renderer provided");
   }
 
-  public OkfConceptPageWriter(final ScribeSupport support, final ScribeOutputContext output) {
-    this(support, new OkfTemplateRenderer(output));
+  public OkfConceptPageWriter(
+      final ScribeSupport support, final BundleDirectoryOutput outputDirectory) {
+    this(support, new OkfTemplateRenderer(outputDirectory));
   }
 
   public void writeConceptPages() throws SchemaCrawlerException {

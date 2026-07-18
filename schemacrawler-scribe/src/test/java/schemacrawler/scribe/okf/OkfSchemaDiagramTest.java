@@ -13,6 +13,7 @@ import static org.hamcrest.Matchers.containsString;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
@@ -23,8 +24,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
-import schemacrawler.scribe.output.ScribeOutputContext;
-import schemacrawler.scribe.output.ZipScribeOutputContext;
 import schemacrawler.scribe.renderer.ScribeSupport;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.WithTestDatabase;
@@ -45,19 +44,17 @@ public class OkfSchemaDiagramTest {
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
 
-    final Path zipFile = tempDir.resolve("okf.zip");
     final String relativePath = "reports/schema.md";
-    try (ScribeOutputContext output = new ZipScribeOutputContext(zipFile)) {
-      final Map<String, Object> model = new HashMap<>();
-      model.put("support", support);
-      model.put("msg", support.messages());
-      model.put("catalog", executionState.getCatalog());
-      model.put("er_model", executionState.getERModel());
-      model.put("title", support.databaseTitle());
-      new OkfTemplateRenderer(output).writeTemplate("schema-diagram.ftl", model, relativePath);
-    }
+    final Map<String, Object> model = new HashMap<>();
+    model.put("support", support);
+    model.put("msg", support.messages());
+    model.put("catalog", executionState.getCatalog());
+    model.put("er_model", executionState.getERModel());
+    model.put("title", support.databaseTitle());
+    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir))
+        .writeTemplate("schema-diagram.ftl", model, relativePath);
 
-    final String content = ZipTestUtility.readEntry(zipFile, relativePath);
+    final String content = Files.readString(tempDir.resolve(relativePath));
     assertThat(content.strip(), containsString("erDiagram"));
     assertThat(content, containsString("title: " + support.databaseTitle()));
 

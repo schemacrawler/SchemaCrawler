@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.is;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -24,8 +25,6 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
-import schemacrawler.scribe.output.ScribeOutputContext;
-import schemacrawler.scribe.output.ScribeOutputContextFactory;
 import schemacrawler.scribe.renderer.ScribeSupport;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.WithTestDatabase;
@@ -46,14 +45,11 @@ public class OkfCrossReferenceWriterTest {
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
 
-    final Path zipFile = tempDir.resolve("okf.zip");
-    try (ScribeOutputContext output = ScribeOutputContextFactory.create(zipFile, false)) {
-      new OkfScribeRenderer().render(support, options, output);
-    }
+    new OkfScribeRenderer().render(support, new BundleDirectoryOutput(tempDir));
 
     final String resourcePath = "reports/cross-references.md";
-    assertThat(ZipTestUtility.hasEntry(zipFile, resourcePath), is(true));
-    final String content = ZipTestUtility.readEntry(zipFile, resourcePath);
+    assertThat(Files.exists(tempDir.resolve(resourcePath)), is(true));
+    final String content = Files.readString(tempDir.resolve(resourcePath));
 
     assertThat(content, containsString("# " + support.messages().sectionCrossReferences()));
     assertThat(content, containsString("| " + support.messages().headerName()));

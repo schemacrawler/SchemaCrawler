@@ -15,6 +15,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
@@ -25,8 +26,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
-import schemacrawler.scribe.output.ScribeOutputContext;
-import schemacrawler.scribe.output.ZipScribeOutputContext;
 import schemacrawler.scribe.renderer.ScribeSupport;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.WithTestDatabase;
@@ -67,13 +66,10 @@ public class OkfConceptWriterTableCountsTest {
     }
     assertThat(target, is(notNullValue()));
 
-    final Path zipFile = tempDir.resolve("okf.zip");
-    try (ScribeOutputContext output = new ZipScribeOutputContext(zipFile)) {
-      new OkfConceptPageWriter(support, output).writeTableConcept(target);
-    }
+    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir)).writeTableConcept(target);
 
     final String content =
-        ZipTestUtility.readEntry(zipFile, "tables/" + target.key().slug() + ".md");
+        Files.readString(tempDir.resolve("tables/" + target.key().slug() + ".md"));
     final long rowCount = support.rowCount(target);
     assertThat(content, containsString("row_count: " + rowCount));
   }

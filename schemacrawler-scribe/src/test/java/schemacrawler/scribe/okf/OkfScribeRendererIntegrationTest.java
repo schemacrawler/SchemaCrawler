@@ -15,17 +15,15 @@ import static org.hamcrest.Matchers.not;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
-import schemacrawler.scribe.output.ScribeOutputContext;
-import schemacrawler.scribe.output.ScribeOutputContextFactory;
 import schemacrawler.scribe.renderer.ScribeSupport;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.WithTestDatabase;
@@ -46,29 +44,27 @@ public class OkfScribeRendererIntegrationTest {
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
 
-    final Path zipFile = tempDir.resolve("okf.zip");
-    try (final ScribeOutputContext output = ScribeOutputContextFactory.create(zipFile, false)) {
-      new OkfScribeRenderer().render(support, options, output);
-    }
+    new OkfScribeRenderer().render(support, new BundleDirectoryOutput(tempDir));
 
-    final Set<String> entries = ZipTestUtility.entryNames(zipFile);
-    assertThat(entries.contains("index.md"), is(true));
-    assertThat(entries.contains("tables/index.md"), is(true));
-    assertThat(entries.contains("routines/index.md"), is(true));
-    assertThat(entries.contains("reports/index.md"), is(true));
-    assertThat(entries.contains("reports/cross-references.md"), is(true));
-    assertThat(entries.contains("reports/schema.md"), is(true));
-    assertThat(entries.contains("log.md"), is(false));
-    assertThat(entries.contains("reports/lint.md"), is(true));
+    assertThat(Files.exists(tempDir.resolve("index.md")), is(true));
+    assertThat(Files.exists(tempDir.resolve("tables/index.md")), is(true));
+    assertThat(Files.exists(tempDir.resolve("routines/index.md")), is(true));
+    assertThat(Files.exists(tempDir.resolve("reports/index.md")), is(true));
+    assertThat(Files.exists(tempDir.resolve("reports/cross-references.md")), is(true));
+    assertThat(Files.exists(tempDir.resolve("reports/schema.md")), is(true));
+    assertThat(Files.exists(tempDir.resolve("log.md")), is(false));
+    assertThat(Files.exists(tempDir.resolve("reports/lint.md")), is(true));
 
     for (final Table table : support.allTables()) {
-      assertThat(entries.contains("tables/" + table.key().slug() + ".md"), is(true));
+      assertThat(Files.exists(tempDir.resolve("tables/" + table.key().slug() + ".md")), is(true));
     }
-    assertThat(
-        entries.stream().filter(e -> e.startsWith("routines/")).count(),
-        is((long) support.allRoutines().size() + 1));
+    final long routineFileCount;
+    try (final var paths = Files.list(tempDir.resolve("routines"))) {
+      routineFileCount = paths.filter(Files::isRegularFile).count();
+    }
+    assertThat(routineFileCount, is((long) support.allRoutines().size() + 1));
 
-    final String rootIndex = ZipTestUtility.readEntry(zipFile, "index.md");
+    final String rootIndex = Files.readString(tempDir.resolve("index.md"));
     assertThat(rootIndex, containsString(support.messages().labelDatabaseProduct() + ":"));
     assertThat(rootIndex, containsString(support.messages().labelDatabaseVersion() + ":"));
     assertThat(rootIndex, containsString(support.messages().labelTables() + ":"));
@@ -106,7 +102,7 @@ public class OkfScribeRendererIntegrationTest {
     assertThat(rootIndex, containsString("(reports/lint.md)"));
     assertThat(rootIndex, containsString("(reports/cross-references.md)"));
 
-    final String reportsIndex = ZipTestUtility.readEntry(zipFile, "reports/index.md");
+    final String reportsIndex = Files.readString(tempDir.resolve("reports/index.md"));
     assertThat(reportsIndex, containsString("(schema.md)"));
     assertThat(reportsIndex, containsString("(cross-references.md)"));
     assertThat(reportsIndex, containsString("(lint.md)"));
@@ -119,14 +115,14 @@ public class OkfScribeRendererIntegrationTest {
           containsString(catalog.getCrawlInfo().getDatabaseVersion().getProductVersion()));
     }
 
-    final String tablesIndex = ZipTestUtility.readEntry(zipFile, "tables/index.md");
+    final String tablesIndex = Files.readString(tempDir.resolve("tables/index.md"));
     if (!support.allTables().isEmpty()) {
       assertThat(
           tablesIndex,
           containsString("## " + support.allTables().get(0).getSchema().getFullName()));
     }
 
-    final String routinesIndex = ZipTestUtility.readEntry(zipFile, "routines/index.md");
+    final String routinesIndex = Files.readString(tempDir.resolve("routines/index.md"));
     if (!support.allRoutines().isEmpty()) {
       assertThat(
           routinesIndex,
@@ -135,9 +131,9 @@ public class OkfScribeRendererIntegrationTest {
 
     boolean sawEmbeddedDiagram = false;
     boolean sawLocalizedEntityModelType = false;
-    for (final String entry : entries) {
-      if (entry.startsWith("tables/")) {
-        final String tableContent = ZipTestUtility.readEntry(zipFile, entry);
+    try (final var paths = Files.walk(tempDir.resolve("tables"))) {
+      for (final Path tableFile : (Iterable<Path>) paths.filter(Files::isRegularFile)::iterator) {
+        final String tableContent = Files.readString(tableFile);
         if (tableContent.contains("```mermaid")) {
           sawEmbeddedDiagram = true;
         }
@@ -150,7 +146,7 @@ public class OkfScribeRendererIntegrationTest {
 
     for (final Table table : support.allTables()) {
       final String content =
-          ZipTestUtility.readEntry(zipFile, "tables/" + table.key().slug() + ".md");
+          Files.readString(tempDir.resolve("tables/" + table.key().slug() + ".md"));
       if (support.localizedEntityModelType(table).isBlank()) {
         assertThat(
             content, not(containsString("- " + support.messages().labelEntityModelType() + ": ")));

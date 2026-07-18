@@ -15,6 +15,9 @@ import static org.hamcrest.Matchers.not;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
@@ -23,8 +26,6 @@ import org.junit.jupiter.api.io.TempDir;
 import schemacrawler.schema.Catalog;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
-import schemacrawler.scribe.output.ScribeOutputContext;
-import schemacrawler.scribe.output.ScribeOutputContextFactory;
 import schemacrawler.scribe.renderer.ScribeMessages;
 import schemacrawler.scribe.renderer.ScribeSupport;
 import schemacrawler.test.utility.StubExecutionState;
@@ -43,52 +44,44 @@ public class OkfLintGateTest {
   public void lintDisabledByDefault(
       final DatabaseConnectionSource connectionSource, @TempDir final Path tempDir)
       throws Exception {
-    final Path zipFile = tempDir.resolve("okf.zip");
-    render(connectionSource, zipFile, false);
+    render(connectionSource, tempDir, false);
 
-    assertThat(ZipTestUtility.hasEntry(zipFile, "reports/index.md"), is(true));
-    assertThat(ZipTestUtility.hasEntry(zipFile, "reports/lint.md"), is(false));
+    assertThat(Files.exists(tempDir.resolve("reports/index.md")), is(true));
+    assertThat(Files.exists(tempDir.resolve("reports/lint.md")), is(false));
     assertThat(
-        ZipTestUtility.readEntry(zipFile, "index.md"), not(containsString("(reports/lint.md)")));
-    final String reportsIndex = ZipTestUtility.readEntry(zipFile, "reports/index.md");
+        Files.readString(tempDir.resolve("index.md")), not(containsString("(reports/lint.md)")));
+    final String reportsIndex = Files.readString(tempDir.resolve("reports/index.md"));
     assertThat(reportsIndex, containsString("(schema.md)"));
     assertThat(reportsIndex, containsString("(cross-references.md)"));
     assertThat(reportsIndex, not(containsString("(lint.md)")));
-    for (final String entry : ZipTestUtility.entryNames(zipFile)) {
-      if (entry.startsWith("tables/")) {
-        assertThat(
-            ZipTestUtility.readEntry(zipFile, entry), not(containsString(LINT_ISSUES_HEADING)));
-      }
-    }
+    walkTableFiles(
+        tempDir,
+        file -> assertThat(Files.readString(file), not(containsString(LINT_ISSUES_HEADING))));
   }
 
   @Test
   public void lintEnabled(
       final DatabaseConnectionSource connectionSource, @TempDir final Path tempDir)
       throws Exception {
-    final Path zipFile = tempDir.resolve("okf.zip");
-    render(connectionSource, zipFile, true);
+    render(connectionSource, tempDir, true);
 
-    assertThat(ZipTestUtility.hasEntry(zipFile, "reports/index.md"), is(true));
-    assertThat(ZipTestUtility.hasEntry(zipFile, "reports/lint.md"), is(true));
-    assertThat(ZipTestUtility.readEntry(zipFile, "index.md"), containsString("(reports/lint.md)"));
-    final String reportsIndex = ZipTestUtility.readEntry(zipFile, "reports/index.md");
+    assertThat(Files.exists(tempDir.resolve("reports/index.md")), is(true));
+    assertThat(Files.exists(tempDir.resolve("reports/lint.md")), is(true));
+    assertThat(Files.readString(tempDir.resolve("index.md")), containsString("(reports/lint.md)"));
+    final String reportsIndex = Files.readString(tempDir.resolve("reports/index.md"));
     assertThat(reportsIndex, containsString("(schema.md)"));
     assertThat(reportsIndex, containsString("(cross-references.md)"));
     assertThat(reportsIndex, containsString("(lint.md)"));
-    final String content = ZipTestUtility.readEntry(zipFile, "reports/lint.md");
+    final String content = Files.readString(tempDir.resolve("reports/lint.md"));
     assertThat(content, containsString("# "));
-    for (final String entry : ZipTestUtility.entryNames(zipFile)) {
-      if (entry.startsWith("tables/")) {
-        assertThat(
-            ZipTestUtility.readEntry(zipFile, entry), not(containsString(LINT_ISSUES_HEADING)));
-      }
-    }
+    walkTableFiles(
+        tempDir,
+        file -> assertThat(Files.readString(file), not(containsString(LINT_ISSUES_HEADING))));
   }
 
   private void render(
       final DatabaseConnectionSource connectionSource,
-      final Path zipFile,
+      final Path outputDirectory,
       final boolean includeLint)
       throws Exception {
     final Catalog catalog =
@@ -101,8 +94,32 @@ public class OkfLintGateTest {
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
 
-    try (ScribeOutputContext output = ScribeOutputContextFactory.create(zipFile, false)) {
-      new OkfScribeRenderer().render(support, options, output);
+    new OkfScribeRenderer().render(support, new BundleDirectoryOutput(outputDirectory));
+  }
+
+  @FunctionalInterface
+  private interface IOConsumer<T> {
+    void accept(T t) throws IOException;
+  }
+
+  private static void walkTableFiles(final Path root, final IOConsumer<Path> consumer) {
+    final Path tablesDir = root.resolve("tables");
+    if (!Files.isDirectory(tablesDir)) {
+      return;
+    }
+    try (final var paths = Files.walk(tablesDir)) {
+      paths
+          .filter(Files::isRegularFile)
+          .forEach(
+              file -> {
+                try {
+                  consumer.accept(file);
+                } catch (final IOException e) {
+                  throw new UncheckedIOException(e);
+                }
+              });
+    } catch (final IOException e) {
+      throw new UncheckedIOException(e);
     }
   }
 }

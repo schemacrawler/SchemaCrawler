@@ -12,6 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +27,6 @@ import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.scribe.model.CrossReferenceEntry;
-import schemacrawler.scribe.output.ScribeOutputContext;
-import schemacrawler.scribe.output.ZipScribeOutputContext;
 import schemacrawler.scribe.renderer.ScribeSupport;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.crawl.LightCatalogUtility;
@@ -71,23 +70,21 @@ public class OkfTemplateCompilationTest {
         new CrossReferenceEntry(
             table, SimpleDatabaseObjectType.table, routine, SimpleDatabaseObjectType.procedure);
 
-    final Path zipFile = tempDir.resolve("okf-cross-references-template.zip");
     final String resourcePath = "reports/cross-references.md";
     final Map<String, Object> model = baseModel(support, resourcePath);
     model.put("crossReferenceEntries", List.of(crossReferenceEntry));
 
-    try (ScribeOutputContext output = new ZipScribeOutputContext(zipFile)) {
-      new OkfTemplateRenderer(output).writeTemplate("cross-references.ftl", model, resourcePath);
-    }
+    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir))
+        .writeTemplate("cross-references.ftl", model, resourcePath);
 
-    final String content = ZipTestUtility.readEntry(zipFile, resourcePath);
+    final String content = Files.readString(tempDir.resolve(resourcePath));
     assertThat(content, containsString("# " + support.messages().sectionCrossReferences()));
     assertThat(content, containsString("table"));
     assertThat(content, containsString("procedure"));
     assertThat(content, containsString(support.messages().labelReferencedBy()));
     assertThat(content, containsString("(../tables/books"));
     assertThat(content, containsString("(../routines/find_book"));
-    assertThat(ZipTestUtility.hasEntry(zipFile, resourcePath), is(true));
+    assertThat(Files.exists(tempDir.resolve(resourcePath)), is(true));
   }
 
   @Test
@@ -97,19 +94,17 @@ public class OkfTemplateCompilationTest {
     final Catalog catalog = LightCatalogUtility.lightCatalog(table);
     final ScribeSupport support = newScribeSupport(catalog);
 
-    final Path zipFile = tempDir.resolve("okf-lint-template.zip");
     final String resourcePath = "reports/lint.md";
     final Map<String, Object> model = baseModel(support, resourcePath);
     model.put("lintsBySeverity", Map.of(LintSeverity.medium, List.of()));
 
-    try (ScribeOutputContext output = new ZipScribeOutputContext(zipFile)) {
-      new OkfTemplateRenderer(output).writeTemplate("lint.ftl", model, resourcePath);
-    }
+    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir))
+        .writeTemplate("lint.ftl", model, resourcePath);
 
-    final String content = ZipTestUtility.readEntry(zipFile, resourcePath);
+    final String content = Files.readString(tempDir.resolve(resourcePath));
     assertThat(content, containsString("# " + support.messages().sectionLintIssues()));
     assertThat(content, containsString("## " + support.severityMessage(LintSeverity.medium)));
-    assertThat(ZipTestUtility.hasEntry(zipFile, resourcePath), is(true));
+    assertThat(Files.exists(tempDir.resolve(resourcePath)), is(true));
   }
 
   @Test
@@ -119,19 +114,17 @@ public class OkfTemplateCompilationTest {
     final Catalog catalog = LightCatalogUtility.lightCatalog(table);
     final ScribeSupport support = newScribeSupport(catalog);
 
-    final Path zipFile = tempDir.resolve("okf-reports-index-template.zip");
     final String resourcePath = "reports/index.md";
     final Map<String, Object> model = baseModel(support, resourcePath);
 
-    try (ScribeOutputContext output = new ZipScribeOutputContext(zipFile)) {
-      new OkfTemplateRenderer(output).writeTemplate("reports-index.ftl", model, resourcePath);
-    }
+    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir))
+        .writeTemplate("reports-index.ftl", model, resourcePath);
 
-    final String content = ZipTestUtility.readEntry(zipFile, resourcePath);
+    final String content = Files.readString(tempDir.resolve(resourcePath));
     assertThat(content, containsString("# Reports"));
     assertThat(content, containsString("(schema.md)"));
     assertThat(content, containsString("(cross-references.md)"));
-    assertThat(ZipTestUtility.hasEntry(zipFile, resourcePath), is(true));
+    assertThat(Files.exists(tempDir.resolve(resourcePath)), is(true));
   }
 
   @Test
@@ -146,21 +139,19 @@ public class OkfTemplateCompilationTest {
     final LightRoutineParameter parameter = new LightRoutineParameter(routine, "book_id");
     ((LightRoutine) routine).addParameter(parameter);
 
-    final Path zipFile = tempDir.resolve("okf-routine-template.zip");
     final String resourcePath = "routines/find_book.md";
     final Map<String, Object> model = baseModel(support, resourcePath);
     model.put("routine", routine);
 
-    try (ScribeOutputContext output = new ZipScribeOutputContext(zipFile)) {
-      new OkfTemplateRenderer(output).writeTemplate("routine-concept.ftl", model, resourcePath);
-    }
+    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir))
+        .writeTemplate("routine-concept.ftl", model, resourcePath);
 
-    final String content = ZipTestUtility.readEntry(zipFile, resourcePath);
+    final String content = Files.readString(tempDir.resolve(resourcePath));
     assertThat(content, containsString("type:"));
     assertThat(content, containsString("## Parameters"));
     assertThat(content, containsString("book_id"));
     assertThat(content, containsString("## Metadata"));
-    assertThat(ZipTestUtility.hasEntry(zipFile, resourcePath), is(true));
+    assertThat(Files.exists(tempDir.resolve(resourcePath)), is(true));
   }
 
   @Test
@@ -177,16 +168,14 @@ public class OkfTemplateCompilationTest {
     final Catalog catalog = LightCatalogUtility.lightCatalog(table);
     final ScribeSupport support = newScribeSupport(catalog);
 
-    final Path zipFile = tempDir.resolve("okf-table-template.zip");
     final String resourcePath = "tables/books.md";
     final Map<String, Object> model = baseModel(support, resourcePath);
     model.put("table", table);
 
-    try (ScribeOutputContext output = new ZipScribeOutputContext(zipFile)) {
-      new OkfTemplateRenderer(output).writeTemplate("table-concept.ftl", model, resourcePath);
-    }
+    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir))
+        .writeTemplate("table-concept.ftl", model, resourcePath);
 
-    final String content = ZipTestUtility.readEntry(zipFile, resourcePath);
+    final String content = Files.readString(tempDir.resolve(resourcePath));
     assertThat(content, containsString("type: \"table\""));
     assertThat(content, containsString("## Columns"));
     assertThat(content, containsString("id"));
@@ -195,6 +184,6 @@ public class OkfTemplateCompilationTest {
     assertThat(content, containsString("```mermaid"));
     assertThat(content, containsString("## Triggers"));
     assertThat(content, containsString("### TRG_BOOKS"));
-    assertThat(ZipTestUtility.hasEntry(zipFile, resourcePath), is(true));
+    assertThat(Files.exists(tempDir.resolve(resourcePath)), is(true));
   }
 }

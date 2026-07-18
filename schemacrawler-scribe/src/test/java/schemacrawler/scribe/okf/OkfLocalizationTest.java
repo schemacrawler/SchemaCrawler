@@ -13,6 +13,7 @@ import static org.hamcrest.Matchers.containsString;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
@@ -22,8 +23,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
-import schemacrawler.scribe.output.ScribeOutputContext;
-import schemacrawler.scribe.output.ZipScribeOutputContext;
 import schemacrawler.scribe.renderer.ScribeMessages;
 import schemacrawler.scribe.renderer.ScribeSupport;
 import schemacrawler.test.utility.StubExecutionState;
@@ -80,13 +79,10 @@ public class OkfLocalizationTest {
         break;
       }
     }
-    final Path zipFile = tempDir.resolve("okf.zip");
-    try (ScribeOutputContext output = new ZipScribeOutputContext(zipFile)) {
-      new OkfConceptPageWriter(support, output).writeTableConcept(table);
-    }
+    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir)).writeTableConcept(table);
 
     final String content =
-        ZipTestUtility.readEntry(zipFile, "tables/" + table.key().slug() + ".md");
+        Files.readString(tempDir.resolve("tables/" + table.key().slug() + ".md"));
 
     assertThat(content, containsString("## " + msg.sectionColumns()));
     if (table.hasTriggers()) {

@@ -26,7 +26,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
-import schemacrawler.scribe.output.ScribeOutputContext;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
 import us.fatehi.utility.string.StringFormat;
@@ -37,16 +36,17 @@ public final class OkfTemplateRenderer {
   private static final Logger LOGGER = Logger.getLogger(OkfTemplateRenderer.class.getName());
 
   private final Configuration configuration;
-  private final ScribeOutputContext output;
+  private final BundleDirectoryOutput outputDirectory;
 
-  public OkfTemplateRenderer(final ScribeOutputContext output) {
-    this.output = requireNonNull(output, "No output context provided");
+  public OkfTemplateRenderer(final BundleDirectoryOutput outputDirectory) {
+    this.outputDirectory = requireNonNull(outputDirectory, "No output directory provided");
     configuration = createFreemarkerConfiguration();
   }
 
   public void writeTemplate(
       final String templateName, final Map<String, Object> model, final String relativePath) {
-    try (final Writer writer = output.openNewOutputWriter(relativePath)) {
+    try (final Writer writer =
+        outputDirectory.resolve(relativePath).openNewOutputWriter(UTF_8, false)) {
       final Template template = configuration.getTemplate(templateName);
       template.process(model, writer);
     } catch (final IOException | TemplateException e) {
