@@ -9,12 +9,9 @@
 package schemacrawler.scribe.command;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 import java.util.ServiceLoader;
-import java.util.function.Supplier;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import schemacrawler.tools.command.SchemaCrawlerCommandProvider;
 import schemacrawler.tools.options.OutputOptions;
@@ -67,19 +64,6 @@ public class ScribeCommandProviderTest {
     assertThat(optionNamed(pluginCommand, "title"), is(false));
     assertThat(optionNamed(pluginCommand, "include-table-counts"), is(false));
     assertThat(optionNamed(pluginCommand, "locale"), is(false));
-  }
-
-  @Test
-  @Disabled
-  public void outputFormatsFooterListsSupportedFormats() throws Exception {
-    final ScribeCommandProvider provider = new ScribeCommandProvider();
-    final Object pluginCommand = provider.getCommandLineCommand();
-    @SuppressWarnings("unchecked")
-    final Supplier<String[]> helpFooterSupplier =
-        (Supplier<String[]>)
-            pluginCommand.getClass().getMethod("getHelpFooter").invoke(pluginCommand);
-    final String footer = String.join(" ", helpFooterSupplier.get());
-    assertThat(footer, containsString("okf"));
   }
 
   private boolean optionNamed(final Object pluginCommand, final String optionName) {

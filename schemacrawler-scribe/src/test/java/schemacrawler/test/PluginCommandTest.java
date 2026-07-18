@@ -23,4 +23,10 @@ public class PluginCommandTest {
     final PluginCommand pluginCommand = new ScribeCommandProvider().getHelpCommand();
     PluginCommandTestUtility.testPluginCommand(testContext, pluginCommand);
   }
+
+  @Test
+  public void testScribeCommandProviderPluginCommand(final TestContext testContext) {
+    final PluginCommand pluginCommand = new ScribeCommandProvider().getCommandLineCommand();
+    PluginCommandTestUtility.testPluginCommand(testContext, pluginCommand);
+  }
 }

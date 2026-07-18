@@ -1,0 +1,15 @@
+command:scribe
+
+** Generate a database schema report bundle
+For more information, see https://www.schemacrawler.com/scribe.html
+
+language
+BCP 47 language tag for localized report text, for example, fr or de-DE; the default is the system locale
+
+include-lint
+Whether to include lint results in the report
+
+expanded-output
+Whether to write the report as expanded files and folders instead of a single ZIP archive
+
+Add command options to the `execute` command in the SchemaCrawler Shell
