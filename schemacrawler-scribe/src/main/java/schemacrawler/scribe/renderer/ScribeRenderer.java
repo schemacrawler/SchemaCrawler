@@ -16,13 +16,6 @@ import schemacrawler.scribe.output.ScribeOutputContext;
 public interface ScribeRenderer {
 
   /**
-   * Gets the output-format string that this renderer handles.
-   *
-   * @return Output format, for example {@code "okf"}
-   */
-  String getSupportedOutputFormat();
-
-  /**
    * Renders the full multi-file report into the given output context. Renderers must not build
    * their own {@link ScribeSupport} instance; the command builds a single instance and passes it
    * in, so that all renderers see the same catalog, ER model, lint, and message state.

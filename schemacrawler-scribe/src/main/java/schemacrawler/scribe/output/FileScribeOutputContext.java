@@ -8,15 +8,16 @@
 
 package schemacrawler.scribe.output;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import us.fatehi.utility.string.StringFormat;
@@ -47,26 +48,22 @@ public final class FileScribeOutputContext implements ScribeOutputContext {
   /** {@inheritDoc} */
   @Override
   public void close() {
-    // Each writer or stream is closed individually by its caller
+    LOGGER.log(
+        Level.FINE, "No-op - each file writer or stream is closed individually by its caller");
   }
 
   /** {@inheritDoc} */
   @Override
   public OutputStream openNewOutputStream(final String relativePath) throws IOException {
     final Path file = resolve(relativePath);
-    return Files.newOutputStream(
-        file, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+    return Files.newOutputStream(file, CREATE, TRUNCATE_EXISTING);
   }
 
   /** {@inheritDoc} */
   @Override
   public Writer openNewOutputWriter(final String relativePath) throws IOException {
     final Path file = resolve(relativePath);
-    return Files.newBufferedWriter(
-        file,
-        StandardCharsets.UTF_8,
-        StandardOpenOption.CREATE,
-        StandardOpenOption.TRUNCATE_EXISTING);
+    return Files.newBufferedWriter(file, UTF_8, CREATE, TRUNCATE_EXISTING);
   }
 
   private Path resolve(final String relativePath) throws IOException {

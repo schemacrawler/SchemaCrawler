@@ -18,11 +18,6 @@ import schemacrawler.scribe.renderer.ScribeSupport;
 public final class OkfScribeRenderer implements ScribeRenderer {
 
   @Override
-  public String getSupportedOutputFormat() {
-    return "okf";
-  }
-
-  @Override
   public void render(
       final ScribeSupport support, final ScribeOptions options, final ScribeOutputContext output)
       throws SchemaCrawlerException {

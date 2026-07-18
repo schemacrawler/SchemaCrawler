@@ -20,7 +20,8 @@ import java.io.Writer;
 public interface ScribeOutputContext extends Closeable {
 
   /**
-   * Opens a raw output stream for a new entry at the given ZIP-relative path.
+   * Opens a raw output stream for a new entry at the given path relative within the zip file or
+   * folder structure.
    *
    * @param relativePath Path of the new entry, relative to the report root
    * @return Output stream for the new entry
@@ -29,7 +30,8 @@ public interface ScribeOutputContext extends Closeable {
   OutputStream openNewOutputStream(String relativePath) throws IOException;
 
   /**
-   * Opens a UTF-8 writer for a new entry at the given ZIP-relative path.
+   * Opens a UTF-8 writer for a new entry at the given path relative within the zip file or folder
+   * structure.
    *
    * @param relativePath Path of the new entry, relative to the report root
    * @return Writer for the new entry

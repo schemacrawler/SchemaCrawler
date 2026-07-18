@@ -1,3 +1,4 @@
+graphify-out/
 .serena/
 /schemacrawler-db2/*.jar
 /schemacrawler-distrib/*.bnd
