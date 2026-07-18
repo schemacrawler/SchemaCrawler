@@ -46,7 +46,7 @@ jobs:
       uses: sualeh/build-maven-dependency@v1.0.9
       with:
         repository: schemacrawler/SchemaCrawler-Core
-        artifact: us.fatehi:schemacrawler:17.12.1
+        artifact: us.fatehi:schemacrawler:17.12.2
 
 # BUILD FOR DISTRIBUTION
     - id: build
@@ -102,8 +102,8 @@ jobs:
           --prerelease \
           --notes "SchemaCrawler early access release at last commit $SHA"
         gh release upload "$TAG" \
-          ./schemacrawler-distrib/target/schemacrawler-17.12.1-bin.zip \
-          ./schemacrawler-distrib/target/schemacrawler-17.12.1-bin.zip.SHA-512 \
+          ./schemacrawler-distrib/target/schemacrawler-17.12.2-bin.zip \
+          ./schemacrawler-distrib/target/schemacrawler-17.12.2-bin.zip.SHA-512 \
           --clobber
 
 # BUILD AND PUBLISH DOCKER IMAGE
