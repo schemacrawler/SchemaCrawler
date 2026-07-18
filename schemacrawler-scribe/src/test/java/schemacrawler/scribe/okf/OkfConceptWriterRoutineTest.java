@@ -71,7 +71,7 @@ public class OkfConceptWriterRoutineTest {
 
     final Routine routine = support.allRoutines().get(0);
 
-    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, false))
+    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
         .writeRoutineConcept(routine);
 
     final String resourcePath = "routines/" + routine.key().slug() + ".md";
@@ -107,7 +107,7 @@ public class OkfConceptWriterRoutineTest {
     final Routine routine = support.allRoutines().get(0);
     final Routine routineWithNullSchemaName = withNullSchemaName(routine);
 
-    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, false))
+    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
         .writeRoutineConcept(routineWithNullSchemaName);
 
     final String resourcePath = "routines/" + routineWithNullSchemaName.key().slug() + ".md";

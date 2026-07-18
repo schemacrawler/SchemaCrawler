@@ -79,7 +79,7 @@ public class OkfLocalizationTest {
         break;
       }
     }
-    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, false))
+    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
         .writeTableConcept(table);
 
     final String content =

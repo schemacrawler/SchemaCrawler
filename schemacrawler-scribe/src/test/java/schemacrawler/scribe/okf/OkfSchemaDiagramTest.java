@@ -51,7 +51,7 @@ public class OkfSchemaDiagramTest {
     model.put("catalog", executionState.getCatalog());
     model.put("er_model", executionState.getERModel());
     model.put("title", support.databaseTitle());
-    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, false))
+    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("schema-diagram.ftl", model, relativePath);
 
     final String content = Files.readString(tempDir.resolve(relativePath));

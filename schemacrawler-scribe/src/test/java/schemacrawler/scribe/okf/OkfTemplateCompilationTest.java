@@ -74,7 +74,7 @@ public class OkfTemplateCompilationTest {
     final Map<String, Object> model = baseModel(support, resourcePath);
     model.put("crossReferenceEntries", List.of(crossReferenceEntry));
 
-    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, false))
+    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("cross-references.ftl", model, resourcePath);
 
     final String content = Files.readString(tempDir.resolve(resourcePath));
@@ -98,7 +98,7 @@ public class OkfTemplateCompilationTest {
     final Map<String, Object> model = baseModel(support, resourcePath);
     model.put("lintsBySeverity", Map.of(LintSeverity.medium, List.of()));
 
-    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, false))
+    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("lint.ftl", model, resourcePath);
 
     final String content = Files.readString(tempDir.resolve(resourcePath));
@@ -117,7 +117,7 @@ public class OkfTemplateCompilationTest {
     final String resourcePath = "reports/index.md";
     final Map<String, Object> model = baseModel(support, resourcePath);
 
-    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, false))
+    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("reports-index.ftl", model, resourcePath);
 
     final String content = Files.readString(tempDir.resolve(resourcePath));
@@ -143,7 +143,7 @@ public class OkfTemplateCompilationTest {
     final Map<String, Object> model = baseModel(support, resourcePath);
     model.put("routine", routine);
 
-    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, false))
+    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("routine-concept.ftl", model, resourcePath);
 
     final String content = Files.readString(tempDir.resolve(resourcePath));
@@ -172,7 +172,7 @@ public class OkfTemplateCompilationTest {
     final Map<String, Object> model = baseModel(support, resourcePath);
     model.put("table", table);
 
-    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, false))
+    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("table-concept.ftl", model, resourcePath);
 
     final String content = Files.readString(tempDir.resolve(resourcePath));

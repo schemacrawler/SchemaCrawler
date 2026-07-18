@@ -11,8 +11,8 @@
 - ${msg.labelRoutines()}: ${support.routineCount()?c}
 - ${msg.labelForeignKeyCount()}: ${support.foreignKeyCount()?c}
 
+<#if support.erModelStats()??>
 <#assign erStats = support.erModelStats()>
-<#if erStats??>
 ## ${msg.sectionErModel()}
 
 <#assign ec = erStats.entityCounts>

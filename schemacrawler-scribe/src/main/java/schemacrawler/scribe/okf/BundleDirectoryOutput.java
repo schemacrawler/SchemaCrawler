@@ -87,36 +87,37 @@ public final class BundleDirectoryOutput implements Closeable {
   }
 
   private final Path rootDirectory;
-
   private final Path outputPath;
-
-  private final boolean finalizeToZip;
+  private final boolean expandedOutput;
 
   /**
    * Creates a directory output resource rooted at the given directory.
    *
-   * @param rootDirectory Root directory for all relative output paths
+   * @param outputPath Output path for the bundle (zip file path or expanded output directory path)
+   * @param expandedOutput Whether output should be in directories and files rather than zipped
    * @throws IOException
    */
-  public BundleDirectoryOutput(final Path outputPath, final boolean finalizeToZip)
+  public BundleDirectoryOutput(final Path outputPath, final boolean expandedOutput)
       throws IOException {
     requireNonNull(outputPath, "No output path provided");
 
-    this.finalizeToZip = finalizeToZip;
-    if (finalizeToZip) {
+    this.expandedOutput = expandedOutput;
+    if (expandedOutput) {
+      this.outputPath = outputPath.toAbsolutePath();
+      rootDirectory = outputPath;
+    } else {
       final Path zipFilePath = ensureZipExtension(outputPath).toAbsolutePath();
       this.outputPath = zipFilePath;
       rootDirectory = Files.createTempDirectory("scribe-");
-    } else {
-      this.outputPath = outputPath.toAbsolutePath();
-      rootDirectory = outputPath;
     }
-    LOGGER.log(Level.FINE, new StringFormat("Output rooted at directory <%s>", rootDirectory));
+    LOGGER.log(Level.INFO, new StringFormat("Scribe bundle rooted at <%s>", rootDirectory));
   }
 
   @Override
   public void close() throws IOException {
-    if (finalizeToZip) {
+    if (expandedOutput) {
+      LOGGER.log(Level.INFO, new StringFormat("Scribe bundle created in <%s>", outputPath));
+    } else {
       try {
         zipDirectory(rootDirectory, outputPath);
       } finally {
@@ -124,6 +125,7 @@ public final class BundleDirectoryOutput implements Closeable {
           deleteDirectory(rootDirectory);
         }
       }
+      LOGGER.log(Level.INFO, new StringFormat("Scribe bundle zipped into <%s>", outputPath));
     }
   }
 
@@ -137,7 +139,11 @@ public final class BundleDirectoryOutput implements Closeable {
    */
   public OutputResource resolve(final String relativePath) throws IOException {
     requireNonNull(relativePath, "No relative path provided");
+    final Path absoluteRoot = rootDirectory.toAbsolutePath().normalize();
     final Path file = rootDirectory.resolve(relativePath).normalize().toAbsolutePath();
+    if (!file.startsWith(absoluteRoot)) {
+      throw new IOException("Resolved output path escapes bundle root: " + relativePath);
+    }
     Files.createDirectories(file.getParent());
     return new FileOutputResource(file);
   }

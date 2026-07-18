@@ -66,7 +66,7 @@ public class OkfConceptWriterTableCountsTest {
     }
     assertThat(target, is(notNullValue()));
 
-    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, false))
+    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
         .writeTableConcept(target);
 
     final String content =
