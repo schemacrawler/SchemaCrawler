@@ -22,6 +22,6 @@ public class BundleDirectoryOutputTest {
     final Path root = tempDir.resolve("bundle-root");
     final BundleDirectoryOutput output = new BundleDirectoryOutput(root, true);
 
-    assertThrows(IOException.class, () -> output.resolve("../outside.md"));
+    assertThrows(IOException.class, () -> output.toWrite("../outside.md"));
   }
 }

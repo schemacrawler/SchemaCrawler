@@ -46,7 +46,7 @@ public final class OkfTemplateRenderer {
   public void writeTemplate(
       final String templateName, final Map<String, Object> model, final String relativePath) {
     try (final Writer writer =
-        outputDirectory.resolve(relativePath).openNewOutputWriter(UTF_8, false)) {
+        outputDirectory.toWrite(relativePath).openNewOutputWriter(UTF_8, false)) {
       final Template template = configuration.getTemplate(templateName);
       template.process(model, writer);
     } catch (final IOException | TemplateException e) {

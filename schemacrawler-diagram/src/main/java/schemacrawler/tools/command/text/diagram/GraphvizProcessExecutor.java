@@ -105,11 +105,8 @@ final class GraphvizProcessExecutor extends AbstractGraphProcessExecutor {
   private void retainDotFile(final List<String> command) {
     try {
       // Find name of DOT file in local directory
-      final Path parentPath = outputFile.normalize().getParent();
-      if (parentPath == null) {
-        throw new UnsupportedOperationException("Cannot use output file path");
-      }
-      final Path movedDotFile = parentPath.resolve(outputFile.getFileName() + ".dot");
+      final Path movedDotFile =
+          outputFile.resolveSibling(outputFile.getFileName() + ".dot").toAbsolutePath().normalize();
       // Copy DOT file
       copy(dotFile, movedDotFile, REPLACE_EXISTING);
 
