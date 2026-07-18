@@ -102,6 +102,66 @@ public final class ScribeMessages {
     return message("label.entity_model_type");
   }
 
+  public String labelEntityCount() {
+    return message("label.entity_count");
+  }
+
+  public String labelStrongEntityCount() {
+    return message("label.strong_entity_count");
+  }
+
+  public String labelWeakEntityCount() {
+    return message("label.weak_entity_count");
+  }
+
+  public String labelSubtypeEntityCount() {
+    return message("label.subtype_entity_count");
+  }
+
+  public String labelNonEntityCount() {
+    return message("label.non_entity_count");
+  }
+
+  public String labelUnknownEntityCount() {
+    return message("label.unknown_entity_count");
+  }
+
+  public String labelRelationshipCount() {
+    return message("label.relationship_count");
+  }
+
+  public String labelOneToOneRelationshipCount() {
+    return message("label.one_to_one_relationship_count");
+  }
+
+  public String labelOneToManyRelationshipCount() {
+    return message("label.one_to_many_relationship_count");
+  }
+
+  public String labelZeroToOneRelationshipCount() {
+    return message("label.zero_to_one_relationship_count");
+  }
+
+  public String labelZeroToManyRelationshipCount() {
+    return message("label.zero_to_many_relationship_count");
+  }
+
+  public String labelManyToManyRelationshipCount() {
+    return message("label.many_to_many_relationship_count");
+  }
+
+  public String labelUnknownRelationshipCount() {
+    return message("label.unknown_relationship_count");
+  }
+
+  public String labelImplicitRelationshipCount() {
+    return message("label.implicit_relationship_count");
+  }
+
+  public String labelUnmodeledTableCount() {
+    return message("label.unmodeled_table_count");
+  }
+
   public String labelForeignKeyCount() {
     return message("label.foreign_key_count");
   }
@@ -232,6 +292,10 @@ public final class ScribeMessages {
 
   public String sectionMetadata() {
     return message("section.metadata");
+  }
+
+  public String sectionErModel() {
+    return message("section.er_model");
   }
 
   public String sectionParameters() {

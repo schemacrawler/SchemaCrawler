@@ -11,9 +11,11 @@ package schemacrawler.scribe.renderer;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static schemacrawler.scribe.renderer.JsonUtility.mapper;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
@@ -142,6 +144,28 @@ public class ScribeSupportTest {
         assertThat(support.referencingTables(referencedTable), hasItem(table));
       }
     }
+
+    assertThat(support.erModelStats(), is(not(nullValue())));
+    final var erModelStats = support.erModelStats();
+    assertThat(erModelStats.entityCounts().count(), is(greaterThanOrEqualTo(0)));
+    assertThat(erModelStats.relationshipCounts().count(), is(greaterThanOrEqualTo(0)));
+    assertThat(
+        erModelStats.entityCounts().strongEntities()
+            + erModelStats.entityCounts().weakEntities()
+            + erModelStats.entityCounts().subtypes()
+            + erModelStats.entityCounts().nonEntities()
+            + erModelStats.entityCounts().unknown(),
+        is(erModelStats.entityCounts().count()));
+    assertThat(
+        erModelStats.relationshipCounts().oneOne()
+            + erModelStats.relationshipCounts().oneMany()
+            + erModelStats.relationshipCounts().zeroOne()
+            + erModelStats.relationshipCounts().zeroMany()
+            + erModelStats.relationshipCounts().manyMany()
+            + erModelStats.relationshipCounts().unknown(),
+        is(erModelStats.relationshipCounts().count()));
+    assertThat(erModelStats.implicitRelationshipCount(), is(greaterThanOrEqualTo(0)));
+    assertThat(erModelStats.unmodeledTableCount(), is(greaterThanOrEqualTo(0)));
     assertThat(support.crawlTimestamp(), is(catalog.getCrawlInfo().getCrawlTimestampInstant()));
   }
 

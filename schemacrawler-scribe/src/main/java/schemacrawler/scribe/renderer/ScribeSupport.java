@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.Set;
 import schemacrawler.ermodel.model.Entity;
 import schemacrawler.ermodel.model.EntityType;
+import schemacrawler.loader.ermodel.summary.ERModelStats;
 import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
@@ -75,7 +76,9 @@ public final class ScribeSupport extends AbstractTextSupport {
 
     executionState.transferState(this);
     relationsIndex = new ScribeRelationsIndex(getCatalog());
-    catalogStats = new ScribeCatalogStats(getCatalog(), relationsIndex);
+    catalogStats =
+        new ScribeCatalogStats(
+            getCatalog(), hasERModel() ? Optional.of(getERModel()) : Optional.empty());
 
     messages = new ScribeMessages(options.getLocale());
   }
@@ -164,6 +167,15 @@ public final class ScribeSupport extends AbstractTextSupport {
 
   public String escapeMarkdown(final String input) {
     return ScribeFormatting.escapeMarkdown(input);
+  }
+
+  /**
+   * Gets the ER model statistics, or {@code null} if no ER model is available.
+   *
+   * @return ER model stats, or {@code null}
+   */
+  public ERModelStats erModelStats() {
+    return catalogStats.erModelStats().orElse(null);
   }
 
   /**

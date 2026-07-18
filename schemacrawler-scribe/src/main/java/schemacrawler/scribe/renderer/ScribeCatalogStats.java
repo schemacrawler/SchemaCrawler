@@ -9,49 +9,41 @@ package schemacrawler.scribe.renderer;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Optional;
+import schemacrawler.ermodel.model.ERModel;
+import schemacrawler.loader.catalog.summary.CatalogStats;
+import schemacrawler.loader.catalog.summary.CatalogStatsUtility;
+import schemacrawler.loader.ermodel.summary.ERModelStats;
+import schemacrawler.loader.ermodel.summary.ERModelStatsUtility;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Table;
-import schemacrawler.schema.View;
 
 final class ScribeCatalogStats {
 
-  private final Catalog catalog;
-  private final ScribeRelationsIndex relationsIndex;
+  private final CatalogStats catalogStats;
+  private final Optional<ERModelStats> erModelStats;
 
-  ScribeCatalogStats(final Catalog catalog, final ScribeRelationsIndex relationsIndex) {
-    this.catalog = requireNonNull(catalog, "No catalog provided");
-    this.relationsIndex = requireNonNull(relationsIndex, "No relations index provided");
+  ScribeCatalogStats(final Catalog catalog, final Optional<ERModel> erModel) {
+    this.catalogStats = CatalogStatsUtility.from(requireNonNull(catalog, "No catalog provided"));
+    erModelStats = requireNonNull(erModel, "No ER model provided").map(ERModelStatsUtility::from);
+  }
+
+  Optional<ERModelStats> erModelStats() {
+    return erModelStats;
   }
 
   int foreignKeyCount() {
-    return relationsIndex.foreignKeyCount();
+    return catalogStats.counts().foreignKeyCount();
   }
 
   int routineCount() {
-    return catalog.getRoutines().size();
+    return catalogStats.counts().routines();
   }
 
   int tableCount() {
-    int count = 0;
-    for (final Table table : catalog.getTables()) {
-      if (!isView(table)) {
-        count++;
-      }
-    }
-    return count;
+    return catalogStats.counts().tableCount();
   }
 
   int viewCount() {
-    int count = 0;
-    for (final Table table : catalog.getTables()) {
-      if (isView(table)) {
-        count++;
-      }
-    }
-    return count;
-  }
-
-  private static boolean isView(final Table table) {
-    return table instanceof View || table.getTableType().isView();
+    return catalogStats.counts().viewCount();
   }
 }

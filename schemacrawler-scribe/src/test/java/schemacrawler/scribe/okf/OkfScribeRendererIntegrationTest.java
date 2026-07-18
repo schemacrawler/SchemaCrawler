@@ -75,6 +75,31 @@ public class OkfScribeRendererIntegrationTest {
     assertThat(rootIndex, containsString(support.messages().labelViews() + ":"));
     assertThat(rootIndex, containsString(support.messages().labelRoutines() + ":"));
     assertThat(rootIndex, containsString(support.messages().labelForeignKeyCount() + ":"));
+    if (support.erModelStats() != null) {
+      assertThat(rootIndex, containsString("## " + support.messages().sectionErModel()));
+      assertThat(rootIndex, containsString(support.messages().labelEntityCount() + ":"));
+      assertThat(rootIndex, containsString(support.messages().labelStrongEntityCount() + ":"));
+      assertThat(rootIndex, containsString(support.messages().labelWeakEntityCount() + ":"));
+      assertThat(rootIndex, containsString(support.messages().labelSubtypeEntityCount() + ":"));
+      assertThat(rootIndex, containsString(support.messages().labelNonEntityCount() + ":"));
+      assertThat(rootIndex, containsString(support.messages().labelUnknownEntityCount() + ":"));
+      assertThat(rootIndex, containsString(support.messages().labelRelationshipCount() + ":"));
+      assertThat(
+          rootIndex, containsString(support.messages().labelOneToOneRelationshipCount() + ":"));
+      assertThat(
+          rootIndex, containsString(support.messages().labelOneToManyRelationshipCount() + ":"));
+      assertThat(
+          rootIndex, containsString(support.messages().labelZeroToOneRelationshipCount() + ":"));
+      assertThat(
+          rootIndex, containsString(support.messages().labelZeroToManyRelationshipCount() + ":"));
+      assertThat(
+          rootIndex, containsString(support.messages().labelManyToManyRelationshipCount() + ":"));
+      assertThat(
+          rootIndex, containsString(support.messages().labelUnknownRelationshipCount() + ":"));
+      assertThat(
+          rootIndex, containsString(support.messages().labelImplicitRelationshipCount() + ":"));
+      assertThat(rootIndex, containsString(support.messages().labelUnmodeledTableCount() + ":"));
+    }
     assertThat(rootIndex, containsString("(tables/index.md)"));
     assertThat(rootIndex, containsString("(routines/index.md)"));
     assertThat(rootIndex, containsString("(reports/schema.md)"));

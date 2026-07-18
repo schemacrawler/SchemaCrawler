@@ -37,6 +37,11 @@ public class ScribeMessagesTest {
     assertThat(messages.labelDatabaseSchema(), is("Database Schema"));
     assertThat(messages.labelTables(), is("Tables"));
     assertThat(messages.labelEntityModelType(), is("Entity model type"));
+    assertThat(messages.labelEntityCount(), is("Entity count"));
+    assertThat(messages.labelRelationshipCount(), is("Relationship count"));
+    assertThat(messages.labelImplicitRelationshipCount(), is("Implicit relationships"));
+    assertThat(messages.labelUnmodeledTableCount(), is("Unmodeled table count"));
+    assertThat(messages.sectionErModel(), is("ER Model"));
     assertThat(messages.lintSeverityLow(), is("Severity low"));
     assertThat(messages.lintSeverityMedium(), is("Severity medium"));
     assertThat(messages.lintSeverityHigh(), is("Severity high"));
