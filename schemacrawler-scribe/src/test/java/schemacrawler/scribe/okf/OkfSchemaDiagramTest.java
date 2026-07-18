@@ -20,7 +20,6 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Table;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
@@ -65,7 +64,12 @@ public class OkfSchemaDiagramTest {
     final Table knownTable = support.allTables().get(0);
     assertThat(content, containsString(knownTable.getName()));
 
-    final ForeignKey knownFk = support.allForeignKeys().stream().findFirst().orElseThrow();
+    final Table fkTable =
+        support.allTables().stream()
+            .filter(t -> !support.childForeignKeys(t).isEmpty())
+            .findFirst()
+            .orElseThrow();
+    final var knownFk = support.childForeignKeys(fkTable).stream().findFirst().orElseThrow();
     assertThat(content, containsString(support.mermaidCardinality(knownFk)));
   }
 }

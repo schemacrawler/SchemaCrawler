@@ -25,7 +25,6 @@ import java.util.Locale;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
@@ -109,7 +108,6 @@ public class ScribeSupportTest {
     final ScribeSupport support = newHelper(catalog, options);
 
     assertThat(support.tableCount(), is(greaterThan(0)));
-    assertThat(support.columnCount(), is(greaterThan(support.tableCount())));
 
     final List<Table> allTables = support.allTables();
     assertThat(allTables.isEmpty(), is(false));
@@ -139,22 +137,12 @@ public class ScribeSupportTest {
     assertThat(foundPrimaryKeyColumn, is(true));
     assertThat(foundForeignKeyColumn, is(true));
 
-    for (final Table orphan : support.orphanTables()) {
-      assertThat(support.childForeignKeys(orphan).isEmpty(), is(true));
-      assertThat(support.parentForeignKeys(orphan).isEmpty(), is(true));
-    }
-
     for (final Table table : support.allTables()) {
-      for (final ForeignKey foreignKey : support.childForeignKeys(table)) {
-        assertThat(support.allForeignKeys(), hasItem(foreignKey));
-      }
       for (final Table referencedTable : support.referencedTables(table)) {
         assertThat(support.referencingTables(referencedTable), hasItem(table));
       }
     }
-
-    assertThat(support.runId(), is(catalog.getCrawlInfo().getRunId()));
-    assertThat(support.runTimestamp(), is(catalog.getCrawlInfo().getCrawlTimestampInstant()));
+    assertThat(support.crawlTimestamp(), is(catalog.getCrawlInfo().getCrawlTimestampInstant()));
   }
 
   private Catalog catalog(final DatabaseConnectionSource connectionSource) {

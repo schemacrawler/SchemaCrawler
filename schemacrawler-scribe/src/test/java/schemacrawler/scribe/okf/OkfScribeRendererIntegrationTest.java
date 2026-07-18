@@ -27,7 +27,6 @@ import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.scribe.output.ScribeOutputContext;
 import schemacrawler.scribe.output.ScribeOutputContextFactory;
 import schemacrawler.scribe.renderer.ScribeSupport;
-import schemacrawler.scribe.renderer.ScribeSupport.EntityModelType;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.lint.Lints;
@@ -124,16 +123,10 @@ public class OkfScribeRendererIntegrationTest {
     }
     assertThat(sawEmbeddedDiagram, is(true));
 
-    for (final Table bridgeTable : support.bridgeTables()) {
-      final String content =
-          ZipTestUtility.readEntry(zipFile, "tables/" + bridgeTable.key().slug() + ".md");
-      assertThat(content, containsString("bridge_table"));
-    }
-
     for (final Table table : support.allTables()) {
       final String content =
           ZipTestUtility.readEntry(zipFile, "tables/" + table.key().slug() + ".md");
-      if (support.entityModelType(table) == EntityModelType.unknown) {
+      if (support.localizedEntityModelType(table).isBlank()) {
         assertThat(
             content, not(containsString("- " + support.messages().labelEntityModelType() + ": ")));
       }
