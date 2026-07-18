@@ -62,7 +62,7 @@ public class OkfScribeRendererIntegrationTest {
     assertThat(entries.contains("log.md"), is(false));
     assertThat(entries.contains("reports/lint.md"), is(true));
 
-    for (final Table table : support.allTablesAndViews()) {
+    for (final Table table : support.allTables()) {
       assertThat(entries.contains("tables/" + table.key().slug() + ".md"), is(true));
     }
     assertThat(
@@ -96,10 +96,10 @@ public class OkfScribeRendererIntegrationTest {
     }
 
     final String tablesIndex = ZipTestUtility.readEntry(zipFile, "tables/index.md");
-    if (!support.allTablesAndViews().isEmpty()) {
+    if (!support.allTables().isEmpty()) {
       assertThat(
           tablesIndex,
-          containsString("## " + support.allTablesAndViews().get(0).getSchema().getFullName()));
+          containsString("## " + support.allTables().get(0).getSchema().getFullName()));
     }
 
     final String routinesIndex = ZipTestUtility.readEntry(zipFile, "routines/index.md");
@@ -130,7 +130,7 @@ public class OkfScribeRendererIntegrationTest {
       assertThat(content, containsString("bridge_table"));
     }
 
-    for (final Table table : support.allTablesAndViews()) {
+    for (final Table table : support.allTables()) {
       final String content =
           ZipTestUtility.readEntry(zipFile, "tables/" + table.key().slug() + ".md");
       if (support.entityModelType(table) == EntityModelType.unknown) {

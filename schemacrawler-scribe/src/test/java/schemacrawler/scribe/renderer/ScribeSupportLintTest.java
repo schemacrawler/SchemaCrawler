@@ -58,7 +58,7 @@ public class ScribeSupportLintTest {
     assertThat(support.isLintEnabled(), is(true));
     assertThat(support.lints().size(), is(greaterThanOrEqualTo(0)));
 
-    final Table knownTable = support.allTablesAndViews().get(0);
+    final Table knownTable = support.allTables().get(0);
     assertThat(support.lintIssues(knownTable), is(not(nullValue())));
   }
 

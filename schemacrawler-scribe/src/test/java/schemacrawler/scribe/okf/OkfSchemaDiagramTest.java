@@ -62,7 +62,7 @@ public class OkfSchemaDiagramTest {
     assertThat(content.strip(), containsString("erDiagram"));
     assertThat(content, containsString("title: " + support.databaseTitle()));
 
-    final Table knownTable = support.allTablesAndViews().get(0);
+    final Table knownTable = support.allTables().get(0);
     assertThat(content, containsString(knownTable.getName()));
 
     final ForeignKey knownFk = support.allForeignKeys().stream().findFirst().orElseThrow();

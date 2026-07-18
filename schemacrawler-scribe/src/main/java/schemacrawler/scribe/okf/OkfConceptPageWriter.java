@@ -36,8 +36,7 @@ public final class OkfConceptPageWriter {
   }
 
   public void writeConceptPages() throws SchemaCrawlerException {
-    final List<Table> tablesAndViews = support.allTablesAndViews();
-    for (final Table table : tablesAndViews) {
+    for (final Table table : support.allTables()) {
       writeTableConcept(table);
     }
 

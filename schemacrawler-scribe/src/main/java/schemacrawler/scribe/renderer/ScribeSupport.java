@@ -150,30 +150,14 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   /**
-   * Gets all tables (not views), sorted alphabetically by full name.
-   *
-   * @return Sorted tables
-   */
-  public List<Table> allTables() {
-    return sortedTables(table -> !isView(table));
-  }
-
-  /**
    * Gets all tables and views, sorted alphabetically by full name.
    *
    * @return Sorted tables and views
    */
-  public List<Table> allTablesAndViews() {
-    return sortedTables(table -> true);
-  }
-
-  /**
-   * Gets all views, sorted alphabetically by full name.
-   *
-   * @return Sorted views
-   */
-  public List<Table> allViews() {
-    return sortedTables(this::isView);
+  public List<Table> allTables() {
+    final List<Table> tables = new ArrayList<>(getCatalog().getTables());
+    tables.sort(Comparator.comparing(Table::getFullName));
+    return List.copyOf(tables);
   }
 
   /**

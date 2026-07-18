@@ -144,7 +144,7 @@ public class ScribeSupportTest {
       assertThat(support.parentForeignKeys(orphan).isEmpty(), is(true));
     }
 
-    for (final Table table : support.allTablesAndViews()) {
+    for (final Table table : support.allTables()) {
       for (final ForeignKey foreignKey : support.childForeignKeys(table)) {
         assertThat(support.allForeignKeys(), hasItem(foreignKey));
       }
