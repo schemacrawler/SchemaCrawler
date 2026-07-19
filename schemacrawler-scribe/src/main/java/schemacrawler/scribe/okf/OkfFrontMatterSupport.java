@@ -89,27 +89,27 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     if (!table.hasPrimaryKey()) {
       tags.add("no_primary_key");
     }
+    if (table.isSelfReferencing()) {
+      tags.add("self_referencing");
+    }
     if (table.hasTriggers()) {
       tags.add("has_triggers");
     }
 
-    frontMatter.put("column_count", table.getColumns().size());
-    frontMatter.put("foreign_key_count", table.getReferencedTables().size());
-    frontMatter.put("index_count", table.getIndexes().size());
-    frontMatter.put("trigger_count", table.getTriggers().size());
-
-    if (table.isSelfReferencing()) {
-      tags.add("self_referencing");
-    }
+    final Map<String, Object> counts = new LinkedHashMap<>();
+    counts.put("column_count", table.getColumns().size());
+    counts.put("foreign_key_count", table.getReferencedTables().size());
+    counts.put("index_count", table.getIndexes().size());
+    counts.put("trigger_count", table.getTriggers().size());
 
     if (TableRowCountsUtility.hasRowCount(table)) {
       final long rowCount = TableRowCountsUtility.getRowCount(table);
       if (rowCount == 0) {
         tags.add("empty_table");
-      } else {
-        frontMatter.put("row_count", rowCount);
       }
+      counts.put("row_count", rowCount);
     }
+    frontMatter.put("counts", counts);
 
     if (hasERModel()) {
       final ERModel model = getERModel();
@@ -139,14 +139,23 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
       return frontMatter;
     }
 
+    final String simpleTypeName = MetaDataUtility.getSimpleTypeName(object).toString();
+    final String name = object.getName();
+    final String fullName = object.getFullName();
+    final String description;
+    if (object.hasRemarks()) {
+      description = object.getRemarks();
+    } else {
+      description = "Description of %s %s".formatted(simpleTypeName, fullName);
+    }
+
     final List<String> tags = new ArrayList<>();
 
-    final String simpleTypeName = MetaDataUtility.getSimpleTypeName(object).toString();
     tags.add(simpleTypeName);
     frontMatter.put("type", simpleTypeName);
-    frontMatter.put("title", object.getFullName());
+    frontMatter.put("title", fullName);
     if (object.hasRemarks()) {
-      frontMatter.put("description", object.getRemarks());
+      frontMatter.put("description", description);
     } else {
       frontMatter.put("description", "Description of " + simpleTypeName);
     }
@@ -154,7 +163,14 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
       frontMatter.put("complete_type", typedObject.getType().toString());
     }
     frontMatter.put("schema", object.getSchema().getFullName());
-    frontMatter.put("name", object.getName());
+    frontMatter.put("name", name);
+
+    // GitHub tags
+    // https://docs.github.com/en/contributing/writing-for-github-docs/using-yaml-frontmatter
+    frontMatter.put("shortTitle", name);
+    frontMatter.put("intro", description);
+    frontMatter.put("showMiniToc", true);
+    frontMatter.put("allowTitleToDifferFromFilename", true);
 
     frontMatter.put("tags", tags);
 
