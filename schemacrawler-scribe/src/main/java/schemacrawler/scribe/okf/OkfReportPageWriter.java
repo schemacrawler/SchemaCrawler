@@ -62,10 +62,15 @@ public final class OkfReportPageWriter {
   }
 
   private Map<String, Object> makeModel() {
+
+    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    support.transferState(frontMatter);
+
     final ScribeMessages msg = support.messages();
     final Map<String, Object> model = new HashMap<>();
     model.put("support", support);
     model.put("msg", msg);
+    model.put("frontMatter", frontMatter);
     model.put("catalog", support.getCatalog());
     model.put("er_model", support.getERModel());
     model.put("title", support.databaseTitle());

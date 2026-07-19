@@ -20,7 +20,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Table;
 
-final class ScribeRelationsIndex {
+final class RelationshipsIndex {
 
   private final List<ForeignKey> allForeignKeys;
   private final Map<NamedObjectKey, List<ForeignKey>> childForeignKeysByTable;
@@ -28,7 +28,7 @@ final class ScribeRelationsIndex {
   private final Map<NamedObjectKey, List<Table>> referencedTablesByTable;
   private final Map<NamedObjectKey, List<Table>> referencingTablesByTable;
 
-  ScribeRelationsIndex(final Catalog catalog) {
+  RelationshipsIndex(final Catalog catalog) {
     requireNonNull(catalog, "No catalog provided");
 
     final Map<NamedObjectKey, List<ForeignKey>> child = new HashMap<>();

@@ -1,6 +1,6 @@
 <#import "common.ftl" as common>
 ---
-${support.reportFrontMatter("Database Lints", "Details of database schema design issues (lints)")}<#rt>
+${frontMatter.reportFrontMatter("Database Lints", "Details of database schema design issues (lints)")}<#rt>
 ---
 
 # ${msg.sectionLintIssues()}

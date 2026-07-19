@@ -25,7 +25,6 @@ import schemacrawler.ermodel.model.EntityType;
 import schemacrawler.loader.ermodel.summary.ERModelStats;
 import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
@@ -58,7 +57,7 @@ public final class ScribeSupport extends AbstractTextSupport {
   private final Lints lints;
   private final ScribeMessages messages;
   private final ScribeOptions options;
-  private final ScribeRelationsIndex relationsIndex;
+  private final RelationshipsIndex relationsIndex;
   private final ScribeCatalogStats catalogStats;
 
   /**
@@ -75,7 +74,7 @@ public final class ScribeSupport extends AbstractTextSupport {
     this.lints = requireNonNull(lints, "No lints provided");
 
     executionState.transferState(this);
-    relationsIndex = new ScribeRelationsIndex(getCatalog());
+    relationsIndex = new RelationshipsIndex(getCatalog());
     catalogStats =
         new ScribeCatalogStats(
             getCatalog(), hasERModel() ? Optional.of(getERModel()) : Optional.empty());
@@ -166,7 +165,7 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   public String escapeMarkdown(final String input) {
-    return ScribeFormatting.escapeMarkdown(input);
+    return MarkdownFormattingHelper.escapeMarkdown(input);
   }
 
   /**
@@ -185,14 +184,6 @@ public final class ScribeSupport extends AbstractTextSupport {
    */
   public int foreignKeyCount() {
     return catalogStats.foreignKeyCount();
-  }
-
-  public String frontMatter(final DatabaseObject object) {
-    return ScribeObjectFrontMatterBuilder.build(
-        object,
-        hasCatalog() ? Optional.of(getCatalog()) : Optional.empty(),
-        hasERModel() ? Optional.of(getERModel()) : Optional.empty(),
-        this::rowCount);
   }
 
   /**
@@ -332,13 +323,6 @@ public final class ScribeSupport extends AbstractTextSupport {
     return relationsIndex.referencingTables(table);
   }
 
-  public String reportFrontMatter(final String providedTitle, final String providedDescription) {
-    return ScribeReportFrontMatterBuilder.build(
-        providedTitle,
-        providedDescription,
-        hasCatalog() ? Optional.of(getCatalog()) : Optional.empty());
-  }
-
   /**
    * Gets the deduplicated number of routines in the catalog.
    *
@@ -379,7 +363,7 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   public String sentenceCase(final String text) {
-    return ScribeFormatting.sentenceCase(text);
+    return MarkdownFormattingHelper.sentenceCase(text);
   }
 
   /**

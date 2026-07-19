@@ -61,9 +61,14 @@ public final class OkfConceptPageWriter {
   }
 
   private Map<String, Object> newModel(final String resourcePath) {
+
+    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    support.transferState(frontMatter);
+
     final Map<String, Object> model = new HashMap<>();
     model.put("support", support);
     model.put("msg", support.messages());
+    model.put("frontMatter", frontMatter);
     model.put("resourcePath", resourcePath);
     model.put("timestamp", support.crawlTimestamp().toString());
     return model;

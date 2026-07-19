@@ -1,6 +1,6 @@
 <#import "common.ftl" as common>
 ---
-${support.reportFrontMatter("Cross-references", "Cross-references between database objects")}<#rt>
+${frontMatter.reportFrontMatter("Cross-references", "Cross-references between database objects")}<#rt>
 ---
 
 # ${msg.sectionCrossReferences()}

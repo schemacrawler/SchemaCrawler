@@ -43,10 +43,13 @@ public class OkfSchemaDiagramTest {
     final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
+    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    support.transferState(frontMatter);
 
     final String relativePath = "reports/schema.md";
     final Map<String, Object> model = new HashMap<>();
     model.put("support", support);
+    model.put("frontMatter", frontMatter);
     model.put("msg", support.messages());
     model.put("catalog", executionState.getCatalog());
     model.put("er_model", executionState.getERModel());
