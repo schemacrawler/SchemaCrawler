@@ -31,6 +31,7 @@ import schemacrawler.tools.commandline.command.LoadCommand;
 import schemacrawler.tools.commandline.command.LogCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
+import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
@@ -59,7 +60,7 @@ public final class GenerateCliSupport {
       boolean isErrored = false;
 
       outputDir = createOutputDirectory();
-      final Path completionScript = outputDir.resolve(completionScriptFilename).toAbsolutePath();
+      final Path completionScript = IOUtility.sanitizeFilePath(outputDir, completionScriptFilename);
 
       if (generateAsciiDoc()) {
         isErrored = true;
@@ -75,6 +76,12 @@ public final class GenerateCliSupport {
 
     protected Path createOutputDirectory() {
       try {
+        if (IOUtility.isOutsideWorkingDirectory(outputDir)) {
+          LOGGER.log(
+              Level.SEVERE,
+              "Attempt to write outside current working directory to path <%s>"
+                  .formatted(outputDir));
+        }
         Files.createDirectories(outputDir);
       } catch (final IOException e) {
         throw new UncheckedIOException("Could not create output directory", e);

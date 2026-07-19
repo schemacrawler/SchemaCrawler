@@ -27,7 +27,7 @@ import us.fatehi.utility.ioresource.OutputResource;
 import us.fatehi.utility.string.StringFormat;
 
 /**
- * An output resource rooted at a directory. Each call to {@link #resolve(String)} returns a new
+ * An output resource rooted at a directory. Each call to {@link #toWrite(String)} returns a new
  * {@link OutputResource} for the given relative path; the writer creates all necessary parent
  * directories before opening the file.
  */
@@ -137,15 +137,11 @@ public final class BundleDirectoryOutput implements Closeable {
    * @return Output resource for the resolved file
    * @throws IOException
    */
-  public OutputResource resolve(final String relativePath) throws IOException {
+  public OutputResource toWrite(final String relativePath) throws IOException {
     requireNonNull(relativePath, "No relative path provided");
-    final Path absoluteRoot = rootDirectory.toAbsolutePath().normalize();
-    final Path file = rootDirectory.resolve(relativePath).normalize().toAbsolutePath();
-    if (!file.startsWith(absoluteRoot)) {
-      throw new IOException("Resolved output path escapes bundle root: " + relativePath);
-    }
-    Files.createDirectories(file.getParent());
-    return new FileOutputResource(file);
+    final Path filePath = IOUtility.sanitizeFilePath(rootDirectory, relativePath);
+    Files.createDirectories(filePath.getParent());
+    return new FileOutputResource(filePath);
   }
 
   @Override
