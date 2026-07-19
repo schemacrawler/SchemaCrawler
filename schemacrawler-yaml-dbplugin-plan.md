@@ -1,39 +1,38 @@
 # Plan: YAML-Driven Database Plugin API (`schemacrawler-dbplugins`)
 
-## 1. Motivation and Goals
+## 1. Goals
 
-SchemaCrawler's database plugin system requires writing Java — a `DatabaseConnector` subclass, a `DatabaseConnectionSourceBuilder` configuration, a `PluginCommand` for picocli help, and a `META-INF/services` registration entry. This is correct and rich, but it is too much friction for "thin" connectors that only need a JDBC URL template, a few driver properties, and basic schema/catalog filtering.
+SchemaCrawler's database plugin system is powerful but requires writing Java for every new connector. The goals of this initiative are:
 
-The goals of this plan are:
-
-1. Define a **YAML schema** that covers the most common plugin configuration surface area.
-2. Provide a **`YamlDatabaseConnector` base class** that constructs a fully functional `DatabaseConnector` from a parsed YAML definition.
-3. Ship a new module `schemacrawler-dbplugins` with **bundled YAML-configured plugins** for Snowflake, Microsoft Access (UCanAccess), ClickHouse, Trino, and Apache Cassandra.
-4. Enable **user-extensible classpath and filesystem plugins** so that dropping a YAML file somewhere is sufficient to register a new server — no Java code required.
+1. Define a **YAML schema** covering the most common plugin configuration surface — JDBC URL template, default properties, CLI help strings, schema/catalog filtering, and retrieval strategy overrides.
+2. Provide a clean **Java model layer** (records/classes) that holds the parsed YAML data with no dependency on Jackson outside the parsing layer.
+3. Provide a **`YamlDatabaseConnector`** that constructs a fully functional `DatabaseConnector` from the model layer.
+4. Provide a **`YamlDatabaseConnectorBridge`** — the single `ServiceLoader` entry — that discovers and expands YAML-defined plugins without being a server itself.
+5. Ship five **bundled YAML-configured plugins** for Snowflake, Microsoft Access, ClickHouse, Trino, and Apache Cassandra.
+6. Enable **user-extensible filesystem plugins** — drop a YAML file somewhere on the configured path and a new server appears with no code.
 
 ---
 
 ## 2. Current Architecture Summary
 
-Every database plugin today follows this pattern (abbreviated from `PostgreSQLDatabaseConnector`):
+Every database plugin today follows this pattern:
 
 ```
 DatabaseConnector
-  └─ constructor calls super(DatabaseConnectorOptions)
-
-DatabaseConnectorOptions is built via DatabaseConnectorOptionsBuilder:
-  - DatabaseServerType        → server identifier + display name
-  - DatabaseConnectionSourceBuilder → JDBC URL template (${host}/${port}/${database}),
-                                      default port, default urlx properties
-  - PluginCommand             → picocli option declarations for --server/--host/--port/--database
-  - urlStartsWith / predicate → URL matching for auto-detection
-  - informationSchemaViews    → classpath SQL resource folder
-  - schemaRetrievalOptions    → per-strategy MetadataRetrievalStrategy overrides
-  - limitOptionsBuilder       → includeSchemas / includeCatalogs (inclusion/exclusion rules)
+  └─ constructor builds DatabaseConnectorOptions via DatabaseConnectorOptionsBuilder:
+       ├─ DatabaseServerType        → server identifier + display name
+       ├─ DatabaseConnectionSourceBuilder → JDBC URL template, default port, urlx defaults
+       ├─ PluginCommand             → picocli option declarations for help display
+       ├─ urlStartsWith / predicate → URL matching for auto-detection
+       ├─ informationSchemaViews    → classpath SQL resource folder
+       ├─ schemaRetrievalOptions    → per-strategy MetadataRetrievalStrategy overrides
+       └─ limitOptionsBuilder       → includeSchemas / includeCatalogs rules
 ```
 
-Registration: one entry per plugin in
+Registration: one class per plugin in
 `META-INF/services/schemacrawler.tools.databaseconnector.DatabaseConnector`.
+
+**PluginCommand and CLI options**: Each connector declares its own `PluginCommand` with `.addOption()` calls. For server-type plugins, these options (e.g. `--server`, `--host`, `--port`, `--database`) appear in the `--help servers` display and in the per-server help page (e.g., `-h postgresql`). At runtime, the base four options (`--host`, `--port`, `--database`, `--server`) are parsed from the CLI by `ServerHostConnectionGroupOptions`. Any driver-specific extra properties (beyond host/port/database) are currently passed via `--urlx=key=value`. The `PluginCommand.addOption()` API is the plugin mechanism for declaring and documenting these named options.
 
 ---
 
@@ -44,17 +43,17 @@ Registration: one entry per plugin in
 | Item | Value |
 |---|---|
 | Artifact ID | `schemacrawler-dbplugins` |
-| Group ID | `us.fatehi` (consistent with the project) |
-| Location | `schemacrawler-dbplugins/` in the root of the SchemaCrawler project |
-| Added to root `pom.xml` | Yes — under the "Database plugins" section of `<modules>` |
+| Group ID | `us.fatehi` |
+| Location | `schemacrawler-dbplugins/` at project root |
+| Root `pom.xml` | Added under the "Database plugins" `<modules>` section |
 
 ### 3.2 Dependencies
 
 ```xml
-<!-- Runtime and compile -->
-<dependency>us.fatehi:schemacrawler</dependency>          <!-- core API -->
+<!-- Compile / runtime -->
+<dependency>us.fatehi:schemacrawler</dependency>           <!-- core API, no Jackson -->
 
-<!-- Jackson 3 (tools.jackson) — already used in schemacrawler-scripting -->
+<!-- Jackson 3 — already used in schemacrawler-scripting; versions managed in parent -->
 <dependency>tools.jackson.core:jackson-databind</dependency>
 <dependency>tools.jackson.dataformat:jackson-dataformat-yaml</dependency>
 
@@ -64,48 +63,103 @@ Registration: one entry per plugin in
 <dependency>us.fatehi:schemacrawler-commandline</dependency>
 ```
 
-Jackson is already managed in the project (`tools.jackson` group ID, used by `schemacrawler-scripting`). No new version decisions are needed.
+**No Jackson is introduced into `schemacrawler` (Core).** Jackson lives exclusively in `schemacrawler-dbplugins`.
 
 ---
 
-## 4. YAML Plugin Definition Schema
+## 4. Required Change to SchemaCrawler-Core
 
-A YAML file contains one `plugin` document. Multiple YAML files may coexist in a bundle or user directory.
+Add a new interface to `schemacrawler` (Core), in the same package as `DatabaseConnector`:
+
+```java
+// New interface — pure Java, zero Jackson dependency
+public interface DatabaseConnectorBundle {
+    Collection<DatabaseConnector> getDatabaseConnectors();
+}
+```
+
+`DatabaseConnectorRegistry.loadDatabaseConnectorRegistry()` is enhanced with one extra check after loading each `ServiceLoader` entry:
+
+```
+if (databaseConnector instanceof DatabaseConnectorBundle bundle) {
+    for (DatabaseConnector child : bundle.getDatabaseConnectors()) {
+        register child by its getDatabaseServerType().getDatabaseSystemIdentifier()
+    }
+    // do NOT register the bridge itself as a server entry
+} else {
+    register databaseConnector normally
+}
+```
+
+This is a **backward-compatible additive change** — all existing connectors are unaffected. The bridge never appears in `getRegisteredPlugins()`, `getHelpCommands()`, or `getDatabaseServerTypes()`.
+
+---
+
+## 5. YAML Plugin Definition Schema
+
+A single YAML file describes one plugin. Files are discovered from:
+
+- **Classpath root directory** `schemacrawler-dbplugins/` — consistent with the module name, not inside `META-INF/`.
+- **Filesystem directory** configured via system property `schemacrawler.plugins.dir` or environment variable `SC_PLUGINS_DIR` (defaults to `~/.schemacrawler/plugins/`).
+
+### 5.1 Full annotated schema
 
 ```yaml
-# schemacrawler-plugin.yaml schema (v1)
+# schemacrawler-dbplugins/snowflake.yaml
+
 plugin:
 
-  # Required — must be a lowercase identifier, must be unique across all plugins
+  # Required — lowercase identifier; must be unique across loaded plugins
   server: snowflake
 
   # Required — human-readable display name
   name: Snowflake
 
-  # Required — JDBC URL template; supports ${host}, ${port}, ${database} placeholders
-  url-template: "jdbc:snowflake://${host}.snowflakecomputing.com:${port}/${database}"
+  # Required — JDBC URL template; ${host}, ${port}, ${database} are interpolated
+  url-template: "jdbc:snowflake://${host}:${port}/"
 
-  # Required — prefix used to auto-detect this plugin from a raw --url argument
+  # Required — string prefix used for automatic detection when --url is passed directly
   url-prefix: "jdbc:snowflake:"
 
-  # Optional — default JDBC port
+  # Optional — default TCP port
   default-port: 443
 
-  # Optional — default URL extra properties (passed as JDBC URL parameters or
-  # Properties entries). Keys and values are strings.
+  # Optional — default JDBC URL extra properties (mapped to withDefaultUrlx calls)
+  # Values are strings.
   default-url-properties:
-    warehouse: ""
-    role: ""
-    authenticator: "snowflake"
+    db: "${database}"                 # maps database placeholder into URL property
+    CLIENT_SESSION_KEEP_ALIVE: "true"
 
-  # Optional — picocli help strings for each CLI option
-  # Each entry is a list of description lines (same multi-line convention as picocli).
+  # Optional — additional named CLI options beyond --server/--host/--port/--database.
+  # These are declared via PluginCommand.addOption() and appear in the server's help page.
+  # At runtime, users pass them as --urlx=key=value (or as named options if CLI wiring
+  # is extended; see §6.4).
+  # Each entry has: name, type (String|Integer|Boolean), help text lines, and
+  # an optional urlx-key override (defaults to the option name).
+  additional-options:
+    - name: warehouse
+      type: String
+      urlx-key: warehouse
+      help:
+        - "Snowflake virtual warehouse name"
+        - "Optional, defaults to the account default"
+    - name: role
+      type: String
+      urlx-key: role
+      help:
+        - "Snowflake role name"
+        - "Optional, defaults to the account default role"
+
+  # Optional — help strings for the standard CLI options.
+  # Each key is one of: server, host, port, database.
+  # Values are lists of description lines (picocli multi-line convention).
   help:
     server:
       - "--server=snowflake"
       - "Loads SchemaCrawler plug-in for Snowflake"
     host:
-      - "Snowflake account identifier (e.g. myorg-myaccount)"
+      - "Snowflake account identifier"
+      - "(e.g. myorg-myaccount.snowflakecomputing.com)"
     port:
       - "Port number"
       - "Optional, defaults to 443"
@@ -113,102 +167,140 @@ plugin:
       - "Snowflake database name"
 
   # Optional — schema retrieval strategy overrides.
-  # Keys are SchemaInfoMetadataRetrievalStrategy field names (camelCase or snake_case).
-  # Values are MetadataRetrievalStrategy enum constants.
+  # Keys must be valid SchemaInfoMetadataRetrievalStrategy field names.
+  # Values must be valid MetadataRetrievalStrategy enum constant names.
   schema-retrieval:
     tableColumnsRetrievalStrategy: metadata_over_schemas
-    primaryKeysRetrievalStrategy: metadata_over_schemas
 
-  # Optional — identifier quoting character (e.g. `"` or `` ` ``)
+  # Optional — identifier quote character (e.g. `"` for standard SQL, `` ` `` for MySQL-style)
   identifier-quote-string: "\""
 
-  # Optional — schema filtering (applied to limitOptionsBuilder).
-  # Supports Java regex. Exactly one of include/exclude-schemas may be set.
+  # Optional — schema/catalog inclusion/exclusion (Java regex).
+  # Exactly one of include-schemas or exclude-schemas may be set; same for catalogs.
   limit:
     exclude-schemas: "INFORMATION_SCHEMA"
-    # include-schemas: ".*"       # alternative
-    # exclude-catalogs: "..."     # optional catalog filter
-    # include-catalogs: "..."     # alternative
+    # include-schemas: ".*"
+    # exclude-catalogs: "..."
+    # include-catalogs: "..."
 ```
 
-### 4.1 Design decisions in the schema
+### 5.2 Schema design decisions
 
-- **`url-template`** exactly mirrors what `DatabaseConnectionSourceBuilder.builder(...)` takes today (`${host}`, `${port}`, `${database}`).
-- **`url-prefix`** maps to `withUrlStartsWith(...)`. If neither `url-prefix` nor a custom predicate is needed, it can be omitted (no auto-detection by URL).
+- **`url-template`** uses the identical placeholder syntax accepted by `DatabaseConnectionSourceBuilder.builder(...)`.
+- **`url-prefix`** maps to `withUrlStartsWith(...)`.
 - **`default-url-properties`** map to `withDefaultUrlx(key, value)` calls.
-- **`schema-retrieval`** exposes only the `SchemaInfoMetadataRetrievalStrategy` / `MetadataRetrievalStrategy` override surface — the same builder API that all Java connectors use. The key names mirror the Java field names exactly to avoid a separate mapping table.
-- **`identifier-quote-string`** covers the SQLite pattern of `withIdentifierQuoteString("\"")`.
-- **`limit`** covers the very common include/exclude pattern for schemas and catalogs.
-- **Information-schema SQL overrides are out of scope for v1.** Connectors needing custom SQL queries still require the full Java approach. A future v2 could allow referencing SQL files from a classpath folder or filesystem path.
-- **`schemaRetrievalOptionsBuilder` lambdas needing a live Connection** (e.g. PostgreSQL enum helpers) are not expressible in YAML. This is a deliberate constraint — advanced connectors continue to use Java.
+- **`additional-options`** declares named driver-specific properties using the `PluginCommand.addOption()` API. These appear in the plugin's help page. Users pass them at runtime via `--urlx=key=value`.
+- **`schema-retrieval`** uses exact `SchemaInfoMetadataRetrievalStrategy` Java field names as keys. A static lookup map in `YamlDatabaseConnector` resolves them — no reflection, no `setAccessible()`.
+- **`identifier-quote-string`** covers the SQLite pattern.
+- **`limit`** covers include/exclude for schemas and catalogs.
+- **Information-schema SQL overrides are out of scope for v1** — connectors needing custom SQL continue to use Java.
 
 ---
 
-## 5. Java Implementation Design
+## 6. Java Model and Implementation Design
 
-### 5.1 `YamlDatabasePluginDefinition` (POJO)
+The implementation is structured in four distinct layers with clear separation of concerns. **YAML parsing code is completely isolated from the bridge.**
 
-A Jackson-annotated POJO matching the YAML schema. Fields map 1:1 to the YAML structure above. Uses `@JsonProperty` annotations for camelCase↔kebab-case mapping.
+### 6.1 Model layer — records holding YAML data
 
-### 5.2 `YamlDatabaseConnector extends DatabaseConnector`
+Pure Java records with no framework annotations. These hold the data parsed from YAML and have no knowledge of Jackson, SchemaCrawler options, or picocli.
 
-A final `DatabaseConnector` subclass that:
-
-1. Accepts a `YamlDatabasePluginDefinition` in its constructor.
-2. Calls the existing builder chain (`DatabaseConnectorOptionsBuilder`, `DatabaseConnectionSourceBuilder`, `PluginCommand`) from that definition.
-3. Converts `schema-retrieval` entries by looking up `SchemaInfoMetadataRetrievalStrategy` fields and `MetadataRetrievalStrategy` enum values by name via reflection (or a fixed `Map<String, SchemaInfoMetadataRetrievalStrategy>`).
-4. Converts `limit` entries into `RegularExpressionInclusionRule` / `RegularExpressionExclusionRule` as needed.
-
-This class is **not** in `META-INF/services` directly; it is instantiated by the loader (§5.3).
-
-### 5.3 `YamlDatabasePluginLoader` (static factory)
-
-A utility class responsible for loading YAML plugin definitions from:
-
-| Source | Discovery mechanism |
-|---|---|
-| Classpath bundle | All resources matching `META-INF/schemacrawler-plugins/*.yaml` enumerated via `ClassLoader.getResources(...)` |
-| Filesystem directory | Path read from system property `schemacrawler.plugins.dir` or environment variable `SC_PLUGINS_DIR`; defaults to `~/.schemacrawler/plugins/` |
-
-`YamlDatabasePluginLoader.loadAll()` returns `List<YamlDatabaseConnector>`.
-
-### 5.4 `YamlDatabaseConnectorBridge implements DatabaseConnector`
-
-A **single registered `DatabaseConnector`** in `META-INF/services` that acts as a routing bridge to all YAML-loaded connectors.
-
-This solves the core problem: Java's `ServiceLoader` requires a known class per registration, but we want dynamic plugins from YAML. The bridge:
-
-1. On construction, calls `YamlDatabasePluginLoader.loadAll()` to discover all YAML connectors.
-2. Stores the resulting `Map<String /* serverIdentifier */, YamlDatabaseConnector>`.
-3. Overrides the required `DatabaseConnector` lifecycle methods to **delegate to the correct sub-connector** after routing by server identifier or URL prefix.
-4. Reports itself to `DatabaseConnectorRegistry` as a multi-valued plugin.
-
-**Caveat**: This approach requires `DatabaseConnectorRegistry` in SchemaCrawler-Core to be able to "explode" a bridge connector into its constituent parts so that each YAML-defined server shows up individually in `--help servers`, `--server=<tab>` completion, and individual routing. This is a **small focused change to Core** (see §6).
-
----
-
-## 6. Required Change to SchemaCrawler-Core
-
-Add a new marker interface (or a default method) to `DatabaseConnector`:
-
-```java
-// New optional interface in schemacrawler-core
-public interface DatabaseConnectorBundle {
-    Collection<DatabaseConnector> getDatabaseConnectors();
-}
+```
+schemacrawler.plugins.dbplugins.model
+  ├─ DatabasePluginDefinition           // top-level record: server, name, urlTemplate, ...
+  ├─ UrlPropertyDefinition              // name, value (for default-url-properties entries)
+  ├─ AdditionalOptionDefinition         // name, type, urlxKey, help[]
+  ├─ HelpDefinition                     // server[], host[], port[], database[]
+  ├─ SchemaRetrievalDefinition          // Map<String,String> of strategy overrides
+  └─ LimitDefinition                    // excludeSchemas, includeSchemas, excludeCatalogs, includeCatalogs
 ```
 
-`DatabaseConnectorRegistry.getDatabaseConnectorRegistry()` is enhanced to check whether each ServiceLoader-discovered `DatabaseConnector` also implements `DatabaseConnectorBundle`. If it does, each constituent connector is unboxed and registered individually. Otherwise behaviour is unchanged.
+### 6.2 YAML parsing layer — isolated Jackson usage
 
-This is a **backward-compatible additive change** — existing connectors are unaffected. It would be part of a minor SchemaCrawler-Core PR.
+```
+schemacrawler.plugins.dbplugins.yaml
+  ├─ DatabasePluginYamlDeserializer      // Jackson ObjectMapper + YAMLFactory; reads
+  │                                       // YAML into DatabasePluginDefinition records
+  └─ (Jackson POJOs / @JsonProperty here, NOT in the model layer)
+```
+
+`DatabasePluginYamlDeserializer.parse(InputStream) → DatabasePluginDefinition` — this is the only class that touches Jackson.
+
+### 6.3 Connector builder — model → `DatabaseConnector`
+
+```
+schemacrawler.plugins.dbplugins
+  └─ YamlDatabaseConnector extends DatabaseConnector
+```
+
+Takes a `DatabasePluginDefinition` in its constructor. Has no knowledge of Jackson or YAML. Translates the model into the builder chain:
+
+| Model field | Builder API |
+|---|---|
+| `urlTemplate` | `DatabaseConnectionSourceBuilder.builder(urlTemplate)` |
+| `defaultPort` | `.withDefaultPort(defaultPort)` |
+| `defaultUrlProperties` | `.withDefaultUrlx(key, value)` for each entry |
+| `server` + `name` | `new DatabaseServerType(server, name)` |
+| `urlPrefix` | `withUrlStartsWith(urlPrefix)` |
+| `help.server/host/port/database` | `PluginCommand.addOption(name, type, helpLines...)` |
+| `additionalOptions` | `PluginCommand.addOption(name, type, helpLines...)` for each entry |
+| `schemaRetrieval` entries | `schemaRetrievalOptionsBuilder.with(strategy, value)` via a static lookup map |
+| `identifierQuoteString` | `schemaRetrievalOptionsBuilder.withIdentifierQuoteString(...)` |
+| `limit.excludeSchemas` | `limitOptionsBuilder.includeSchemas(new RegularExpressionExclusionRule(...))` |
+| `limit.includeSchemas` | `limitOptionsBuilder.includeSchemas(new RegularExpressionInclusionRule(...))` |
+| `limit.excludeCatalogs` | `limitOptionsBuilder.includeCatalogs(new RegularExpressionExclusionRule(...))` |
+| `limit.includeCatalogs` | `limitOptionsBuilder.includeCatalogs(new RegularExpressionInclusionRule(...))` |
+
+The `SchemaInfoMetadataRetrievalStrategy` resolution uses a **static `Map<String, SchemaInfoMetadataRetrievalStrategy>`** keyed by field name — no reflection, compatible with ArchUnit.
+
+### 6.4 Discovery layer
+
+```
+schemacrawler.plugins.dbplugins
+  └─ YamlDatabasePluginLoader
+```
+
+`YamlDatabasePluginLoader.loadAll() → List<YamlDatabaseConnector>`:
+
+1. **Classpath**: Enumerate all resources matching `schemacrawler-dbplugins/*.yaml` via `ClassLoader.getResources("schemacrawler-dbplugins")`. This is a directory at the classpath root — consistent with the module name, not inside `META-INF/`.
+2. **Filesystem**: Read all `*.yaml` files from the directory given by system property `schemacrawler.plugins.dir` or environment variable `SC_PLUGINS_DIR`, defaulting to `~/.schemacrawler/plugins/`.
+3. For each YAML stream, call `DatabasePluginYamlDeserializer.parse(stream)` → `DatabasePluginDefinition` → `new YamlDatabaseConnector(definition)`.
+
+### 6.5 Bridge — the single ServiceLoader entry
+
+```
+schemacrawler.plugins.dbplugins
+  └─ YamlDatabaseConnectorBridge
+         implements DatabaseConnector, DatabaseConnectorBundle
+```
+
+**The bridge is NOT itself a server**:
+- Its `getDatabaseServerType()` returns a sentinel/internal type that is NOT registered in the map — the `DatabaseConnectorRegistry` skips registering the bridge directly (because it implements `DatabaseConnectorBundle`).
+- Its `getDatabaseConnectors()` calls `YamlDatabasePluginLoader.loadAll()` and returns the results.
+- It delegates no other `DatabaseConnector` methods — those are never called on the bridge itself.
+
+The single `META-INF/services/schemacrawler.tools.databaseconnector.DatabaseConnector` entry:
+```
+schemacrawler.plugins.dbplugins.YamlDatabaseConnectorBridge
+```
+
+Each `YamlDatabaseConnector` returned from the bridge is registered individually in the `DatabaseConnectorRegistry` map, appears in `--server` tab-completion, and has its `PluginCommand` published to `--help servers`.
+
+### 6.6 Additional CLI options — the plugin API
+
+The `PluginCommand.addOption()` mechanism is the existing plugin API for surfacing named options in a server's help page. The YAML `additional-options` list feeds directly into this:
+
+- **Help output**: `--warehouse <warehouse>   Snowflake virtual warehouse name` appears in `-h snowflake`.
+- **Runtime**: Users pass `--urlx=warehouse=mywarehouse` on the command line, which is merged into the `DatabaseServerHostConnectionOptions.urlx` map and forwarded to `DatabaseConnectionSourceBuilder.withUrlx(urlx)`.
+- **No changes** to `schemacrawler-commandline` are required for v1. The existing `--urlx` mechanism handles runtime values; the plugin API handles documentation.
 
 ---
 
-## 7. Bundled Plugins
+## 7. Bundled YAML Files
 
-Five YAML files are included in `schemacrawler-dbplugins/src/main/resources/META-INF/schemacrawler-plugins/`:
+Five files live at `src/main/resources/schemacrawler-dbplugins/` in the module:
 
-### 7.1 Snowflake
+### 7.1 `snowflake.yaml`
 
 ```yaml
 plugin:
@@ -220,6 +312,15 @@ plugin:
   default-url-properties:
     db: "${database}"
     CLIENT_SESSION_KEEP_ALIVE: "true"
+  additional-options:
+    - name: warehouse
+      type: String
+      urlx-key: warehouse
+      help: ["Snowflake virtual warehouse name", "Optional"]
+    - name: role
+      type: String
+      urlx-key: role
+      help: ["Snowflake role name", "Optional"]
   help:
     server: ["--server=snowflake", "Loads SchemaCrawler plug-in for Snowflake"]
     host: ["Snowflake account identifier (e.g. myorg-myaccount.snowflakecomputing.com)"]
@@ -229,9 +330,9 @@ plugin:
     exclude-schemas: "INFORMATION_SCHEMA"
 ```
 
-*Note: Snowflake JDBC URLs encode the database as a URL property (`db=`) rather than a URL path segment. The template reflects this.*
+*Note: Snowflake JDBC encodes the database as a URL property (`db=`) not a path segment. The template uses `${port}` in the host portion; the database is injected via `default-url-properties`. This needs verification against current Snowflake JDBC driver documentation before finalising.*
 
-### 7.2 Microsoft Access (UCanAccess)
+### 7.2 `access.yaml`
 
 ```yaml
 plugin:
@@ -242,6 +343,11 @@ plugin:
   default-url-properties:
     memory: "false"
     showSchema: "true"
+  additional-options:
+    - name: memory
+      type: Boolean
+      urlx-key: memory
+      help: ["Load database into memory", "Optional, defaults to false"]
   help:
     server: ["--server=access", "Loads SchemaCrawler plug-in for Microsoft Access (UCanAccess)"]
     host: ["Should be omitted"]
@@ -251,7 +357,7 @@ plugin:
     tableColumnsRetrievalStrategy: metadata_over_schemas
 ```
 
-### 7.3 ClickHouse
+### 7.3 `clickhouse.yaml`
 
 ```yaml
 plugin:
@@ -262,6 +368,11 @@ plugin:
   default-port: 8123
   default-url-properties:
     socket_timeout: "300000"
+  additional-options:
+    - name: compress
+      type: Boolean
+      urlx-key: compress
+      help: ["Enable data compression", "Optional, defaults to true"]
   help:
     server: ["--server=clickhouse", "Loads SchemaCrawler plug-in for ClickHouse"]
     host: ["Host name", "Optional, defaults to localhost"]
@@ -271,7 +382,7 @@ plugin:
     exclude-schemas: "INFORMATION_SCHEMA|system"
 ```
 
-### 7.4 Trino
+### 7.4 `trino.yaml`
 
 ```yaml
 plugin:
@@ -280,6 +391,15 @@ plugin:
   url-template: "jdbc:trino://${host}:${port}/${database}"
   url-prefix: "jdbc:trino:"
   default-port: 8080
+  additional-options:
+    - name: user
+      type: String
+      urlx-key: user
+      help: ["Trino user name", "Optional"]
+    - name: SSL
+      type: Boolean
+      urlx-key: SSL
+      help: ["Enable SSL", "Optional, defaults to false"]
   help:
     server: ["--server=trino", "Loads SchemaCrawler plug-in for Trino"]
     host: ["Trino coordinator host name", "Optional, defaults to localhost"]
@@ -289,7 +409,7 @@ plugin:
     exclude-schemas: "INFORMATION_SCHEMA"
 ```
 
-### 7.5 Apache Cassandra (DataStax JDBC)
+### 7.5 `cassandra.yaml`
 
 ```yaml
 plugin:
@@ -300,6 +420,15 @@ plugin:
   default-port: 9042
   default-url-properties:
     consistency: "LOCAL_ONE"
+  additional-options:
+    - name: consistency
+      type: String
+      urlx-key: consistency
+      help: ["Consistency level", "Optional, defaults to LOCAL_ONE"]
+    - name: loadbalancing
+      type: String
+      urlx-key: loadbalancing
+      help: ["Load balancing policy", "Optional"]
   help:
     server: ["--server=cassandra", "Loads SchemaCrawler plug-in for Apache Cassandra"]
     host: ["Host name", "Optional, defaults to localhost"]
@@ -313,109 +442,114 @@ plugin:
 
 ---
 
-## 8. User-Extensible Filesystem Plugins
-
-Once the module is on the classpath, a user can add any new database by:
-
-1. Creating `~/.schemacrawler/plugins/myplugin.yaml` (or any `.yaml` file in the configured directory).
-2. Adding the JDBC driver JAR to the classpath.
-3. Running SchemaCrawler with `--server=myplugin ...`.
-
-No Java code, no recompilation, no JAR packaging required.
-
-The discovery path can be overridden via:
-- System property: `-Dschemacrawler.plugins.dir=/path/to/dir`
-- Environment variable: `SC_PLUGINS_DIR=/path/to/dir`
-
----
-
-## 9. Module Structure
+## 8. Full Module Structure
 
 ```
 schemacrawler-dbplugins/
 ├── pom.xml
 └── src/
     ├── main/
-    │   ├── java/schemacrawler/plugins/yaml/
-    │   │   ├── YamlDatabasePluginDefinition.java     # Jackson POJO
-    │   │   ├── YamlDatabasePluginDefinition.java     # nested POJOs: HelpDefinition, LimitDefinition, etc.
-    │   │   ├── YamlDatabaseConnector.java            # extends DatabaseConnector
-    │   │   ├── YamlDatabasePluginLoader.java         # classpath + filesystem scanner
-    │   │   └── YamlDatabaseConnectorBridge.java      # implements DatabaseConnector + DatabaseConnectorBundle
+    │   ├── java/
+    │   │   └── schemacrawler/plugins/dbplugins/
+    │   │       ├── model/                          ← pure model records, no Jackson
+    │   │       │   ├── DatabasePluginDefinition.java
+    │   │       │   ├── UrlPropertyDefinition.java
+    │   │       │   ├── AdditionalOptionDefinition.java
+    │   │       │   ├── HelpDefinition.java
+    │   │       │   ├── SchemaRetrievalDefinition.java
+    │   │       │   └── LimitDefinition.java
+    │   │       ├── yaml/                           ← Jackson parsing, isolated
+    │   │       │   └── DatabasePluginYamlDeserializer.java
+    │   │       ├── YamlDatabaseConnector.java      ← model → DatabaseConnector
+    │   │       ├── YamlDatabasePluginLoader.java   ← classpath + filesystem scanner
+    │   │       └── YamlDatabaseConnectorBridge.java ← ServiceLoader entry, not a server
     │   └── resources/
     │       ├── META-INF/services/
     │       │   └── schemacrawler.tools.databaseconnector.DatabaseConnector
-    │       │       (contains: schemacrawler.plugins.yaml.YamlDatabaseConnectorBridge)
-    │       └── META-INF/schemacrawler-plugins/
+    │       │       (one line: schemacrawler.plugins.dbplugins.YamlDatabaseConnectorBridge)
+    │       └── schemacrawler-dbplugins/            ← classpath root, consistent with module name
     │           ├── snowflake.yaml
     │           ├── access.yaml
     │           ├── clickhouse.yaml
     │           ├── trino.yaml
     │           └── cassandra.yaml
     └── test/
-        └── java/schemacrawler/plugins/yaml/
-            ├── YamlDatabasePluginLoaderTest.java
+        └── java/schemacrawler/plugins/dbplugins/
+            ├── model/
+            │   └── DatabasePluginDefinitionTest.java
+            ├── yaml/
+            │   └── DatabasePluginYamlDeserializerTest.java
             ├── YamlDatabaseConnectorTest.java
-            └── BundledPluginsTest.java
+            ├── YamlDatabasePluginLoaderTest.java
+            └── BundledPluginsIntegrationTest.java
 ```
 
 ---
 
-## 10. ArchUnit Considerations
-
-The `schemacrawler-verify` module enforces several architectural rules. The new module must comply:
+## 9. ArchUnit Compliance
 
 | Rule | How `schemacrawler-dbplugins` satisfies it |
 |---|---|
-| No `System.out` / `System.err` in production code | Use `java.util.logging` |
-| No generic exception throws | Use specific checked or `SchemaCrawlerException` |
-| `@ModelImplementation` / `@Retriever` classes must be package-private | N/A (no model/retriever classes) |
-| `lookup*()` methods return `Optional` | N/A (no lookup methods) |
-| No `setAccessible()` | Reflection for `SchemaInfoMetadataRetrievalStrategy` lookup will use field access, not `setAccessible` — or use a static lookup map instead |
-
-The reflection concern in §5.2 (looking up `SchemaInfoMetadataRetrievalStrategy` values) should use a **static `EnumMap`** rather than reflection to stay clean and avoid the `setAccessible()` restriction.
+| No `System.out` / `System.err` in production code | Use `java.util.logging` throughout |
+| No generic exception throws | Throw specific exceptions; use `SchemaCrawlerException` where applicable |
+| `@ModelImplementation` / `@Retriever` classes package-private | N/A — no model/retriever classes in the SchemaCrawler-Core sense |
+| `lookup*()` methods return `Optional` | N/A — no lookup methods in this module |
+| No `setAccessible()` | The `SchemaInfoMetadataRetrievalStrategy` resolution uses a static `EnumMap`, not reflection |
+| No package cycles | `model/` ← used by `yaml/`, `YamlDatabaseConnector`, loader, bridge; no reverse dependency |
 
 ---
 
-## 11. Implementation Sequence
+## 10. Implementation Sequence
 
-1. **Core change (small PR to SchemaCrawler-Core)**: Add `DatabaseConnectorBundle` interface; update `DatabaseConnectorRegistry` to unwrap bundles. This unblocks step 2.
+1. **Core PR (SchemaCrawler-Core)**: Add `DatabaseConnectorBundle` interface (no Jackson, pure Java). Update `DatabaseConnectorRegistry.loadDatabaseConnectorRegistry()` to unwrap bundles. Add a unit test.
 
-2. **New module scaffold**: Create `schemacrawler-dbplugins/pom.xml`, register in root `pom.xml`.
+2. **Module scaffold**: Create `schemacrawler-dbplugins/pom.xml`; register in root `pom.xml`.
 
-3. **YAML POJO layer**: `YamlDatabasePluginDefinition` + nested POJOs, Jackson annotations, unit tests with sample YAML.
+3. **Model records** (`model/` package): All six records — `DatabasePluginDefinition`, `UrlPropertyDefinition`, `AdditionalOptionDefinition`, `HelpDefinition`, `SchemaRetrievalDefinition`, `LimitDefinition`. Unit tests with in-memory construction.
 
-4. **`YamlDatabaseConnector`**: The translation layer from POJO to `DatabaseConnectorOptions`. Covers URL template, default port, urlx properties, help command options, schema-retrieval overrides (static enum map), identifier quote string, and limit options.
+4. **YAML parsing layer** (`yaml/` package): `DatabasePluginYamlDeserializer` using `YAMLMapper` (the same `tools.jackson.dataformat.yaml` already used in `schemacrawler-scripting`). Unit tests parsing each of the five bundled YAML files and asserting all fields.
 
-5. **`YamlDatabasePluginLoader`**: Classpath resource scanning (`META-INF/schemacrawler-plugins/*.yaml`) and filesystem directory scanning. Unit tests covering both paths.
+5. **`YamlDatabaseConnector`**: Translation from `DatabasePluginDefinition` → `DatabaseConnectorOptions`. Includes the static `SchemaInfoMetadataRetrievalStrategy` lookup map. Unit tests covering URL construction, plugin command option generation (including `additional-options`), limit rule generation.
 
-6. **`YamlDatabaseConnectorBridge`**: ServiceLoader entry, delegates to loader. Integration test confirming all 5 bundled plugins appear in `DatabaseConnectorRegistry`.
+6. **`YamlDatabasePluginLoader`**: Classpath discovery (`ClassLoader.getResources("schemacrawler-dbplugins")`), filesystem discovery. Unit tests with a temp directory of YAML files.
 
-7. **Bundled YAML files**: The five YAML definitions above, with test assertions that the connectors they produce can construct valid `DatabaseConnectorOptions` and generate correct `PluginCommand` help output.
+7. **`YamlDatabaseConnectorBridge`**: ServiceLoader entry; implements `DatabaseConnectorBundle`; calls loader; not registered as a server. Integration test verifying all five bundled plugins appear individually in a `DatabaseConnectorRegistry` loaded with the bridge on the classpath.
 
-8. **Documentation**: Update `AGENTS.md` module table; add a user guide section explaining how to author a custom YAML plugin.
+8. **Bundled YAML files**: The five YAML definitions in `src/main/resources/schemacrawler-dbplugins/`. Test that the connectors produce correct `PluginCommand` help output.
+
+9. **Documentation update**: Add module to `AGENTS.md` table; add a user guide section on authoring YAML plugins.
+
+---
+
+## 11. User-Extensible Filesystem Plugins
+
+Once the module is on the classpath, adding a new server requires only:
+
+1. Create `~/.schemacrawler/plugins/mydb.yaml` (or set `SC_PLUGINS_DIR` to point elsewhere).
+2. Place the JDBC driver JAR on the classpath.
+3. Run `schemacrawler --server=mydb ...`.
+
+No Java, no recompilation, no JAR packaging.
 
 ---
 
 ## 12. Out of Scope for v1
 
-- Information-schema SQL overrides from YAML (complex, deferred to v2).
-- Connection initializers (Java-only feature — e.g. Oracle's `SET` statements).
-- Enum data type helpers (Java-only feature — e.g. PostgreSQL `pg_enum`).
-- Non-standard URL patterns where database is not a path segment (Snowflake's `db=` property is handled via `default-url-properties` workaround, see §7.1).
-- Automatic JDBC driver download or dependency resolution.
-- A YAML schema registry or JSON Schema document (useful but not blocking).
+- Information-schema SQL query overrides from YAML (complex, deferred to v2)
+- Connection initializers (e.g. Oracle `ALTER SESSION`) — Java-only feature
+- Enum data type helpers (e.g. PostgreSQL `pg_enum`) — Java-only feature
+- Mixing server plugin options into the `connect` command as picocli-parsed options (users use `--urlx=key=value` at runtime; the `additional-options` YAML field handles documentation)
+- Automatic JDBC driver download/resolution
+- JSON Schema document for YAML validation
 
 ---
 
 ## 13. Open Questions for Review
 
-1. **`DatabaseConnectorBundle` interface in Core vs. an extension point in this project**: Is the Core team willing to take the small `DatabaseConnectorBundle` change, or should the new module use a different mechanism (e.g. a startup hook, a `@Configuration` pattern from the existing Typesafe Config infrastructure) to register dynamic connectors?
+1. **Snowflake URL shape**: Snowflake JDBC can accept the database as a URL path segment (`/mydatabase`) or as a `db=` URL property. The plan currently uses `db=` via `default-url-properties`. This needs verification against the current Snowflake JDBC driver documentation before implementation.
 
-2. **Module name**: `schemacrawler-dbplugins` (plural, bundled plugins concept) vs. `schemacrawler-yaml-plugin` (emphasises the YAML mechanism) vs. `schemacrawler-plugin-registry` (emphasises the extensibility angle). Which name fits the project's naming conventions best?
+2. **`additional-options` at runtime**: For v1, users pass these via `--urlx=key=value`. In a future v2, a small change to `SchemaCrawlerCommandLine` / `ConnectCommand` could mix in server plugin commands (analogous to catalog loaders), allowing named parsing of e.g. `--warehouse=mywarehouse`. This is noted as a future enhancement.
 
-3. **YAML file discovery path on the classpath**: `META-INF/schemacrawler-plugins/*.yaml` is proposed. Should this mirror the pattern used for Typesafe Config (`schemacrawler.config.properties`) more closely?
+3. **Classpath collision**: If two YAML files on the classpath declare the same `server:` identifier, the second one wins (last-write-wins in the bridge's loader). Should this be an error? Or logged as a warning and the first definition kept?
 
-4. **Snowflake URL shape**: Snowflake JDBC can take the database either as a URL path segment or as a `db` URL property depending on driver version. The plan currently uses `db` as a default URL property with the database placeholder. This needs verification against the current Snowflake JDBC driver documentation before implementation.
-
-5. **`DatabaseConnectorBridge` server type**: The bridge itself would be registered in `AvailableServers` unless suppressed. Should the bridge have a sentinel server type (e.g. `yaml-bundle`) that the registry explicitly hides from help output and completion candidates?
+4. **Filesystem plugin security**: YAML files from `~/.schemacrawler/plugins/` are loaded at startup and can declare arbitrary JDBC URL templates. Any security concerns with loading user-supplied YAML that could be exploited?
