@@ -25,6 +25,7 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TypedObject;
+import schemacrawler.schemacrawler.Version;
 import schemacrawler.tools.state.AbstractExecutionState;
 import schemacrawler.utility.MetaDataUtility;
 
@@ -53,7 +54,8 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     if (hasCatalog()) {
       final CrawlInfo crawlInfo = getCatalog().getCrawlInfo();
       frontMatter.put("timestamp", crawlInfo.getCrawlTimestamp());
-      frontMatter.put("run_id", crawlInfo.getRunId());
+      frontMatter.put("runId", crawlInfo.getRunId());
+      frontMatter.put("generatedBy", Version.version().toString());
     }
 
     // GitHub tags
@@ -78,7 +80,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     frontMatter.put("resource", "catalog://routines/" + encodeFullName(routine));
 
     final Map<String, Object> counts = new LinkedHashMap<>();
-    counts.put("parameter_count", routine.getParameters().size());
+    counts.put("parameterCount", routine.getParameters().size());
 
     frontMatter.put("counts", counts);
 
@@ -98,27 +100,27 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
     frontMatter.put("resource", "catalog://tables/" + encodeFullName(table));
     if (!table.hasPrimaryKey()) {
-      tags.add("no_primary_key");
+      tags.add("noPrimaryKey");
     }
     if (table.isSelfReferencing()) {
-      tags.add("self_referencing");
+      tags.add("selfReferencing");
     }
     if (table.hasTriggers()) {
-      tags.add("has_triggers");
+      tags.add("hasTriggers");
     }
 
     final Map<String, Object> counts = new LinkedHashMap<>();
-    counts.put("column_count", table.getColumns().size());
-    counts.put("foreign_key_count", table.getReferencedTables().size());
-    counts.put("index_count", table.getIndexes().size());
-    counts.put("trigger_count", table.getTriggers().size());
+    counts.put("columnCount", table.getColumns().size());
+    counts.put("foreignKeyCount", table.getReferencedTables().size());
+    counts.put("indexCount", table.getIndexes().size());
+    counts.put("triggerCount", table.getTriggers().size());
 
     if (TableRowCountsUtility.hasRowCount(table)) {
       final long rowCount = TableRowCountsUtility.getRowCount(table);
       if (rowCount == 0) {
-        tags.add("empty_table");
+        tags.add("emptyTable");
       }
-      counts.put("row_count", rowCount);
+      counts.put("rowCount", rowCount);
     }
     frontMatter.put("counts", counts);
 
@@ -129,12 +131,12 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
         final Entity entity = lookupEntity.get();
         final EntityType entityType = entity.getType();
         if (entityType != EntityType.unknown) {
-          frontMatter.put("entity_type", entityType.description());
+          frontMatter.put("entityType", entityType.description());
           tags.add(entityType.name());
         }
       }
       if (model.lookupByBridgeTable(table).isPresent()) {
-        tags.add("bridge_table");
+        tags.add("bridgeTable");
       }
     }
 
@@ -171,7 +173,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
       frontMatter.put("description", "Description of " + simpleTypeName);
     }
     if (object instanceof final TypedObject typedObject) {
-      frontMatter.put("complete_type", typedObject.getType().toString());
+      frontMatter.put("completeType", typedObject.getType().toString());
     }
     frontMatter.put("schema", object.getSchema().getFullName());
     frontMatter.put("name", name);
@@ -188,7 +190,8 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     if (hasCatalog()) {
       final CrawlInfo crawlInfo = getCatalog().getCrawlInfo();
       frontMatter.put("timestamp", crawlInfo.getCrawlTimestamp());
-      frontMatter.put("run_id", crawlInfo.getRunId());
+      frontMatter.put("runId", crawlInfo.getRunId());
+      frontMatter.put("generatedBy", Version.version().toString());
     }
 
     return frontMatter;
