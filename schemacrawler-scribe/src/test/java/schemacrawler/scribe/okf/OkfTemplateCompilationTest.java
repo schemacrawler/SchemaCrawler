@@ -64,6 +64,8 @@ public class OkfTemplateCompilationTest {
     final LightTable table = new LightTable(schema, "books");
     final Catalog catalog = LightCatalogUtility.lightCatalog(table);
     final ScribeSupport support = newScribeSupport(catalog);
+    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    support.transferState(frontMatter);
 
     final Routine routine = new LightRoutine(schema, "find_book");
     final CrossReferenceEntry crossReferenceEntry =
@@ -73,6 +75,7 @@ public class OkfTemplateCompilationTest {
     final String resourcePath = "reports/cross-references.md";
     final Map<String, Object> model = baseModel(support, resourcePath);
     model.put("crossReferenceEntries", List.of(crossReferenceEntry));
+    model.put("frontMatter", frontMatter);
 
     new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("cross-references.ftl", model, resourcePath);
@@ -93,10 +96,13 @@ public class OkfTemplateCompilationTest {
     final LightTable table = new LightTable(schema, "books");
     final Catalog catalog = LightCatalogUtility.lightCatalog(table);
     final ScribeSupport support = newScribeSupport(catalog);
+    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    support.transferState(frontMatter);
 
     final String resourcePath = "reports/lint.md";
     final Map<String, Object> model = baseModel(support, resourcePath);
     model.put("lintsBySeverity", Map.of(LintSeverity.medium, List.of()));
+    model.put("frontMatter", frontMatter);
 
     new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("lint.ftl", model, resourcePath);
@@ -134,6 +140,8 @@ public class OkfTemplateCompilationTest {
     final LightTable table = new LightTable(schema, "books");
     final Catalog catalog = LightCatalogUtility.lightCatalog(table);
     final ScribeSupport support = newScribeSupport(catalog);
+    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    support.transferState(frontMatter);
 
     final Routine routine = new LightRoutine(schema, "find_book");
     final LightRoutineParameter parameter = new LightRoutineParameter(routine, "book_id");
@@ -142,6 +150,7 @@ public class OkfTemplateCompilationTest {
     final String resourcePath = "routines/find_book.md";
     final Map<String, Object> model = baseModel(support, resourcePath);
     model.put("routine", routine);
+    model.put("frontMatter", frontMatter);
 
     new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("routine-concept.ftl", model, resourcePath);
@@ -167,10 +176,13 @@ public class OkfTemplateCompilationTest {
 
     final Catalog catalog = LightCatalogUtility.lightCatalog(table);
     final ScribeSupport support = newScribeSupport(catalog);
+    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    support.transferState(frontMatter);
 
     final String resourcePath = "tables/books.md";
     final Map<String, Object> model = baseModel(support, resourcePath);
     model.put("table", table);
+    model.put("frontMatter", frontMatter);
 
     new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("table-concept.ftl", model, resourcePath);

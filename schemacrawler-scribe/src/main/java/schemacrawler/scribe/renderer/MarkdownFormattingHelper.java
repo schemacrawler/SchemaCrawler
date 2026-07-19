@@ -13,11 +13,11 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import schemacrawler.schema.DatabaseObject;
 
-final class ScribeFormatting {
+public final class MarkdownFormattingHelper {
 
-  private ScribeFormatting() {}
+  private MarkdownFormattingHelper() {}
 
-  static String encodeFullName(final DatabaseObject databaseObject) {
+  public static String encodeFullName(final DatabaseObject databaseObject) {
     if (databaseObject == null) {
       return "";
     }
@@ -45,7 +45,7 @@ final class ScribeFormatting {
     return sb.toString().replaceAll("\\R", "");
   }
 
-  static String sentenceCase(final String text) {
+  public static String sentenceCase(final String text) {
     if (isBlank(text)) {
       return "";
     }
