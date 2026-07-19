@@ -22,8 +22,10 @@ import java.lang.reflect.Proxy;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -139,6 +141,6 @@ public class OkfConceptWriterTableTest {
     final String resourcePath = "tables/" + tableWithNullSchemaName.key().slug() + ".md";
     final String content = Files.readString(tempDir.resolve(resourcePath));
     assertThat(content, containsString("schema:"));
-    assertThat(content, containsString("complete_type:"));
+    assertThat(content, containsString("completeType:"));
   }
 }
