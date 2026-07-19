@@ -56,6 +56,13 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
       frontMatter.put("run_id", crawlInfo.getRunId());
     }
 
+    // GitHub tags
+    // https://docs.github.com/en/contributing/writing-for-github-docs/using-yaml-frontmatter
+    frontMatter.put("shortTitle", title);
+    frontMatter.put("intro", description);
+    frontMatter.put("showMiniToc", false);
+    frontMatter.put("allowTitleToDifferFromFilename", true);
+
     return mapper.writeValueAsString(frontMatter);
   }
 
@@ -69,7 +76,11 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     final List<String> tags = new ArrayList<>((List<String>) frontMatter.get("tags"));
 
     frontMatter.put("resource", "catalog://routines/" + encodeFullName(routine));
-    frontMatter.put("parameter_count", routine.getParameters().size());
+
+    final Map<String, Object> counts = new LinkedHashMap<>();
+    counts.put("parameter_count", routine.getParameters().size());
+
+    frontMatter.put("counts", counts);
 
     frontMatter.put("tags", tags);
 
