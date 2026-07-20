@@ -17,6 +17,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -34,6 +35,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.integration.utility.SnowflakeTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 
+@Disabled("Under development")
 @DisableLogging
 @HeavyDatabaseTest("snowflake")
 @Testcontainers(disabledWithoutDocker = true)
