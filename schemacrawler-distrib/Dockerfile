@@ -50,11 +50,13 @@ RUN \
 USER schcrwlr
 WORKDIR /home/schcrwlr
 
-# Create .bashrc with aliases for SchemaCrawler
+# Create .bashrc with aliases, shell prompt, and startup message
 RUN \
     echo 'alias schemacrawler="/opt/schemacrawler/bin/schemacrawler.sh"' \
     >> /home/schcrwlr/.profile \
- && echo 'export schemacrawler' \
+ && echo 'alias schemaspy="/opt/schemacrawler/bin/schemaspy.sh"' \
+    >> /home/schcrwlr/.profile \
+ && echo 'export schemacrawler schemaspy' \
     >> /home/schcrwlr/.profile \
  && cp /home/schcrwlr/.profile /home/schcrwlr/.bashrc \
  && echo 'PS1="\[\e[0;33m\]SchemaCrawler\[\e[m\]:\w\$ "'  >> /home/schcrwlr/.bashrc \
