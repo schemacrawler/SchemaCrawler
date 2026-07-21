@@ -16,18 +16,31 @@ import java.util.Locale;
 import java.util.logging.Level;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.IVersionProvider;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
+import schemacrawler.schemacrawler.Version;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 
 @Command(
     name = "schemaspy",
-    mixinStandardHelpOptions = true,
+    mixinStandardHelpOptions = false,
+    versionProvider = SchemaSpyMain.SchemaSpyVersionProvider.class,
     sortOptions = false,
     description = "SchemaSpy compatibility wrapper for SchemaCrawler Scribe (OKF output).")
 public final class SchemaSpyMain implements Runnable {
+
+  public static final class SchemaSpyVersionProvider implements IVersionProvider {
+
+    @Override
+    public String[] getVersion() {
+      return new String[] {
+        "SchemaSpy 7.x adapter for generating OKF bundles.", "", String.valueOf(Version.about())
+      };
+    }
+  }
 
   public static int execute(final String... args) {
     requireNonNull(args, "No command-line arguments provided");
@@ -49,6 +62,19 @@ public final class SchemaSpyMain implements Runnable {
       names = "-dbhelp",
       description = "Print supported SchemaSpy database types for -t and exit")
   private boolean dbhelp;
+
+  @Option(
+      names = {"-h", "--help"},
+      usageHelp = true,
+      description = "Show this help message and exit.")
+  private boolean helpRequested;
+
+  @Option(
+      names = {"-V", "--version"},
+      versionHelp = true,
+      description =
+          "Display SchemaSpy adapter info and SchemaCrawler version and system information")
+  private boolean versionRequested;
 
   @Option(names = "-configFile", paramLabel = "filePath", description = "Compatibility config file")
   private String configFile;
