@@ -38,6 +38,8 @@
       <fileset dir="${distribution.assembly}">
         <include name="schemacrawler.cmd" />
         <include name="schemacrawler.sh" />
+        <include name="schemaspy.cmd" />
+        <include name="schemaspy.sh" />
         <include name="testdb.cmd" />
         <include name="testdb.sh" />
       </fileset>
@@ -47,6 +49,12 @@
         <include name="schemacrawler.cmd"/>
       </fileset>
       <globmapper from="schemacrawler.cmd" to="schemacrawler.bat"/>
+    </copy>
+    <copy todir="${schemacrawler.expanded-distribution}/bin">
+      <fileset dir="${schemacrawler.expanded-distribution}/bin">
+        <include name="schemaspy.cmd"/>
+      </fileset>
+      <globmapper from="schemaspy.cmd" to="schemaspy.bat"/>
     </copy>
 
     <copy
