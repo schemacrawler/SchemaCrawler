@@ -13,8 +13,6 @@ import static java.util.Objects.requireNonNull;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
@@ -79,13 +77,6 @@ public enum SchemaSpyDatabaseType {
     return Arrays.stream(values())
         .map(SchemaSpyDatabaseType::getSchemaspyType)
         .collect(Collectors.joining(", "));
-  }
-
-  public static Set<String> supportedServerIdentifiers() {
-    return Arrays.stream(values())
-        .map(SchemaSpyDatabaseType::getSchemaCrawlerServer)
-        .flatMap(Optional::stream)
-        .collect(Collectors.toCollection(TreeSet::new));
   }
 
   private static String normalize(final String type) {
