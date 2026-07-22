@@ -22,6 +22,7 @@ import static us.fatehi.utility.IOUtility.isFileReadable;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -38,6 +39,7 @@ import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
+@Tag("graphviz")
 public class SchemaCrawlerExecutableChainTest {
 
   @Test

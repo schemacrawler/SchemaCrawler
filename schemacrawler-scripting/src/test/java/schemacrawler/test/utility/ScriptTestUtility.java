@@ -16,6 +16,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.Tag;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.command.template.options.TemplateLanguageType;
@@ -27,6 +28,7 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.test.utility.DatabaseConnectionInfo;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
+@Tag("graphviz")
 public class ScriptTestUtility {
 
   public static Path commandLineScriptExecution(
