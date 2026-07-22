@@ -27,6 +27,7 @@ import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.plugin.EnumDataTypeHelper;
@@ -187,6 +188,7 @@ public class DiagramOutputTest {
 
   @Test
   @DisplayName("Diagram with maximum output, including columns enum values")
+  @Tag("graphviz")
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executableForDiagram_enum(
       final TestContext testContext, final DatabaseConnectionSource connectionSource)
@@ -215,6 +217,7 @@ public class DiagramOutputTest {
 
   @Test
   @DisplayName("Diagram with maximum output, including indexes with remarks")
+  @Tag("graphviz")
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executableForDiagram_indexRemarks(
       final TestContext testContext, final DatabaseConnectionSource connectionSource)

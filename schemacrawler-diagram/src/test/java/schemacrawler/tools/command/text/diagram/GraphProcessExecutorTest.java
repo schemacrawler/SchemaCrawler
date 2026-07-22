@@ -23,6 +23,7 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.test.utility.extensions.CaptureSystemStreams;
@@ -82,6 +83,7 @@ public class GraphProcessExecutorTest {
   }
 
   @Test
+  @Tag("graphviz")
   public void graphvizProcessExecutorError(final CapturedSystemStreams streams) throws IOException {
 
     final Path dotFile = Files.createTempFile("", "");

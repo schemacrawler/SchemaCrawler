@@ -19,6 +19,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.nio.file.Path;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.integration.test.DiagramOutputTest;
@@ -152,12 +153,14 @@ public class DiagramRendererTest {
   }
 
   @Test
+  @Tag("graphviz")
   public void checkGraphvizAvailabilityEnabled() throws Exception {
 
     assertThat(GraphvizUtility.isGraphvizAvailable(), is(true));
   }
 
   @Test
+  @Tag("graphviz")
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void diagramRenderer_graphviz(
       final TestContext testContext, final DatabaseConnectionSource connectionSource)
@@ -179,6 +182,7 @@ public class DiagramRendererTest {
   }
 
   @Test
+  @Tag("graphviz")
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void embeddedDiagramRenderer_graphviz(
       final TestContext testContext, final DatabaseConnectionSource connectionSource)
