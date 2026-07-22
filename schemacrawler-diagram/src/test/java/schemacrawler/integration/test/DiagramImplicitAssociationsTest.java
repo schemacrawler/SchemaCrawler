@@ -9,6 +9,7 @@
 package schemacrawler.integration.test;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import schemacrawler.test.AbstractImplicitAssociationsTest;
@@ -21,6 +22,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
+@Tag("graphviz")
 public class DiagramImplicitAssociationsTest extends AbstractImplicitAssociationsTest {
 
   @Override

@@ -27,6 +27,7 @@ import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.plugin.EnumDataTypeHelper;
@@ -59,6 +60,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
+@Tag("graphviz")
 public class DiagramOutputTest {
 
   private static final String DIAGRAM_OUTPUT = "diagram_output/";

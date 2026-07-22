@@ -21,6 +21,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import java.nio.file.Path;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.FilterOptions;
@@ -47,6 +48,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @ResolveTestContext
 @WithTestDatabase(script = "/table-chain.sql")
+@Tag("graphviz")
 public class DiagramRendererOptionsAdditionalSchemasTest {
 
   private static final String ADDITIONAL_DIAGRAM_OPTIONS_OUTPUT =

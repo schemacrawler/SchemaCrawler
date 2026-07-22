@@ -70,12 +70,6 @@ jobs:
         distribution: temurin
         java-version: ${{ github.event.inputs.java_version || '17' }}
         cache: maven
-    - id: install-graphviz
-      name: Install Graphviz
-      shell: bash
-      # Skip apt update — runner image already has a current apt cache,
-      # and apt update writes large index files to root that trigger ENOSPC
-      run: sudo apt-get install -y --no-install-recommends graphviz
     - id: restart-docker
       name: Configure Docker .data-root on workspace volume
       shell: bash
@@ -172,6 +166,7 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -D${{ matrix.database }} \
+          -Dno-diagram-tests \
           -Dreactor.printOrder \
           --projects schemacrawler-dbtest,schemacrawler-$dbproject \
           --also-make \

@@ -23,6 +23,7 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.test.utility.extensions.CaptureSystemStreams;
@@ -30,6 +31,7 @@ import us.fatehi.test.utility.extensions.CapturedSystemStreams;
 import us.fatehi.utility.IOUtility;
 
 @CaptureSystemStreams
+@Tag("graphviz")
 public class GraphProcessExecutorTest {
 
   private final class TestGraphProcessExecutor extends AbstractGraphProcessExecutor {

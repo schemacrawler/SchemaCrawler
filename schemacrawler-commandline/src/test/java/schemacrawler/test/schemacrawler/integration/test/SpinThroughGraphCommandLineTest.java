@@ -10,9 +10,11 @@ package schemacrawler.test.schemacrawler.integration.test;
 
 import java.util.EnumSet;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Tag;
 import schemacrawler.test.AbstractSpinThroughCommandLineTest;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
+@Tag("graphviz")
 public class SpinThroughGraphCommandLineTest extends AbstractSpinThroughCommandLineTest {
 
   @Override

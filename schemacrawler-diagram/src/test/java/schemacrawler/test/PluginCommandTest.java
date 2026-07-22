@@ -8,6 +8,7 @@
 
 package schemacrawler.test;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.PluginCommandTestUtility;
 import schemacrawler.tools.command.text.diagram.DiagramCommandProvider;
@@ -17,6 +18,7 @@ import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
 
 @ResolveTestContext
+@Tag("graphviz")
 public class PluginCommandTest {
 
   @Test

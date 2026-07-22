@@ -14,6 +14,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.Table;
@@ -33,6 +34,7 @@ import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
 
 @ResolveTestContext
+@Tag("graphviz")
 public class DotFormatterCoverageTest {
 
   private static final String FORMATTER_COVERAGE_OUTPUT = "formatter_coverage/";
