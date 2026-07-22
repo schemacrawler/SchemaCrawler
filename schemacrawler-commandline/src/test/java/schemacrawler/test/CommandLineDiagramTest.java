@@ -17,6 +17,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
@@ -26,6 +27,7 @@ import us.fatehi.test.utility.extensions.TestContext;
 
 @WithTestDatabase
 @ResolveTestContext
+@Tag("graphviz")
 public class CommandLineDiagramTest {
 
   private static final String COMMAND_LINE_DIAGRAM_OUTPUT = "command_line_diagram_output/";
