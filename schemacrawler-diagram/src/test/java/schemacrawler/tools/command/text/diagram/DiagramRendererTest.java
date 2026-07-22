@@ -50,6 +50,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
+@Tag("graphviz")
 public class DiagramRendererTest {
 
   private static final String DIAGRAM_OUTPUT = "diagram_renderer_output/";
@@ -153,14 +154,12 @@ public class DiagramRendererTest {
   }
 
   @Test
-  @Tag("graphviz")
   public void checkGraphvizAvailabilityEnabled() throws Exception {
 
     assertThat(GraphvizUtility.isGraphvizAvailable(), is(true));
   }
 
   @Test
-  @Tag("graphviz")
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void diagramRenderer_graphviz(
       final TestContext testContext, final DatabaseConnectionSource connectionSource)
@@ -182,7 +181,6 @@ public class DiagramRendererTest {
   }
 
   @Test
-  @Tag("graphviz")
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void embeddedDiagramRenderer_graphviz(
       final TestContext testContext, final DatabaseConnectionSource connectionSource)

@@ -31,6 +31,7 @@ import us.fatehi.test.utility.extensions.CapturedSystemStreams;
 import us.fatehi.utility.IOUtility;
 
 @CaptureSystemStreams
+@Tag("graphviz")
 public class GraphProcessExecutorTest {
 
   private final class TestGraphProcessExecutor extends AbstractGraphProcessExecutor {
@@ -83,7 +84,6 @@ public class GraphProcessExecutorTest {
   }
 
   @Test
-  @Tag("graphviz")
   public void graphvizProcessExecutorError(final CapturedSystemStreams streams) throws IOException {
 
     final Path dotFile = Files.createTempFile("", "");

@@ -60,6 +60,7 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @WithTestDatabase
 @ResolveTestContext
+@Tag("graphviz")
 public class DiagramOutputTest {
 
   private static final String DIAGRAM_OUTPUT = "diagram_output/";
@@ -188,7 +189,6 @@ public class DiagramOutputTest {
 
   @Test
   @DisplayName("Diagram with maximum output, including columns enum values")
-  @Tag("graphviz")
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executableForDiagram_enum(
       final TestContext testContext, final DatabaseConnectionSource connectionSource)
@@ -217,7 +217,6 @@ public class DiagramOutputTest {
 
   @Test
   @DisplayName("Diagram with maximum output, including indexes with remarks")
-  @Tag("graphviz")
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void executableForDiagram_indexRemarks(
       final TestContext testContext, final DatabaseConnectionSource connectionSource)
