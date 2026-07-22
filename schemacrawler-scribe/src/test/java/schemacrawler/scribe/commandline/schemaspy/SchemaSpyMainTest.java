@@ -186,6 +186,35 @@ public class SchemaSpyMainTest {
   }
 
   @Test
+  public void supportsSchemaspyPrefixedProperties(@TempDir final Path tempDir) throws Exception {
+    final Path propertiesFile = tempDir.resolve("schemaspy.properties");
+    Files.writeString(
+        propertiesFile,
+        """
+        schemaspy.t=pgsql
+        schemaspy.db=books
+        schemaspy.u=scott
+        schemaspy.host=db.example
+        """);
+    final String previousUserDir = System.getProperty("user.dir");
+    try {
+      System.setProperty("user.dir", tempDir.toString());
+      final String[] effectiveArgs = SchemaSpyMain.resolveEffectiveArgs("-o", "out.zip");
+
+      assertThat(Arrays.asList(effectiveArgs).contains("-t"), is(true));
+      assertThat(Arrays.asList(effectiveArgs).contains("pgsql"), is(true));
+      assertThat(Arrays.asList(effectiveArgs).contains("-db"), is(true));
+      assertThat(Arrays.asList(effectiveArgs).contains("books"), is(true));
+      assertThat(Arrays.asList(effectiveArgs).contains("-u"), is(true));
+      assertThat(Arrays.asList(effectiveArgs).contains("scott"), is(true));
+      assertThat(Arrays.asList(effectiveArgs).contains("-host"), is(true));
+      assertThat(Arrays.asList(effectiveArgs).contains("db.example"), is(true));
+    } finally {
+      System.setProperty("user.dir", previousUserDir);
+    }
+  }
+
+  @Test
   public void returnsOriginalArgsWhenNoPropertiesArePresent(@TempDir final Path tempDir) {
     final String previousUserDir = System.getProperty("user.dir");
     try {
