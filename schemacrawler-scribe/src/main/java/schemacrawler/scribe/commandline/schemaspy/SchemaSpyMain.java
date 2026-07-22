@@ -44,22 +44,31 @@ public final class SchemaSpyMain implements Runnable {
 
   public static int execute(final String... args) {
     requireNonNull(args, "No command-line arguments provided");
-    final SchemaSpyMain command = new SchemaSpyMain();
-    final CommandLine commandLine = new CommandLine(command);
-    commandLine.setExecutionExceptionHandler(
-        (exception, cmd, parseResult) -> {
-          cmd.getErr().println(exception.getMessage());
-          return 1;
-        });
-    return commandLine.execute(args);
+    try {
+      final SchemaSpyMain command = new SchemaSpyMain();
+      final CommandLine commandLine = new CommandLine(command);
+      commandLine.setExecutionExceptionHandler(
+          (exception, cmd, parseResult) -> {
+            cmd.getErr().println(exception.getMessage());
+            return 1;
+          });
+      return commandLine.execute(resolveEffectiveArgs(args));
+    } catch (final RuntimeException e) {
+      System.err.println(e.getMessage());
+      return 1;
+    }
   }
 
   public static void main(final String[] args) {
     System.exit(execute(args));
   }
 
+  static String[] resolveEffectiveArgs(final String... args) {
+    return SchemaSpyPropertiesResolver.resolveEffectiveArgs(args);
+  }
+
   @Option(
-      names = "-dbhelp",
+      names = {"-dbhelp", "-dbHelp"},
       description = "Print supported SchemaSpy database types for -t and exit")
   private boolean dbhelp;
 
