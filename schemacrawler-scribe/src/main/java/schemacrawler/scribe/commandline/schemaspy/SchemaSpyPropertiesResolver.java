@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 final class SchemaSpyPropertiesResolver {
+  private static final String PROPERTY_PREFIX = "schemaspy.";
 
   private record OptionSpec(String propertyKey, boolean takesValue, String... names) {}
 
@@ -142,7 +143,7 @@ final class SchemaSpyPropertiesResolver {
 
     final List<String> propertyArgs = new ArrayList<>();
     for (String key : properties.stringPropertyNames()) {
-      final String normalizedKey = key.trim().toLowerCase(Locale.ROOT);
+      final String normalizedKey = normalizePropertyKey(key);
       final OptionSpec optionSpec = PROPERTY_OPTION_BY_KEY.get(normalizedKey);
       if (optionSpec == null) {
         System.err.println("Ignoring unsupported property key <" + key + ">");
@@ -184,6 +185,14 @@ final class SchemaSpyPropertiesResolver {
       return defaultConfigPath;
     }
     return null;
+  }
+
+  private static String normalizePropertyKey(final String key) {
+    String normalizedKey = key.trim().toLowerCase(Locale.ROOT);
+    if (normalizedKey.startsWith(PROPERTY_PREFIX)) {
+      normalizedKey = normalizedKey.substring(PROPERTY_PREFIX.length());
+    }
+    return normalizedKey;
   }
 
   private SchemaSpyPropertiesResolver() {
