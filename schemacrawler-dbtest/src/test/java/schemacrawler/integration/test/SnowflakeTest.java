@@ -17,7 +17,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -35,7 +34,6 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.integration.utility.SnowflakeTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 
-@Disabled("Under development")
 @DisableLogging
 @HeavyDatabaseTest("snowflake")
 @Testcontainers(disabledWithoutDocker = true)
@@ -67,7 +65,7 @@ public class SnowflakeTest extends BaseAdditionalDatabaseTest {
   public void testSnowflakeWithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.BOOKS"))
             .tableTypes("TABLE", "VIEW");
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
