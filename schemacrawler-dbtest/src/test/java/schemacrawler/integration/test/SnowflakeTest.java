@@ -9,13 +9,12 @@
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
+import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -78,10 +77,9 @@ public class SnowflakeTest extends BaseAdditionalDatabaseTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder().toConfig());
 
-    final Path outputPath =
-        Path.of(
-            outputOf(executableExecution(getConnectionSource(), executable)).getResourceString());
-    final String commandOutput = Files.readString(outputPath);
-    assertThat(commandOutput, containsString("AUTHORS"));
+    final String expectedResource = "testSnowflakeWithConnection.txt";
+    assertThat(
+        outputOf(executableExecution(getConnectionSource(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
   }
 }
