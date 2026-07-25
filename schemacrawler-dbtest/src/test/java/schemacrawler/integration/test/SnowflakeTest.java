@@ -15,6 +15,8 @@ import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -44,20 +46,28 @@ public class SnowflakeTest extends BaseAdditionalDatabaseTest {
   @BeforeEach
   public void createDatabase() {
 
-    try {
-      Class.forName("net.snowflake.client.jdbc.SnowflakeDriver");
-    } catch (final Exception e) {
-      fail("Could not load the Snowflake JDBC driver", e);
-    }
-
     if (!dbContainer.isRunning()) {
       fail("Testcontainer for database is not available");
     }
+
+    System.err.println(
+        "%s %s/%s"
+            .formatted(
+                dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword()));
+
+    final Map<String, String> urlx = new HashMap<>();
+    urlx.put("db", dbContainer.getDatabaseName());
+    urlx.put("schema", "BOOKS");
+    urlx.put("tracing", "ALL");
 
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
     createDatabase("/snowflake.scripts.txt");
+
+    // Overwrite the datasource with default database
+    createDataSource(
+        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword(), urlx);
   }
 
   @Test
@@ -65,6 +75,10 @@ public class SnowflakeTest extends BaseAdditionalDatabaseTest {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.BOOKS"))
+            .includeAllTables()
+            .includeAllRoutines()
+            .includeAllSequences()
+            .includeAllSynonyms()
             .tableTypes("TABLE", "VIEW");
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
