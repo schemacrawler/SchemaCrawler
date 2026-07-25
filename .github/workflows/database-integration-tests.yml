@@ -35,6 +35,7 @@ jobs:
         - db2
         - mariadb
         - cassandra
+        - snowflake
         - firebird
         - informix
         - trino
@@ -129,6 +130,9 @@ jobs:
             dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "cassandra" ]; then
             docker pull cassandra:5.0.2
+            dbproject="dbtest"
+        elif [ "${{ matrix.database }}" == "snowflake" ]; then
+            docker pull localstack/snowflake:2026.06
             dbproject="dbtest"
         elif [ "${{ matrix.database }}" == "firebird" ]; then
             docker pull jacobalberty/firebird:v4.0.2
