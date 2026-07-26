@@ -1,0 +1,73 @@
+plugin:
+  server: trino
+  name: Trino
+  url-template: "jdbc:trino://${host}:${port}/${database}"
+  url-prefix: "jdbc:trino:"
+  default-port: 8080
+  allowed-driver-properties:
+    - user
+    - password
+    - sessionUser
+    - SSL
+    - SSLVerification
+    - SSLTrustStorePath
+    - SSLTrustStorePassword
+    - SSLTrustStoreType
+    - SSLKeyStorePath
+    - SSLKeyStorePassword
+    - SSLKeyStoreType
+    - applicationNamePrefix
+    - clientInfo
+    - clientTags
+    - traceToken
+    - timezone
+    - locale
+    - queryInterceptors
+    - httpProxy
+    - socksProxy
+    - assumeLiteralNamesInMetadataCallsForNonConformingClients
+    - assumeLiteralUnderscoreInMetadataCallsForNonConformingClients
+    - disableCompression
+    - extraCredentials
+    - roles
+    - sessionProperties
+    - protocols
+    - accessToken
+    - externalAuthentication
+    - kerberosEnabled
+    - kerberosServicePrincipalPattern
+    - kerberosPrincipal
+    - kerberosRemoteServiceName
+    - kerberosUseCanonicalHostname
+    - kerberosConfigPath
+    - kerberosKeytabPath
+    - kerberosCredentialCachePath
+    - kerberosDelegation
+    - httpLoggingLevel
+  additional-options:
+    - name: user
+      type: String
+      urlx-key: user
+      help:
+        - Trino user name
+        - Optional
+    - name: SSL
+      type: Boolean
+      urlx-key: SSL
+      help:
+        - Enable SSL
+        - Optional, defaults to false
+  help:
+    server:
+      - --server=trino
+      - Loads SchemaCrawler plug-in for Trino
+    database:
+      - Database name
+  schema-retrieval:
+    indexes-retrieval-strategy: none
+  limit:
+    exclude-schemas: "INFORMATION_SCHEMA"
+  schema-support:
+    supports-catalogs: auto
+    supports-schemas: auto
+

@@ -17,6 +17,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.net.InetSocketAddress;
+import java.util.Map;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,17 +31,24 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
 @HeavyDatabaseTest("cassandra")
 @Testcontainers(disabledWithoutDocker = true)
-public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
+public class CassandraTest {
+
+  private DatabaseConnectionSource connectionSource;
 
   @Container private final CassandraContainer dbContainer = newCassandraContainer();
 
@@ -56,11 +64,16 @@ public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
     final int port = contactPoint.getPort();
     final String keyspace = "books";
     final String localDatacenter = dbContainer.getLocalDatacenter();
-    final String connectionUrl =
-        "jdbc:cassandra://%s:%d/%s?localdatacenter=%s"
-            .formatted(host, port, keyspace, localDatacenter);
-    // System.out.printf("url=%s%n", connectionUrl);
-    createDataSource(connectionUrl, dbContainer.getUsername(), dbContainer.getPassword());
+    final DatabaseConnector connector =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry()
+            .findDatabaseConnectorFromDatabaseSystemIdentifier("cassandra");
+    final DatabaseConnectionOptions connectionOptions =
+        new DatabaseServerHostConnectionOptions(
+            "cassandra", host, port, keyspace, Map.of("localdatacenter", localDatacenter));
+    connectionSource =
+        connector.newDatabaseConnectionSource(
+            connectionOptions,
+            new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword()));
   }
 
   @Test
@@ -88,7 +101,7 @@ public class WithoutPluginCassandraTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testCassandraWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getConnectionSource(), executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

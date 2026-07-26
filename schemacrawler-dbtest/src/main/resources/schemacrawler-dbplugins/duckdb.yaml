@@ -1,0 +1,33 @@
+plugin:
+  server: duckdb
+  name: DuckDB
+  url-template: "jdbc:duckdb:${database}"
+  url-prefix: "jdbc:duckdb:"
+  default-url-properties:
+    duckdb.read_only: "false"
+  allowed-driver-properties:
+    - duckdb.read_only
+    - user
+    - password
+    - temp_directory
+    - threads
+    - memory_limit
+  help:
+    server:
+      - --server=duckdb
+      - Loads SchemaCrawler plug-in for DuckDB
+    host:
+      - Should be omitted
+    port:
+      - Should be omitted
+    database:
+      - DuckDB database file path, or :memory:
+  schema-retrieval:
+    table-columns-retrieval-strategy: metadata-over-schemas
+  schema-support:
+    supports-catalogs: auto
+    supports-schemas: auto
+  identifier-quote-string: "\""
+  limit:
+    exclude-schemas: "information_schema|pg_catalog"
+

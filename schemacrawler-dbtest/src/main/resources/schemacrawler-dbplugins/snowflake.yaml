@@ -1,0 +1,56 @@
+plugin:
+  server: snowflake
+  name: Snowflake
+  url-template: "jdbc:snowflake://${host}:${port}/"
+  url-prefix: "jdbc:snowflake:"
+  default-port: 443
+  default-url-properties:
+    db: "${database}"
+    CLIENT_SESSION_KEEP_ALIVE: "true"
+  allowed-driver-properties:
+    - db
+    - schema
+    - warehouse
+    - role
+    - CLIENT_SESSION_KEEP_ALIVE
+    - user
+    - password
+    - privateKey
+    - privateKeyFile
+    - authenticator
+    - loginTimeout
+    - networkTimeout
+    - queryTimeout
+    - tracing
+    - proxyHost
+    - proxyPort
+  additional-options:
+    - name: warehouse
+      type: String
+      urlx-key: warehouse
+      help:
+        - Snowflake virtual warehouse name
+        - Optional
+    - name: role
+      type: String
+      urlx-key: role
+      help:
+        - Snowflake role name
+        - Optional
+  help:
+    server:
+      - --server=snowflake
+      - Loads SchemaCrawler plug-in for Snowflake
+    host:
+      - Snowflake account identifier (e.g. myorg-myaccount.snowflakecomputing.com)
+    port:
+      - Port number
+      - Optional, defaults to 443
+    database:
+      - Snowflake database name
+  schema-support:
+    supports-catalogs: auto
+    supports-schemas: auto
+  limit:
+    exclude-schemas: "INFORMATION_SCHEMA"
+

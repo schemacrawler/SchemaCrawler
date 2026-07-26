@@ -1,0 +1,44 @@
+plugin:
+  server: h2
+  name: H2
+  url-template: "jdbc:h2:${database}"
+  url-prefix: "jdbc:h2:"
+  default-url-properties:
+    MODE: "REGULAR"
+  allowed-driver-properties:
+    - MODE
+    - AUTO_SERVER
+    - AUTO_RECONNECT
+    - DATABASE_TO_UPPER
+    - DATABASE_TO_LOWER
+    - DEFAULT_NULL_ORDERING
+    - TRACE_LEVEL_FILE
+    - TRACE_LEVEL_SYSTEM_OUT
+    - INIT
+    - IFEXISTS
+    - ACCESS_MODE_DATA
+    - FILE_LOCK
+    - user
+    - password
+  additional-options:
+    - name: MODE
+      type: String
+      urlx-key: MODE
+      help:
+        - H2 compatibility mode (for example PostgreSQL, MySQL, Oracle)
+  help:
+    server:
+      - --server=h2
+      - Loads SchemaCrawler plug-in for H2
+    host:
+      - Should be omitted
+    port:
+      - Should be omitted
+    database:
+      - H2 JDBC database path (for example ~/test or mem:test)
+  schema-support:
+    supports-catalogs: auto
+    supports-schemas: auto
+  limit:
+    exclude-schemas: "INFORMATION_SCHEMA"
+

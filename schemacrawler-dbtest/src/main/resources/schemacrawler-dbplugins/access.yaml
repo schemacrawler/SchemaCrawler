@@ -1,0 +1,39 @@
+plugin:
+  server: access
+  name: Microsoft Access
+  url-template: "jdbc:ucanaccess://${database}"
+  url-prefix: "jdbc:ucanaccess:"
+  default-url-properties:
+    memory: "false"
+    showSchema: "true"
+    sysSchema: "true"
+  allowed-driver-properties:
+    - memory
+    - showSchema
+    - sysSchema
+    - singleConnection
+    - columnOrder
+    - ignoreCase
+    - lobScale
+    - maxMemoFieldLength
+    - concatNulls
+    - immediatelyReleaseResources
+    - jackcessOpener
+    - openMode
+    - inactivityTimeout
+    - password
+    - newDatabaseVersion
+  additional-options:
+    - name: memory
+      type: Boolean
+      urlx-key: memory
+      help:
+        - Load database into memory
+        - Optional, defaults to false
+  help:
+    server:
+      - --server=access
+      - Loads SchemaCrawler plug-in for Microsoft Access
+    database:
+      - Database file
+
