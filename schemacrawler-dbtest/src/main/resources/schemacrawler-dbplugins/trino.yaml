@@ -1,9 +1,9 @@
-plugin:
-  server: trino
-  name: Trino
+database-connector:
+  database-server-type:
+    server: trino
+    name: Trino
   url-template: "jdbc:trino://${host}:${port}/${database}"
   url-prefix: "jdbc:trino:"
-  default-port: 8080
   allowed-driver-properties:
     - user
     - password
@@ -44,30 +44,34 @@ plugin:
     - kerberosCredentialCachePath
     - kerberosDelegation
     - httpLoggingLevel
-  additional-options:
-    - name: user
-      type: String
-      urlx-key: user
-      help:
-        - Trino user name
-        - Optional
-    - name: SSL
-      type: Boolean
-      urlx-key: SSL
-      help:
-        - Enable SSL
-        - Optional, defaults to false
-  help:
-    server:
+standard-options:
+  server:
+    help:
       - --server=trino
       - Loads SchemaCrawler plug-in for Trino
-    database:
+  port:
+    default: 8080
+  database:
+    help:
       - Database name
-  schema-retrieval:
-    indexes-retrieval-strategy: none
-  limit:
-    exclude-schemas: "INFORMATION_SCHEMA"
-  schema-support:
-    supports-catalogs: auto
-    supports-schemas: auto
-
+additional-options:
+  - name: user
+    type: String
+    urlx-key: user
+    default: null
+    help:
+      - Trino user name
+      - Optional
+  - name: SSL
+    type: Boolean
+    urlx-key: SSL
+    default: false
+    help:
+      - Enable SSL
+      - Optional, defaults to false
+schema-retrieval:
+  supports-catalogs: auto
+  supports-schemas: auto
+  indexes-retrieval-strategy: none
+limit:
+  exclude-schemas: "INFORMATION_SCHEMA"

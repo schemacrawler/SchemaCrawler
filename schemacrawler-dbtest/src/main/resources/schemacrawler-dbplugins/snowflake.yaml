@@ -1,12 +1,9 @@
-plugin:
-  server: snowflake
-  name: Snowflake
+database-connector:
+  database-server-type:
+    server: snowflake
+    name: Snowflake
   url-template: "jdbc:snowflake://${host}:${port}/"
   url-prefix: "jdbc:snowflake:"
-  default-port: 443
-  default-url-properties:
-    db: "${database}"
-    CLIENT_SESSION_KEEP_ALIVE: "true"
   allowed-driver-properties:
     - db
     - schema
@@ -24,33 +21,47 @@ plugin:
     - tracing
     - proxyHost
     - proxyPort
-  additional-options:
-    - name: warehouse
-      type: String
-      urlx-key: warehouse
-      help:
-        - Snowflake virtual warehouse name
-        - Optional
-    - name: role
-      type: String
-      urlx-key: role
-      help:
-        - Snowflake role name
-        - Optional
-  help:
-    server:
+standard-options:
+  server:
+    help:
       - --server=snowflake
       - Loads SchemaCrawler plug-in for Snowflake
-    host:
+  host:
+    help:
       - Snowflake account identifier (e.g. myorg-myaccount.snowflakecomputing.com)
-    port:
+  port:
+    help:
       - Port number
       - Optional, defaults to 443
-    database:
+    default: 443
+  database:
+    help:
       - Snowflake database name
-  schema-support:
-    supports-catalogs: auto
-    supports-schemas: auto
-  limit:
-    exclude-schemas: "INFORMATION_SCHEMA"
-
+additional-options:
+  - name: warehouse
+    type: String
+    urlx-key: warehouse
+    default: null
+    help:
+      - Snowflake virtual warehouse name
+      - Optional
+  - name: role
+    type: String
+    urlx-key: role
+    default: null
+    help:
+      - Snowflake role name
+      - Optional
+  - name: db
+    type: String
+    urlx-key: db
+    default: "${database}"
+  - name: CLIENT_SESSION_KEEP_ALIVE
+    type: Boolean
+    urlx-key: CLIENT_SESSION_KEEP_ALIVE
+    default: true
+schema-retrieval:
+  supports-catalogs: auto
+  supports-schemas: auto
+limit:
+  exclude-schemas: "INFORMATION_SCHEMA"

@@ -1,11 +1,9 @@
-plugin:
-  server: clickhouse
-  name: ClickHouse
+database-connector:
+  database-server-type:
+    server: clickhouse
+    name: ClickHouse
   url-template: "jdbc:clickhouse://${host}:${port}/${database}"
   url-prefix: "jdbc:clickhouse:"
-  default-port: 8123
-  default-url-properties:
-    socket_timeout: "300000"
   allowed-driver-properties:
     - socket_timeout
     - compress
@@ -23,28 +21,37 @@ plugin:
     - ssl
     - sslmode
     - sslrootcert
-  additional-options:
-    - name: compress
-      type: Boolean
-      urlx-key: compress
-      help:
-        - Enable data compression
-        - Optional, defaults to true
-  help:
-    server:
+standard-options:
+  server:
+    help:
       - --server=clickhouse
       - Loads SchemaCrawler plug-in for ClickHouse
-    host:
+  host:
+    help:
       - Host name
       - Optional, defaults to localhost
-    port:
+  port:
+    help:
       - Port number
       - Optional, defaults to 8123
-    database:
+    default: 8123
+  database:
+    help:
       - Database name
-  limit:
-    exclude-schemas: "INFORMATION_SCHEMA|system"
-  schema-support:
-    supports-catalogs: auto
-    supports-schemas: auto
-
+additional-options:
+  - name: compress
+    type: Boolean
+    urlx-key: compress
+    default: true
+    help:
+      - Enable data compression
+      - Optional, defaults to true
+  - name: socket_timeout
+    type: Integer
+    urlx-key: socket_timeout
+    default: 300000
+schema-retrieval:
+  supports-catalogs: auto
+  supports-schemas: auto
+limit:
+  exclude-schemas: "INFORMATION_SCHEMA|system"

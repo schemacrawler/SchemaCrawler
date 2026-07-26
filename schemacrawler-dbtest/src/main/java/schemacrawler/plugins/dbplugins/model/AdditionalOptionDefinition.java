@@ -16,16 +16,17 @@ import java.util.List;
 
 /** Represents an additional named JDBC option. */
 public record AdditionalOptionDefinition(
-    String name, String type, String urlxKey, List<String> help) {
+    String name, String type, String urlxKey, String defaultValue, List<String> help) {
 
   public AdditionalOptionDefinition() {
-    this("option", "String", null, List.of());
+    this("option", "String", null, null, List.of());
   }
 
   public AdditionalOptionDefinition {
     name = requireNotBlank(name, "No additional option name provided");
     type = requireNotBlank(type, "No additional option type provided");
     urlxKey = isBlank(urlxKey) ? null : urlxKey;
+    defaultValue = defaultValue == null ? null : defaultValue;
     help = help == null ? List.of() : List.copyOf(help);
     requireNonNull(help, "No additional option help provided");
   }

@@ -44,7 +44,7 @@ public final class MultiDatabaseConnectorRegistry extends BasePluginRegistry {
     }
 
     public boolean isValid() {
-      return !"unknown".equals(definition.name());
+      return !"unknown".equals(definition.databaseServerType().server());
     }
   }
 
@@ -136,8 +136,9 @@ public final class MultiDatabaseConnectorRegistry extends BasePluginRegistry {
     final Set<String> servers = new HashSet<>();
     for (final LoadedConnectorDefinition loadedDefinition : loadedDefinitions) {
       final DatabaseConnectorDefinition definition = loadedDefinition.definition();
-      if (!servers.add(definition.name())) {
-        LOGGER.log(Level.WARNING, "Already loaded <%s>".formatted(definition.name()));
+      final String server = definition.databaseServerType().server();
+      if (!servers.add(server)) {
+        LOGGER.log(Level.WARNING, "Already loaded <%s>".formatted(server));
         continue;
       }
       databaseConnectors.add(new SimpleDatabaseConnector(definition));

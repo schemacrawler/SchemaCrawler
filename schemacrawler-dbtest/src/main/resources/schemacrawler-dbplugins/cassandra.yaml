@@ -1,11 +1,9 @@
-plugin:
-  server: cassandra
-  name: Cassandra
+database-connector:
+  database-server-type:
+    server: cassandra
+    name: Cassandra
   url-template: "jdbc:cassandra://${host}:${port}/${database}"
   url-prefix: "jdbc:cassandra:"
-  default-port: 9042
-  default-url-properties:
-    consistency: "LOCAL_ONE"
   allowed-driver-properties:
     - consistency
     - loadbalancing
@@ -28,31 +26,36 @@ plugin:
     - requestTracker
     - asyncQueryTimeout
     - keyspace
-  additional-options:
-    - name: consistency
-      type: String
-      urlx-key: consistency
-      help:
-        - Consistency level
-        - Optional, defaults to LOCAL_ONE
-  help:
-    server:
+standard-options:
+  server:
+    help:
       - --server=cassandra
       - Loads SchemaCrawler plug-in for Cassandra
-    host:
+  host:
+    help:
       - Host name
       - Optional, defaults to localhost
       - Can be a list of hosts separated with '--'
       - See https://github.com/ing-bank/cassandra-jdbc-wrapper
-    port:
+  port:
+    help:
       - Port number
       - Optional, defaults to 9042
-    database:
+    default: 9042
+  database:
+    help:
       - Keyspace name
-  schema-retrieval:
-    foreign-keys-retrieval-strategy: none
-    procedures-retrieval-strategy: none
-    functions-retrieval-strategy: none
-  schema-support:
-    supports-catalogs: auto
-    supports-schemas: auto
+additional-options:
+  - name: consistency
+    type: String
+    urlx-key: consistency
+    default: LOCAL_ONE
+    help:
+      - Consistency level
+      - Optional, defaults to LOCAL_ONE
+schema-retrieval:
+  supports-catalogs: auto
+  supports-schemas: auto
+  foreign-keys-retrieval-strategy: none
+  procedures-retrieval-strategy: none
+  functions-retrieval-strategy: none

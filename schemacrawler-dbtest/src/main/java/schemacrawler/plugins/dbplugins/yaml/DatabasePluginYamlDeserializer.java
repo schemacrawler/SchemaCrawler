@@ -22,11 +22,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.plugins.dbplugins.model.AdditionalOptionDefinition;
 import schemacrawler.plugins.dbplugins.model.DatabaseConnectorDefinition;
-import schemacrawler.plugins.dbplugins.model.HelpDefinition;
+import schemacrawler.plugins.dbplugins.model.DatabaseServerTypeDefinition;
 import schemacrawler.plugins.dbplugins.model.LimitDefinition;
 import schemacrawler.plugins.dbplugins.model.SchemaRetrievalDefinition;
-import schemacrawler.plugins.dbplugins.model.SchemaSupportDefinition;
-import schemacrawler.plugins.dbplugins.model.UrlPropertyDefinition;
+import schemacrawler.plugins.dbplugins.model.StandardOptionDefinition;
+import schemacrawler.plugins.dbplugins.model.StandardOptionsDefinition;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
@@ -40,29 +40,26 @@ public final class DatabasePluginYamlDeserializer {
   private static final Logger LOGGER =
       Logger.getLogger(DatabasePluginYamlDeserializer.class.getName());
 
-  private static final Set<String> PLUGIN_FIELDS =
+  private static final Set<String> ROOT_FIELDS =
       Set.of(
-          "server",
-          "name",
-          "url-template",
-          "url-prefix",
-          "default-port",
-          "default-url-properties",
-          "allowed-driver-properties",
+          "database-connector",
+          "standard-options",
           "additional-options",
-          "help",
           "schema-retrieval",
-          "schema-support",
-          "identifier-quote-string",
           "limit");
+  private static final Set<String> CONNECTOR_FIELDS =
+      Set.of("database-server-type", "url-template", "url-prefix", "allowed-driver-properties");
 
-  private static final Set<String> HELP_FIELDS = Set.of("server", "host", "port", "database");
+  private static final Set<String> DATABASE_SERVER_TYPE_FIELDS = Set.of("server", "name");
+  private static final Set<String> STANDARD_OPTIONS_FIELDS =
+      Set.of("server", "host", "port", "database");
+  private static final Set<String> STANDARD_OPTION_FIELDS = Set.of("help", "default");
   private static final Set<String> LIMIT_FIELDS =
       Set.of("include-schemas", "exclude-schemas", "include-catalogs", "exclude-catalogs");
-  private static final Set<String> SCHEMA_SUPPORT_FIELDS =
+  private static final Set<String> SCHEMA_RETRIEVAL_FIELDS =
       Set.of("supports-catalogs", "supports-schemas");
   private static final Set<String> ADDITIONAL_OPTION_FIELDS =
-      Set.of("name", "type", "urlx-key", "help");
+      Set.of("name", "type", "urlx-key", "default", "help");
 
   private static final Map<String, SchemaInfoMetadataRetrievalStrategy>
       SCHEMA_RETRIEVAL_STRATEGY_LOOKUP = createSchemaRetrievalStrategyLookup();
@@ -121,17 +118,6 @@ public final class DatabasePluginYamlDeserializer {
     return value.replace("-", "").replace("_", "").toLowerCase();
   }
 
-  private static Integer optionalIntField(final JsonNode node, final String fieldName) {
-    final JsonNode field = node.get(fieldName);
-    if (field == null || field.isNull()) {
-      return null;
-    }
-    if (!field.canConvertToInt()) {
-      throw new ConfigurationException("Invalid integer value for <%s>".formatted(fieldName));
-    }
-    return field.asInt();
-  }
-
   private static String optionalText(final JsonNode node, final String fieldName) {
     final JsonNode field = node.get(fieldName);
     if (field == null || field.isNull()) {
@@ -147,8 +133,14 @@ public final class DatabasePluginYamlDeserializer {
     final String name = requiredTextField(node, "name", sourceDescription);
     final String type = requiredTextField(node, "type", sourceDescription);
     final String urlxKey = node.hasNonNull("urlx-key") ? node.get("urlx-key").asString() : null;
+    if (!node.has("default")) {
+      throw new ConfigurationException(
+          "Missing required <default> field in additional-option in <%s>"
+              .formatted(sourceDescription));
+    }
+    final String defaultValue = valueToString(node.get("default"));
     final List<String> help = readStringList(node, "help");
-    return new AdditionalOptionDefinition(name, type, urlxKey, help);
+    return new AdditionalOptionDefinition(name, type, urlxKey, defaultValue, help);
   }
 
   private static Set<String> readAllowedDriverProperties(final JsonNode node) {
@@ -164,37 +156,13 @@ public final class DatabasePluginYamlDeserializer {
     return Set.copyOf(values);
   }
 
-  private static List<UrlPropertyDefinition> readDefaultUrlProperties(final JsonNode node) {
-    final JsonNode field = node.get("default-url-properties");
-    if (field == null || field.isNull()) {
-      return List.of();
-    }
-    if (!field.isObject()) {
-      throw new ConfigurationException("Invalid map value for <default-url-properties>");
-    }
-    final List<UrlPropertyDefinition> defaultUrlProperties = new ArrayList<>();
-    for (final String propertyName : field.propertyNames()) {
-      defaultUrlProperties.add(
-          new UrlPropertyDefinition(propertyName, field.get(propertyName).asString()));
-    }
-    return List.copyOf(defaultUrlProperties);
-  }
-
-  private static HelpDefinition readHelpDefinition(
+  private static DatabaseServerTypeDefinition readDatabaseServerTypeDefinition(
       final JsonNode node, final String sourceDescription) {
-    final JsonNode field = node.get("help");
-    if (field == null || field.isNull()) {
-      return new HelpDefinition(null, null, null, null);
-    }
-    if (!field.isObject()) {
-      throw new ConfigurationException("Invalid object value for <help>");
-    }
-    ensureAllowedFields(field, HELP_FIELDS, sourceDescription);
-    return new HelpDefinition(
-        readStringList(field, "server"),
-        readStringList(field, "host"),
-        readStringList(field, "port"),
-        readStringList(field, "database"));
+    final JsonNode field = requiredObjectField(node, "database-server-type", sourceDescription);
+    ensureAllowedFields(field, DATABASE_SERVER_TYPE_FIELDS, sourceDescription);
+    return new DatabaseServerTypeDefinition(
+        requiredTextField(field, "server", sourceDescription),
+        requiredTextField(field, "name", sourceDescription));
   }
 
   private static LimitDefinition readLimitDefinition(
@@ -224,25 +192,25 @@ public final class DatabasePluginYamlDeserializer {
 
   private static SchemaRetrievalDefinition readSchemaRetrievalDefinition(
       final JsonNode node, final String sourceDescription) {
-    final Map<String, String> strategies = readStringMap(node, "schema-retrieval");
-    for (final Map.Entry<String, String> entry : strategies.entrySet()) {
-      lookupSchemaRetrievalStrategy(entry.getKey(), sourceDescription);
-      lookupMetadataRetrievalStrategy(entry.getValue(), sourceDescription);
-    }
-    return new SchemaRetrievalDefinition(strategies);
-  }
-
-  private static SchemaSupportDefinition readSchemaSupportDefinition(
-      final JsonNode node, final String sourceDescription) {
-    final JsonNode field = node.get("schema-support");
+    final JsonNode field = node.get("schema-retrieval");
     if (field == null || field.isNull()) {
-      return new SchemaSupportDefinition(null, null);
+      return new SchemaRetrievalDefinition(null, null, null);
     }
     if (!field.isObject()) {
-      throw new ConfigurationException("Invalid object value for <schema-support>");
+      throw new ConfigurationException("Invalid object value for <schema-retrieval>");
     }
-    ensureAllowedFields(field, SCHEMA_SUPPORT_FIELDS, sourceDescription);
-    return new SchemaSupportDefinition(
+    final Map<String, String> strategies = new LinkedHashMap<>();
+    for (final String propertyName : field.propertyNames()) {
+      if (SCHEMA_RETRIEVAL_FIELDS.contains(propertyName)) {
+        continue;
+      }
+      final String strategyValue = requiredTextField(field, propertyName, sourceDescription);
+      lookupSchemaRetrievalStrategy(propertyName, sourceDescription);
+      lookupMetadataRetrievalStrategy(strategyValue, sourceDescription);
+      strategies.put(propertyName, strategyValue);
+    }
+    return new SchemaRetrievalDefinition(
+        strategies,
         readTriState(field, "supports-catalogs", sourceDescription),
         readTriState(field, "supports-schemas", sourceDescription));
   }
@@ -260,19 +228,35 @@ public final class DatabasePluginYamlDeserializer {
     return List.copyOf(values);
   }
 
-  private static Map<String, String> readStringMap(final JsonNode node, final String fieldName) {
+  private static StandardOptionDefinition readStandardOptionDefinition(
+      final JsonNode node, final String fieldName, final String sourceDescription) {
     final JsonNode field = node.get(fieldName);
     if (field == null || field.isNull()) {
-      return Map.of();
+      return new StandardOptionDefinition(null, null);
     }
     if (!field.isObject()) {
-      throw new ConfigurationException("Invalid map value for <%s>".formatted(fieldName));
+      throw new ConfigurationException("Invalid object value for <%s>".formatted(fieldName));
     }
-    final Map<String, String> values = new LinkedHashMap<>();
-    for (final String propertyName : field.propertyNames()) {
-      values.put(propertyName, field.get(propertyName).asString());
+    ensureAllowedFields(field, STANDARD_OPTION_FIELDS, sourceDescription);
+    return new StandardOptionDefinition(
+        readStringList(field, "help"), valueToString(field.get("default")));
+  }
+
+  private static StandardOptionsDefinition readStandardOptionsDefinition(
+      final JsonNode node, final String sourceDescription) {
+    final JsonNode field = node.get("standard-options");
+    if (field == null || field.isNull()) {
+      return new StandardOptionsDefinition();
     }
-    return Map.copyOf(values);
+    if (!field.isObject()) {
+      throw new ConfigurationException("Invalid object value for <standard-options>");
+    }
+    ensureAllowedFields(field, STANDARD_OPTIONS_FIELDS, sourceDescription);
+    return new StandardOptionsDefinition(
+        readStandardOptionDefinition(field, "server", sourceDescription),
+        readStandardOptionDefinition(field, "host", sourceDescription),
+        readStandardOptionDefinition(field, "port", sourceDescription),
+        readStandardOptionDefinition(field, "database", sourceDescription));
   }
 
   private static Boolean readTriState(
@@ -323,6 +307,16 @@ public final class DatabasePluginYamlDeserializer {
     return value;
   }
 
+  private static String valueToString(final JsonNode node) {
+    if (node == null || node.isNull()) {
+      return null;
+    }
+    if (node.isValueNode()) {
+      return node.asString();
+    }
+    return node.toString();
+  }
+
   public DatabaseConnectorDefinition parse(final InputResource inputResource) {
     requireNonNull(inputResource, "No input resource provided");
     LOGGER.log(Level.FINE, new StringFormat("Parsing <%s>", inputResource));
@@ -343,50 +337,33 @@ public final class DatabasePluginYamlDeserializer {
     if (root == null || !root.isObject()) {
       throw new ConfigurationException("Invalid YAML root in <%s>".formatted(sourceDescription));
     }
-    ensureAllowedFields(root, Set.of("plugin"), sourceDescription);
-    final JsonNode plugin = requiredObjectField(root, "plugin", sourceDescription);
-    ensureAllowedFields(plugin, PLUGIN_FIELDS, sourceDescription);
+    ensureAllowedFields(root, ROOT_FIELDS, sourceDescription);
+    final JsonNode databaseConnector =
+        requiredObjectField(root, "database-connector", sourceDescription);
+    ensureAllowedFields(databaseConnector, CONNECTOR_FIELDS, sourceDescription);
 
-    final String server = requiredTextField(plugin, "server", sourceDescription);
-    final String name = requiredTextField(plugin, "name", sourceDescription);
-    final String urlTemplate = requiredTextField(plugin, "url-template", sourceDescription);
-    final String urlPrefix = requiredTextField(plugin, "url-prefix", sourceDescription);
-    final Integer defaultPort = optionalIntField(plugin, "default-port");
-    final List<UrlPropertyDefinition> defaultUrlProperties = readDefaultUrlProperties(plugin);
-    final Set<String> allowedDriverProperties = readAllowedDriverProperties(plugin);
+    final DatabaseServerTypeDefinition databaseServerType =
+        readDatabaseServerTypeDefinition(databaseConnector, sourceDescription);
+    final String urlTemplate =
+        requiredTextField(databaseConnector, "url-template", sourceDescription);
+    final String urlPrefix = requiredTextField(databaseConnector, "url-prefix", sourceDescription);
+    final StandardOptionsDefinition standardOptions =
+        readStandardOptionsDefinition(root, sourceDescription);
+    final Set<String> allowedDriverProperties = readAllowedDriverProperties(databaseConnector);
     final List<AdditionalOptionDefinition> additionalOptions =
-        readAdditionalOptions(plugin, sourceDescription);
-    final HelpDefinition help = readHelpDefinition(plugin, sourceDescription);
+        readAdditionalOptions(root, sourceDescription);
     final SchemaRetrievalDefinition schemaRetrieval =
-        readSchemaRetrievalDefinition(plugin, sourceDescription);
-    final SchemaSupportDefinition schemaSupport =
-        readSchemaSupportDefinition(plugin, sourceDescription);
-    final String identifierQuoteString = optionalText(plugin, "identifier-quote-string");
-    final LimitDefinition limit = readLimitDefinition(plugin, sourceDescription);
-
-    if (!allowedDriverProperties.isEmpty()) {
-      for (final UrlPropertyDefinition defaultUrlProperty : defaultUrlProperties) {
-        if (!allowedDriverProperties.contains(defaultUrlProperty.name())) {
-          throw new ConfigurationException(
-              "Default URL property <%s> is not allowed in <%s>"
-                  .formatted(defaultUrlProperty.name(), sourceDescription));
-        }
-      }
-    }
+        readSchemaRetrievalDefinition(root, sourceDescription);
+    final LimitDefinition limit = readLimitDefinition(root, sourceDescription);
 
     return new DatabaseConnectorDefinition(
-        server,
-        name,
+        databaseServerType,
         urlTemplate,
         urlPrefix,
-        defaultPort,
-        defaultUrlProperties,
+        standardOptions,
         allowedDriverProperties,
         additionalOptions,
-        help,
         schemaRetrieval,
-        schemaSupport,
-        identifierQuoteString,
         limit);
   }
 

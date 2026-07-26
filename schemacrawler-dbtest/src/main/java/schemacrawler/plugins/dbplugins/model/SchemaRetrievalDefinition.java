@@ -11,10 +11,11 @@ package schemacrawler.plugins.dbplugins.model;
 import java.util.Map;
 
 /** Represents schema metadata retrieval overrides. */
-public record SchemaRetrievalDefinition(Map<String, String> strategies) {
+public record SchemaRetrievalDefinition(
+    Map<String, String> strategies, Boolean supportsCatalogs, Boolean supportsSchemas) {
 
   public SchemaRetrievalDefinition() {
-    this(null);
+    this(null, null, null);
   }
 
   public SchemaRetrievalDefinition {

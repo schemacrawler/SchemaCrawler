@@ -16,9 +16,8 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.plugins.dbplugins.model.AdditionalOptionDefinition;
 import schemacrawler.plugins.dbplugins.model.DatabaseConnectorDefinition;
-import schemacrawler.plugins.dbplugins.model.HelpDefinition;
 import schemacrawler.plugins.dbplugins.model.LimitDefinition;
-import schemacrawler.plugins.dbplugins.model.UrlPropertyDefinition;
+import schemacrawler.plugins.dbplugins.model.StandardOptionsDefinition;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
@@ -59,21 +58,23 @@ public final class DatabaseConnectorDefinitionAdapter {
 
   private void addStandardOptions(
       final PluginCommand pluginCommand,
-      final HelpDefinition helpDefinition,
+      final StandardOptionsDefinition standardOptions,
       final DatabaseServerType dbServerType) {
     pluginCommand.addOption(
         "server",
         String.class,
         helpLinesOrDefault(
-            helpDefinition.server(),
+            standardOptions.server().help(),
             "--server=%s".formatted(dbServerType.getDatabaseSystemIdentifier()),
             "Loads SchemaCrawler plug-in for %s".formatted(dbServerType.getDatabaseSystemName())));
     pluginCommand.addOption(
-        "host", String.class, helpLinesOrDefault(helpDefinition.host(), "Host name"));
+        "host", String.class, helpLinesOrDefault(standardOptions.host().help(), "Host name"));
     pluginCommand.addOption(
-        "port", Integer.class, helpLinesOrDefault(helpDefinition.port(), "Port number"));
+        "port", Integer.class, helpLinesOrDefault(standardOptions.port().help(), "Port number"));
     pluginCommand.addOption(
-        "database", String.class, helpLinesOrDefault(helpDefinition.database(), "Database name"));
+        "database",
+        String.class,
+        helpLinesOrDefault(standardOptions.database().help(), "Database name"));
   }
 
   private void applyLimitOptions(
@@ -90,27 +91,22 @@ public final class DatabaseConnectorDefinitionAdapter {
 
   private void applySchemaRetrievalOverrides(
       final SchemaRetrievalOptionsBuilder builder, final DatabaseConnectorDefinition definition) {
-    final var schemaSupport = definition.schemaSupport();
-    if (schemaSupport.supportsCatalogs() != null) {
-      if (schemaSupport.supportsCatalogs()) {
+    final var schemaRetrieval = definition.schemaRetrieval();
+    if (schemaRetrieval.supportsCatalogs() != null) {
+      if (schemaRetrieval.supportsCatalogs()) {
         builder.withSupportsCatalogs();
       } else {
         builder.withDoesNotSupportCatalogs();
       }
     }
-    if (schemaSupport.supportsSchemas() != null) {
-      if (schemaSupport.supportsSchemas()) {
+    if (schemaRetrieval.supportsSchemas() != null) {
+      if (schemaRetrieval.supportsSchemas()) {
         builder.withSupportsSchemas();
       } else {
         builder.withDoesNotSupportSchemas();
       }
     }
-    final String identifierQuoteString = definition.identifierQuoteString();
-    if (identifierQuoteString != null) {
-      builder.withIdentifierQuoteString(identifierQuoteString);
-    }
-    for (final Map.Entry<String, String> entry :
-        definition.schemaRetrieval().strategies().entrySet()) {
+    for (final Map.Entry<String, String> entry : schemaRetrieval.strategies().entrySet()) {
       final SchemaInfoMetadataRetrievalStrategy strategy = lookupStrategy(entry.getKey());
       final MetadataRetrievalStrategy metadataRetrievalStrategy =
           lookupMetadataRetrievalStrategy(entry.getValue());
@@ -132,19 +128,43 @@ public final class DatabaseConnectorDefinitionAdapter {
       final DatabaseConnectorDefinition definition) {
     final DatabaseConnectionSourceBuilder connectionSourceBuilder =
         DatabaseConnectionSourceBuilder.builder(definition.urlTemplate());
-    if (definition.defaultPort() != null) {
-      connectionSourceBuilder.withDefaultPort(definition.defaultPort());
-    }
+    applyStandardOptionDefaults(connectionSourceBuilder, definition.standardOptions());
     if (!definition.allowedDriverProperties().isEmpty()) {
       connectionSourceBuilder.withAdditionalDriverProperties(definition.allowedDriverProperties());
     }
-    if (!definition.defaultUrlProperties().isEmpty()) {
-      for (final UrlPropertyDefinition defaultUrlProperty : definition.defaultUrlProperties()) {
-        connectionSourceBuilder.withDefaultUrlx(
-            defaultUrlProperty.name(), defaultUrlProperty.value());
+    if (!definition.additionalOptions().isEmpty()) {
+      for (final AdditionalOptionDefinition additionalOption : definition.additionalOptions()) {
+        final String defaultValue = additionalOption.defaultValue();
+        if (defaultValue != null) {
+          final String urlxKey = additionalOption.urlxKey();
+          connectionSourceBuilder.withDefaultUrlx(
+              urlxKey == null ? additionalOption.name() : urlxKey, defaultValue);
+        }
       }
     }
     return connectionSourceBuilder;
+  }
+
+  private void applyStandardOptionDefaults(
+      final DatabaseConnectionSourceBuilder connectionSourceBuilder,
+      final StandardOptionsDefinition standardOptions) {
+    final String defaultHost = standardOptions.host().defaultValue();
+    if (defaultHost != null) {
+      connectionSourceBuilder.withDefaultHost(defaultHost);
+    }
+    final String defaultDatabase = standardOptions.database().defaultValue();
+    if (defaultDatabase != null) {
+      connectionSourceBuilder.withDefaultDatabase(defaultDatabase);
+    }
+    final String defaultPort = standardOptions.port().defaultValue();
+    if (defaultPort != null) {
+      try {
+        connectionSourceBuilder.withDefaultPort(Integer.parseInt(defaultPort));
+      } catch (final NumberFormatException e) {
+        throw new ConfigurationException(
+            "Invalid standard option default for <port> <%s>".formatted(defaultPort), e);
+      }
+    }
   }
 
   private String[] helpLinesOrDefault(final List<String> helpLines, final String... defaults) {
@@ -185,11 +205,10 @@ public final class DatabaseConnectorDefinitionAdapter {
 
   private DatabaseConnectorOptions toDatabaseConnectorOptionsInternal(
       final DatabaseConnectorDefinition definition) {
-    final DatabaseServerType dbServerType =
-        new DatabaseServerType(definition.server(), definition.name());
+    final DatabaseServerType dbServerType = definition.databaseServerType().toDatabaseServerType();
 
     final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand(dbServerType);
-    addStandardOptions(pluginCommand, definition.help(), dbServerType);
+    addStandardOptions(pluginCommand, definition.standardOptions(), dbServerType);
     addAdditionalOptions(pluginCommand, definition.additionalOptions());
 
     return DatabaseConnectorOptionsBuilder.builder(dbServerType)

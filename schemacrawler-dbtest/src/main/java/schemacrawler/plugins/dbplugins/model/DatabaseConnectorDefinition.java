@@ -9,7 +9,6 @@
 package schemacrawler.plugins.dbplugins.model;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.util.List;
@@ -17,56 +16,42 @@ import java.util.Set;
 
 /** Represents a YAML database plugin definition. */
 public record DatabaseConnectorDefinition(
-    String server,
-    String name,
+    DatabaseServerTypeDefinition databaseServerType,
     String urlTemplate,
     String urlPrefix,
-    Integer defaultPort,
-    List<UrlPropertyDefinition> defaultUrlProperties,
+    StandardOptionsDefinition standardOptions,
     Set<String> allowedDriverProperties,
     List<AdditionalOptionDefinition> additionalOptions,
-    HelpDefinition help,
     SchemaRetrievalDefinition schemaRetrieval,
-    SchemaSupportDefinition schemaSupport,
-    String identifierQuoteString,
     LimitDefinition limit) {
 
   public DatabaseConnectorDefinition() {
     this(
-        "unknown",
-        "Unknown",
+        new DatabaseServerTypeDefinition(),
         "jdbc:unknown:${database}",
         "jdbc:unknown:",
-        null,
-        List.of(),
+        new StandardOptionsDefinition(),
         Set.of(),
         List.of(),
-        new HelpDefinition(),
         new SchemaRetrievalDefinition(),
-        new SchemaSupportDefinition(),
-        null,
         new LimitDefinition());
   }
 
   public DatabaseConnectorDefinition {
-    server = requireNotBlank(server, "No database plugin server provided");
-    name = requireNotBlank(name, "No database plugin name provided");
+    databaseServerType =
+        databaseServerType == null ? new DatabaseServerTypeDefinition() : databaseServerType;
     urlTemplate = requireNotBlank(urlTemplate, "No database plugin URL template provided");
     urlPrefix = requireNotBlank(urlPrefix, "No database plugin URL prefix provided");
-    defaultUrlProperties =
-        defaultUrlProperties == null ? List.of() : List.copyOf(defaultUrlProperties);
+    standardOptions = standardOptions == null ? new StandardOptionsDefinition() : standardOptions;
     allowedDriverProperties =
         allowedDriverProperties == null ? Set.of() : Set.copyOf(allowedDriverProperties);
     additionalOptions = additionalOptions == null ? List.of() : List.copyOf(additionalOptions);
-    help = help == null ? new HelpDefinition(null, null, null, null) : help;
     schemaRetrieval =
-        schemaRetrieval == null ? new SchemaRetrievalDefinition(null) : schemaRetrieval;
-    schemaSupport = schemaSupport == null ? new SchemaSupportDefinition(null, null) : schemaSupport;
-    identifierQuoteString = isBlank(identifierQuoteString) ? null : identifierQuoteString;
+        schemaRetrieval == null ? new SchemaRetrievalDefinition(null, null, null) : schemaRetrieval;
     limit = limit == null ? new LimitDefinition(null, null, null, null) : limit;
-    requireNonNull(help, "No help definition provided");
+    requireNonNull(databaseServerType, "No database server type definition provided");
+    requireNonNull(standardOptions, "No standard options definition provided");
     requireNonNull(schemaRetrieval, "No schema retrieval definition provided");
-    requireNonNull(schemaSupport, "No schema support definition provided");
     requireNonNull(limit, "No limit definition provided");
   }
 }
