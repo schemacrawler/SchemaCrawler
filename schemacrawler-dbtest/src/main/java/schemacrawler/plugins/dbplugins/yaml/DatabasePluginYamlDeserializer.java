@@ -49,7 +49,6 @@ public final class DatabasePluginYamlDeserializer {
           "limit");
   private static final Set<String> CONNECTOR_FIELDS =
       Set.of("database-server-type", "url-template", "url-prefix", "allowed-driver-properties");
-
   private static final Set<String> DATABASE_SERVER_TYPE_FIELDS = Set.of("server", "name");
   private static final Set<String> STANDARD_OPTIONS_FIELDS =
       Set.of("server", "host", "port", "database");
@@ -59,7 +58,7 @@ public final class DatabasePluginYamlDeserializer {
   private static final Set<String> SCHEMA_RETRIEVAL_FIELDS =
       Set.of("supports-catalogs", "supports-schemas");
   private static final Set<String> ADDITIONAL_OPTION_FIELDS =
-      Set.of("name", "type", "urlx-key", "default", "help");
+      Set.of("name", "type", "default", "help");
 
   private static final Map<String, SchemaInfoMetadataRetrievalStrategy>
       SCHEMA_RETRIEVAL_STRATEGY_LOOKUP = createSchemaRetrievalStrategyLookup();
