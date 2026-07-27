@@ -57,14 +57,12 @@ standard-options:
 additional-options:
   - name: user
     type: String
-    urlx-key: user
     default: null
     help:
       - Trino user name
       - Optional
   - name: SSL
     type: Boolean
-    urlx-key: SSL
     default: false
     help:
       - Enable SSL

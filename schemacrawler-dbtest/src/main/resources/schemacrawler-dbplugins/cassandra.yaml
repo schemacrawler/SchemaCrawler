@@ -48,7 +48,6 @@ standard-options:
 additional-options:
   - name: consistency
     type: String
-    urlx-key: consistency
     default: LOCAL_ONE
     help:
       - Consistency level

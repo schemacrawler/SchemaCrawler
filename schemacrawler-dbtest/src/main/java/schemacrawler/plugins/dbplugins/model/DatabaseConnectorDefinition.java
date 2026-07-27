@@ -8,7 +8,6 @@
 
 package schemacrawler.plugins.dbplugins.model;
 
-import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.util.List;
@@ -19,8 +18,8 @@ public record DatabaseConnectorDefinition(
     DatabaseServerTypeDefinition databaseServerType,
     String urlTemplate,
     String urlPrefix,
-    StandardOptionsDefinition standardOptions,
     Set<String> allowedDriverProperties,
+    StandardOptionsDefinition standardOptions,
     List<AdditionalOptionDefinition> additionalOptions,
     SchemaRetrievalDefinition schemaRetrieval,
     LimitDefinition limit) {
@@ -30,8 +29,8 @@ public record DatabaseConnectorDefinition(
         new DatabaseServerTypeDefinition(),
         "jdbc:unknown:${database}",
         "jdbc:unknown:",
-        new StandardOptionsDefinition(),
         Set.of(),
+        new StandardOptionsDefinition(),
         List.of(),
         new SchemaRetrievalDefinition(),
         new LimitDefinition());
@@ -46,12 +45,7 @@ public record DatabaseConnectorDefinition(
     allowedDriverProperties =
         allowedDriverProperties == null ? Set.of() : Set.copyOf(allowedDriverProperties);
     additionalOptions = additionalOptions == null ? List.of() : List.copyOf(additionalOptions);
-    schemaRetrieval =
-        schemaRetrieval == null ? new SchemaRetrievalDefinition(null, null, null) : schemaRetrieval;
-    limit = limit == null ? new LimitDefinition(null, null, null, null) : limit;
-    requireNonNull(databaseServerType, "No database server type definition provided");
-    requireNonNull(standardOptions, "No standard options definition provided");
-    requireNonNull(schemaRetrieval, "No schema retrieval definition provided");
-    requireNonNull(limit, "No limit definition provided");
+    schemaRetrieval = schemaRetrieval == null ? new SchemaRetrievalDefinition() : schemaRetrieval;
+    limit = limit == null ? new LimitDefinition() : limit;
   }
 }

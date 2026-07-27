@@ -28,7 +28,6 @@ standard-options:
 additional-options:
   - name: duckdb.read_only
     type: Boolean
-    urlx-key: duckdb.read_only
     default: false
 schema-retrieval:
   supports-catalogs: auto

@@ -36,7 +36,6 @@ standard-options:
 additional-options:
   - name: MODE
     type: String
-    urlx-key: MODE
     default: REGULAR
     help:
       - H2 compatibility mode (for example PostgreSQL, MySQL, Oracle)

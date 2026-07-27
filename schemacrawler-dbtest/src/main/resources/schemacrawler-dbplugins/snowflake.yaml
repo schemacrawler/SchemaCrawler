@@ -38,27 +38,29 @@ standard-options:
     help:
       - Snowflake database name
 additional-options:
+  - name: db
+    type: String
+    default: "${database}"  
+  - name: schema
+    type: String
+    default: null
+    help:
+      - Snowflake schema name
+      - Optional  
   - name: warehouse
     type: String
-    urlx-key: warehouse
     default: null
     help:
       - Snowflake virtual warehouse name
       - Optional
   - name: role
     type: String
-    urlx-key: role
     default: null
     help:
       - Snowflake role name
       - Optional
-  - name: db
-    type: String
-    urlx-key: db
-    default: "${database}"
   - name: CLIENT_SESSION_KEEP_ALIVE
     type: Boolean
-    urlx-key: CLIENT_SESSION_KEEP_ALIVE
     default: true
 schema-retrieval:
   supports-catalogs: auto

@@ -41,14 +41,12 @@ standard-options:
 additional-options:
   - name: compress
     type: Boolean
-    urlx-key: compress
     default: true
     help:
       - Enable data compression
       - Optional, defaults to true
   - name: socket_timeout
     type: Integer
-    urlx-key: socket_timeout
     default: 300000
 schema-retrieval:
   supports-catalogs: auto

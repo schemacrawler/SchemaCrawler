@@ -132,7 +132,6 @@ public final class DatabasePluginYamlDeserializer {
     ensureAllowedFields(node, ADDITIONAL_OPTION_FIELDS, sourceDescription);
     final String name = requiredTextField(node, "name", sourceDescription);
     final String type = requiredTextField(node, "type", sourceDescription);
-    final String urlxKey = node.hasNonNull("urlx-key") ? node.get("urlx-key").asString() : null;
     if (!node.has("default")) {
       throw new ConfigurationException(
           "Missing required <default> field in additional-option in <%s>"
@@ -140,7 +139,7 @@ public final class DatabasePluginYamlDeserializer {
     }
     final String defaultValue = valueToString(node.get("default"));
     final List<String> help = readStringList(node, "help");
-    return new AdditionalOptionDefinition(name, type, urlxKey, defaultValue, help);
+    return new AdditionalOptionDefinition(name, type, defaultValue, help);
   }
 
   private static Set<String> readAllowedDriverProperties(final JsonNode node) {
@@ -239,7 +238,7 @@ public final class DatabasePluginYamlDeserializer {
     }
     ensureAllowedFields(field, STANDARD_OPTION_FIELDS, sourceDescription);
     return new StandardOptionDefinition(
-        readStringList(field, "help"), valueToString(field.get("default")));
+        valueToString(field.get("default")), readStringList(field, "help"));
   }
 
   private static StandardOptionsDefinition readStandardOptionsDefinition(
@@ -360,8 +359,8 @@ public final class DatabasePluginYamlDeserializer {
         databaseServerType,
         urlTemplate,
         urlPrefix,
-        standardOptions,
         allowedDriverProperties,
+        standardOptions,
         additionalOptions,
         schemaRetrieval,
         limit);

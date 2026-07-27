@@ -136,7 +136,7 @@ public final class DatabaseConnectorDefinitionAdapter {
       for (final AdditionalOptionDefinition additionalOption : definition.additionalOptions()) {
         final String defaultValue = additionalOption.defaultValue();
         if (defaultValue != null) {
-          final String urlxKey = additionalOption.urlxKey();
+          final String urlxKey = additionalOption.name();
           connectionSourceBuilder.withDefaultUrlx(
               urlxKey == null ? additionalOption.name() : urlxKey, defaultValue);
         }

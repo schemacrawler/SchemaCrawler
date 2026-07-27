@@ -25,6 +25,9 @@ public record DatabaseServerTypeDefinition(String server, String name) {
   }
 
   public DatabaseServerType toDatabaseServerType() {
+    if ("unknown".equals(server)) {
+      return DatabaseServerType.UNKNOWN;
+    }
     return new DatabaseServerType(server, name);
   }
 }
