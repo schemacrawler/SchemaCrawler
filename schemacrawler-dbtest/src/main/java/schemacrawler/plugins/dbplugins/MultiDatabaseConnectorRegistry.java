@@ -9,7 +9,6 @@
 package schemacrawler.plugins.dbplugins;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,6 +18,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,19 +34,6 @@ import us.fatehi.utility.property.PropertyName;
 
 /** Loads bundled and filesystem YAML plugins. */
 public final class MultiDatabaseConnectorRegistry extends BasePluginRegistry {
-
-  private record LoadedConnectorDefinition(
-      String sourceDescription, DatabaseConnectorDefinition definition) {
-
-    public LoadedConnectorDefinition {
-      requireNotBlank(sourceDescription, "No source description provided");
-      requireNonNull(definition, "No definition provided");
-    }
-
-    public boolean isValid() {
-      return !"unknown".equals(definition.databaseServerType().server());
-    }
-  }
 
   private static final class SimpleDatabaseConnector extends DatabaseConnector {
 
@@ -74,7 +61,7 @@ public final class MultiDatabaseConnectorRegistry extends BasePluginRegistry {
     return singleton;
   }
 
-  private static List<LoadedConnectorDefinition> loadClasspathDefinitions() {
+  private static List<DatabaseConnectorDefinition> loadClasspathDefinitions() {
     final List<String> connectorResources =
         List.of(
             "access.yaml",
@@ -84,35 +71,50 @@ public final class MultiDatabaseConnectorRegistry extends BasePluginRegistry {
             "h2.yaml",
             "snowflake.yaml",
             "trino.yaml");
-    try (final Stream<String> stream = connectorResources.stream()) {
-      return stream
-          .map(resource -> "%s/%s".formatted(CLASS_PATH_ROOT, resource))
-          .map(ClasspathInputResource::new)
-          .map(
-              inputResource ->
-                  new LoadedConnectorDefinition(
-                      inputResource.toString(), DESERIALIZER.parse(inputResource)))
-          .filter(LoadedConnectorDefinition::isValid)
-          .collect(Collectors.toList());
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not load database connectors from the classpath", e);
+
+    final List<DatabaseConnectorDefinition> result = new ArrayList<>();
+
+    for (final String connectorResource : connectorResources) {
+      final String resource = "%s/%s".formatted(CLASS_PATH_ROOT, connectorResource);
+      final ClasspathInputResource inputResource = new ClasspathInputResource(resource);
+      try {
+        final DatabaseConnectorDefinition databaseConnectorDefinition =
+            DESERIALIZER.parse(inputResource);
+        result.add(databaseConnectorDefinition);
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            "Could not load connector definition from resource <%s>".formatted(inputResource),
+            e);
+      }
     }
-    return List.of();
+
+    return result;
   }
 
-  private static List<LoadedConnectorDefinition> loadDirectoryDefinitions(final Path directory) {
-    final List<LoadedConnectorDefinition> loadedDefinitions = new ArrayList<>();
+  private static List<DatabaseConnectorDefinition> loadDirectoryDefinitions(final Path directory) {
     if (directory == null || !Files.isDirectory(directory)) {
-      return loadedDefinitions;
+      return List.of();
     }
     try (final Stream<Path> stream = Files.list(directory)) {
       return stream
           .map(FileInputResource::new)
           .map(
-              inputResource ->
-                  new LoadedConnectorDefinition(
-                      inputResource.toString(), DESERIALIZER.parse(inputResource)))
-          .filter(LoadedConnectorDefinition::isValid)
+              inputResource -> {
+                try {
+                  final DatabaseConnectorDefinition databaseConnectorDefinition =
+                      DESERIALIZER.parse(inputResource);
+                  return Optional.<DatabaseConnectorDefinition>of(databaseConnectorDefinition);
+                } catch (final Exception e) {
+                  LOGGER.log(
+                      Level.WARNING,
+                      "Could not load connector definition from resource <%s>"
+                          .formatted(inputResource),
+                      e);
+                  return Optional.<DatabaseConnectorDefinition>empty();
+                }
+              })
+          .flatMap(Optional::stream) // keep only present values
           .collect(Collectors.toList());
     } catch (final Exception e) {
       LOGGER.log(
@@ -124,18 +126,17 @@ public final class MultiDatabaseConnectorRegistry extends BasePluginRegistry {
   }
 
   private static List<SimpleDatabaseConnector> loadSimpleDatabasePluginRegistry() {
-    final List<LoadedConnectorDefinition> loadedDefinitions =
+    final List<DatabaseConnectorDefinition> loadedDefinitions =
         new ArrayList<>(loadClasspathDefinitions());
     loadedDefinitions.addAll(loadDirectoryDefinitions(Paths.get(".")));
     return toDatabaseConnectors(loadedDefinitions);
   }
 
   private static List<SimpleDatabaseConnector> toDatabaseConnectors(
-      final List<LoadedConnectorDefinition> loadedDefinitions) {
+      final List<DatabaseConnectorDefinition> loadedDefinitions) {
     final List<SimpleDatabaseConnector> databaseConnectors = new ArrayList<>();
     final Set<String> servers = new HashSet<>();
-    for (final LoadedConnectorDefinition loadedDefinition : loadedDefinitions) {
-      final DatabaseConnectorDefinition definition = loadedDefinition.definition();
+    for (final DatabaseConnectorDefinition definition : loadedDefinitions) {
       final String server = definition.databaseServerType().server();
       if (!servers.add(server)) {
         LOGGER.log(Level.WARNING, "Already loaded <%s>".formatted(server));

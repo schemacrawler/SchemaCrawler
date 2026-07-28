@@ -19,28 +19,25 @@ database-connector:
     - FILE_LOCK
     - user
     - password
-standard-options:
-  server:
-    help:
-      - --server=h2
-      - Loads SchemaCrawler plug-in for H2
-  host:
-    help:
-      - Should be omitted
-  port:
-    help:
-      - Should be omitted
-  database:
-    help:
-      - H2 JDBC database path (for example ~/test or mem:test)
-additional-options:
-  - name: MODE
-    type: String
-    default: REGULAR
-    help:
-      - H2 compatibility mode (for example PostgreSQL, MySQL, Oracle)
-schema-retrieval:
-  supports-catalogs: auto
-  supports-schemas: auto
-limit:
-  exclude-schemas: "INFORMATION_SCHEMA"
+  standard-options:
+    server:
+      help:
+        - --server=h2
+        - Loads SchemaCrawler plug-in for H2
+    host:
+      help:
+        - Should be omitted
+    port:
+      help:
+        - Should be omitted
+    database:
+      help:
+        - H2 database path (for example ~/test or mem:test)
+  additional-options:
+    - name: MODE
+      type: string
+      default: REGULAR
+      help:
+        - H2 compatibility mode (for example PostgreSQL, MySQL, Oracle)
+  limit:
+    exclude-schemas: "INFORMATION_SCHEMA"

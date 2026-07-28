@@ -8,26 +8,36 @@
 
 package schemacrawler.plugins.dbplugins.model;
 
-import static us.fatehi.utility.Utility.requireNotBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
+import org.jspecify.annotations.NonNull;
+import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
 import us.fatehi.utility.datasource.DatabaseServerType;
 
 /** Represents database server type information in YAML. */
-public record DatabaseServerTypeDefinition(String server, String name) {
+@JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
+public record DatabaseServerTypeDefinition(@NonNull String server, @NonNull String name) {
 
   public DatabaseServerTypeDefinition() {
-    this("unknown", "Unknown");
+    this(null, null);
   }
 
   public DatabaseServerTypeDefinition {
-    server = requireNotBlank(server, "No database plugin server provided");
-    name = requireNotBlank(name, "No database plugin name provided");
+    server = isBlank(server) ? null : server;
+    name = isBlank(name) ? null : name;
   }
 
   public DatabaseServerType toDatabaseServerType() {
-    if ("unknown".equals(server)) {
+    if (isBlank(server)) {
       return DatabaseServerType.UNKNOWN;
     }
     return new DatabaseServerType(server, name);
+  }
+
+  @Override
+  public String toString() {
+    return JsonUtility.mapper.writeValueAsString(this);
   }
 }

@@ -9,8 +9,12 @@
 package schemacrawler.plugins.dbplugins.model;
 
 import java.util.Map;
+import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
 
 /** Represents schema metadata retrieval overrides. */
+@JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record SchemaRetrievalDefinition(
     Map<String, String> strategies, Boolean supportsCatalogs, Boolean supportsSchemas) {
 
@@ -20,5 +24,10 @@ public record SchemaRetrievalDefinition(
 
   public SchemaRetrievalDefinition {
     strategies = strategies == null ? Map.of() : Map.copyOf(strategies);
+  }
+
+  @Override
+  public String toString() {
+    return JsonUtility.mapper.writeValueAsString(this);
   }
 }

@@ -8,7 +8,12 @@
 
 package schemacrawler.plugins.dbplugins.model;
 
+import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
+
 /** Represents standard plugin options metadata. */
+@JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record StandardOptionsDefinition(
     StandardOptionDefinition server,
     StandardOptionDefinition host,
@@ -24,5 +29,10 @@ public record StandardOptionsDefinition(
     host = host == null ? new StandardOptionDefinition() : host;
     port = port == null ? new StandardOptionDefinition() : port;
     database = database == null ? new StandardOptionDefinition() : database;
+  }
+
+  @Override
+  public String toString() {
+    return JsonUtility.mapper.writeValueAsString(this);
   }
 }

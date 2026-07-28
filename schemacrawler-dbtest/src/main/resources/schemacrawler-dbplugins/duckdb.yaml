@@ -11,27 +11,26 @@ database-connector:
     - temp_directory
     - threads
     - memory_limit
-standard-options:
-  server:
-    help:
-      - --server=duckdb
-      - Loads SchemaCrawler plug-in for DuckDB
-  host:
-    help:
-      - Should be omitted
-  port:
-    help:
-      - Should be omitted
-  database:
-    help:
-      - DuckDB database file path, or :memory:
-additional-options:
-  - name: duckdb.read_only
-    type: Boolean
-    default: false
-schema-retrieval:
-  supports-catalogs: auto
-  supports-schemas: auto
-  table-columns-retrieval-strategy: metadata-over-schemas
-limit:
-  exclude-schemas: "information_schema|pg_catalog"
+  standard-options:
+    server:
+      help:
+        - --server=duckdb
+        - Loads SchemaCrawler plug-in for DuckDB
+    host:
+      help:
+        - Should be omitted
+    port:
+      help:
+        - Should be omitted
+    database:
+      help:
+        - "DuckDB database file path, or :memory:"
+  additional-options:
+    - name: duckdb.read_only
+      type: boolean
+      default: false
+  schema-retrieval:
+    strategies:
+      table-columns-retrieval-strategy: metadata-over-schemas
+  limit:
+    exclude-schemas: "information_schema|pg_catalog"

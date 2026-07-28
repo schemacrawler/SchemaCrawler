@@ -44,32 +44,27 @@ database-connector:
     - kerberosCredentialCachePath
     - kerberosDelegation
     - httpLoggingLevel
-standard-options:
-  server:
-    help:
-      - --server=trino
-      - Loads SchemaCrawler plug-in for Trino
-  port:
-    default: 8080
-  database:
-    help:
-      - Database name
-additional-options:
-  - name: user
-    type: String
-    default: null
-    help:
-      - Trino user name
-      - Optional
-  - name: SSL
-    type: Boolean
-    default: false
-    help:
-      - Enable SSL
-      - Optional, defaults to false
-schema-retrieval:
-  supports-catalogs: auto
-  supports-schemas: auto
-  indexes-retrieval-strategy: none
-limit:
-  exclude-schemas: "INFORMATION_SCHEMA"
+  standard-options:
+    server:
+      help:
+        - --server=trino
+        - Loads SchemaCrawler plug-in for Trino
+    port:
+      default: 8080
+  additional-options:
+    - name: user
+      type: string
+      help:
+        - Trino user name
+        - Optional
+    - name: SSL
+      type: boolean
+      default: false
+      help:
+        - Enable SSL
+        - Optional, defaults to false
+  schema-retrieval:
+    strategies:
+      indexes-retrieval-strategy: none
+  limit:
+    exclude-schemas: "INFORMATION_SCHEMA"

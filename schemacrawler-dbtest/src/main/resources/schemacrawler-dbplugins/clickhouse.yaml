@@ -21,35 +21,32 @@ database-connector:
     - ssl
     - sslmode
     - sslrootcert
-standard-options:
-  server:
-    help:
-      - --server=clickhouse
-      - Loads SchemaCrawler plug-in for ClickHouse
-  host:
-    help:
-      - Host name
-      - Optional, defaults to localhost
-  port:
-    help:
-      - Port number
-      - Optional, defaults to 8123
-    default: 8123
-  database:
-    help:
-      - Database name
-additional-options:
-  - name: compress
-    type: Boolean
-    default: true
-    help:
-      - Enable data compression
-      - Optional, defaults to true
-  - name: socket_timeout
-    type: Integer
-    default: 300000
-schema-retrieval:
-  supports-catalogs: auto
-  supports-schemas: auto
-limit:
-  exclude-schemas: "INFORMATION_SCHEMA|system"
+  standard-options:
+    server:
+      help:
+        - --server=clickhouse
+        - Loads SchemaCrawler plug-in for ClickHouse
+    host:
+      help:
+        - Host name
+        - Optional, defaults to localhost
+    port:
+      help:
+        - Port number
+        - Optional, defaults to 8123
+      default: 8123
+    database:
+      help:
+        - Database name
+  additional-options:
+    - name: compress
+      type: boolean
+      default: true
+      help:
+        - Enable data compression
+        - Optional, defaults to true
+    - name: socket_timeout
+      type: integer
+      default: 300000
+  limit:
+    exclude-schemas: "INFORMATION_SCHEMA|system"

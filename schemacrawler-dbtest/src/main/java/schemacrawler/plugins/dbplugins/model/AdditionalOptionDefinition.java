@@ -8,17 +8,39 @@
 
 package schemacrawler.plugins.dbplugins.model;
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import org.jspecify.annotations.NonNull;
+import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
 
-/** Represents an additional named JDBC option. */
+/** Represents an additional named JDBC driver option. */
+@JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record AdditionalOptionDefinition(
-    String name, String type, String defaultValue, List<String> help) {
+    @NonNull String name,
+    @NonNull CommandlineOptionType type,
+    @NonNull @JsonProperty(value = "default") Object defaultValue,
+    List<String> help) {
 
   public AdditionalOptionDefinition {
     name = requireNotBlank(name, "No additional option name provided");
-    type = requireNotBlank(type, "No additional option type provided");
+    type = requireNonNull(type, "No additional option type provided");
     help = help == null ? List.of() : List.copyOf(help);
+  }
+
+  public String stringDefault() {
+    if (defaultValue == null) {
+      return null;
+    }
+    return String.valueOf(defaultValue);
+  }
+
+  @Override
+  public String toString() {
+    return JsonUtility.mapper.writeValueAsString(this);
   }
 }

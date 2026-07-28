@@ -20,27 +20,24 @@ database-connector:
     - inactivityTimeout
     - password
     - newDatabaseVersion
-standard-options:
-  server:
-    help:
-      - --server=access
-      - Loads SchemaCrawler plug-in for Microsoft Access
-  database:
-    help:
-      - Database file
-additional-options:
-  - name: memory
-    type: Boolean
-    default: false
-    help:
-      - Load database into memory
-      - Optional, defaults to false
-  - name: showSchema
-    type: Boolean
-    default: true
-  - name: sysSchema
-    type: Boolean
-    default: true
-schema-retrieval:
-  supports-catalogs: auto
-  supports-schemas: auto
+  standard-options:
+    server:
+      help:
+        - --server=access
+        - Loads SchemaCrawler plug-in for Microsoft Access
+    database:
+      help:
+        - Database file
+  additional-options:
+    - name: memory
+      type: boolean
+      default: false
+      help:
+        - Load database into memory
+        - Optional, defaults to false
+    - name: showSchema
+      type: boolean
+      default: true
+    - name: sysSchema
+      type: boolean
+      default: true

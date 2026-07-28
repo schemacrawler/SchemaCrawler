@@ -8,16 +8,21 @@
 
 package schemacrawler.plugins.dbplugins.model;
 
-import static us.fatehi.utility.Utility.requireNotBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.List;
 import java.util.Set;
+import org.jspecify.annotations.NonNull;
+import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
 
 /** Represents a YAML database plugin definition. */
+@JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record DatabaseConnectorDefinition(
-    DatabaseServerTypeDefinition databaseServerType,
-    String urlTemplate,
-    String urlPrefix,
+    @NonNull DatabaseServerTypeDefinition databaseServerType,
+    @NonNull String urlTemplate,
+    @NonNull String urlPrefix,
     Set<String> allowedDriverProperties,
     StandardOptionsDefinition standardOptions,
     List<AdditionalOptionDefinition> additionalOptions,
@@ -25,27 +30,24 @@ public record DatabaseConnectorDefinition(
     LimitDefinition limit) {
 
   public DatabaseConnectorDefinition() {
-    this(
-        new DatabaseServerTypeDefinition(),
-        "jdbc:unknown:${database}",
-        "jdbc:unknown:",
-        Set.of(),
-        new StandardOptionsDefinition(),
-        List.of(),
-        new SchemaRetrievalDefinition(),
-        new LimitDefinition());
+    this(null, null, null, null, null, null, null, null);
   }
 
   public DatabaseConnectorDefinition {
     databaseServerType =
         databaseServerType == null ? new DatabaseServerTypeDefinition() : databaseServerType;
-    urlTemplate = requireNotBlank(urlTemplate, "No database plugin URL template provided");
-    urlPrefix = requireNotBlank(urlPrefix, "No database plugin URL prefix provided");
-    standardOptions = standardOptions == null ? new StandardOptionsDefinition() : standardOptions;
+    urlTemplate = isBlank(urlTemplate) ? "" : urlTemplate;
+    urlPrefix = isBlank(urlPrefix) ? "" : urlPrefix;
     allowedDriverProperties =
         allowedDriverProperties == null ? Set.of() : Set.copyOf(allowedDriverProperties);
+    standardOptions = standardOptions == null ? new StandardOptionsDefinition() : standardOptions;
     additionalOptions = additionalOptions == null ? List.of() : List.copyOf(additionalOptions);
     schemaRetrieval = schemaRetrieval == null ? new SchemaRetrievalDefinition() : schemaRetrieval;
     limit = limit == null ? new LimitDefinition() : limit;
+  }
+
+  @Override
+  public String toString() {
+    return JsonUtility.mapper.writeValueAsString(this);
   }
 }

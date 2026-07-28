@@ -8,19 +8,34 @@
 
 package schemacrawler.plugins.dbplugins.model;
 
-import static us.fatehi.utility.Utility.isBlank;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
 
 /** Represents help and default values for a standard option. */
-public record StandardOptionDefinition(String defaultValue, List<String> help) {
+@JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
+public record StandardOptionDefinition(
+    @JsonProperty(value = "default") Object defaultValue, List<String> help) {
 
   public StandardOptionDefinition() {
     this(null, null);
   }
 
   public StandardOptionDefinition {
-    defaultValue = isBlank(defaultValue) ? null : defaultValue;
     help = help == null ? List.of() : List.copyOf(help);
+  }
+
+  public String stringDefault() {
+    if (defaultValue == null) {
+      return null;
+    }
+    return String.valueOf(defaultValue);
+  }
+
+  @Override
+  public String toString() {
+    return JsonUtility.mapper.writeValueAsString(this);
   }
 }

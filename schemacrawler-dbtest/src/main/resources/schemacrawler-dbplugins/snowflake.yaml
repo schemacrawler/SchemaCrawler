@@ -21,49 +21,42 @@ database-connector:
     - tracing
     - proxyHost
     - proxyPort
-standard-options:
-  server:
-    help:
-      - --server=snowflake
-      - Loads SchemaCrawler plug-in for Snowflake
-  host:
-    help:
-      - Snowflake account identifier (e.g. myorg-myaccount.snowflakecomputing.com)
-  port:
-    help:
-      - Port number
-      - Optional, defaults to 443
-    default: 443
-  database:
-    help:
-      - Snowflake database name
-additional-options:
-  - name: db
-    type: String
-    default: "${database}"  
-  - name: schema
-    type: String
-    default: null
-    help:
-      - Snowflake schema name
-      - Optional  
-  - name: warehouse
-    type: String
-    default: null
-    help:
-      - Snowflake virtual warehouse name
-      - Optional
-  - name: role
-    type: String
-    default: null
-    help:
-      - Snowflake role name
-      - Optional
-  - name: CLIENT_SESSION_KEEP_ALIVE
-    type: Boolean
-    default: true
-schema-retrieval:
-  supports-catalogs: auto
-  supports-schemas: auto
-limit:
-  exclude-schemas: "INFORMATION_SCHEMA"
+  standard-options:
+    server:
+      help:
+        - --server=snowflake
+        - Loads SchemaCrawler plug-in for Snowflake
+    host:
+      help:
+        - Snowflake account identifier (e.g. myorg-myaccount.snowflakecomputing.com)
+    port:
+      help:
+        - Port number
+        - Optional, defaults to 443
+      default: 443
+    database:
+      help:
+        - Snowflake database name
+  additional-options:
+    - name: db
+      type: string
+    - name: schema
+      type: string
+      help:
+        - Snowflake schema name
+        - Optional  
+    - name: warehouse
+      type: string
+      help:
+        - Snowflake virtual warehouse name
+        - Optional
+    - name: role
+      type: string
+      help:
+        - Snowflake role name
+        - Optional
+    - name: CLIENT_SESSION_KEEP_ALIVE
+      type: boolean
+      default: true
+  limit:
+    exclude-schemas: "INFORMATION_SCHEMA"

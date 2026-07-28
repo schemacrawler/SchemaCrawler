@@ -36,13 +36,9 @@ public final class DatabaseConnectorDefinitionAdapter {
     return new DatabaseConnectorDefinitionAdapter().toDatabaseConnectorOptionsInternal(definition);
   }
 
-  private final Map<String, Class<?>> optionTypes;
-
   private final Map<String, SchemaInfoMetadataRetrievalStrategy> strategyLookup;
 
   public DatabaseConnectorDefinitionAdapter() {
-    optionTypes =
-        Map.of("string", String.class, "integer", Integer.class, "boolean", Boolean.class);
     strategyLookup = createStrategyLookup();
   }
 
@@ -51,7 +47,7 @@ public final class DatabaseConnectorDefinitionAdapter {
     for (final AdditionalOptionDefinition additionalOption : additionalOptions) {
       pluginCommand.addOption(
           additionalOption.name(),
-          lookupOptionType(additionalOption.type()),
+          additionalOption.type().optionClass(),
           additionalOption.help().toArray(String[]::new));
     }
   }
@@ -92,15 +88,17 @@ public final class DatabaseConnectorDefinitionAdapter {
   private void applySchemaRetrievalOverrides(
       final SchemaRetrievalOptionsBuilder builder, final DatabaseConnectorDefinition definition) {
     final var schemaRetrieval = definition.schemaRetrieval();
-    if (schemaRetrieval.supportsCatalogs() != null) {
-      if (schemaRetrieval.supportsCatalogs()) {
+    final Boolean supportsCatalogs = schemaRetrieval.supportsCatalogs();
+    if (supportsCatalogs != null) {
+      if (supportsCatalogs) {
         builder.withSupportsCatalogs();
       } else {
         builder.withDoesNotSupportCatalogs();
       }
     }
-    if (schemaRetrieval.supportsSchemas() != null) {
-      if (schemaRetrieval.supportsSchemas()) {
+    final Boolean supportsSchemas = schemaRetrieval.supportsSchemas();
+    if (supportsSchemas != null) {
+      if (supportsSchemas) {
         builder.withSupportsSchemas();
       } else {
         builder.withDoesNotSupportSchemas();
@@ -111,6 +109,28 @@ public final class DatabaseConnectorDefinitionAdapter {
       final MetadataRetrievalStrategy metadataRetrievalStrategy =
           lookupMetadataRetrievalStrategy(entry.getValue());
       builder.with(strategy, metadataRetrievalStrategy);
+    }
+  }
+
+  private void applyStandardOptionDefaults(
+      final DatabaseConnectionSourceBuilder connectionSourceBuilder,
+      final StandardOptionsDefinition standardOptions) {
+    final String defaultHost = standardOptions.host().stringDefault();
+    if (defaultHost != null) {
+      connectionSourceBuilder.withDefaultHost(defaultHost);
+    }
+    final String defaultDatabase = standardOptions.database().stringDefault();
+    if (defaultDatabase != null) {
+      connectionSourceBuilder.withDefaultDatabase(defaultDatabase);
+    }
+    final String defaultPort = standardOptions.port().stringDefault();
+    if (defaultPort != null) {
+      try {
+        connectionSourceBuilder.withDefaultPort(Integer.parseInt(defaultPort));
+      } catch (final NumberFormatException e) {
+        throw new ConfigurationException(
+            "Invalid standard option default for <port> <%s>".formatted(defaultPort), e);
+      }
     }
   }
 
@@ -134,37 +154,15 @@ public final class DatabaseConnectorDefinitionAdapter {
     }
     if (!definition.additionalOptions().isEmpty()) {
       for (final AdditionalOptionDefinition additionalOption : definition.additionalOptions()) {
-        final String defaultValue = additionalOption.defaultValue();
-        if (defaultValue != null) {
+        final String stringDefault = additionalOption.stringDefault();
+        if (stringDefault != null) {
           final String urlxKey = additionalOption.name();
           connectionSourceBuilder.withDefaultUrlx(
-              urlxKey == null ? additionalOption.name() : urlxKey, defaultValue);
+              urlxKey == null ? additionalOption.name() : urlxKey, stringDefault);
         }
       }
     }
     return connectionSourceBuilder;
-  }
-
-  private void applyStandardOptionDefaults(
-      final DatabaseConnectionSourceBuilder connectionSourceBuilder,
-      final StandardOptionsDefinition standardOptions) {
-    final String defaultHost = standardOptions.host().defaultValue();
-    if (defaultHost != null) {
-      connectionSourceBuilder.withDefaultHost(defaultHost);
-    }
-    final String defaultDatabase = standardOptions.database().defaultValue();
-    if (defaultDatabase != null) {
-      connectionSourceBuilder.withDefaultDatabase(defaultDatabase);
-    }
-    final String defaultPort = standardOptions.port().defaultValue();
-    if (defaultPort != null) {
-      try {
-        connectionSourceBuilder.withDefaultPort(Integer.parseInt(defaultPort));
-      } catch (final NumberFormatException e) {
-        throw new ConfigurationException(
-            "Invalid standard option default for <port> <%s>".formatted(defaultPort), e);
-      }
-    }
   }
 
   private String[] helpLinesOrDefault(final List<String> helpLines, final String... defaults) {
@@ -181,14 +179,6 @@ public final class DatabaseConnectorDefinitionAdapter {
       throw new ConfigurationException(
           "Unknown metadata retrieval strategy <%s>".formatted(value), e);
     }
-  }
-
-  private Class<?> lookupOptionType(final String type) {
-    final Class<?> optionType = optionTypes.get(normalize(type));
-    if (optionType == null) {
-      throw new ConfigurationException("Unknown additional option type <%s>".formatted(type));
-    }
-    return optionType;
   }
 
   private SchemaInfoMetadataRetrievalStrategy lookupStrategy(final String name) {

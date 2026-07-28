@@ -10,7 +10,12 @@ package schemacrawler.plugins.dbplugins.model;
 
 import static us.fatehi.utility.Utility.isBlank;
 
+import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
+
 /** Represents catalog and schema limit patterns. */
+@JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record LimitDefinition(
     String includeSchemas, String excludeSchemas, String includeCatalogs, String excludeCatalogs) {
 
@@ -23,5 +28,10 @@ public record LimitDefinition(
     excludeSchemas = isBlank(excludeSchemas) ? null : excludeSchemas;
     includeCatalogs = isBlank(includeCatalogs) ? null : includeCatalogs;
     excludeCatalogs = isBlank(excludeCatalogs) ? null : excludeCatalogs;
+  }
+
+  @Override
+  public String toString() {
+    return JsonUtility.mapper.writeValueAsString(this);
   }
 }
