@@ -12,10 +12,6 @@ database-connector:
     - threads
     - memory_limit
   standard-options:
-    server:
-      help:
-        - --server=duckdb
-        - Loads SchemaCrawler plug-in for DuckDB
     host:
       help:
         - Should be omitted

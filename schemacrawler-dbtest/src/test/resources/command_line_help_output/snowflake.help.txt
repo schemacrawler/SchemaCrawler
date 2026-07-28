@@ -1,0 +1,23 @@
+** Connect to Snowflake
+
+      --CLIENT_SESSION_KEEP_ALIVE
+
+      --database=<database>
+                          Snowflake database name
+      --db=<db>
+      --host=<host>       Snowflake account identifier (e.g. myorg-myaccount.
+                            snowflakecomputing.com)
+      --port=<port>       Port number
+                          Optional, defaults to 443
+      --role=<role>       Snowflake role name
+                          Optional
+      --schema=<schema>   Snowflake schema name
+                          Optional
+      --server=<server>   --server=snowflake
+                          Loads SchemaCrawler plug-in for Snowflake
+      --warehouse=<warehouse>
+                          Snowflake virtual warehouse name
+                          Optional
+Add connection options to the `connect` command in the SchemaCrawler Shell
+
+

@@ -20,16 +20,6 @@ database-connector:
     - user
     - password
   standard-options:
-    server:
-      help:
-        - --server=h2
-        - Loads SchemaCrawler plug-in for H2
-    host:
-      help:
-        - Should be omitted
-    port:
-      help:
-        - Should be omitted
     database:
       help:
         - H2 database path (for example ~/test or mem:test)

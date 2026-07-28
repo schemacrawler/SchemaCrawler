@@ -1,0 +1,12 @@
+** Connect to DuckDB
+
+      --database=<database>
+                           DuckDB database file path, or :memory:
+      --duckdb.read_only
+      --host=<host>        Should be omitted
+      --port=<port>        Should be omitted
+      --server=<server>    --server=duckdb
+                           Loads SchemaCrawler plug-in for DuckDB
+Add connection options to the `connect` command in the SchemaCrawler Shell
+
+

@@ -1,0 +1,13 @@
+** Connect to H2
+
+      --database=<database>
+                          H2 database path (for example ~/test or mem:test)
+      --host=<host>       Host name
+      --MODE=<MODE>       H2 compatibility mode (for example PostgreSQL, MySQL,
+                            Oracle)
+      --port=<port>       Port number
+      --server=<server>   --server=h2
+                          Loads SchemaCrawler plug-in for H2
+Add connection options to the `connect` command in the SchemaCrawler Shell
+
+

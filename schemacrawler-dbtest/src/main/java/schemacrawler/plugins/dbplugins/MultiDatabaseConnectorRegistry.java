@@ -28,6 +28,7 @@ import schemacrawler.plugins.dbplugins.model.DatabaseConnectorDefinition;
 import schemacrawler.plugins.dbplugins.yaml.DatabasePluginYamlDeserializer;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.registry.BasePluginRegistry;
+import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 import us.fatehi.utility.ioresource.FileInputResource;
 import us.fatehi.utility.property.PropertyName;
@@ -98,6 +99,7 @@ public final class MultiDatabaseConnectorRegistry extends BasePluginRegistry {
     }
     try (final Stream<Path> stream = Files.list(directory)) {
       return stream
+          .filter(file -> "yaml".equals(IOUtility.getFileExtension(file)))
           .map(FileInputResource::new)
           .map(
               inputResource -> {

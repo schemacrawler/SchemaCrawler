@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.plugins.dbplugins.yaml;
+package schemacrawler.plugins.dbplugins;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -19,6 +19,7 @@ import org.junit.jupiter.api.io.TempDir;
 import schemacrawler.plugins.dbplugins.model.AdditionalOptionDefinition;
 import schemacrawler.plugins.dbplugins.model.CommandlineOptionType;
 import schemacrawler.plugins.dbplugins.model.DatabaseConnectorDefinition;
+import schemacrawler.plugins.dbplugins.yaml.DatabasePluginYamlDeserializer;
 import us.fatehi.utility.ioresource.FileInputResource;
 
 class DatabasePluginYamlDeserializerTest {

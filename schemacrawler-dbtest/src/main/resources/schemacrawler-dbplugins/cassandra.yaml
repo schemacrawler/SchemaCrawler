@@ -27,10 +27,6 @@ database-connector:
     - asyncQueryTimeout
     - keyspace
   standard-options:
-    server:
-      help:
-        - --server=cassandra
-        - Loads SchemaCrawler plug-in for Cassandra
     host:
       help:
         - Host name

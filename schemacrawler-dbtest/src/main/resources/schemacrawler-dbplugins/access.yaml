@@ -21,10 +21,6 @@ database-connector:
     - password
     - newDatabaseVersion
   standard-options:
-    server:
-      help:
-        - --server=access
-        - Loads SchemaCrawler plug-in for Microsoft Access
     database:
       help:
         - Database file

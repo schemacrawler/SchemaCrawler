@@ -15,17 +15,15 @@ import tools.jackson.databind.annotation.JsonNaming;
 /** Represents standard plugin options metadata. */
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record StandardOptionsDefinition(
-    StandardOptionDefinition server,
     StandardOptionDefinition host,
     StandardOptionDefinition port,
     StandardOptionDefinition database) {
 
   public StandardOptionsDefinition() {
-    this(null, null, null, null);
+    this(null, null, null);
   }
 
   public StandardOptionsDefinition {
-    server = server == null ? new StandardOptionDefinition() : server;
     host = host == null ? new StandardOptionDefinition() : host;
     port = port == null ? new StandardOptionDefinition() : port;
     database = database == null ? new StandardOptionDefinition() : database;

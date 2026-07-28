@@ -22,10 +22,6 @@ database-connector:
     - sslmode
     - sslrootcert
   standard-options:
-    server:
-      help:
-        - --server=clickhouse
-        - Loads SchemaCrawler plug-in for ClickHouse
     host:
       help:
         - Host name

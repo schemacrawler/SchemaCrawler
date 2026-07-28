@@ -1,0 +1,18 @@
+** Connect to Cassandra
+
+      --consistency=<consistency>
+                          Consistency level
+                          Optional, defaults to LOCAL_ONE
+      --database=<database>
+                          Keyspace name
+      --host=<host>       Host name
+                          Optional, defaults to localhost
+                          Can be a list of hosts separated with '--'
+                          See https://github.com/ing-bank/cassandra-jdbc-wrapper
+      --port=<port>       Port number
+                          Optional, defaults to 9042
+      --server=<server>   --server=cassandra
+                          Loads SchemaCrawler plug-in for Cassandra
+Add connection options to the `connect` command in the SchemaCrawler Shell
+
+

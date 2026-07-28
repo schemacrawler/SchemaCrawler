@@ -59,10 +59,8 @@ public final class DatabaseConnectorDefinitionAdapter {
     pluginCommand.addOption(
         "server",
         String.class,
-        helpLinesOrDefault(
-            standardOptions.server().help(),
-            "--server=%s".formatted(dbServerType.getDatabaseSystemIdentifier()),
-            "Loads SchemaCrawler plug-in for %s".formatted(dbServerType.getDatabaseSystemName())));
+        "--server=%s".formatted(dbServerType.getDatabaseSystemIdentifier()),
+        "Loads SchemaCrawler plug-in for %s".formatted(dbServerType.getDatabaseSystemName()));
     pluginCommand.addOption(
         "host", String.class, helpLinesOrDefault(standardOptions.host().help(), "Host name"));
     pluginCommand.addOption(

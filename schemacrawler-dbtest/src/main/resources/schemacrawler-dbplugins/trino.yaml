@@ -45,10 +45,6 @@ database-connector:
     - kerberosDelegation
     - httpLoggingLevel
   standard-options:
-    server:
-      help:
-        - --server=trino
-        - Loads SchemaCrawler plug-in for Trino
     port:
       default: 8080
   additional-options:
