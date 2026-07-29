@@ -20,19 +20,15 @@ import tools.jackson.databind.annotation.JsonNaming;
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record LimitDefinition(
     @Nullable @JsonProperty(required = false) String includeSchemas,
-    @Nullable @JsonProperty(required = false) String excludeSchemas,
-    @Nullable @JsonProperty(required = false) String includeCatalogs,
-    @Nullable @JsonProperty(required = false) String excludeCatalogs) {
+    @Nullable @JsonProperty(required = false) String excludeSchemas) {
 
   public LimitDefinition() {
-    this(null, null, null, null);
+    this(null, null);
   }
 
   public LimitDefinition {
     includeSchemas = isBlank(includeSchemas) ? null : includeSchemas;
     excludeSchemas = isBlank(excludeSchemas) ? null : excludeSchemas;
-    includeCatalogs = isBlank(includeCatalogs) ? null : includeCatalogs;
-    excludeCatalogs = isBlank(excludeCatalogs) ? null : excludeCatalogs;
   }
 
   @Override

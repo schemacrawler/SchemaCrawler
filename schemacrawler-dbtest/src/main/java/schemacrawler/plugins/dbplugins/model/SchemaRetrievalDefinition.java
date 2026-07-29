@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 import org.jspecify.annotations.Nullable;
 import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
+import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
@@ -20,7 +21,7 @@ import tools.jackson.databind.annotation.JsonNaming;
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record SchemaRetrievalDefinition(
     @Nullable @JsonProperty(required = false)
-        Map<SchemaInfoMetadataRetrievalStrategy, String> retrievalStrategies,
+        Map<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy> retrievalStrategies,
     @Nullable @JsonProperty(required = false) Boolean supportsCatalogs,
     @Nullable @JsonProperty(required = false) Boolean supportsSchemas) {
 

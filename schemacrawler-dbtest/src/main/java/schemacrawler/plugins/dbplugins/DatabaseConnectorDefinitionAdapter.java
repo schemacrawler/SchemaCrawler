@@ -8,12 +8,9 @@
 
 package schemacrawler.plugins.dbplugins;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.plugins.dbplugins.model.AdditionalOptionDefinition;
 import schemacrawler.plugins.dbplugins.model.DatabaseConnectorDefinition;
 import schemacrawler.plugins.dbplugins.model.LimitDefinition;
@@ -34,12 +31,6 @@ public final class DatabaseConnectorDefinitionAdapter {
   public static DatabaseConnectorOptions toDatabaseConnectorOptions(
       final DatabaseConnectorDefinition definition) {
     return new DatabaseConnectorDefinitionAdapter().toDatabaseConnectorOptionsInternal(definition);
-  }
-
-  private final Map<String, SchemaInfoMetadataRetrievalStrategy> strategyLookup;
-
-  public DatabaseConnectorDefinitionAdapter() {
-    strategyLookup = createStrategyLookup();
   }
 
   private void addAdditionalOptions(
@@ -76,11 +67,8 @@ public final class DatabaseConnectorDefinitionAdapter {
     if (limit == null) {
       return;
     }
-    if (limit.includeSchemas() != null) {
-      builder.includeSchemas(new RegularExpressionInclusionRule(limit.includeSchemas()));
-    } else if (limit.excludeSchemas() != null) {
-      builder.includeSchemas(new RegularExpressionExclusionRule(limit.excludeSchemas()));
-    }
+    builder.includeSchemas(
+        new RegularExpressionRule(limit.includeSchemas(), limit.excludeSchemas()));
   }
 
   private void applySchemaRetrievalOverrides(
@@ -102,12 +90,9 @@ public final class DatabaseConnectorDefinitionAdapter {
         builder.withDoesNotSupportSchemas();
       }
     }
-    for (final Map.Entry<SchemaInfoMetadataRetrievalStrategy, String> entry :
+    for (final Map.Entry<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy> entry :
         schemaRetrieval.retrievalStrategies().entrySet()) {
-      final SchemaInfoMetadataRetrievalStrategy strategy = entry.getKey();
-      final MetadataRetrievalStrategy metadataRetrievalStrategy =
-          lookupMetadataRetrievalStrategy(entry.getValue());
-      builder.with(strategy, metadataRetrievalStrategy);
+      builder.with(entry.getKey(), entry.getValue());
     }
   }
 
@@ -131,16 +116,6 @@ public final class DatabaseConnectorDefinitionAdapter {
             "Invalid standard option default for <port> <%s>".formatted(defaultPort), e);
       }
     }
-  }
-
-  private Map<String, SchemaInfoMetadataRetrievalStrategy> createStrategyLookup() {
-    final Map<String, SchemaInfoMetadataRetrievalStrategy> strategies = new LinkedHashMap<>();
-    for (final SchemaInfoMetadataRetrievalStrategy strategy :
-        SchemaInfoMetadataRetrievalStrategy.values()) {
-      strategies.put(normalize(strategy.name()), strategy);
-      strategies.put(normalize(strategy.getKey()), strategy);
-    }
-    return Map.copyOf(strategies);
   }
 
   private DatabaseConnectionSourceBuilder databaseConnectionSourceBuilder(
@@ -169,27 +144,6 @@ public final class DatabaseConnectorDefinitionAdapter {
       return defaults;
     }
     return helpLines.toArray(String[]::new);
-  }
-
-  private MetadataRetrievalStrategy lookupMetadataRetrievalStrategy(final String value) {
-    try {
-      return MetadataRetrievalStrategy.valueOf(value.toLowerCase(Locale.ENGLISH).replace('-', '_'));
-    } catch (final IllegalArgumentException e) {
-      throw new ConfigurationException(
-          "Unknown metadata retrieval strategy <%s>".formatted(value), e);
-    }
-  }
-
-  private SchemaInfoMetadataRetrievalStrategy lookupStrategy(final String name) {
-    final SchemaInfoMetadataRetrievalStrategy strategy = strategyLookup.get(normalize(name));
-    if (strategy == null) {
-      throw new ConfigurationException("Unknown schema retrieval strategy <%s>".formatted(name));
-    }
-    return strategy;
-  }
-
-  private String normalize(final String value) {
-    return value == null ? "" : value.replace("-", "").replace("_", "").toLowerCase(Locale.ENGLISH);
   }
 
   private DatabaseConnectorOptions toDatabaseConnectorOptionsInternal(

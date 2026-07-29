@@ -25,11 +25,13 @@ import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.JsonGenerator;
+import tools.jackson.core.JsonParser;
 import tools.jackson.databind.DeserializationContext;
 import tools.jackson.databind.JacksonModule;
 import tools.jackson.databind.KeyDeserializer;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueDeserializer;
 import tools.jackson.databind.ValueSerializer;
 import tools.jackson.databind.cfg.MapperBuilder;
 import tools.jackson.databind.module.SimpleModule;
@@ -43,8 +45,7 @@ public class JsonUtility {
       newConfiguredObjectMapper(YAMLMapper.builder().disable(WRITE_DOC_START_MARKER));
 
   private static JacksonModule getEnumMapper() {
-    final SimpleModule module =
-        new SimpleModule("Retrieval strategy map key and value serializaation");
+    final SimpleModule module = new SimpleModule("Retrieval strategy map entries serializaation");
     module.addKeySerializer(
         SchemaInfoMetadataRetrievalStrategy.class,
         new ValueSerializer<SchemaInfoMetadataRetrievalStrategy>() {
@@ -72,7 +73,7 @@ public class JsonUtility {
             return SchemaInfoMetadataRetrievalStrategy.valueOfFromKey(key);
           }
         });
-    module.addKeySerializer(
+    module.addSerializer(
         MetadataRetrievalStrategy.class,
         new ValueSerializer<MetadataRetrievalStrategy>() {
 
@@ -89,13 +90,14 @@ public class JsonUtility {
             }
           }
         });
-    module.addKeyDeserializer(
+    module.addDeserializer(
         MetadataRetrievalStrategy.class,
-        new KeyDeserializer() {
+        new ValueDeserializer<MetadataRetrievalStrategy>() {
 
           @Override
-          public Object deserializeKey(final String key, final DeserializationContext ctxt)
-              throws JacksonException {
+          public MetadataRetrievalStrategy deserialize(
+              final JsonParser p, final DeserializationContext ctxt) throws JacksonException {
+            final String key = p.getString();
             if (isBlank(key)) {
               return MetadataRetrievalStrategy.none;
             }
