@@ -10,9 +10,11 @@ package schemacrawler.plugins.dbplugins.model;
 
 import static us.fatehi.utility.Utility.isBlank;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Set;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
@@ -20,14 +22,14 @@ import tools.jackson.databind.annotation.JsonNaming;
 /** Represents a YAML database plugin definition. */
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record DatabaseConnectorDefinition(
-    @NonNull DatabaseServerTypeDefinition databaseServerType,
-    @NonNull String urlTemplate,
-    @NonNull String urlPrefix,
-    Set<String> allowedDriverProperties,
-    StandardOptionsDefinition standardOptions,
-    List<AdditionalOptionDefinition> additionalOptions,
-    SchemaRetrievalDefinition schemaRetrieval,
-    LimitDefinition limit) {
+    @NonNull @JsonProperty(required = true) DatabaseServerTypeDefinition databaseServerType,
+    @NonNull @JsonProperty(required = true) String urlTemplate,
+    @NonNull @JsonProperty(required = true) String urlPrefix,
+    @Nullable @JsonProperty(required = false) Set<String> allowedDriverProperties,
+    @Nullable @JsonProperty(required = false) StandardOptionsDefinition standardOptions,
+    @Nullable @JsonProperty(required = false) List<AdditionalOptionDefinition> additionalOptions,
+    @Nullable @JsonProperty(required = false) SchemaRetrievalDefinition schemaRetrieval,
+    @Nullable @JsonProperty(required = false) LimitDefinition limit) {
 
   public DatabaseConnectorDefinition() {
     this(null, null, null, null, null, null, null, null);

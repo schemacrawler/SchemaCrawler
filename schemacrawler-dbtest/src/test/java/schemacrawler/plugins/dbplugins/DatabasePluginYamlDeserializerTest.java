@@ -95,6 +95,8 @@ class DatabasePluginYamlDeserializerTest {
              - name: setting
                type: string
                default: value
+               help:
+                 - Help!
            schema-retrieval:
              supports-catalogs: null
              supports-schemas: true
