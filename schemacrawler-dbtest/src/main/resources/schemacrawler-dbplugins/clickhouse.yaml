@@ -2,7 +2,7 @@ database-connector:
   database-server-type:
     server: clickhouse
     name: ClickHouse
-  url-template: "jdbc:clickhouse://${host}:${port}/${database}"
+  url-template: "jdbc:clickhouse://${host}:${port}/${database}?client_name=SchemaCrawler"
   url-prefix: "jdbc:clickhouse:"
   allowed-driver-properties:
     - socket_timeout
@@ -34,15 +34,5 @@ database-connector:
     database:
       help:
         - Database name
-  additional-options:
-    - name: compress
-      type: boolean
-      default: true
-      help:
-        - Enable data compression
-        - Optional, defaults to true
-    - name: socket_timeout
-      type: integer
-      default: 300000
   limit:
     exclude-schemas: "INFORMATION_SCHEMA|system"

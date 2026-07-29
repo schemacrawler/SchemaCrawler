@@ -2,12 +2,10 @@ database-connector:
   database-server-type:
     server: access
     name: Microsoft Access
-  url-template: "jdbc:ucanaccess://${database}"
+  url-template: "jdbc:ucanaccess://${database};showSchema=true;sysSchema=true"
   url-prefix: "jdbc:ucanaccess:"
   allowed-driver-properties:
     - memory
-    - showSchema
-    - sysSchema
     - singleConnection
     - columnOrder
     - ignoreCase
@@ -24,16 +22,3 @@ database-connector:
     database:
       help:
         - Database file
-  additional-options:
-    - name: memory
-      type: boolean
-      default: false
-      help:
-        - Load database into memory
-        - Optional, defaults to false
-    - name: showSchema
-      type: boolean
-      default: true
-    - name: sysSchema
-      type: boolean
-      default: true

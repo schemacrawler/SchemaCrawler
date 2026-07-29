@@ -21,10 +21,10 @@ import tools.jackson.databind.annotation.JsonNaming;
 /** Represents an additional named JDBC driver option. */
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record AdditionalOptionDefinition(
-    @NonNull String name,
-    @NonNull CommandlineOptionType type,
-    @NonNull @JsonProperty(value = "default") Object defaultValue,
-    List<String> help) {
+    @NonNull @JsonProperty(required = true) String name,
+    @NonNull @JsonProperty(required = true) CommandlineOptionType type,
+    @NonNull @JsonProperty(value = "default", required = false) Object defaultValue,
+    @NonNull @JsonProperty(required = true) List<String> help) {
 
   public AdditionalOptionDefinition {
     name = requireNotBlank(name, "No additional option name provided");

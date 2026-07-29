@@ -36,23 +36,27 @@ database-connector:
   additional-options:
     - name: db
       type: string
+      help:
+        - Specifies the default database to use once connected. 
+        - The specified database should be an existing database for which the specified default role has privileges.
+        - Optional
     - name: schema
       type: string
       help:
-        - Snowflake schema name
-        - Optional  
+        - Specifies the default schema to use for the specified database once connected. 
+        - The specified schema should be an existing schema for which the specified default role has privileges.
+        - Optional
     - name: warehouse
       type: string
       help:
-        - Snowflake virtual warehouse name
+        - Specifies the virtual warehouse to use once connected. 
+        - The specified warehouse should be an existing warehouse for which the specified default role has privileges.
         - Optional
     - name: role
       type: string
       help:
-        - Snowflake role name
+        - Specifies the default access control role. 
+        - The specified role should be an existing role that has already been assigned to the specified user.
         - Optional
-    - name: CLIENT_SESSION_KEEP_ALIVE
-      type: boolean
-      default: true
   limit:
     exclude-schemas: "INFORMATION_SCHEMA"

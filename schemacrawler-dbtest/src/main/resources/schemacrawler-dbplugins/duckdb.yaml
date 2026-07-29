@@ -21,10 +21,6 @@ database-connector:
     database:
       help:
         - "DuckDB database file path, or :memory:"
-  additional-options:
-    - name: duckdb.read_only
-      type: boolean
-      default: false
   schema-retrieval:
     strategies:
       table-columns-retrieval-strategy: metadata-over-schemas
