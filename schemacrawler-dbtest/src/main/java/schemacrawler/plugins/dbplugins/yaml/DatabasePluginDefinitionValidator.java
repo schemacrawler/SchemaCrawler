@@ -71,6 +71,9 @@ final class DatabasePluginDefinitionValidator {
     if (definition == null) {
       throw new ConfigurationException("Missing YAML root in <%s>".formatted(sourceDescription));
     }
+    if (definition.databaseServerType().toDatabaseServerType().isUnknownDatabaseSystem()) {
+      throw new ConfigurationException("Missing database server type");
+    }
     validateSchemaRetrieval(definition.schemaRetrieval(), sourceDescription);
     validateLimit(definition.limit(), sourceDescription);
     return definition;
@@ -90,10 +93,7 @@ final class DatabasePluginDefinitionValidator {
 
   private void validateSchemaRetrieval(
       final SchemaRetrievalDefinition schemaRetrieval, final String sourceDescription) {
-    if (schemaRetrieval == null
-        || schemaRetrieval.strategies().isEmpty()
-            && schemaRetrieval.supportsCatalogs() == null
-            && schemaRetrieval.supportsSchemas() == null) {
+    if (schemaRetrieval == null || schemaRetrieval.isEmpty()) {
       return;
     }
     for (final Map.Entry<String, String> entry : schemaRetrieval.strategies().entrySet()) {
