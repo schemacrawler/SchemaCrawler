@@ -1,7 +1,5 @@
 ** Connect to ClickHouse
 
-      --compress          Enable data compression
-                          Optional, defaults to true
       --database=<database>
                           Database name
       --host=<host>       Host name
@@ -10,8 +8,6 @@
                           Optional, defaults to 8123
       --server=<server>   --server=clickhouse
                           Loads SchemaCrawler plug-in for ClickHouse
-      --socket_timeout=<socket_timeout>
-
 Add connection options to the `connect` command in the SchemaCrawler Shell
 
 
