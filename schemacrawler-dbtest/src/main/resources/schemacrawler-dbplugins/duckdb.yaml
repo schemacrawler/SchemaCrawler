@@ -22,7 +22,7 @@ database-connector:
       help:
         - "DuckDB database file path, or :memory:"
   schema-retrieval:
-    strategies:
-      table-columns-retrieval-strategy: metadata-over-schemas
+    retrieval-strategies:
+      tablecolumns: metadata-over-schemas
   limit:
     exclude-schemas: "information_schema|pg_catalog"

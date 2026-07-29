@@ -12,13 +12,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 import org.jspecify.annotations.Nullable;
 import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
+import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
 /** Represents schema metadata retrieval overrides. */
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record SchemaRetrievalDefinition(
-    @Nullable @JsonProperty(required = false) Map<String, String> strategies,
+    @Nullable @JsonProperty(required = false)
+        Map<SchemaInfoMetadataRetrievalStrategy, String> retrievalStrategies,
     @Nullable @JsonProperty(required = false) Boolean supportsCatalogs,
     @Nullable @JsonProperty(required = false) Boolean supportsSchemas) {
 
@@ -27,11 +29,11 @@ public record SchemaRetrievalDefinition(
   }
 
   public SchemaRetrievalDefinition {
-    strategies = strategies == null ? Map.of() : Map.copyOf(strategies);
+    retrievalStrategies = retrievalStrategies == null ? Map.of() : Map.copyOf(retrievalStrategies);
   }
 
   public boolean isEmpty() {
-    return strategies.isEmpty() && supportsCatalogs == null && supportsSchemas == null;
+    return retrievalStrategies.isEmpty() && supportsCatalogs == null && supportsSchemas == null;
   }
 
   @Override

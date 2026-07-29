@@ -102,8 +102,9 @@ public final class DatabaseConnectorDefinitionAdapter {
         builder.withDoesNotSupportSchemas();
       }
     }
-    for (final Map.Entry<String, String> entry : schemaRetrieval.strategies().entrySet()) {
-      final SchemaInfoMetadataRetrievalStrategy strategy = lookupStrategy(entry.getKey());
+    for (final Map.Entry<SchemaInfoMetadataRetrievalStrategy, String> entry :
+        schemaRetrieval.retrievalStrategies().entrySet()) {
+      final SchemaInfoMetadataRetrievalStrategy strategy = entry.getKey();
       final MetadataRetrievalStrategy metadataRetrievalStrategy =
           lookupMetadataRetrievalStrategy(entry.getValue());
       builder.with(strategy, metadataRetrievalStrategy);

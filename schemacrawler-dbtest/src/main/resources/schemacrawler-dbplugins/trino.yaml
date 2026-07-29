@@ -60,7 +60,7 @@ database-connector:
         - Enable SSL
         - Optional, defaults to false
   schema-retrieval:
-    strategies:
-      indexes-retrieval-strategy: none
+    retrieval-strategies:
+      indexes: none
   limit:
     exclude-schemas: "INFORMATION_SCHEMA"

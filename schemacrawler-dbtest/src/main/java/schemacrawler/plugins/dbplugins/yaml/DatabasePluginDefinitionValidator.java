@@ -96,8 +96,8 @@ final class DatabasePluginDefinitionValidator {
     if (schemaRetrieval == null || schemaRetrieval.isEmpty()) {
       return;
     }
-    for (final Map.Entry<String, String> entry : schemaRetrieval.strategies().entrySet()) {
-      lookupSchemaRetrievalStrategy(entry.getKey(), sourceDescription);
+    for (final Map.Entry<SchemaInfoMetadataRetrievalStrategy, String> entry :
+        schemaRetrieval.retrievalStrategies().entrySet()) {
       final String strategyValue = entry.getValue();
       if (isBlank(strategyValue)) {
         throw new ConfigurationException(

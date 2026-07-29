@@ -49,7 +49,7 @@ database-connector:
         - Consistency level
         - Optional, defaults to LOCAL_ONE
   schema-retrieval:
-    strategies:
-      foreign-keys-retrieval-strategy: none
-      procedures-retrieval-strategy: none
-      functions-retrieval-strategy: none
+    retrieval-strategies:
+      foreignkeys: none
+      procedures: none
+      functions: none
