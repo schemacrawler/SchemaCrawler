@@ -10,6 +10,7 @@ package schemacrawler.plugins.dbplugins.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import org.jspecify.annotations.Nullable;
 import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
@@ -17,7 +18,8 @@ import tools.jackson.databind.annotation.JsonNaming;
 /** Represents help and default values for a standard option. */
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record StandardOptionDefinition(
-    @JsonProperty(value = "default") Object defaultValue, List<String> help) {
+    @Nullable @JsonProperty(value = "default", required = false) Object defaultValue,
+    @Nullable @JsonProperty(required = false) List<String> help) {
 
   public StandardOptionDefinition() {
     this(null, null);
