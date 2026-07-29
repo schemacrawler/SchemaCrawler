@@ -31,9 +31,6 @@ public final class DatabasePluginYamlDeserializer {
   private static final Logger LOGGER =
       Logger.getLogger(DatabasePluginYamlDeserializer.class.getName());
 
-  private static final DatabasePluginDefinitionValidator VALIDATOR =
-      new DatabasePluginDefinitionValidator();
-
   public DatabaseConnectorDefinition parse(final InputResource inputResource) {
     requireNonNull(inputResource, "No input resource provided");
     LOGGER.log(Level.FINE, new StringFormat("Parsing <%s>", inputResource));
@@ -43,8 +40,7 @@ public final class DatabasePluginYamlDeserializer {
               .readerFor(DatabaseConnectorDefinitionHolder.class)
               .with(FAIL_ON_UNKNOWN_PROPERTIES)
               .readValue(reader);
-      return VALIDATOR.toDatabaseConnectorDefinition(
-          definition.databaseConnector(), inputResource.toString());
+      return definition.databaseConnector();
     } catch (final Exception e) {
       e.printStackTrace();
       LOGGER.log(
