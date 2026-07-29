@@ -10,6 +10,7 @@ package schemacrawler.plugins.dbplugins.model;
 
 import static us.fatehi.utility.Utility.isBlank;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jspecify.annotations.NonNull;
 import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
 import tools.jackson.databind.PropertyNamingStrategies;
@@ -18,7 +19,9 @@ import us.fatehi.utility.datasource.DatabaseServerType;
 
 /** Represents database server type information in YAML. */
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
-public record DatabaseServerTypeDefinition(@NonNull String server, @NonNull String name) {
+public record DatabaseServerTypeDefinition(
+    @NonNull @JsonProperty(required = true) String server,
+    @NonNull @JsonProperty(required = true) String name) {
 
   public DatabaseServerTypeDefinition() {
     this(null, null);

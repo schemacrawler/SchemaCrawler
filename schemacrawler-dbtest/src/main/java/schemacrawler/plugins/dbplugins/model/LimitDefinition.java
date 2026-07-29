@@ -10,6 +10,8 @@ package schemacrawler.plugins.dbplugins.model;
 
 import static us.fatehi.utility.Utility.isBlank;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
@@ -17,7 +19,10 @@ import tools.jackson.databind.annotation.JsonNaming;
 /** Represents catalog and schema limit patterns. */
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record LimitDefinition(
-    String includeSchemas, String excludeSchemas, String includeCatalogs, String excludeCatalogs) {
+    @Nullable @JsonProperty(required = false) String includeSchemas,
+    @Nullable @JsonProperty(required = false) String excludeSchemas,
+    @Nullable @JsonProperty(required = false) String includeCatalogs,
+    @Nullable @JsonProperty(required = false) String excludeCatalogs) {
 
   public LimitDefinition() {
     this(null, null, null, null);

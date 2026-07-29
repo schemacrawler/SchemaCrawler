@@ -8,7 +8,9 @@
 
 package schemacrawler.plugins.dbplugins.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
+import org.jspecify.annotations.Nullable;
 import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
@@ -16,7 +18,9 @@ import tools.jackson.databind.annotation.JsonNaming;
 /** Represents schema metadata retrieval overrides. */
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record SchemaRetrievalDefinition(
-    Map<String, String> strategies, Boolean supportsCatalogs, Boolean supportsSchemas) {
+    @Nullable @JsonProperty(required = false) Map<String, String> strategies,
+    @Nullable @JsonProperty(required = false) Boolean supportsCatalogs,
+    @Nullable @JsonProperty(required = false) Boolean supportsSchemas) {
 
   public SchemaRetrievalDefinition() {
     this(null, null, null);

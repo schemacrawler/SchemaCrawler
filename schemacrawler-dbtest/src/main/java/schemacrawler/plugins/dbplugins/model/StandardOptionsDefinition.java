@@ -8,6 +8,8 @@
 
 package schemacrawler.plugins.dbplugins.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import schemacrawler.plugins.dbplugins.yaml.JsonUtility;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
@@ -15,9 +17,9 @@ import tools.jackson.databind.annotation.JsonNaming;
 /** Represents standard plugin options metadata. */
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public record StandardOptionsDefinition(
-    StandardOptionDefinition host,
-    StandardOptionDefinition port,
-    StandardOptionDefinition database) {
+    @Nullable @JsonProperty(required = false) StandardOptionDefinition host,
+    @Nullable @JsonProperty(required = false) StandardOptionDefinition port,
+    @Nullable @JsonProperty(required = false) StandardOptionDefinition database) {
 
   public StandardOptionsDefinition() {
     this(null, null, null);
