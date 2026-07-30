@@ -47,18 +47,6 @@ database-connector:
   standard-options:
     port:
       default: 8080
-  additional-options:
-    - name: user
-      type: string
-      help:
-        - Trino user name
-        - Optional
-    - name: SSL
-      type: boolean
-      default: false
-      help:
-        - Enable SSL
-        - Optional, defaults to false
   schema-retrieval:
     retrieval-strategies:
       indexes: none
