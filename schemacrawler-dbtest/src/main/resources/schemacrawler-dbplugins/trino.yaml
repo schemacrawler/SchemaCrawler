@@ -1,0 +1,54 @@
+database-connector:
+  database-server-type:
+    server: trino
+    name: Trino
+  url-template: "jdbc:trino://${host}:${port}/${database}"
+  url-prefix: "jdbc:trino:"
+  allowed-driver-properties:
+    - user
+    - password
+    - sessionUser
+    - SSL
+    - SSLVerification
+    - SSLTrustStorePath
+    - SSLTrustStorePassword
+    - SSLTrustStoreType
+    - SSLKeyStorePath
+    - SSLKeyStorePassword
+    - SSLKeyStoreType
+    - applicationNamePrefix
+    - clientInfo
+    - clientTags
+    - traceToken
+    - timezone
+    - locale
+    - queryInterceptors
+    - httpProxy
+    - socksProxy
+    - assumeLiteralNamesInMetadataCallsForNonConformingClients
+    - assumeLiteralUnderscoreInMetadataCallsForNonConformingClients
+    - disableCompression
+    - extraCredentials
+    - roles
+    - sessionProperties
+    - protocols
+    - accessToken
+    - externalAuthentication
+    - kerberosEnabled
+    - kerberosServicePrincipalPattern
+    - kerberosPrincipal
+    - kerberosRemoteServiceName
+    - kerberosUseCanonicalHostname
+    - kerberosConfigPath
+    - kerberosKeytabPath
+    - kerberosCredentialCachePath
+    - kerberosDelegation
+    - httpLoggingLevel
+  standard-options:
+    port:
+      default: 8080
+  schema-retrieval:
+    retrieval-strategies:
+      indexes: none
+  limit:
+    exclude-schemas: "INFORMATION_SCHEMA"

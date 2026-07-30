@@ -1,6 +1,7 @@
 
 Available SchemaCrawler Database Server Plugins:
-  test-db  Test Database
+  test-bundle-db  Test Bundle Database
+  test-db         Test Database
 
 Notes:
 - For help on an individual database plugin,

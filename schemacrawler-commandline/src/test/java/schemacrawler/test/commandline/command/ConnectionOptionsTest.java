@@ -13,6 +13,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.ConnectCommand;
@@ -179,7 +180,7 @@ public class ConnectionOptionsTest {
   @Test
   public void urlx() throws NoSuchFieldException, IllegalAccessException {
     final String[] args = {
-      "--server", "test-db", "--urlx", "key1=value1;key2=value2", "additional", "--extra"
+      "--server", "test-db", "--urlx", "key1=val;1", "--urlx", "key2=val&2", "additional", "--extra"
     };
 
     final Config config = ConfigUtility.newConfig();
@@ -191,7 +192,9 @@ public class ConnectionOptionsTest {
     final DatabaseConnectionOptions databaseConnectorOptions =
         optionsParser.getDatabaseConnectionOptions();
 
-    // TODO: test urlx parameters
+    assertThat(
+        ((DatabaseServerHostConnectionOptions) databaseConnectorOptions).urlx(),
+        is(Map.of("key1", "val;1", "key2", "val&2")));
   }
 
   @Test

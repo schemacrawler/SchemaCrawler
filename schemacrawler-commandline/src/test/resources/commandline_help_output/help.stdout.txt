@@ -1,4 +1,4 @@
-SchemaCrawler 17.8.1
+SchemaCrawler 17.12.2
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -53,7 +53,7 @@ For connecting to specific databases, use
       --server=<database system identifier>
                           Where <database system identifier> is a database for
                             which a SchemaCrawler plug-in is available
-                          Use one of test-db
+                          Use one of test-bundle-db, test-db
       --urlx=<String=String>
                           JDBC URL additional properties
 

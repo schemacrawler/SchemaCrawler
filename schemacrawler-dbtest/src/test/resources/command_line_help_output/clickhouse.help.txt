@@ -1,0 +1,13 @@
+** Connect to ClickHouse
+
+      --database=<database>
+                          Database name
+      --host=<host>       Host name
+                          Optional, defaults to localhost
+      --port=<port>       Port number
+                          Optional, defaults to 8123
+      --server=<server>   --server=clickhouse
+                          Loads SchemaCrawler plug-in for ClickHouse
+Add connection options to the `connect` command in the SchemaCrawler Shell
+
+

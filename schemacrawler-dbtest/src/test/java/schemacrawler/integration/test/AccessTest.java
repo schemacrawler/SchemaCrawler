@@ -16,6 +16,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,19 +28,32 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @TestInstance(Lifecycle.PER_CLASS)
-public class WithoutPluginAccessTest extends BaseAdditionalDatabaseTest {
+public class AccessTest {
+
+  private DatabaseConnectionSource connectionSource;
 
   @BeforeEach
   public void createDatabase() throws Exception {
     Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
     final Path databaseFile = copyResourceToTempFile("/Books2010.accdb");
-    createDataSource(
-        "jdbc:ucanaccess://" + databaseFile + ";showSchema=true;sysSchema=true", null, null);
+    final DatabaseConnector connector =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry()
+            .findDatabaseConnectorFromDatabaseSystemIdentifier("access");
+    final DatabaseConnectionOptions connectionOptions =
+        new DatabaseServerHostConnectionOptions(
+            "access", null, null, databaseFile.toString(), Map.of());
+    connectionSource =
+        connector.newDatabaseConnectionSource(connectionOptions, new MultiUseUserCredentials());
   }
 
   @Test
@@ -64,7 +78,7 @@ public class WithoutPluginAccessTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testAccessWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getConnectionSource(), executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

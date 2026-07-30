@@ -1,0 +1,11 @@
+** Connect to Microsoft Access
+
+      --database=<database>
+                          Database file
+      --host=<host>       Host name
+      --port=<port>       Port number
+      --server=<server>   --server=access
+                          Loads SchemaCrawler plug-in for Microsoft Access
+Add connection options to the `connect` command in the SchemaCrawler Shell
+
+

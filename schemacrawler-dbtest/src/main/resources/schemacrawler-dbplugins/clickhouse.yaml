@@ -1,0 +1,38 @@
+database-connector:
+  database-server-type:
+    server: clickhouse
+    name: ClickHouse
+  url-template: "jdbc:clickhouse://${host}:${port}/${database}?client_name=SchemaCrawler"
+  url-prefix: "jdbc:clickhouse:"
+  allowed-driver-properties:
+    - socket_timeout
+    - compress
+    - decompress
+    - http_connection_timeout
+    - http_receive_timeout
+    - http_send_timeout
+    - max_rows_to_read
+    - max_bytes_to_read
+    - use_time_zone
+    - use_server_time_zone
+    - use_objects_in_arrays
+    - user
+    - password
+    - ssl
+    - sslmode
+    - sslrootcert
+  standard-options:
+    host:
+      help:
+        - Host name
+        - Optional, defaults to localhost
+    port:
+      help:
+        - Port number
+        - Optional, defaults to 8123
+      default: 8123
+    database:
+      help:
+        - Database name
+  limit:
+    exclude-schemas: "INFORMATION_SCHEMA|system"

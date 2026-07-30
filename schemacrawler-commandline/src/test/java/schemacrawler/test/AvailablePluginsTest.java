@@ -70,6 +70,6 @@ public class AvailablePluginsTest {
 
   @Test
   public void availableServers() {
-    assertThat(new AvailableServers(), contains("test-db"));
+    assertThat(new AvailableServers(), containsInAnyOrder("test-db", "test-bundle-db"));
   }
 }
