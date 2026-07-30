@@ -14,40 +14,62 @@ import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
-import java.io.IOException;
-import java.nio.file.Path;
+import java.sql.Connection;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledOnOs;
-import org.junit.jupiter.api.condition.OS;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
+import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
-@DisabledOnOs(value = OS.WINDOWS, disabledReason = "DuckDB does not run on Windows ARM")
-public class DuckDBTest extends BaseAdditionalDatabaseTest {
+public class H2Test {
+
+  private DatabaseConnectionSource connectionSource;
 
   @BeforeEach
-  public void createDatabase() throws IOException {
-    final Path databasePath = IOUtility.createTempFilePath("sc.", "db");
-    createDataSource("jdbc:duckdb:" + databasePath, null, null);
-    createDatabase("/duckdb.scripts.txt");
+  public void createDatabase() throws Exception {
+    final DatabaseConnector connector =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry()
+            .findDatabaseConnectorFromDatabaseSystemIdentifier("h2");
+    final DatabaseConnectionOptions connectionOptions =
+        new DatabaseServerHostConnectionOptions(
+            "h2", null, null, "mem:schemacrawler", Map.of());
+    connectionSource =
+        connector.newDatabaseConnectionSource(connectionOptions, new MultiUseUserCredentials());
+
+    try (final Connection connection = connectionSource.get()) {
+      new TestSchemaCreator(connection, "/h2.scripts.txt", false).run();
+    }
   }
 
   @Test
-  public void testDuckDBWithConnection() throws Exception {
+  public void testH2WithConnection() throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+            .includeSequences(new RegularExpressionExclusionRule(".*\\.BOOKS\\.SYSTEM_SEQUENCE.*"))
+            .tableTypes("BASE TABLE", "VIEW", "GLOBAL TEMPORARY", "LOCAL TEMPORARY", "SYNONYM");
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.noIndexNames().showDatabaseInfo().showJdbcDriverInfo();
@@ -57,9 +79,9 @@ public class DuckDBTest extends BaseAdditionalDatabaseTest {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource = "testDuckDBWithConnection.txt";
+    final String expectedResource = "testH2WithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getConnectionSource(), executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

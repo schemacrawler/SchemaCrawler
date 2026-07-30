@@ -15,6 +15,8 @@ import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
+import java.sql.Connection;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -26,34 +28,61 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
+import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.integration.utility.ClickHouseTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
 @HeavyDatabaseTest("clickhouse")
 @Testcontainers(disabledWithoutDocker = true)
-public class ClickHouseTest extends BaseAdditionalDatabaseTest {
+public class ClickHouseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
       ClickHouseTestUtility.newClickhouseContainer();
 
+  private DatabaseConnectionSource connectionSource;
+
   @BeforeEach
-  public void createDatabase() {
+  public void createDatabase() throws Exception {
 
     if (!dbContainer.isRunning()) {
       fail("Testcontainer for database is not available");
     }
 
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+    final String jdbcUrl = dbContainer.getJdbcUrl();
+    final String urlTail = jdbcUrl.substring("jdbc:clickhouse://".length());
+    final int slashIndex = urlTail.indexOf('/');
+    final String hostPort = slashIndex >= 0 ? urlTail.substring(0, slashIndex) : urlTail;
+    final String database = slashIndex >= 0 ? urlTail.substring(slashIndex + 1) : "";
+    final String[] hostAndPort = hostPort.split(":", 2);
+    final String host = hostAndPort[0];
+    final int port = Integer.parseInt(hostAndPort[1]);
 
-    createDatabase("/clickhouse.scripts.txt");
+    final DatabaseConnector connector =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry()
+            .findDatabaseConnectorFromDatabaseSystemIdentifier("clickhouse");
+    final DatabaseConnectionOptions connectionOptions =
+        new DatabaseServerHostConnectionOptions(
+            "clickhouse", host, port, database, Map.of());
+    connectionSource =
+        connector.newDatabaseConnectionSource(
+            connectionOptions,
+            new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword()));
+
+    try (final Connection connection = connectionSource.get()) {
+      new TestSchemaCreator(connection, "/clickhouse.scripts.txt", false).run();
+    }
   }
 
   @Test
@@ -80,7 +109,7 @@ public class ClickHouseTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testClickHouseWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getConnectionSource(), executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

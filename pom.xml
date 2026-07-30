@@ -28,7 +28,7 @@
     <module>schemacrawler-commandline</module>
     <module>schemacrawler-lint</module>
     <!-- Database plugins -->
-    <module>schemacrawler-dbtest</module>
+    <module>schemacrawler-dbplugins</module>
     <module>schemacrawler-db2</module>
     <module>schemacrawler-hsqldb</module>
     <module>schemacrawler-mysql</module>

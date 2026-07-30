@@ -15,7 +15,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
-import java.util.HashMap;
+import java.sql.Connection;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,47 +29,70 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
+import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.integration.utility.SnowflakeTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
 @HeavyDatabaseTest("snowflake")
 @EnabledIfEnvironmentVariable(named = "LOCALSTACK_AUTH_TOKEN", matches = ".+")
 @Testcontainers(disabledWithoutDocker = true)
-public class SnowflakeTest extends BaseAdditionalDatabaseTest {
+public class SnowflakeTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer = SnowflakeTestUtility.newSnowflakeContainer();
 
+  private DatabaseConnectionSource connectionSource;
+
   @BeforeEach
-  public void createDatabase() {
+  public void createDatabase() throws Exception {
 
     if (!dbContainer.isRunning()) {
       fail("Testcontainer for database is not available");
     }
 
-    System.err.println(
-        "%s %s/%s"
-            .formatted(
-                dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword()));
+    final String jdbcUrl = dbContainer.getJdbcUrl();
+    final String urlTail = jdbcUrl.substring("jdbc:snowflake://".length());
+    final int slashIndex = urlTail.indexOf('/');
+    final String hostPort = slashIndex >= 0 ? urlTail.substring(0, slashIndex) : urlTail;
+    final String[] hostAndPort = hostPort.split(":", 2);
+    final String host = hostAndPort[0];
+    final int port = Integer.parseInt(hostAndPort[1]);
 
-    final Map<String, String> urlx = new HashMap<>();
-    urlx.put("db", dbContainer.getDatabaseName());
-    urlx.put("schema", "BOOKS");
-    urlx.put("tracing", "ALL");
+    final DatabaseConnector connector =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry()
+            .findDatabaseConnectorFromDatabaseSystemIdentifier("snowflake");
+    final MultiUseUserCredentials credentials =
+        new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword());
 
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+    // First connection: no database selected, used to create the schema
+    final DatabaseConnectionOptions setupConnectionOptions =
+        new DatabaseServerHostConnectionOptions("snowflake", host, port, "", Map.of());
+    try (final DatabaseConnectionSource setupSource =
+        connector.newDatabaseConnectionSource(setupConnectionOptions, credentials)) {
+      try (final Connection connection = setupSource.get()) {
+        new TestSchemaCreator(connection, "/snowflake.scripts.txt", false).run();
+      }
+    }
 
-    createDatabase("/snowflake.scripts.txt");
-
-    // Overwrite the datasource with default database
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword(), urlx);
+    // Second connection: use database and schema for the actual test
+    final DatabaseConnectionOptions connectionOptions =
+        new DatabaseServerHostConnectionOptions(
+            "snowflake",
+            host,
+            port,
+            dbContainer.getDatabaseName(),
+            Map.of("schema", "BOOKS", "tracing", "ALL"));
+    connectionSource = connector.newDatabaseConnectionSource(connectionOptions, credentials);
   }
 
   @Test
@@ -95,7 +118,7 @@ public class SnowflakeTest extends BaseAdditionalDatabaseTest {
 
     final String expectedResource = "testSnowflakeWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(getConnectionSource(), executable)),
+        outputOf(executableExecution(connectionSource, executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

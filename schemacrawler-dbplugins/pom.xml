@@ -10,9 +10,9 @@
     <version>17.12.2</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>schemacrawler-dbtest</artifactId>
+  <artifactId>schemacrawler-dbplugins</artifactId>
   <packaging>jar</packaging>
-  <name>SchemaCrawler - Additional Database Tests</name>
+  <name>SchemaCrawler - Database Plugins</name>
   <dependencies>
 
     <dependency>
