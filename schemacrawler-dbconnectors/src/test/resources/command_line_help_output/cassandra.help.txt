@@ -9,6 +9,10 @@
                           Optional, defaults to localhost
                           Can be a list of hosts separated with '--'
                           See https://github.com/ing-bank/cassandra-jdbc-wrapper
+      --localdatacenter=<localdatacenter>
+                          Tells the load-balancing policy which local
+                            datacenter nodes to route queries to.
+                          Optional, defaults to datacenter1
       --port=<port>       Port number
                           Optional, defaults to 9042
       --server=<server>   --server=cassandra
