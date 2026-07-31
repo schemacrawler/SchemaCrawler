@@ -37,9 +37,6 @@ public final class SQLiteDatabaseConnector extends DatabaseConnector {
         .withHelpCommand(pluginCommand)
         .withUrlStartsWith("jdbc:sqlite:")
         .withInformationSchemaViewsFromResourceFolder("/sqlite.information_schema")
-        .withSchemaRetrievalOptionsBuilder(
-            (schemaRetrievalOptionsBuilder, connection) ->
-                schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\""))
         .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
         .build();
   }

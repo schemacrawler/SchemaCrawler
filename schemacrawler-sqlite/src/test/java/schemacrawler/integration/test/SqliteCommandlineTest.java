@@ -33,18 +33,23 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.BaseSqliteTest;
+import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.tools.command.text.schema.options.PortableType;
+import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.options.OutputFormat;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.CaptureSystemStreams;
 import us.fatehi.test.utility.extensions.CapturedSystemStreams;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
 import us.fatehi.utility.SystemExitException;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
 
 @CaptureSystemStreams
 @ResolveTestContext
+@DisableLogging
 public class SqliteCommandlineTest extends BaseSqliteTest {
 
   private DatabaseConnector dbConnector;
@@ -59,13 +64,41 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
   @Test
   public void testIdentifierQuoteString() throws Exception {
 
-    final Connection connection = null;
+    assertThat(
+        dbConnector
+            .getSchemaRetrievalOptionsBuilder(/* connection */ null)
+            .toOptions()
+            .getIdentifierQuoteString(),
+        is(""));
+
+    final DatabaseConnectionSource connectionSource = createDataSourceInMemory();
+    final Connection connection = connectionSource.get();
     assertThat(
         dbConnector
             .getSchemaRetrievalOptionsBuilder(connection)
             .toOptions()
             .getIdentifierQuoteString(),
         is("\""));
+  }
+
+  @Test
+  public void testSqliteMain(final TestContext testContext) throws Exception {
+    final OutputFormat outputFormat = TextOutputFormat.text;
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final Path sqliteDbFile = createTestDatabase();
+      final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("--server", "sqlite");
+      argsMap.put("--database", sqliteDbFile.toString());
+      argsMap.put("--no-info", Boolean.FALSE.toString());
+      argsMap.put("--command", "details");
+      argsMap.put("--info-level", InfoLevel.maximum.name());
+      argsMap.put("--output-file", out.toString());
+
+      Main.main(flattenCommandlineArgs(argsMap));
+    }
+    final String expectedResource = testContext.testMethodName() + ".txt";
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
 
   @Test
@@ -80,28 +113,6 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
       argsMap.put("--no-info", Boolean.TRUE.toString());
       argsMap.put("--command", "list");
       argsMap.put("--info-level", InfoLevel.minimum.name());
-      argsMap.put("--output-file", out.toString());
-
-      Main.main(flattenCommandlineArgs(argsMap));
-    }
-
-    final String expectedResource = testContext.testMethodName() + ".txt";
-    assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
-  }
-
-  @Test
-  public void testSqlitePortable(final TestContext testContext) throws Exception {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout) {
-      final Path sqliteDbFile = createTestDatabase();
-
-      final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("--server", "sqlite");
-      argsMap.put("--database", sqliteDbFile.toString());
-      argsMap.put("--no-info", Boolean.TRUE.toString());
-      argsMap.put("--command", "schema");
-      argsMap.put("--info-level", InfoLevel.maximum.name());
-      argsMap.put("--portable", PortableType.names.name());
       argsMap.put("--output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
@@ -147,5 +158,27 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
                     + " <\\{\\}>.*",
                 Pattern.DOTALL)));
     assertThat(outputOf(streams.out()), hasNoContent());
+  }
+
+  @Test
+  public void testSqlitePortable(final TestContext testContext) throws Exception {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final Path sqliteDbFile = createTestDatabase();
+
+      final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("--server", "sqlite");
+      argsMap.put("--database", sqliteDbFile.toString());
+      argsMap.put("--no-info", Boolean.TRUE.toString());
+      argsMap.put("--command", "schema");
+      argsMap.put("--info-level", InfoLevel.maximum.name());
+      argsMap.put("--portable", PortableType.names.name());
+      argsMap.put("--output-file", out.toString());
+
+      Main.main(flattenCommandlineArgs(argsMap));
+    }
+
+    final String expectedResource = testContext.testMethodName() + ".txt";
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResource)));
   }
 }
