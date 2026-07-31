@@ -127,27 +127,27 @@ jobs:
             dbproject="${{ matrix.database }}"
         elif [ "${{ matrix.database }}" == "mariadb" ]; then
             docker pull mariadb:11.8.5-noble
-            dbproject="dbplugins"
+            dbproject="dbconnectors"
         elif [ "${{ matrix.database }}" == "cassandra" ]; then
             docker pull cassandra:5.0.2
-            dbproject="dbplugins"
+            dbproject="dbconnectors"
         elif [ "${{ matrix.database }}" == "snowflake" ]; then
             docker pull localstack/snowflake:2026.06
-            dbproject="dbplugins"
+            dbproject="dbconnectors"
         elif [ "${{ matrix.database }}" == "firebird" ]; then
             docker pull jacobalberty/firebird:v4.0.2
-            dbproject="dbplugins"
+            dbproject="dbconnectors"
         elif [ "${{ matrix.database }}" == "informix" ]; then
             docker pull ibmcom/informix-developer-database:14.10.FC7W1DE
-            dbproject="dbplugins"
+            dbproject="dbconnectors"
         elif [ "${{ matrix.database }}" == "trino" ]; then
             docker pull trinodb/trino:470
-            dbproject="dbplugins"
+            dbproject="dbconnectors"
         elif [ "${{ matrix.database }}" == "clickhouse" ]; then
             docker pull clickhouse/clickhouse-server:26.2
-            dbproject="dbplugins"
+            dbproject="dbconnectors"
         else
-            dbproject="dbplugins"
+            dbproject="dbconnectors"
         fi
         echo "dbproject=$dbproject"
         echo "dbproject=$dbproject" >> "$GITHUB_OUTPUT"
@@ -172,7 +172,7 @@ jobs:
           -D${{ matrix.database }} \
           -Dno-diagram-tests \
           -Dreactor.printOrder \
-          --projects schemacrawler-dbplugins,schemacrawler-$dbproject \
+          --projects schemacrawler-dbconnectors,schemacrawler-$dbproject \
           --also-make \
           clean verify
     - id: docker-cleanup

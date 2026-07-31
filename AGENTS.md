@@ -37,7 +37,7 @@ Diagram-related tests require **Graphviz** (`dot` on `PATH`). Diagram generation
 | `schemacrawler-offline` | Offline/snapshot mode for serialized catalogs |
 | `schemacrawler-docs` | Documentation generation |
 | `schemacrawler-db2` / `-hsqldb` / `-mysql` / `-oracle` / `-postgresql` / `-sqlite` / `-sqlserver` | Bundled JDBC driver plugins |
-| `schemacrawler-dbplugins` | YAML-driven database plugin framework with bundled connectors and integration tests |
+| `schemacrawler-dbconnectors` | YAML-driven database connector framework with bundled connectors and integration tests |
 | `schemacrawler-library-bom` | Bill of Materials for downstream consumers |
 | `schemacrawler-distrib` | Assembles the ZIP distribution — activated by `-Ddistrib` |
 | `schemacrawler-verify` | ArchUnit architectural verification + Docker image tests — activated by `-Dverify` |
