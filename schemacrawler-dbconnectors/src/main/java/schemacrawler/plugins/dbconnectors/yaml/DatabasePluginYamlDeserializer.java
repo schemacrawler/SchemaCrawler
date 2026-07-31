@@ -16,6 +16,8 @@ import java.io.Reader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.plugins.dbconnectors.model.DatabaseConnectorDefinition;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DatabindException;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 import us.fatehi.utility.ioresource.InputResource;
@@ -35,12 +37,17 @@ public final class DatabasePluginYamlDeserializer {
     requireNonNull(inputResource, "No input resource provided");
     LOGGER.log(Level.FINE, new StringFormat("Parsing <%s>", inputResource));
     try (final Reader reader = inputResource.openNewInputReader(UTF_8)) {
-      final DatabaseConnectorDefinitionHolder definition =
-          JsonUtility.mapper
-              .readerFor(DatabaseConnectorDefinitionHolder.class)
-              .with(FAIL_ON_UNKNOWN_PROPERTIES)
-              .readValue(reader);
-      return definition.databaseConnector();
+      try {
+        final DatabaseConnectorDefinitionHolder definition =
+            JsonUtility.mapper
+                .readerFor(DatabaseConnectorDefinitionHolder.class)
+                .with(FAIL_ON_UNKNOWN_PROPERTIES)
+                .readValue(reader);
+        return definition.databaseConnector();
+      } catch (final JacksonException e) {
+        e.prependPath(new DatabindException.Reference(null, inputResource.toString()));
+        throw e;
+      }
     } catch (final Exception e) {
       LOGGER.log(
           Level.WARNING,
