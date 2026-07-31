@@ -2,30 +2,26 @@ database-connector:
   database-server-type:
     server: cassandra
     name: Cassandra
-  url-template: "jdbc:cassandra://${host}:${port}/${database}"
+  url-template: "jdbc:cassandra://${host}:${port}/${database}?localdatacenter=${localdatacenter}"
   url-prefix: "jdbc:cassandra:"
   allowed-driver-properties:
-    - consistency
-    - loadbalancing
-    - version
-    - contactPoints
-    - port
+    # Tells the load-balancing policy which local datacenter nodes to route queries to.
+    # Prevents cross-region bottlenecks.
     - localdatacenter
-    - localDataCenter
-    - username
-    - password
-    - authProvider
-    - sslOptions
-    - fetchSize
-    - connectTimeout
-    - readTimeout
-    - compression
-    - maxSchemaAgreementWaitSeconds
-    - reconnectionPolicy
-    - retryPolicy
-    - requestTracker
-    - asyncQueryTimeout
-    - keyspace
+    # Enables network traffic encryption using JSSE properties.
+    # Required if your cluster has SSL communication enabled.
+    - enablessl
+    # Alters driver behavioral quirks for ecosystem tools.
+    # Options include Liquibase (forces strict standard JDBC catalog behaviors) or Standard.
+    - compliancemode
+    # Sets the default Cassandra execution consistency level for statement queries
+    # (e.g., ANY, ONE, QUORUM, LOCAL_QUORUM).
+    - consistency
+    # Overrides the default routing framework.
+    - loadbalancing
+    # Configures the global session timeout threshold.
+    # Increase this if processing dense scripts or large batch updates.
+    - requesttimeout
   standard-options:
     host:
       help:
@@ -42,14 +38,15 @@ database-connector:
       help:
         - Keyspace name
   additional-options:
+    - name: localdatacenter
+      type: string
+      default: datacenter1
+      help:
+        - Tells the load-balancing policy which local datacenter nodes to route queries to.
+        - Optional, defaults to datacenter1
     - name: consistency
       type: string
       default: LOCAL_ONE
       help:
         - Consistency level
         - Optional, defaults to LOCAL_ONE
-  schema-retrieval:
-    retrieval-strategies:
-      foreignkeys: none
-      procedures: none
-      functions: none
