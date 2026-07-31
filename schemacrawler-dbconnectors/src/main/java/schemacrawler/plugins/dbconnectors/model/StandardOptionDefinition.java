@@ -1,0 +1,43 @@
+/*
+ * SchemaCrawler
+ * http://www.schemacrawler.com
+ * Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
+ * All rights reserved.
+ * SPDX-License-Identifier: EPL-2.0
+ */
+
+package schemacrawler.plugins.dbconnectors.model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
+import org.jspecify.annotations.Nullable;
+import schemacrawler.plugins.dbconnectors.yaml.JsonUtility;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
+
+/** Represents help and default values for a standard option. */
+@JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
+public record StandardOptionDefinition(
+    @Nullable @JsonProperty(value = "default", required = false) Object defaultValue,
+    @Nullable @JsonProperty(required = false) List<String> help) {
+
+  public StandardOptionDefinition() {
+    this(null, null);
+  }
+
+  public StandardOptionDefinition {
+    help = help == null ? List.of() : List.copyOf(help);
+  }
+
+  public String stringDefault() {
+    if (defaultValue == null) {
+      return null;
+    }
+    return String.valueOf(defaultValue);
+  }
+
+  @Override
+  public String toString() {
+    return JsonUtility.mapper.writeValueAsString(this);
+  }
+}

@@ -67,7 +67,7 @@
       </dependency>
       <dependency>
         <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-dbtest</artifactId>
+        <artifactId>schemacrawler-dbconnectors</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
