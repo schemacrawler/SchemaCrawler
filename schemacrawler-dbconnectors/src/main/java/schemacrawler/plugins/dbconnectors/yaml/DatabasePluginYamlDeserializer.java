@@ -42,7 +42,6 @@ public final class DatabasePluginYamlDeserializer {
               .readValue(reader);
       return definition.databaseConnector();
     } catch (final Exception e) {
-      e.printStackTrace();
       LOGGER.log(
           Level.WARNING,
           "Could not read database connector definition from <%s>".formatted(inputResource),
