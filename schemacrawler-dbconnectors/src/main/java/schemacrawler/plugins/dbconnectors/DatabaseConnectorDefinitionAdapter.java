@@ -53,7 +53,6 @@ public final class DatabaseConnectorDefinitionAdapter {
 
     return DatabaseConnectorOptionsBuilder.builder(dbServerType)
         .withHelpCommand(pluginCommand)
-        .withUrlStartsWith(definition.urlPrefix())
         .withDatabaseConnectionSourceBuilder(() -> toConnectionSourceBuilder(definition))
         .withSchemaRetrievalOptionsBuilder(
             (builder, connection) -> applySchemaRetrievalOverrides(builder, definition))

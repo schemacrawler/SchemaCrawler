@@ -3,7 +3,6 @@ database-connector:
     server: db2
     name: IBM DB2
   url-template: "jdbc:db2://${host}:${port}/${database}"
-  url-prefix: "jdbc:db2:"
   allowed-driver-properties:
     - affinityFailbackInterval
     - allowNextOnExhaustedResultSet

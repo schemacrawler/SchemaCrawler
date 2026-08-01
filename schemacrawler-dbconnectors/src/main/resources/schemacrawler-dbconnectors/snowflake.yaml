@@ -3,7 +3,6 @@ database-connector:
     server: snowflake
     name: Snowflake
   url-template: "jdbc:snowflake://${host}:${port}/"
-  url-prefix: "jdbc:snowflake:"
   allowed-driver-properties:
     - db
     - schema

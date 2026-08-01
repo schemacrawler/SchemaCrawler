@@ -35,7 +35,6 @@ class DatabasePluginYamlDeserializerTest {
             server: unit
             name: Unit DB
           url-template: "jdbc:unit:${database}"
-          url-prefix: "jdbc:unit:"
           additional-options:
             - name: setting
               type: string
@@ -61,7 +60,6 @@ class DatabasePluginYamlDeserializerTest {
             server: unit
             name: Unit DB
           url-template: "jdbc:unit:${database}"
-          url-prefix: "jdbc:unit:"
           unexpected: true
           additional-options:
             - name: setting
@@ -85,7 +83,6 @@ class DatabasePluginYamlDeserializerTest {
              server: unit-test
              name: Unit Test DB
            url-template: "jdbc:unit://${host}:${port}/${database}"
-           url-prefix: "jdbc:unit:"
            allowed-driver-properties:
              - setting
            standard-options:
@@ -111,7 +108,6 @@ class DatabasePluginYamlDeserializerTest {
     assertEquals("unit-test", definition.databaseServerType().server());
     assertEquals("Unit Test DB", definition.databaseServerType().name());
     assertEquals("jdbc:unit://${host}:${port}/${database}", definition.urlTemplate());
-    assertEquals("jdbc:unit:", definition.urlPrefix());
 
     assertEquals("1234", definition.standardOptions().port().stringDefault());
 

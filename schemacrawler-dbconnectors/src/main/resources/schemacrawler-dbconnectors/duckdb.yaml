@@ -3,7 +3,6 @@ database-connector:
     server: duckdb
     name: DuckDB
   url-template: "jdbc:duckdb:${database}"
-  url-prefix: "jdbc:duckdb:"
   allowed-driver-properties:
     - duckdb.read_only
     - user

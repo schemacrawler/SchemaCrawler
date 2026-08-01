@@ -3,7 +3,6 @@ database-connector:
     server: sqlite
     name: SQLite
   url-template: "jdbc:sqlite:${database}"
-  url-prefix: "jdbc:sqlite:"
   standard-options:
     host:
       help:

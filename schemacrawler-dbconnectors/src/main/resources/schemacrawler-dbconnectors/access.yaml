@@ -3,7 +3,6 @@ database-connector:
     server: access
     name: Microsoft Access
   url-template: "jdbc:ucanaccess://${database};showSchema=true;sysSchema=true"
-  url-prefix: "jdbc:ucanaccess:"
   allowed-driver-properties:
     - memory
     - singleConnection

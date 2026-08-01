@@ -3,7 +3,6 @@ database-connector:
     server: oracle
     name: Oracle
   url-template: "jdbc:oracle:thin:@//${host}:${port}/${database}"
-  url-prefix: "jdbc:oracle:"
   standard-options:
     host:
       help:

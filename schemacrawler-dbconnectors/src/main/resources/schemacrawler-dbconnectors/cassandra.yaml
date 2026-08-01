@@ -3,7 +3,6 @@ database-connector:
     server: cassandra
     name: Cassandra
   url-template: "jdbc:cassandra://${host}:${port}/${database}?localdatacenter=${localdatacenter}"
-  url-prefix: "jdbc:cassandra:"
   allowed-driver-properties:
     # Tells the load-balancing policy which local datacenter nodes to route queries to.
     # Prevents cross-region bottlenecks.

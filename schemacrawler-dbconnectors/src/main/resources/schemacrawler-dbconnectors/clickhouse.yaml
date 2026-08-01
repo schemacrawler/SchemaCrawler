@@ -3,7 +3,6 @@ database-connector:
     server: clickhouse
     name: ClickHouse
   url-template: "jdbc:clickhouse://${host}:${port}/${database}?client_name=SchemaCrawler"
-  url-prefix: "jdbc:clickhouse:"
   allowed-driver-properties:
     - socket_timeout
     - compress

@@ -3,7 +3,6 @@ database-connector:
     server: hsqldb
     name: HyperSQL DataBase
   url-template: "jdbc:hsqldb:hsql://${host}:${port}/${database}"
-  url-prefix: "jdbc:hsqldb:"
   standard-options:
     host:
       help:

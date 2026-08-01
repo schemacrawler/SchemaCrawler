@@ -3,7 +3,6 @@ database-connector:
     server: postgresql
     name: PostgreSQL
   url-template: "jdbc:postgresql://${host}:${port}/${database}"
-  url-prefix: "jdbc:postgresql:"
   standard-options:
     host:
       help:

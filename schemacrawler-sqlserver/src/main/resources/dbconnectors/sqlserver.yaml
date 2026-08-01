@@ -3,7 +3,6 @@ database-connector:
     server: sqlserver
     name: Microsoft SQL Server
   url-template: "jdbc:sqlserver://${host}:${port};databaseName=${database}"
-  url-prefix: "jdbc:sqlserver:"
   standard-options:
     host:
       help:

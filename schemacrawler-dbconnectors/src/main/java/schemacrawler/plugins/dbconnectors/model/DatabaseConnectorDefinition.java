@@ -24,7 +24,6 @@ import tools.jackson.databind.annotation.JsonNaming;
 public record DatabaseConnectorDefinition(
     @NonNull @JsonProperty(required = true) DatabaseServerTypeDefinition databaseServerType,
     @NonNull @JsonProperty(required = true) String urlTemplate,
-    @NonNull @JsonProperty(required = true) String urlPrefix,
     @Nullable @JsonProperty(required = false) Set<String> allowedDriverProperties,
     @Nullable @JsonProperty(required = false) StandardOptionsDefinition standardOptions,
     @Nullable @JsonProperty(required = false) List<AdditionalOptionDefinition> additionalOptions,
@@ -32,14 +31,13 @@ public record DatabaseConnectorDefinition(
     @Nullable @JsonProperty(required = false) LimitDefinition limit) {
 
   public DatabaseConnectorDefinition() {
-    this(null, null, null, null, null, null, null, null);
+    this(null, null, null, null, null, null, null);
   }
 
   public DatabaseConnectorDefinition {
     databaseServerType =
         databaseServerType == null ? new DatabaseServerTypeDefinition() : databaseServerType;
     urlTemplate = isBlank(urlTemplate) ? "" : urlTemplate;
-    urlPrefix = isBlank(urlPrefix) ? "" : urlPrefix;
     allowedDriverProperties =
         allowedDriverProperties == null ? Set.of() : Set.copyOf(allowedDriverProperties);
     standardOptions = standardOptions == null ? new StandardOptionsDefinition() : standardOptions;

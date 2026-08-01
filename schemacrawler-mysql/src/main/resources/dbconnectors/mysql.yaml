@@ -3,7 +3,6 @@ database-connector:
     server: mysql
     name: MySQL
   url-template: "jdbc:mysql://${host}:${port}/${database}"
-  url-prefix: "jdbc:mysql:"
   standard-options:
     host:
       help:
