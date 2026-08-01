@@ -1,0 +1,57 @@
+database-connector:
+  database-server-type:
+    server: sqlserver
+    name: Microsoft SQL Server
+  url-template: "jdbc:sqlserver://${host}:${port};databaseName=${database}"
+  url-prefix: "jdbc:sqlserver:"
+  standard-options:
+    host:
+      help:
+        - Host name
+        - Optional, defaults to localhost
+    port:
+      help:
+        - Port number
+        - Optional, defaults to 1433
+      default: 1433
+    database:
+      help:
+        - Database name
+        - Be sure to also restrict your schemas to this database, by using an additional option,
+        - --schemas=<database>.dbo
+  schema-retrieval:
+    retrieval-strategies:
+      tablecolumns: metadata_over_schemas
+      primarykeys: data_dictionary_over_schemas
+      foreignkeys: data_dictionary_over_schemas
+      indexes: data_dictionary_over_schemas
+      view-information: data_dictionary_over_schemas
+      view-table-usage: data_dictionary_over_schemas
+      triggers: data_dictionary_over_schemas
+      table-constraints: data_dictionary_over_schemas
+      table-constraint-columns: data_dictionary_over_schemas
+      table-check-constraints: data_dictionary_over_schemas
+      table-additional-attributes: data_dictionary_over_schemas
+      table-column-additional-attributes: data_dictionary_over_schemas
+      routines: data_dictionary_over_schemas
+      routine-references: data_dictionary_over_schemas
+      procedures: data_dictionary_over_schemas
+      procedureparameters: data_dictionary_over_schemas
+      functions: data_dictionary_over_schemas
+      functionparameters: data_dictionary_over_schemas
+  limit:
+    include-schemas: ".*\\.dbo"
+    exclude-schemas: "model\\..*|master\\..*|msdb\\..*|tempdb\\..*|rdsadmin\\..*"
+  additional-options:
+    - name: applicationName
+      type: string
+      default: SchemaCrawler
+      help:
+        - Application name shown in SQL Server activity monitor
+        - Optional, defaults to SchemaCrawler
+    - name: encrypt
+      type: boolean
+      default: "false"
+      help:
+        - Encrypt the connection
+        - Optional, defaults to false

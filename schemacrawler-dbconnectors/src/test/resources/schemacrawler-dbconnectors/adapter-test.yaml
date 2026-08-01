@@ -1,0 +1,12 @@
+database-connector:
+  database-server-type:
+    server: adapter-test
+    name: Adapter Test
+  url-template: "jdbc:adapter-test:${database}"
+  url-prefix: "jdbc:adapter-test:"
+  additional-options:
+    - name: sampleSetting
+      type: string
+      default: sample
+      help:
+        - Sample setting

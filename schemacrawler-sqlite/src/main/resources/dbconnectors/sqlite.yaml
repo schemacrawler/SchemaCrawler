@@ -1,0 +1,29 @@
+database-connector:
+  database-server-type:
+    server: sqlite
+    name: SQLite
+  url-template: "jdbc:sqlite:${database}"
+  url-prefix: "jdbc:sqlite:"
+  standard-options:
+    host:
+      help:
+        - Should be omitted
+    port:
+      help:
+        - Should be omitted
+    database:
+      help:
+        - SQLite database file path
+  additional-options:
+    - name: application_id
+      type: string
+      default: SchemaCrawler
+      help:
+        - Application identifier stored in the database file
+        - Optional, defaults to SchemaCrawler
+    - name: open_mode
+      type: string
+      default: 2
+      help:
+        - SQLite open mode flags
+        - Optional, defaults to 2 (read-write)

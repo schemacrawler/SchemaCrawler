@@ -8,37 +8,20 @@
 
 package schemacrawler.tools.sqlite;
 
+import schemacrawler.plugins.dbconnectors.DatabaseConnectorDefinitionAdapter;
+import schemacrawler.plugins.dbconnectors.model.DatabaseConnectorDefinition;
+import schemacrawler.plugins.dbconnectors.yaml.DatabasePluginYamlDeserializer;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorOptionsBuilder;
-import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
-import us.fatehi.utility.datasource.DatabaseServerType;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class SQLiteDatabaseConnector extends DatabaseConnector {
 
   private static DatabaseConnectorOptions databaseConnectorOptions() {
-    final DatabaseServerType dbServerType = new DatabaseServerType("sqlite", "SQLite");
-
-    final DatabaseConnectionSourceBuilder connectionSourceBuilder =
-        DatabaseConnectionSourceBuilder.builder("jdbc:sqlite:${database}")
-            .withDefaultUrlx("application_id", "SchemaCrawler")
-            .withDefaultUrlx("open_mode", "2");
-
-    final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand(dbServerType);
-    pluginCommand
-        .addOption(
-            "server", String.class, "--server=sqlite%n" + "Loads SchemaCrawler plug-in for SQLite")
-        .addOption("host", String.class, "Should be omitted")
-        .addOption("port", Integer.class, "Should be omitted")
-        .addOption("database", String.class, "SQLite database file path");
-
-    return DatabaseConnectorOptionsBuilder.builder(dbServerType)
-        .withHelpCommand(pluginCommand)
-        .withUrlStartsWith("jdbc:sqlite:")
-        .withInformationSchemaViewsFromResourceFolder("/sqlite.information_schema")
-        .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
-        .build();
+    final DatabaseConnectorDefinition definition =
+        new DatabasePluginYamlDeserializer()
+            .parse(new ClasspathInputResource("dbconnectors/sqlite.yaml"));
+    return DatabaseConnectorDefinitionAdapter.toOptionsBuilder(definition).build();
   }
 
   public SQLiteDatabaseConnector() {

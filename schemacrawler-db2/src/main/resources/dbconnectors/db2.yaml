@@ -1,0 +1,92 @@
+database-connector:
+  database-server-type:
+    server: db2
+    name: IBM DB2
+  url-template: "jdbc:db2://${host}:${port}/${database}"
+  url-prefix: "jdbc:db2:"
+  allowed-driver-properties:
+    - affinityFailbackInterval
+    - allowNextOnExhaustedResultSet
+    - allowNullResultSetForExecuteQuery
+    - atomicMultiRowInsert
+    - autocommit
+    - blockingReadConnectionTimeout
+    - clientBidiStringType
+    - clientDebugInfo
+    - clientRerouteAlternateServerName
+    - clientRerouteAlternatePortNumber
+    - clientRerouteServerListJNDIName
+    - clientRerouteServerListJNDIContext
+    - commandTimeout
+    - connectionCloseWithInFlightTransaction
+    - connectionTimeout
+    - databaseName
+    - decimalSeparator
+    - decimalStringFormat
+    - defaultIsolationLevel
+    - deferPrepares
+    - description
+    - downgradeHoldCursorsUnderXa
+    - driverType
+    - enableClientAffinitiesList
+    - enableNamedParameterMarkers
+    - enableBidiLayoutTransformation
+    - enableSeamlessFailover
+    - enableSysplexWLB
+    - fetchSize
+    - fullyMaterializeLobData
+    - implicitRollbackOption
+    - interruptProcessingMode
+    - keepAliveTimeOut
+    - loginTimeout
+    - logWriter
+    - maxRetriesForClientReroute
+    - memberConnectTimeout
+    - progressiveStreaming
+    - queryCloseImplicit
+    - queryDataSize
+    - queryTimeoutInterruptProcessingMode
+    - receiveBufferSize
+    - retrieveMessagesFromServerOnGetMessage
+    - retryIntervalForClientReroute
+    - securityMechanism
+    - sendDataAsIs
+    - serverBidiStringType
+    - serverName
+    - sslConnection
+    - sslTrustStoreLocation
+    - sslTrustStorePassword
+    - sslTrustStoreType
+    - sslKeyStoreLocation
+    - sslKeyStorePassword
+    - sslKeyStoreType
+    - sslVersion
+    - streamBufferSize
+    - traceDirectory
+    - traceFile
+    - traceFileAppend
+    - traceLevel
+    - translateForBitData
+    - translateBinary
+    - useCachedCursor
+    - useJDBC4ColumnNameAndLabelSemantics
+  standard-options:
+    host:
+      help:
+        - Host name
+        - Optional, defaults to localhost
+    port:
+      help:
+        - Port number
+        - Optional, defaults to 50000
+      default: 50000
+    database:
+      help:
+        - Database name
+  additional-options:
+    - name: retrieveMessagesFromServerOnGetMessage
+      type: boolean
+      default: "true"
+      help:
+        - Retrieve error messages from the server
+        - Optional, defaults to true

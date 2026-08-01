@@ -8,24 +8,14 @@
 
 package schemacrawler.server.oracle;
 
-import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
-
+import schemacrawler.plugins.dbconnectors.DatabaseConnectorDefinitionAdapter;
+import schemacrawler.plugins.dbconnectors.model.DatabaseConnectorDefinition;
+import schemacrawler.plugins.dbconnectors.yaml.DatabasePluginYamlDeserializer;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorOptionsBuilder;
-import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 import us.fatehi.utility.datasource.DatabaseServerType;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class OracleDatabaseConnector extends DatabaseConnector {
 
@@ -33,50 +23,20 @@ public final class OracleDatabaseConnector extends DatabaseConnector {
       new DatabaseServerType("oracle", "Oracle");
 
   private static DatabaseConnectorOptions databaseConnectorOptions() {
-    final DatabaseServerType dbServerType = DB_SERVER_TYPE;
+    final DatabaseConnectorDefinition definition =
+        new DatabasePluginYamlDeserializer()
+            .parse(new ClasspathInputResource("dbconnectors/oracle.yaml"));
 
     final DatabaseConnectionSourceBuilder connectionSourceBuilder =
-        DatabaseConnectionSourceBuilder.builder("jdbc:oracle:thin:@//${host}:${port}/${database}")
-            .withDefaultPort(1521)
-            .withDefaultUrlx("remarksReporting", true)
-            .withDefaultUrlx("restrictGetTables", true)
-            .withDefaultUrlx("useFetchSizeWithLongColumn", true)
+        DatabaseConnectorDefinitionAdapter.toConnectionSourceBuilder(definition)
             .withConnectionInitializer(new OracleConnectionInitializer());
 
-    final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand(dbServerType);
-    pluginCommand
-        .addOption(
-            "server", String.class, "--server=oracle%n" + "Loads SchemaCrawler plug-in for Oracle")
-        .addOption("host", String.class, "Host name%n" + "Optional, defaults to localhost")
-        .addOption("port", Integer.class, "Port number%n" + "Optional, defaults to 1521")
-        .addOption(
-            "database",
-            String.class,
-            "Oracle Service Name%n"
-                + "You can use a query similar to the one below to find it.%n"
-                + "SELECT GLOBAL_NAME FROM GLOBAL_NAME");
-
-    return DatabaseConnectorOptionsBuilder.builder(dbServerType)
-        .withHelpCommand(pluginCommand)
-        .withUrlStartsWith("jdbc:oracle:")
+    return DatabaseConnectorDefinitionAdapter.toOptionsBuilder(definition)
+        .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
         .withInformationSchemaViewsBuilder(new OracleInformationSchemaViewsBuilder())
-        .withSchemaRetrievalOptionsBuilder(
-            (schemaRetrievalOptionsBuilder, connection) ->
-                schemaRetrievalOptionsBuilder
-                    .with(typeInfoRetrievalStrategy, data_dictionary_all)
-                    .with(tablesRetrievalStrategy, data_dictionary_all)
-                    .with(tableColumnsRetrievalStrategy, data_dictionary_all)
-                    .with(primaryKeysRetrievalStrategy, data_dictionary_all)
-                    .with(foreignKeysRetrievalStrategy, data_dictionary_all)
-                    .with(indexesRetrievalStrategy, data_dictionary_all)
-                    .with(proceduresRetrievalStrategy, data_dictionary_all)
-                    .with(procedureParametersRetrievalStrategy, data_dictionary_all)
-                    .with(functionsRetrievalStrategy, data_dictionary_all)
-                    .with(functionParametersRetrievalStrategy, data_dictionary_all))
         .withLimitOptionsBuilder(
             limitOptionsBuilder ->
                 limitOptionsBuilder.includeSchemas(new OracleSchemaExclusionRule()))
-        .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
         .build();
   }
 

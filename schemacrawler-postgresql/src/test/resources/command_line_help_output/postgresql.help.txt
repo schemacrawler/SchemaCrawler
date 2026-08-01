@@ -1,5 +1,8 @@
 ** Connect to PostgreSQL
 
+      --ApplicationName=<ApplicationName>
+                          Application name shown in pg_stat_activity
+                          Optional, defaults to SchemaCrawler
       --database=<database>
                           Database name
                           Optional, uses the PGDATABASE environmental variable
@@ -8,6 +11,9 @@
                           Optional, uses the PGHOSTADDR and PGHOST
                             environmental variables if available, or defaults
                             to localhost
+      --loggerLevel=<loggerLevel>
+                          PostgreSQL JDBC driver log level
+                          Optional, defaults to DEBUG
       --port=<port>       Port number
                           Optional, uses the PGPORT environmental variable if
                             available, or defaults to 5432

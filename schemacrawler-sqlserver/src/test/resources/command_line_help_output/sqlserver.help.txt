@@ -9,7 +9,7 @@
                           Optional, defaults to localhost
       --port=<port>       Port number
                           Optional, defaults to 1433
-      --server=<server>   --server=mysql
+      --server=<server>   --server=sqlserver
                           Loads SchemaCrawler plug-in for Microsoft SQL Server
                           If you are using instance names, named pipes, or
                             Windows authentication, you will need to provide a

@@ -1,13 +1,34 @@
 ** Connect to MySQL
 
+      --allowPublicKeyRetrieval
+                          Allow retrieval of RSA public key from server if
+                            needed
       --database=<database>
                           Database name
+      --disableMariaDbDriver
+                          Prefer MySQL JDBC driver when both MySQL and MariaDB
+                            drivers are present
+      --dumpMetadataOnColumnNotFound
+                          Include metadata details when column lookup fails
+      --dumpQueriesOnException
+                          Include executed query details in exceptions
+      --getProceduresReturnsFunctions
+                          Keep procedure metadata separate from functions
       --host=<host>       Host name
                           Optional, defaults to localhost
+      --logger=<logger>   MySQL JDBC logger implementation
+      --maxQuerySizeToLog=<maxQuerySizeToLog>
+                          Maximum query size to include in logs
+      --noAccessToProcedureBodies
+                          Avoid direct access to procedure bodies
+      --nullNamePatternMatchesAll
+                          Treat null name patterns as wildcards
       --port=<port>       Port number
                           Optional, defaults to 3306
       --server=<server>   --server=mysql
                           Loads SchemaCrawler plug-in for MySQL
+      --useInformationSchema
+                          Use information_schema metadata where available
 Add connection options to the `connect` command in the SchemaCrawler Shell
 
 

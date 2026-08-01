@@ -6,6 +6,9 @@
                           Optional, defaults to localhost
       --port=<port>       Port number
                           Optional, defaults to 50000
+      --retrieveMessagesFromServerOnGetMessage
+                          Retrieve error messages from the server
+                          Optional, defaults to true
       --server=<server>   --server=db2
                           Loads SchemaCrawler plug-in for IBM DB2
 Add connection options to the `connect` command in the SchemaCrawler Shell

@@ -8,47 +8,20 @@
 
 package schemacrawler.server.hsqldb;
 
-import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnPrivilegesRetrievalStrategy;
-
+import schemacrawler.plugins.dbconnectors.DatabaseConnectorDefinitionAdapter;
+import schemacrawler.plugins.dbconnectors.model.DatabaseConnectorDefinition;
+import schemacrawler.plugins.dbconnectors.yaml.DatabasePluginYamlDeserializer;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorOptionsBuilder;
-import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
-import us.fatehi.utility.datasource.DatabaseServerType;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class HyperSQLDatabaseConnector extends DatabaseConnector {
 
   private static DatabaseConnectorOptions databaseConnectorOptions() {
-    final DatabaseServerType dbServerType = new DatabaseServerType("hsqldb", "HyperSQL DataBase");
-
-    final DatabaseConnectionSourceBuilder connectionSourceBuilder =
-        DatabaseConnectionSourceBuilder.builder("jdbc:hsqldb:hsql://${host}:${port}/${database}")
-            .withDefaultPort(9001)
-            .withDefaultUrlx("readonly", true)
-            .withDefaultUrlx("hsqldb.lock_file", false);
-
-    final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand(dbServerType);
-    pluginCommand
-        .addOption(
-            "server",
-            String.class,
-            "--server=hsqldb%n" + "Loads SchemaCrawler plug-in for HyperSQL")
-        .addOption("host", String.class, "Host name%n" + "Optional, defaults to localhost")
-        .addOption("port", Integer.class, "Port number%n" + "Optional, defaults to 9001")
-        .addOption("database", String.class, "Database name");
-
-    return DatabaseConnectorOptionsBuilder.builder(dbServerType)
-        .withHelpCommand(pluginCommand)
-        .withUrlStartsWith("jdbc:hsqldb:")
-        .withInformationSchemaViewsFromResourceFolder("/hsqldb.information_schema")
-        .withSchemaRetrievalOptionsBuilder(
-            (schemaRetrievalOptionsBuilder, connection) ->
-                schemaRetrievalOptionsBuilder.with(
-                    tableColumnPrivilegesRetrievalStrategy, data_dictionary_all))
-        .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
-        .build();
+    final DatabaseConnectorDefinition definition =
+        new DatabasePluginYamlDeserializer()
+            .parse(new ClasspathInputResource("dbconnectors/hsqldb.yaml"));
+    return DatabaseConnectorDefinitionAdapter.toOptionsBuilder(definition).build();
   }
 
   public HyperSQLDatabaseConnector() {
