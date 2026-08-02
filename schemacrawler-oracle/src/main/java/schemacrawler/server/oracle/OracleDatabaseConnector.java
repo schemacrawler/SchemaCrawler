@@ -28,10 +28,12 @@ public final class OracleDatabaseConnector extends DatabaseConnector {
             .parse(new ClasspathInputResource("dbconnectors/oracle.yaml"));
 
     final DatabaseConnectionSourceBuilder connectionSourceBuilder =
-        DatabaseConnectorDefinitionAdapter.toConnectionSourceBuilder(definition)
+        new DatabaseConnectorDefinitionAdapter(definition)
+            .toConnectionSourceBuilder()
             .withConnectionInitializer(new OracleConnectionInitializer());
 
-    return DatabaseConnectorDefinitionAdapter.toOptionsBuilder(definition)
+    return new DatabaseConnectorDefinitionAdapter(definition)
+        .toDatabaseConnectorOptionsBuilder()
         .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
         .withInformationSchemaViewsBuilder(new OracleInformationSchemaViewsBuilder())
         .withLimitOptionsBuilder(

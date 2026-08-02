@@ -26,11 +26,14 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
             .parse(new ClasspathInputResource("dbconnectors/sqlserver.yaml"));
 
     final DatabaseConnectionSourceBuilder connectionSourceBuilder =
-        DatabaseConnectorDefinitionAdapter.toConnectionSourceBuilder(definition)
+        new DatabaseConnectorDefinitionAdapter(definition)
+            .toConnectionSourceBuilder()
             .withConnectionInitializer(new SqlServerConnectionInitializer());
 
     final DatabaseServerType dbServerType =
-        DatabaseConnectorDefinitionAdapter.toOptionsBuilder(definition).toOptions().dbServerType();
+        new DatabaseConnectorDefinitionAdapter(definition)
+            .toDatabaseConnectorOptions()
+            .dbServerType();
     final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand(dbServerType);
     pluginCommand
         .addOption(
@@ -52,7 +55,8 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
                 + "by using an additional option,",
             "--schemas=<database>.dbo");
 
-    return DatabaseConnectorDefinitionAdapter.toOptionsBuilder(definition)
+    return new DatabaseConnectorDefinitionAdapter(definition)
+        .toDatabaseConnectorOptionsBuilder()
         .withHelpCommand(pluginCommand)
         .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
         .build();

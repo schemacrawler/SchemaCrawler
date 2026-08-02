@@ -27,6 +27,7 @@ import java.util.stream.Stream;
 import schemacrawler.plugins.dbconnectors.model.DatabaseConnectorDefinition;
 import schemacrawler.plugins.dbconnectors.yaml.DatabasePluginYamlDeserializer;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
 import schemacrawler.tools.registry.BasePluginRegistry;
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
@@ -38,10 +39,14 @@ public final class MultiDatabaseConnectorRegistry extends BasePluginRegistry {
 
   private static final class SimpleDatabaseConnector extends DatabaseConnector {
 
+    private static DatabaseConnectorOptions toOptions(
+        final DatabaseConnectorDefinition definition) {
+      requireNonNull(definition, "No database plugin definition provided");
+      return new DatabaseConnectorDefinitionAdapter(definition).toDatabaseConnectorOptions();
+    }
+
     public SimpleDatabaseConnector(final DatabaseConnectorDefinition definition) {
-      super(
-          DatabaseConnectorDefinitionAdapter.toDatabaseConnectorOptions(
-              requireNonNull(definition, "No database plugin definition provided")));
+      super(toOptions(definition));
     }
   }
 

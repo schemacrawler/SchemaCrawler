@@ -21,7 +21,7 @@ public final class SQLiteDatabaseConnector extends DatabaseConnector {
     final DatabaseConnectorDefinition definition =
         new DatabasePluginYamlDeserializer()
             .parse(new ClasspathInputResource("dbconnectors/sqlite.yaml"));
-    return DatabaseConnectorDefinitionAdapter.toOptionsBuilder(definition).build();
+    return new DatabaseConnectorDefinitionAdapter(definition).toDatabaseConnectorOptions();
   }
 
   public SQLiteDatabaseConnector() {

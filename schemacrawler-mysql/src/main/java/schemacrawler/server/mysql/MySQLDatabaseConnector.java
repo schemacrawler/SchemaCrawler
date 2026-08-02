@@ -23,7 +23,8 @@ public final class MySQLDatabaseConnector extends DatabaseConnector {
         new DatabasePluginYamlDeserializer()
             .parse(new ClasspathInputResource("dbconnectors/mysql.yaml"));
 
-    return DatabaseConnectorDefinitionAdapter.toOptionsBuilder(definition)
+    return new DatabaseConnectorDefinitionAdapter(definition)
+        .toDatabaseConnectorOptionsBuilder()
         .withUrlSupportPredicate(
             url -> url != null && Pattern.matches("jdbc:(mysql|mariadb):.*", url))
         .withSchemaRetrievalOptionsBuilder(
