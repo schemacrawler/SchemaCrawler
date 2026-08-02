@@ -4,21 +4,33 @@ database-connector:
     name: Snowflake
   url-template: "jdbc:snowflake://${host}:${port}/"
   allowed-driver-properties:
+    # Default database after authentication.
     - db
+    # Default schema within the selected database.
     - schema
+    # Virtual warehouse for query execution.
     - warehouse
+    # Default role for the session.
     - role
+    # Keeps session alive while the connection is idle.
     - CLIENT_SESSION_KEEP_ALIVE
-    - user
-    - password
+    # Private key contents for key-pair authentication.
     - privateKey
+    # Private key file path for key-pair authentication.
     - privateKeyFile
+    # Auth mode (snowflake, externalbrowser, oauth, snowflake_jwt, etc.).
     - authenticator
+    # Login timeout in seconds.
     - loginTimeout
+    # Network timeout for socket-level operations.
     - networkTimeout
+    # Query timeout in seconds.
     - queryTimeout
+    # Driver logging/tracing level.
     - tracing
+    # Proxy host for outbound connections.
     - proxyHost
+    # Proxy port for outbound connections.
     - proxyPort
   standard-options:
     host:

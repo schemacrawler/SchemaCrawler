@@ -10,8 +10,8 @@ database-connector:
     # Enables network traffic encryption using JSSE properties.
     # Required if your cluster has SSL communication enabled.
     - enablessl
-    # Alters driver behavioral quirks for ecosystem tools.
-    # Options include Liquibase (forces strict standard JDBC catalog behaviors) or Standard.
+    # Enables JDBC compatibility mode adjustments.
+    # Supported values are Default and Liquibase.
     - compliancemode
     # Sets the default Cassandra execution consistency level for statement queries
     # (e.g., ANY, ONE, QUORUM, LOCAL_QUORUM).

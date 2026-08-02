@@ -22,7 +22,8 @@ public final class PostgreSQLDatabaseConnector extends DatabaseConnector {
         new DatabasePluginYamlDeserializer()
             .parse(new ClasspathInputResource("dbconnectors/postgresql.yaml"));
 
-    return DatabaseConnectorDefinitionAdapter.toOptionsBuilder(definition)
+    return new DatabaseConnectorDefinitionAdapter(definition)
+        .toDatabaseConnectorOptionsBuilder()
         .withSchemaRetrievalOptionsBuilder(
             (builder, conn) -> builder.withEnumDataTypeHelper(new PostgreSQLEnumDataTypeHelper()))
         .build();

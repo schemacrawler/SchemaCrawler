@@ -10,7 +10,6 @@ package schemacrawler.plugins.dbconnectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 
 import org.junit.jupiter.api.Test;
 import schemacrawler.plugins.dbconnectors.model.DatabaseConnectorDefinition;
@@ -19,7 +18,6 @@ import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
-import us.fatehi.utility.datasource.DatabaseConnectionSourceBuilder;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public class DatabaseConnectorDefinitionAdapterTest {
@@ -27,23 +25,12 @@ public class DatabaseConnectorDefinitionAdapterTest {
   private final DatabasePluginYamlDeserializer deserializer = new DatabasePluginYamlDeserializer();
 
   @Test
-  public void toConnectionSourceBuilder() {
-    final DatabaseConnectorDefinition definition =
-        deserializer.parse(new ClasspathInputResource("schemacrawler-dbconnectors/h2.yaml"));
-
-    final DatabaseConnectionSourceBuilder connectionSourceBuilder =
-        DatabaseConnectorDefinitionAdapter.toConnectionSourceBuilder(definition);
-
-    assertThat(connectionSourceBuilder, is(notNullValue()));
-  }
-
-  @Test
   public void toOptionsBuilderMissingInformationSchemaFolder() {
     final DatabaseConnectorDefinition definition =
-        deserializer.parse(new ClasspathInputResource("schemacrawler-dbconnectors/h2.yaml"));
+        deserializer.parse(new ClasspathInputResource("dbconnectors/h2.yaml"));
 
     final DatabaseConnectorOptions options =
-        DatabaseConnectorDefinitionAdapter.toOptionsBuilder(definition).build();
+        new DatabaseConnectorDefinitionAdapter(definition).toDatabaseConnectorOptions();
     final InformationSchemaViewsBuilder viewsBuilder = InformationSchemaViewsBuilder.builder();
     options.informationSchemaViewsBuildProcess().accept(viewsBuilder, null);
     final InformationSchemaViews views = viewsBuilder.toOptions();
@@ -54,11 +41,10 @@ public class DatabaseConnectorDefinitionAdapterTest {
   @Test
   public void toOptionsBuilderWithInformationSchemaFolder() {
     final DatabaseConnectorDefinition definition =
-        deserializer.parse(
-            new ClasspathInputResource("schemacrawler-dbconnectors/adapter-test.yaml"));
+        deserializer.parse(new ClasspathInputResource("dbconnectors/adapter-test.yaml"));
 
     final DatabaseConnectorOptions options =
-        DatabaseConnectorDefinitionAdapter.toOptionsBuilder(definition).build();
+        new DatabaseConnectorDefinitionAdapter(definition).toDatabaseConnectorOptions();
     final InformationSchemaViewsBuilder viewsBuilder = InformationSchemaViewsBuilder.builder();
     options.informationSchemaViewsBuildProcess().accept(viewsBuilder, null);
     final InformationSchemaViews views = viewsBuilder.toOptions();

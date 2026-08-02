@@ -21,7 +21,7 @@ public final class DB2DatabaseConnector extends DatabaseConnector {
     final DatabaseConnectorDefinition definition =
         new DatabasePluginYamlDeserializer()
             .parse(new ClasspathInputResource("dbconnectors/db2.yaml"));
-    return DatabaseConnectorDefinitionAdapter.toOptionsBuilder(definition).build();
+    return new DatabaseConnectorDefinitionAdapter(definition).toDatabaseConnectorOptions();
   }
 
   public DB2DatabaseConnector() {
