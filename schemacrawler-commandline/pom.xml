@@ -82,7 +82,7 @@
     <dependency>
       <groupId>org.jline</groupId>
       <artifactId>jline</artifactId>
-      <version>3.29.0</version>
+      <version>4.3.1</version>
     </dependency>
     <dependency>
       <groupId>info.picocli</groupId>
