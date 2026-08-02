@@ -27,7 +27,7 @@ public class DatabaseConnectorDefinitionAdapterTest {
   @Test
   public void toOptionsBuilderMissingInformationSchemaFolder() {
     final DatabaseConnectorDefinition definition =
-        deserializer.parse(new ClasspathInputResource("schemacrawler-dbconnectors/h2.yaml"));
+        deserializer.parse(new ClasspathInputResource("dbconnectors/h2.yaml"));
 
     final DatabaseConnectorOptions options =
         new DatabaseConnectorDefinitionAdapter(definition).toDatabaseConnectorOptions();
@@ -41,8 +41,7 @@ public class DatabaseConnectorDefinitionAdapterTest {
   @Test
   public void toOptionsBuilderWithInformationSchemaFolder() {
     final DatabaseConnectorDefinition definition =
-        deserializer.parse(
-            new ClasspathInputResource("schemacrawler-dbconnectors/adapter-test.yaml"));
+        deserializer.parse(new ClasspathInputResource("dbconnectors/adapter-test.yaml"));
 
     final DatabaseConnectorOptions options =
         new DatabaseConnectorDefinitionAdapter(definition).toDatabaseConnectorOptions();

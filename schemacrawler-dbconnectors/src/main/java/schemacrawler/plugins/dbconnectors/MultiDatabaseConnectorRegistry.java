@@ -54,7 +54,7 @@ public final class MultiDatabaseConnectorRegistry extends BasePluginRegistry {
       Logger.getLogger(MultiDatabaseConnectorRegistry.class.getName());
 
   private static MultiDatabaseConnectorRegistry singleton;
-  private static final String CLASS_PATH_ROOT = "schemacrawler-dbconnectors";
+  private static final String CLASS_PATH_ROOT = "dbconnectors";
 
   private static final DatabasePluginYamlDeserializer DESERIALIZER =
       new DatabasePluginYamlDeserializer();

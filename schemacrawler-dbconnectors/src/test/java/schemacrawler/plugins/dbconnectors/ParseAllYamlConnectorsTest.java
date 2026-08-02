@@ -36,8 +36,7 @@ class ParseAllYamlConnectorsTest {
       throws IOException {
 
     final DatabaseConnectorDefinition definition =
-        deserializer.parse(
-            new ClasspathInputResource("schemacrawler-dbconnectors/%s.yaml".formatted(server)));
+        deserializer.parse(new ClasspathInputResource("dbconnectors/%s.yaml".formatted(server)));
 
     assertThat(outputOf(streams.err()), hasNoContent());
     assertThat(definition.databaseServerType().server(), is(server));
