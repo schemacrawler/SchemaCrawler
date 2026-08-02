@@ -8,6 +8,8 @@
 
 package schemacrawler.plugins.dbconnectors;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 import java.util.Map;
 import schemacrawler.inclusionrule.RegularExpressionRule;
@@ -30,10 +32,65 @@ public final class DatabaseConnectorDefinitionAdapter {
 
   public static DatabaseConnectorOptions toDatabaseConnectorOptions(
       final DatabaseConnectorDefinition definition) {
-    return new DatabaseConnectorDefinitionAdapter().toDatabaseConnectorOptionsInternal(definition);
+    return toOptionsBuilder(definition).build();
   }
 
-  private void addAdditionalOptions(
+  /**
+   * Creates a pre-populated options builder from a YAML connector definition.
+   *
+   * <p>The returned builder includes all declarative settings, including URL matching, CLI help,
+   * schema retrieval overrides, limit options, connection source defaults, and information schema
+   * SQL loading by the folder naming convention.
+   */
+  public static DatabaseConnectorOptionsBuilder toOptionsBuilder(
+      final DatabaseConnectorDefinition definition) {
+    requireNonNull(definition, "No database connector definition provided");
+
+    final DatabaseServerType dbServerType = definition.databaseServerType().toDatabaseServerType();
+    final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand(dbServerType);
+    addStandardOptions(pluginCommand, definition.standardOptions(), dbServerType);
+    addAdditionalOptions(pluginCommand, definition.additionalOptions());
+
+    return DatabaseConnectorOptionsBuilder.builder(dbServerType)
+        .withHelpCommand(pluginCommand)
+        .withDatabaseConnectionSourceBuilder(() -> toConnectionSourceBuilder(definition))
+        .withSchemaRetrievalOptionsBuilder(
+            (builder, connection) -> applySchemaRetrievalOverrides(builder, definition))
+        .withLimitOptionsBuilder(builder -> applyLimitOptions(builder, definition.limit()))
+        .withInformationSchemaViewsFromResourceFolder(
+            "/%s.information_schema".formatted(definition.databaseServerType().server()));
+  }
+
+  /**
+   * Creates a pre-populated connection source builder from a YAML connector definition.
+   *
+   * <p>The returned builder includes URL template defaults, standard option defaults, allowed
+   * driver properties, and all additional option urlx defaults.
+   */
+  public static DatabaseConnectionSourceBuilder toConnectionSourceBuilder(
+      final DatabaseConnectorDefinition definition) {
+    requireNonNull(definition, "No database connector definition provided");
+
+    final DatabaseConnectionSourceBuilder connectionSourceBuilder =
+        DatabaseConnectionSourceBuilder.builder(definition.urlTemplate());
+    applyStandardOptionDefaults(connectionSourceBuilder, definition.standardOptions());
+    if (!definition.allowedDriverProperties().isEmpty()) {
+      connectionSourceBuilder.withAdditionalDriverProperties(definition.allowedDriverProperties());
+    }
+    if (!definition.additionalOptions().isEmpty()) {
+      for (final AdditionalOptionDefinition additionalOption : definition.additionalOptions()) {
+        final String stringDefault = additionalOption.stringDefault();
+        if (stringDefault != null) {
+          final String urlxKey = additionalOption.name();
+          connectionSourceBuilder.withDefaultUrlx(
+              urlxKey == null ? additionalOption.name() : urlxKey, stringDefault);
+        }
+      }
+    }
+    return connectionSourceBuilder;
+  }
+
+  private static void addAdditionalOptions(
       final PluginCommand pluginCommand, final List<AdditionalOptionDefinition> additionalOptions) {
     for (final AdditionalOptionDefinition additionalOption : additionalOptions) {
       pluginCommand.addOption(
@@ -43,7 +100,7 @@ public final class DatabaseConnectorDefinitionAdapter {
     }
   }
 
-  private void addStandardOptions(
+  private static void addStandardOptions(
       final PluginCommand pluginCommand,
       final StandardOptionsDefinition standardOptions,
       final DatabaseServerType dbServerType) {
@@ -62,16 +119,16 @@ public final class DatabaseConnectorDefinitionAdapter {
         helpLinesOrDefault(standardOptions.database().help(), "Database name"));
   }
 
-  private void applyLimitOptions(
+  private static void applyLimitOptions(
       final schemacrawler.schemacrawler.LimitOptionsBuilder builder, final LimitDefinition limit) {
-    if (limit == null) {
+    if (limit == null || !limit.hasValues()) {
       return;
     }
     builder.includeSchemas(
         new RegularExpressionRule(limit.includeSchemas(), limit.excludeSchemas()));
   }
 
-  private void applySchemaRetrievalOverrides(
+  private static void applySchemaRetrievalOverrides(
       final SchemaRetrievalOptionsBuilder builder, final DatabaseConnectorDefinition definition) {
     final var schemaRetrieval = definition.schemaRetrieval();
     final Boolean supportsCatalogs = schemaRetrieval.supportsCatalogs();
@@ -96,7 +153,7 @@ public final class DatabaseConnectorDefinitionAdapter {
     }
   }
 
-  private void applyStandardOptionDefaults(
+  private static void applyStandardOptionDefaults(
       final DatabaseConnectionSourceBuilder connectionSourceBuilder,
       final StandardOptionsDefinition standardOptions) {
     final String defaultHost = standardOptions.host().stringDefault();
@@ -118,49 +175,11 @@ public final class DatabaseConnectorDefinitionAdapter {
     }
   }
 
-  private DatabaseConnectionSourceBuilder databaseConnectionSourceBuilder(
-      final DatabaseConnectorDefinition definition) {
-    final DatabaseConnectionSourceBuilder connectionSourceBuilder =
-        DatabaseConnectionSourceBuilder.builder(definition.urlTemplate());
-    applyStandardOptionDefaults(connectionSourceBuilder, definition.standardOptions());
-    if (!definition.allowedDriverProperties().isEmpty()) {
-      connectionSourceBuilder.withAdditionalDriverProperties(definition.allowedDriverProperties());
-    }
-    if (!definition.additionalOptions().isEmpty()) {
-      for (final AdditionalOptionDefinition additionalOption : definition.additionalOptions()) {
-        final String stringDefault = additionalOption.stringDefault();
-        if (stringDefault != null) {
-          final String urlxKey = additionalOption.name();
-          connectionSourceBuilder.withDefaultUrlx(
-              urlxKey == null ? additionalOption.name() : urlxKey, stringDefault);
-        }
-      }
-    }
-    return connectionSourceBuilder;
-  }
-
-  private String[] helpLinesOrDefault(final List<String> helpLines, final String... defaults) {
+  private static String[] helpLinesOrDefault(
+      final List<String> helpLines, final String... defaults) {
     if (helpLines == null || helpLines.isEmpty()) {
       return defaults;
     }
     return helpLines.toArray(String[]::new);
-  }
-
-  private DatabaseConnectorOptions toDatabaseConnectorOptionsInternal(
-      final DatabaseConnectorDefinition definition) {
-    final DatabaseServerType dbServerType = definition.databaseServerType().toDatabaseServerType();
-
-    final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand(dbServerType);
-    addStandardOptions(pluginCommand, definition.standardOptions(), dbServerType);
-    addAdditionalOptions(pluginCommand, definition.additionalOptions());
-
-    return DatabaseConnectorOptionsBuilder.builder(dbServerType)
-        .withHelpCommand(pluginCommand)
-        .withUrlStartsWith(definition.urlPrefix())
-        .withDatabaseConnectionSourceBuilder(() -> databaseConnectionSourceBuilder(definition))
-        .withSchemaRetrievalOptionsBuilder(
-            (builder, connection) -> applySchemaRetrievalOverrides(builder, definition))
-        .withLimitOptionsBuilder(builder -> applyLimitOptions(builder, definition.limit()))
-        .build();
   }
 }

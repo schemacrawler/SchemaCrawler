@@ -3,7 +3,6 @@ database-connector:
     server: h2
     name: H2
   url-template: "jdbc:h2:${database}"
-  url-prefix: "jdbc:h2:"
   allowed-driver-properties:
     - MODE
     - AUTO_SERVER

@@ -1,0 +1,37 @@
+database-connector:
+  database-server-type:
+    server: postgresql
+    name: PostgreSQL
+  url-template: "jdbc:postgresql://${host}:${port}/${database}"
+  standard-options:
+    host:
+      help:
+        - Host name
+        - Optional, uses the PGHOSTADDR and PGHOST environmental variables if available, or defaults to localhost
+    port:
+      help:
+        - Port number
+        - Optional, uses the PGPORT environmental variable if available, or defaults to 5432
+      default: 5432
+    database:
+      help:
+        - Database name
+        - Optional, uses the PGDATABASE environmental variable if available
+  schema-retrieval:
+    retrieval-strategies:
+      tablecolumns: metadata_over_schemas
+  limit:
+    exclude-schemas: "pg_catalog|information_schema"
+  additional-options:
+    - name: ApplicationName
+      type: string
+      default: SchemaCrawler
+      help:
+        - Application name shown in pg_stat_activity
+        - Optional, defaults to SchemaCrawler
+    - name: loggerLevel
+      type: string
+      default: DEBUG
+      help:
+        - PostgreSQL JDBC driver log level
+        - Optional, defaults to DEBUG

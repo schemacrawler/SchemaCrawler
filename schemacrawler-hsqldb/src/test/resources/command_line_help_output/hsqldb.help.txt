@@ -1,13 +1,17 @@
 ** Connect to HyperSQL DataBase
 
       --database=<database>
-                          Database name
-      --host=<host>       Host name
-                          Optional, defaults to localhost
-      --port=<port>       Port number
-                          Optional, defaults to 9001
-      --server=<server>   --server=hsqldb
-                          Loads SchemaCrawler plug-in for HyperSQL
+                           Database name
+      --host=<host>        Host name
+                           Optional, defaults to localhost
+      --hsqldb.lock_file   Use a lock file for the database
+                           Optional, defaults to false
+      --port=<port>        Port number
+                           Optional, defaults to 9001
+      --readonly           Open connection in read-only mode
+                           Optional, defaults to true
+      --server=<server>    --server=hsqldb
+                           Loads SchemaCrawler plug-in for HyperSQL DataBase
 Add connection options to the `connect` command in the SchemaCrawler Shell
 
 

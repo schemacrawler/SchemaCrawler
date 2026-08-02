@@ -8,7 +8,7 @@
 
 package schemacrawler.plugins.dbconnectors.model;
 
-import static us.fatehi.utility.Utility.isBlank;
+import static java.util.Objects.requireNonNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jspecify.annotations.Nullable;
@@ -27,8 +27,18 @@ public record LimitDefinition(
   }
 
   public LimitDefinition {
-    includeSchemas = isBlank(includeSchemas) ? null : includeSchemas;
-    excludeSchemas = isBlank(excludeSchemas) ? null : excludeSchemas;
+    // Null means use defaults for include and exclude
+
+    if (includeSchemas != null) {
+      requireNonNull(includeSchemas, "No include schema pattern provided");
+    }
+    if (excludeSchemas != null) {
+      requireNonNull(excludeSchemas, "No exclude schema pattern provided");
+    }
+  }
+
+  public boolean hasValues() {
+    return includeSchemas != null || excludeSchemas != null;
   }
 
   @Override

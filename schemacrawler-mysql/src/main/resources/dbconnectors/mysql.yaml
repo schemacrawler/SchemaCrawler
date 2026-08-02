@@ -1,0 +1,71 @@
+database-connector:
+  database-server-type:
+    server: mysql
+    name: MySQL
+  url-template: "jdbc:mysql://${host}:${port}/${database}"
+  standard-options:
+    host:
+      help:
+        - Host name
+        - Optional, defaults to localhost
+    port:
+      help:
+        - Port number
+        - Optional, defaults to 3306
+      default: 3306
+    database:
+      help:
+        - Database name
+  limit:
+    exclude-schemas: "sys|mysql"
+  additional-options:
+    - name: allowPublicKeyRetrieval
+      type: boolean
+      default: "true"
+      help:
+        - Allow retrieval of RSA public key from server if needed
+    - name: nullNamePatternMatchesAll
+      type: boolean
+      default: "true"
+      help:
+        - Treat null name patterns as wildcards
+    - name: getProceduresReturnsFunctions
+      type: boolean
+      default: "false"
+      help:
+        - Keep procedure metadata separate from functions
+    - name: noAccessToProcedureBodies
+      type: boolean
+      default: "true"
+      help:
+        - Avoid direct access to procedure bodies
+    - name: logger
+      type: string
+      default: Jdk14Logger
+      help:
+        - MySQL JDBC logger implementation
+    - name: dumpQueriesOnException
+      type: boolean
+      default: "true"
+      help:
+        - Include executed query details in exceptions
+    - name: dumpMetadataOnColumnNotFound
+      type: boolean
+      default: "true"
+      help:
+        - Include metadata details when column lookup fails
+    - name: maxQuerySizeToLog
+      type: string
+      default: "4096"
+      help:
+        - Maximum query size to include in logs
+    - name: disableMariaDbDriver
+      type: boolean
+      default: "true"
+      help:
+        - Prefer MySQL JDBC driver when both MySQL and MariaDB drivers are present
+    - name: useInformationSchema
+      type: boolean
+      default: "true"
+      help:
+        - Use information_schema metadata where available

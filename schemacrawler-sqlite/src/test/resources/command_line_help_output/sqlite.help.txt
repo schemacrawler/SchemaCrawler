@@ -1,8 +1,14 @@
 ** Connect to SQLite
 
+      --application_id=<application_id>
+                          Application identifier stored in the database file
+                          Optional, defaults to SchemaCrawler
       --database=<database>
                           SQLite database file path
       --host=<host>       Should be omitted
+      --open_mode=<open_mode>
+                          SQLite open mode flags
+                          Optional, defaults to 2 (read-write)
       --port=<port>       Should be omitted
       --server=<server>   --server=sqlite
                           Loads SchemaCrawler plug-in for SQLite
