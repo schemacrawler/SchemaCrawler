@@ -4,20 +4,30 @@ database-connector:
     name: H2
   url-template: "jdbc:h2:${database}"
   allowed-driver-properties:
+    # Compatibility mode (for example PostgreSQL, MySQL, Oracle).
     - MODE
+    # Enables automatic mixed mode for file databases.
     - AUTO_SERVER
+    # Attempts reconnect when a connection is interrupted.
     - AUTO_RECONNECT
+    # Converts unquoted identifiers to upper case.
     - DATABASE_TO_UPPER
+    # Converts unquoted identifiers to lower case.
     - DATABASE_TO_LOWER
+    # Default NULL ordering in ORDER BY expressions.
     - DEFAULT_NULL_ORDERING
+    # File trace level (0..3).
     - TRACE_LEVEL_FILE
+    # Console trace level (0..3).
     - TRACE_LEVEL_SYSTEM_OUT
+    # SQL executed at connection start.
     - INIT
+    # Fails if database file does not already exist.
     - IFEXISTS
+    # Data access mode (r or rw).
     - ACCESS_MODE_DATA
+    # File locking strategy.
     - FILE_LOCK
-    - user
-    - password
   standard-options:
     database:
       help:

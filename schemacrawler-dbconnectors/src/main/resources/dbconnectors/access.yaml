@@ -4,18 +4,29 @@ database-connector:
     name: Microsoft Access
   url-template: "jdbc:ucanaccess://${database};showSchema=true;sysSchema=true"
   allowed-driver-properties:
+    # Load database in memory for faster access and temporary working sets.
     - memory
+    # Force a single shared connection lifecycle for the file.
     - singleConnection
+    # Controls returned column order (display/data/alphabetical modes).
     - columnOrder
+    # Makes identifier matching case-insensitive.
     - ignoreCase
+    # Tuning factor for LOB/MEMO buffering behavior.
     - lobScale
+    # Upper bound for returned MEMO field length.
     - maxMemoFieldLength
+    # Controls NULL concatenation semantics.
     - concatNulls
+    # Releases file resources immediately when connection is closed.
     - immediatelyReleaseResources
+    # Custom Jackcess opener for encrypted/protected files.
     - jackcessOpener
+    # File open mode such as read-only or read-write.
     - openMode
+    # Idle timeout before releasing inactive resources.
     - inactivityTimeout
-    - password
+    # Access file version used when creating a new database.
     - newDatabaseVersion
   standard-options:
     database:

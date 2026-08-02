@@ -4,45 +4,62 @@ database-connector:
     name: Trino
   url-template: "jdbc:trino://${host}:${port}/${database}"
   allowed-driver-properties:
-    - user
-    - password
+    # Session-level impersonation user.
     - sessionUser
+    # TLS enablement and verification behavior.
+    # SSLVerification supports FULL, CA, or NONE.
     - SSL
     - SSLVerification
+    # TLS trust/key store paths, passwords, and formats.
     - SSLTrustStorePath
     - SSLTrustStorePassword
     - SSLTrustStoreType
+    - SSLUseSystemTrustStore
     - SSLKeyStorePath
     - SSLKeyStorePassword
     - SSLKeyStoreType
+    - SSLUseSystemKeyStore
+    # Expected hostname in presented certificate.
+    - hostnameInCertificate
+    # Client metadata and tracing properties.
     - applicationNamePrefix
     - clientInfo
     - clientTags
     - traceToken
+    - source
+    - path
+    # JVM/session time zone selection.
     - timezone
-    - locale
-    - queryInterceptors
+    # HTTP/SOCKS proxy configuration.
     - httpProxy
     - socksProxy
-    - assumeLiteralNamesInMetadataCallsForNonConformingClients
+    # Metadata pattern handling workaround for non-conforming clients.
     - assumeLiteralUnderscoreInMetadataCallsForNonConformingClients
+    # Controls HTTP compression and redirect behavior.
     - disableCompression
+    - disallowLocalRedirect
+    # Catalog/session-level dynamic configuration.
     - extraCredentials
     - roles
     - sessionProperties
-    - protocols
+    - extraHeaders
+    # Authentication extensions.
     - accessToken
     - externalAuthentication
-    - kerberosEnabled
-    - kerberosServicePrincipalPattern
-    - kerberosPrincipal
-    - kerberosRemoteServiceName
-    - kerberosUseCanonicalHostname
-    - kerberosConfigPath
-    - kerberosKeytabPath
-    - kerberosCredentialCachePath
-    - kerberosDelegation
-    - httpLoggingLevel
+    - externalAuthenticationTokenCache
+    # Kerberos settings (property names are case-sensitive).
+    - KerberosServicePrincipalPattern
+    - KerberosPrincipal
+    - KerberosRemoteServiceName
+    - KerberosUseCanonicalHostname
+    - KerberosConfigPath
+    - KerberosKeytabPath
+    - KerberosCredentialCachePath
+    - KerberosDelegation
+    # Prepared statement/transport tuning.
+    - explicitPrepare
+    - encoding
+    - validateConnection
   standard-options:
     port:
       default: 8080

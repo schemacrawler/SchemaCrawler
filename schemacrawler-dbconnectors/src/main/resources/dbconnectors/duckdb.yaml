@@ -4,11 +4,13 @@ database-connector:
     name: DuckDB
   url-template: "jdbc:duckdb:${database}"
   allowed-driver-properties:
+    # Opens the database in read-only mode.
     - duckdb.read_only
-    - user
-    - password
+    # Directory for temporary spill files.
     - temp_directory
+    # Maximum number of worker threads.
     - threads
+    # Memory budget (for example 1GB, 512MB).
     - memory_limit
   standard-options:
     host:

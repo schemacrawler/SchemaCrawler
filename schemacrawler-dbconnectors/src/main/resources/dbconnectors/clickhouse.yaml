@@ -4,21 +4,33 @@ database-connector:
     name: ClickHouse
   url-template: "jdbc:clickhouse://${host}:${port}/${database}?client_name=SchemaCrawler"
   allowed-driver-properties:
+    # Socket read/write timeout in milliseconds.
     - socket_timeout
+    # Enables request/response compression.
     - compress
+    # Enables response decompression control for compatibility.
     - decompress
+    # HTTP connection establishment timeout in milliseconds.
     - http_connection_timeout
+    # HTTP response read timeout in milliseconds.
     - http_receive_timeout
+    # HTTP request send timeout in milliseconds.
     - http_send_timeout
+    # Server setting to cap rows read by a query.
     - max_rows_to_read
+    # Server setting to cap bytes read by a query.
     - max_bytes_to_read
+    # Explicit client timezone for decoding temporal values.
     - use_time_zone
+    # Uses server timezone when client timezone is not forced.
     - use_server_time_zone
+    # Maps array values to object representations when enabled.
     - use_objects_in_arrays
-    - user
-    - password
+    # Enables TLS transport.
     - ssl
+    # TLS verification mode (for example strict or verify_ca).
     - sslmode
+    # CA/root certificate path or PEM for TLS verification.
     - sslrootcert
   standard-options:
     host:
