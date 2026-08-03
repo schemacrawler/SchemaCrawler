@@ -25,6 +25,7 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
@@ -34,13 +35,10 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
-public class H2Test {
-
-  private DatabaseConnectionSource connectionSource;
+public class H2Test extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws Exception {
@@ -49,10 +47,10 @@ public class H2Test {
             .findDatabaseConnectorFromDatabaseSystemIdentifier("h2");
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions("h2", null, null, "mem:schemacrawler", Map.of());
-    connectionSource =
-        connector.newDatabaseConnectionSource(connectionOptions, new MultiUseUserCredentials());
+    createConnectionSource(
+        connector.newDatabaseConnectionSource(connectionOptions, new MultiUseUserCredentials()));
 
-    try (final Connection connection = connectionSource.get()) {
+    try (final Connection connection = getConnection()) {
       new TestSchemaCreator(connection, "/h2.scripts.txt", false).run();
     }
   }
@@ -80,7 +78,7 @@ public class H2Test {
 
     final String expectedResource = "testH2WithConnection.txt";
     assertThat(
-        outputOf(executableExecution(connectionSource, executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

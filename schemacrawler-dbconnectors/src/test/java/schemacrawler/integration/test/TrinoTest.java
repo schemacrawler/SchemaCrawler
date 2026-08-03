@@ -26,24 +26,22 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.JdbcUrl;
 import us.fatehi.utility.datasource.JdbcUrlParser;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @HeavyDatabaseTest("trino")
 @Testcontainers(disabledWithoutDocker = true)
-public class TrinoTest {
+public class TrinoTest extends BaseAdditionalDatabaseTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newTrinoContainer();
-
-  private DatabaseConnectionSource connectionSource;
 
   @BeforeEach
   public void createDatabase() {
@@ -63,10 +61,10 @@ public class TrinoTest {
             .findDatabaseConnectorFromDatabaseSystemIdentifier("trino");
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions("trino", host, port, database, Map.of());
-    connectionSource =
+    createConnectionSource(
         connector.newDatabaseConnectionSource(
             connectionOptions,
-            new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword()));
+            new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword())));
   }
 
   @Test
@@ -84,7 +82,7 @@ public class TrinoTest {
 
     final String expectedResource = "testTrinoWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(connectionSource, executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

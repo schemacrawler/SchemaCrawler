@@ -29,6 +29,7 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -48,12 +49,10 @@ import us.fatehi.utility.datasource.MultiUseUserCredentials;
 @HeavyDatabaseTest("snowflake")
 @EnabledIfEnvironmentVariable(named = "LOCALSTACK_AUTH_TOKEN", matches = ".+")
 @Testcontainers(disabledWithoutDocker = true)
-public class SnowflakeTest {
+public class SnowflakeTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer = SnowflakeTestUtility.newSnowflakeContainer();
-
-  private DatabaseConnectionSource connectionSource;
 
   @BeforeEach
   public void createDatabase() throws Exception {
@@ -91,7 +90,7 @@ public class SnowflakeTest {
             port,
             dbContainer.getDatabaseName(),
             Map.of("schema", "BOOKS", "tracing", "ALL"));
-    connectionSource = connector.newDatabaseConnectionSource(connectionOptions, credentials);
+    createConnectionSource(connector.newDatabaseConnectionSource(connectionOptions, credentials));
   }
 
   @Test
@@ -117,7 +116,7 @@ public class SnowflakeTest {
 
     final String expectedResource = "testSnowflakeWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(connectionSource, executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

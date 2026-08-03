@@ -31,6 +31,7 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -40,15 +41,12 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
 @HeavyDatabaseTest("cassandra")
 @Testcontainers(disabledWithoutDocker = true)
-public class CassandraTest {
-
-  private DatabaseConnectionSource connectionSource;
+public class CassandraTest extends BaseAdditionalDatabaseTest {
 
   @Container private final CassandraContainer dbContainer = newCassandraContainer();
 
@@ -70,10 +68,10 @@ public class CassandraTest {
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions(
             "cassandra", host, port, keyspace, Map.of("localdatacenter", localDatacenter));
-    connectionSource =
+    createConnectionSource(
         connector.newDatabaseConnectionSource(
             connectionOptions,
-            new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword()));
+            new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword())));
   }
 
   @Test
@@ -101,7 +99,7 @@ public class CassandraTest {
 
     final String expectedResource = "testCassandraWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(connectionSource, executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }
