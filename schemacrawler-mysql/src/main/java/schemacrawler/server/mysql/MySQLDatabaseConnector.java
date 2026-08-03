@@ -28,7 +28,10 @@ public final class MySQLDatabaseConnector extends DatabaseConnector {
         .withUrlSupportPredicate(
             url -> url != null && Pattern.matches("jdbc:(mysql|mariadb):.*", url))
         .withSchemaRetrievalOptionsBuilder(
-            (builder, conn) -> builder.withEnumDataTypeHelper(new MySQLEnumDataTypeHelper()))
+            (builder, conn) -> {
+              builder.withEnumDataTypeHelper(new MySQLEnumDataTypeHelper());
+              builder.withHostLocationExtractor(new MySQLHostLocationExtractor());
+            })
         .build();
   }
 

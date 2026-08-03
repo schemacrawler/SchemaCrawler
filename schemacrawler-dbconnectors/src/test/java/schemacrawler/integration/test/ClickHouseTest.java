@@ -40,6 +40,8 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.integration.utility.ClickHouseTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.JdbcUrl;
+import us.fatehi.utility.datasource.JdbcUrlParser;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
@@ -61,13 +63,10 @@ public class ClickHouseTest {
     }
 
     final String jdbcUrl = dbContainer.getJdbcUrl();
-    final String urlTail = jdbcUrl.substring("jdbc:clickhouse://".length());
-    final int slashIndex = urlTail.indexOf('/');
-    final String hostPort = slashIndex >= 0 ? urlTail.substring(0, slashIndex) : urlTail;
-    final String database = slashIndex >= 0 ? urlTail.substring(slashIndex + 1) : "";
-    final String[] hostAndPort = hostPort.split(":", 2);
-    final String host = hostAndPort[0];
-    final int port = Integer.parseInt(hostAndPort[1]);
+    final JdbcUrl parsedUrl = JdbcUrlParser.parse(jdbcUrl);
+    final String host = dbContainer.getHost();
+    final int port = parsedUrl.port();
+    final String database = parsedUrl.databaseName();
 
     final DatabaseConnector connector =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry()

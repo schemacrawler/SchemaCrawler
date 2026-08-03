@@ -36,6 +36,8 @@ public final class OracleDatabaseConnector extends DatabaseConnector {
         .toDatabaseConnectorOptionsBuilder()
         .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
         .withInformationSchemaViewsBuilder(new OracleInformationSchemaViewsBuilder())
+        .withSchemaRetrievalOptionsBuilder(
+            (builder, conn) -> builder.withHostLocationExtractor(new OracleHostLocationExtractor()))
         .withLimitOptionsBuilder(
             limitOptionsBuilder ->
                 limitOptionsBuilder.includeSchemas(new OracleSchemaExclusionRule()))

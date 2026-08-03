@@ -33,6 +33,8 @@ import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.JdbcUrl;
+import us.fatehi.utility.datasource.JdbcUrlParser;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @HeavyDatabaseTest("trino")
@@ -51,18 +53,10 @@ public class TrinoTest {
     }
 
     final String jdbcUrl = dbContainer.getJdbcUrl();
-    final String urlTail = jdbcUrl.substring("jdbc:trino://".length());
-    final int slashIndex = urlTail.indexOf('/');
-    final String hostPort = slashIndex >= 0 ? urlTail.substring(0, slashIndex) : urlTail;
-    final String databaseAndQuery = slashIndex >= 0 ? urlTail.substring(slashIndex + 1) : "";
-    final int questionMarkIndex = databaseAndQuery.indexOf('?');
-    final String database =
-        questionMarkIndex >= 0
-            ? databaseAndQuery.substring(0, questionMarkIndex)
-            : databaseAndQuery;
-    final String[] hostAndPort = hostPort.split(":", 2);
-    final String host = hostAndPort[0];
-    final int port = Integer.parseInt(hostAndPort[1]);
+    final JdbcUrl parsedUrl = JdbcUrlParser.parse(jdbcUrl);
+    final String host = dbContainer.getHost();
+    final int port = parsedUrl.port();
+    final String database = parsedUrl.databaseName();
 
     final DatabaseConnector connector =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry()
