@@ -33,19 +33,19 @@ database-connector:
   additional-options:
     - name: remarksReporting
       type: boolean
-      default: "true"
+      default: true
       help:
         - Report REMARKS for tables and columns
         - Optional, defaults to true
     - name: restrictGetTables
       type: boolean
-      default: "true"
+      default: true
       help:
         - Restrict getTables() to accessible objects
         - Optional, defaults to true
     - name: useFetchSizeWithLongColumn
       type: boolean
-      default: "true"
+      default: true
       help:
         - Use fetch size hint when LONG columns are present
         - Optional, defaults to true
