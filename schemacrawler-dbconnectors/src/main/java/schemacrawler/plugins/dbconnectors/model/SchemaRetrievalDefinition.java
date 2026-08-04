@@ -33,10 +33,6 @@ public record SchemaRetrievalDefinition(
     retrievalStrategies = retrievalStrategies == null ? Map.of() : Map.copyOf(retrievalStrategies);
   }
 
-  public boolean isEmpty() {
-    return retrievalStrategies.isEmpty() && supportsCatalogs == null && supportsSchemas == null;
-  }
-
   @Override
   public String toString() {
     return JsonUtility.mapper.writeValueAsString(this);
