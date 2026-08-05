@@ -21,7 +21,9 @@ public final class HyperSQLDatabaseConnector extends DatabaseConnector {
     final DatabaseConnectorDefinition definition =
         new DatabasePluginYamlDeserializer()
             .parse(new ClasspathInputResource("dbconnectors/hsqldb.yaml"));
-    return new DatabaseConnectorDefinitionAdapter(definition).toDatabaseConnectorOptions();
+    return new DatabaseConnectorDefinitionAdapter(definition)
+        .toDatabaseConnectorOptionsBuilder()
+        .build();
   }
 
   public HyperSQLDatabaseConnector() {

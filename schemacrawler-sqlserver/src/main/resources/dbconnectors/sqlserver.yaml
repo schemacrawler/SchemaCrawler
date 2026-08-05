@@ -50,7 +50,7 @@ database-connector:
         - Optional, defaults to SchemaCrawler
     - name: encrypt
       type: boolean
-      default: "false"
+      default: false
       help:
         - Encrypt the connection
         - Optional, defaults to false

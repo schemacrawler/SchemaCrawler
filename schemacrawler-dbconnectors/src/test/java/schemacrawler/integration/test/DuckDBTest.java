@@ -26,6 +26,7 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
@@ -36,14 +37,11 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.utility.IOUtility;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
 @DisabledOnOs(value = OS.WINDOWS, disabledReason = "DuckDB does not run on Windows ARM")
-public class DuckDBTest {
-
-  private DatabaseConnectionSource connectionSource;
+public class DuckDBTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws IOException, Exception {
@@ -55,10 +53,10 @@ public class DuckDBTest {
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions(
             "duckdb", null, null, databasePath.toString(), Map.of());
-    connectionSource =
-        connector.newDatabaseConnectionSource(connectionOptions, new MultiUseUserCredentials());
+    createConnectionSource(
+        connector.newDatabaseConnectionSource(connectionOptions, new MultiUseUserCredentials()));
 
-    try (final Connection connection = connectionSource.get()) {
+    try (final Connection connection = getConnection()) {
       new TestSchemaCreator(connection, "/duckdb.scripts.txt", false).run();
     }
   }
@@ -80,7 +78,7 @@ public class DuckDBTest {
 
     final String expectedResource = "testDuckDBWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(connectionSource, executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

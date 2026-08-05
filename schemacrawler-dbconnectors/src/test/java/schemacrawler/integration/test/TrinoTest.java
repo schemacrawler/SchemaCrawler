@@ -26,22 +26,22 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.JdbcUrl;
+import us.fatehi.utility.datasource.JdbcUrlParser;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @HeavyDatabaseTest("trino")
 @Testcontainers(disabledWithoutDocker = true)
-public class TrinoTest {
+public class TrinoTest extends BaseAdditionalDatabaseTest {
 
   @Container private final JdbcDatabaseContainer<?> dbContainer = newTrinoContainer();
-
-  private DatabaseConnectionSource connectionSource;
 
   @BeforeEach
   public void createDatabase() {
@@ -51,28 +51,20 @@ public class TrinoTest {
     }
 
     final String jdbcUrl = dbContainer.getJdbcUrl();
-    final String urlTail = jdbcUrl.substring("jdbc:trino://".length());
-    final int slashIndex = urlTail.indexOf('/');
-    final String hostPort = slashIndex >= 0 ? urlTail.substring(0, slashIndex) : urlTail;
-    final String databaseAndQuery = slashIndex >= 0 ? urlTail.substring(slashIndex + 1) : "";
-    final int questionMarkIndex = databaseAndQuery.indexOf('?');
-    final String database =
-        questionMarkIndex >= 0
-            ? databaseAndQuery.substring(0, questionMarkIndex)
-            : databaseAndQuery;
-    final String[] hostAndPort = hostPort.split(":", 2);
-    final String host = hostAndPort[0];
-    final int port = Integer.parseInt(hostAndPort[1]);
+    final JdbcUrl parsedUrl = JdbcUrlParser.parse(jdbcUrl);
+    final String host = dbContainer.getHost();
+    final int port = parsedUrl.port();
+    final String database = parsedUrl.databaseName();
 
     final DatabaseConnector connector =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry()
             .findDatabaseConnectorFromDatabaseSystemIdentifier("trino");
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions("trino", host, port, database, Map.of());
-    connectionSource =
+    createConnectionSource(
         connector.newDatabaseConnectionSource(
             connectionOptions,
-            new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword()));
+            new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword())));
   }
 
   @Test
@@ -90,7 +82,7 @@ public class TrinoTest {
 
     final String expectedResource = "testTrinoWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(connectionSource, executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

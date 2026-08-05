@@ -29,6 +29,7 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
@@ -40,18 +41,18 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.integration.utility.SnowflakeTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.JdbcUrl;
+import us.fatehi.utility.datasource.JdbcUrlParser;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
 @HeavyDatabaseTest("snowflake")
 @EnabledIfEnvironmentVariable(named = "LOCALSTACK_AUTH_TOKEN", matches = ".+")
 @Testcontainers(disabledWithoutDocker = true)
-public class SnowflakeTest {
+public class SnowflakeTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer = SnowflakeTestUtility.newSnowflakeContainer();
-
-  private DatabaseConnectionSource connectionSource;
 
   @BeforeEach
   public void createDatabase() throws Exception {
@@ -61,12 +62,9 @@ public class SnowflakeTest {
     }
 
     final String jdbcUrl = dbContainer.getJdbcUrl();
-    final String urlTail = jdbcUrl.substring("jdbc:snowflake://".length());
-    final int slashIndex = urlTail.indexOf('/');
-    final String hostPort = slashIndex >= 0 ? urlTail.substring(0, slashIndex) : urlTail;
-    final String[] hostAndPort = hostPort.split(":", 2);
-    final String host = hostAndPort[0];
-    final int port = Integer.parseInt(hostAndPort[1]);
+    final JdbcUrl parsedUrl = JdbcUrlParser.parse(jdbcUrl);
+    final String host = dbContainer.getHost();
+    final int port = parsedUrl.port();
 
     final DatabaseConnector connector =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry()
@@ -92,7 +90,7 @@ public class SnowflakeTest {
             port,
             dbContainer.getDatabaseName(),
             Map.of("schema", "BOOKS", "tracing", "ALL"));
-    connectionSource = connector.newDatabaseConnectionSource(connectionOptions, credentials);
+    createConnectionSource(connector.newDatabaseConnectionSource(connectionOptions, credentials));
   }
 
   @Test
@@ -118,7 +116,7 @@ public class SnowflakeTest {
 
     final String expectedResource = "testSnowflakeWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(connectionSource, executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

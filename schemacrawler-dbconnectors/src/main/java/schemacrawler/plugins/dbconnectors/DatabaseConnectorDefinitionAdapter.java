@@ -16,6 +16,7 @@ import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.plugins.dbconnectors.model.AdditionalOptionDefinition;
 import schemacrawler.plugins.dbconnectors.model.DatabaseConnectorDefinition;
 import schemacrawler.plugins.dbconnectors.model.LimitDefinition;
+import schemacrawler.plugins.dbconnectors.model.SchemaRetrievalDefinition;
 import schemacrawler.plugins.dbconnectors.model.StandardOptionsDefinition;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
@@ -130,7 +131,7 @@ public final class DatabaseConnectorDefinitionAdapter {
 
   private void applySchemaRetrievalOverrides(
       final SchemaRetrievalOptionsBuilder builder, final DatabaseConnectorDefinition definition) {
-    final var schemaRetrieval = definition.schemaRetrieval();
+    final SchemaRetrievalDefinition schemaRetrieval = definition.schemaRetrieval();
     final Boolean supportsCatalogs = schemaRetrieval.supportsCatalogs();
     if (supportsCatalogs != null) {
       if (supportsCatalogs) {

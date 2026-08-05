@@ -28,6 +28,7 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
@@ -39,19 +40,18 @@ import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.integration.utility.ClickHouseTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.JdbcUrl;
+import us.fatehi.utility.datasource.JdbcUrlParser;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
 @HeavyDatabaseTest("clickhouse")
 @Testcontainers(disabledWithoutDocker = true)
-public class ClickHouseTest {
+public class ClickHouseTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
       ClickHouseTestUtility.newClickhouseContainer();
-
-  private DatabaseConnectionSource connectionSource;
 
   @BeforeEach
   public void createDatabase() throws Exception {
@@ -61,25 +61,22 @@ public class ClickHouseTest {
     }
 
     final String jdbcUrl = dbContainer.getJdbcUrl();
-    final String urlTail = jdbcUrl.substring("jdbc:clickhouse://".length());
-    final int slashIndex = urlTail.indexOf('/');
-    final String hostPort = slashIndex >= 0 ? urlTail.substring(0, slashIndex) : urlTail;
-    final String database = slashIndex >= 0 ? urlTail.substring(slashIndex + 1) : "";
-    final String[] hostAndPort = hostPort.split(":", 2);
-    final String host = hostAndPort[0];
-    final int port = Integer.parseInt(hostAndPort[1]);
+    final JdbcUrl parsedUrl = JdbcUrlParser.parse(jdbcUrl);
+    final String host = dbContainer.getHost();
+    final int port = parsedUrl.port();
+    final String database = parsedUrl.databaseName();
 
     final DatabaseConnector connector =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry()
             .findDatabaseConnectorFromDatabaseSystemIdentifier("clickhouse");
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions("clickhouse", host, port, database, Map.of());
-    connectionSource =
+    createConnectionSource(
         connector.newDatabaseConnectionSource(
             connectionOptions,
-            new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword()));
+            new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword())));
 
-    try (final Connection connection = connectionSource.get()) {
+    try (final Connection connection = getConnection()) {
       new TestSchemaCreator(connection, "/clickhouse.scripts.txt", false).run();
     }
   }
@@ -108,7 +105,7 @@ public class ClickHouseTest {
 
     final String expectedResource = "testClickHouseWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(connectionSource, executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

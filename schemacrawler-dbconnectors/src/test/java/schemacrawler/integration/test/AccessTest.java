@@ -28,19 +28,17 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @TestInstance(Lifecycle.PER_CLASS)
-public class AccessTest {
-
-  private DatabaseConnectionSource connectionSource;
+public class AccessTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws Exception {
@@ -52,8 +50,8 @@ public class AccessTest {
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions(
             "access", null, null, databaseFile.toString(), Map.of());
-    connectionSource =
-        connector.newDatabaseConnectionSource(connectionOptions, new MultiUseUserCredentials());
+    createConnectionSource(
+        connector.newDatabaseConnectionSource(connectionOptions, new MultiUseUserCredentials()));
   }
 
   @Test
@@ -78,7 +76,7 @@ public class AccessTest {
 
     final String expectedResource = "testAccessWithConnection.txt";
     assertThat(
-        outputOf(executableExecution(connectionSource, executable)),
+        outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
   }
 }

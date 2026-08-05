@@ -36,6 +36,7 @@ import static schemacrawler.utility.MetaDataUtility.getTypeName;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -307,13 +308,18 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     }
 
     final Collection<Property> serverInfo = dbInfo.getServerInfo();
-    if (!serverInfo.isEmpty()) {
+    final String hostLocationDescription = hostLocationDescription(dbInfo);
+    if (!serverInfo.isEmpty() || !isBlank(hostLocationDescription)) {
       formattingHelper.writeHeader(DocumentHeaderType.section, "Database Server Information");
       formattingHelper.writeObjectStart();
       for (final Property property : serverInfo) {
         final String name = property.getName();
         final String valueString = new SimpleToStringFunction().apply(property.getValue());
         formattingHelper.writeNameValueRow(name, valueString, Alignment.inherit);
+      }
+      if (!isBlank(hostLocationDescription)) {
+        formattingHelper.writeNameValueRow(
+            "host location", hostLocationDescription, Alignment.inherit);
       }
       formattingHelper.writeObjectEnd();
     }
@@ -493,6 +499,30 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       }
     }
     return constraints;
+  }
+
+  private String hostLocationDescription(final DatabaseInfo dbInfo) {
+    try {
+      final Method hostLocationMethod = dbInfo.getClass().getMethod("getHostLocation");
+      final Object hostLocation = hostLocationMethod.invoke(dbInfo);
+      if (hostLocation == null) {
+        return null;
+      }
+
+      final Method hostTypeMethod = hostLocation.getClass().getMethod("hostType");
+      final Object hostType = hostTypeMethod.invoke(hostLocation);
+      if (hostType != null && "unknown".equalsIgnoreCase(hostType.toString())) {
+        return null;
+      }
+
+      final Method getDescriptionMethod = hostLocation.getClass().getMethod("getDescription");
+      final Object hostLocationDescription = getDescriptionMethod.invoke(hostLocation);
+      return hostLocationDescription == null
+          ? null
+          : trimToEmpty(hostLocationDescription.toString());
+    } catch (final ReflectiveOperationException e) {
+      return null;
+    }
   }
 
   private String makeFkRuleString(final ForeignKey foreignKey) {
