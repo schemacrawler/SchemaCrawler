@@ -27,7 +27,6 @@ public final class PostgreSQLDatabaseConnector extends DatabaseConnector {
         .withSchemaRetrievalOptionsBuilder(
             (builder, conn) -> {
               builder.withEnumDataTypeHelper(new PostgreSQLEnumDataTypeHelper());
-              builder.withHostLocationExtractor(new PostgreSQLHostLocationExtractor());
             })
         .build();
   }

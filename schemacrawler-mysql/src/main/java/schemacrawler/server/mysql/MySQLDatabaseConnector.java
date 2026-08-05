@@ -30,7 +30,6 @@ public final class MySQLDatabaseConnector extends DatabaseConnector {
         .withSchemaRetrievalOptionsBuilder(
             (builder, conn) -> {
               builder.withEnumDataTypeHelper(new MySQLEnumDataTypeHelper());
-              builder.withHostLocationExtractor(new MySQLHostLocationExtractor());
             })
         .build();
   }
