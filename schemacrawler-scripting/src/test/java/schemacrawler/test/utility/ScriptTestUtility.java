@@ -56,14 +56,15 @@ public class ScriptTestUtility {
     final SchemaRetrievalOptions schemaRetrievalOptions =
         SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
 
-    final OutputOptions outputOptions =
-        OutputOptionsBuilder.builder().title("FROM TEST: Database Schema Diagram").toOptions();
+    final OutputOptions outputOptions = OutputOptionsBuilder.builder().toOptions();
 
     final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("script", script);
 
     final SchemaCrawlerExecutable executable = executableOf("script");
     executable.setAdditionalConfiguration(additionalConfig);
+    executable.setSchemaCrawlerOptions(
+        executable.getSchemaCrawlerOptions().withTitle("FROM TEST: Database Schema Diagram"));
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
     executable.setOutputOptions(outputOptions);
 
@@ -76,8 +77,7 @@ public class ScriptTestUtility {
       final String templateResource)
       throws Exception {
 
-    final OutputOptions outputOptions =
-        OutputOptionsBuilder.builder().title("FROM TEST: Database Schema Diagram").toOptions();
+    final OutputOptions outputOptions = OutputOptionsBuilder.builder().toOptions();
 
     final Config additionalConfig = ConfigUtility.newConfig();
     additionalConfig.put("template", templateResource);
@@ -85,6 +85,8 @@ public class ScriptTestUtility {
 
     final SchemaCrawlerExecutable executable = executableOf("template");
     executable.setAdditionalConfiguration(additionalConfig);
+    executable.setSchemaCrawlerOptions(
+        executable.getSchemaCrawlerOptions().withTitle("FROM TEST: Database Schema Diagram"));
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsDefault);
     executable.setOutputOptions(outputOptions);
 

@@ -9,7 +9,6 @@
 package schemacrawler.tools.command.script;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Reader;
 import java.io.Writer;
@@ -61,8 +60,8 @@ public final class ScriptCommand extends AbstractSchemaCrawlerCommand<ScriptOpti
         LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, %s", inputResource));
 
         // Set up the context
-        final String title = title();
         final Catalog catalog = getCatalog();
+        final String title = catalog.getCrawlInfo().getTitle();
         final ScriptSupport support = new ScriptSupport();
         transferState(support);
         final Map<String, Object> context = new HashMap<>();
@@ -115,13 +114,5 @@ public final class ScriptCommand extends AbstractSchemaCrawlerCommand<ScriptOpti
   @Override
   public boolean usesConnection() {
     return true;
-  }
-
-  private String title() {
-    final String requestedTitle = outputOptions.getTitle();
-    if (!isBlank(requestedTitle)) {
-      return requestedTitle;
-    }
-    return "Database Schema";
   }
 }

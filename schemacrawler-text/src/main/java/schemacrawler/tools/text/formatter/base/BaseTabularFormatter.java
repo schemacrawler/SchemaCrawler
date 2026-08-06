@@ -9,6 +9,7 @@
 package schemacrawler.tools.text.formatter.base;
 
 import static us.fatehi.utility.Utility.isBlank;
+
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Identifiers;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
@@ -47,7 +48,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
       return;
     }
 
-    final String title = outputOptions.getTitle();
+    final String title = crawlInfo.getTitle();
     if (!isBlank(title)) {
       formattingHelper.writeHeader(DocumentHeaderType.title, title);
     }
