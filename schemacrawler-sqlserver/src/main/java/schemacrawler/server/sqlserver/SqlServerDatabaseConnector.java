@@ -59,9 +59,6 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
         .toDatabaseConnectorOptionsBuilder()
         .withHelpCommand(pluginCommand)
         .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
-        .withSchemaRetrievalOptionsBuilder(
-            (builder, conn) ->
-                builder.withHostLocationExtractor(new SQLServerHostLocationExtractor()))
         .build();
   }
 
