@@ -9,7 +9,6 @@
 package schemacrawler.tools.command.template;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,8 +43,8 @@ public final class TemplateCommand
     final TemplateRenderer templateRenderer = languageType.newRenderer();
 
     // Set up the context
-    final String title = title();
     final Catalog catalog = getCatalog();
+    final String title = catalog.getCrawlInfo().getTitle();
     final ScriptSupport support = new ScriptSupport();
     transferState(support);
     final Map<String, Object> context = new HashMap<>();
@@ -65,13 +64,5 @@ public final class TemplateCommand
   @Override
   public boolean usesConnection() {
     return true;
-  }
-
-  private String title() {
-    final String requestedTitle = outputOptions.getTitle();
-    if (!isBlank(requestedTitle)) {
-      return requestedTitle;
-    }
-    return "Database Schema";
   }
 }

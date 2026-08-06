@@ -23,6 +23,10 @@ public final class CrawlInfoSupport {
     return crawlInfo.getDatabaseVersion().toString().replace("\"", "");
   }
 
+  public String title() {
+    return crawlInfo.getTitle();
+  }
+
   public String schemacrawlerVersion() {
     return crawlInfo.getSchemaCrawlerVersion().toString();
   }

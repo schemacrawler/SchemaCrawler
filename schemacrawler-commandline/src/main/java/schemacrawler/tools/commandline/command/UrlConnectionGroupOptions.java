@@ -12,6 +12,7 @@ import picocli.CommandLine.Option;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 
+@CliOptionsMarker
 public class UrlConnectionGroupOptions implements ConnectionOptions {
 
   @Option(

@@ -9,6 +9,7 @@
 package schemacrawler.tools.commandline.command;
 
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.matchedOptionValues;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Map;
 import java.util.logging.Level;
@@ -59,6 +60,11 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
         "Optional, defaults to standard"
       })
   private InfoLevel infolevel;
+
+  @Option(
+      names = {"-m", "--title"},
+      description = {"Shows the title on the output", "Optional, defaults to no title being shown"})
+  private String title;
 
   @Spec private Model.CommandSpec spec;
 
@@ -137,6 +143,10 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
 
     if (infolevel != null) {
       loadOptionsBuilder.withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
+    }
+
+    if (!isBlank(title)) {
+      state.withTitle(title);
     }
 
     state.withLoadOptions(loadOptionsBuilder.toOptions());

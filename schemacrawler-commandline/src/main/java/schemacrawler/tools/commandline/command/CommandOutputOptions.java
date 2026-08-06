@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 import picocli.CommandLine.Option;
 
+@CliOptionsMarker
 public final class CommandOutputOptions {
 
   @Option(
@@ -51,32 +52,17 @@ public final class CommandOutputOptions {
       })
   private String outputFormatValue;
 
-  @Option(
-      names = {"-m", "--title"},
-      description = {"Shows the title on the output", "Optional, defaults to no title being shown"})
-  private String title;
-
   public Optional<Path> getOutputFile() {
     if (outputFile == null) {
       return Optional.empty();
-    } else {
-      return Optional.of(outputFile.normalize().toAbsolutePath());
     }
+    return Optional.of(outputFile.normalize().toAbsolutePath());
   }
 
   public Optional<String> getOutputFormatValue() {
     if (isBlank(outputFormatValue)) {
       return Optional.empty();
-    } else {
-      return Optional.of(outputFormatValue);
     }
-  }
-
-  public Optional<String> getTitle() {
-    if (isBlank(title)) {
-      return Optional.empty();
-    } else {
-      return Optional.of(title);
-    }
+    return Optional.of(outputFormatValue);
   }
 }

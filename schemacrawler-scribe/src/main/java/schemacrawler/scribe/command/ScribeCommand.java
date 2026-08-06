@@ -51,7 +51,7 @@ public final class ScribeCommand extends AbstractSchemaCrawlerCommand<ScribeOpti
     checkCatalog();
 
     final String outputFormat = getOutputOptions().getOutputFormatValue();
-    final String title = getOutputOptions().getTitle();
+    final String title = getSchemaCrawlerOptions().title();
 
     final boolean supportedFormat = ScribeOutputFormat.isSupportedFormat(outputFormat);
     if (!supportedFormat) {

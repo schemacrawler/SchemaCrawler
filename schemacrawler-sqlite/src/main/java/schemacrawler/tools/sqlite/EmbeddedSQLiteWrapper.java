@@ -129,12 +129,13 @@ public class EmbeddedSQLiteWrapper {
       final LimitOptions limitOptions =
           LimitOptionsBuilder.builder().includeTables(sqliteTableExclusionRule).toOptions();
       final SchemaCrawlerOptions schemaCrawlerOptions =
-          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions().withLimitOptions(limitOptions);
+          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+              .withLimitOptions(limitOptions)
+              .withTitle(title);
 
       final Path diagramFile = createTempFilePath("schemacrawler", extension.getFormat());
       final OutputOptions outputOptions =
           OutputOptionsBuilder.builder()
-              .title(title)
               .withOutputFormat(extension)
               .withOutputFile(diagramFile)
               .toOptions();

@@ -157,4 +157,9 @@ public class ShellState extends AbstractExecutionState implements AutoCloseable 
   public void withLoadOptions(final LoadOptions loadOptions) {
     schemaCrawlerOptions = schemaCrawlerOptions.withLoadOptions(loadOptions);
   }
+
+  /** Update SchemaCrawler options by reassignment. */
+  public void withTitle(final String title) {
+    schemaCrawlerOptions = schemaCrawlerOptions.withTitle(title);
+  }
 }

@@ -10,6 +10,7 @@ package schemacrawler.tools.text.formatter.diagram;
 
 import static us.fatehi.utility.CollectionsUtility.splitList;
 import static us.fatehi.utility.IOUtility.readResourceFully;
+import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
 import static us.fatehi.utility.html.TagOutputFormat.html;
@@ -57,8 +58,11 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
 
     Tag row;
 
-    if (outputOptions.hasTitle()) {
-      final String title = outputOptions.getTitle();
+    final String title = crawlInfo.getTitle();
+    if (!isBlank(title)) {
+      if (options.isNoInfo()) {
+        writeTitleOnlyStart();
+      }
       row = tableRow().make();
       row.addInnerTag(
           tableCell()
@@ -69,6 +73,10 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
               .make());
 
       formattingHelper.append(row.render(html)).println();
+
+      if (options.isNoInfo()) {
+        writeTitleOnlyEnd();
+      }
     }
 
     if (options.isNoInfo()) {
@@ -115,7 +123,7 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
 
   @Override
   public void handleHeaderEnd() {
-    if (options.isNoInfo() && !outputOptions.hasTitle()) {
+    if (options.isNoInfo()) {
       return;
     }
 
@@ -127,7 +135,7 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
 
   @Override
   public void handleHeaderStart() {
-    if (options.isNoInfo() && !outputOptions.hasTitle()) {
+    if (options.isNoInfo()) {
       return;
     }
 
@@ -171,5 +179,25 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
             makeGraphvizAttributes(graphvizAttributes, "node"),
             makeGraphvizAttributes(graphvizAttributes, "edge"));
     return graphvizHeader;
+  }
+
+  private void writeTitleOnlyEnd() {
+    formattingHelper.append("      </table>").println();
+    formattingHelper.append("    >").println();
+    formattingHelper.append("  ];").println();
+    formattingHelper.println();
+  }
+
+  private void writeTitleOnlyStart() {
+    formattingHelper
+        .append("  /* ")
+        .append("Title Block")
+        .append(" -=-=-=-=-=-=-=-=-=-=-=-=-=- */")
+        .println();
+    formattingHelper.append("  graph [ ").println();
+    formattingHelper.append("    label=<").println();
+    formattingHelper
+        .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\" color=\"#888888\">")
+        .println();
   }
 }

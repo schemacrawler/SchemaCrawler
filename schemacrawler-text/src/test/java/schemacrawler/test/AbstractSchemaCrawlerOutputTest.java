@@ -729,11 +729,10 @@ public abstract class AbstractSchemaCrawlerOutputTest {
             .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions());
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withTitle("Database Design for Books and Publishers");
 
-    final OutputOptionsBuilder outputOptionsBuilder =
-        OutputOptionsBuilder.builder().title("Database Design for Books and Publishers");
-    final OutputOptions outputOptions = outputOptionsBuilder.toOptions();
+    final OutputOptions outputOptions = OutputOptionsBuilder.builder().toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

@@ -99,7 +99,6 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
     commandOutputOptions
         .getOutputFormatValue()
         .ifPresent(outputOptionsBuilder::withOutputFormatValue);
-    commandOutputOptions.getTitle().ifPresent(outputOptionsBuilder::title);
 
     final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
     final OutputOptions outputOptions = outputOptionsBuilder.toOptions();

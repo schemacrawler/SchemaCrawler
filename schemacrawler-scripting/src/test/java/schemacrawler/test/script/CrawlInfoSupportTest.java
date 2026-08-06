@@ -48,7 +48,13 @@ public class CrawlInfoSupportTest {
 
   @BeforeEach
   public void setUp() {
-    crawlInfo = new LightCrawlInfo();
+    crawlInfo = new LightCrawlInfo("Test Title");
+  }
+
+  @Test
+  public void title() {
+    final CrawlInfoSupport support = new CrawlInfoSupport(crawlInfo);
+    assertThat(support.title(), is("Test Title"));
   }
 
   @Test
