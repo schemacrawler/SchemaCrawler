@@ -13,6 +13,7 @@ import picocli.CommandLine.Option;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 
+@CliOptionsMarker
 public class ServerHostConnectionGroupOptions implements ConnectionOptions {
 
   @Option(

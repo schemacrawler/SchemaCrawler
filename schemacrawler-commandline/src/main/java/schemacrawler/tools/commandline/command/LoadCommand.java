@@ -9,13 +9,13 @@
 package schemacrawler.tools.commandline.command;
 
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.matchedOptionValues;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ExecutionException;
-import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ParseResult;
@@ -61,7 +61,11 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       })
   private InfoLevel infolevel;
 
-  @Mixin private CommandOutputOptions commandOutputOptions;
+  @Option(
+      names = {"-m", "--title"},
+      description = {"Shows the title on the output", "Optional, defaults to no title being shown"})
+  private String title;
+
   @Spec private Model.CommandSpec spec;
 
   public LoadCommand(final ShellState state) {
@@ -141,8 +145,8 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       loadOptionsBuilder.withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
     }
 
-    if (commandOutputOptions != null) {
-      commandOutputOptions.getTitle().ifPresent(state::withTitle);
+    if (!isBlank(title)) {
+      state.withTitle(title);
     }
 
     state.withLoadOptions(loadOptionsBuilder.toOptions());

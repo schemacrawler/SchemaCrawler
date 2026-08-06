@@ -96,7 +96,10 @@ Run with `-Dverify`. `ArchitectureTest` enforces the same structural rules as `s
 
 - Prefer **immutability**: use `final` on fields, parameters, and local variables.
 - Use `Optional`, streams, and functional programming idioms.
+- Sort methods based on whether they are static, then by visibility, and then alphabetically.
+- Format code using Google Java style guidelines.
+- Do not use `var` - instead use the interface or class name.
 - Ensure **thread safety**: avoid mutable shared state.
 - Write meaningful **Javadoc** for all public API.
-- Tests use **JUnit 5** with **Hamcrest** matchers; mock with **Mockito**.
+- Tests use **JUnit 6** with **Hamcrest** matchers; mock with **Mockito**.
 - All dependency versions are managed in `schemacrawler-parent/pom.xml`; do not declare versions in sub-module POMs.

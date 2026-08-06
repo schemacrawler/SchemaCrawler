@@ -269,10 +269,14 @@ load
 
 Options:
   -i, --info-level=<infolevel>
-         <infolevel> is one of unknown, minimum, standard, detailed, maximum
-         The info level determines the amount of database metadata retrieved,
-           and also determines the time taken to crawl the schema
-         Optional, defaults to standard
+                        <infolevel> is one of unknown, minimum, standard,
+                          detailed, maximum
+                        The info level determines the amount of database
+                          metadata retrieved, and also determines the time
+                          taken to crawl the schema
+                        Optional, defaults to standard
+  -m, --title=<title>   Shows the title on the output
+                        Optional, defaults to no title being shown
 
 For additional options, specific to individual catalog loaders,
 run SchemaCrawler with: `-h loaders`
@@ -365,8 +369,6 @@ Options:
 
                             Optional, defaults to the format specified by the
                               output file, otherwise, text
-  -m, --title=<title>       Shows the title on the output
-                            Optional, defaults to no title being shown
   -o, --output-file=<outputFile>
                             Generate output in a named file
                             <outputfile> is the path to the output file

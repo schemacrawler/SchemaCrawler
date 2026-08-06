@@ -16,6 +16,7 @@ import us.fatehi.utility.datasource.MultiUseUserCredentials;
 import us.fatehi.utility.datasource.UserCredentials;
 
 /** Options for the command-line. */
+@CliOptionsMarker
 public final class UserCredentialsOptions {
 
   @ArgGroup(heading = "Specify the database user name using one of these options\n")

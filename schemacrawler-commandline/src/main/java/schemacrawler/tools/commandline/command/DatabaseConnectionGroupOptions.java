@@ -11,6 +11,7 @@ package schemacrawler.tools.commandline.command;
 import picocli.CommandLine.ArgGroup;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 
+@CliOptionsMarker
 public class DatabaseConnectionGroupOptions {
 
   @ArgGroup(exclusive = false, heading = "%nFor connecting to specific databases, use%n")
@@ -24,8 +25,7 @@ public class DatabaseConnectionGroupOptions {
   DatabaseConnectionOptions getDatabaseConnectionOptions() {
     if (databaseConfigConnectionOptions != null) {
       return databaseConfigConnectionOptions.toDatabaseConnectionOptions();
-    } else {
-      return databaseUrlConnectionOptions.toDatabaseConnectionOptions();
     }
+    return databaseUrlConnectionOptions.toDatabaseConnectionOptions();
   }
 }

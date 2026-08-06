@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import picocli.CommandLine.Option;
 import us.fatehi.utility.ioresource.FileInputResource;
 
+@CliOptionsMarker
 public final class PasswordOptions {
 
   @Option(

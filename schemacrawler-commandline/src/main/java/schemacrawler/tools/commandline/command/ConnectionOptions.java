@@ -10,6 +10,7 @@ package schemacrawler.tools.commandline.command;
 
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 
+@CliOptionsMarker
 public interface ConnectionOptions {
 
   DatabaseConnectionOptions toDatabaseConnectionOptions();

@@ -15,6 +15,7 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
 
+@CliOptionsMarker
 public final class CommandOptions {
 
   @Option(
