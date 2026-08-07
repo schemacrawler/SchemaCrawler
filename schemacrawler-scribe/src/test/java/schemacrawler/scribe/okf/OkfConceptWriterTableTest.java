@@ -22,10 +22,8 @@ import java.lang.reflect.Proxy;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -95,10 +93,10 @@ public class OkfConceptWriterTableTest {
     assertThat(frontMatterStart, is(not(-1)));
     assertThat(frontMatterEnd, is(not(-1)));
     final String frontMatter = content.substring(frontMatterStart + 3, frontMatterEnd);
-    final JsonNode parsed = JsonUtility.mapper.readTree(frontMatter);
+    final JsonNode parsed = JsonUtility.yamlMapper.readTree(frontMatter);
     final JsonNode typeNode = parsed.get("type");
     assertThat(typeNode, is(notNullValue()));
-    final String tableType = JsonUtility.mapper.treeToValue(typeNode, String.class);
+    final String tableType = JsonUtility.yamlMapper.treeToValue(typeNode, String.class);
     assertThat(tableType, anyOf(is("table"), is("view")));
 
     assertThat(content, containsString("## " + msg.sectionColumns()));

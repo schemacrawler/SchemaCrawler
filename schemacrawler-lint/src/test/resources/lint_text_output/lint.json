@@ -45,8 +45,7 @@
     },
     "object-name" : "catalog",
     "object-type" : "catalog",
-    "severity" : "low",
-    "value" : ""
+    "severity" : "low"
   }, {
     "lint-id" : "33d2f7ae-054a-42b5-aa84-c96d175c049e",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey",
@@ -57,8 +56,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
     "object-type" : "table",
-    "severity" : "high",
-    "value" : ""
+    "severity" : "high"
   }, {
     "lint-id" : "f5b39167-ba8c-461b-a775-3a749430fee3",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey",
@@ -69,8 +67,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
     "object-type" : "table",
-    "severity" : "high",
-    "value" : ""
+    "severity" : "high"
   }, {
     "lint-id" : "337f1389-c3e1-41f0-a5fe-4384399868ee",
     "linter-id" : "schemacrawler.tools.linter.LinterTableAllNullableColumns",
@@ -81,8 +78,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
     "object-type" : "table",
-    "severity" : "medium",
-    "value" : ""
+    "severity" : "medium"
   }, {
     "lint-id" : "3f9ca945-cc58-41ee-b481-81d962df9852",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoIndexes",
@@ -93,8 +89,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
     "object-type" : "table",
-    "severity" : "medium",
-    "value" : ""
+    "severity" : "medium"
   }, {
     "lint-id" : "03f81934-6207-4d20-a0d9-94ad10254cc0",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithQuotedNames",
@@ -105,8 +100,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
     "object-type" : "table",
-    "severity" : "medium",
-    "value" : ""
+    "severity" : "medium"
   }, {
     "lint-id" : "19f2456a-9485-4157-9800-83652f5c0ce4",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithQuotedNames",
@@ -129,8 +123,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
     "object-type" : "table",
-    "severity" : "medium",
-    "value" : ""
+    "severity" : "medium"
   }, {
     "lint-id" : "1f143375-3bbf-4f72-8b17-c9392f21aeef",
     "linter-id" : "schemacrawler.tools.linter.LinterTableEmpty",
@@ -141,8 +134,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
     "object-type" : "table",
-    "severity" : "low",
-    "value" : ""
+    "severity" : "low"
   }, {
     "lint-id" : "e35908d1-6d05-4c20-80d5-43dc0f384634",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
@@ -153,8 +145,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
     "object-type" : "table",
-    "severity" : "low",
-    "value" : ""
+    "severity" : "low"
   }, {
     "lint-id" : "d31875fa-1eb6-4b2d-90bb-86f064b92756",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
@@ -177,8 +168,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.EXTRA_PK",
     "object-type" : "table",
-    "severity" : "low",
-    "value" : ""
+    "severity" : "low"
   }, {
     "lint-id" : "f946a393-d565-4a50-b6a2-79640fd192d8",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
@@ -201,8 +191,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.EXTRA_PK",
     "object-type" : "table",
-    "severity" : "low",
-    "value" : ""
+    "severity" : "low"
   }, {
     "lint-id" : "fe6f64fc-f8fa-43ef-bf1b-c21f46aafaa2",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithQuotedNames",
@@ -225,8 +214,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONS",
     "object-type" : "table",
-    "severity" : "low",
-    "value" : ""
+    "severity" : "low"
   }, {
     "lint-id" : "d0e3606f-ba33-4fb6-8ab6-06f7c428c28d",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
@@ -237,8 +225,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONS",
     "object-type" : "table",
-    "severity" : "low",
-    "value" : ""
+    "severity" : "low"
   }, {
     "lint-id" : "e0b25d8e-b00a-429f-b178-98f1820b19d6",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
@@ -273,8 +260,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
     "object-type" : "table",
-    "severity" : "high",
-    "value" : ""
+    "severity" : "high"
   }, {
     "lint-id" : "540554a2-0b3d-4e13-bc14-9a347fa05eb6",
     "linter-id" : "schemacrawler.tools.linter.LinterTableEmpty",
@@ -285,8 +271,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
     "object-type" : "table",
-    "severity" : "low",
-    "value" : ""
+    "severity" : "low"
   }, {
     "lint-id" : "4cb44fcf-5a37-4836-a023-67301f6a08f7",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
@@ -297,8 +282,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
     "object-type" : "table",
-    "severity" : "low",
-    "value" : ""
+    "severity" : "low"
   }, {
     "lint-id" : "4505189d-8303-42f5-8350-692301518ab2",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
@@ -357,8 +341,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.SELFREFERENCE",
     "object-type" : "table",
-    "severity" : "low",
-    "value" : ""
+    "severity" : "low"
   }, {
     "lint-id" : "012811c2-2673-4af4-8ab5-ff018595dc1a",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
@@ -369,8 +352,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.SELFREFERENCE",
     "object-type" : "table",
-    "severity" : "low",
-    "value" : ""
+    "severity" : "low"
   }, {
     "lint-id" : "e316af68-1b41-41a0-b180-23a87ce24662",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
@@ -561,8 +543,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.WRITERS",
     "object-type" : "table",
-    "severity" : "low",
-    "value" : ""
+    "severity" : "low"
   }, {
     "lint-id" : "45301331-7319-4126-9b9d-cf5c56be3b34",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
@@ -573,8 +554,7 @@
     },
     "object-name" : "PUBLIC.FOR_LINT.WRITERS",
     "object-type" : "table",
-    "severity" : "low",
-    "value" : ""
+    "severity" : "low"
   }, {
     "lint-id" : "482ba994-76c1-4fab-83e2-506b65241f6b",
     "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",

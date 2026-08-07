@@ -23,6 +23,6 @@ public final class DataJsonFormatter extends BaseJacksonFormatter {
 
   @Override
   protected final JsonMapper.Builder newMapperBuilder() {
-    return JsonMapper.builder();
+    return JsonUtility.newJsonMapperBuilder();
   }
 }

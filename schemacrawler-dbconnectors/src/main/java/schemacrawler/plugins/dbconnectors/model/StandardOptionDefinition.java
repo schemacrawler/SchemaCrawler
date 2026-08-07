@@ -38,6 +38,6 @@ public record StandardOptionDefinition(
 
   @Override
   public String toString() {
-    return JsonUtility.mapper.writeValueAsString(this);
+    return JsonUtility.yamlMapper.writeValueAsString(this);
   }
 }

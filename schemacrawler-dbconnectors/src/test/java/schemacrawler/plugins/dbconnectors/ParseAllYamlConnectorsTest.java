@@ -20,7 +20,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import schemacrawler.plugins.dbconnectors.model.DatabaseConnectorDefinition;
 import schemacrawler.plugins.dbconnectors.yaml.DatabasePluginYamlDeserializer;
-import schemacrawler.plugins.dbconnectors.yaml.JsonUtility;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 import us.fatehi.test.utility.TestWriter;
@@ -51,7 +50,8 @@ class ParseAllYamlConnectorsTest {
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
-      JsonUtility.mapper.writeValue(out, new DatabaseConnectorDefinitionHolder(definition));
+      DatabasePluginYamlDeserializer.mapper.writeValue(
+          out, new DatabaseConnectorDefinitionHolder(definition));
     }
 
     assertThat(outputOf(streams.err()), hasNoContent());

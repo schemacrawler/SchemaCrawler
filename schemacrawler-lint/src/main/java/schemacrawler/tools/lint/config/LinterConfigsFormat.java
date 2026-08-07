@@ -8,13 +8,6 @@
 
 package schemacrawler.tools.lint.config;
 
-import static tools.jackson.core.StreamWriteFeature.IGNORE_UNKNOWN;
-import static tools.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS;
-import static tools.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
-import static tools.jackson.databind.SerializationFeature.INDENT_OUTPUT;
-import static tools.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
-import static tools.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.function.Supplier;
@@ -22,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
+import schemacrawler.tools.lint.formatter.JsonUtility;
 import schemacrawler.tools.options.Config;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
@@ -74,13 +68,9 @@ public final class LinterConfigsFormat implements Supplier<String> {
   private static final ObjectMapper MAPPER;
 
   static {
-    MAPPER =
-        JsonMapper.builder()
-            .addMixIn(LinterConfig.class, LinterConfigMixin.class)
-            .enable(IGNORE_UNKNOWN)
-            .enable(ORDER_MAP_ENTRIES_BY_KEYS, INDENT_OUTPUT, USE_EQUALITY_FOR_OBJECT_ID)
-            .enable(SORT_PROPERTIES_ALPHABETICALLY, ACCEPT_CASE_INSENSITIVE_ENUMS)
-            .build();
+    final JsonMapper.Builder mapperBuilder = JsonUtility.newJsonMapperBuilder();
+    mapperBuilder.addMixIn(LinterConfig.class, LinterConfigMixin.class);
+    MAPPER = mapperBuilder.build();
   }
 
   private static final Logger LOGGER = Logger.getLogger(LinterConfigsFormat.class.getName());

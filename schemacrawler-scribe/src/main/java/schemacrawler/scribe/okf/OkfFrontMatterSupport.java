@@ -7,7 +7,7 @@
  */
 package schemacrawler.scribe.okf;
 
-import static schemacrawler.scribe.renderer.JsonUtility.mapper;
+import static schemacrawler.scribe.renderer.JsonUtility.yamlMapper;
 import static schemacrawler.scribe.renderer.MarkdownFormattingHelper.encodeFullName;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -33,12 +33,12 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
   public String frontMatter(final Routine routine) {
     final Map<String, Object> frontMatter = build(routine);
-    return mapper.writeValueAsString(frontMatter);
+    return yamlMapper.writeValueAsString(frontMatter);
   }
 
   public String frontMatter(final Table table) {
     final Map<String, Object> frontMatter = build(table);
-    return mapper.writeValueAsString(frontMatter);
+    return yamlMapper.writeValueAsString(frontMatter);
   }
 
   public String reportFrontMatter(final String providedTitle, final String providedDescription) {
@@ -65,7 +65,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     frontMatter.put("showMiniToc", false);
     frontMatter.put("allowTitleToDifferFromFilename", true);
 
-    return mapper.writeValueAsString(frontMatter);
+    return yamlMapper.writeValueAsString(frontMatter);
   }
 
   private Map<String, Object> build(final Routine routine) {

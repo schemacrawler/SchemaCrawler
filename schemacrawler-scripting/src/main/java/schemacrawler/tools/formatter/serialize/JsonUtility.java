@@ -1,12 +1,12 @@
 /*
- * SchemaCrawler Scribe
+ * SchemaCrawler
  * http://www.schemacrawler.com
  * Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
  * All rights reserved.
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.scribe.renderer;
+package schemacrawler.tools.formatter.serialize;
 
 import static tools.jackson.core.StreamReadFeature.IGNORE_UNDEFINED;
 import static tools.jackson.core.StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION;
@@ -24,15 +24,17 @@ import static tools.jackson.dataformat.yaml.YAMLWriteFeature.MINIMIZE_QUOTES;
 import static tools.jackson.dataformat.yaml.YAMLWriteFeature.WRITE_DOC_START_MARKER;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.cfg.MapperBuilder;
+import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.dataformat.yaml.YAMLMapper;
 import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
 public class JsonUtility {
 
-  public static final ObjectMapper yamlMapper = newYamlMapperBuilder().build();
+  public static JsonMapper.Builder newJsonMapperBuilder() {
+    return (JsonMapper.Builder) configureMapper(JsonMapper.builder());
+  }
 
   public static YAMLMapper.Builder newYamlMapperBuilder() {
     return configureYamlMapper(YAMLMapper.builder());

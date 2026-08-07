@@ -35,6 +35,6 @@ public record SchemaRetrievalDefinition(
 
   @Override
   public String toString() {
-    return JsonUtility.mapper.writeValueAsString(this);
+    return JsonUtility.yamlMapper.writeValueAsString(this);
   }
 }

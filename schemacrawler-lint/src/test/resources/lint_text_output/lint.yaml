@@ -1,632 +1,612 @@
----
 lints:
-- lint-id: "a53344f0-f416-4526-aac4-36cd2bb5184e"
-  linter-id: "schemacrawler.tools.linter.LinterColumnTypes"
-  linter-instance-id: "d2e03a7e-f60d-49bb-8eb8-67214883c4eb"
-  message: "column with same name but different data types"
-  object-key:
-    key:
-    - "catalog"
-  object-name: "catalog"
-  object-type: "catalog"
-  severity: "medium"
-  value: "ID [BIGINT, INTEGER]"
-- lint-id: "dc21f612-ba48-4ad3-b347-e9c65acc89a7"
-  linter-id: "schemacrawler.tools.linter.LinterTableCycles"
-  linter-instance-id: "bc41bbd1-6158-4456-9430-f06879410727"
-  message: "cycles in table relationships"
-  object-key:
-    key:
-    - "catalog"
-  object-name: "catalog"
-  object-type: "catalog"
-  severity: "medium"
-  value: "PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS"
-- lint-id: "d1087700-0aa9-4d29-b56d-e34087739280"
-  linter-id: "schemacrawler.test.utility.LinterForTest"
-  linter-instance-id: "efac11e5-bb91-4db4-940f-20cb9a6c3e46"
-  message: "Test lint for database"
-  object-key:
-    key:
-    - "catalog"
-  object-name: "catalog"
-  object-type: "catalog"
-  severity: "low"
-  value: "HSQL Database Engine 2.7.4"
-- lint-id: "20b59427-589e-4129-abc1-a9691d22bf4a"
-  linter-id: "schemacrawler.test.utility.LinterForTest"
-  linter-instance-id: "efac11e5-bb91-4db4-940f-20cb9a6c3e46"
-  message: "Test lint for the whole catalog, without a value"
-  object-key:
-    key:
-    - "catalog"
-  object-name: "catalog"
-  object-type: "catalog"
-  severity: "low"
-  value: ""
-- lint-id: "57bcfbf4-63c0-4058-bff5-f60fd31b2b98"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey"
-  linter-instance-id: "455ad7f0-4ecd-4d8b-a3d1-9278e21e4b5c"
-  message: "no primary key"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "Global Counts"
-  object-name: "PUBLIC.FOR_LINT.\"Global Counts\""
-  object-type: "table"
-  severity: "high"
-  value: ""
-- lint-id: "192d1678-33c5-47f6-9e3f-5861ae346eaa"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey"
-  linter-instance-id: "83b6a3d0-ae05-4f58-bced-3dcd2af343b7"
-  message: "primary key should not be a surrogate"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "Global Counts"
-  object-name: "PUBLIC.FOR_LINT.\"Global Counts\""
-  object-type: "table"
-  severity: "high"
-  value: ""
-- lint-id: "bac6446d-be6c-48a7-a655-06aadef9d886"
-  linter-id: "schemacrawler.tools.linter.LinterTableAllNullableColumns"
-  linter-instance-id: "28446475-56df-4f84-bb7a-43a27dbc6992"
-  message: "no non-nullable data columns"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "Global Counts"
-  object-name: "PUBLIC.FOR_LINT.\"Global Counts\""
-  object-type: "table"
-  severity: "medium"
-  value: ""
-- lint-id: "7ddf6d23-4a7b-4000-99b4-3a4466552303"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoIndexes"
-  linter-instance-id: "9483ef76-91e0-4248-81db-297a0c656cae"
-  message: "no indexes"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "Global Counts"
-  object-name: "PUBLIC.FOR_LINT.\"Global Counts\""
-  object-type: "table"
-  severity: "medium"
-  value: ""
-- lint-id: "b564c0c7-a372-48aa-8d93-43ded74b2e10"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithQuotedNames"
-  linter-instance-id: "678db7ae-029d-4e22-91b7-3723fc642d16"
-  message: "spaces in name, or reserved word"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "Global Counts"
-  object-name: "PUBLIC.FOR_LINT.\"Global Counts\""
-  object-type: "table"
-  severity: "medium"
-  value: ""
-- lint-id: "dba67ff4-0232-453d-ab80-0b78fe37db0f"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithQuotedNames"
-  linter-instance-id: "678db7ae-029d-4e22-91b7-3723fc642d16"
-  message: "spaces in name, or reserved word"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "Global Counts"
-  object-name: "PUBLIC.FOR_LINT.\"Global Counts\""
-  object-type: "table"
-  severity: "medium"
-  value: "Global Count"
-- lint-id: "a84f0527-41bb-425c-adbc-a3ee2a8c7f40"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithSingleColumn"
-  linter-instance-id: "c1f5de7e-1b34-44e2-a165-2092e8bfcbd2"
-  message: "single column"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "Global Counts"
-  object-name: "PUBLIC.FOR_LINT.\"Global Counts\""
-  object-type: "table"
-  severity: "medium"
-  value: ""
-- lint-id: "d10df39b-4951-4e90-be47-d04b94a4c810"
-  linter-id: "schemacrawler.tools.linter.LinterTableEmpty"
-  linter-instance-id: "100cb159-4197-44bd-a10c-6bf12b9778bc"
-  message: "empty table"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "Global Counts"
-  object-name: "PUBLIC.FOR_LINT.\"Global Counts\""
-  object-type: "table"
-  severity: "low"
-  value: ""
-- lint-id: "be318573-2200-4b3b-a95f-4f25087ebfc2"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "dad9ba4b-6f1f-4adf-8b13-cdcf9988845c"
-  message: "should have remarks"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "Global Counts"
-  object-name: "PUBLIC.FOR_LINT.\"Global Counts\""
-  object-type: "table"
-  severity: "low"
-  value: ""
-- lint-id: "09886a85-be75-401e-affd-4cc6e09c9a7a"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "dad9ba4b-6f1f-4adf-8b13-cdcf9988845c"
-  message: "should have remarks"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "Global Counts"
-  object-name: "PUBLIC.FOR_LINT.\"Global Counts\""
-  object-type: "table"
-  severity: "low"
-  value: "Global Count"
-- lint-id: "1a4e6d05-b332-4d05-8dda-19abff859bb9"
-  linter-id: "schemacrawler.tools.linter.LinterTableEmpty"
-  linter-instance-id: "100cb159-4197-44bd-a10c-6bf12b9778bc"
-  message: "empty table"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "EXTRA_PK"
-  object-name: "PUBLIC.FOR_LINT.EXTRA_PK"
-  object-type: "table"
-  severity: "low"
-  value: ""
-- lint-id: "443ed0d9-03dd-4a17-8495-a44da704baea"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "dad9ba4b-6f1f-4adf-8b13-cdcf9988845c"
-  message: "should have remarks"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "EXTRA_PK"
-  object-name: "PUBLIC.FOR_LINT.EXTRA_PK"
-  object-type: "table"
-  severity: "low"
-  value: "WRITERID, PUBLICATIONID, ID"
-- lint-id: "2bb17a71-5bca-4383-9ca6-ddd7913daac1"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst"
-  linter-instance-id: "486c1abd-3b69-4530-a400-44c6fa4e9961"
-  message: "primary key not first"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "EXTRA_PK"
-  object-name: "PUBLIC.FOR_LINT.EXTRA_PK"
-  object-type: "table"
-  severity: "low"
-  value: ""
-- lint-id: "10e297f5-0913-4ebd-aefc-ab5b71cc780a"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithQuotedNames"
-  linter-instance-id: "678db7ae-029d-4e22-91b7-3723fc642d16"
-  message: "spaces in name, or reserved word"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "PUBLICATIONS"
-  object-name: "PUBLIC.FOR_LINT.PUBLICATIONS"
-  object-type: "table"
-  severity: "medium"
-  value: "UPDATE"
-- lint-id: "cbdaa3b7-3027-41c5-8740-16c5806ad672"
-  linter-id: "schemacrawler.tools.linter.LinterTableEmpty"
-  linter-instance-id: "100cb159-4197-44bd-a10c-6bf12b9778bc"
-  message: "empty table"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "PUBLICATIONS"
-  object-name: "PUBLIC.FOR_LINT.PUBLICATIONS"
-  object-type: "table"
-  severity: "low"
-  value: ""
-- lint-id: "e3fb29a7-90c3-4902-ba0a-f090b809a37c"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "dad9ba4b-6f1f-4adf-8b13-cdcf9988845c"
-  message: "should have remarks"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "PUBLICATIONS"
-  object-name: "PUBLIC.FOR_LINT.PUBLICATIONS"
-  object-type: "table"
-  severity: "low"
-  value: ""
-- lint-id: "0427ef6d-6f00-46cc-b084-bc5fe2b9f0cc"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "dad9ba4b-6f1f-4adf-8b13-cdcf9988845c"
-  message: "should have remarks"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "PUBLICATIONS"
-  object-name: "PUBLIC.FOR_LINT.PUBLICATIONS"
-  object-type: "table"
-  severity: "low"
-  value: "ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, UPDATE, PRESS_RELEASE"
-- lint-id: "fc7246b1-f113-4465-80c1-e85293ce918d"
-  linter-id: "schemacrawler.tools.linter.LinterTooManyLobs"
-  linter-instance-id: "71521be9-dcc6-4995-b6a5-b74a72abb365"
-  message: "too many binary objects"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "PUBLICATIONS"
-  object-name: "PUBLIC.FOR_LINT.PUBLICATIONS"
-  object-type: "table"
-  severity: "low"
-  value: "PUBLIC.FOR_LINT.PUBLICATIONS.\"UPDATE\", PUBLIC.FOR_LINT.PUBLICATIONS.PRESS_RELEASE"
-- lint-id: "67a4f344-5ef7-4cc1-bab8-a3d0a2e3f3e1"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey"
-  linter-instance-id: "83b6a3d0-ae05-4f58-bced-3dcd2af343b7"
-  message: "primary key should not be a surrogate"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "PUBLICATIONWRITERS"
-  object-name: "PUBLIC.FOR_LINT.PUBLICATIONWRITERS"
-  object-type: "table"
-  severity: "high"
-  value: ""
-- lint-id: "34c7a8e1-a5ec-4006-9058-29a71248c4e4"
-  linter-id: "schemacrawler.tools.linter.LinterTableEmpty"
-  linter-instance-id: "100cb159-4197-44bd-a10c-6bf12b9778bc"
-  message: "empty table"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "PUBLICATIONWRITERS"
-  object-name: "PUBLIC.FOR_LINT.PUBLICATIONWRITERS"
-  object-type: "table"
-  severity: "low"
-  value: ""
-- lint-id: "4d5817e0-6f2f-4f40-a50a-2a4e1e84ee3f"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "dad9ba4b-6f1f-4adf-8b13-cdcf9988845c"
-  message: "should have remarks"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "PUBLICATIONWRITERS"
-  object-name: "PUBLIC.FOR_LINT.PUBLICATIONWRITERS"
-  object-type: "table"
-  severity: "low"
-  value: ""
-- lint-id: "bc53ef2d-4644-44aa-870e-679f1e7ce52a"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "dad9ba4b-6f1f-4adf-8b13-cdcf9988845c"
-  message: "should have remarks"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "PUBLICATIONWRITERS"
-  object-name: "PUBLIC.FOR_LINT.PUBLICATIONWRITERS"
-  object-type: "table"
-  severity: "low"
-  value: "PUBLICATIONID, WRITERID"
-- lint-id: "96679c26-049b-4cf0-be04-03bc375ba704"
-  linter-id: "schemacrawler.tools.linter.LinterForeignKeySelfReference"
-  linter-instance-id: "35a8a726-5bf7-48ab-a8e3-462d917740ed"
-  message: "foreign key self-references primary key"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "SELFREFERENCE"
-  object-name: "PUBLIC.FOR_LINT.SELFREFERENCE"
-  object-type: "table"
-  severity: "critical"
-  value: "PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE"
-- lint-id: "9b2f38fc-26ed-4d8c-ab2e-f3209a59a5dc"
-  linter-id: "schemacrawler.tools.linter.LinterRedundantIndexes"
-  linter-instance-id: "709f04b4-11da-4f99-9312-a81227cc50f2"
-  message: "redundant index"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "SELFREFERENCE"
-  object-name: "PUBLIC.FOR_LINT.SELFREFERENCE"
-  object-type: "table"
-  severity: "high"
-  value: "PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE"
-- lint-id: "a0808018-4292-4c94-b40d-8be060241f86"
-  linter-id: "schemacrawler.tools.linter.LinterRedundantIndexes"
-  linter-instance-id: "709f04b4-11da-4f99-9312-a81227cc50f2"
-  message: "redundant index"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "SELFREFERENCE"
-  object-name: "PUBLIC.FOR_LINT.SELFREFERENCE"
-  object-type: "table"
-  severity: "high"
-  value: "PUBLIC.FOR_LINT.SELFREFERENCE.PK_SELFREFERENCE"
-- lint-id: "c84e72c5-98d4-47db-8cf4-701728adb333"
-  linter-id: "schemacrawler.tools.linter.LinterTableEmpty"
-  linter-instance-id: "100cb159-4197-44bd-a10c-6bf12b9778bc"
-  message: "empty table"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "SELFREFERENCE"
-  object-name: "PUBLIC.FOR_LINT.SELFREFERENCE"
-  object-type: "table"
-  severity: "low"
-  value: ""
-- lint-id: "362062c8-fe96-4fff-86e6-969551dbd405"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "dad9ba4b-6f1f-4adf-8b13-cdcf9988845c"
-  message: "should have remarks"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "SELFREFERENCE"
-  object-name: "PUBLIC.FOR_LINT.SELFREFERENCE"
-  object-type: "table"
-  severity: "low"
-  value: ""
-- lint-id: "ef33393b-1ec0-4255-822d-8e173d834ae1"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "dad9ba4b-6f1f-4adf-8b13-cdcf9988845c"
-  message: "should have remarks"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "SELFREFERENCE"
-  object-name: "PUBLIC.FOR_LINT.SELFREFERENCE"
-  object-type: "table"
-  severity: "low"
-  value: "ID, TITLE"
-- lint-id: "6da6895b-ad7e-41e9-9dcf-57077f247d6c"
-  linter-id: "schemacrawler.tools.linter.LinterForeignKeyMismatch"
-  linter-instance-id: "1e41a5ef-817b-4a51-a36c-385a9663e81f"
-  message: "foreign key data type different from primary key"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "high"
-  value: "PUBLIC.FOR_LINT.WRITERS.FK_WRITERS_PUBLICATION"
-- lint-id: "913c6fe8-8ca8-4edc-868a-d4a207f3540b"
-  linter-id: "schemacrawler.tools.linter.LinterRedundantIndexes"
-  linter-instance-id: "709f04b4-11da-4f99-9312-a81227cc50f2"
-  message: "redundant index"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "high"
-  value: "PUBLIC.FOR_LINT.WRITERS.IDX_A1_WRITERS"
-- lint-id: "72f99a82-160e-4577-8d34-abf7afd038f5"
-  linter-id: "schemacrawler.tools.linter.LinterNullColumnsInIndex"
-  linter-instance-id: "8b4ec81b-027b-4ac7-829e-15d599e08e02"
-  message: "unique index with nullable columns"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "medium"
-  value: "PUBLIC.FOR_LINT.WRITERS.IDX_U_WRITERS"
-- lint-id: "59259358-0a9e-4bde-bb11-34e7187dcd40"
-  linter-id: "schemacrawler.tools.linter.LinterNullIntendedColumns"
-  linter-instance-id: "82f4bc68-7f69-45ce-8ae9-335c6db4d613"
-  message: "column where NULL may be intended"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "medium"
-  value: "PUBLIC.FOR_LINT.WRITERS.ADDRESS2"
-- lint-id: "5d7e39b9-9190-45bb-8e63-779ddd8cfd7e"
-  linter-id: "schemacrawler.tools.linter.LinterNullIntendedColumns"
-  linter-instance-id: "82f4bc68-7f69-45ce-8ae9-335c6db4d613"
-  message: "column where NULL may be intended"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "medium"
-  value: "PUBLIC.FOR_LINT.WRITERS.COUNTRY"
-- lint-id: "2c3e9a4d-2a2e-4e67-bfcb-0f7a40ad8ccb"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "167a5b1d-0a2d-49e9-ab69-66b6d089acf4"
-  message: "incrementing columns"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "medium"
-  value: "PUBLIC.FOR_LINT.WRITERS.ADDRESS1, PUBLIC.FOR_LINT.WRITERS.ADDRESS2"
-- lint-id: "d721db8e-e409-45e4-81d4-0979429afe72"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "167a5b1d-0a2d-49e9-ab69-66b6d089acf4"
-  message: "incrementing columns"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "medium"
-  value: "PUBLIC.FOR_LINT.WRITERS.EMAIL1, PUBLIC.FOR_LINT.WRITERS.EMAIL2"
-- lint-id: "33161226-7edc-486e-ad09-a342cbb73492"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "167a5b1d-0a2d-49e9-ab69-66b6d089acf4"
-  message: "incrementing columns"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "medium"
-  value: "PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3"
-- lint-id: "0b6d76c8-4487-48cf-97a4-15e0d718f3a7"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "167a5b1d-0a2d-49e9-ab69-66b6d089acf4"
-  message: "incrementing columns"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "medium"
-  value: "PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL11, PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL12"
-- lint-id: "76cb476a-cb1b-42aa-98fd-4b452abd890f"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "167a5b1d-0a2d-49e9-ab69-66b6d089acf4"
-  message: "incrementing columns"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "medium"
-  value: "PUBLIC.FOR_LINT.WRITERS.PHONE1, PUBLIC.FOR_LINT.WRITERS.PHONE2"
-- lint-id: "993b2db0-f68d-4ac1-ad39-77f2ee8f036a"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "167a5b1d-0a2d-49e9-ab69-66b6d089acf4"
-  message: "incrementing columns are not consecutive"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "medium"
-  value: "PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3"
-- lint-id: "37942827-b178-4136-b182-30327671d575"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "167a5b1d-0a2d-49e9-ab69-66b6d089acf4"
-  message: "incrementing columns don't have the same data-type"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "medium"
-  value: "PUBLIC.FOR_LINT.WRITERS.EMAIL1, PUBLIC.FOR_LINT.WRITERS.EMAIL2"
-- lint-id: "3da2d0f7-7745-423e-bb45-4e5a8818148f"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "167a5b1d-0a2d-49e9-ab69-66b6d089acf4"
-  message: "incrementing columns don't have the same data-type"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "medium"
-  value: "PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3"
-- lint-id: "7e2abf0a-5142-4e94-9932-bc1e6776559f"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithIncrementingColumns"
-  linter-instance-id: "167a5b1d-0a2d-49e9-ab69-66b6d089acf4"
-  message: "incrementing columns don't have the same data-type"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "medium"
-  value: "PUBLIC.FOR_LINT.WRITERS.PHONE1, PUBLIC.FOR_LINT.WRITERS.PHONE2"
-- lint-id: "08c6bf1e-84a8-4752-994a-2ff88403cc34"
-  linter-id: "schemacrawler.tools.linter.LinterTableEmpty"
-  linter-instance-id: "100cb159-4197-44bd-a10c-6bf12b9778bc"
-  message: "empty table"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "low"
-  value: ""
-- lint-id: "f6e1efd3-c77f-4f03-828b-88b9001c4ec8"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "dad9ba4b-6f1f-4adf-8b13-cdcf9988845c"
-  message: "should have remarks"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "low"
-  value: ""
-- lint-id: "aa30ef1a-a80a-47f7-a165-da906ef8bd41"
-  linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
-  linter-instance-id: "dad9ba4b-6f1f-4adf-8b13-cdcf9988845c"
-  message: "should have remarks"
-  object-key:
-    key:
-    - "PUBLIC"
-    - "FOR_LINT"
-    - "WRITERS"
-  object-name: "PUBLIC.FOR_LINT.WRITERS"
-  object-type: "table"
-  severity: "low"
-  value: "ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY,\
-    \ PHONE1, PHONE2, EMAIL1, EMAIL2, FAX, FAX3, HOMEEMAIL11, HOMEEMAIL12, PUBLICATION_ID"
+  - lint-id: b1a03a48-2cf8-49ec-9986-725d6c763832
+    linter-id: schemacrawler.tools.linter.LinterColumnTypes
+    linter-instance-id: 5ef3e2a4-ad14-4556-8af2-d0023ebbea95
+    message: column with same name but different data types
+    object-key:
+      key:
+        - catalog
+    object-name: catalog
+    object-type: catalog
+    severity: medium
+    value: "ID [BIGINT, INTEGER]"
+  - lint-id: 39c45863-0e77-492b-be14-653d66e9a591
+    linter-id: schemacrawler.tools.linter.LinterTableCycles
+    linter-instance-id: ff9ac536-712f-44cf-a469-7a08c62d00df
+    message: cycles in table relationships
+    object-key:
+      key:
+        - catalog
+    object-name: catalog
+    object-type: catalog
+    severity: medium
+    value: "PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS"
+  - lint-id: ea29b967-9fc1-48b0-b6aa-c8a80f573a7e
+    linter-id: schemacrawler.test.utility.LinterForTest
+    linter-instance-id: 1cddb459-36e0-468e-9967-642f0335b198
+    message: Test lint for database
+    object-key:
+      key:
+        - catalog
+    object-name: catalog
+    object-type: catalog
+    severity: low
+    value: HSQL Database Engine
+  - lint-id: 90423741-980e-49f1-a428-5fd7ca3c1550
+    linter-id: schemacrawler.test.utility.LinterForTest
+    linter-instance-id: 1cddb459-36e0-468e-9967-642f0335b198
+    message: "Test lint for the whole catalog, without a value"
+    object-key:
+      key:
+        - catalog
+    object-name: catalog
+    object-type: catalog
+    severity: low
+  - lint-id: 3efa03cc-14e5-42a0-bc77-9d29ee06e1af
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoPrimaryKey
+    linter-instance-id: f1e8b58c-a778-4a43-b50f-873f248a2326
+    message: no primary key
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - Global Counts
+    object-name: PUBLIC.FOR_LINT."Global Counts"
+    object-type: table
+    severity: high
+  - lint-id: c75987cf-104b-4313-af72-6121460e5cb5
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey
+    linter-instance-id: c78477b2-eb13-435c-9fca-df9c2eb732eb
+    message: primary key should not be a surrogate
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - Global Counts
+    object-name: PUBLIC.FOR_LINT."Global Counts"
+    object-type: table
+    severity: high
+  - lint-id: 2fac0c15-17f3-4c89-8697-758ef0123074
+    linter-id: schemacrawler.tools.linter.LinterTableAllNullableColumns
+    linter-instance-id: f6903e3d-1d9f-46c2-80b9-16736ccd8714
+    message: no non-nullable data columns
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - Global Counts
+    object-name: PUBLIC.FOR_LINT."Global Counts"
+    object-type: table
+    severity: medium
+  - lint-id: 2d5c28c0-e211-4279-8ae6-f77bf0c93f20
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoIndexes
+    linter-instance-id: b6b4e59b-2c26-448e-bbb7-36dfd68fe013
+    message: no indexes
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - Global Counts
+    object-name: PUBLIC.FOR_LINT."Global Counts"
+    object-type: table
+    severity: medium
+  - lint-id: 2919a465-b730-4d3a-994a-61806c5f4941
+    linter-id: schemacrawler.tools.linter.LinterTableWithQuotedNames
+    linter-instance-id: e2272e9f-2fa6-4a6c-8c17-f4eaabe33a76
+    message: "spaces in name, or reserved word"
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - Global Counts
+    object-name: PUBLIC.FOR_LINT."Global Counts"
+    object-type: table
+    severity: medium
+  - lint-id: d67522ff-a6bf-4c88-9c82-30d9018c311d
+    linter-id: schemacrawler.tools.linter.LinterTableWithQuotedNames
+    linter-instance-id: e2272e9f-2fa6-4a6c-8c17-f4eaabe33a76
+    message: "spaces in name, or reserved word"
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - Global Counts
+    object-name: PUBLIC.FOR_LINT."Global Counts"
+    object-type: table
+    severity: medium
+    value: Global Count
+  - lint-id: 06a63ce3-5168-4948-8221-7dc01fc25a46
+    linter-id: schemacrawler.tools.linter.LinterTableWithSingleColumn
+    linter-instance-id: e72bb119-e22f-4aa0-8669-3e2d1cee9527
+    message: single column
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - Global Counts
+    object-name: PUBLIC.FOR_LINT."Global Counts"
+    object-type: table
+    severity: medium
+  - lint-id: 686a8149-3ba3-4b63-9c6b-5cc34ac4dc6b
+    linter-id: schemacrawler.tools.linter.LinterTableEmpty
+    linter-instance-id: 0e6face7-8b73-4e6c-9813-72ea04e5e8c5
+    message: empty table
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - Global Counts
+    object-name: PUBLIC.FOR_LINT."Global Counts"
+    object-type: table
+    severity: low
+  - lint-id: 8b5c2c74-722b-47a3-99b5-c8a963035300
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoRemarks
+    linter-instance-id: 36c44f63-14c1-416b-8aa1-080f1637a122
+    message: should have remarks
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - Global Counts
+    object-name: PUBLIC.FOR_LINT."Global Counts"
+    object-type: table
+    severity: low
+  - lint-id: 002e277a-ea38-4678-8850-689eefa2219e
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoRemarks
+    linter-instance-id: 36c44f63-14c1-416b-8aa1-080f1637a122
+    message: should have remarks
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - Global Counts
+    object-name: PUBLIC.FOR_LINT."Global Counts"
+    object-type: table
+    severity: low
+    value: Global Count
+  - lint-id: db9b611a-ed76-4713-a316-62b1ae396283
+    linter-id: schemacrawler.tools.linter.LinterTableEmpty
+    linter-instance-id: 0e6face7-8b73-4e6c-9813-72ea04e5e8c5
+    message: empty table
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - EXTRA_PK
+    object-name: PUBLIC.FOR_LINT.EXTRA_PK
+    object-type: table
+    severity: low
+  - lint-id: ecb960c9-adb0-4a51-9d11-3288200a3e85
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoRemarks
+    linter-instance-id: 36c44f63-14c1-416b-8aa1-080f1637a122
+    message: should have remarks
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - EXTRA_PK
+    object-name: PUBLIC.FOR_LINT.EXTRA_PK
+    object-type: table
+    severity: low
+    value: "WRITERID, PUBLICATIONID, ID"
+  - lint-id: 4e28d917-e49c-4611-9026-f0f1379c0fd3
+    linter-id: schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst
+    linter-instance-id: 8739f725-ef97-4224-b06d-036396d6def6
+    message: primary key not first
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - EXTRA_PK
+    object-name: PUBLIC.FOR_LINT.EXTRA_PK
+    object-type: table
+    severity: low
+  - lint-id: f92c57bd-4b77-4270-9b99-dab3e5bb2b68
+    linter-id: schemacrawler.tools.linter.LinterTableWithQuotedNames
+    linter-instance-id: e2272e9f-2fa6-4a6c-8c17-f4eaabe33a76
+    message: "spaces in name, or reserved word"
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - PUBLICATIONS
+    object-name: PUBLIC.FOR_LINT.PUBLICATIONS
+    object-type: table
+    severity: medium
+    value: UPDATE
+  - lint-id: 3036a630-0e30-4c61-9a78-ce1799221aec
+    linter-id: schemacrawler.tools.linter.LinterTableEmpty
+    linter-instance-id: 0e6face7-8b73-4e6c-9813-72ea04e5e8c5
+    message: empty table
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - PUBLICATIONS
+    object-name: PUBLIC.FOR_LINT.PUBLICATIONS
+    object-type: table
+    severity: low
+  - lint-id: c8c09ccf-6be1-4c4a-941e-f7faacde2a3a
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoRemarks
+    linter-instance-id: 36c44f63-14c1-416b-8aa1-080f1637a122
+    message: should have remarks
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - PUBLICATIONS
+    object-name: PUBLIC.FOR_LINT.PUBLICATIONS
+    object-type: table
+    severity: low
+  - lint-id: 3ba11618-0a52-44d3-8ebf-7ad12d49e7a2
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoRemarks
+    linter-instance-id: 36c44f63-14c1-416b-8aa1-080f1637a122
+    message: should have remarks
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - PUBLICATIONS
+    object-name: PUBLIC.FOR_LINT.PUBLICATIONS
+    object-type: table
+    severity: low
+    value: "ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, UPDATE, PRESS_RELEASE"
+  - lint-id: 42b7a7dd-e7d2-48b1-8fd6-300ee9b501eb
+    linter-id: schemacrawler.tools.linter.LinterTooManyLobs
+    linter-instance-id: ef01626c-f3ab-4524-84e4-6dcce17122e0
+    message: too many binary objects
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - PUBLICATIONS
+    object-name: PUBLIC.FOR_LINT.PUBLICATIONS
+    object-type: table
+    severity: low
+    value: "PUBLIC.FOR_LINT.PUBLICATIONS.\"UPDATE\", PUBLIC.FOR_LINT.PUBLICATIONS.PRESS_RELEASE"
+  - lint-id: 5fa7cc5f-2ce6-4f9e-a67d-8b8bb066ecc1
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey
+    linter-instance-id: c78477b2-eb13-435c-9fca-df9c2eb732eb
+    message: primary key should not be a surrogate
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - PUBLICATIONWRITERS
+    object-name: PUBLIC.FOR_LINT.PUBLICATIONWRITERS
+    object-type: table
+    severity: high
+  - lint-id: 956b67d9-5040-4291-a7f8-60743c3ce588
+    linter-id: schemacrawler.tools.linter.LinterTableEmpty
+    linter-instance-id: 0e6face7-8b73-4e6c-9813-72ea04e5e8c5
+    message: empty table
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - PUBLICATIONWRITERS
+    object-name: PUBLIC.FOR_LINT.PUBLICATIONWRITERS
+    object-type: table
+    severity: low
+  - lint-id: 022115cb-1c4d-4c36-9c0d-7cf3729ddedb
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoRemarks
+    linter-instance-id: 36c44f63-14c1-416b-8aa1-080f1637a122
+    message: should have remarks
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - PUBLICATIONWRITERS
+    object-name: PUBLIC.FOR_LINT.PUBLICATIONWRITERS
+    object-type: table
+    severity: low
+  - lint-id: ce033565-a213-4b3a-9be8-a81ab71a3382
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoRemarks
+    linter-instance-id: 36c44f63-14c1-416b-8aa1-080f1637a122
+    message: should have remarks
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - PUBLICATIONWRITERS
+    object-name: PUBLIC.FOR_LINT.PUBLICATIONWRITERS
+    object-type: table
+    severity: low
+    value: "PUBLICATIONID, WRITERID"
+  - lint-id: ee19f60c-dfe8-4c6e-94db-0d6f3ffaab04
+    linter-id: schemacrawler.tools.linter.LinterForeignKeySelfReference
+    linter-instance-id: 727277f7-0b7c-4253-9664-05020b7a0e1e
+    message: foreign key self-references primary key
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - SELFREFERENCE
+    object-name: PUBLIC.FOR_LINT.SELFREFERENCE
+    object-type: table
+    severity: critical
+    value: PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE
+  - lint-id: 1e3b5d12-f840-48a9-acc4-29838adcd650
+    linter-id: schemacrawler.tools.linter.LinterRedundantIndexes
+    linter-instance-id: 8a043a0b-053f-4d28-ac7d-c44a8569e12f
+    message: redundant index
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - SELFREFERENCE
+    object-name: PUBLIC.FOR_LINT.SELFREFERENCE
+    object-type: table
+    severity: high
+    value: PUBLIC.FOR_LINT.SELFREFERENCE.FK_SELFREFERENCE
+  - lint-id: 852cf3bd-334a-4c4b-af60-55a42822d95a
+    linter-id: schemacrawler.tools.linter.LinterRedundantIndexes
+    linter-instance-id: 8a043a0b-053f-4d28-ac7d-c44a8569e12f
+    message: redundant index
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - SELFREFERENCE
+    object-name: PUBLIC.FOR_LINT.SELFREFERENCE
+    object-type: table
+    severity: high
+    value: PUBLIC.FOR_LINT.SELFREFERENCE.PK_SELFREFERENCE
+  - lint-id: 7ff13a83-43c4-4fb0-878d-71e109533bf2
+    linter-id: schemacrawler.tools.linter.LinterTableEmpty
+    linter-instance-id: 0e6face7-8b73-4e6c-9813-72ea04e5e8c5
+    message: empty table
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - SELFREFERENCE
+    object-name: PUBLIC.FOR_LINT.SELFREFERENCE
+    object-type: table
+    severity: low
+  - lint-id: 041bfcc6-46ec-4d4a-9629-75e6be793454
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoRemarks
+    linter-instance-id: 36c44f63-14c1-416b-8aa1-080f1637a122
+    message: should have remarks
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - SELFREFERENCE
+    object-name: PUBLIC.FOR_LINT.SELFREFERENCE
+    object-type: table
+    severity: low
+  - lint-id: 5b58d028-bbf3-4036-99fc-4586ed50216f
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoRemarks
+    linter-instance-id: 36c44f63-14c1-416b-8aa1-080f1637a122
+    message: should have remarks
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - SELFREFERENCE
+    object-name: PUBLIC.FOR_LINT.SELFREFERENCE
+    object-type: table
+    severity: low
+    value: "ID, TITLE"
+  - lint-id: 00bf25c4-ef7e-4c3b-8cf6-07636c43a592
+    linter-id: schemacrawler.tools.linter.LinterForeignKeyMismatch
+    linter-instance-id: ffabf98a-2d32-4a00-b262-f4def0fca5a6
+    message: foreign key data type different from primary key
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: high
+    value: PUBLIC.FOR_LINT.WRITERS.FK_WRITERS_PUBLICATION
+  - lint-id: aefa7177-25eb-4b81-a33f-8dd3c0635cec
+    linter-id: schemacrawler.tools.linter.LinterRedundantIndexes
+    linter-instance-id: 8a043a0b-053f-4d28-ac7d-c44a8569e12f
+    message: redundant index
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: high
+    value: PUBLIC.FOR_LINT.WRITERS.IDX_A1_WRITERS
+  - lint-id: 246f89fb-57b4-419b-9e24-329b998d7feb
+    linter-id: schemacrawler.tools.linter.LinterNullColumnsInIndex
+    linter-instance-id: eac85abc-e1ee-414a-a5d7-1f8a2431bc02
+    message: unique index with nullable columns
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: medium
+    value: PUBLIC.FOR_LINT.WRITERS.IDX_U_WRITERS
+  - lint-id: 4928c8c8-ac9d-4b7d-9308-b15340e20b29
+    linter-id: schemacrawler.tools.linter.LinterNullIntendedColumns
+    linter-instance-id: 611df187-b32b-4f87-ab94-d3eddd4f9462
+    message: column where NULL may be intended
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: medium
+    value: PUBLIC.FOR_LINT.WRITERS.ADDRESS2
+  - lint-id: 4f538d26-1861-4f82-9a62-86f82260b62e
+    linter-id: schemacrawler.tools.linter.LinterNullIntendedColumns
+    linter-instance-id: 611df187-b32b-4f87-ab94-d3eddd4f9462
+    message: column where NULL may be intended
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: medium
+    value: PUBLIC.FOR_LINT.WRITERS.COUNTRY
+  - lint-id: befaff73-2845-4ba8-b523-85dcfc2c2b32
+    linter-id: schemacrawler.tools.linter.LinterTableWithIncrementingColumns
+    linter-instance-id: c9f9a36e-4800-4e99-904b-7fd58222a0c7
+    message: incrementing columns
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: medium
+    value: "PUBLIC.FOR_LINT.WRITERS.ADDRESS1, PUBLIC.FOR_LINT.WRITERS.ADDRESS2"
+  - lint-id: 2efeff84-9284-4c99-85c3-08e16dea8cc3
+    linter-id: schemacrawler.tools.linter.LinterTableWithIncrementingColumns
+    linter-instance-id: c9f9a36e-4800-4e99-904b-7fd58222a0c7
+    message: incrementing columns
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: medium
+    value: "PUBLIC.FOR_LINT.WRITERS.EMAIL1, PUBLIC.FOR_LINT.WRITERS.EMAIL2"
+  - lint-id: 2795cea1-6330-4deb-98b3-0a7e6b389094
+    linter-id: schemacrawler.tools.linter.LinterTableWithIncrementingColumns
+    linter-instance-id: c9f9a36e-4800-4e99-904b-7fd58222a0c7
+    message: incrementing columns
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: medium
+    value: "PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3"
+  - lint-id: 91115260-5a66-49f4-89bd-ea99a39a2b02
+    linter-id: schemacrawler.tools.linter.LinterTableWithIncrementingColumns
+    linter-instance-id: c9f9a36e-4800-4e99-904b-7fd58222a0c7
+    message: incrementing columns
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: medium
+    value: "PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL11, PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL12"
+  - lint-id: 86afa9a9-10b0-42ee-abf5-18647918f179
+    linter-id: schemacrawler.tools.linter.LinterTableWithIncrementingColumns
+    linter-instance-id: c9f9a36e-4800-4e99-904b-7fd58222a0c7
+    message: incrementing columns
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: medium
+    value: "PUBLIC.FOR_LINT.WRITERS.PHONE1, PUBLIC.FOR_LINT.WRITERS.PHONE2"
+  - lint-id: 297daa08-7727-4031-8e28-d400af68b3c8
+    linter-id: schemacrawler.tools.linter.LinterTableWithIncrementingColumns
+    linter-instance-id: c9f9a36e-4800-4e99-904b-7fd58222a0c7
+    message: incrementing columns are not consecutive
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: medium
+    value: "PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3"
+  - lint-id: ebcbdfd5-f0e6-4d4a-b080-07ae889ddabf
+    linter-id: schemacrawler.tools.linter.LinterTableWithIncrementingColumns
+    linter-instance-id: c9f9a36e-4800-4e99-904b-7fd58222a0c7
+    message: incrementing columns don't have the same data-type
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: medium
+    value: "PUBLIC.FOR_LINT.WRITERS.EMAIL1, PUBLIC.FOR_LINT.WRITERS.EMAIL2"
+  - lint-id: 3d5a92bd-4895-42f4-a738-a3f4ca4795e9
+    linter-id: schemacrawler.tools.linter.LinterTableWithIncrementingColumns
+    linter-instance-id: c9f9a36e-4800-4e99-904b-7fd58222a0c7
+    message: incrementing columns don't have the same data-type
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: medium
+    value: "PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3"
+  - lint-id: 4b1831f3-3ab5-4b4b-819b-f7b9eca4785a
+    linter-id: schemacrawler.tools.linter.LinterTableWithIncrementingColumns
+    linter-instance-id: c9f9a36e-4800-4e99-904b-7fd58222a0c7
+    message: incrementing columns don't have the same data-type
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: medium
+    value: "PUBLIC.FOR_LINT.WRITERS.PHONE1, PUBLIC.FOR_LINT.WRITERS.PHONE2"
+  - lint-id: 840066ea-b17f-41ca-a575-ef1cf69f3dc9
+    linter-id: schemacrawler.tools.linter.LinterTableEmpty
+    linter-instance-id: 0e6face7-8b73-4e6c-9813-72ea04e5e8c5
+    message: empty table
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: low
+  - lint-id: f6b80e1b-c3dc-485f-b550-548e4596c546
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoRemarks
+    linter-instance-id: 36c44f63-14c1-416b-8aa1-080f1637a122
+    message: should have remarks
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: low
+  - lint-id: 3ae23186-cdba-4ac5-b8e7-a313d215ae24
+    linter-id: schemacrawler.tools.linter.LinterTableWithNoRemarks
+    linter-instance-id: 36c44f63-14c1-416b-8aa1-080f1637a122
+    message: should have remarks
+    object-key:
+      key:
+        - PUBLIC
+        - FOR_LINT
+        - WRITERS
+    object-name: PUBLIC.FOR_LINT.WRITERS
+    object-type: table
+    severity: low
+    value: "ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE,\
+      \ COUNTRY, PHONE1, PHONE2, EMAIL1, EMAIL2, FAX, FAX3, HOMEEMAIL11, HOMEEMAIL12,\
+      \ PUBLICATION_ID"

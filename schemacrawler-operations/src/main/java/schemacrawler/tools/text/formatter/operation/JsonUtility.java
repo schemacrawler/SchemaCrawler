@@ -1,12 +1,12 @@
 /*
- * SchemaCrawler Scribe
+ * SchemaCrawler
  * http://www.schemacrawler.com
  * Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
  * All rights reserved.
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.scribe.renderer;
+package schemacrawler.tools.text.formatter.operation;
 
 import static tools.jackson.core.StreamReadFeature.IGNORE_UNDEFINED;
 import static tools.jackson.core.StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION;
@@ -18,24 +18,17 @@ import static tools.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALL
 import static tools.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static tools.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
 import static tools.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID;
-import static tools.jackson.dataformat.yaml.YAMLWriteFeature.INDENT_ARRAYS;
-import static tools.jackson.dataformat.yaml.YAMLWriteFeature.INDENT_ARRAYS_WITH_INDICATOR;
-import static tools.jackson.dataformat.yaml.YAMLWriteFeature.MINIMIZE_QUOTES;
-import static tools.jackson.dataformat.yaml.YAMLWriteFeature.WRITE_DOC_START_MARKER;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.cfg.MapperBuilder;
-import tools.jackson.dataformat.yaml.YAMLMapper;
+import tools.jackson.databind.json.JsonMapper;
 import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
-public class JsonUtility {
+class JsonUtility {
 
-  public static final ObjectMapper yamlMapper = newYamlMapperBuilder().build();
-
-  public static YAMLMapper.Builder newYamlMapperBuilder() {
-    return configureYamlMapper(YAMLMapper.builder());
+  public static JsonMapper.Builder newJsonMapperBuilder() {
+    return (JsonMapper.Builder) configureMapper(JsonMapper.builder());
   }
 
   /** Applies the standard base configuration to any {@link MapperBuilder}. */
@@ -51,21 +44,6 @@ public class JsonUtility {
     // Omit null and empty values in output
     mapperBuilder.changeDefaultPropertyInclusion(
         incl -> incl.withValueInclusion(JsonInclude.Include.NON_EMPTY));
-
-    return mapperBuilder;
-  }
-
-  /**
-   * Applies the standard base configuration plus YAML-specific settings to a {@link
-   * YAMLMapper.Builder}.
-   */
-  private static YAMLMapper.Builder configureYamlMapper(final YAMLMapper.Builder mapperBuilder) {
-    configureMapper(mapperBuilder);
-
-    mapperBuilder.enable(MINIMIZE_QUOTES, INDENT_ARRAYS, INDENT_ARRAYS_WITH_INDICATOR);
-    mapperBuilder.disable(WRITE_DOC_START_MARKER);
-    // Preserve YAML insertion order rather than sorting map keys
-    mapperBuilder.disable(ORDER_MAP_ENTRIES_BY_KEYS);
 
     return mapperBuilder;
   }

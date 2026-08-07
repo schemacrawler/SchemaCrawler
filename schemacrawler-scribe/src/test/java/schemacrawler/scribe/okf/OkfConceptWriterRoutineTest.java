@@ -82,8 +82,7 @@ public class OkfConceptWriterRoutineTest {
     final int frontMatterEnd = content.indexOf("---", frontMatterStart + 3);
     final String frontMatter = content.substring(frontMatterStart + 3, frontMatterEnd);
     assertThat(
-        frontMatter,
-        anyOf(containsString("type: \"procedure\""), containsString("type: \"function\"")));
+        frontMatter, anyOf(containsString("type: procedure"), containsString("type: function")));
 
     assertThat(content, containsString("## " + msg.sectionParameters()));
 

@@ -72,6 +72,6 @@ public class ExecutableSerializeCommandTest {
   public void executableSerializeYaml(final DatabaseConnectionSource connectionSource)
       throws Exception {
     assertThat(
-        fileHeaderOf(executeSerialize(connectionSource, SerializationFormat.yaml)), is("2D2D"));
+        fileHeaderOf(executeSerialize(connectionSource, SerializationFormat.yaml)), is("213C"));
   }
 }

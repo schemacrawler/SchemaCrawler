@@ -19,6 +19,6 @@ public final class LintReportJsonGenerator extends BaseLintReportJacksonGenerato
 
   @Override
   protected final JsonMapper.Builder newMapperBuilder() {
-    return JsonMapper.builder();
+    return JsonUtility.newJsonMapperBuilder();
   }
 }
