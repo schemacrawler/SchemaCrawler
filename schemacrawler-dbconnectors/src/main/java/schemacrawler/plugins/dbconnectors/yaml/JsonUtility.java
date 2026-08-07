@@ -13,14 +13,19 @@ import static tools.jackson.core.StreamReadFeature.IGNORE_UNDEFINED;
 import static tools.jackson.core.StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION;
 import static tools.jackson.core.StreamWriteFeature.IGNORE_UNKNOWN;
 import static tools.jackson.databind.DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES;
+import static tools.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static tools.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS;
 import static tools.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
 import static tools.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static tools.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
 import static tools.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID;
+import static tools.jackson.dataformat.yaml.YAMLWriteFeature.INDENT_ARRAYS;
+import static tools.jackson.dataformat.yaml.YAMLWriteFeature.INDENT_ARRAYS_WITH_INDICATOR;
+import static tools.jackson.dataformat.yaml.YAMLWriteFeature.MINIMIZE_QUOTES;
 import static tools.jackson.dataformat.yaml.YAMLWriteFeature.WRITE_DOC_START_MARKER;
 import static us.fatehi.utility.Utility.isBlank;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import tools.jackson.core.JacksonException;
@@ -42,7 +47,10 @@ import us.fatehi.utility.UtilityMarker;
 public class JsonUtility {
 
   public static final ObjectMapper mapper =
-      newConfiguredObjectMapper(YAMLMapper.builder().disable(WRITE_DOC_START_MARKER));
+      newConfiguredObjectMapper(
+          YAMLMapper.builder()
+              .enable(MINIMIZE_QUOTES, INDENT_ARRAYS, INDENT_ARRAYS_WITH_INDICATOR)
+              .disable(WRITE_DOC_START_MARKER));
 
   private static JacksonModule getEnumMapper() {
     final SimpleModule module = new SimpleModule("Retrieval strategy map entries serializaation");
@@ -56,11 +64,7 @@ public class JsonUtility {
               final JsonGenerator gen,
               final SerializationContext ctxt)
               throws JacksonException {
-            if (value == null) {
-              gen.writeNull();
-            } else {
-              gen.writeString(value.getKey());
-            }
+            gen.writeName(requireNonNull(value, "No retrieval strategy key provided").getKey());
           }
         });
     module.addKeyDeserializer(
@@ -113,6 +117,8 @@ public class JsonUtility {
     requireNonNull(mapperBuilder, "No mapper builder provided");
     // De-serialization
     mapperBuilder.enable(INCLUDE_SOURCE_IN_LOCATION, IGNORE_UNDEFINED);
+    mapperBuilder.enable(FAIL_ON_UNKNOWN_PROPERTIES);
+
     mapperBuilder.disable(FAIL_ON_NULL_FOR_PRIMITIVES);
     // Serialization
     mapperBuilder.enable(IGNORE_UNKNOWN);
@@ -122,6 +128,10 @@ public class JsonUtility {
     mapperBuilder.disable(ORDER_MAP_ENTRIES_BY_KEYS);
 
     mapperBuilder.addModule(getEnumMapper());
+
+    // Omit nulls + "empty" values (empty String, empty Collection/Map/array, etc.)
+    mapperBuilder.changeDefaultPropertyInclusion(
+        incl -> incl.withValueInclusion(JsonInclude.Include.NON_EMPTY));
 
     final ObjectMapper objectMapper = mapperBuilder.build();
     return objectMapper;

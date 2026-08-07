@@ -1,0 +1,26 @@
+database-connector:
+  database-server-type:
+    server: access
+    name: Microsoft Access
+  url-template: "jdbc:ucanaccess://${database};showSchema=true;sysSchema=true"
+  allowed-driver-properties:
+    - memory
+    - singleConnection
+    - columnOrder
+    - ignoreCase
+    - lobScale
+    - maxMemoFieldLength
+    - concatNulls
+    - immediatelyReleaseResources
+    - jackcessOpener
+    - openMode
+    - inactivityTimeout
+    - newDatabaseVersion
+  standard-options:
+    host: {}
+    port: {}
+    database:
+      help:
+        - Database file
+  schema-retrieval: {}
+  limit: {}

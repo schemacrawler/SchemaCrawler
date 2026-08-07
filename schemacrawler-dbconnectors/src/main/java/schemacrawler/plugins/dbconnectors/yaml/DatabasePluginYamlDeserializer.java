@@ -10,7 +10,6 @@ package schemacrawler.plugins.dbconnectors.yaml;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
-import static tools.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 import java.io.Reader;
 import java.util.logging.Level;
@@ -39,10 +38,7 @@ public final class DatabasePluginYamlDeserializer {
     try (final Reader reader = inputResource.openNewInputReader(UTF_8)) {
       try {
         final DatabaseConnectorDefinitionHolder definition =
-            JsonUtility.mapper
-                .readerFor(DatabaseConnectorDefinitionHolder.class)
-                .with(FAIL_ON_UNKNOWN_PROPERTIES)
-                .readValue(reader);
+            JsonUtility.mapper.readerFor(DatabaseConnectorDefinitionHolder.class).readValue(reader);
         return definition.databaseConnector();
       } catch (final JacksonException e) {
         e.prependPath(new DatabindException.Reference(null, inputResource.toString()));

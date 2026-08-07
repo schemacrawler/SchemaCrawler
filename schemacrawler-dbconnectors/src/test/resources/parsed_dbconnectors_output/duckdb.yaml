@@ -1,0 +1,25 @@
+database-connector:
+  database-server-type:
+    server: duckdb
+    name: DuckDB
+  url-template: "jdbc:duckdb:${database}"
+  allowed-driver-properties:
+    - duckdb.read_only
+    - temp_directory
+    - threads
+    - memory_limit
+  standard-options:
+    host:
+      help:
+        - Should be omitted
+    port:
+      help:
+        - Should be omitted
+    database:
+      help:
+        - "DuckDB database file path, or :memory:"
+  schema-retrieval:
+    retrieval-strategies:
+      tablecolumns: metadata-over-schemas
+  limit:
+    exclude-schemas: information_schema|pg_catalog
