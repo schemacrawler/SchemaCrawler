@@ -10,8 +10,6 @@ package schemacrawler.tools.commandline.utility;
 
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
-import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.options.Config;
@@ -39,17 +37,6 @@ public final class SchemaRetrievalOptionsConfig {
             currentSchemaRetrievalOptions.getInformationSchemaViews());
     SchemaRetrievalOptionsConfig.fromConfig(informationSchemaViewsBuilder, configProperties);
     builder.withInformationSchemaViews(informationSchemaViewsBuilder.toOptions());
-
-    for (final SchemaInfoMetadataRetrievalStrategy metadataRetrievalStrategy :
-        SchemaInfoMetadataRetrievalStrategy.values()) {
-      final MetadataRetrievalStrategy currentValue =
-          currentSchemaRetrievalOptions.get(metadataRetrievalStrategy);
-      final String configKey =
-          "schemacrawler.schema.retrieval.strategy." + metadataRetrievalStrategy.getKey();
-      final MetadataRetrievalStrategy configValue =
-          configProperties.getEnumValue(configKey, currentValue);
-      builder.with(metadataRetrievalStrategy, configValue);
-    }
 
     return builder;
   }
