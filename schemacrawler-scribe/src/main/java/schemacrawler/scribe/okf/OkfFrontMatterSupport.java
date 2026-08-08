@@ -34,6 +34,7 @@ import schemacrawler.scribe.okf.frontmatter.OkfVerifiedBy;
 import schemacrawler.scribe.okf.frontmatter.OkfVerifiedRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerCountsRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
+import schemacrawler.scribe.okf.frontmatter.TableSpecialAttributesRecord;
 import schemacrawler.tools.state.AbstractExecutionState;
 import schemacrawler.utility.MetaDataUtility;
 
@@ -98,17 +99,6 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     }
   }
 
-  private static final String TAG_NO_PRIMARY_KEY = "no_primary_key";
-  private static final String TAG_SELF_REFERENCING = "self_referencing";
-  private static final String TAG_HAS_TRIGGERS = "has_triggers";
-  private static final String TAG_EMPTY_TABLE = "empty_table";
-
-  private static final String TAG_BRIDGE_TABLE = "bridge_table";
-
-  private static void addTag(final List<String> tags, final String tag) {
-    tags.add(toSnakeCase(tag));
-  }
-
   private final OkfFrontMatterYamlUtility frontMatterYamlUtility;
 
   public OkfFrontMatterSupport() {
@@ -171,28 +161,13 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
     final List<String> tags = new ArrayList<>();
     addTag(tags, objectDescription.simpleTypeName());
-
-    if (!table.hasPrimaryKey()) {
-      addTag(tags, TAG_NO_PRIMARY_KEY);
-    }
-    if (table.isSelfReferencing()) {
-      addTag(tags, TAG_SELF_REFERENCING);
-    }
-    if (table.hasTriggers()) {
-      addTag(tags, TAG_HAS_TRIGGERS);
-    }
-
-    final Long rowCount;
-    if (TableRowCountsUtility.hasRowCount(table)) {
-      rowCount = TableRowCountsUtility.getRowCount(table);
-      if (rowCount == 0) {
-        addTag(tags, TAG_EMPTY_TABLE);
-      }
-    } else {
-      rowCount = null;
-    }
+    final TableSpecialAttributesRecord specialAttributes =
+        TableSpecialAttributesRecord.of(table, isBridgeTable(table));
+    tags.addAll(frontMatterYamlUtility.toSnakeCaseList(specialAttributes));
 
     final String entityType = entityType(table, tags);
+    final Long rowCount =
+        TableRowCountsUtility.hasRowCount(table) ? TableRowCountsUtility.getRowCount(table) : null;
 
     final OkfFrontMatterRecord okfFrontMatter = okfFrontMatter(objectDescription, tags);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
@@ -227,18 +202,19 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
       final EntityType entityType = entity.getType();
       if (entityType != EntityType.unknown) {
         addTag(tags, entityType.name());
-        if (model.lookupByBridgeTable(table).isPresent()) {
-          addTag(tags, TAG_BRIDGE_TABLE);
-        }
         return entityType.description();
       }
     }
 
-    if (model.lookupByBridgeTable(table).isPresent()) {
-      addTag(tags, TAG_BRIDGE_TABLE);
-    }
-
     return null;
+  }
+
+  private boolean isBridgeTable(final Table table) {
+    if (!hasERModel()) {
+      return false;
+    }
+    final ERModel model = getERModel();
+    return model.lookupByBridgeTable(table).isPresent();
   }
 
   private OkfGeneratedRecord generated() {
@@ -264,7 +240,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
         objectDescription.simpleTypeName(),
         objectDescription.fullName(),
         objectDescription.description(),
-        objectDescription.resource,
+        objectDescription.resource(),
         tags,
         generated(),
         verified(),
@@ -283,5 +259,9 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
   private OkfVerifiedRecord verified() {
     return OkfVerifiedRecord.of(
         OkfVerifiedBy.machine_confirmed, schemaCrawlerActor(), Instant.now());
+  }
+
+  private static void addTag(final List<String> tags, final String tag) {
+    tags.add(toSnakeCase(tag));
   }
 }

@@ -106,6 +106,11 @@ public class OkfConceptWriterTableTest {
     assertThat(parsed.get("name"), is(notNullValue()));
     assertThat(parsed.get("complete_type"), is(notNullValue()));
     assertThat(parsed.get("counts"), is(notNullValue()));
+    assertThat(content, not(containsString("noPrimaryKey")));
+    assertThat(content, not(containsString("selfReferencing")));
+    assertThat(content, not(containsString("hasTriggers")));
+    assertThat(content, not(containsString("emptyTable")));
+    assertThat(content, not(containsString("bridgeTable")));
     assertThat(
         JsonUtility.yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class),
         is("machine-confirmed:" + SchemaCrawlerActor.schemaCrawlerActor()));

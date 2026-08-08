@@ -9,7 +9,9 @@ package schemacrawler.scribe.okf;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.scribe.renderer.JsonUtility.yamlMapper;
+import static us.fatehi.utility.Utility.toSnakeCase;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +37,19 @@ final class OkfFrontMatterYamlUtility {
     }
 
     return yamlMapper.writeValueAsString(frontMatter);
+  }
+
+  List<String> toSnakeCaseList(final Object value) {
+    requireNonNull(value, "No value provided");
+
+    final LinkedHashMap<String, Object> map = toMap(value);
+    final List<String> values = new ArrayList<>();
+    for (final Object item : map.values()) {
+      if (item instanceof final String stringValue && !stringValue.isBlank()) {
+        values.add(toSnakeCase(stringValue));
+      }
+    }
+    return List.copyOf(values);
   }
 
   @SuppressWarnings("unchecked")
