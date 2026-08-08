@@ -9,12 +9,16 @@ package schemacrawler.scribe.okf.frontmatter;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
+import static us.fatehi.utility.Utility.toSnakeCase;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record OkfFrontMatterRecord(
     String type,
     String title,
@@ -39,7 +43,7 @@ public record OkfFrontMatterRecord(
     final List<String> safeTags = tags == null ? List.of() : List.copyOf(tags);
     final Set<String> uniqueTags = new LinkedHashSet<>();
     for (final String tag : safeTags) {
-      uniqueTags.add(requireNotBlank(tag, "Tag should be non-blank"));
+      uniqueTags.add(toSnakeCase(requireNotBlank(trimToEmpty(tag), "Tag should be non-blank")));
     }
     return List.copyOf(uniqueTags);
   }

@@ -8,9 +8,11 @@
 package schemacrawler.scribe.okf;
 
 import static schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor.schemaCrawlerActor;
-import static schemacrawler.scribe.renderer.MarkdownFormattingHelper.encodeFullName;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.toSnakeCase;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,12 @@ import schemacrawler.tools.state.AbstractExecutionState;
 import schemacrawler.utility.MetaDataUtility;
 
 public final class OkfFrontMatterSupport extends AbstractExecutionState {
+
+  private static final String TAG_NO_PRIMARY_KEY = "no_primary_key";
+  private static final String TAG_SELF_REFERENCING = "self_referencing";
+  private static final String TAG_HAS_TRIGGERS = "has_triggers";
+  private static final String TAG_EMPTY_TABLE = "empty_table";
+  private static final String TAG_BRIDGE_TABLE = "bridge_table";
 
   private final OkfFrontMatterYamlUtility frontMatterYamlUtility;
 
@@ -76,29 +84,19 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     final DatabaseObjectDescription objectDescription = databaseObjectDescription(routine);
 
     final List<String> tags = new ArrayList<>();
-    tags.add(objectDescription.simpleTypeName());
+    addTag(tags, objectDescription.simpleTypeName());
 
     final OkfFrontMatterRecord okfFrontMatter =
-        new OkfFrontMatterRecord(
-            objectDescription.simpleTypeName(),
-            objectDescription.fullName(),
-            objectDescription.description(),
-            "catalog://routines/" + encodeFullName(routine),
-            tags,
-            generated(),
-            verified(),
-            OkfStatus.stable);
+        okfFrontMatter(objectDescription, resourceFor("routines", routine.getFullName()), tags);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
-        new GitHubPagesFrontMatterRecord(
-            objectDescription.name(), objectDescription.intro(), true, true);
-    final SchemaCrawlerCountsRecord counts =
-        new SchemaCrawlerCountsRecord(null, null, null, null, null, routine.getParameters().size());
+        gitHubPagesFrontMatter(objectDescription, true);
     final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
-        new SchemaCrawlerFrontMatterRecord(
+        schemaCrawlerFrontMatter(
             routine.getSchema().getFullName(),
             objectDescription.name(),
             completeType(routine),
-            counts,
+            new SchemaCrawlerCountsRecord(
+                null, null, null, null, null, routine.getParameters().size()),
             null);
 
     return frontMatterYamlUtility.toYamlString(
@@ -109,23 +107,23 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     final DatabaseObjectDescription objectDescription = databaseObjectDescription(table);
 
     final List<String> tags = new ArrayList<>();
-    tags.add(objectDescription.simpleTypeName());
+    addTag(tags, objectDescription.simpleTypeName());
 
     if (!table.hasPrimaryKey()) {
-      tags.add("noPrimaryKey");
+      addTag(tags, TAG_NO_PRIMARY_KEY);
     }
     if (table.isSelfReferencing()) {
-      tags.add("selfReferencing");
+      addTag(tags, TAG_SELF_REFERENCING);
     }
     if (table.hasTriggers()) {
-      tags.add("hasTriggers");
+      addTag(tags, TAG_HAS_TRIGGERS);
     }
 
     final Long rowCount;
     if (TableRowCountsUtility.hasRowCount(table)) {
       rowCount = TableRowCountsUtility.getRowCount(table);
       if (rowCount == 0) {
-        tags.add("emptyTable");
+        addTag(tags, TAG_EMPTY_TABLE);
       }
     } else {
       rowCount = null;
@@ -134,36 +132,55 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     final String entityType = entityType(table, tags);
 
     final OkfFrontMatterRecord okfFrontMatter =
-        new OkfFrontMatterRecord(
-            objectDescription.simpleTypeName(),
-            objectDescription.fullName(),
-            objectDescription.description(),
-            "catalog://tables/" + encodeFullName(table),
-            tags,
-            generated(),
-            verified(),
-            OkfStatus.stable);
+        okfFrontMatter(objectDescription, resourceFor("tables", table.getFullName()), tags);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
-        new GitHubPagesFrontMatterRecord(
-            objectDescription.name(), objectDescription.intro(), true, true);
-    final SchemaCrawlerCountsRecord counts =
-        new SchemaCrawlerCountsRecord(
-            table.getColumns().size(),
-            table.getReferencedTables().size(),
-            table.getIndexes().size(),
-            table.getTriggers().size(),
-            rowCount,
-            null);
+        gitHubPagesFrontMatter(objectDescription, true);
     final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
-        new SchemaCrawlerFrontMatterRecord(
+        schemaCrawlerFrontMatter(
             table.getSchema().getFullName(),
             objectDescription.name(),
             completeType(table),
-            counts,
+            new SchemaCrawlerCountsRecord(
+                table.getColumns().size(),
+                table.getReferencedTables().size(),
+                table.getIndexes().size(),
+                table.getTriggers().size(),
+                rowCount,
+                null),
             entityType);
 
     return frontMatterYamlUtility.toYamlString(
         okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
+  }
+
+  private OkfFrontMatterRecord okfFrontMatter(
+      final DatabaseObjectDescription objectDescription,
+      final String resource,
+      final List<String> tags) {
+    return new OkfFrontMatterRecord(
+        objectDescription.simpleTypeName(),
+        objectDescription.fullName(),
+        objectDescription.description(),
+        resource,
+        tags,
+        generated(),
+        verified(),
+        OkfStatus.stable);
+  }
+
+  private GitHubPagesFrontMatterRecord gitHubPagesFrontMatter(
+      final DatabaseObjectDescription objectDescription, final boolean showMiniToc) {
+    return new GitHubPagesFrontMatterRecord(
+        objectDescription.name(), objectDescription.intro(), showMiniToc, true);
+  }
+
+  private SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter(
+      final String schema,
+      final String name,
+      final String completeType,
+      final SchemaCrawlerCountsRecord counts,
+      final String entityType) {
+    return new SchemaCrawlerFrontMatterRecord(schema, name, completeType, counts, entityType);
   }
 
   private String completeType(final DatabaseObject databaseObject) {
@@ -202,16 +219,16 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
       final Entity entity = lookupEntity.get();
       final EntityType entityType = entity.getType();
       if (entityType != EntityType.unknown) {
-        tags.add(entityType.name());
+        addTag(tags, entityType.name());
         if (model.lookupByBridgeTable(table).isPresent()) {
-          tags.add("bridgeTable");
+          addTag(tags, TAG_BRIDGE_TABLE);
         }
         return entityType.description();
       }
     }
 
     if (model.lookupByBridgeTable(table).isPresent()) {
-      tags.add("bridgeTable");
+      addTag(tags, TAG_BRIDGE_TABLE);
     }
 
     return null;
@@ -231,6 +248,18 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
   private OkfVerifiedRecord verified() {
     return OkfVerifiedRecord.of(
         OkfVerifiedBy.machine_confirmed, schemaCrawlerActor(), Instant.now());
+  }
+
+  private String resourceFor(final String kind, final String fullName) {
+    try {
+      return new URI("catalog", kind, "/" + fullName, null).toString();
+    } catch (final URISyntaxException e) {
+      throw new IllegalArgumentException("Unable to create resource URI", e);
+    }
+  }
+
+  private static void addTag(final List<String> tags, final String tag) {
+    tags.add(toSnakeCase(tag));
   }
 
   private record DatabaseObjectDescription(

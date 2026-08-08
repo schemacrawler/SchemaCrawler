@@ -9,6 +9,10 @@ package schemacrawler.scribe.okf.frontmatter;
 
 import static us.fatehi.utility.Utility.trimToEmpty;
 
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
+
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record SchemaCrawlerFrontMatterRecord(
     String schema,
     String name,

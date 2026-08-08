@@ -9,6 +9,10 @@ package schemacrawler.scribe.okf.frontmatter;
 
 import static us.fatehi.utility.Utility.trimToEmpty;
 
+import tools.jackson.databind.PropertyNamingStrategies.LowerCamelCaseStrategy;
+import tools.jackson.databind.annotation.JsonNaming;
+
+@JsonNaming(LowerCamelCaseStrategy.class)
 public record GitHubPagesFrontMatterRecord(
     String shortTitle, String intro, boolean showMiniToc, boolean allowTitleToDifferFromFilename) {
 

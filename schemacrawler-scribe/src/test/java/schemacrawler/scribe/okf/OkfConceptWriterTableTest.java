@@ -104,6 +104,7 @@ public class OkfConceptWriterTableTest {
     assertThat(parsed.get("verified"), is(notNullValue()));
     assertThat(parsed.get("schema"), is(notNullValue()));
     assertThat(parsed.get("name"), is(notNullValue()));
+    assertThat(parsed.get("complete_type"), is(notNullValue()));
     assertThat(parsed.get("counts"), is(notNullValue()));
     assertThat(
         JsonUtility.yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class),
@@ -152,6 +153,6 @@ public class OkfConceptWriterTableTest {
     final String resourcePath = "tables/" + tableWithNullSchemaName.key().slug() + ".md";
     final String content = Files.readString(tempDir.resolve(resourcePath));
     assertThat(content, containsString("schema:"));
-    assertThat(content, containsString("completeType:"));
+    assertThat(content, containsString("complete_type:"));
   }
 }

@@ -7,6 +7,11 @@
  */
 package schemacrawler.scribe.okf.frontmatter;
 
+import java.util.function.Function;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
+
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record SchemaCrawlerCountsRecord(
     Integer columnCount,
     Integer foreignKeyCount,
@@ -15,18 +20,16 @@ public record SchemaCrawlerCountsRecord(
     Long rowCount,
     Integer parameterCount) {
 
-  public SchemaCrawlerCountsRecord {
-    validateNonNegative(columnCount, "columnCount");
-    validateNonNegative(foreignKeyCount, "foreignKeyCount");
-    validateNonNegative(indexCount, "indexCount");
-    validateNonNegative(triggerCount, "triggerCount");
-    validateNonNegative(rowCount, "rowCount");
-    validateNonNegative(parameterCount, "parameterCount");
-  }
+  private static final Function<Integer, Integer> makePostiveInteger =
+      x -> (x == null || x < 0) ? null : x;
+  private static final Function<Long, Long> makePostiveLong = x -> (x == null || x < 0) ? null : x;
 
-  private static void validateNonNegative(final Number value, final String fieldName) {
-    if (value != null && value.longValue() < 0) {
-      throw new IllegalArgumentException(fieldName + " should not be negative");
-    }
+  public SchemaCrawlerCountsRecord {
+    columnCount = makePostiveInteger.apply(columnCount);
+    foreignKeyCount = makePostiveInteger.apply(foreignKeyCount);
+    indexCount = makePostiveInteger.apply(indexCount);
+    triggerCount = makePostiveInteger.apply(triggerCount);
+    rowCount = makePostiveLong.apply(rowCount);
+    parameterCount = makePostiveInteger.apply(parameterCount);
   }
 }

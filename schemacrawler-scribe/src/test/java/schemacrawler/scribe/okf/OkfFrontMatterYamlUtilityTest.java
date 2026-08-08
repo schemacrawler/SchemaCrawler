@@ -40,7 +40,7 @@ public class OkfFrontMatterYamlUtilityTest {
             "PUBLIC.BOOKS",
             "Books table",
             null,
-            List.of("table", "hasTriggers"),
+            List.of("table", "has_triggers"),
             new OkfGeneratedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
             OkfVerifiedRecord.of(
                 OkfVerifiedBy.machine_confirmed, actor, Instant.parse("2026-01-01T00:00:00Z")),
@@ -61,10 +61,13 @@ public class OkfFrontMatterYamlUtilityTest {
 
     assertThat(yamlMapper.treeToValue(parsed.get("type"), String.class), is("table"));
     assertThat(parsed.get("resource"), is(nullValue()));
+    assertThat(yamlMapper.treeToValue(parsed.get("tags").get(1), String.class), is("has_triggers"));
     assertThat(parsed.get("generated"), is(notNullValue()));
     assertThat(parsed.get("verified"), is(notNullValue()));
     assertThat(parsed.get("counts"), is(notNullValue()));
-    assertThat(parsed.get("counts").get("rowCount"), is(nullValue()));
+    assertThat(parsed.get("counts").get("row_count"), is(nullValue()));
+    assertThat(parsed.get("complete_type"), is(nullValue()));
+    assertThat(parsed.get("entity_type"), is(nullValue()));
     assertThat(
         yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class),
         is("machine-confirmed:" + actor));
@@ -96,7 +99,7 @@ public class OkfFrontMatterYamlUtilityTest {
     assertThat(parsed.get("schema"), is(nullValue()));
     assertThat(parsed.get("name"), is(nullValue()));
     assertThat(parsed.get("counts"), is(nullValue()));
-    assertThat(parsed.get("entityType"), is(nullValue()));
+    assertThat(parsed.get("entity_type"), is(nullValue()));
   }
 
   @Test
@@ -114,8 +117,5 @@ public class OkfFrontMatterYamlUtilityTest {
                 null,
                 OkfStatus.stable));
     assertThrows(IllegalArgumentException.class, () -> OkfStatus.fromString("invalid"));
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> new SchemaCrawlerCountsRecord(-1, null, null, null, null, null));
   }
 }

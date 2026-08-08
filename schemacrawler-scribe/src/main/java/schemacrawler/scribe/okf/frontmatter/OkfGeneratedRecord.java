@@ -12,7 +12,10 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.time.Instant;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record OkfGeneratedRecord(String by, Instant at) {
 
   public OkfGeneratedRecord {

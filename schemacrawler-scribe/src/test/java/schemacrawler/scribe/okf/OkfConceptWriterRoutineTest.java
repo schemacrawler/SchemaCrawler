@@ -85,6 +85,7 @@ public class OkfConceptWriterRoutineTest {
         frontMatter, anyOf(containsString("type: procedure"), containsString("type: function")));
     assertThat(frontMatter, containsString("verified:"));
     assertThat(frontMatter, containsString("machine-confirmed:"));
+    assertThat(frontMatter, containsString("complete_type:"));
 
     assertThat(content, containsString("## " + msg.sectionParameters()));
 
