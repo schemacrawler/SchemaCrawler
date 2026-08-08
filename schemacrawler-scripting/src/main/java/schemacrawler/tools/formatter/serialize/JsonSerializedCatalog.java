@@ -20,6 +20,6 @@ public final class JsonSerializedCatalog extends BaseJacksonSerializedCatalog {
 
   @Override
   protected final JsonMapper.Builder newMapperBuilder() {
-    return JsonMapper.builder();
+    return JsonUtility.newJsonMapperBuilder();
   }
 }

@@ -19,7 +19,7 @@ database-connector:
         - Optional, uses the PGDATABASE environmental variable if available
   schema-retrieval:
     retrieval-strategies:
-      tablecolumns: metadata_over_schemas
+      table-columns: metadata_over_schemas
   limit:
     exclude-schemas: "pg_catalog|information_schema"
   additional-options:

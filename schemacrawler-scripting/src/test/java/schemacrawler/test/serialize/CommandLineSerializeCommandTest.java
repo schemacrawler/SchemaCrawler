@@ -69,7 +69,7 @@ public class CommandLineSerializeCommandTest {
   @Test
   public void commandLineYaml(final DatabaseConnectionInfo connectionInfo) throws Exception {
     assertThatOutputIsCorrect(
-        commandlineSerialize(connectionInfo, SerializationFormat.yaml), is("2D2D"));
+        commandlineSerialize(connectionInfo, SerializationFormat.yaml), is("213C"));
   }
 
   private void assertThatOutputIsCorrect(

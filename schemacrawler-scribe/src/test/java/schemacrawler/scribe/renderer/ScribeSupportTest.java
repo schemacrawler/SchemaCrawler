@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static schemacrawler.scribe.renderer.JsonUtility.mapper;
+import static schemacrawler.scribe.renderer.JsonUtility.yamlMapper;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
@@ -91,8 +91,8 @@ public class ScribeSupportTest {
     final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
     support.transferState(frontMatter);
 
-    final JsonNode tableFrontMatter = mapper.readTree(frontMatter.frontMatter(table));
-    final JsonNode routineFrontMatter = mapper.readTree(frontMatter.frontMatter(routine));
+    final JsonNode tableFrontMatter = yamlMapper.readTree(frontMatter.frontMatter(table));
+    final JsonNode routineFrontMatter = yamlMapper.readTree(frontMatter.frontMatter(routine));
 
     final String expectedTableResource =
         "catalog://tables/"

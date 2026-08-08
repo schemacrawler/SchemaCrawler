@@ -24,7 +24,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -47,7 +46,6 @@ import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.SerializationContext;
 import tools.jackson.databind.annotation.JsonNaming;
 import tools.jackson.databind.cfg.MapperBuilder;
-import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import tools.jackson.databind.jsontype.PolymorphicTypeValidator;
 import tools.jackson.databind.ser.BeanPropertyWriter;
@@ -100,17 +98,6 @@ public abstract sealed class BaseJacksonSerializedCatalog implements CatalogSeri
 
   private static final Logger LOGGER =
       Logger.getLogger(BaseJacksonSerializedCatalog.class.getName());
-
-  protected static Catalog readCatalog(final InputStream in) {
-    requireNonNull(in, "No input stream provided");
-    try {
-      final ObjectMapper mapper = newConfiguredObjectMapper(JsonMapper.builder(), true);
-      final Catalog catalog = mapper.readValue(in, Catalog.class);
-      return catalog;
-    } catch (final JacksonException e) {
-      throw new ExecutionRuntimeException("Could not deserialize catalog", e);
-    }
-  }
 
   private static ObjectMapper newConfiguredObjectMapper(
       final MapperBuilder<? extends ObjectMapper, ?> mapperBuilder, final boolean indented) {

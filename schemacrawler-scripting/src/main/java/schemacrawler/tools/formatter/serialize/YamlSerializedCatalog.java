@@ -20,6 +20,6 @@ public final class YamlSerializedCatalog extends BaseJacksonSerializedCatalog {
 
   @Override
   protected final YAMLMapper.Builder newMapperBuilder() {
-    return YAMLMapper.builder();
+    return JsonUtility.newYamlMapperBuilder();
   }
 }

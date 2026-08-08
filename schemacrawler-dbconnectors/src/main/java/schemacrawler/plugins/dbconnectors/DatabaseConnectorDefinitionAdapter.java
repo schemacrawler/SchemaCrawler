@@ -12,6 +12,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import org.jspecify.annotations.Nullable;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.plugins.dbconnectors.model.AdditionalOptionDefinition;
 import schemacrawler.plugins.dbconnectors.model.DatabaseConnectorDefinition;
@@ -49,7 +51,9 @@ public final class DatabaseConnectorDefinitionAdapter {
         DatabaseConnectionSourceBuilder.builder(definition.urlTemplate());
     applyStandardOptionDefaults(connectionSourceBuilder, definition.standardOptions());
     if (!definition.allowedDriverProperties().isEmpty()) {
-      connectionSourceBuilder.withAdditionalDriverProperties(definition.allowedDriverProperties());
+      final @Nullable Set<String> allowedDriverProperties =
+          Set.copyOf(definition.allowedDriverProperties());
+      connectionSourceBuilder.withAdditionalDriverProperties(allowedDriverProperties);
     }
     if (!definition.additionalOptions().isEmpty()) {
       for (final AdditionalOptionDefinition additionalOption : definition.additionalOptions()) {

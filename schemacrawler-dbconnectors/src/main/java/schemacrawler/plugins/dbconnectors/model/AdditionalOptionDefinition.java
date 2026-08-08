@@ -41,6 +41,6 @@ public record AdditionalOptionDefinition(
 
   @Override
   public String toString() {
-    return JsonUtility.mapper.writeValueAsString(this);
+    return JsonUtility.yamlMapper.writeValueAsString(this);
   }
 }

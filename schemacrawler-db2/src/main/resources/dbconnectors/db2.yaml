@@ -85,7 +85,7 @@ database-connector:
   additional-options:
     - name: retrieveMessagesFromServerOnGetMessage
       type: boolean
-      default: "true"
+      default: true
       help:
         - Retrieve error messages from the server
         - Optional, defaults to true

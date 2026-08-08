@@ -21,22 +21,22 @@ database-connector:
   additional-options:
     - name: allowPublicKeyRetrieval
       type: boolean
-      default: "true"
+      default: true
       help:
         - Allow retrieval of RSA public key from server if needed
     - name: nullNamePatternMatchesAll
       type: boolean
-      default: "true"
+      default: true
       help:
         - Treat null name patterns as wildcards
     - name: getProceduresReturnsFunctions
       type: boolean
-      default: "false"
+      default: false
       help:
         - Keep procedure metadata separate from functions
     - name: noAccessToProcedureBodies
       type: boolean
-      default: "true"
+      default: true
       help:
         - Avoid direct access to procedure bodies
     - name: logger
@@ -46,12 +46,12 @@ database-connector:
         - MySQL JDBC logger implementation
     - name: dumpQueriesOnException
       type: boolean
-      default: "true"
+      default: true
       help:
         - Include executed query details in exceptions
     - name: dumpMetadataOnColumnNotFound
       type: boolean
-      default: "true"
+      default: true
       help:
         - Include metadata details when column lookup fails
     - name: maxQuerySizeToLog
@@ -61,11 +61,11 @@ database-connector:
         - Maximum query size to include in logs
     - name: disableMariaDbDriver
       type: boolean
-      default: "true"
+      default: true
       help:
         - Prefer MySQL JDBC driver when both MySQL and MariaDB drivers are present
     - name: useInformationSchema
       type: boolean
-      default: "true"
+      default: true
       help:
         - Use information_schema metadata where available

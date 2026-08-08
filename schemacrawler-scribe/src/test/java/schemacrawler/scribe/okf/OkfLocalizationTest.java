@@ -91,6 +91,6 @@ public class OkfLocalizationTest {
           content, containsString("| " + msg.headerAttribute() + " | " + msg.headerValue() + " |"));
       assertThat(content, containsString("| " + msg.triggerAttributeTiming() + " |"));
     }
-    assertThat(content, containsString("type: \"table\""));
+    assertThat(content, containsString("type: table"));
   }
 }

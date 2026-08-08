@@ -1,0 +1,64 @@
+database-connector:
+  database-server-type:
+    server: snowflake
+    name: Snowflake
+  url-template: "jdbc:snowflake://${host}:${port}/"
+  allowed-driver-properties:
+    - db
+    - schema
+    - warehouse
+    - role
+    - CLIENT_SESSION_KEEP_ALIVE
+    - privateKey
+    - privateKeyFile
+    - authenticator
+    - loginTimeout
+    - networkTimeout
+    - queryTimeout
+    - tracing
+    - proxyHost
+    - proxyPort
+  standard-options:
+    host:
+      help:
+        - Snowflake account identifier (e.g. myorg-myaccount.snowflakecomputing.com)
+    port:
+      default: 443
+      help:
+        - Port number
+        - "Optional, defaults to 443"
+    database:
+      help:
+        - Snowflake database name
+  additional-options:
+    - name: db
+      type: string
+      help:
+        - Specifies the default database to use once connected.
+        - The specified database should be an existing database for which the specified
+          default role has privileges.
+        - Optional
+    - name: schema
+      type: string
+      help:
+        - Specifies the default schema to use for the specified database once connected.
+        - The specified schema should be an existing schema for which the specified
+          default role has privileges.
+        - Optional
+    - name: warehouse
+      type: string
+      help:
+        - Specifies the virtual warehouse to use once connected.
+        - The specified warehouse should be an existing warehouse for which the specified
+          default role has privileges.
+        - Optional
+    - name: role
+      type: string
+      help:
+        - Specifies the default access control role.
+        - The specified role should be an existing role that has already been assigned
+          to the specified user.
+        - Optional
+  schema-retrieval: {}
+  limit:
+    exclude-schemas: INFORMATION_SCHEMA

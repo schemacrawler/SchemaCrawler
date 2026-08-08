@@ -188,7 +188,7 @@ public class OkfTemplateCompilationTest {
         .writeTemplate("table-concept.ftl", model, resourcePath);
 
     final String content = Files.readString(tempDir.resolve(resourcePath));
-    assertThat(content, containsString("type: \"table\""));
+    assertThat(content, containsString("type: table"));
     assertThat(content, containsString("## Columns"));
     assertThat(content, containsString("id"));
     assertThat(content, containsString("title"));

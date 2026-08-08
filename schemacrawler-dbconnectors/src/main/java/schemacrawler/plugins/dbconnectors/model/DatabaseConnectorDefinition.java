@@ -24,7 +24,7 @@ import tools.jackson.databind.annotation.JsonNaming;
 public record DatabaseConnectorDefinition(
     @NonNull @JsonProperty(required = true) DatabaseServerTypeDefinition databaseServerType,
     @NonNull @JsonProperty(required = true) String urlTemplate,
-    @Nullable @JsonProperty(required = false) Set<String> allowedDriverProperties,
+    @Nullable @JsonProperty(required = false) List<String> allowedDriverProperties,
     @Nullable @JsonProperty(required = false) StandardOptionsDefinition standardOptions,
     @Nullable @JsonProperty(required = false) List<AdditionalOptionDefinition> additionalOptions,
     @Nullable @JsonProperty(required = false) SchemaRetrievalDefinition schemaRetrieval,
@@ -39,15 +39,20 @@ public record DatabaseConnectorDefinition(
         databaseServerType == null ? new DatabaseServerTypeDefinition() : databaseServerType;
     urlTemplate = isBlank(urlTemplate) ? "" : urlTemplate;
     allowedDriverProperties =
-        allowedDriverProperties == null ? Set.of() : Set.copyOf(allowedDriverProperties);
+        allowedDriverProperties == null ? List.of() : List.copyOf(allowedDriverProperties);
     standardOptions = standardOptions == null ? new StandardOptionsDefinition() : standardOptions;
     additionalOptions = additionalOptions == null ? List.of() : List.copyOf(additionalOptions);
     schemaRetrieval = schemaRetrieval == null ? new SchemaRetrievalDefinition() : schemaRetrieval;
     limit = limit == null ? new LimitDefinition() : limit;
+
+    // Validate allowedDriverProperties
+    if (!allowedDriverProperties.equals(Set.copyOf(allowedDriverProperties))) {
+      new IllegalArgumentException("Allowed driver properties list should have duplicate values");
+    }
   }
 
   @Override
   public String toString() {
-    return JsonUtility.mapper.writeValueAsString(this);
+    return JsonUtility.yamlMapper.writeValueAsString(this);
   }
 }

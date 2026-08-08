@@ -18,17 +18,17 @@ database-connector:
         - Database name
   schema-retrieval:
     retrieval-strategies:
-      tablecolumnprivileges: data_dictionary_all
+      table-column-privileges: data_dictionary_all
   additional-options:
     - name: readonly
       type: boolean
-      default: "true"
+      default: true
       help:
         - Open connection in read-only mode
         - Optional, defaults to true
     - name: hsqldb.lock_file
       type: boolean
-      default: "false"
+      default: false
       help:
         - Use a lock file for the database
         - Optional, defaults to false

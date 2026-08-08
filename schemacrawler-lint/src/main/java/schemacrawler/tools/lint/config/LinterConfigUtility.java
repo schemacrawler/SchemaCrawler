@@ -19,9 +19,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.exceptions.ConfigurationException;
 import schemacrawler.tools.command.lint.options.LintOptions;
+import schemacrawler.tools.lint.formatter.JsonUtility;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.type.CollectionType;
-import tools.jackson.dataformat.yaml.YAMLMapper;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
@@ -32,7 +32,7 @@ public final class LinterConfigUtility {
 
   public static final Logger LOGGER = Logger.getLogger(LinterConfigUtility.class.getName());
 
-  private static final ObjectMapper mapper = new YAMLMapper();
+  private static final ObjectMapper mapper = JsonUtility.yamlMapper;
 
   /**
    * Obtain linter configuration from a system property

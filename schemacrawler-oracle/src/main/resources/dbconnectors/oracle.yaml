@@ -20,16 +20,16 @@ database-connector:
         - SELECT GLOBAL_NAME FROM GLOBAL_NAME
   schema-retrieval:
     retrieval-strategies:
-      typeinfo: data_dictionary_all
+      type-info: data_dictionary_all
       tables: data_dictionary_all
-      tablecolumns: data_dictionary_all
-      primarykeys: data_dictionary_all
-      foreignkeys: data_dictionary_all
+      table-columns: data_dictionary_all
+      primary-keys: data_dictionary_all
+      foreign-keys: data_dictionary_all
       indexes: data_dictionary_all
       procedures: data_dictionary_all
-      procedureparameters: data_dictionary_all
+      procedure-parameters: data_dictionary_all
       functions: data_dictionary_all
-      functionparameters: data_dictionary_all
+      function-parameters: data_dictionary_all
   additional-options:
     - name: remarksReporting
       type: boolean

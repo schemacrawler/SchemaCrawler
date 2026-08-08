@@ -1,0 +1,33 @@
+database-connector:
+  database-server-type:
+    server: h2
+    name: H2
+  url-template: "jdbc:h2:${database}"
+  allowed-driver-properties:
+    - MODE
+    - AUTO_SERVER
+    - AUTO_RECONNECT
+    - DATABASE_TO_UPPER
+    - DATABASE_TO_LOWER
+    - DEFAULT_NULL_ORDERING
+    - TRACE_LEVEL_FILE
+    - TRACE_LEVEL_SYSTEM_OUT
+    - INIT
+    - IFEXISTS
+    - ACCESS_MODE_DATA
+    - FILE_LOCK
+  standard-options:
+    host: {}
+    port: {}
+    database:
+      help:
+        - H2 database path (for example ~/test or mem:test)
+  additional-options:
+    - name: MODE
+      type: string
+      default: REGULAR
+      help:
+        - "H2 compatibility mode (for example PostgreSQL, MySQL, Oracle)"
+  schema-retrieval: {}
+  limit:
+    exclude-schemas: INFORMATION_SCHEMA

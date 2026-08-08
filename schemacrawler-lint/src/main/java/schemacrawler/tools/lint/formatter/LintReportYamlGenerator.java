@@ -19,6 +19,6 @@ public final class LintReportYamlGenerator extends BaseLintReportJacksonGenerato
 
   @Override
   protected final YAMLMapper.Builder newMapperBuilder() {
-    return YAMLMapper.builder();
+    return JsonUtility.newYamlMapperBuilder();
   }
 }
