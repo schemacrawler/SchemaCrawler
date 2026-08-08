@@ -39,11 +39,45 @@ import schemacrawler.utility.MetaDataUtility;
 
 public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
+  private record DatabaseObjectDescription(
+      String simpleTypeName, String name, String fullName, String description, String intro) {
+
+    public DatabaseObjectDescription() {
+      this(null, null, null, null, null);
+    }
+
+    public static DatabaseObjectDescription of(final DatabaseObject databaseObject) {
+      if (databaseObject == null) {
+        return new DatabaseObjectDescription();
+      }
+      final String simpleTypeName = MetaDataUtility.getSimpleTypeName(databaseObject).toString();
+      final String name = databaseObject.getName();
+      final String fullName = databaseObject.getFullName();
+
+      final String intro;
+      final String description;
+      if (databaseObject.hasRemarks()) {
+        intro = databaseObject.getRemarks();
+        description = intro;
+      } else {
+        intro = "Description of %s %s".formatted(simpleTypeName, fullName);
+        description = "Description of " + simpleTypeName;
+      }
+
+      return new DatabaseObjectDescription(simpleTypeName, name, fullName, description, intro);
+    }
+  }
+
   private static final String TAG_NO_PRIMARY_KEY = "no_primary_key";
   private static final String TAG_SELF_REFERENCING = "self_referencing";
   private static final String TAG_HAS_TRIGGERS = "has_triggers";
   private static final String TAG_EMPTY_TABLE = "empty_table";
+
   private static final String TAG_BRIDGE_TABLE = "bridge_table";
+
+  private static void addTag(final List<String> tags, final String tag) {
+    tags.add(toSnakeCase(tag));
+  }
 
   private final OkfFrontMatterYamlUtility frontMatterYamlUtility;
 
@@ -81,7 +115,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
   }
 
   private String buildForRoutine(final Routine routine) {
-    final DatabaseObjectDescription objectDescription = databaseObjectDescription(routine);
+    final DatabaseObjectDescription objectDescription = DatabaseObjectDescription.of(routine);
 
     final List<String> tags = new ArrayList<>();
     addTag(tags, objectDescription.simpleTypeName());
@@ -104,7 +138,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
   }
 
   private String buildForTable(final Table table) {
-    final DatabaseObjectDescription objectDescription = databaseObjectDescription(table);
+    final DatabaseObjectDescription objectDescription = DatabaseObjectDescription.of(table);
 
     final List<String> tags = new ArrayList<>();
     addTag(tags, objectDescription.simpleTypeName());
@@ -153,59 +187,11 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
         okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
   }
 
-  private OkfFrontMatterRecord okfFrontMatter(
-      final DatabaseObjectDescription objectDescription,
-      final String resource,
-      final List<String> tags) {
-    return new OkfFrontMatterRecord(
-        objectDescription.simpleTypeName(),
-        objectDescription.fullName(),
-        objectDescription.description(),
-        resource,
-        tags,
-        generated(),
-        verified(),
-        OkfStatus.stable);
-  }
-
-  private GitHubPagesFrontMatterRecord gitHubPagesFrontMatter(
-      final DatabaseObjectDescription objectDescription, final boolean showMiniToc) {
-    return new GitHubPagesFrontMatterRecord(
-        objectDescription.name(), objectDescription.intro(), showMiniToc, true);
-  }
-
-  private SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter(
-      final String schema,
-      final String name,
-      final String completeType,
-      final SchemaCrawlerCountsRecord counts,
-      final String entityType) {
-    return new SchemaCrawlerFrontMatterRecord(schema, name, completeType, counts, entityType);
-  }
-
   private String completeType(final DatabaseObject databaseObject) {
     if (databaseObject instanceof final TypedObject typedObject) {
       return typedObject.getType().toString();
     }
     return null;
-  }
-
-  private DatabaseObjectDescription databaseObjectDescription(final DatabaseObject databaseObject) {
-    final String simpleTypeName = MetaDataUtility.getSimpleTypeName(databaseObject).toString();
-    final String name = databaseObject.getName();
-    final String fullName = databaseObject.getFullName();
-
-    final String intro;
-    final String description;
-    if (databaseObject.hasRemarks()) {
-      intro = databaseObject.getRemarks();
-      description = intro;
-    } else {
-      intro = "Description of %s %s".formatted(simpleTypeName, fullName);
-      description = "Description of " + simpleTypeName;
-    }
-
-    return new DatabaseObjectDescription(simpleTypeName, name, fullName, description, intro);
   }
 
   private String entityType(final Table table, final List<String> tags) {
@@ -245,9 +231,25 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     return new OkfGeneratedRecord(schemaCrawlerActor(), crawlTimestamp);
   }
 
-  private OkfVerifiedRecord verified() {
-    return OkfVerifiedRecord.of(
-        OkfVerifiedBy.machine_confirmed, schemaCrawlerActor(), Instant.now());
+  private GitHubPagesFrontMatterRecord gitHubPagesFrontMatter(
+      final DatabaseObjectDescription objectDescription, final boolean showMiniToc) {
+    return new GitHubPagesFrontMatterRecord(
+        objectDescription.name(), objectDescription.intro(), showMiniToc, true);
+  }
+
+  private OkfFrontMatterRecord okfFrontMatter(
+      final DatabaseObjectDescription objectDescription,
+      final String resource,
+      final List<String> tags) {
+    return new OkfFrontMatterRecord(
+        objectDescription.simpleTypeName(),
+        objectDescription.fullName(),
+        objectDescription.description(),
+        resource,
+        tags,
+        generated(),
+        verified(),
+        OkfStatus.stable);
   }
 
   private String resourceFor(final String kind, final String fullName) {
@@ -258,10 +260,17 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     }
   }
 
-  private static void addTag(final List<String> tags, final String tag) {
-    tags.add(toSnakeCase(tag));
+  private SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter(
+      final String schema,
+      final String name,
+      final String completeType,
+      final SchemaCrawlerCountsRecord counts,
+      final String entityType) {
+    return new SchemaCrawlerFrontMatterRecord(schema, name, completeType, counts, entityType);
   }
 
-  private record DatabaseObjectDescription(
-      String simpleTypeName, String name, String fullName, String description, String intro) {}
+  private OkfVerifiedRecord verified() {
+    return OkfVerifiedRecord.of(
+        OkfVerifiedBy.machine_confirmed, schemaCrawlerActor(), Instant.now());
+  }
 }
