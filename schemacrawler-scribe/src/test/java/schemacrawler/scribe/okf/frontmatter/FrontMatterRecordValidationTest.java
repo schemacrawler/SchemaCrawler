@@ -33,6 +33,18 @@ public class FrontMatterRecordValidationTest {
     assertThrows(
         IllegalArgumentException.class,
         () -> new OkfVerifiedRecord(" ", parse("2026-06-25T09:00:00Z")));
+    assertDoesNotThrow(
+        () ->
+            OkfVerifiedRecord.of(
+                OkfVerifiedBy.machine_confirmed,
+                SchemaCrawlerActor.schemaCrawlerActor(),
+                parse("2026-06-25T09:00:00Z")));
+  }
+
+  @Test
+  public void verifiedByRoundTripsFromString() {
+    assertThat(OkfVerifiedBy.fromString("machine-confirmed"), is(OkfVerifiedBy.machine_confirmed));
+    assertThrows(IllegalArgumentException.class, () -> OkfVerifiedBy.fromString("bogus"));
   }
 
   @Test

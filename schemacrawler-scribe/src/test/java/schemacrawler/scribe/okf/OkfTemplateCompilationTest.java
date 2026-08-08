@@ -47,7 +47,6 @@ public class OkfTemplateCompilationTest {
     model.put("support", support);
     model.put("msg", support.messages());
     model.put("resourcePath", resourcePath);
-    model.put("timestamp", "2026-01-01T00:00:00Z");
     return model;
   }
 

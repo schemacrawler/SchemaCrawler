@@ -107,7 +107,7 @@ public class OkfConceptWriterTableTest {
     assertThat(parsed.get("counts"), is(notNullValue()));
     assertThat(
         JsonUtility.yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class),
-        is(SchemaCrawlerActor.schemaCrawlerActor()));
+        is("machine-confirmed:" + SchemaCrawlerActor.schemaCrawlerActor()));
     assertThat(parsed.get("timestamp"), is(nullValue()));
     assertThat(parsed.get("runId"), is(nullValue()));
     assertThat(parsed.get("generatedBy"), is(nullValue()));

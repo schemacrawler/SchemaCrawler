@@ -28,6 +28,7 @@ import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfGeneratedRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfStatus;
+import schemacrawler.scribe.okf.frontmatter.OkfVerifiedBy;
 import schemacrawler.scribe.okf.frontmatter.OkfVerifiedRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerCountsRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
@@ -228,7 +229,8 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
   }
 
   private OkfVerifiedRecord verified() {
-    return new OkfVerifiedRecord(schemaCrawlerActor(), Instant.now());
+    return OkfVerifiedRecord.of(
+        OkfVerifiedBy.machine_confirmed, schemaCrawlerActor(), Instant.now());
   }
 
   private record DatabaseObjectDescription(

@@ -112,7 +112,7 @@ public class ScribeSupportTest {
         is(SchemaCrawlerActor.schemaCrawlerActor()));
     assertThat(
         yamlMapper.treeToValue(tableFrontMatter.get("verified").get("by"), String.class),
-        is(SchemaCrawlerActor.schemaCrawlerActor()));
+        is("machine-confirmed:" + SchemaCrawlerActor.schemaCrawlerActor()));
     assertThat(tableFrontMatter.get("timestamp"), is(nullValue()));
     assertThat(tableFrontMatter.get("runId"), is(nullValue()));
     assertThat(tableFrontMatter.get("generatedBy"), is(nullValue()));

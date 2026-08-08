@@ -70,7 +70,6 @@ public final class OkfConceptPageWriter {
     model.put("msg", support.messages());
     model.put("frontMatter", frontMatter);
     model.put("resourcePath", resourcePath);
-    model.put("timestamp", support.crawlTimestamp().toString());
     return model;
   }
 }

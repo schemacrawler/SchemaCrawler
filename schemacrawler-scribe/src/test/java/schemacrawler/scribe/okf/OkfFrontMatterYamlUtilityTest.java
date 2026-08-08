@@ -21,6 +21,7 @@ import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfGeneratedRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfStatus;
+import schemacrawler.scribe.okf.frontmatter.OkfVerifiedBy;
 import schemacrawler.scribe.okf.frontmatter.OkfVerifiedRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerCountsRecord;
@@ -41,7 +42,8 @@ public class OkfFrontMatterYamlUtilityTest {
             null,
             List.of("table", "hasTriggers"),
             new OkfGeneratedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
-            new OkfVerifiedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
+            OkfVerifiedRecord.of(
+                OkfVerifiedBy.machine_confirmed, actor, Instant.parse("2026-01-01T00:00:00Z")),
             OkfStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord("books", "Books table", true, true);
@@ -63,7 +65,9 @@ public class OkfFrontMatterYamlUtilityTest {
     assertThat(parsed.get("verified"), is(notNullValue()));
     assertThat(parsed.get("counts"), is(notNullValue()));
     assertThat(parsed.get("counts").get("rowCount"), is(nullValue()));
-    assertThat(yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class), is(actor));
+    assertThat(
+        yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class),
+        is("machine-confirmed:" + actor));
     assertThat(parsed.get("showMiniToc").asBoolean(), is(true));
     assertThat(parsed.get("allowTitleToDifferFromFilename").asBoolean(), is(true));
   }
@@ -80,7 +84,8 @@ public class OkfFrontMatterYamlUtilityTest {
             null,
             List.of(),
             new OkfGeneratedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
-            new OkfVerifiedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
+            OkfVerifiedRecord.of(
+                OkfVerifiedBy.machine_confirmed, actor, Instant.parse("2026-01-01T00:00:00Z")),
             OkfStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord("Report", "Report", false, true);
