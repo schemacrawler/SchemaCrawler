@@ -97,11 +97,17 @@ public class ScribeSupportTest {
     final JsonNode routineFrontMatter = yamlMapper.readTree(frontMatter.frontMatter(routine));
 
     final String expectedTableResource =
-        "catalog://tables/"
-            + URLEncoder.encode(table.getFullName(), StandardCharsets.UTF_8).replace("+", "%20");
+        "catalog://tables/%s/%s"
+            .formatted(
+                URLEncoder.encode(table.getSchema().toString(), StandardCharsets.UTF_8)
+                    .replace("+", "%20"),
+                URLEncoder.encode(table.getName(), StandardCharsets.UTF_8).replace("+", "%20"));
     final String expectedRoutineResource =
-        "catalog://routines/"
-            + URLEncoder.encode(routine.getFullName(), StandardCharsets.UTF_8).replace("+", "%20");
+        "catalog://routines/%s/%s"
+            .formatted(
+                URLEncoder.encode(routine.getSchema().toString(), StandardCharsets.UTF_8)
+                    .replace("+", "%20"),
+                URLEncoder.encode(routine.getName(), StandardCharsets.UTF_8).replace("+", "%20"));
 
     assertThat(tableFrontMatter.get("resource").asString(), is(expectedTableResource));
     assertThat(routineFrontMatter.get("resource").asString(), is(expectedRoutineResource));

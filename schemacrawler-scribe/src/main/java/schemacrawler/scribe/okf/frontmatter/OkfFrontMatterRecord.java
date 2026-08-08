@@ -12,6 +12,7 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 import static us.fatehi.utility.Utility.toSnakeCase;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
+import java.net.URI;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +24,7 @@ public record OkfFrontMatterRecord(
     String type,
     String title,
     String description,
-    String resource,
+    URI resource,
     List<String> tags,
     OkfGeneratedRecord generated,
     OkfVerifiedRecord verified,
@@ -33,7 +34,6 @@ public record OkfFrontMatterRecord(
     type = requireNotBlank(trimToEmpty(type), "No type provided");
     title = requireNotBlank(trimToEmpty(title), "No title provided");
     description = trimToEmpty(description);
-    resource = trimToEmpty(resource);
     tags = normalizeTags(tags);
     verified = requireNonNull(verified, "No verified front-matter provided");
     status = status == null ? OkfStatus.stable : status;

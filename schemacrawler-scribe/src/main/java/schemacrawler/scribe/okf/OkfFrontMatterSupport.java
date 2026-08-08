@@ -40,10 +40,16 @@ import schemacrawler.utility.MetaDataUtility;
 public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
   private record DatabaseObjectDescription(
-      String simpleTypeName, String name, String fullName, String description, String intro) {
+      String simpleTypeName,
+      String completeType,
+      String name,
+      String fullName,
+      String description,
+      String intro,
+      URI resource) {
 
     public DatabaseObjectDescription() {
-      this(null, null, null, null, null);
+      this(null, null, null, null, null, null, null);
     }
 
     public static DatabaseObjectDescription of(final DatabaseObject databaseObject) {
@@ -64,7 +70,31 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
         description = "Description of " + simpleTypeName;
       }
 
-      return new DatabaseObjectDescription(simpleTypeName, name, fullName, description, intro);
+      final String completeType;
+      if (databaseObject instanceof final TypedObject typedObject) {
+        completeType = typedObject.getType().toString();
+      } else {
+        completeType = null;
+      }
+
+      URI resource;
+      try {
+        final String context;
+        if (databaseObject instanceof Table) {
+          context = "tables";
+        } else if (databaseObject instanceof Routine) {
+          context = "routines";
+        } else {
+          context = "unknowns";
+        }
+        final String path = "/" + String.join("/", databaseObject.getSchema().toString(), name);
+        resource = new URI("catalog", context, path, null);
+      } catch (final URISyntaxException e) {
+        resource = null;
+      }
+
+      return new DatabaseObjectDescription(
+          simpleTypeName, completeType, name, fullName, description, intro, resource);
     }
   }
 
@@ -120,15 +150,14 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     final List<String> tags = new ArrayList<>();
     addTag(tags, objectDescription.simpleTypeName());
 
-    final OkfFrontMatterRecord okfFrontMatter =
-        okfFrontMatter(objectDescription, resourceFor("routines", routine.getFullName()), tags);
+    final OkfFrontMatterRecord okfFrontMatter = okfFrontMatter(objectDescription, tags);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         gitHubPagesFrontMatter(objectDescription, true);
     final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
         schemaCrawlerFrontMatter(
             routine.getSchema().getFullName(),
             objectDescription.name(),
-            completeType(routine),
+            objectDescription.completeType(),
             new SchemaCrawlerCountsRecord(
                 null, null, null, null, null, routine.getParameters().size()),
             null);
@@ -165,15 +194,14 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
     final String entityType = entityType(table, tags);
 
-    final OkfFrontMatterRecord okfFrontMatter =
-        okfFrontMatter(objectDescription, resourceFor("tables", table.getFullName()), tags);
+    final OkfFrontMatterRecord okfFrontMatter = okfFrontMatter(objectDescription, tags);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         gitHubPagesFrontMatter(objectDescription, true);
     final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
         schemaCrawlerFrontMatter(
             table.getSchema().getFullName(),
             objectDescription.name(),
-            completeType(table),
+            objectDescription.completeType(),
             new SchemaCrawlerCountsRecord(
                 table.getColumns().size(),
                 table.getReferencedTables().size(),
@@ -185,13 +213,6 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
     return frontMatterYamlUtility.toYamlString(
         okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
-  }
-
-  private String completeType(final DatabaseObject databaseObject) {
-    if (databaseObject instanceof final TypedObject typedObject) {
-      return typedObject.getType().toString();
-    }
-    return null;
   }
 
   private String entityType(final Table table, final List<String> tags) {
@@ -238,26 +259,16 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
   }
 
   private OkfFrontMatterRecord okfFrontMatter(
-      final DatabaseObjectDescription objectDescription,
-      final String resource,
-      final List<String> tags) {
+      final DatabaseObjectDescription objectDescription, final List<String> tags) {
     return new OkfFrontMatterRecord(
         objectDescription.simpleTypeName(),
         objectDescription.fullName(),
         objectDescription.description(),
-        resource,
+        objectDescription.resource,
         tags,
         generated(),
         verified(),
         OkfStatus.stable);
-  }
-
-  private String resourceFor(final String kind, final String fullName) {
-    try {
-      return new URI("catalog", kind, "/" + fullName, null).toString();
-    } catch (final URISyntaxException e) {
-      throw new IllegalArgumentException("Unable to create resource URI", e);
-    }
   }
 
   private SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter(
