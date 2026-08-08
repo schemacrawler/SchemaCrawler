@@ -7,6 +7,7 @@
  */
 package schemacrawler.scribe.okf.frontmatter;
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
 import tools.jackson.databind.PropertyNamingStrategies.LowerCamelCaseStrategy;
@@ -19,5 +20,16 @@ public record GitHubPagesFrontMatterRecord(
   public GitHubPagesFrontMatterRecord {
     shortTitle = trimToEmpty(shortTitle);
     intro = trimToEmpty(intro);
+  }
+
+  public GitHubPagesFrontMatterRecord(
+      final DatabaseObjectDescription objectDescription,
+      final boolean showMiniToc,
+      final boolean allowTitleToDifferFromFilename) {
+    this(
+        requireNonNull(objectDescription, "No database object description provided").name(),
+        objectDescription.intro(),
+        showMiniToc,
+        allowTitleToDifferFromFilename);
   }
 }

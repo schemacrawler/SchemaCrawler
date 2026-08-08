@@ -7,6 +7,7 @@
  */
 package schemacrawler.scribe.okf.frontmatter;
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
 import tools.jackson.databind.PropertyNamingStrategies;
@@ -25,5 +26,17 @@ public record SchemaCrawlerFrontMatterRecord(
     name = trimToEmpty(name);
     completeType = trimToEmpty(completeType);
     entityType = trimToEmpty(entityType);
+  }
+
+  public SchemaCrawlerFrontMatterRecord(
+      final DatabaseObjectDescription objectDescription,
+      final SchemaCrawlerCountsRecord counts,
+      final String entityType) {
+    this(
+        requireNonNull(objectDescription, "No database object description provided").schemaName(),
+        objectDescription.name(),
+        objectDescription.completeType(),
+        counts,
+        entityType);
   }
 }

@@ -36,6 +36,10 @@ import schemacrawler.tools.state.AbstractExecutionState;
 
 public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
+  private static void addTag(final List<String> tags, final String tag) {
+    tags.add(toSnakeCase(tag));
+  }
+
   private final OkfFrontMatterYamlUtility frontMatterYamlUtility;
 
   public OkfFrontMatterSupport() {
@@ -43,11 +47,59 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
   }
 
   public String frontMatter(final Routine routine) {
-    return buildForRoutine(routine);
+    final DatabaseObjectDescription objectDescription = DatabaseObjectDescription.of(routine);
+
+    final List<String> tags = new ArrayList<>();
+    addTag(tags, objectDescription.simpleTypeName());
+
+    final OkfFrontMatterRecord okfFrontMatter =
+        new OkfFrontMatterRecord(
+            objectDescription, tags, generated(), verified(), OkfStatus.stable);
+    final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
+        new GitHubPagesFrontMatterRecord(objectDescription, true, true);
+    final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
+        new SchemaCrawlerFrontMatterRecord(
+            objectDescription,
+            new SchemaCrawlerCountsRecord(
+                null, null, null, null, null, routine.getParameters().size()),
+            null);
+
+    return frontMatterYamlUtility.toYamlString(
+        okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
   }
 
   public String frontMatter(final Table table) {
-    return buildForTable(table);
+    final DatabaseObjectDescription objectDescription = DatabaseObjectDescription.of(table);
+
+    final List<String> tags = new ArrayList<>();
+    addTag(tags, objectDescription.simpleTypeName());
+    final TableAttributesRecord tableAttributes =
+        TableAttributesRecord.of(table, isBridgeTable(table));
+    tags.addAll(frontMatterYamlUtility.toTags(tableAttributes));
+
+    final String entityType = entityType(table, tags);
+    final Long rowCount =
+        TableRowCountsUtility.hasRowCount(table) ? TableRowCountsUtility.getRowCount(table) : null;
+
+    final OkfFrontMatterRecord okfFrontMatter =
+        new OkfFrontMatterRecord(
+            objectDescription, tags, generated(), verified(), OkfStatus.stable);
+    final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
+        new GitHubPagesFrontMatterRecord(objectDescription, true, true);
+    final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
+        new SchemaCrawlerFrontMatterRecord(
+            objectDescription,
+            new SchemaCrawlerCountsRecord(
+                table.getColumns().size(),
+                table.getReferencedTables().size(),
+                table.getIndexes().size(),
+                table.getTriggers().size(),
+                rowCount,
+                null),
+            entityType);
+
+    return frontMatterYamlUtility.toYamlString(
+        okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
   }
 
   public String reportFrontMatter(final String providedTitle, final String providedDescription) {
@@ -71,62 +123,6 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     return frontMatterYamlUtility.toYamlString(okfFrontMatter, gitHubPagesFrontMatter, null);
   }
 
-  private String buildForRoutine(final Routine routine) {
-    final DatabaseObjectDescription objectDescription = DatabaseObjectDescription.of(routine);
-
-    final List<String> tags = new ArrayList<>();
-    addTag(tags, objectDescription.simpleTypeName());
-
-    final OkfFrontMatterRecord okfFrontMatter = okfFrontMatter(objectDescription, tags);
-    final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
-        gitHubPagesFrontMatter(objectDescription, true);
-    final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
-        schemaCrawlerFrontMatter(
-            routine.getSchema().getFullName(),
-            objectDescription.name(),
-            objectDescription.completeType(),
-            new SchemaCrawlerCountsRecord(
-                null, null, null, null, null, routine.getParameters().size()),
-            null);
-
-    return frontMatterYamlUtility.toYamlString(
-        okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
-  }
-
-  private String buildForTable(final Table table) {
-    final DatabaseObjectDescription objectDescription = DatabaseObjectDescription.of(table);
-
-    final List<String> tags = new ArrayList<>();
-    addTag(tags, objectDescription.simpleTypeName());
-    final TableAttributesRecord tableAttributes =
-        TableAttributesRecord.of(table, isBridgeTable(table));
-    tags.addAll(frontMatterYamlUtility.toTags(tableAttributes));
-
-    final String entityType = entityType(table, tags);
-    final Long rowCount =
-        TableRowCountsUtility.hasRowCount(table) ? TableRowCountsUtility.getRowCount(table) : null;
-
-    final OkfFrontMatterRecord okfFrontMatter = okfFrontMatter(objectDescription, tags);
-    final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
-        gitHubPagesFrontMatter(objectDescription, true);
-    final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
-        schemaCrawlerFrontMatter(
-            table.getSchema().getFullName(),
-            objectDescription.name(),
-            objectDescription.completeType(),
-            new SchemaCrawlerCountsRecord(
-                table.getColumns().size(),
-                table.getReferencedTables().size(),
-                table.getIndexes().size(),
-                table.getTriggers().size(),
-                rowCount,
-                null),
-            entityType);
-
-    return frontMatterYamlUtility.toYamlString(
-        okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
-  }
-
   private String entityType(final Table table, final List<String> tags) {
     if (!hasERModel()) {
       return null;
@@ -146,14 +142,6 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     return null;
   }
 
-  private boolean isBridgeTable(final Table table) {
-    if (!hasERModel()) {
-      return false;
-    }
-    final ERModel model = getERModel();
-    return model.lookupByBridgeTable(table).isPresent();
-  }
-
   private OkfGeneratedRecord generated() {
     if (!hasCatalog()) {
       return null;
@@ -165,40 +153,16 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     return new OkfGeneratedRecord(schemaCrawlerActor(), crawlTimestamp);
   }
 
-  private GitHubPagesFrontMatterRecord gitHubPagesFrontMatter(
-      final DatabaseObjectDescription objectDescription, final boolean showMiniToc) {
-    return new GitHubPagesFrontMatterRecord(
-        objectDescription.name(), objectDescription.intro(), showMiniToc, true);
-  }
-
-  private OkfFrontMatterRecord okfFrontMatter(
-      final DatabaseObjectDescription objectDescription, final List<String> tags) {
-    return new OkfFrontMatterRecord(
-        objectDescription.simpleTypeName(),
-        objectDescription.fullName(),
-        objectDescription.description(),
-        objectDescription.resource(),
-        tags,
-        generated(),
-        verified(),
-        OkfStatus.stable);
-  }
-
-  private SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter(
-      final String schema,
-      final String name,
-      final String completeType,
-      final SchemaCrawlerCountsRecord counts,
-      final String entityType) {
-    return new SchemaCrawlerFrontMatterRecord(schema, name, completeType, counts, entityType);
+  private boolean isBridgeTable(final Table table) {
+    if (!hasERModel()) {
+      return false;
+    }
+    final ERModel model = getERModel();
+    return model.lookupByBridgeTable(table).isPresent();
   }
 
   private OkfVerifiedRecord verified() {
     return OkfVerifiedRecord.of(
         OkfVerifiedBy.machine_confirmed, schemaCrawlerActor(), Instant.now());
-  }
-
-  private static void addTag(final List<String> tags, final String tag) {
-    tags.add(toSnakeCase(tag));
   }
 }

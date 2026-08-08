@@ -18,6 +18,7 @@ import schemacrawler.utility.MetaDataUtility;
 public record DatabaseObjectDescription(
     String simpleTypeName,
     String completeType,
+    String schemaName,
     String name,
     String fullName,
     String description,
@@ -25,7 +26,7 @@ public record DatabaseObjectDescription(
     URI resource) {
 
   public DatabaseObjectDescription() {
-    this(null, null, null, null, null, null, null);
+    this(null, null, null, null, null, null, null, null);
   }
 
   public static DatabaseObjectDescription of(final DatabaseObject databaseObject) {
@@ -33,6 +34,7 @@ public record DatabaseObjectDescription(
       return new DatabaseObjectDescription();
     }
     final String simpleTypeName = MetaDataUtility.getSimpleTypeName(databaseObject).toString();
+    final String schemaName = databaseObject.getSchema().getFullName();
     final String name = databaseObject.getName();
     final String fullName = databaseObject.getFullName();
 
@@ -70,6 +72,6 @@ public record DatabaseObjectDescription(
     }
 
     return new DatabaseObjectDescription(
-        simpleTypeName, completeType, name, fullName, description, intro, resource);
+        simpleTypeName, completeType, schemaName, name, fullName, description, intro, resource);
   }
 }
