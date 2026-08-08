@@ -7,62 +7,95 @@
  */
 package schemacrawler.scribe.okf;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.scribe.renderer.JsonUtility.yamlMapper;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-
-import static java.util.Objects.requireNonNull;
-
 import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
 
 final class OkfFrontMatterYamlUtility {
 
-  String toYaml(
+  String toYamlString(
       final OkfFrontMatterRecord okfFrontMatter,
       final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter,
       final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter) {
     requireNonNull(okfFrontMatter, "No OKF front-matter provided");
     requireNonNull(gitHubPagesFrontMatter, "No GitHub front-matter provided");
 
-    final Map<String, Object> frontMatter = new LinkedHashMap<>();
+    final LinkedHashMap<String, Object> frontMatter = new LinkedHashMap<>();
 
-    putIfPresent(frontMatter, "type", okfFrontMatter.type());
-    putIfPresent(frontMatter, "title", okfFrontMatter.title());
-    putIfPresent(frontMatter, "description", okfFrontMatter.description());
-    putIfPresent(frontMatter, "resource", okfFrontMatter.resource());
-    putIfPresent(frontMatter, "tags", okfFrontMatter.tags());
-    putIfPresent(frontMatter, "generated", okfFrontMatter.generated());
-    putIfPresent(frontMatter, "verified", okfFrontMatter.verified());
-    putIfPresent(frontMatter, "status", okfFrontMatter.status());
-
+    mergeInto(frontMatter, toMap(okfFrontMatter));
+    mergeInto(frontMatter, toMap(gitHubPagesFrontMatter));
     if (schemaCrawlerFrontMatter != null) {
-      putIfPresent(frontMatter, "schema", schemaCrawlerFrontMatter.schema());
-      putIfPresent(frontMatter, "name", schemaCrawlerFrontMatter.name());
-      putIfPresent(frontMatter, "completeType", schemaCrawlerFrontMatter.completeType());
-      putIfPresent(frontMatter, "counts", schemaCrawlerFrontMatter.counts());
-      putIfPresent(frontMatter, "entityType", schemaCrawlerFrontMatter.entityType());
+      mergeInto(frontMatter, toMap(schemaCrawlerFrontMatter));
     }
-
-    putIfPresent(frontMatter, "shortTitle", gitHubPagesFrontMatter.shortTitle());
-    putIfPresent(frontMatter, "intro", gitHubPagesFrontMatter.intro());
-    frontMatter.put("showMiniToc", gitHubPagesFrontMatter.showMiniToc());
-    frontMatter.put(
-        "allowTitleToDifferFromFilename", gitHubPagesFrontMatter.allowTitleToDifferFromFilename());
 
     return yamlMapper.writeValueAsString(frontMatter);
   }
 
-  private static void putIfPresent(
-      final Map<String, Object> frontMatter, final String key, final Object value) {
-    if ((value == null) || (value instanceof final String stringValue && stringValue.isBlank())) {
-      return;
+  @SuppressWarnings("unchecked")
+  private static void mergeInto(
+      final Map<String, Object> target, final Map<String, Object> source) {
+    for (final Map.Entry<String, Object> entry : source.entrySet()) {
+      final Object normalizedValue = normalize(entry.getValue());
+      if (normalizedValue == null) {
+        continue;
+      }
+
+      final String key = entry.getKey();
+      final Object existingValue = target.get(key);
+      if (existingValue instanceof final Map<?, ?> existingMap
+          && normalizedValue instanceof final Map<?, ?> incomingMap) {
+        final LinkedHashMap<String, Object> mergedMap = new LinkedHashMap<>();
+        mergeInto(mergedMap, (Map<String, Object>) existingMap);
+        mergeInto(mergedMap, (Map<String, Object>) incomingMap);
+        if (!mergedMap.isEmpty()) {
+          target.put(key, mergedMap);
+        }
+      } else {
+        target.put(key, normalizedValue);
+      }
     }
-    if ((value instanceof final Iterable<?> iterableValue && !iterableValue.iterator().hasNext()) || (value instanceof final Map<?, ?> mapValue && mapValue.isEmpty())) {
-      return;
+  }
+
+  private static Object normalize(final Object value) {
+    if (value == null) {
+      return null;
     }
-    frontMatter.put(key, value);
+    if (value instanceof final String stringValue) {
+      return stringValue.isBlank() ? null : stringValue;
+    }
+    if (value instanceof final Map<?, ?> mapValue) {
+      final LinkedHashMap<String, Object> normalizedMap = new LinkedHashMap<>();
+      for (final Map.Entry<?, ?> entry : mapValue.entrySet()) {
+        if (entry.getKey() == null) {
+          continue;
+        }
+        final Object normalizedEntryValue = normalize(entry.getValue());
+        if (normalizedEntryValue != null) {
+          normalizedMap.put(String.valueOf(entry.getKey()), normalizedEntryValue);
+        }
+      }
+      return normalizedMap.isEmpty() ? null : normalizedMap;
+    }
+    if (value instanceof final Iterable<?> iterableValue) {
+      final List<Object> normalizedValues = new java.util.ArrayList<>();
+      for (final Object item : iterableValue) {
+        final Object normalizedItem = normalize(item);
+        if (normalizedItem != null) {
+          normalizedValues.add(normalizedItem);
+        }
+      }
+      return normalizedValues.isEmpty() ? null : normalizedValues;
+    }
+    return value;
+  }
+
+  private static LinkedHashMap<String, Object> toMap(final Object value) {
+    return yamlMapper.convertValue(value, new tools.jackson.core.type.TypeReference<>() {});
   }
 }

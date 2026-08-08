@@ -54,7 +54,7 @@ public class OkfFrontMatterYamlUtilityTest {
             null);
 
     final String yaml =
-        utility.toYaml(okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
+        utility.toYamlString(okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
     final JsonNode parsed = yamlMapper.readTree(yaml);
 
     assertThat(yamlMapper.treeToValue(parsed.get("type"), String.class), is("table"));
@@ -66,6 +66,32 @@ public class OkfFrontMatterYamlUtilityTest {
     assertThat(yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class), is(actor));
     assertThat(parsed.get("showMiniToc").asBoolean(), is(true));
     assertThat(parsed.get("allowTitleToDifferFromFilename").asBoolean(), is(true));
+  }
+
+  @Test
+  public void omitsSchemaCrawlerSectionWhenNotProvided() throws Exception {
+    final OkfFrontMatterYamlUtility utility = new OkfFrontMatterYamlUtility();
+    final String actor = SchemaCrawlerActor.schemaCrawlerActor();
+    final OkfFrontMatterRecord okfFrontMatter =
+        new OkfFrontMatterRecord(
+            "report",
+            "Report",
+            "Report",
+            null,
+            List.of(),
+            new OkfGeneratedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
+            new OkfVerifiedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
+            OkfStatus.stable);
+    final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
+        new GitHubPagesFrontMatterRecord("Report", "Report", false, true);
+
+    final JsonNode parsed =
+        yamlMapper.readTree(utility.toYamlString(okfFrontMatter, gitHubPagesFrontMatter, null));
+
+    assertThat(parsed.get("schema"), is(nullValue()));
+    assertThat(parsed.get("name"), is(nullValue()));
+    assertThat(parsed.get("counts"), is(nullValue()));
+    assertThat(parsed.get("entityType"), is(nullValue()));
   }
 
   @Test

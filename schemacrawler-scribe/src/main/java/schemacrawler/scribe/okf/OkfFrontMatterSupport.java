@@ -68,7 +68,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord(title, description, false, true);
 
-    return frontMatterYamlUtility.toYaml(okfFrontMatter, gitHubPagesFrontMatter, null);
+    return frontMatterYamlUtility.toYamlString(okfFrontMatter, gitHubPagesFrontMatter, null);
   }
 
   private String buildForRoutine(final Routine routine) {
@@ -100,7 +100,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
             counts,
             null);
 
-    return frontMatterYamlUtility.toYaml(
+    return frontMatterYamlUtility.toYamlString(
         okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
   }
 
@@ -161,7 +161,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
             counts,
             entityType);
 
-    return frontMatterYamlUtility.toYaml(
+    return frontMatterYamlUtility.toYamlString(
         okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
   }
 
