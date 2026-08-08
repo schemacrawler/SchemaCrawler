@@ -34,7 +34,7 @@ import schemacrawler.scribe.okf.frontmatter.OkfVerifiedBy;
 import schemacrawler.scribe.okf.frontmatter.OkfVerifiedRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerCountsRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.TableSpecialAttributesRecord;
+import schemacrawler.scribe.okf.frontmatter.TableAttributesRecord;
 import schemacrawler.tools.state.AbstractExecutionState;
 import schemacrawler.utility.MetaDataUtility;
 
@@ -161,9 +161,9 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
     final List<String> tags = new ArrayList<>();
     addTag(tags, objectDescription.simpleTypeName());
-    final TableSpecialAttributesRecord specialAttributes =
-        TableSpecialAttributesRecord.of(table, isBridgeTable(table));
-    tags.addAll(frontMatterYamlUtility.toSnakeCaseList(specialAttributes));
+    final TableAttributesRecord tableAttributes =
+        TableAttributesRecord.of(table, isBridgeTable(table));
+    tags.addAll(frontMatterYamlUtility.toTags(tableAttributes));
 
     final String entityType = entityType(table, tags);
     final Long rowCount =

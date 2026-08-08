@@ -15,42 +15,12 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
 
 final class OkfFrontMatterYamlUtility {
-
-  String toYamlString(
-      final OkfFrontMatterRecord okfFrontMatter,
-      final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter,
-      final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter) {
-    requireNonNull(okfFrontMatter, "No OKF front-matter provided");
-    requireNonNull(gitHubPagesFrontMatter, "No GitHub front-matter provided");
-
-    final LinkedHashMap<String, Object> frontMatter = new LinkedHashMap<>();
-
-    mergeInto(frontMatter, toMap(okfFrontMatter));
-    mergeInto(frontMatter, toMap(gitHubPagesFrontMatter));
-    if (schemaCrawlerFrontMatter != null) {
-      mergeInto(frontMatter, toMap(schemaCrawlerFrontMatter));
-    }
-
-    return yamlMapper.writeValueAsString(frontMatter);
-  }
-
-  List<String> toSnakeCaseList(final Object value) {
-    requireNonNull(value, "No value provided");
-
-    final LinkedHashMap<String, Object> map = toMap(value);
-    final List<String> values = new ArrayList<>();
-    for (final Object item : map.values()) {
-      if (item instanceof final String stringValue && !stringValue.isBlank()) {
-        values.add(toSnakeCase(stringValue));
-      }
-    }
-    return List.copyOf(values);
-  }
 
   @SuppressWarnings("unchecked")
   private static void mergeInto(
@@ -112,5 +82,36 @@ final class OkfFrontMatterYamlUtility {
 
   private static LinkedHashMap<String, Object> toMap(final Object value) {
     return yamlMapper.convertValue(value, new tools.jackson.core.type.TypeReference<>() {});
+  }
+
+  List<String> toTags(final Object value) {
+    requireNonNull(value, "No value provided");
+
+    final List<String> tags = new ArrayList<>();
+    final LinkedHashMap<String, Object> map = toMap(value);
+    for (final Entry<String, Object> entry : map.entrySet()) {
+      if ((entry.getValue() instanceof final Boolean booleanValue) && booleanValue) {
+        tags.add(toSnakeCase(entry.getKey()));
+      }
+    }
+    return List.copyOf(tags);
+  }
+
+  String toYamlString(
+      final OkfFrontMatterRecord okfFrontMatter,
+      final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter,
+      final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter) {
+    requireNonNull(okfFrontMatter, "No OKF front-matter provided");
+    requireNonNull(gitHubPagesFrontMatter, "No GitHub front-matter provided");
+
+    final LinkedHashMap<String, Object> frontMatter = new LinkedHashMap<>();
+
+    mergeInto(frontMatter, toMap(okfFrontMatter));
+    mergeInto(frontMatter, toMap(gitHubPagesFrontMatter));
+    if (schemaCrawlerFrontMatter != null) {
+      mergeInto(frontMatter, toMap(schemaCrawlerFrontMatter));
+    }
+
+    return yamlMapper.writeValueAsString(frontMatter);
   }
 }

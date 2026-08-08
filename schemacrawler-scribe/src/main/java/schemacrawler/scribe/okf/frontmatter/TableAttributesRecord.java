@@ -15,7 +15,7 @@ import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record TableSpecialAttributesRecord(
+public record TableAttributesRecord(
     Boolean noPrimaryKey,
     Boolean selfReferencing,
     Boolean hasTriggers,
@@ -25,11 +25,11 @@ public record TableSpecialAttributesRecord(
   private static final Function<Boolean, Boolean> makeTrueOrNull =
       booleanValue -> (booleanValue == null || !booleanValue) ? null : Boolean.TRUE;
 
-  public TableSpecialAttributesRecord() {
+  public TableAttributesRecord() {
     this(null, null, null, null, null);
   }
 
-  public TableSpecialAttributesRecord {
+  public TableAttributesRecord {
     noPrimaryKey = makeTrueOrNull.apply(noPrimaryKey);
     selfReferencing = makeTrueOrNull.apply(selfReferencing);
     hasTriggers = makeTrueOrNull.apply(hasTriggers);
@@ -37,11 +37,11 @@ public record TableSpecialAttributesRecord(
     bridgeTable = makeTrueOrNull.apply(bridgeTable);
   }
 
-  public static TableSpecialAttributesRecord of(final Table table, final boolean isBridgeTable) {
+  public static TableAttributesRecord of(final Table table, final boolean isBridgeTable) {
     if (table == null) {
-      return new TableSpecialAttributesRecord();
+      return new TableAttributesRecord();
     }
-    return new TableSpecialAttributesRecord(
+    return new TableAttributesRecord(
         table.hasPrimaryKey(),
         table.isSelfReferencing(),
         table.hasTriggers(),
