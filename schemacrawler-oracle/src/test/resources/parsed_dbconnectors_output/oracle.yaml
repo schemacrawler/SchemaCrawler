@@ -7,45 +7,46 @@ database-connector:
     host:
       help:
         - Host name
-        - Optional, defaults to localhost
+        - "Optional, defaults to localhost"
     port:
+      default: 1521
       help:
         - Port number
-        - Optional, defaults to 1521
-      default: 1521
+        - "Optional, defaults to 1521"
     database:
       help:
         - Oracle Service Name
         - You can use a query similar to the one below to find it.
         - SELECT GLOBAL_NAME FROM GLOBAL_NAME
-  schema-retrieval:
-    retrieval-strategies:
-      type-info: data_dictionary_all
-      tables: data_dictionary_all
-      table-columns: data_dictionary_all
-      primary-keys: data_dictionary_all
-      foreign-keys: data_dictionary_all
-      indexes: data_dictionary_all
-      procedures: data_dictionary_all
-      procedure-parameters: data_dictionary_all
-      functions: data_dictionary_all
-      function-parameters: data_dictionary_all
   additional-options:
     - name: remarksReporting
       type: boolean
       default: true
       help:
         - Report REMARKS for tables and columns
-        - Optional, defaults to true
+        - "Optional, defaults to true"
     - name: restrictGetTables
       type: boolean
       default: true
       help:
         - Restrict getTables() to accessible objects
-        - Optional, defaults to true
+        - "Optional, defaults to true"
     - name: useFetchSizeWithLongColumn
       type: boolean
       default: true
       help:
         - Use fetch size hint when LONG columns are present
-        - Optional, defaults to true
+        - "Optional, defaults to true"
+  schema-retrieval:
+    retrieval-strategies:
+      foreign-keys: data-dictionary-all
+      function-parameters: data-dictionary-all
+      functions: data-dictionary-all
+      indexes: data-dictionary-all
+      primary-keys: data-dictionary-all
+      procedures: data-dictionary-all
+      procedure-parameters: data-dictionary-all
+      table-columns: data-dictionary-all
+      tables: data-dictionary-all
+      type-info: data-dictionary-all
+  limit: {}

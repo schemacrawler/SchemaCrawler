@@ -24,7 +24,7 @@ database-connector:
         - H2 database path (for example ~/test or mem:test)
   additional-options:
     - name: MODE
-      type: STRING
+      type: string
       default: REGULAR
       help:
         - "H2 compatibility mode (for example PostgreSQL, MySQL, Oracle)"

@@ -7,28 +7,29 @@ database-connector:
     host:
       help:
         - Host name
-        - Optional, defaults to localhost
+        - "Optional, defaults to localhost"
     port:
+      default: 9001
       help:
         - Port number
-        - Optional, defaults to 9001
-      default: 9001
+        - "Optional, defaults to 9001"
     database:
       help:
         - Database name
-  schema-retrieval:
-    retrieval-strategies:
-      table-column-privileges: data_dictionary_all
   additional-options:
     - name: readonly
       type: boolean
       default: true
       help:
         - Open connection in read-only mode
-        - Optional, defaults to true
+        - "Optional, defaults to true"
     - name: hsqldb.lock_file
       type: boolean
       default: false
       help:
         - Use a lock file for the database
-        - Optional, defaults to false
+        - "Optional, defaults to false"
+  schema-retrieval:
+    retrieval-strategies:
+      table-column-privileges: data-dictionary-all
+  limit: {}

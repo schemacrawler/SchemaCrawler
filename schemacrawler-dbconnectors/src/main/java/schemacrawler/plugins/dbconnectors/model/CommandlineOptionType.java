@@ -22,4 +22,9 @@ public enum CommandlineOptionType {
   public Class<?> optionClass() {
     return optionClass;
   }
+
+  @Override
+  public String toString() {
+    return name().toLowerCase();
+  }
 }

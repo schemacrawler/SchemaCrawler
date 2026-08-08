@@ -27,14 +27,14 @@ database-connector:
         - Keyspace name
   additional-options:
     - name: localdatacenter
-      type: STRING
+      type: string
       default: datacenter1
       help:
         - Tells the load-balancing policy which local datacenter nodes to route queries
           to.
         - "Optional, defaults to datacenter1"
     - name: consistency
-      type: STRING
+      type: string
       default: LOCAL_ONE
       help:
         - Consistency level

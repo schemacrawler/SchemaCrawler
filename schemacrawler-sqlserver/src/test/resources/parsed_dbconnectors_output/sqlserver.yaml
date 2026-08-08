@@ -1,0 +1,57 @@
+database-connector:
+  database-server-type:
+    server: sqlserver
+    name: Microsoft SQL Server
+  url-template: "jdbc:sqlserver://${host}:${port};databaseName=${database}"
+  standard-options:
+    host:
+      help:
+        - Host name
+        - "Optional, defaults to localhost"
+    port:
+      default: 1433
+      help:
+        - Port number
+        - "Optional, defaults to 1433"
+    database:
+      help:
+        - Database name
+        - "Be sure to also restrict your schemas to this database, by using an additional\
+          \ option,"
+        - --schemas=<database>.dbo
+  additional-options:
+    - name: applicationName
+      type: string
+      default: SchemaCrawler
+      help:
+        - Application name shown in SQL Server activity monitor
+        - "Optional, defaults to SchemaCrawler"
+    - name: encrypt
+      type: boolean
+      default: false
+      help:
+        - Encrypt the connection
+        - "Optional, defaults to false"
+  schema-retrieval:
+    retrieval-strategies:
+      foreign-keys: data-dictionary-over-schemas
+      function-parameters: data-dictionary-over-schemas
+      functions: data-dictionary-over-schemas
+      indexes: data-dictionary-over-schemas
+      primary-keys: data-dictionary-over-schemas
+      routines: data-dictionary-over-schemas
+      routine-references: data-dictionary-over-schemas
+      procedures: data-dictionary-over-schemas
+      procedure-parameters: data-dictionary-over-schemas
+      table-columns: metadata-over-schemas
+      table-additional-attributes: data-dictionary-over-schemas
+      table-column-additional-attributes: data-dictionary-over-schemas
+      triggers: data-dictionary-over-schemas
+      table-constraints: data-dictionary-over-schemas
+      table-constraint-columns: data-dictionary-over-schemas
+      table-check-constraints: data-dictionary-over-schemas
+      view-information: data-dictionary-over-schemas
+      view-table-usage: data-dictionary-over-schemas
+  limit:
+    include-schemas: .*\.dbo
+    exclude-schemas: model\..*|master\..*|msdb\..*|tempdb\..*|rdsadmin\..*

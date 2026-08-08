@@ -20,9 +20,9 @@ database-connector:
         - --schemas=<database>.dbo
   schema-retrieval:
     retrieval-strategies:
-      tablecolumns: metadata_over_schemas
-      primarykeys: data_dictionary_over_schemas
-      foreignkeys: data_dictionary_over_schemas
+      table-columns: metadata_over_schemas
+      primary-keys: data_dictionary_over_schemas
+      foreign-keys: data_dictionary_over_schemas
       indexes: data_dictionary_over_schemas
       view-information: data_dictionary_over_schemas
       view-table-usage: data_dictionary_over_schemas
@@ -35,9 +35,9 @@ database-connector:
       routines: data_dictionary_over_schemas
       routine-references: data_dictionary_over_schemas
       procedures: data_dictionary_over_schemas
-      procedureparameters: data_dictionary_over_schemas
+      procedure-parameters: data_dictionary_over_schemas
       functions: data_dictionary_over_schemas
-      functionparameters: data_dictionary_over_schemas
+      function-parameters: data_dictionary_over_schemas
   limit:
     include-schemas: ".*\\.dbo"
     exclude-schemas: "model\\..*|master\\..*|msdb\\..*|tempdb\\..*|rdsadmin\\..*"

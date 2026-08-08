@@ -10,6 +10,7 @@ package schemacrawler.plugins.dbconnectors.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
+import java.util.TreeMap;
 import org.jspecify.annotations.Nullable;
 import schemacrawler.plugins.dbconnectors.yaml.JsonUtility;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
@@ -30,7 +31,8 @@ public record SchemaRetrievalDefinition(
   }
 
   public SchemaRetrievalDefinition {
-    retrievalStrategies = retrievalStrategies == null ? Map.of() : Map.copyOf(retrievalStrategies);
+    retrievalStrategies =
+        retrievalStrategies == null ? Map.of() : new TreeMap<>(retrievalStrategies);
   }
 
   @Override

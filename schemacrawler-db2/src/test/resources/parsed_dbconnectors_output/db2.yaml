@@ -73,12 +73,12 @@ database-connector:
     host:
       help:
         - Host name
-        - Optional, defaults to localhost
+        - "Optional, defaults to localhost"
     port:
+      default: 50000
       help:
         - Port number
-        - Optional, defaults to 50000
-      default: 50000
+        - "Optional, defaults to 50000"
     database:
       help:
         - Database name
@@ -88,4 +88,6 @@ database-connector:
       default: true
       help:
         - Retrieve error messages from the server
-        - Optional, defaults to true
+        - "Optional, defaults to true"
+  schema-retrieval: {}
+  limit: {}
