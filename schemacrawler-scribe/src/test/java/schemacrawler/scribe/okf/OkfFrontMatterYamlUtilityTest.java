@@ -17,6 +17,7 @@ import static schemacrawler.scribe.renderer.JsonUtility.yamlMapper;
 import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import schemacrawler.scribe.okf.frontmatter.CountsRecord;
 import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfGeneratedRecord;
@@ -24,7 +25,6 @@ import schemacrawler.scribe.okf.frontmatter.OkfStatus;
 import schemacrawler.scribe.okf.frontmatter.OkfVerifiedBy;
 import schemacrawler.scribe.okf.frontmatter.OkfVerifiedRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
-import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerCountsRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
 import tools.jackson.databind.JsonNode;
 
@@ -49,11 +49,7 @@ public class OkfFrontMatterYamlUtilityTest {
         new GitHubPagesFrontMatterRecord("books", "Books table", true, true);
     final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
         new SchemaCrawlerFrontMatterRecord(
-            "PUBLIC.BOOKS",
-            "BOOKS",
-            null,
-            new SchemaCrawlerCountsRecord(2, 0, 1, 1, null, null),
-            null);
+            "PUBLIC.BOOKS", "BOOKS", null, new CountsRecord(2, 0, 1, 1, null, null), null);
 
     final String yaml =
         utility.toYamlString(okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);

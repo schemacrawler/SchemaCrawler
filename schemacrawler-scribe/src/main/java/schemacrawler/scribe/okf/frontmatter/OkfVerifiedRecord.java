@@ -25,8 +25,10 @@ public record OkfVerifiedRecord(String by, Instant at) {
 
   public static OkfVerifiedRecord of(
       final OkfVerifiedBy verifiedBy, final String actor, final Instant at) {
-    return new OkfVerifiedRecord(
-        requireNonNull(verifiedBy, "No verified.by trust tier provided").format(actor), at);
+    requireNonNull(verifiedBy, "No verified by provided");
+    requireNonNull(actor, "No actor provided");
+    requireNonNull(at, "No verified.at provided");
+    return new OkfVerifiedRecord("%s:%s".formatted(verifiedBy, actor), at);
   }
 
   private static void validateBy(final String by) {

@@ -22,6 +22,7 @@ import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
+import schemacrawler.scribe.okf.frontmatter.CountsRecord;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
 import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfFrontMatterRecord;
@@ -29,7 +30,6 @@ import schemacrawler.scribe.okf.frontmatter.OkfGeneratedRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfStatus;
 import schemacrawler.scribe.okf.frontmatter.OkfVerifiedBy;
 import schemacrawler.scribe.okf.frontmatter.OkfVerifiedRecord;
-import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerCountsRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.TableAttributesRecord;
 import schemacrawler.tools.state.AbstractExecutionState;
@@ -54,14 +54,18 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
     final OkfFrontMatterRecord okfFrontMatter =
         new OkfFrontMatterRecord(
-            objectDescription, tags, generated(), verified(), OkfStatus.stable);
+            objectDescription,
+            tags,
+            generated(),
+            OkfVerifiedRecord.of(
+                OkfVerifiedBy.machine_confirmed, schemaCrawlerActor(), Instant.now()),
+            OkfStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord(objectDescription, true, true);
     final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
         new SchemaCrawlerFrontMatterRecord(
             objectDescription,
-            new SchemaCrawlerCountsRecord(
-                null, null, null, null, null, routine.getParameters().size()),
+            new CountsRecord(null, null, null, null, null, routine.getParameters().size()),
             null);
 
     return frontMatterYamlUtility.toYamlString(
@@ -83,13 +87,18 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
     final OkfFrontMatterRecord okfFrontMatter =
         new OkfFrontMatterRecord(
-            objectDescription, tags, generated(), verified(), OkfStatus.stable);
+            objectDescription,
+            tags,
+            generated(),
+            OkfVerifiedRecord.of(
+                OkfVerifiedBy.machine_confirmed, schemaCrawlerActor(), Instant.now()),
+            OkfStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord(objectDescription, true, true);
     final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
         new SchemaCrawlerFrontMatterRecord(
             objectDescription,
-            new SchemaCrawlerCountsRecord(
+            new CountsRecord(
                 table.getColumns().size(),
                 table.getReferencedTables().size(),
                 table.getIndexes().size(),
@@ -115,7 +124,8 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
             null,
             List.of(),
             generated(),
-            verified(),
+            OkfVerifiedRecord.of(
+                OkfVerifiedBy.machine_confirmed, schemaCrawlerActor(), Instant.now()),
             OkfStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord(title, description, false, true);
@@ -159,10 +169,5 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     }
     final ERModel model = getERModel();
     return model.lookupByBridgeTable(table).isPresent();
-  }
-
-  private OkfVerifiedRecord verified() {
-    return OkfVerifiedRecord.of(
-        OkfVerifiedBy.machine_confirmed, schemaCrawlerActor(), Instant.now());
   }
 }

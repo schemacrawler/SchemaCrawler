@@ -31,10 +31,6 @@ public enum OkfVerifiedBy {
     throw new IllegalArgumentException("Unknown verified.by trust tier: " + value);
   }
 
-  public String format(final String actor) {
-    return value + ":" + requireNonNull(actor, "No actor provided");
-  }
-
   @Override
   public String toString() {
     return value;

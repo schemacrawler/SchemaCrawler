@@ -12,7 +12,7 @@ import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record SchemaCrawlerCountsRecord(
+public record CountsRecord(
     Integer columnCount,
     Integer foreignKeyCount,
     Integer indexCount,
@@ -24,7 +24,7 @@ public record SchemaCrawlerCountsRecord(
       x -> (x == null || x < 0) ? null : x;
   private static final Function<Long, Long> makePostiveLong = x -> (x == null || x < 0) ? null : x;
 
-  public SchemaCrawlerCountsRecord {
+  public CountsRecord {
     columnCount = makePostiveInteger.apply(columnCount);
     foreignKeyCount = makePostiveInteger.apply(foreignKeyCount);
     indexCount = makePostiveInteger.apply(indexCount);

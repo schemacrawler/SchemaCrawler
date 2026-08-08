@@ -15,11 +15,7 @@ import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record SchemaCrawlerFrontMatterRecord(
-    String schema,
-    String name,
-    String completeType,
-    SchemaCrawlerCountsRecord counts,
-    String entityType) {
+    String schema, String name, String completeType, CountsRecord counts, String entityType) {
 
   public SchemaCrawlerFrontMatterRecord {
     schema = trimToEmpty(schema);
@@ -30,7 +26,7 @@ public record SchemaCrawlerFrontMatterRecord(
 
   public SchemaCrawlerFrontMatterRecord(
       final DatabaseObjectDescription objectDescription,
-      final SchemaCrawlerCountsRecord counts,
+      final CountsRecord counts,
       final String entityType) {
     this(
         requireNonNull(objectDescription, "No database object description provided").schemaName(),
