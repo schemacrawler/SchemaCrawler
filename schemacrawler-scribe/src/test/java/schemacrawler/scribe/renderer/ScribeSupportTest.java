@@ -15,6 +15,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static schemacrawler.scribe.renderer.JsonUtility.yamlMapper;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
@@ -33,6 +34,7 @@ import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.scribe.okf.OkfFrontMatterSupport;
+import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.test.utility.crawl.LightCatalogUtility;
@@ -103,6 +105,17 @@ public class ScribeSupportTest {
 
     assertThat(tableFrontMatter.get("resource").asString(), is(expectedTableResource));
     assertThat(routineFrontMatter.get("resource").asString(), is(expectedRoutineResource));
+    assertThat(tableFrontMatter.get("generated"), is(notNullValue()));
+    assertThat(tableFrontMatter.get("verified"), is(notNullValue()));
+    assertThat(
+        yamlMapper.treeToValue(tableFrontMatter.get("generated").get("by"), String.class),
+        is(SchemaCrawlerActor.schemaCrawlerActor()));
+    assertThat(
+        yamlMapper.treeToValue(tableFrontMatter.get("verified").get("by"), String.class),
+        is(SchemaCrawlerActor.schemaCrawlerActor()));
+    assertThat(tableFrontMatter.get("timestamp"), is(nullValue()));
+    assertThat(tableFrontMatter.get("runId"), is(nullValue()));
+    assertThat(tableFrontMatter.get("generatedBy"), is(nullValue()));
   }
 
   @Test

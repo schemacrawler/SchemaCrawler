@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
@@ -30,6 +31,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
+import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
 import schemacrawler.scribe.renderer.JsonUtility;
 import schemacrawler.scribe.renderer.ScribeMessages;
 import schemacrawler.scribe.renderer.ScribeSupport;
@@ -98,6 +100,17 @@ public class OkfConceptWriterTableTest {
     assertThat(typeNode, is(notNullValue()));
     final String tableType = JsonUtility.yamlMapper.treeToValue(typeNode, String.class);
     assertThat(tableType, anyOf(is("table"), is("view")));
+    assertThat(parsed.get("generated"), is(notNullValue()));
+    assertThat(parsed.get("verified"), is(notNullValue()));
+    assertThat(parsed.get("schema"), is(notNullValue()));
+    assertThat(parsed.get("name"), is(notNullValue()));
+    assertThat(parsed.get("counts"), is(notNullValue()));
+    assertThat(
+        JsonUtility.yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class),
+        is(SchemaCrawlerActor.schemaCrawlerActor()));
+    assertThat(parsed.get("timestamp"), is(nullValue()));
+    assertThat(parsed.get("runId"), is(nullValue()));
+    assertThat(parsed.get("generatedBy"), is(nullValue()));
 
     assertThat(content, containsString("## " + msg.sectionColumns()));
     assertThat(content, containsString("## " + msg.sectionForeignKeys()));
