@@ -20,7 +20,7 @@ public record TableAttributesRecord(
     Boolean bridgeTable) {
 
   private static final Function<Boolean, Boolean> makeTrueOrNull =
-      booleanValue -> (booleanValue == null || !booleanValue) ? null : Boolean.TRUE;
+      booleanValue -> booleanValue == null || !booleanValue ? null : Boolean.TRUE;
 
   public TableAttributesRecord() {
     this(null, null, null, null, null);

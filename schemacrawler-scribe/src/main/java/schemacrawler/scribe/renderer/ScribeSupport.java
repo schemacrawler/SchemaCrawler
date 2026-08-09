@@ -137,37 +137,6 @@ public final class ScribeSupport extends AbstractTextSupport {
     return messages.labelDatabaseSchema();
   }
 
-  private EntityModelType entityModelType(final Table table) {
-    if (table == null || !hasERModel()) {
-      return EntityModelType.unknown;
-    }
-    if (isBridgeTable(table)) {
-      return EntityModelType.bridge_table;
-    }
-    final Optional<EntityType> optionalEntityType = entityType(table);
-    if (optionalEntityType.isEmpty()) {
-      return EntityModelType.unknown;
-    }
-    return switch (optionalEntityType.get()) {
-      case strong_entity -> EntityModelType.strong_entity;
-      case subtype -> EntityModelType.subtype;
-      case weak_entity -> EntityModelType.weak_entity;
-      case non_entity -> EntityModelType.non_entity;
-      default -> EntityModelType.unknown;
-    };
-  }
-
-  private Optional<EntityType> entityType(final Table table) {
-    if (table == null || !hasERModel()) {
-      return Optional.empty();
-    }
-    return getERModel().lookupEntity(table).map(Entity::getType);
-  }
-
-  public String escapeMarkdown(final String input) {
-    return MarkdownFormattingHelper.escapeMarkdown(input);
-  }
-
   /**
    * Gets the ER model statistics, or {@code null} if no ER model is available.
    *
@@ -175,6 +144,10 @@ public final class ScribeSupport extends AbstractTextSupport {
    */
   public ERModelStats erModelStats() {
     return catalogStats.erModelStats().orElse(null);
+  }
+
+  public String escapeMarkdown(final String input) {
+    return MarkdownFormattingHelper.escapeMarkdown(input);
   }
 
   /**
@@ -435,6 +408,42 @@ public final class ScribeSupport extends AbstractTextSupport {
     return List.copyOf(used);
   }
 
+  /**
+   * Gets the number of views in the catalog.
+   *
+   * @return View count
+   */
+  public int viewCount() {
+    return catalogStats.viewCount();
+  }
+
+  private EntityModelType entityModelType(final Table table) {
+    if (table == null || !hasERModel()) {
+      return EntityModelType.unknown;
+    }
+    if (isBridgeTable(table)) {
+      return EntityModelType.bridge_table;
+    }
+    final Optional<EntityType> optionalEntityType = entityType(table);
+    if (optionalEntityType.isEmpty()) {
+      return EntityModelType.unknown;
+    }
+    return switch (optionalEntityType.get()) {
+      case strong_entity -> EntityModelType.strong_entity;
+      case subtype -> EntityModelType.subtype;
+      case weak_entity -> EntityModelType.weak_entity;
+      case non_entity -> EntityModelType.non_entity;
+      default -> EntityModelType.unknown;
+    };
+  }
+
+  private Optional<EntityType> entityType(final Table table) {
+    if (table == null || !hasERModel()) {
+      return Optional.empty();
+    }
+    return getERModel().lookupEntity(table).map(Entity::getType);
+  }
+
   private Collection<Table> usedByViews(final Table table) {
     if (table == null) {
       return List.of();
@@ -446,14 +455,5 @@ public final class ScribeSupport extends AbstractTextSupport {
       }
     }
     return List.copyOf(views);
-  }
-
-  /**
-   * Gets the number of views in the catalog.
-   *
-   * @return View count
-   */
-  public int viewCount() {
-    return catalogStats.viewCount();
   }
 }

@@ -25,12 +25,12 @@ public enum OkfTrustTier {
     throw new IllegalArgumentException("Unknown trust tier: " + value);
   }
 
+  public String getValue() {
+    return name().replace('_', '-');
+  }
+
   @Override
   public String toString() {
     return getValue();
-  }
-
-  public String getValue() {
-    return name().replace('_', '-');
   }
 }

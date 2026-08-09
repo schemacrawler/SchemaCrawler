@@ -23,7 +23,7 @@ final class ScribeCatalogStats {
   private final Optional<ERModelStats> erModelStats;
 
   ScribeCatalogStats(final Catalog catalog, final Optional<ERModel> erModel) {
-    this.catalogStats = CatalogStatsUtility.from(requireNonNull(catalog, "No catalog provided"));
+    catalogStats = CatalogStatsUtility.from(requireNonNull(catalog, "No catalog provided"));
     erModelStats = requireNonNull(erModel, "No ER model provided").map(ERModelStatsUtility::from);
   }
 

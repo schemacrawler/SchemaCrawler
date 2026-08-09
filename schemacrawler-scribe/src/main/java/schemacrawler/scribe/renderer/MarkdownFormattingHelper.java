@@ -12,10 +12,10 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import schemacrawler.schema.DatabaseObject;
+import us.fatehi.utility.UtilityMarker;
 
+@UtilityMarker
 public final class MarkdownFormattingHelper {
-
-  private MarkdownFormattingHelper() {}
 
   public static String encodeFullName(final DatabaseObject databaseObject) {
     if (databaseObject == null) {
@@ -23,6 +23,13 @@ public final class MarkdownFormattingHelper {
     }
     return URLEncoder.encode(databaseObject.getFullName(), StandardCharsets.UTF_8)
         .replace("+", "%20");
+  }
+
+  public static String sentenceCase(final String text) {
+    if (isBlank(text)) {
+      return "";
+    }
+    return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
   }
 
   static String escapeMarkdown(final String input) {
@@ -45,13 +52,6 @@ public final class MarkdownFormattingHelper {
     return sb.toString().replaceAll("\\R", "");
   }
 
-  public static String sentenceCase(final String text) {
-    if (isBlank(text)) {
-      return "";
-    }
-    return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
-  }
-
   private static boolean isMarkdownSpecial(final int cp) {
     return cp == '\\'
         || cp == '`'
@@ -70,5 +70,9 @@ public final class MarkdownFormattingHelper {
         || cp == '!'
         || cp == '|'
         || cp == '>';
+  }
+
+  private MarkdownFormattingHelper() {
+    // Prevent instantiation
   }
 }

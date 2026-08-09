@@ -21,7 +21,7 @@ public enum ScribeOutputFormat implements OutputFormat {
   okf("Google Open Knowledge Format (OKF) bundle");
 
   public static ScribeOutputFormat fromFormat(final String format) {
-    ScribeOutputFormat scribeFormat = fromFormatOrNull(format);
+    final ScribeOutputFormat scribeFormat = fromFormatOrNull(format);
     if (scribeFormat != null) {
       return scribeFormat;
     }

@@ -90,7 +90,7 @@ final class OkfFrontMatterYamlUtility {
     final List<String> tags = new ArrayList<>();
     final LinkedHashMap<String, Object> map = toMap(value);
     for (final Entry<String, Object> entry : map.entrySet()) {
-      if ((entry.getValue() instanceof final Boolean booleanValue) && booleanValue) {
+      if (entry.getValue() instanceof final Boolean booleanValue && booleanValue) {
         tags.add(toSnakeCase(entry.getKey()));
       }
     }

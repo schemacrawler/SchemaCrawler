@@ -25,14 +25,14 @@ public final class OkfConceptPageWriter {
   private final OkfTemplateRenderer templateRenderer;
 
   public OkfConceptPageWriter(
-      final ScribeSupport support, final OkfTemplateRenderer templateRenderer) {
-    this.support = requireNonNull(support, "No Scribe support provided");
-    this.templateRenderer = requireNonNull(templateRenderer, "No template renderer provided");
+      final ScribeSupport support, final BundleDirectoryOutput outputDirectory) {
+    this(support, new OkfTemplateRenderer(outputDirectory));
   }
 
   public OkfConceptPageWriter(
-      final ScribeSupport support, final BundleDirectoryOutput outputDirectory) {
-    this(support, new OkfTemplateRenderer(outputDirectory));
+      final ScribeSupport support, final OkfTemplateRenderer templateRenderer) {
+    this.support = requireNonNull(support, "No Scribe support provided");
+    this.templateRenderer = requireNonNull(templateRenderer, "No template renderer provided");
   }
 
   public void writeConceptPages() throws SchemaCrawlerException {
