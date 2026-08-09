@@ -21,7 +21,7 @@ public record CountsRecord(
     Integer parameterCount) {
 
   private static final Function<Integer, Integer> makePostiveInteger =
-      x -> x == null || x < 0 ? null : x;
+      x -> x == null || x <= 0 ? null : x;
   private static final Function<Long, Long> makePostiveLong = x -> x == null || x <= 0 ? null : x;
 
   public CountsRecord {

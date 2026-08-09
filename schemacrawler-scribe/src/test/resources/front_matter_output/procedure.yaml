@@ -8,7 +8,7 @@ generated:
   at: 1970-01-01T00:00:00Z
   by: process:schemacrawler-v17.12.2
 verified:
-  at: 2026-08-09T02:26:47.289466Z
+  at: 2026-08-09T02:35:17.750427Z
   by: machine-confirmed:schemacrawler-v17.12.2
 status: stable
 shortTitle: find order
@@ -18,5 +18,3 @@ allowTitleToDifferFromFilename: true
 schema: PUBLIC.BOOKS
 name: find order
 complete_type: procedure
-counts:
-  parameter_count: 0
