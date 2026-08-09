@@ -12,10 +12,12 @@ import static schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor.schemaCraw
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TypedObject;
+import schemacrawler.scribe.okf.frontmatter.CountsRecord;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
 import schemacrawler.scribe.okf.frontmatter.OkfTrustTier;
 import schemacrawler.scribe.okf.frontmatter.OkfVerifiedRecord;
@@ -25,22 +27,6 @@ import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
 class OkfFrontMatterUtility {
-
-  static OkfVerifiedRecord verified() {
-    return new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, schemaCrawlerActor());
-  }
-
-  static TableAttributesRecord tableAttributes(final Table table, final boolean isBridgeTable) {
-    if (table == null) {
-      return new TableAttributesRecord();
-    }
-    return new TableAttributesRecord(
-        !table.hasPrimaryKey(),
-        table.isSelfReferencing(),
-        table.hasTriggers(),
-        !hasRowCount(table),
-        isBridgeTable);
-  }
 
   static DatabaseObjectDescription objectDescription(final DatabaseObject databaseObject) {
     if (databaseObject == null) {
@@ -86,6 +72,44 @@ class OkfFrontMatterUtility {
 
     return new DatabaseObjectDescription(
         simpleTypeName, completeType, schemaName, name, fullName, description, intro, resource);
+  }
+
+  static CountsRecord routineCounts(final Routine routine) {
+    if (routine == null) {
+      return new CountsRecord();
+    }
+    return new CountsRecord(null, null, null, null, null, routine.getParameters().size());
+  }
+
+  static TableAttributesRecord tableAttributes(final Table table, final boolean isBridgeTable) {
+    if (table == null) {
+      return new TableAttributesRecord();
+    }
+    return new TableAttributesRecord(
+        !table.hasPrimaryKey(),
+        table.isSelfReferencing(),
+        table.hasTriggers(),
+        !hasRowCount(table),
+        isBridgeTable);
+  }
+
+  static CountsRecord tableCounts(final Table table) {
+    if (table == null) {
+      return null;
+    }
+    final Long rowCount =
+        TableRowCountsUtility.hasRowCount(table) ? TableRowCountsUtility.getRowCount(table) : null;
+    return new CountsRecord(
+        table.getColumns().size(),
+        table.getReferencedTables().size(),
+        table.getIndexes().size(),
+        table.getTriggers().size(),
+        rowCount,
+        null);
+  }
+
+  static OkfVerifiedRecord verified() {
+    return new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, schemaCrawlerActor());
   }
 
   private OkfFrontMatterUtility() {

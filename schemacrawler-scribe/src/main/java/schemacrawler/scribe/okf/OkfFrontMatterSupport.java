@@ -21,11 +21,9 @@ import java.util.Optional;
 import schemacrawler.ermodel.model.ERModel;
 import schemacrawler.ermodel.model.Entity;
 import schemacrawler.ermodel.model.EntityType;
-import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
-import schemacrawler.scribe.okf.frontmatter.CountsRecord;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
 import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfFrontMatterRecord;
@@ -60,9 +58,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
         new GitHubPagesFrontMatterRecord(objectDescription, true, true);
     final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
         new SchemaCrawlerFrontMatterRecord(
-            objectDescription,
-            new CountsRecord(null, null, null, null, null, routine.getParameters().size()),
-            null);
+            objectDescription, OkfFrontMatterUtility.routineCounts(routine), null);
 
     return frontMatterYamlUtility.toYamlString(
         okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
@@ -77,8 +73,6 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     tags.addAll(frontMatterYamlUtility.toTags(tableAttributes));
 
     final String entityType = entityType(table, tags);
-    final Long rowCount =
-        TableRowCountsUtility.hasRowCount(table) ? TableRowCountsUtility.getRowCount(table) : null;
 
     final OkfFrontMatterRecord okfFrontMatter =
         new OkfFrontMatterRecord(
@@ -87,15 +81,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
         new GitHubPagesFrontMatterRecord(objectDescription, true, true);
     final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
         new SchemaCrawlerFrontMatterRecord(
-            objectDescription,
-            new CountsRecord(
-                table.getColumns().size(),
-                table.getReferencedTables().size(),
-                table.getIndexes().size(),
-                table.getTriggers().size(),
-                rowCount,
-                null),
-            entityType);
+            objectDescription, OkfFrontMatterUtility.tableCounts(table), entityType);
 
     return frontMatterYamlUtility.toYamlString(
         okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);

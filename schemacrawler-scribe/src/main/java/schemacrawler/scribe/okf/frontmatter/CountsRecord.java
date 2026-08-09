@@ -32,4 +32,8 @@ public record CountsRecord(
     rowCount = makePostiveLong.apply(rowCount);
     parameterCount = makePostiveInteger.apply(parameterCount);
   }
+
+  public CountsRecord() {
+    this(null, null, null, null, null, null);
+  }
 }
