@@ -20,17 +20,17 @@ public record Counts(
     Long rowCount,
     Integer parameterCount) {
 
-  private static final Function<Integer, Integer> makePostiveInteger =
-      x -> x == null || x <= 0 ? null : x;
-  private static final Function<Long, Long> makePostiveLong = x -> x == null || x <= 0 ? null : x;
+  private static final Function<Integer, Integer> removeNegativeInteger =
+      x -> x == null || x < 0 ? null : x;
+  private static final Function<Long, Long> makeValidRowCount = x -> x == null || x <= 0 ? null : x;
 
   public Counts {
-    columnCount = makePostiveInteger.apply(columnCount);
-    foreignKeyCount = makePostiveInteger.apply(foreignKeyCount);
-    indexCount = makePostiveInteger.apply(indexCount);
-    triggerCount = makePostiveInteger.apply(triggerCount);
-    rowCount = makePostiveLong.apply(rowCount);
-    parameterCount = makePostiveInteger.apply(parameterCount);
+    columnCount = removeNegativeInteger.apply(columnCount);
+    foreignKeyCount = removeNegativeInteger.apply(foreignKeyCount);
+    indexCount = removeNegativeInteger.apply(indexCount);
+    triggerCount = removeNegativeInteger.apply(triggerCount);
+    rowCount = makeValidRowCount.apply(rowCount);
+    parameterCount = removeNegativeInteger.apply(parameterCount);
   }
 
   public Counts() {
