@@ -25,7 +25,7 @@ public final class SimpleDatabaseConnectorBundle extends DatabaseConnector
   @Override
   public Collection<DatabaseConnector> getDatabaseConnectors() {
     final MultiDatabaseConnectorRegistry simpleDatabaseconnectorRegistry =
-        MultiDatabaseConnectorRegistry.getInstance();
+        MultiDatabaseConnectorRegistry.getRegistry();
     return simpleDatabaseconnectorRegistry.getDatabaseConnectors();
   }
 }

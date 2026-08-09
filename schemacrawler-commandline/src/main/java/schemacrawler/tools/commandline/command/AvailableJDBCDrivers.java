@@ -15,8 +15,8 @@ public class AvailableJDBCDrivers extends BaseAvailableRegistryPlugins {
   private final String name;
 
   public AvailableJDBCDrivers() {
-    super(JDBCDriverRegistry.getJDBCDriverRegistry().getRegisteredPlugins());
-    name = JDBCDriverRegistry.getJDBCDriverRegistry().getName();
+    super(JDBCDriverRegistry.getRegistry().getRegisteredPlugins());
+    name = JDBCDriverRegistry.getRegistry().getName();
   }
 
   @Override

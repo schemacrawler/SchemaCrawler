@@ -53,7 +53,7 @@ public final class CommandChain extends AbstractSchemaCrawlerCommand<LanguageOpt
 
     requireNonNull(scCommand, "No command provided, for settings");
 
-    commandRegistry = CommandRegistry.getCommandRegistry();
+    commandRegistry = CommandRegistry.getRegistry();
     scCommands = new ArrayList<>();
 
     // Copy all configuration

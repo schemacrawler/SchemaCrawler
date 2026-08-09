@@ -20,8 +20,7 @@ public class BundledDistributionTest {
 
   @Test
   public void testInformationSchema_hsqldb() throws Exception {
-    final DatabaseConnectorRegistry registry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
     final DatabaseConnector databaseSystemIdentifier =
         registry.findDatabaseConnectorFromDatabaseSystemIdentifier("hsqldb");
     final Connection connection = null;
@@ -36,8 +35,7 @@ public class BundledDistributionTest {
 
   @Test
   public void testPlugin_hsqldb() throws Exception {
-    final DatabaseConnectorRegistry registry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("hsqldb"), is(true));
   }
 }

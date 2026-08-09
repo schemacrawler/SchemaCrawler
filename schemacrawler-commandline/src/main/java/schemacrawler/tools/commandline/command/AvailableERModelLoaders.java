@@ -15,8 +15,8 @@ public class AvailableERModelLoaders extends BaseAvailableRegistryPlugins {
   private final String name;
 
   public AvailableERModelLoaders() {
-    super(ERModelLoaderRegistry.getERModelLoaderRegistry().getRegisteredPlugins());
-    name = ERModelLoaderRegistry.getERModelLoaderRegistry().getName();
+    super(ERModelLoaderRegistry.getRegistry().getRegisteredPlugins());
+    name = ERModelLoaderRegistry.getRegistry().getName();
   }
 
   @Override

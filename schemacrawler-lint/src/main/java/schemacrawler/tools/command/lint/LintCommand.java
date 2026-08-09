@@ -50,7 +50,7 @@ public class LintCommand extends AbstractSchemaCrawlerCommand<LintOptions> {
       final LinterConfigs linterConfigs = readLinterConfigs(commandOptions);
       LOGGER.log(Level.FINEST, new LinterConfigsFormat(linterConfigs));
       final Linters linters = new Linters(linterConfigs, commandOptions.isRunAllLinters());
-      final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
+      final LinterRegistry linterRegistry = LinterRegistry.getRegistry();
       linters.initialize(linterRegistry);
       transferState(linters);
       linters.lint();

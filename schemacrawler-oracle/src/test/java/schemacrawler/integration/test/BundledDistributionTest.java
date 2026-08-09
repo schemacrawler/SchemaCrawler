@@ -22,8 +22,7 @@ public class BundledDistributionTest {
   public void testInformationSchema_oracle() throws Exception {
 
     final Connection connection = null;
-    final DatabaseConnectorRegistry registry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
     final DatabaseConnector databaseSystemIdentifier =
         registry.findDatabaseConnectorFromDatabaseSystemIdentifier("oracle");
     assertThat(
@@ -37,8 +36,7 @@ public class BundledDistributionTest {
 
   @Test
   public void testPlugin_oracle() throws Exception {
-    final DatabaseConnectorRegistry registry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("oracle"), is(true));
   }
 }

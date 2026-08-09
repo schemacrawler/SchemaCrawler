@@ -67,7 +67,7 @@ public class SnowflakeTest extends BaseAdditionalDatabaseTest {
     final int port = parsedUrl.port();
 
     final DatabaseConnector connector =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry()
+        DatabaseConnectorRegistry.getRegistry()
             .findDatabaseConnectorFromDatabaseSystemIdentifier("snowflake");
     final MultiUseUserCredentials credentials =
         new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword());

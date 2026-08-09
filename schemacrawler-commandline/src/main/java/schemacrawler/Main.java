@@ -55,7 +55,7 @@ public final class Main {
     logger.logSafeArguments(args);
     logger.logSystemClasspath();
     logger.logSystemProperties();
-    JDBCDriverRegistry.getJDBCDriverRegistry(); // Will log
+    JDBCDriverRegistry.getRegistry(); // Will log
 
     final ConnectionTestOptions connectionTestOptions = new ConnectionTestOptions();
     populateCommand(connectionTestOptions, args);

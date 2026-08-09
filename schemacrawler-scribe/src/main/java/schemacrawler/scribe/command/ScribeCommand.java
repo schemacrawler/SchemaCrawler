@@ -96,7 +96,7 @@ public final class ScribeCommand extends AbstractSchemaCrawlerCommand<ScribeOpti
     final Config config = ConfigUtility.newConfig();
     final LinterConfigs linterConfigs = new LinterConfigs(config);
     final Linters linters = new Linters(linterConfigs, true);
-    final LinterRegistry registry = LinterRegistry.getLinterRegistry();
+    final LinterRegistry registry = LinterRegistry.getRegistry();
     linters.initialize(registry);
     transferState(linters);
     linters.lint();

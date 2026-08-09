@@ -53,18 +53,19 @@ public final class MultiDatabaseConnectorRegistry extends BasePluginRegistry {
   private static final Logger LOGGER =
       Logger.getLogger(MultiDatabaseConnectorRegistry.class.getName());
 
-  private static MultiDatabaseConnectorRegistry singleton;
+  private static MultiDatabaseConnectorRegistry registrySingleton;
+
   private static final String CLASS_PATH_ROOT = "dbconnectors";
 
   private static final DatabasePluginYamlDeserializer DESERIALIZER =
       new DatabasePluginYamlDeserializer();
 
-  public static MultiDatabaseConnectorRegistry getInstance() {
-    if (singleton == null) {
-      singleton = new MultiDatabaseConnectorRegistry();
-      singleton.log();
+  public static MultiDatabaseConnectorRegistry getRegistry() {
+    if (registrySingleton == null) {
+      registrySingleton = new MultiDatabaseConnectorRegistry();
+      registrySingleton.log();
     }
-    return singleton;
+    return registrySingleton;
   }
 
   private static List<DatabaseConnectorDefinition> loadClasspathDefinitions() {

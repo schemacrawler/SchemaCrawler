@@ -50,25 +50,25 @@ import us.fatehi.utility.property.ProductVersion;
 public class CommandLineUtility {
 
   public static final Supplier<Collection<PluginCommand>> catalogLoaderPluginCommands =
-      () -> CatalogLoaderRegistry.getCatalogLoaderRegistry().getCommandLineCommands();
+      () -> CatalogLoaderRegistry.getRegistry().getCommandLineCommands();
 
   public static final Supplier<Collection<PluginCommand>> catalogLoaderPluginHelpCommands =
-      () -> CatalogLoaderRegistry.getCatalogLoaderRegistry().getHelpCommands();
+      () -> CatalogLoaderRegistry.getRegistry().getHelpCommands();
 
   public static final Supplier<Collection<PluginCommand>> erModelLoaderPluginCommands =
-      () -> ERModelLoaderRegistry.getERModelLoaderRegistry().getCommandLineCommands();
+      () -> ERModelLoaderRegistry.getRegistry().getCommandLineCommands();
 
   public static final Supplier<Collection<PluginCommand>> erModelLoaderPluginHelpCommands =
-      () -> ERModelLoaderRegistry.getERModelLoaderRegistry().getHelpCommands();
+      () -> ERModelLoaderRegistry.getRegistry().getHelpCommands();
 
   public static final Supplier<Collection<PluginCommand>> commandPluginCommands =
-      () -> CommandRegistry.getCommandRegistry().getCommandLineCommands();
+      () -> CommandRegistry.getRegistry().getCommandLineCommands();
 
   public static final Supplier<Collection<PluginCommand>> commandPluginHelpCommands =
-      () -> CommandRegistry.getCommandRegistry().getHelpCommands();
+      () -> CommandRegistry.getRegistry().getHelpCommands();
 
   public static final Supplier<Collection<PluginCommand>> serverPluginHelpCommands =
-      () -> DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getHelpCommands();
+      () -> DatabaseConnectorRegistry.getRegistry().getHelpCommands();
 
   public static void addPluginCommands(
       final CommandLine commandLine, final Supplier<Collection<PluginCommand>> pluginCommands) {

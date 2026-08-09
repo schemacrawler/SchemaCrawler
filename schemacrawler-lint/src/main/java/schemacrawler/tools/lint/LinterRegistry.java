@@ -33,14 +33,14 @@ public final class LinterRegistry extends BasePluginRegistry implements LinterIn
 
   private static final Linter NO_OP_LINTER = new NoOpLinter();
 
-  private static LinterRegistry linterRegistrySingleton;
+  private static LinterRegistry registrySingleton;
 
-  public static LinterRegistry getLinterRegistry() {
-    if (linterRegistrySingleton == null) {
-      linterRegistrySingleton = new LinterRegistry();
-      linterRegistrySingleton.log();
+  public static LinterRegistry getRegistry() {
+    if (registrySingleton == null) {
+      registrySingleton = new LinterRegistry();
+      registrySingleton.log();
     }
-    return linterRegistrySingleton;
+    return registrySingleton;
   }
 
   private static Map<String, LinterProvider> loadLinterRegistry() {
