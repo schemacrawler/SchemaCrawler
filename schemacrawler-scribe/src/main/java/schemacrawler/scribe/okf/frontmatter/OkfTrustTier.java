@@ -9,26 +9,26 @@ package schemacrawler.scribe.okf.frontmatter;
 
 import static java.util.Objects.requireNonNull;
 
-public enum OkfVerifiedBy {
+public enum OkfTrustTier {
   unverified("unverified"),
   machine_confirmed("machine-confirmed"),
   human_reviewed("human-reviewed");
 
   private final String value;
 
-  OkfVerifiedBy(final String value) {
+  OkfTrustTier(final String value) {
     this.value = value;
   }
 
-  public static OkfVerifiedBy fromString(final String value) {
-    final String normalized = requireNonNull(value, "No verified.by trust tier provided").trim();
-    for (final OkfVerifiedBy verifiedBy : values()) {
+  public static OkfTrustTier fromString(final String value) {
+    final String normalized = requireNonNull(value, "No trust tier provided").trim();
+    for (final OkfTrustTier verifiedBy : values()) {
       if (verifiedBy.value.equalsIgnoreCase(normalized)
           || verifiedBy.name().equalsIgnoreCase(normalized.replace('-', '_'))) {
         return verifiedBy;
       }
     }
-    throw new IllegalArgumentException("Unknown verified.by trust tier: " + value);
+    throw new IllegalArgumentException("Unknown trust tier: " + value);
   }
 
   @Override

@@ -22,7 +22,7 @@ import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfGeneratedRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfStatus;
-import schemacrawler.scribe.okf.frontmatter.OkfVerifiedBy;
+import schemacrawler.scribe.okf.frontmatter.OkfTrustTier;
 import schemacrawler.scribe.okf.frontmatter.OkfVerifiedRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
@@ -42,8 +42,7 @@ public class OkfFrontMatterYamlUtilityTest {
             null,
             List.of("table", "has_triggers"),
             new OkfGeneratedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
-            OkfVerifiedRecord.of(
-                OkfVerifiedBy.machine_confirmed, actor, Instant.parse("2026-01-01T00:00:00Z")),
+            new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, actor),
             OkfStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord("books", "Books table", true, true);
@@ -83,8 +82,7 @@ public class OkfFrontMatterYamlUtilityTest {
             null,
             List.of(),
             new OkfGeneratedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
-            OkfVerifiedRecord.of(
-                OkfVerifiedBy.machine_confirmed, actor, Instant.parse("2026-01-01T00:00:00Z")),
+            new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, actor),
             OkfStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord("Report", "Report", false, true);

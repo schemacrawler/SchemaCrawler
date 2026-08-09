@@ -7,7 +7,6 @@
  */
 package schemacrawler.scribe.okf.frontmatter;
 
-import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
@@ -19,16 +18,12 @@ import tools.jackson.databind.annotation.JsonNaming;
 public record OkfVerifiedRecord(String by, Instant at) {
   public OkfVerifiedRecord {
     by = requireNotBlank(trimToEmpty(by), "No verified.by value provided");
-    at = requireNonNull(at, "No verified.at value provided");
+    at = at == null ? Instant.now() : at;
     validateBy(by);
   }
 
-  public static OkfVerifiedRecord of(
-      final OkfVerifiedBy verifiedBy, final String actor, final Instant at) {
-    requireNonNull(verifiedBy, "No verified by provided");
-    requireNonNull(actor, "No actor provided");
-    requireNonNull(at, "No verified.at provided");
-    return new OkfVerifiedRecord("%s:%s".formatted(verifiedBy, actor), at);
+  public OkfVerifiedRecord(final OkfTrustTier trustTier, final String actor) {
+    this("%s:%s".formatted(trustTier, actor), null);
   }
 
   private static void validateBy(final String by) {
@@ -36,7 +31,7 @@ public record OkfVerifiedRecord(String by, Instant at) {
     if (verifiedByParts.length != 2) {
       throw new IllegalArgumentException("verified.by should include trust tier and actor");
     }
-    OkfVerifiedBy.fromString(verifiedByParts[0]);
+    OkfTrustTier.fromString(verifiedByParts[0]);
     requireNotBlank(trimToEmpty(verifiedByParts[1]), "No verified actor provided");
   }
 }

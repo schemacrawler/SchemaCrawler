@@ -28,7 +28,7 @@ import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfGeneratedRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfStatus;
-import schemacrawler.scribe.okf.frontmatter.OkfVerifiedBy;
+import schemacrawler.scribe.okf.frontmatter.OkfTrustTier;
 import schemacrawler.scribe.okf.frontmatter.OkfVerifiedRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.TableAttributesRecord;
@@ -57,8 +57,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
             objectDescription,
             tags,
             generated(),
-            OkfVerifiedRecord.of(
-                OkfVerifiedBy.machine_confirmed, schemaCrawlerActor(), Instant.now()),
+            new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, schemaCrawlerActor()),
             OkfStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord(objectDescription, true, true);
@@ -90,8 +89,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
             objectDescription,
             tags,
             generated(),
-            OkfVerifiedRecord.of(
-                OkfVerifiedBy.machine_confirmed, schemaCrawlerActor(), Instant.now()),
+            new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, schemaCrawlerActor()),
             OkfStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord(objectDescription, true, true);
@@ -124,8 +122,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
             null,
             List.of(),
             generated(),
-            OkfVerifiedRecord.of(
-                OkfVerifiedBy.machine_confirmed, schemaCrawlerActor(), Instant.now()),
+            new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, schemaCrawlerActor()),
             OkfStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord(title, description, false, true);
