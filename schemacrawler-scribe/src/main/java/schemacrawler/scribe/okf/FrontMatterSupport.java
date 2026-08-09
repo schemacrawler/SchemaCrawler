@@ -25,6 +25,7 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
 import schemacrawler.scribe.okf.frontmatter.github.GitHubPagesFrontMatter;
+import schemacrawler.scribe.okf.frontmatter.okf.Actor;
 import schemacrawler.scribe.okf.frontmatter.okf.Generated;
 import schemacrawler.scribe.okf.frontmatter.okf.LifecycleStatus;
 import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatter;
@@ -135,7 +136,8 @@ public final class FrontMatterSupport extends AbstractExecutionState {
     final CrawlInfo crawlInfo = getCatalog().getCrawlInfo();
     final Instant crawlTimestamp = crawlInfo.getCrawlTimestampInstant();
 
-    return new Generated(new SchemaCrawlerActor(), crawlTimestamp);
+    final Actor scActor = new SchemaCrawlerActor().toActor();
+    return new Generated(scActor, crawlTimestamp);
   }
 
   private boolean isBridgeTable(final Table table) {

@@ -48,6 +48,20 @@ public class ScribeOptionsBuilderTest {
   }
 
   @Test
+  public void toConfigWritesEachOptionKey() {
+    final Config config =
+        ScribeOptionsBuilder.builder()
+            .withIncludeLint(true)
+            .withLocale(Locale.FRENCH)
+            .withExpandedOutput(true)
+            .toConfig();
+
+    assertThat(config.getBooleanValue("schemacrawler.scribe.include-lint"), is(true));
+    assertThat(config.getStringValue("schemacrawler.scribe.language"), is("fr"));
+    assertThat(config.getBooleanValue("schemacrawler.scribe.expanded-output"), is(true));
+  }
+
+  @Test
   public void fromConfigReadsEachPrefixedConfigFileKey() {
     final Config config = ConfigUtility.newConfig();
     config.put("schemacrawler.scribe.generate-diagrams", false);

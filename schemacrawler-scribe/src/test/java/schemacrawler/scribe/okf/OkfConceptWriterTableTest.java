@@ -112,10 +112,10 @@ public class OkfConceptWriterTableTest {
     assertThat(content, not(containsString("hasTriggers")));
     assertThat(content, not(containsString("emptyTable")));
     assertThat(content, not(containsString("bridgeTable")));
-    final Actor schemaCrawlerActor = new SchemaCrawlerActor();
+    final Actor schemaCrawlerActor = new SchemaCrawlerActor().toActor();
     assertThat(
         JsonUtility.yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class),
-        is("machine-confirmed:" + schemaCrawlerActor.getActor()));
+        is("machine-confirmed:" + schemaCrawlerActor.actor()));
     assertThat(parsed.get("timestamp"), is(nullValue()));
     assertThat(parsed.get("runId"), is(nullValue()));
     assertThat(parsed.get("generatedBy"), is(nullValue()));

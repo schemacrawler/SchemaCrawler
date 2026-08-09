@@ -17,6 +17,7 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TypedObject;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
+import schemacrawler.scribe.okf.frontmatter.okf.Actor;
 import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
 import schemacrawler.scribe.okf.frontmatter.okf.Verified;
@@ -97,7 +98,8 @@ public class FrontMatterUtility {
   }
 
   public static Verified verified() {
-    return new Verified(TrustTier.machine_confirmed, new SchemaCrawlerActor());
+    final Actor scActor = new SchemaCrawlerActor().toActor();
+    return new Verified(TrustTier.machine_confirmed, scActor);
   }
 
   private FrontMatterUtility() {
