@@ -26,9 +26,9 @@ import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
-class FrontMatterUtility {
+public class FrontMatterUtility {
 
-  static DatabaseObjectDescription objectDescription(final DatabaseObject databaseObject) {
+  public static DatabaseObjectDescription objectDescription(final DatabaseObject databaseObject) {
     if (databaseObject == null) {
       return new DatabaseObjectDescription();
     }
@@ -60,14 +60,14 @@ class FrontMatterUtility {
         simpleTypeName, completeType, schemaName, name, fullName, description, intro, resource);
   }
 
-  static Counts routineCounts(final Routine routine) {
+  public static Counts routineCounts(final Routine routine) {
     if (routine == null) {
       return new Counts();
     }
     return new Counts(null, null, null, null, null, routine.getParameters().size());
   }
 
-  static TableAttributes tableAttributes(final Table table, final boolean isBridgeTable) {
+  public static TableAttributes tableAttributes(final Table table, final boolean isBridgeTable) {
     if (table == null) {
       return new TableAttributes();
     }
@@ -81,7 +81,7 @@ class FrontMatterUtility {
         isBridgeTable);
   }
 
-  static Counts tableCounts(final Table table) {
+  public static Counts tableCounts(final Table table) {
     if (table == null) {
       return null;
     }
@@ -96,7 +96,7 @@ class FrontMatterUtility {
         null);
   }
 
-  static Verified verified() {
+  public static Verified verified() {
     return new Verified(TrustTier.machine_confirmed, new SchemaCrawlerActor());
   }
 
