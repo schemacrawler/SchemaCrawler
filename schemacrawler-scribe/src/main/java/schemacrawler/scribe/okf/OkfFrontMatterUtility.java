@@ -7,6 +7,7 @@
  */
 package schemacrawler.scribe.okf;
 
+import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCount;
 import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 
 import java.net.URI;
@@ -89,7 +90,7 @@ class OkfFrontMatterUtility {
         !table.hasPrimaryKey(),
         table.isSelfReferencing(),
         table.hasTriggers(),
-        !hasRowCount(table),
+        hasRowCount(table) && getRowCount(table) == 0,
         isBridgeTable);
   }
 

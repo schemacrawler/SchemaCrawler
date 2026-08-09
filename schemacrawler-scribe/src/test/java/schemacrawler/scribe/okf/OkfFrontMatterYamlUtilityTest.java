@@ -26,6 +26,7 @@ import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
 import schemacrawler.scribe.okf.frontmatter.okf.VerifiedRecord;
 import schemacrawler.scribe.okf.frontmatter.schemacrawler.CountsRecord;
 import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatterRecord;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributesRecord;
 import tools.jackson.databind.JsonNode;
 
 public class OkfFrontMatterYamlUtilityTest {
@@ -114,5 +115,16 @@ public class OkfFrontMatterYamlUtilityTest {
                 null,
                 LifecycleStatus.stable));
     assertThrows(IllegalArgumentException.class, () -> LifecycleStatus.fromString("invalid"));
+  }
+
+  @Test
+  public void tableAttributesAreConvertedToSnakeCaseTags() {
+    final OkfFrontMatterYamlUtility utility = new OkfFrontMatterYamlUtility();
+    final TableAttributesRecord tableAttributes =
+        new TableAttributesRecord(true, true, false, null, true);
+
+    assertThat(
+        utility.toTags(tableAttributes),
+        is(List.of("no_primary_key", "self_referencing", "bridge_table")));
   }
 }
