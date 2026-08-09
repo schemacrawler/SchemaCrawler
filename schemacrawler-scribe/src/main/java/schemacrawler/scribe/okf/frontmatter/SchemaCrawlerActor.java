@@ -23,10 +23,12 @@ public final class SchemaCrawlerActor implements OkfActor {
     actor = "%s-v%s".formatted(actorName, version.getProductVersion());
   }
 
+  @Override
   public String getActor() {
     return actor;
   }
 
+  @Override
   public ActorType getActorType() {
     return actorType;
   }

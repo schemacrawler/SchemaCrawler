@@ -65,7 +65,7 @@ public class OkfFrontMatterYamlUtilityTest {
     assertThat(parsed.get("entity_type"), is(nullValue()));
     assertThat(
         yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class),
-        is("machine-confirmed:" + actor));
+        is("machine-confirmed:" + actor.getActor()));
     assertThat(parsed.get("verified").get("trust_tier"), is(nullValue()));
     assertThat(parsed.get("verified").get("actor"), is(nullValue()));
     assertThat(parsed.get("generated").get("actor"), is(nullValue()));

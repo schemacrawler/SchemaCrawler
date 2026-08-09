@@ -34,6 +34,7 @@ import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
 import schemacrawler.scribe.okf.OkfFrontMatterSupport;
+import schemacrawler.scribe.okf.frontmatter.OkfActor;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.WithTestDatabase;
@@ -113,13 +114,13 @@ public class ScribeSupportTest {
     assertThat(routineFrontMatter.get("resource").asString(), is(expectedRoutineResource));
     assertThat(tableFrontMatter.get("generated"), is(notNullValue()));
     assertThat(tableFrontMatter.get("verified"), is(notNullValue()));
-    final String schemaCrawlerActor = new SchemaCrawlerActor().toString();
+    final OkfActor schemaCrawlerActor = new SchemaCrawlerActor();
     assertThat(
         yamlMapper.treeToValue(tableFrontMatter.get("generated").get("by"), String.class),
-        is(schemaCrawlerActor));
+        is(schemaCrawlerActor.toString()));
     assertThat(
         yamlMapper.treeToValue(tableFrontMatter.get("verified").get("by"), String.class),
-        is("machine-confirmed:" + schemaCrawlerActor));
+        is("machine-confirmed:" + schemaCrawlerActor.getActor()));
     assertThat(tableFrontMatter.get("timestamp"), is(nullValue()));
     assertThat(tableFrontMatter.get("runId"), is(nullValue()));
     assertThat(tableFrontMatter.get("generatedBy"), is(nullValue()));

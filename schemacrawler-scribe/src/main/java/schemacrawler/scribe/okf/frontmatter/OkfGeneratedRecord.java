@@ -25,6 +25,6 @@ public record OkfGeneratedRecord(@JsonIgnore OkfActor actor, Instant at) {
 
   @JsonProperty("by")
   public String by() {
-    return actor.toString();
+    return "%s:%s".formatted(actor.getActorType(), actor.getActor());
   }
 }

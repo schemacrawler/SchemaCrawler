@@ -30,6 +30,6 @@ public record OkfVerifiedRecord(
 
   @JsonProperty("by")
   public String by() {
-    return "%s:%s".formatted(trustTier, actor);
+    return "%s:%s".formatted(trustTier, actor.getActor());
   }
 }

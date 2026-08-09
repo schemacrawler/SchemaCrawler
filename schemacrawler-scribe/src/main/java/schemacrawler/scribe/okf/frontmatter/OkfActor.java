@@ -13,4 +13,8 @@ public interface OkfActor {
     human,
     process;
   }
+
+  String getActor();
+
+  ActorType getActorType();
 }
