@@ -33,7 +33,7 @@ public class OkfFrontMatterYamlUtilityTest {
   @Test
   public void mergesFrontMatterAndOmitsOptionalFields() throws Exception {
     final OkfFrontMatterYamlUtility utility = new OkfFrontMatterYamlUtility();
-    final String actor = SchemaCrawlerActor.schemaCrawlerActor();
+    final SchemaCrawlerActor actor = new SchemaCrawlerActor();
     final OkfFrontMatterRecord okfFrontMatter =
         new OkfFrontMatterRecord(
             "table",
@@ -66,6 +66,9 @@ public class OkfFrontMatterYamlUtilityTest {
     assertThat(
         yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class),
         is("machine-confirmed:" + actor));
+    assertThat(parsed.get("verified").get("trust_tier"), is(nullValue()));
+    assertThat(parsed.get("verified").get("actor"), is(nullValue()));
+    assertThat(parsed.get("generated").get("actor"), is(nullValue()));
     assertThat(parsed.get("showMiniToc").asBoolean(), is(true));
     assertThat(parsed.get("allowTitleToDifferFromFilename").asBoolean(), is(true));
   }
@@ -73,7 +76,7 @@ public class OkfFrontMatterYamlUtilityTest {
   @Test
   public void omitsSchemaCrawlerSectionWhenNotProvided() throws Exception {
     final OkfFrontMatterYamlUtility utility = new OkfFrontMatterYamlUtility();
-    final String actor = SchemaCrawlerActor.schemaCrawlerActor();
+    final SchemaCrawlerActor actor = new SchemaCrawlerActor();
     final OkfFrontMatterRecord okfFrontMatter =
         new OkfFrontMatterRecord(
             "report",

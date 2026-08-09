@@ -113,12 +113,13 @@ public class ScribeSupportTest {
     assertThat(routineFrontMatter.get("resource").asString(), is(expectedRoutineResource));
     assertThat(tableFrontMatter.get("generated"), is(notNullValue()));
     assertThat(tableFrontMatter.get("verified"), is(notNullValue()));
+    final String schemaCrawlerActor = new SchemaCrawlerActor().toString();
     assertThat(
         yamlMapper.treeToValue(tableFrontMatter.get("generated").get("by"), String.class),
-        is(SchemaCrawlerActor.schemaCrawlerActor()));
+        is(schemaCrawlerActor));
     assertThat(
         yamlMapper.treeToValue(tableFrontMatter.get("verified").get("by"), String.class),
-        is("machine-confirmed:" + SchemaCrawlerActor.schemaCrawlerActor()));
+        is("machine-confirmed:" + schemaCrawlerActor));
     assertThat(tableFrontMatter.get("timestamp"), is(nullValue()));
     assertThat(tableFrontMatter.get("runId"), is(nullValue()));
     assertThat(tableFrontMatter.get("generatedBy"), is(nullValue()));

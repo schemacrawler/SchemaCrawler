@@ -8,20 +8,31 @@
 package schemacrawler.scribe.okf.frontmatter;
 
 import schemacrawler.schemacrawler.Version;
-import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.property.ProductVersion;
 
-@UtilityMarker
-public class SchemaCrawlerActor {
+public final class SchemaCrawlerActor implements OkfActor {
 
-  public static String schemaCrawlerActor() {
+  private final ActorType actorType;
+  private final String actor;
+
+  public SchemaCrawlerActor() {
+    actorType = ActorType.process;
+
     final ProductVersion version = Version.version();
     final String actorName = version.getProductName().toLowerCase().replaceAll("[^a-z0-9]+", "");
-    final String actorValue = "%s-v%s".formatted(actorName, version.getProductVersion());
-    return actorValue;
+    actor = "%s-v%s".formatted(actorName, version.getProductVersion());
   }
 
-  private SchemaCrawlerActor() {
-    // Prevent instantiation
+  public String getActor() {
+    return actor;
+  }
+
+  public ActorType getActorType() {
+    return actorType;
+  }
+
+  @Override
+  public String toString() {
+    return "%s:%s".formatted(actorType, actor);
   }
 }

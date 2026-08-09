@@ -8,7 +8,6 @@
 package schemacrawler.scribe.okf;
 
 import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
-import static schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor.schemaCrawlerActor;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -21,6 +20,7 @@ import schemacrawler.scribe.okf.frontmatter.CountsRecord;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
 import schemacrawler.scribe.okf.frontmatter.OkfTrustTier;
 import schemacrawler.scribe.okf.frontmatter.OkfVerifiedRecord;
+import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.TableAttributesRecord;
 import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.UtilityMarker;
@@ -109,7 +109,7 @@ class OkfFrontMatterUtility {
   }
 
   static OkfVerifiedRecord verified() {
-    return new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, schemaCrawlerActor());
+    return new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, new SchemaCrawlerActor());
   }
 
   private OkfFrontMatterUtility() {

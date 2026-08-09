@@ -10,7 +10,6 @@ package schemacrawler.scribe.okf;
 import static schemacrawler.scribe.okf.OkfFrontMatterUtility.objectDescription;
 import static schemacrawler.scribe.okf.OkfFrontMatterUtility.tableAttributes;
 import static schemacrawler.scribe.okf.OkfFrontMatterUtility.verified;
-import static schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor.schemaCrawlerActor;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.toSnakeCase;
 
@@ -29,6 +28,7 @@ import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfGeneratedRecord;
 import schemacrawler.scribe.okf.frontmatter.OkfStatus;
+import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.TableAttributesRecord;
 import schemacrawler.tools.state.AbstractExecutionState;
@@ -135,7 +135,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     final CrawlInfo crawlInfo = getCatalog().getCrawlInfo();
     final Instant crawlTimestamp = crawlInfo.getCrawlTimestampInstant();
 
-    return new OkfGeneratedRecord(schemaCrawlerActor(), crawlTimestamp);
+    return new OkfGeneratedRecord(new SchemaCrawlerActor(), crawlTimestamp);
   }
 
   private boolean isBridgeTable(final Table table) {

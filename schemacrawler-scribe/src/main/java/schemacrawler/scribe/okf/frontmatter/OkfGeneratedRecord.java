@@ -8,18 +8,23 @@
 package schemacrawler.scribe.okf.frontmatter;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
-import static us.fatehi.utility.Utility.trimToEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.Instant;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record OkfGeneratedRecord(String by, Instant at) {
+public record OkfGeneratedRecord(@JsonIgnore OkfActor actor, Instant at) {
 
   public OkfGeneratedRecord {
-    by = requireNotBlank(trimToEmpty(by), "No generated.by value provided");
-    at = requireNonNull(at, "No generated.at value provided");
+    actor = requireNonNull(actor, "No generated.by actor provided");
+    at = at == null ? Instant.now() : at;
+  }
+
+  @JsonProperty("by")
+  public String by() {
+    return actor.toString();
   }
 }

@@ -18,8 +18,8 @@ public class SchemaCrawlerActorTest {
 
   @Test
   public void schemaCrawlerActorUsesVersionedPrefix() {
-    final String actor = SchemaCrawlerActor.schemaCrawlerActor();
-    assertThat(actor, startsWith("schemacrawler-v"));
+    final String actor = new SchemaCrawlerActor().toString();
+    assertThat(actor, startsWith("process:schemacrawler-v"));
     assertThat(actor, endsWith(Version.version().getProductVersion()));
   }
 }
