@@ -42,10 +42,10 @@ public record TableAttributesRecord(
       return new TableAttributesRecord();
     }
     return new TableAttributesRecord(
-        table.hasPrimaryKey(),
+        !table.hasPrimaryKey(),
         table.isSelfReferencing(),
         table.hasTriggers(),
-        hasRowCount(table),
+        !hasRowCount(table),
         isBridgeTable);
   }
 }
