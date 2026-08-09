@@ -31,14 +31,14 @@ import us.fatehi.utility.ioresource.InputResourceUtility;
 import us.fatehi.utility.string.StringFormat;
 
 /** Renders FreeMarker templates and writes pages to the output context. */
-public final class OkfTemplateRenderer {
+public final class TemplateRenderer {
 
-  private static final Logger LOGGER = Logger.getLogger(OkfTemplateRenderer.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TemplateRenderer.class.getName());
 
   private final Configuration configuration;
   private final BundleDirectoryOutput outputDirectory;
 
-  public OkfTemplateRenderer(final BundleDirectoryOutput outputDirectory) {
+  public TemplateRenderer(final BundleDirectoryOutput outputDirectory) {
     this.outputDirectory = requireNonNull(outputDirectory, "No output directory provided");
     configuration = createFreemarkerConfiguration();
   }
@@ -56,7 +56,7 @@ public final class OkfTemplateRenderer {
   }
 
   private Configuration createFreemarkerConfiguration() {
-    final class OkfTemplateLoader implements TemplateLoader {
+    final class TemplateSourceLoader implements TemplateLoader {
       @Override
       public void closeTemplateSource(final Object templateSource) {
         // nothing to close; readers are closed by FreeMarker
@@ -94,7 +94,7 @@ public final class OkfTemplateRenderer {
     }
 
     final Configuration cfg = new Configuration(Configuration.VERSION_2_3_34);
-    cfg.setTemplateLoader(new OkfTemplateLoader());
+    cfg.setTemplateLoader(new TemplateSourceLoader());
     cfg.setDefaultEncoding("UTF-8");
     // Localization is handled with the helper messages
     cfg.setLocalizedLookup(false);

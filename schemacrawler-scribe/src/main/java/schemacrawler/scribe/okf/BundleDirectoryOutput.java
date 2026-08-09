@@ -129,6 +129,11 @@ public final class BundleDirectoryOutput implements Closeable {
     }
   }
 
+  @Override
+  public String toString() {
+    return rootDirectory.toString();
+  }
+
   /**
    * Resolves a relative path under the root directory and returns an {@link OutputResource} that
    * creates all necessary parent directories before opening a writer.
@@ -142,10 +147,5 @@ public final class BundleDirectoryOutput implements Closeable {
     final Path filePath = IOUtility.sanitizeFilePath(rootDirectory, relativePath);
     Files.createDirectories(filePath.getParent());
     return new FileOutputResource(filePath);
-  }
-
-  @Override
-  public String toString() {
-    return rootDirectory.toString();
   }
 }

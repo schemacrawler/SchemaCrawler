@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
@@ -30,6 +31,8 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
+import schemacrawler.scribe.okf.frontmatter.okf.Actor;
+import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.renderer.JsonUtility;
 import schemacrawler.scribe.renderer.ScribeMessages;
 import schemacrawler.scribe.renderer.ScribeSupport;
@@ -81,7 +84,7 @@ public class OkfConceptWriterTableTest {
     }
     assertThat(target, is(notNullValue()));
 
-    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
+    new ConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
         .writeTableConcept(target);
 
     final String resourcePath = "tables/" + target.key().slug() + ".md";
@@ -98,6 +101,24 @@ public class OkfConceptWriterTableTest {
     assertThat(typeNode, is(notNullValue()));
     final String tableType = JsonUtility.yamlMapper.treeToValue(typeNode, String.class);
     assertThat(tableType, anyOf(is("table"), is("view")));
+    assertThat(parsed.get("generated"), is(notNullValue()));
+    assertThat(parsed.get("verified"), is(notNullValue()));
+    assertThat(parsed.get("schema"), is(notNullValue()));
+    assertThat(parsed.get("name"), is(notNullValue()));
+    assertThat(parsed.get("complete_type"), is(notNullValue()));
+    assertThat(parsed.get("counts"), is(notNullValue()));
+    assertThat(content, not(containsString("noPrimaryKey")));
+    assertThat(content, not(containsString("selfReferencing")));
+    assertThat(content, not(containsString("hasTriggers")));
+    assertThat(content, not(containsString("emptyTable")));
+    assertThat(content, not(containsString("bridgeTable")));
+    final Actor schemaCrawlerActor = new SchemaCrawlerActor();
+    assertThat(
+        JsonUtility.yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class),
+        is("machine-confirmed:" + schemaCrawlerActor.getActor()));
+    assertThat(parsed.get("timestamp"), is(nullValue()));
+    assertThat(parsed.get("runId"), is(nullValue()));
+    assertThat(parsed.get("generatedBy"), is(nullValue()));
 
     assertThat(content, containsString("## " + msg.sectionColumns()));
     assertThat(content, containsString("## " + msg.sectionForeignKeys()));
@@ -133,12 +154,12 @@ public class OkfConceptWriterTableTest {
     final Table table = support.allTables().get(0);
     final Table tableWithNullSchemaName = withNullSchemaName(table);
 
-    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
+    new ConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
         .writeTableConcept(tableWithNullSchemaName);
 
     final String resourcePath = "tables/" + tableWithNullSchemaName.key().slug() + ".md";
     final String content = Files.readString(tempDir.resolve(resourcePath));
     assertThat(content, containsString("schema:"));
-    assertThat(content, containsString("completeType:"));
+    assertThat(content, containsString("complete_type:"));
   }
 }

@@ -1,0 +1,22 @@
+type: procedure
+title: PUBLIC.BOOKS.find order
+description: Description of procedure
+resource: catalog://routines/PUBLIC.BOOKS/find%20order
+tags:
+  - procedure
+generated:
+  at: 1970-01-01T00:00:00Z
+  by: process:schemacrawler-v17.12.2
+verified:
+  at: 2026-08-09T03:01:42.788992100Z
+  by: machine-confirmed:schemacrawler-v17.12.2
+status: stable
+shortTitle: find order
+intro: Description of procedure PUBLIC.BOOKS.find order
+showMiniToc: true
+allowTitleToDifferFromFilename: true
+schema: PUBLIC.BOOKS
+name: find order
+complete_type: procedure
+counts:
+  parameter_count: 0

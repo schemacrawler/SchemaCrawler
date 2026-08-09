@@ -43,7 +43,7 @@ public class OkfSchemaDiagramTest {
     final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
-    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    final FrontMatterSupport frontMatter = new FrontMatterSupport();
     support.transferState(frontMatter);
 
     final String relativePath = "reports/schema.md";
@@ -54,7 +54,7 @@ public class OkfSchemaDiagramTest {
     model.put("catalog", executionState.getCatalog());
     model.put("er_model", executionState.getERModel());
     model.put("title", support.databaseTitle());
-    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
+    new TemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("schema-diagram.ftl", model, relativePath);
 
     final String content = Files.readString(tempDir.resolve(relativePath));

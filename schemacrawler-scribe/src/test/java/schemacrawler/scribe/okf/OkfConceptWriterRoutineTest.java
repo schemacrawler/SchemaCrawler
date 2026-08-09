@@ -71,7 +71,7 @@ public class OkfConceptWriterRoutineTest {
 
     final Routine routine = support.allRoutines().get(0);
 
-    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
+    new ConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
         .writeRoutineConcept(routine);
 
     final String resourcePath = "routines/" + routine.key().slug() + ".md";
@@ -83,6 +83,9 @@ public class OkfConceptWriterRoutineTest {
     final String frontMatter = content.substring(frontMatterStart + 3, frontMatterEnd);
     assertThat(
         frontMatter, anyOf(containsString("type: procedure"), containsString("type: function")));
+    assertThat(frontMatter, containsString("verified:"));
+    assertThat(frontMatter, containsString("machine-confirmed:"));
+    assertThat(frontMatter, containsString("complete_type:"));
 
     assertThat(content, containsString("## " + msg.sectionParameters()));
 
@@ -106,7 +109,7 @@ public class OkfConceptWriterRoutineTest {
     final Routine routine = support.allRoutines().get(0);
     final Routine routineWithNullSchemaName = withNullSchemaName(routine);
 
-    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
+    new ConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
         .writeRoutineConcept(routineWithNullSchemaName);
 
     final String resourcePath = "routines/" + routineWithNullSchemaName.key().slug() + ".md";

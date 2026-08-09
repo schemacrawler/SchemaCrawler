@@ -46,6 +46,10 @@ public final class ScribeMessages {
     return message("header.default");
   }
 
+  public String headerDescription() {
+    return message("header.description");
+  }
+
   public String headerGenerated() {
     return message("header.generated");
   }
@@ -90,76 +94,20 @@ public final class ScribeMessages {
     return message("label.database_product");
   }
 
-  public String labelDatabaseVersion() {
-    return message("label.database_version");
-  }
-
   public String labelDatabaseSchema() {
     return message("label.database_schema");
   }
 
-  public String labelEntityModelType() {
-    return message("label.entity_model_type");
+  public String labelDatabaseVersion() {
+    return message("label.database_version");
   }
 
   public String labelEntityCount() {
     return message("label.entity_count");
   }
 
-  public String labelStrongEntityCount() {
-    return message("label.strong_entity_count");
-  }
-
-  public String labelWeakEntityCount() {
-    return message("label.weak_entity_count");
-  }
-
-  public String labelSubtypeEntityCount() {
-    return message("label.subtype_entity_count");
-  }
-
-  public String labelNonEntityCount() {
-    return message("label.non_entity_count");
-  }
-
-  public String labelUnknownEntityCount() {
-    return message("label.unknown_entity_count");
-  }
-
-  public String labelRelationshipCount() {
-    return message("label.relationship_count");
-  }
-
-  public String labelOneToOneRelationshipCount() {
-    return message("label.one_to_one_relationship_count");
-  }
-
-  public String labelOneToManyRelationshipCount() {
-    return message("label.one_to_many_relationship_count");
-  }
-
-  public String labelZeroToOneRelationshipCount() {
-    return message("label.zero_to_one_relationship_count");
-  }
-
-  public String labelZeroToManyRelationshipCount() {
-    return message("label.zero_to_many_relationship_count");
-  }
-
-  public String labelManyToManyRelationshipCount() {
-    return message("label.many_to_many_relationship_count");
-  }
-
-  public String labelUnknownRelationshipCount() {
-    return message("label.unknown_relationship_count");
-  }
-
-  public String labelImplicitRelationshipCount() {
-    return message("label.implicit_relationship_count");
-  }
-
-  public String labelUnmodeledTableCount() {
-    return message("label.unmodeled_table_count");
+  public String labelEntityModelType() {
+    return message("label.entity_model_type");
   }
 
   public String labelForeignKeyCount() {
@@ -170,12 +118,36 @@ public final class ScribeMessages {
     return message("label.function");
   }
 
+  public String labelImplicitRelationshipCount() {
+    return message("label.implicit_relationship_count");
+  }
+
+  public String labelManyToManyRelationshipCount() {
+    return message("label.many_to_many_relationship_count");
+  }
+
+  public String labelNonEntityCount() {
+    return message("label.non_entity_count");
+  }
+
+  public String labelOneToManyRelationshipCount() {
+    return message("label.one_to_many_relationship_count");
+  }
+
+  public String labelOneToOneRelationshipCount() {
+    return message("label.one_to_one_relationship_count");
+  }
+
   public String labelReferencedBy() {
     return message("label.referenced_by");
   }
 
   public String labelReferences() {
     return message("label.references");
+  }
+
+  public String labelRelationshipCount() {
+    return message("label.relationship_count");
   }
 
   public String labelReturnType() {
@@ -198,6 +170,14 @@ public final class ScribeMessages {
     return message("label.stored_procedure");
   }
 
+  public String labelStrongEntityCount() {
+    return message("label.strong_entity_count");
+  }
+
+  public String labelSubtypeEntityCount() {
+    return message("label.subtype_entity_count");
+  }
+
   public String labelTable() {
     return message("label.table");
   }
@@ -214,12 +194,36 @@ public final class ScribeMessages {
     return message("label.type");
   }
 
+  public String labelUnknownEntityCount() {
+    return message("label.unknown_entity_count");
+  }
+
+  public String labelUnknownRelationshipCount() {
+    return message("label.unknown_relationship_count");
+  }
+
+  public String labelUnmodeledTableCount() {
+    return message("label.unmodeled_table_count");
+  }
+
   public String labelView() {
     return message("label.view");
   }
 
   public String labelViews() {
     return message("label.views");
+  }
+
+  public String labelWeakEntityCount() {
+    return message("label.weak_entity_count");
+  }
+
+  public String labelZeroToManyRelationshipCount() {
+    return message("label.zero_to_many_relationship_count");
+  }
+
+  public String labelZeroToOneRelationshipCount() {
+    return message("label.zero_to_one_relationship_count");
   }
 
   public String lintSeverityCritical() {
@@ -270,12 +274,12 @@ public final class ScribeMessages {
     return message("section.definition");
   }
 
-  public String headerDescription() {
-    return message("header.description");
-  }
-
   public String sectionDiagram() {
     return message("section.diagram");
+  }
+
+  public String sectionErModel() {
+    return message("section.er_model");
   }
 
   public String sectionForeignKeys() {
@@ -292,10 +296,6 @@ public final class ScribeMessages {
 
   public String sectionMetadata() {
     return message("section.metadata");
-  }
-
-  public String sectionErModel() {
-    return message("section.er_model");
   }
 
   public String sectionParameters() {

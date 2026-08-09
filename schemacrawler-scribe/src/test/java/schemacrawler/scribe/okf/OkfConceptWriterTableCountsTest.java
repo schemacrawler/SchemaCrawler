@@ -19,10 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-
 import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
@@ -68,12 +66,12 @@ public class OkfConceptWriterTableCountsTest {
     }
     assertThat(target, is(notNullValue()));
 
-    new OkfConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
+    new ConceptPageWriter(support, new BundleDirectoryOutput(tempDir, true))
         .writeTableConcept(target);
 
     final String content =
         Files.readString(tempDir.resolve("tables/" + target.key().slug() + ".md"));
     final long rowCount = support.rowCount(target);
-    assertThat(content, containsString("rowCount: " + rowCount));
+    assertThat(content, containsString("row_count: " + rowCount));
   }
 }

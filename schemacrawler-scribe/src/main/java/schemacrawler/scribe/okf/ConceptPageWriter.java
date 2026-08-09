@@ -19,20 +19,19 @@ import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.scribe.renderer.ScribeSupport;
 
 /** Writes OKF concept pages for tables/views and routines. */
-public final class OkfConceptPageWriter {
+public final class ConceptPageWriter {
 
   private final ScribeSupport support;
-  private final OkfTemplateRenderer templateRenderer;
+  private final TemplateRenderer templateRenderer;
 
-  public OkfConceptPageWriter(
-      final ScribeSupport support, final OkfTemplateRenderer templateRenderer) {
-    this.support = requireNonNull(support, "No Scribe support provided");
-    this.templateRenderer = requireNonNull(templateRenderer, "No template renderer provided");
+  public ConceptPageWriter(
+      final ScribeSupport support, final BundleDirectoryOutput outputDirectory) {
+    this(support, new TemplateRenderer(outputDirectory));
   }
 
-  public OkfConceptPageWriter(
-      final ScribeSupport support, final BundleDirectoryOutput outputDirectory) {
-    this(support, new OkfTemplateRenderer(outputDirectory));
+  public ConceptPageWriter(final ScribeSupport support, final TemplateRenderer templateRenderer) {
+    this.support = requireNonNull(support, "No Scribe support provided");
+    this.templateRenderer = requireNonNull(templateRenderer, "No template renderer provided");
   }
 
   public void writeConceptPages() throws SchemaCrawlerException {
@@ -62,7 +61,7 @@ public final class OkfConceptPageWriter {
 
   private Map<String, Object> newModel(final String resourcePath) {
 
-    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    final FrontMatterSupport frontMatter = new FrontMatterSupport();
     support.transferState(frontMatter);
 
     final Map<String, Object> model = new HashMap<>();
@@ -70,7 +69,6 @@ public final class OkfConceptPageWriter {
     model.put("msg", support.messages());
     model.put("frontMatter", frontMatter);
     model.put("resourcePath", resourcePath);
-    model.put("timestamp", support.crawlTimestamp().toString());
     return model;
   }
 }
