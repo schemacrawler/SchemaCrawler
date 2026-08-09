@@ -30,8 +30,8 @@ import schemacrawler.scribe.model.CrossReferenceEntry;
 import schemacrawler.scribe.renderer.ScribeSupport;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.crawl.LightCatalogUtility;
-import schemacrawler.test.utility.crawl.LightRoutine;
-import schemacrawler.test.utility.crawl.LightRoutineParameter;
+import schemacrawler.test.utility.crawl.LightProcedure;
+import schemacrawler.test.utility.crawl.LightProcedureParameter;
 import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.test.utility.crawl.LightTrigger;
 import schemacrawler.tools.lint.LintSeverity;
@@ -66,7 +66,7 @@ public class OkfTemplateCompilationTest {
     final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
     support.transferState(frontMatter);
 
-    final Routine routine = new LightRoutine(schema, "find_book");
+    final Routine routine = new LightProcedure(schema, "find_book");
     final CrossReferenceEntry crossReferenceEntry =
         new CrossReferenceEntry(
             table, SimpleDatabaseObjectType.table, routine, SimpleDatabaseObjectType.procedure);
@@ -142,9 +142,9 @@ public class OkfTemplateCompilationTest {
     final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
     support.transferState(frontMatter);
 
-    final Routine routine = new LightRoutine(schema, "find_book");
-    final LightRoutineParameter parameter = new LightRoutineParameter(routine, "book_id");
-    ((LightRoutine) routine).addParameter(parameter);
+    final LightProcedure routine = new LightProcedure(schema, "find_book");
+    final LightProcedureParameter parameter = new LightProcedureParameter(routine, "book_id");
+    routine.addParameter(parameter);
 
     final String resourcePath = "routines/find_book.md";
     final Map<String, Object> model = baseModel(support, resourcePath);

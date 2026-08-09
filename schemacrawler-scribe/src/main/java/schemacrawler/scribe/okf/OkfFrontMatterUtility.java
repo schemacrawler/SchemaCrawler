@@ -11,7 +11,6 @@ import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCount;
 import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Routine;
@@ -55,21 +54,7 @@ class OkfFrontMatterUtility {
       completeType = null;
     }
 
-    URI resource;
-    try {
-      final String context;
-      if (databaseObject instanceof Table) {
-        context = "tables";
-      } else if (databaseObject instanceof Routine) {
-        context = "routines";
-      } else {
-        context = "unknowns";
-      }
-      final String path = "/" + String.join("/", databaseObject.getSchema().toString(), name);
-      resource = new URI("catalog", context, path, null);
-    } catch (final URISyntaxException e) {
-      resource = null;
-    }
+    final URI resource = MetaDataUtility.getDatabaseObjectUri(databaseObject);
 
     return new DatabaseObjectDescription(
         simpleTypeName, completeType, schemaName, name, fullName, description, intro, resource);

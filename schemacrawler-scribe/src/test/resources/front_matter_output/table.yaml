@@ -1,0 +1,26 @@
+type: table
+title: PUBLIC.BOOKS.order details
+description: Description of table
+resource: catalog://tables/PUBLIC.BOOKS/order%20details
+tags:
+  - table
+  - no_primary_key
+generated:
+  at: 1970-01-01T00:00:00Z
+  by: process:schemacrawler-v17.12.2
+verified:
+  at: 2026-08-09T02:07:42.417453100Z
+  by: machine-confirmed:schemacrawler-v17.12.2
+status: stable
+shortTitle: order details
+intro: Description of table PUBLIC.BOOKS.order details
+showMiniToc: true
+allowTitleToDifferFromFilename: true
+schema: PUBLIC.BOOKS
+name: order details
+complete_type: unknown
+counts:
+  column_count: 0
+  foreign_key_count: 0
+  index_count: 0
+  trigger_count: 0

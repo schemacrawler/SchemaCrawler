@@ -22,7 +22,7 @@ public record CountsRecord(
 
   private static final Function<Integer, Integer> makePostiveInteger =
       x -> x == null || x < 0 ? null : x;
-  private static final Function<Long, Long> makePostiveLong = x -> x == null || x < 0 ? null : x;
+  private static final Function<Long, Long> makePostiveLong = x -> x == null || x <= 0 ? null : x;
 
   public CountsRecord {
     columnCount = makePostiveInteger.apply(columnCount);
