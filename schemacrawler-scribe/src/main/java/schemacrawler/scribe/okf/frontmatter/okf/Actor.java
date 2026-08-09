@@ -7,14 +7,26 @@
  */
 package schemacrawler.scribe.okf.frontmatter.okf;
 
-public interface Actor {
+import static us.fatehi.utility.Utility.requireNotBlank;
+
+public record Actor(ActorType actorType, String actor) {
 
   public enum ActorType {
+    agent,
     human,
     process;
   }
 
-  String getActor();
+  public Actor {
+    actorType = actorType == null ? actorType = ActorType.process : actorType;
+    requireNotBlank(actor, "No actor provided");
+  }
 
-  ActorType getActorType();
+  @Override
+  public String toString() {
+    if (actorType == ActorType.process) {
+      return actor;
+    }
+    return "%s:%s".formatted(actorType, actor);
+  }
 }

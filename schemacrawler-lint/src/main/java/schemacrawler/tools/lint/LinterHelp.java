@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.tools.lint;
 
 import java.util.Collection;
@@ -35,7 +34,7 @@ public final class LinterHelp implements Supplier<String[]> {
       printHelpHeader(buffer);
     }
 
-    final LinterRegistry registry = LinterRegistry.getLinterRegistry();
+    final LinterRegistry registry = LinterRegistry.getRegistry();
     final Collection<PropertyName> registeredPlugins = registry.getRegisteredPlugins();
     for (final PropertyName linterName : registeredPlugins) {
       final String linterId = linterName.getName();

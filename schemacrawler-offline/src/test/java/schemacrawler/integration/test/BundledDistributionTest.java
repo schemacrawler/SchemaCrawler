@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,8 +18,7 @@ public class BundledDistributionTest {
 
   @Test
   public void testPlugin_offline() throws Exception {
-    final DatabaseConnectorRegistry registry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("offline"), is(true));
   }
 }

@@ -18,6 +18,7 @@ import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import schemacrawler.scribe.okf.frontmatter.github.GitHubPagesFrontMatter;
+import schemacrawler.scribe.okf.frontmatter.okf.Actor;
 import schemacrawler.scribe.okf.frontmatter.okf.Generated;
 import schemacrawler.scribe.okf.frontmatter.okf.LifecycleStatus;
 import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatter;
@@ -34,7 +35,7 @@ public class OkfFrontMatterYamlUtilityTest {
   @Test
   public void mergesFrontMatterAndOmitsOptionalFields() throws Exception {
     final FrontMatterYamlUtility utility = new FrontMatterYamlUtility();
-    final SchemaCrawlerActor actor = new SchemaCrawlerActor();
+    final Actor actor = new SchemaCrawlerActor().toActor();
     final OkfFrontMatter okfFrontMatter =
         new OkfFrontMatter(
             "table",
@@ -66,7 +67,7 @@ public class OkfFrontMatterYamlUtilityTest {
     assertThat(parsed.get("entity_type"), is(nullValue()));
     assertThat(
         yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class),
-        is("machine-confirmed:" + actor.getActor()));
+        is("machine-confirmed:" + actor.actor()));
     assertThat(parsed.get("verified").get("trust_tier"), is(nullValue()));
     assertThat(parsed.get("verified").get("actor"), is(nullValue()));
     assertThat(parsed.get("generated").get("actor"), is(nullValue()));
@@ -77,7 +78,7 @@ public class OkfFrontMatterYamlUtilityTest {
   @Test
   public void omitsSchemaCrawlerSectionWhenNotProvided() throws Exception {
     final FrontMatterYamlUtility utility = new FrontMatterYamlUtility();
-    final SchemaCrawlerActor actor = new SchemaCrawlerActor();
+    final Actor actor = new SchemaCrawlerActor().toActor();
     final OkfFrontMatter okfFrontMatter =
         new OkfFrontMatter(
             "report",

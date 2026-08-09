@@ -29,6 +29,6 @@ public record Verified(@JsonIgnore TrustTier trustTier, @JsonIgnore Actor actor,
 
   @JsonProperty("by")
   public String by() {
-    return "%s:%s".formatted(trustTier, actor.getActor());
+    return "%s:%s".formatted(trustTier, actor.actor());
   }
 }

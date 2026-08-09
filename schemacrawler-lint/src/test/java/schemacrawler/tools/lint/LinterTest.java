@@ -127,7 +127,7 @@ public class LinterTest {
   public void noOpLinter(final DatabaseConnectionSource connectionSource) throws Exception {
 
     final LintCollector collector = new LintCollector();
-    final Linter linter = LinterRegistry.getLinterRegistry().newLinter("bad-linter-id", collector);
+    final Linter linter = LinterRegistry.getRegistry().newLinter("bad-linter-id", collector);
 
     assertThat(linter.getSummary(), is("No-op linter"));
 

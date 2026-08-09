@@ -25,6 +25,6 @@ public record Generated(@JsonIgnore Actor actor, Instant at) {
 
   @JsonProperty("by")
   public String by() {
-    return "%s:%s".formatted(actor.getActorType(), actor.getActor());
+    return actor.toString();
   }
 }

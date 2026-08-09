@@ -22,8 +22,7 @@ public class BundledDistributionTest {
   public void testInformationSchema_sqlserver() throws Exception {
 
     final Connection connection = null;
-    final DatabaseConnectorRegistry registry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
     final DatabaseConnector databaseSystemIdentifier =
         registry.findDatabaseConnectorFromDatabaseSystemIdentifier("sqlserver");
     assertThat(
@@ -37,8 +36,7 @@ public class BundledDistributionTest {
 
   @Test
   public void testPlugin_sqlserver() throws Exception {
-    final DatabaseConnectorRegistry registry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("sqlserver"), is(true));
   }
 }

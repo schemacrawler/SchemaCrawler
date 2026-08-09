@@ -45,7 +45,7 @@ public class AccessTest extends BaseAdditionalDatabaseTest {
     Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
     final Path databaseFile = copyResourceToTempFile("/Books2010.accdb");
     final DatabaseConnector connector =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry()
+        DatabaseConnectorRegistry.getRegistry()
             .findDatabaseConnectorFromDatabaseSystemIdentifier("access");
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions(

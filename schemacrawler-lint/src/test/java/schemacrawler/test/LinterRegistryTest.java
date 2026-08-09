@@ -11,6 +11,7 @@ package schemacrawler.test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import schemacrawler.tools.lint.LinterRegistry;
@@ -21,13 +22,13 @@ public class LinterRegistryTest {
   @Test
   public void registeredPlugins() throws Exception {
     final Collection<PropertyName> supportedLinters =
-        LinterRegistry.getLinterRegistry().getRegisteredPlugins();
+        LinterRegistry.getRegistry().getRegisteredPlugins();
     assertThat(supportedLinters, hasSize(23));
   }
 
   @Test
   public void name() throws Exception {
-    final LinterRegistry catalogLoaderRegistry = LinterRegistry.getLinterRegistry();
+    final LinterRegistry catalogLoaderRegistry = LinterRegistry.getRegistry();
     assertThat(catalogLoaderRegistry.getName(), is("Linters"));
   }
 }

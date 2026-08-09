@@ -96,7 +96,7 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
       requireNonNull(connectionOptions, "No database connection options provided");
 
       final DatabaseConnectorRegistry databaseConnectorRegistry =
-          DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+          DatabaseConnectorRegistry.getRegistry();
       final DatabaseConnector databaseConnector;
 
       if (connectionOptions instanceof final DatabaseUrlConnectionOptions options1) {

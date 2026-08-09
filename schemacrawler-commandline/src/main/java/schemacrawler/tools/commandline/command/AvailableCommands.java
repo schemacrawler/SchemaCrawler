@@ -17,7 +17,7 @@ public class AvailableCommands extends BaseAvailableRegistryPlugins {
 
   private static Collection<PropertyName> availableCommands() {
     final Collection<PropertyName> supportedCommands =
-        new ArrayList<>(CommandRegistry.getCommandRegistry().getRegisteredPlugins());
+        new ArrayList<>(CommandRegistry.getRegistry().getRegisteredPlugins());
     // Add meta-commands
     supportedCommands.add(
         new PropertyName(
@@ -42,7 +42,7 @@ public class AvailableCommands extends BaseAvailableRegistryPlugins {
 
   public AvailableCommands() {
     super(availableCommands());
-    name = CommandRegistry.getCommandRegistry().getName();
+    name = CommandRegistry.getRegistry().getName();
   }
 
   @Override

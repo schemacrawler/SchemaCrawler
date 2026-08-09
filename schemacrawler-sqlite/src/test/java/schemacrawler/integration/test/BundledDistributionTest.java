@@ -6,11 +6,11 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+
 import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -22,8 +22,7 @@ public class BundledDistributionTest {
   public void testInformationSchema_sqlite() throws Exception {
 
     final Connection connection = null;
-    final DatabaseConnectorRegistry registry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
     final DatabaseConnector databaseSystemIdentifier =
         registry.findDatabaseConnectorFromDatabaseSystemIdentifier("sqlite");
     assertThat(
@@ -37,8 +36,7 @@ public class BundledDistributionTest {
 
   @Test
   public void testPlugin_sqlite() throws Exception {
-    final DatabaseConnectorRegistry registry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("sqlite"), is(true));
   }
 }

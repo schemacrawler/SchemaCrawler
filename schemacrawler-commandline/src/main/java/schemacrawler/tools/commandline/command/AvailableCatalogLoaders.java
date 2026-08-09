@@ -15,8 +15,8 @@ public class AvailableCatalogLoaders extends BaseAvailableRegistryPlugins {
   private final String name;
 
   public AvailableCatalogLoaders() {
-    super(CatalogLoaderRegistry.getCatalogLoaderRegistry().getRegisteredPlugins());
-    name = CatalogLoaderRegistry.getCatalogLoaderRegistry().getName();
+    super(CatalogLoaderRegistry.getRegistry().getRegisteredPlugins());
+    name = CatalogLoaderRegistry.getRegistry().getName();
   }
 
   @Override

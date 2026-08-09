@@ -15,8 +15,8 @@ public class AvailableServers extends BaseAvailableRegistryPlugins {
   private final String name;
 
   public AvailableServers() {
-    super(DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getRegisteredPlugins());
-    name = DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getName();
+    super(DatabaseConnectorRegistry.getRegistry().getRegisteredPlugins());
+    name = DatabaseConnectorRegistry.getRegistry().getName();
   }
 
   @Override

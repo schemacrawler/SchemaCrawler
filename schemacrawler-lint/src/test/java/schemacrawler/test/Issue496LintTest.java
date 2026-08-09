@@ -65,7 +65,7 @@ public class Issue496LintTest {
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
 
     final Linters linters = new Linters(linterConfigs, false);
-    final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
+    final LinterRegistry linterRegistry = LinterRegistry.getRegistry();
     linters.initialize(linterRegistry);
     linters.setCatalog(catalog);
     linters.setConnectionSource(connectionSource);
@@ -96,7 +96,7 @@ public class Issue496LintTest {
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
 
     final Linters linters = new Linters(linterConfigs, false);
-    final LinterRegistry linterRegistry = LinterRegistry.getLinterRegistry();
+    final LinterRegistry linterRegistry = LinterRegistry.getRegistry();
     linters.initialize(linterRegistry);
     linters.setCatalog(catalog);
     linters.setConnectionSource(connectionSource);

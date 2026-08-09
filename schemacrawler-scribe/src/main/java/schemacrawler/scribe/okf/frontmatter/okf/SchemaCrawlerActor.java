@@ -8,9 +8,10 @@
 package schemacrawler.scribe.okf.frontmatter.okf;
 
 import schemacrawler.schemacrawler.Version;
+import schemacrawler.scribe.okf.frontmatter.okf.Actor.ActorType;
 import us.fatehi.utility.property.ProductVersion;
 
-public final class SchemaCrawlerActor implements Actor {
+public final class SchemaCrawlerActor {
 
   private final ActorType actorType;
   private final String actor;
@@ -23,14 +24,16 @@ public final class SchemaCrawlerActor implements Actor {
     actor = "%s-v%s".formatted(actorName, version.getProductVersion());
   }
 
-  @Override
-  public String getActor() {
+  public String actor() {
     return actor;
   }
 
-  @Override
-  public ActorType getActorType() {
+  public ActorType actorType() {
     return actorType;
+  }
+
+  public Actor toActor() {
+    return new Actor(actorType, actor);
   }
 
   @Override
