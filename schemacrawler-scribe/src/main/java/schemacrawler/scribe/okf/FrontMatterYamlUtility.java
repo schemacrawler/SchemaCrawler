@@ -16,11 +16,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import schemacrawler.scribe.okf.frontmatter.github.GitHubPagesFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatterRecord;
+import schemacrawler.scribe.okf.frontmatter.github.GitHubPagesFrontMatter;
+import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatter;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatter;
 
-final class OkfFrontMatterYamlUtility {
+final class FrontMatterYamlUtility {
 
   @SuppressWarnings("unchecked")
   private static void mergeInto(
@@ -98,9 +98,9 @@ final class OkfFrontMatterYamlUtility {
   }
 
   String toYamlString(
-      final OkfFrontMatterRecord okfFrontMatter,
-      final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter,
-      final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter) {
+      final OkfFrontMatter okfFrontMatter,
+      final GitHubPagesFrontMatter gitHubPagesFrontMatter,
+      final SchemaCrawlerFrontMatter schemaCrawlerFrontMatter) {
     requireNonNull(okfFrontMatter, "No OKF front-matter provided");
     requireNonNull(gitHubPagesFrontMatter, "No GitHub front-matter provided");
 

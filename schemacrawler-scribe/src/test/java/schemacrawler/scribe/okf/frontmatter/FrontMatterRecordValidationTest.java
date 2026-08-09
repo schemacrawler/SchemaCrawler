@@ -17,11 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.scribe.renderer.JsonUtility.yamlMapper;
 
 import org.junit.jupiter.api.Test;
-import schemacrawler.scribe.okf.frontmatter.okf.GeneratedRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.Generated;
 import schemacrawler.scribe.okf.frontmatter.okf.LifecycleStatus;
 import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
-import schemacrawler.scribe.okf.frontmatter.okf.VerifiedRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.Verified;
 import tools.jackson.databind.JsonNode;
 
 public class FrontMatterRecordValidationTest {
@@ -29,17 +29,15 @@ public class FrontMatterRecordValidationTest {
   @Test
   public void generatedRecordValidatesActorPrefix() {
     assertThrows(
-        NullPointerException.class, () -> new GeneratedRecord(null, parse("2026-06-25T09:00:00Z")));
+        NullPointerException.class, () -> new Generated(null, parse("2026-06-25T09:00:00Z")));
     assertDoesNotThrow(
-        () -> new GeneratedRecord(new SchemaCrawlerActor(), parse("2026-06-25T09:00:00Z")));
+        () -> new Generated(new SchemaCrawlerActor(), parse("2026-06-25T09:00:00Z")));
   }
 
   @Test
   public void verifiedRecordValidatesPresence() {
-    assertThrows(
-        NullPointerException.class, () -> new VerifiedRecord(TrustTier.machine_confirmed, null));
-    assertDoesNotThrow(
-        () -> new VerifiedRecord(TrustTier.machine_confirmed, new SchemaCrawlerActor()));
+    assertThrows(NullPointerException.class, () -> new Verified(TrustTier.machine_confirmed, null));
+    assertDoesNotThrow(() -> new Verified(TrustTier.machine_confirmed, new SchemaCrawlerActor()));
   }
 
   @Test
@@ -55,10 +53,9 @@ public class FrontMatterRecordValidationTest {
 
   @Test
   public void recordsSerializeByAndAtOnly() {
-    final GeneratedRecord generated =
-        new GeneratedRecord(new SchemaCrawlerActor(), parse("2026-06-25T09:00:00Z"));
-    final VerifiedRecord verified =
-        new VerifiedRecord(TrustTier.machine_confirmed, new SchemaCrawlerActor());
+    final Generated generated =
+        new Generated(new SchemaCrawlerActor(), parse("2026-06-25T09:00:00Z"));
+    final Verified verified = new Verified(TrustTier.machine_confirmed, new SchemaCrawlerActor());
 
     final JsonNode generatedJson = yamlMapper.valueToTree(generated);
     final JsonNode verifiedJson = yamlMapper.valueToTree(verified);

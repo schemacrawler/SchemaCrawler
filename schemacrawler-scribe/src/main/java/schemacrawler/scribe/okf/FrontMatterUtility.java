@@ -19,14 +19,14 @@ import schemacrawler.schema.TypedObject;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
 import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
-import schemacrawler.scribe.okf.frontmatter.okf.VerifiedRecord;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.CountsRecord;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributesRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.Verified;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.Counts;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributes;
 import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
-class OkfFrontMatterUtility {
+class FrontMatterUtility {
 
   static DatabaseObjectDescription objectDescription(final DatabaseObject databaseObject) {
     if (databaseObject == null) {
@@ -60,18 +60,18 @@ class OkfFrontMatterUtility {
         simpleTypeName, completeType, schemaName, name, fullName, description, intro, resource);
   }
 
-  static CountsRecord routineCounts(final Routine routine) {
+  static Counts routineCounts(final Routine routine) {
     if (routine == null) {
-      return new CountsRecord();
+      return new Counts();
     }
-    return new CountsRecord(null, null, null, null, null, routine.getParameters().size());
+    return new Counts(null, null, null, null, null, routine.getParameters().size());
   }
 
-  static TableAttributesRecord tableAttributes(final Table table, final boolean isBridgeTable) {
+  static TableAttributes tableAttributes(final Table table, final boolean isBridgeTable) {
     if (table == null) {
-      return new TableAttributesRecord();
+      return new TableAttributes();
     }
-    return new TableAttributesRecord(
+    return new TableAttributes(
         !table.hasPrimaryKey(),
         table.isSelfReferencing(),
         table.hasTriggers(),
@@ -79,13 +79,13 @@ class OkfFrontMatterUtility {
         isBridgeTable);
   }
 
-  static CountsRecord tableCounts(final Table table) {
+  static Counts tableCounts(final Table table) {
     if (table == null) {
       return null;
     }
     final Long rowCount =
         TableRowCountsUtility.hasRowCount(table) ? TableRowCountsUtility.getRowCount(table) : null;
-    return new CountsRecord(
+    return new Counts(
         table.getColumns().size(),
         table.getReferencedTables().size(),
         table.getIndexes().size(),
@@ -94,11 +94,11 @@ class OkfFrontMatterUtility {
         null);
   }
 
-  static VerifiedRecord verified() {
-    return new VerifiedRecord(TrustTier.machine_confirmed, new SchemaCrawlerActor());
+  static Verified verified() {
+    return new Verified(TrustTier.machine_confirmed, new SchemaCrawlerActor());
   }
 
-  private OkfFrontMatterUtility() {
+  private FrontMatterUtility() {
     // Prevent instantiation
   }
 }

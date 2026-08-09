@@ -44,7 +44,7 @@ public class OkfScribeRendererIntegrationTest {
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
 
-    new OkfScribeRenderer().render(support, new BundleDirectoryOutput(tempDir, true));
+    new OpenKnowledgeFormatRenderer().render(support, new BundleDirectoryOutput(tempDir, true));
 
     assertThat(Files.exists(tempDir.resolve("index.md")), is(true));
     assertThat(Files.exists(tempDir.resolve("tables/index.md")), is(true));

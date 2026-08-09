@@ -15,19 +15,19 @@ import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record SchemaCrawlerFrontMatterRecord(
-    String schema, String name, String completeType, CountsRecord counts, String entityType) {
+public record SchemaCrawlerFrontMatter(
+    String schema, String name, String completeType, Counts counts, String entityType) {
 
-  public SchemaCrawlerFrontMatterRecord {
+  public SchemaCrawlerFrontMatter {
     schema = trimToEmpty(schema);
     name = trimToEmpty(name);
     completeType = trimToEmpty(completeType);
     entityType = trimToEmpty(entityType);
   }
 
-  public SchemaCrawlerFrontMatterRecord(
+  public SchemaCrawlerFrontMatter(
       final DatabaseObjectDescription objectDescription,
-      final CountsRecord counts,
+      final Counts counts,
       final String entityType) {
     this(
         requireNonNull(objectDescription, "No database object description provided").schemaName(),

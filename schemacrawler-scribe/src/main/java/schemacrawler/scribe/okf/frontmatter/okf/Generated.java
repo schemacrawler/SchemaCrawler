@@ -16,9 +16,9 @@ import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record GeneratedRecord(@JsonIgnore Actor actor, Instant at) {
+public record Generated(@JsonIgnore Actor actor, Instant at) {
 
-  public GeneratedRecord {
+  public Generated {
     actor = requireNonNull(actor, "No generated.by actor provided");
     at = at == null ? Instant.now() : at;
   }

@@ -16,14 +16,14 @@ import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record VerifiedRecord(@JsonIgnore TrustTier trustTier, @JsonIgnore Actor actor, Instant at) {
-  public VerifiedRecord {
+public record Verified(@JsonIgnore TrustTier trustTier, @JsonIgnore Actor actor, Instant at) {
+  public Verified {
     trustTier = trustTier == null ? TrustTier.unverified : trustTier;
     requireNonNull(actor, "No actor provided");
     at = at == null ? Instant.now() : at;
   }
 
-  public VerifiedRecord(final TrustTier trustTier, final Actor actor) {
+  public Verified(final TrustTier trustTier, final Actor actor) {
     this(trustTier, actor, null);
   }
 

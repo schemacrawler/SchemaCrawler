@@ -13,19 +13,18 @@ import schemacrawler.scribe.renderer.ScribeRenderer;
 import schemacrawler.scribe.renderer.ScribeSupport;
 
 /** Renders a Google OKF (Open Knowledge Framework) Markdown bundle. */
-public final class OkfScribeRenderer implements ScribeRenderer {
+public final class OpenKnowledgeFormatRenderer implements ScribeRenderer {
 
   @Override
   public void render(final ScribeSupport support, final BundleDirectoryOutput outputDirectory)
       throws SchemaCrawlerException {
 
-    final OkfTemplateRenderer templateRenderer = new OkfTemplateRenderer(outputDirectory);
+    final TemplateRenderer templateRenderer = new TemplateRenderer(outputDirectory);
 
-    final OkfConceptPageWriter conceptPageWriter =
-        new OkfConceptPageWriter(support, templateRenderer);
+    final ConceptPageWriter conceptPageWriter = new ConceptPageWriter(support, templateRenderer);
     conceptPageWriter.writeConceptPages();
 
-    final OkfReportPageWriter reportPageWriter = new OkfReportPageWriter(support, templateRenderer);
+    final ReportPageWriter reportPageWriter = new ReportPageWriter(support, templateRenderer);
     reportPageWriter.writeReportAndIndexPages();
   }
 }

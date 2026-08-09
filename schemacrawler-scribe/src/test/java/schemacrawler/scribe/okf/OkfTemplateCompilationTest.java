@@ -63,7 +63,7 @@ public class OkfTemplateCompilationTest {
     final LightTable table = new LightTable(schema, "books");
     final Catalog catalog = LightCatalogUtility.lightCatalog(table);
     final ScribeSupport support = newScribeSupport(catalog);
-    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    final FrontMatterSupport frontMatter = new FrontMatterSupport();
     support.transferState(frontMatter);
 
     final Routine routine = new LightProcedure(schema, "find_book");
@@ -76,7 +76,7 @@ public class OkfTemplateCompilationTest {
     model.put("crossReferenceEntries", List.of(crossReferenceEntry));
     model.put("frontMatter", frontMatter);
 
-    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
+    new TemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("cross-references.ftl", model, resourcePath);
 
     final String content = Files.readString(tempDir.resolve(resourcePath));
@@ -95,7 +95,7 @@ public class OkfTemplateCompilationTest {
     final LightTable table = new LightTable(schema, "books");
     final Catalog catalog = LightCatalogUtility.lightCatalog(table);
     final ScribeSupport support = newScribeSupport(catalog);
-    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    final FrontMatterSupport frontMatter = new FrontMatterSupport();
     support.transferState(frontMatter);
 
     final String resourcePath = "reports/lint.md";
@@ -103,7 +103,7 @@ public class OkfTemplateCompilationTest {
     model.put("lintsBySeverity", Map.of(LintSeverity.medium, List.of()));
     model.put("frontMatter", frontMatter);
 
-    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
+    new TemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("lint.ftl", model, resourcePath);
 
     final String content = Files.readString(tempDir.resolve(resourcePath));
@@ -122,7 +122,7 @@ public class OkfTemplateCompilationTest {
     final String resourcePath = "reports/index.md";
     final Map<String, Object> model = baseModel(support, resourcePath);
 
-    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
+    new TemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("reports-index.ftl", model, resourcePath);
 
     final String content = Files.readString(tempDir.resolve(resourcePath));
@@ -139,7 +139,7 @@ public class OkfTemplateCompilationTest {
     final LightTable table = new LightTable(schema, "books");
     final Catalog catalog = LightCatalogUtility.lightCatalog(table);
     final ScribeSupport support = newScribeSupport(catalog);
-    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    final FrontMatterSupport frontMatter = new FrontMatterSupport();
     support.transferState(frontMatter);
 
     final LightProcedure routine = new LightProcedure(schema, "find_book");
@@ -151,7 +151,7 @@ public class OkfTemplateCompilationTest {
     model.put("routine", routine);
     model.put("frontMatter", frontMatter);
 
-    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
+    new TemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("routine-concept.ftl", model, resourcePath);
 
     final String content = Files.readString(tempDir.resolve(resourcePath));
@@ -175,7 +175,7 @@ public class OkfTemplateCompilationTest {
 
     final Catalog catalog = LightCatalogUtility.lightCatalog(table);
     final ScribeSupport support = newScribeSupport(catalog);
-    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    final FrontMatterSupport frontMatter = new FrontMatterSupport();
     support.transferState(frontMatter);
 
     final String resourcePath = "tables/books.md";
@@ -183,7 +183,7 @@ public class OkfTemplateCompilationTest {
     model.put("table", table);
     model.put("frontMatter", frontMatter);
 
-    new OkfTemplateRenderer(new BundleDirectoryOutput(tempDir, true))
+    new TemplateRenderer(new BundleDirectoryOutput(tempDir, true))
         .writeTemplate("table-concept.ftl", model, resourcePath);
 
     final String content = Files.readString(tempDir.resolve(resourcePath));

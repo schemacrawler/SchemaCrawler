@@ -94,7 +94,8 @@ public class OkfLintGateTest {
     final ExecutionState executionState = new StubExecutionState(catalog);
     final ScribeSupport support = new ScribeSupport(executionState, options, new Lints(List.of()));
 
-    new OkfScribeRenderer().render(support, new BundleDirectoryOutput(outputDirectory, true));
+    new OpenKnowledgeFormatRenderer()
+        .render(support, new BundleDirectoryOutput(outputDirectory, true));
   }
 
   @FunctionalInterface

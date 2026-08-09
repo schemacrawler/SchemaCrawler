@@ -15,15 +15,15 @@ import tools.jackson.databind.PropertyNamingStrategies.LowerCamelCaseStrategy;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(LowerCamelCaseStrategy.class)
-public record GitHubPagesFrontMatterRecord(
+public record GitHubPagesFrontMatter(
     String shortTitle, String intro, boolean showMiniToc, boolean allowTitleToDifferFromFilename) {
 
-  public GitHubPagesFrontMatterRecord {
+  public GitHubPagesFrontMatter {
     shortTitle = trimToEmpty(shortTitle);
     intro = trimToEmpty(intro);
   }
 
-  public GitHubPagesFrontMatterRecord(
+  public GitHubPagesFrontMatter(
       final DatabaseObjectDescription objectDescription,
       final boolean showMiniToc,
       final boolean allowTitleToDifferFromFilename) {

@@ -11,7 +11,7 @@ package schemacrawler.scribe.command.options;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.List;
-import schemacrawler.scribe.okf.OkfScribeRenderer;
+import schemacrawler.scribe.okf.OpenKnowledgeFormatRenderer;
 import schemacrawler.scribe.renderer.ScribeRenderer;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputFormatState;
@@ -73,7 +73,7 @@ public enum ScribeOutputFormat implements OutputFormat {
 
   public ScribeRenderer newRenderer() {
     return switch (this) {
-      case okf -> new OkfScribeRenderer();
+      case okf -> new OpenKnowledgeFormatRenderer();
     };
   }
 

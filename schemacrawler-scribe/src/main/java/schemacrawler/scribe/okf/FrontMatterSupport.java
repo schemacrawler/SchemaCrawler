@@ -7,9 +7,9 @@
  */
 package schemacrawler.scribe.okf;
 
-import static schemacrawler.scribe.okf.OkfFrontMatterUtility.objectDescription;
-import static schemacrawler.scribe.okf.OkfFrontMatterUtility.tableAttributes;
-import static schemacrawler.scribe.okf.OkfFrontMatterUtility.verified;
+import static schemacrawler.scribe.okf.FrontMatterUtility.objectDescription;
+import static schemacrawler.scribe.okf.FrontMatterUtility.tableAttributes;
+import static schemacrawler.scribe.okf.FrontMatterUtility.verified;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.toSnakeCase;
 
@@ -24,25 +24,25 @@ import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
-import schemacrawler.scribe.okf.frontmatter.github.GitHubPagesFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.okf.GeneratedRecord;
+import schemacrawler.scribe.okf.frontmatter.github.GitHubPagesFrontMatter;
+import schemacrawler.scribe.okf.frontmatter.okf.Generated;
 import schemacrawler.scribe.okf.frontmatter.okf.LifecycleStatus;
-import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatterRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatter;
 import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributesRecord;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatter;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributes;
 import schemacrawler.tools.state.AbstractExecutionState;
 
-public final class OkfFrontMatterSupport extends AbstractExecutionState {
+public final class FrontMatterSupport extends AbstractExecutionState {
 
   private static void addTag(final List<String> tags, final String tag) {
     tags.add(toSnakeCase(tag));
   }
 
-  private final OkfFrontMatterYamlUtility frontMatterYamlUtility;
+  private final FrontMatterYamlUtility frontMatterYamlUtility;
 
-  public OkfFrontMatterSupport() {
-    frontMatterYamlUtility = new OkfFrontMatterYamlUtility();
+  public FrontMatterSupport() {
+    frontMatterYamlUtility = new FrontMatterYamlUtility();
   }
 
   public String frontMatter(final Routine routine) {
@@ -51,14 +51,14 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     final List<String> tags = new ArrayList<>();
     addTag(tags, objectDescription.simpleTypeName());
 
-    final OkfFrontMatterRecord okfFrontMatter =
-        new OkfFrontMatterRecord(
+    final OkfFrontMatter okfFrontMatter =
+        new OkfFrontMatter(
             objectDescription, tags, generated(), verified(), LifecycleStatus.stable);
-    final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
-        new GitHubPagesFrontMatterRecord(objectDescription, true, true);
-    final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
-        new SchemaCrawlerFrontMatterRecord(
-            objectDescription, OkfFrontMatterUtility.routineCounts(routine), null);
+    final GitHubPagesFrontMatter gitHubPagesFrontMatter =
+        new GitHubPagesFrontMatter(objectDescription, true, true);
+    final SchemaCrawlerFrontMatter schemaCrawlerFrontMatter =
+        new SchemaCrawlerFrontMatter(
+            objectDescription, FrontMatterUtility.routineCounts(routine), null);
 
     return frontMatterYamlUtility.toYamlString(
         okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
@@ -69,19 +69,19 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
     final List<String> tags = new ArrayList<>();
     addTag(tags, objectDescription.simpleTypeName());
-    final TableAttributesRecord tableAttributes = tableAttributes(table, isBridgeTable(table));
+    final TableAttributes tableAttributes = tableAttributes(table, isBridgeTable(table));
     tags.addAll(frontMatterYamlUtility.toTags(tableAttributes));
 
     final String entityType = entityType(table, tags);
 
-    final OkfFrontMatterRecord okfFrontMatter =
-        new OkfFrontMatterRecord(
+    final OkfFrontMatter okfFrontMatter =
+        new OkfFrontMatter(
             objectDescription, tags, generated(), verified(), LifecycleStatus.stable);
-    final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
-        new GitHubPagesFrontMatterRecord(objectDescription, true, true);
-    final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
-        new SchemaCrawlerFrontMatterRecord(
-            objectDescription, OkfFrontMatterUtility.tableCounts(table), entityType);
+    final GitHubPagesFrontMatter gitHubPagesFrontMatter =
+        new GitHubPagesFrontMatter(objectDescription, true, true);
+    final SchemaCrawlerFrontMatter schemaCrawlerFrontMatter =
+        new SchemaCrawlerFrontMatter(
+            objectDescription, FrontMatterUtility.tableCounts(table), entityType);
 
     return frontMatterYamlUtility.toYamlString(
         okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
@@ -92,8 +92,8 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     final String title = isBlank(providedTitle) ? "Report" : providedTitle;
     final String description = isBlank(providedDescription) ? "Report" : providedDescription;
 
-    final OkfFrontMatterRecord okfFrontMatter =
-        new OkfFrontMatterRecord(
+    final OkfFrontMatter okfFrontMatter =
+        new OkfFrontMatter(
             "report",
             title,
             description,
@@ -102,8 +102,8 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
             generated(),
             verified(),
             LifecycleStatus.stable);
-    final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
-        new GitHubPagesFrontMatterRecord(title, description, false, true);
+    final GitHubPagesFrontMatter gitHubPagesFrontMatter =
+        new GitHubPagesFrontMatter(title, description, false, true);
 
     return frontMatterYamlUtility.toYamlString(okfFrontMatter, gitHubPagesFrontMatter, null);
   }
@@ -127,7 +127,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     return null;
   }
 
-  private GeneratedRecord generated() {
+  private Generated generated() {
     if (!hasCatalog()) {
       return null;
     }
@@ -135,7 +135,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     final CrawlInfo crawlInfo = getCatalog().getCrawlInfo();
     final Instant crawlTimestamp = crawlInfo.getCrawlTimestampInstant();
 
-    return new GeneratedRecord(new SchemaCrawlerActor(), crawlTimestamp);
+    return new Generated(new SchemaCrawlerActor(), crawlTimestamp);
   }
 
   private boolean isBridgeTable(final Table table) {

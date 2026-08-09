@@ -30,9 +30,9 @@ import schemacrawler.tools.lint.Lints;
 import us.fatehi.utility.string.StringFormat;
 
 /** Writes OKF index and report pages. */
-public final class OkfReportPageWriter {
+public final class ReportPageWriter {
 
-  private static final Logger LOGGER = Logger.getLogger(OkfReportPageWriter.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ReportPageWriter.class.getName());
 
   private static final String ROOT_INDEX_PATH = "index.md";
   private static final String TABLES_INDEX_PATH = "tables/index.md";
@@ -44,10 +44,9 @@ public final class OkfReportPageWriter {
   private static final String CROSS_REFERENCES_PATH = REPORTS_DIRECTORY + "cross-references.md";
 
   private final ScribeSupport support;
-  private final OkfTemplateRenderer templateRenderer;
+  private final TemplateRenderer templateRenderer;
 
-  public OkfReportPageWriter(
-      final ScribeSupport support, final OkfTemplateRenderer templateRenderer) {
+  public ReportPageWriter(final ScribeSupport support, final TemplateRenderer templateRenderer) {
     this.support = requireNonNull(support, "No Scribe support provided");
     this.templateRenderer = requireNonNull(templateRenderer, "No template renderer provided");
   }
@@ -63,7 +62,7 @@ public final class OkfReportPageWriter {
 
   private Map<String, Object> makeModel() {
 
-    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    final FrontMatterSupport frontMatter = new FrontMatterSupport();
     support.transferState(frontMatter);
 
     final ScribeMessages msg = support.messages();

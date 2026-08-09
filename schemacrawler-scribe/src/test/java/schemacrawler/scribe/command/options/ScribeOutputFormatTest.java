@@ -12,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
-import schemacrawler.scribe.okf.OkfScribeRenderer;
+import schemacrawler.scribe.okf.OpenKnowledgeFormatRenderer;
 
 public class ScribeOutputFormatTest {
 
@@ -29,7 +29,8 @@ public class ScribeOutputFormatTest {
   @Test
   public void createsRendererForKnownFormat() {
     assertThat(
-        ScribeOutputFormat.fromFormatOrNull("okf").newRenderer() instanceof OkfScribeRenderer,
+        ScribeOutputFormat.fromFormatOrNull("okf").newRenderer()
+            instanceof OpenKnowledgeFormatRenderer,
         is(true));
   }
 

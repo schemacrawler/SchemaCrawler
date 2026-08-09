@@ -17,39 +17,39 @@ import static schemacrawler.scribe.renderer.JsonUtility.yamlMapper;
 import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import schemacrawler.scribe.okf.frontmatter.github.GitHubPagesFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.okf.GeneratedRecord;
+import schemacrawler.scribe.okf.frontmatter.github.GitHubPagesFrontMatter;
+import schemacrawler.scribe.okf.frontmatter.okf.Generated;
 import schemacrawler.scribe.okf.frontmatter.okf.LifecycleStatus;
-import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatterRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatter;
 import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
-import schemacrawler.scribe.okf.frontmatter.okf.VerifiedRecord;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.CountsRecord;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributesRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.Verified;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.Counts;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatter;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributes;
 import tools.jackson.databind.JsonNode;
 
 public class OkfFrontMatterYamlUtilityTest {
 
   @Test
   public void mergesFrontMatterAndOmitsOptionalFields() throws Exception {
-    final OkfFrontMatterYamlUtility utility = new OkfFrontMatterYamlUtility();
+    final FrontMatterYamlUtility utility = new FrontMatterYamlUtility();
     final SchemaCrawlerActor actor = new SchemaCrawlerActor();
-    final OkfFrontMatterRecord okfFrontMatter =
-        new OkfFrontMatterRecord(
+    final OkfFrontMatter okfFrontMatter =
+        new OkfFrontMatter(
             "table",
             "PUBLIC.BOOKS",
             "Books table",
             null,
             List.of("table", "has_triggers"),
-            new GeneratedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
-            new VerifiedRecord(TrustTier.machine_confirmed, actor),
+            new Generated(actor, Instant.parse("2026-01-01T00:00:00Z")),
+            new Verified(TrustTier.machine_confirmed, actor),
             LifecycleStatus.stable);
-    final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
-        new GitHubPagesFrontMatterRecord("books", "Books table", true, true);
-    final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
-        new SchemaCrawlerFrontMatterRecord(
-            "PUBLIC.BOOKS", "BOOKS", null, new CountsRecord(2, 0, 1, 1, null, null), null);
+    final GitHubPagesFrontMatter gitHubPagesFrontMatter =
+        new GitHubPagesFrontMatter("books", "Books table", true, true);
+    final SchemaCrawlerFrontMatter schemaCrawlerFrontMatter =
+        new SchemaCrawlerFrontMatter(
+            "PUBLIC.BOOKS", "BOOKS", null, new Counts(2, 0, 1, 1, null, null), null);
 
     final String yaml =
         utility.toYamlString(okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
@@ -76,20 +76,20 @@ public class OkfFrontMatterYamlUtilityTest {
 
   @Test
   public void omitsSchemaCrawlerSectionWhenNotProvided() throws Exception {
-    final OkfFrontMatterYamlUtility utility = new OkfFrontMatterYamlUtility();
+    final FrontMatterYamlUtility utility = new FrontMatterYamlUtility();
     final SchemaCrawlerActor actor = new SchemaCrawlerActor();
-    final OkfFrontMatterRecord okfFrontMatter =
-        new OkfFrontMatterRecord(
+    final OkfFrontMatter okfFrontMatter =
+        new OkfFrontMatter(
             "report",
             "Report",
             "Report",
             null,
             List.of(),
-            new GeneratedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
-            new VerifiedRecord(TrustTier.machine_confirmed, actor),
+            new Generated(actor, Instant.parse("2026-01-01T00:00:00Z")),
+            new Verified(TrustTier.machine_confirmed, actor),
             LifecycleStatus.stable);
-    final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
-        new GitHubPagesFrontMatterRecord("Report", "Report", false, true);
+    final GitHubPagesFrontMatter gitHubPagesFrontMatter =
+        new GitHubPagesFrontMatter("Report", "Report", false, true);
 
     final JsonNode parsed =
         yamlMapper.readTree(utility.toYamlString(okfFrontMatter, gitHubPagesFrontMatter, null));
@@ -105,7 +105,7 @@ public class OkfFrontMatterYamlUtilityTest {
     assertThrows(
         IllegalArgumentException.class,
         () ->
-            new OkfFrontMatterRecord(
+            new OkfFrontMatter(
                 " ",
                 "PUBLIC.BOOKS",
                 "Books table",
@@ -119,9 +119,8 @@ public class OkfFrontMatterYamlUtilityTest {
 
   @Test
   public void tableAttributesAreConvertedToSnakeCaseTags() {
-    final OkfFrontMatterYamlUtility utility = new OkfFrontMatterYamlUtility();
-    final TableAttributesRecord tableAttributes =
-        new TableAttributesRecord(true, true, false, null, true);
+    final FrontMatterYamlUtility utility = new FrontMatterYamlUtility();
+    final TableAttributes tableAttributes = new TableAttributes(true, true, false, null, true);
 
     assertThat(
         utility.toTags(tableAttributes),

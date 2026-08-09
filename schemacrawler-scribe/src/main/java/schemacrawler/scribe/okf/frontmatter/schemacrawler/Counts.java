@@ -12,7 +12,7 @@ import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record CountsRecord(
+public record Counts(
     Integer columnCount,
     Integer foreignKeyCount,
     Integer indexCount,
@@ -24,7 +24,7 @@ public record CountsRecord(
       x -> x == null || x <= 0 ? null : x;
   private static final Function<Long, Long> makePostiveLong = x -> x == null || x <= 0 ? null : x;
 
-  public CountsRecord {
+  public Counts {
     columnCount = makePostiveInteger.apply(columnCount);
     foreignKeyCount = makePostiveInteger.apply(foreignKeyCount);
     indexCount = makePostiveInteger.apply(indexCount);
@@ -33,7 +33,7 @@ public record CountsRecord(
     parameterCount = makePostiveInteger.apply(parameterCount);
   }
 
-  public CountsRecord() {
+  public Counts() {
     this(null, null, null, null, null, null);
   }
 }

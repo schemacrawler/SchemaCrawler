@@ -33,7 +33,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
-import schemacrawler.scribe.okf.OkfFrontMatterSupport;
+import schemacrawler.scribe.okf.FrontMatterSupport;
 import schemacrawler.test.utility.StubExecutionState;
 import schemacrawler.test.utility.WithTestDatabase;
 import schemacrawler.test.utility.crawl.LightCatalogUtility;
@@ -81,7 +81,7 @@ public class ScribeSupportTest {
     final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
     final ScribeSupport support =
         new ScribeSupport(new StubExecutionState(catalog), options, new Lints(List.of()));
-    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    final FrontMatterSupport frontMatter = new FrontMatterSupport();
     support.transferState(frontMatter);
 
     final JsonNode frontMatterNode = yamlMapper.readTree(frontMatter.frontMatter(routine));
@@ -105,7 +105,7 @@ public class ScribeSupportTest {
     final ScribeOptions options = ScribeOptionsBuilder.builder().toOptions();
     final ScribeSupport support =
         new ScribeSupport(new StubExecutionState(catalog), options, new Lints(List.of()));
-    final OkfFrontMatterSupport frontMatter = new OkfFrontMatterSupport();
+    final FrontMatterSupport frontMatter = new FrontMatterSupport();
     support.transferState(frontMatter);
 
     final JsonNode frontMatterNode = yamlMapper.readTree(frontMatter.frontMatter(table));

@@ -21,17 +21,17 @@ import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record OkfFrontMatterRecord(
+public record OkfFrontMatter(
     String type,
     String title,
     String description,
     URI resource,
     List<String> tags,
-    GeneratedRecord generated,
-    VerifiedRecord verified,
+    Generated generated,
+    Verified verified,
     LifecycleStatus status) {
 
-  public OkfFrontMatterRecord {
+  public OkfFrontMatter {
     type = requireNotBlank(trimToEmpty(type), "No type provided");
     title = requireNotBlank(trimToEmpty(title), "No title provided");
     description = trimToEmpty(description);
@@ -40,11 +40,11 @@ public record OkfFrontMatterRecord(
     status = status == null ? LifecycleStatus.stable : status;
   }
 
-  public OkfFrontMatterRecord(
+  public OkfFrontMatter(
       final DatabaseObjectDescription objectDescription,
       final List<String> tags,
-      final GeneratedRecord generated,
-      final VerifiedRecord verified,
+      final Generated generated,
+      final Verified verified,
       final LifecycleStatus status) {
     this(
         requireNonNull(objectDescription, "No database object description provided")
