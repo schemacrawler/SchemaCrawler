@@ -7,10 +7,7 @@
  */
 package schemacrawler.scribe.okf.frontmatter;
 
-import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
-
 import java.util.function.Function;
-import schemacrawler.schema.Table;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
@@ -35,17 +32,5 @@ public record TableAttributesRecord(
     hasTriggers = makeTrueOrNull.apply(hasTriggers);
     emptyTable = makeTrueOrNull.apply(emptyTable);
     bridgeTable = makeTrueOrNull.apply(bridgeTable);
-  }
-
-  public static TableAttributesRecord of(final Table table, final boolean isBridgeTable) {
-    if (table == null) {
-      return new TableAttributesRecord();
-    }
-    return new TableAttributesRecord(
-        !table.hasPrimaryKey(),
-        table.isSelfReferencing(),
-        table.hasTriggers(),
-        !hasRowCount(table),
-        isBridgeTable);
   }
 }

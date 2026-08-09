@@ -10,20 +10,14 @@ package schemacrawler.scribe.okf.frontmatter;
 import static java.util.Objects.requireNonNull;
 
 public enum OkfTrustTier {
-  unverified("unverified"),
-  machine_confirmed("machine-confirmed"),
-  human_reviewed("human-reviewed");
-
-  private final String value;
-
-  OkfTrustTier(final String value) {
-    this.value = value;
-  }
+  unverified,
+  machine_confirmed,
+  human_reviewed;
 
   public static OkfTrustTier fromString(final String value) {
     final String normalized = requireNonNull(value, "No trust tier provided").trim();
     for (final OkfTrustTier verifiedBy : values()) {
-      if (verifiedBy.value.equalsIgnoreCase(normalized)
+      if (verifiedBy.getValue().equalsIgnoreCase(normalized)
           || verifiedBy.name().equalsIgnoreCase(normalized.replace('-', '_'))) {
         return verifiedBy;
       }
@@ -33,6 +27,10 @@ public enum OkfTrustTier {
 
   @Override
   public String toString() {
-    return value;
+    return getValue();
+  }
+
+  public String getValue() {
+    return name().replace('_', '-');
   }
 }
