@@ -25,12 +25,12 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
 import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.OkfFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.OkfGeneratedRecord;
-import schemacrawler.scribe.okf.frontmatter.OkfStatus;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.TableAttributesRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.GeneratedRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.LifecycleStatus;
+import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatterRecord;
 import schemacrawler.tools.state.AbstractExecutionState;
 
 public final class OkfFrontMatterSupport extends AbstractExecutionState {
@@ -53,7 +53,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
     final OkfFrontMatterRecord okfFrontMatter =
         new OkfFrontMatterRecord(
-            objectDescription, tags, generated(), verified(), OkfStatus.stable);
+            objectDescription, tags, generated(), verified(), LifecycleStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord(objectDescription, true, true);
     final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
@@ -76,7 +76,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
 
     final OkfFrontMatterRecord okfFrontMatter =
         new OkfFrontMatterRecord(
-            objectDescription, tags, generated(), verified(), OkfStatus.stable);
+            objectDescription, tags, generated(), verified(), LifecycleStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord(objectDescription, true, true);
     final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
@@ -101,7 +101,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
             List.of(),
             generated(),
             verified(),
-            OkfStatus.stable);
+            LifecycleStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord(title, description, false, true);
 
@@ -127,7 +127,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     return null;
   }
 
-  private OkfGeneratedRecord generated() {
+  private GeneratedRecord generated() {
     if (!hasCatalog()) {
       return null;
     }
@@ -135,7 +135,7 @@ public final class OkfFrontMatterSupport extends AbstractExecutionState {
     final CrawlInfo crawlInfo = getCatalog().getCrawlInfo();
     final Instant crawlTimestamp = crawlInfo.getCrawlTimestampInstant();
 
-    return new OkfGeneratedRecord(new SchemaCrawlerActor(), crawlTimestamp);
+    return new GeneratedRecord(new SchemaCrawlerActor(), crawlTimestamp);
   }
 
   private boolean isBridgeTable(final Table table) {

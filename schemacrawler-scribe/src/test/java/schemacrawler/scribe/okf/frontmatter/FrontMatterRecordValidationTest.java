@@ -17,6 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.scribe.renderer.JsonUtility.yamlMapper;
 
 import org.junit.jupiter.api.Test;
+import schemacrawler.scribe.okf.frontmatter.okf.GeneratedRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.LifecycleStatus;
+import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
+import schemacrawler.scribe.okf.frontmatter.okf.VerifiedRecord;
 import tools.jackson.databind.JsonNode;
 
 public class FrontMatterRecordValidationTest {
@@ -24,38 +28,36 @@ public class FrontMatterRecordValidationTest {
   @Test
   public void generatedRecordValidatesActorPrefix() {
     assertThrows(
-        NullPointerException.class,
-        () -> new OkfGeneratedRecord(null, parse("2026-06-25T09:00:00Z")));
+        NullPointerException.class, () -> new GeneratedRecord(null, parse("2026-06-25T09:00:00Z")));
     assertDoesNotThrow(
-        () -> new OkfGeneratedRecord(new SchemaCrawlerActor(), parse("2026-06-25T09:00:00Z")));
+        () -> new GeneratedRecord(new SchemaCrawlerActor(), parse("2026-06-25T09:00:00Z")));
   }
 
   @Test
   public void verifiedRecordValidatesPresence() {
     assertThrows(
-        NullPointerException.class,
-        () -> new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, null));
+        NullPointerException.class, () -> new VerifiedRecord(TrustTier.machine_confirmed, null));
     assertDoesNotThrow(
-        () -> new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, new SchemaCrawlerActor()));
+        () -> new VerifiedRecord(TrustTier.machine_confirmed, new SchemaCrawlerActor()));
   }
 
   @Test
   public void verifiedByRoundTripsFromString() {
-    assertThat(OkfTrustTier.fromString("machine-confirmed"), is(OkfTrustTier.machine_confirmed));
-    assertThrows(IllegalArgumentException.class, () -> OkfTrustTier.fromString("bogus"));
+    assertThat(TrustTier.fromString("machine-confirmed"), is(TrustTier.machine_confirmed));
+    assertThrows(IllegalArgumentException.class, () -> TrustTier.fromString("bogus"));
   }
 
   @Test
   public void statusRoundTripsFromString() {
-    assertThat(OkfStatus.fromString("stable"), is(OkfStatus.stable));
+    assertThat(LifecycleStatus.fromString("stable"), is(LifecycleStatus.stable));
   }
 
   @Test
   public void recordsSerializeByAndAtOnly() {
-    final OkfGeneratedRecord generated =
-        new OkfGeneratedRecord(new SchemaCrawlerActor(), parse("2026-06-25T09:00:00Z"));
-    final OkfVerifiedRecord verified =
-        new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, new SchemaCrawlerActor());
+    final GeneratedRecord generated =
+        new GeneratedRecord(new SchemaCrawlerActor(), parse("2026-06-25T09:00:00Z"));
+    final VerifiedRecord verified =
+        new VerifiedRecord(TrustTier.machine_confirmed, new SchemaCrawlerActor());
 
     final JsonNode generatedJson = yamlMapper.valueToTree(generated);
     final JsonNode verifiedJson = yamlMapper.valueToTree(verified);

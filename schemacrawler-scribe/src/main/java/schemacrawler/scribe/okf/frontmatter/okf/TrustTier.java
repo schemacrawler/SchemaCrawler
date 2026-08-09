@@ -5,18 +5,18 @@
  * All rights reserved.
  * SPDX-License-Identifier: EPL-2.0
  */
-package schemacrawler.scribe.okf.frontmatter;
+package schemacrawler.scribe.okf.frontmatter.okf;
 
 import static java.util.Objects.requireNonNull;
 
-public enum OkfTrustTier {
+public enum TrustTier {
   unverified,
   machine_confirmed,
   human_reviewed;
 
-  public static OkfTrustTier fromString(final String value) {
+  public static TrustTier fromString(final String value) {
     final String normalized = requireNonNull(value, "No trust tier provided").trim();
-    for (final OkfTrustTier verifiedBy : values()) {
+    for (final TrustTier verifiedBy : values()) {
       if (verifiedBy.getValue().equalsIgnoreCase(normalized)
           || verifiedBy.name().equalsIgnoreCase(normalized.replace('-', '_'))) {
         return verifiedBy;

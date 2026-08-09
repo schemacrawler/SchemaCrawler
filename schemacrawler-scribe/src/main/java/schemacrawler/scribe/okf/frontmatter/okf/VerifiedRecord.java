@@ -5,7 +5,7 @@
  * All rights reserved.
  * SPDX-License-Identifier: EPL-2.0
  */
-package schemacrawler.scribe.okf.frontmatter;
+package schemacrawler.scribe.okf.frontmatter.okf;
 
 import static java.util.Objects.requireNonNull;
 
@@ -16,15 +16,14 @@ import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record OkfVerifiedRecord(
-    @JsonIgnore OkfTrustTier trustTier, @JsonIgnore OkfActor actor, Instant at) {
-  public OkfVerifiedRecord {
-    trustTier = trustTier == null ? OkfTrustTier.unverified : trustTier;
+public record VerifiedRecord(@JsonIgnore TrustTier trustTier, @JsonIgnore Actor actor, Instant at) {
+  public VerifiedRecord {
+    trustTier = trustTier == null ? TrustTier.unverified : trustTier;
     requireNonNull(actor, "No actor provided");
     at = at == null ? Instant.now() : at;
   }
 
-  public OkfVerifiedRecord(final OkfTrustTier trustTier, final OkfActor actor) {
+  public VerifiedRecord(final TrustTier trustTier, final Actor actor) {
     this(trustTier, actor, null);
   }
 

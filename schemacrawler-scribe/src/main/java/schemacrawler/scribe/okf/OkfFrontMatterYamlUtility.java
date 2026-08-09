@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.OkfFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatterRecord;
 
 final class OkfFrontMatterYamlUtility {
 

@@ -5,14 +5,14 @@
  * All rights reserved.
  * SPDX-License-Identifier: EPL-2.0
  */
-package schemacrawler.scribe.okf.frontmatter;
+package schemacrawler.scribe.okf.frontmatter.okf;
 
-public enum OkfStatus {
+public enum LifecycleStatus {
   draft,
   stable,
   deprecated;
 
-  public static OkfStatus fromString(final String status) {
+  public static LifecycleStatus fromString(final String status) {
     return valueOf(status);
   }
 }

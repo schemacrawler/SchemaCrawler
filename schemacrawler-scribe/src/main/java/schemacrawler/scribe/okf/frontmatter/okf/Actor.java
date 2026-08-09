@@ -5,9 +5,9 @@
  * All rights reserved.
  * SPDX-License-Identifier: EPL-2.0
  */
-package schemacrawler.scribe.okf.frontmatter;
+package schemacrawler.scribe.okf.frontmatter.okf;
 
-public interface OkfActor {
+public interface Actor {
 
   public enum ActorType {
     human,

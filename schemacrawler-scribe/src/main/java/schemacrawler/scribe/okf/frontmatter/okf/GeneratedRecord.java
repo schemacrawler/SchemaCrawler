@@ -5,7 +5,7 @@
  * All rights reserved.
  * SPDX-License-Identifier: EPL-2.0
  */
-package schemacrawler.scribe.okf.frontmatter;
+package schemacrawler.scribe.okf.frontmatter.okf;
 
 import static java.util.Objects.requireNonNull;
 
@@ -16,9 +16,9 @@ import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record OkfGeneratedRecord(@JsonIgnore OkfActor actor, Instant at) {
+public record GeneratedRecord(@JsonIgnore Actor actor, Instant at) {
 
-  public OkfGeneratedRecord {
+  public GeneratedRecord {
     actor = requireNonNull(actor, "No generated.by actor provided");
     at = at == null ? Instant.now() : at;
   }

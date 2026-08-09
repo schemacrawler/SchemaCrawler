@@ -18,10 +18,10 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TypedObject;
 import schemacrawler.scribe.okf.frontmatter.CountsRecord;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
-import schemacrawler.scribe.okf.frontmatter.OkfTrustTier;
-import schemacrawler.scribe.okf.frontmatter.OkfVerifiedRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.TableAttributesRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
+import schemacrawler.scribe.okf.frontmatter.okf.VerifiedRecord;
 import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.UtilityMarker;
 
@@ -108,8 +108,8 @@ class OkfFrontMatterUtility {
         null);
   }
 
-  static OkfVerifiedRecord verified() {
-    return new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, new SchemaCrawlerActor());
+  static VerifiedRecord verified() {
+    return new VerifiedRecord(TrustTier.machine_confirmed, new SchemaCrawlerActor());
   }
 
   private OkfFrontMatterUtility() {

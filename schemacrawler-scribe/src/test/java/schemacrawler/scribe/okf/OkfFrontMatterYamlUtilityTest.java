@@ -19,13 +19,13 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import schemacrawler.scribe.okf.frontmatter.CountsRecord;
 import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.OkfFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.OkfGeneratedRecord;
-import schemacrawler.scribe.okf.frontmatter.OkfStatus;
-import schemacrawler.scribe.okf.frontmatter.OkfTrustTier;
-import schemacrawler.scribe.okf.frontmatter.OkfVerifiedRecord;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.GeneratedRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.LifecycleStatus;
+import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatterRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
+import schemacrawler.scribe.okf.frontmatter.okf.VerifiedRecord;
 import tools.jackson.databind.JsonNode;
 
 public class OkfFrontMatterYamlUtilityTest {
@@ -41,9 +41,9 @@ public class OkfFrontMatterYamlUtilityTest {
             "Books table",
             null,
             List.of("table", "has_triggers"),
-            new OkfGeneratedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
-            new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, actor),
-            OkfStatus.stable);
+            new GeneratedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
+            new VerifiedRecord(TrustTier.machine_confirmed, actor),
+            LifecycleStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord("books", "Books table", true, true);
     final SchemaCrawlerFrontMatterRecord schemaCrawlerFrontMatter =
@@ -84,9 +84,9 @@ public class OkfFrontMatterYamlUtilityTest {
             "Report",
             null,
             List.of(),
-            new OkfGeneratedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
-            new OkfVerifiedRecord(OkfTrustTier.machine_confirmed, actor),
-            OkfStatus.stable);
+            new GeneratedRecord(actor, Instant.parse("2026-01-01T00:00:00Z")),
+            new VerifiedRecord(TrustTier.machine_confirmed, actor),
+            LifecycleStatus.stable);
     final GitHubPagesFrontMatterRecord gitHubPagesFrontMatter =
         new GitHubPagesFrontMatterRecord("Report", "Report", false, true);
 
@@ -112,7 +112,7 @@ public class OkfFrontMatterYamlUtilityTest {
                 List.of("table"),
                 null,
                 null,
-                OkfStatus.stable));
-    assertThrows(IllegalArgumentException.class, () -> OkfStatus.fromString("invalid"));
+                LifecycleStatus.stable));
+    assertThrows(IllegalArgumentException.class, () -> LifecycleStatus.fromString("invalid"));
   }
 }

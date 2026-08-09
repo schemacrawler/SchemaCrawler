@@ -31,8 +31,8 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.scribe.command.options.ScribeOptionsBuilder;
-import schemacrawler.scribe.okf.frontmatter.OkfActor;
 import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
+import schemacrawler.scribe.okf.frontmatter.okf.Actor;
 import schemacrawler.scribe.renderer.JsonUtility;
 import schemacrawler.scribe.renderer.ScribeMessages;
 import schemacrawler.scribe.renderer.ScribeSupport;
@@ -112,7 +112,7 @@ public class OkfConceptWriterTableTest {
     assertThat(content, not(containsString("hasTriggers")));
     assertThat(content, not(containsString("emptyTable")));
     assertThat(content, not(containsString("bridgeTable")));
-    final OkfActor schemaCrawlerActor = new SchemaCrawlerActor();
+    final Actor schemaCrawlerActor = new SchemaCrawlerActor();
     assertThat(
         JsonUtility.yamlMapper.treeToValue(parsed.get("verified").get("by"), String.class),
         is("machine-confirmed:" + schemaCrawlerActor.getActor()));

@@ -8,9 +8,10 @@
 package schemacrawler.scribe.okf.frontmatter;
 
 import schemacrawler.schemacrawler.Version;
+import schemacrawler.scribe.okf.frontmatter.okf.Actor;
 import us.fatehi.utility.property.ProductVersion;
 
-public final class SchemaCrawlerActor implements OkfActor {
+public final class SchemaCrawlerActor implements Actor {
 
   private final ActorType actorType;
   private final String actor;

@@ -5,7 +5,7 @@
  * All rights reserved.
  * SPDX-License-Identifier: EPL-2.0
  */
-package schemacrawler.scribe.okf.frontmatter;
+package schemacrawler.scribe.okf.frontmatter.okf;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
@@ -16,6 +16,7 @@ import java.net.URI;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
@@ -26,9 +27,9 @@ public record OkfFrontMatterRecord(
     String description,
     URI resource,
     List<String> tags,
-    OkfGeneratedRecord generated,
-    OkfVerifiedRecord verified,
-    OkfStatus status) {
+    GeneratedRecord generated,
+    VerifiedRecord verified,
+    LifecycleStatus status) {
 
   public OkfFrontMatterRecord {
     type = requireNotBlank(trimToEmpty(type), "No type provided");
@@ -36,15 +37,15 @@ public record OkfFrontMatterRecord(
     description = trimToEmpty(description);
     tags = normalizeTags(tags);
     verified = requireNonNull(verified, "No verified front-matter provided");
-    status = status == null ? OkfStatus.stable : status;
+    status = status == null ? LifecycleStatus.stable : status;
   }
 
   public OkfFrontMatterRecord(
       final DatabaseObjectDescription objectDescription,
       final List<String> tags,
-      final OkfGeneratedRecord generated,
-      final OkfVerifiedRecord verified,
-      final OkfStatus status) {
+      final GeneratedRecord generated,
+      final VerifiedRecord verified,
+      final LifecycleStatus status) {
     this(
         requireNonNull(objectDescription, "No database object description provided")
             .simpleTypeName(),
