@@ -5,11 +5,12 @@
  * All rights reserved.
  * SPDX-License-Identifier: EPL-2.0
  */
-package schemacrawler.scribe.okf.frontmatter;
+package schemacrawler.scribe.okf.frontmatter.github;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
+import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
 import tools.jackson.databind.PropertyNamingStrategies.LowerCamelCaseStrategy;
 import tools.jackson.databind.annotation.JsonNaming;
 

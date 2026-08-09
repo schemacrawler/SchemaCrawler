@@ -24,13 +24,13 @@ import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
-import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
-import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.TableAttributesRecord;
+import schemacrawler.scribe.okf.frontmatter.github.GitHubPagesFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.okf.GeneratedRecord;
 import schemacrawler.scribe.okf.frontmatter.okf.LifecycleStatus;
 import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatterRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatterRecord;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributesRecord;
 import schemacrawler.tools.state.AbstractExecutionState;
 
 public final class OkfFrontMatterSupport extends AbstractExecutionState {

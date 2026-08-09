@@ -17,15 +17,15 @@ import static schemacrawler.scribe.renderer.JsonUtility.yamlMapper;
 import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import schemacrawler.scribe.okf.frontmatter.CountsRecord;
-import schemacrawler.scribe.okf.frontmatter.GitHubPagesFrontMatterRecord;
-import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
-import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerFrontMatterRecord;
+import schemacrawler.scribe.okf.frontmatter.github.GitHubPagesFrontMatterRecord;
 import schemacrawler.scribe.okf.frontmatter.okf.GeneratedRecord;
 import schemacrawler.scribe.okf.frontmatter.okf.LifecycleStatus;
 import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatterRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
 import schemacrawler.scribe.okf.frontmatter.okf.VerifiedRecord;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.CountsRecord;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatterRecord;
 import tools.jackson.databind.JsonNode;
 
 public class OkfFrontMatterYamlUtilityTest {

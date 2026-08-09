@@ -5,10 +5,9 @@
  * All rights reserved.
  * SPDX-License-Identifier: EPL-2.0
  */
-package schemacrawler.scribe.okf.frontmatter;
+package schemacrawler.scribe.okf.frontmatter.okf;
 
 import schemacrawler.schemacrawler.Version;
-import schemacrawler.scribe.okf.frontmatter.okf.Actor;
 import us.fatehi.utility.property.ProductVersion;
 
 public final class SchemaCrawlerActor implements Actor {

@@ -5,7 +5,7 @@
  * All rights reserved.
  * SPDX-License-Identifier: EPL-2.0
  */
-package schemacrawler.scribe.okf.frontmatter;
+package schemacrawler.scribe.okf.frontmatter.schemacrawler;
 
 import java.util.function.Function;
 import tools.jackson.databind.PropertyNamingStrategies;

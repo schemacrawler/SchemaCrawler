@@ -19,6 +19,7 @@ import static schemacrawler.scribe.renderer.JsonUtility.yamlMapper;
 import org.junit.jupiter.api.Test;
 import schemacrawler.scribe.okf.frontmatter.okf.GeneratedRecord;
 import schemacrawler.scribe.okf.frontmatter.okf.LifecycleStatus;
+import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
 import schemacrawler.scribe.okf.frontmatter.okf.VerifiedRecord;
 import tools.jackson.databind.JsonNode;

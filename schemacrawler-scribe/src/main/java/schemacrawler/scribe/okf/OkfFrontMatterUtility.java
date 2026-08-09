@@ -16,12 +16,12 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TypedObject;
-import schemacrawler.scribe.okf.frontmatter.CountsRecord;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
-import schemacrawler.scribe.okf.frontmatter.SchemaCrawlerActor;
-import schemacrawler.scribe.okf.frontmatter.TableAttributesRecord;
+import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
 import schemacrawler.scribe.okf.frontmatter.okf.VerifiedRecord;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.CountsRecord;
+import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributesRecord;
 import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.UtilityMarker;
 

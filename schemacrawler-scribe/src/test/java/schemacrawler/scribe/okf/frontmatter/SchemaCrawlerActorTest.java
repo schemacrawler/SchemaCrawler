@@ -13,6 +13,7 @@ import static org.hamcrest.Matchers.startsWith;
 
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.Version;
+import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 
 public class SchemaCrawlerActorTest {
 
