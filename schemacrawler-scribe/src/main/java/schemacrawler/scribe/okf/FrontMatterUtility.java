@@ -73,6 +73,8 @@ class FrontMatterUtility {
     }
     return new TableAttributes(
         !table.hasPrimaryKey(),
+        !table.hasForeignKeys(),
+        !table.hasIndexes(),
         table.isSelfReferencing(),
         table.hasTriggers(),
         hasRowCount(table) && getRowCount(table) == 0,

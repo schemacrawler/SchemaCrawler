@@ -5,11 +5,13 @@ resource: catalog://tables/PUBLIC.BOOKS/order%20details
 tags:
   - table
   - no_primary_key
+  - no_foreign_keys
+  - no_indexes
 generated:
   at: 1970-01-01T00:00:00Z
   by: process:schemacrawler-v17.12.2
 verified:
-  at: 2026-08-09T02:35:17.625249800Z
+  at: 2026-08-09T02:50:07.447323Z
   by: machine-confirmed:schemacrawler-v17.12.2
 status: stable
 shortTitle: order details

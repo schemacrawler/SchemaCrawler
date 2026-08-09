@@ -120,10 +120,11 @@ public class OkfFrontMatterYamlUtilityTest {
   @Test
   public void tableAttributesAreConvertedToSnakeCaseTags() {
     final FrontMatterYamlUtility utility = new FrontMatterYamlUtility();
-    final TableAttributes tableAttributes = new TableAttributes(true, true, false, null, true);
+    final TableAttributes tableAttributes =
+        new TableAttributes(true, true, false, true, false, null, true);
 
     assertThat(
         utility.toTags(tableAttributes),
-        is(List.of("no_primary_key", "self_referencing", "bridge_table")));
+        is(List.of("no_primary_key", "no_foreign_keys", "self_referencing", "bridge_table")));
   }
 }
