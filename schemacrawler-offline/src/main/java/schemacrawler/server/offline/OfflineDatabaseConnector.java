@@ -23,9 +23,6 @@ public final class OfflineDatabaseConnector extends DatabaseConnector {
   private static DatabaseConnectorOptions databaseConnectorOptions() {
     final DatabaseServerType dbServerType = DB_SERVER_TYPE;
 
-    final DatabaseConnectionSourceBuilder connectionSourceBuilder =
-        DatabaseConnectionSourceBuilder.builder("jdbc:offline:${database}");
-
     final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand(dbServerType);
     pluginCommand
         .addOption(
@@ -40,7 +37,9 @@ public final class OfflineDatabaseConnector extends DatabaseConnector {
     return DatabaseConnectorOptionsBuilder.builder(dbServerType)
         .withHelpCommand(pluginCommand)
         .withUrlStartsWith("jdbc:offline:")
-        .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
+        // Build a fresh mutable builder per request to avoid cross-thread state leakage
+        .withDatabaseConnectionSourceBuilder(
+            () -> DatabaseConnectionSourceBuilder.builder("jdbc:offline:${database}"))
         .build();
   }
 

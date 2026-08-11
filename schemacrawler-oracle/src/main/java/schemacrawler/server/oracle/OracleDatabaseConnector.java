@@ -8,6 +8,7 @@
 
 package schemacrawler.server.oracle;
 
+import java.util.function.Supplier;
 import schemacrawler.plugins.dbconnectors.DatabaseConnectorDefinitionAdapter;
 import schemacrawler.plugins.dbconnectors.model.DatabaseConnectorDefinition;
 import schemacrawler.plugins.dbconnectors.yaml.DatabasePluginYamlDeserializer;
@@ -27,14 +28,18 @@ public final class OracleDatabaseConnector extends DatabaseConnector {
         new DatabasePluginYamlDeserializer()
             .parse(new ClasspathInputResource("dbconnectors/oracle.yaml"));
 
-    final DatabaseConnectionSourceBuilder connectionSourceBuilder =
-        new DatabaseConnectorDefinitionAdapter(definition)
-            .toConnectionSourceBuilder()
-            .withConnectionInitializer(new OracleConnectionInitializer());
+    // The connection builder is mutable and request-specific values (host, database, user, etc.)
+    // are applied during connection creation. Build a fresh instance each time to prevent
+    // concurrent requests from sharing and mutating the same builder state.
+    final Supplier<DatabaseConnectionSourceBuilder> connectionSourceBuilderSupplier =
+        () ->
+            new DatabaseConnectorDefinitionAdapter(definition)
+                .toConnectionSourceBuilder()
+                .withConnectionInitializer(new OracleConnectionInitializer());
 
     return new DatabaseConnectorDefinitionAdapter(definition)
         .toDatabaseConnectorOptionsBuilder()
-        .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
+        .withDatabaseConnectionSourceBuilder(connectionSourceBuilderSupplier)
         .withInformationSchemaViewsBuilder(new OracleInformationSchemaViewsBuilder())
         .withLimitOptionsBuilder(
             limitOptionsBuilder ->

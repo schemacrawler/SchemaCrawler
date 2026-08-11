@@ -8,6 +8,7 @@
 
 package schemacrawler.server.sqlserver;
 
+import java.util.function.Supplier;
 import schemacrawler.plugins.dbconnectors.DatabaseConnectorDefinitionAdapter;
 import schemacrawler.plugins.dbconnectors.model.DatabaseConnectorDefinition;
 import schemacrawler.plugins.dbconnectors.yaml.DatabasePluginYamlDeserializer;
@@ -25,10 +26,13 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
         new DatabasePluginYamlDeserializer()
             .parse(new ClasspathInputResource("dbconnectors/sqlserver.yaml"));
 
-    final DatabaseConnectionSourceBuilder connectionSourceBuilder =
-        new DatabaseConnectorDefinitionAdapter(definition)
-            .toConnectionSourceBuilder()
-            .withConnectionInitializer(new SqlServerConnectionInitializer());
+    // The builder is mutable and later receives per-request settings (host, database, credentials).
+    // Return a new builder for each request to avoid leaking state across concurrent requests.
+    final Supplier<DatabaseConnectionSourceBuilder> connectionSourceBuilderSupplier =
+        () ->
+            new DatabaseConnectorDefinitionAdapter(definition)
+                .toConnectionSourceBuilder()
+                .withConnectionInitializer(new SqlServerConnectionInitializer());
 
     final DatabaseServerType dbServerType =
         new DatabaseConnectorDefinitionAdapter(definition)
@@ -58,7 +62,7 @@ public final class SqlServerDatabaseConnector extends DatabaseConnector {
     return new DatabaseConnectorDefinitionAdapter(definition)
         .toDatabaseConnectorOptionsBuilder()
         .withHelpCommand(pluginCommand)
-        .withDatabaseConnectionSourceBuilder(() -> connectionSourceBuilder)
+        .withDatabaseConnectionSourceBuilder(connectionSourceBuilderSupplier)
         .build();
   }
 
