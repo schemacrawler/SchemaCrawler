@@ -24,7 +24,7 @@ public record Actor(ActorType actorType, String actor) {
 
   @Override
   public String toString() {
-    if (actorType == ActorType.process) {
+    if (actorType == ActorType.agent) {
       return actor;
     }
     return "%s:%s".formatted(actorType, actor);

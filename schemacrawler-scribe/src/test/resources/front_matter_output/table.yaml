@@ -1,7 +1,7 @@
 type: table
 title: PUBLIC.BOOKS.order details
 description: Description of table
-resource: catalog://tables/PUBLIC.BOOKS/order%20details
+resource: catalog://tables/PUBLIC.BOOKS.order%20details
 tags:
   - table
   - no_primary_key
@@ -11,7 +11,7 @@ generated:
   at: 1970-01-01T00:00:00Z
   by: process:schemacrawler-v17.12.2
 verified:
-  at: 2026-08-09T03:01:42.741606800Z
+  at: 2026-08-11T02:30:45.334348900Z
   by: machine-confirmed:schemacrawler-v17.12.2
 status: stable
 shortTitle: order details

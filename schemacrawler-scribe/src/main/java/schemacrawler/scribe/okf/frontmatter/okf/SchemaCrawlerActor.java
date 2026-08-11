@@ -35,9 +35,4 @@ public final class SchemaCrawlerActor {
   public Actor toActor() {
     return new Actor(actorType, actor);
   }
-
-  @Override
-  public String toString() {
-    return "%s:%s".formatted(actorType, actor);
-  }
 }
