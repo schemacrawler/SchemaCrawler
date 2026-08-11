@@ -225,4 +225,152 @@ public class SchemaSpyMainTest {
       System.setProperty("user.dir", previousUserDir);
     }
   }
+
+  @Test
+  public void mapsConnectionPropertiesArgument() {
+    final SchemaSpyMain command = new SchemaSpyMain();
+    new CommandLine(command)
+        .parseArgs(
+            "-t", "pgsql", "-db", "books", "-u", "scott", "-connprops", "key1=value1,key2=value2");
+
+    final String equivalentCommand = command.toEquivalentCommand();
+    assertThat(equivalentCommand, containsString("--jdbc-properties"));
+    assertThat(equivalentCommand, containsString("key1=value1,key2=value2"));
+  }
+
+  @Test
+  public void mapsCatalogArgument() {
+    final SchemaSpyMain command = new SchemaSpyMain();
+    new CommandLine(command)
+        .parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-cat", "mycat");
+
+    final String equivalentCommand = command.toEquivalentCommand();
+    assertThat(equivalentCommand, containsString("--catalogs"));
+    assertThat(equivalentCommand, containsString("mycat"));
+  }
+
+  @Test
+  public void mapsSingleSchemaArgument() {
+    final SchemaSpyMain command = new SchemaSpyMain();
+    new CommandLine(command)
+        .parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-s", "public");
+
+    final String equivalentCommand = command.toEquivalentCommand();
+    assertThat(equivalentCommand, containsString("--schemas"));
+    assertThat(equivalentCommand, containsString("public"));
+  }
+
+  @Test
+  public void mapsMultipleSchemasWithConversion() {
+    final SchemaSpyMain command = new SchemaSpyMain();
+    new CommandLine(command)
+        .parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-schemas", "schema1,schema2");
+
+    final String equivalentCommand = command.toEquivalentCommand();
+    assertThat(equivalentCommand, containsString("--schemas"));
+    // Pattern uses \Q and \E for escaping: .*\.(schema1|schema2)
+    assertThat(equivalentCommand, containsString("\\Qschema1\\E"));
+    assertThat(equivalentCommand, containsString("\\Qschema2\\E"));
+  }
+
+  @Test
+  public void mapsSchemaRegexArgument() {
+    final SchemaSpyMain command = new SchemaSpyMain();
+    new CommandLine(command)
+        .parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-schemaSpec", ".*\\.TEST.*");
+
+    final String equivalentCommand = command.toEquivalentCommand();
+    assertThat(equivalentCommand, containsString("--schemas"));
+    assertThat(equivalentCommand, containsString(".*\\.TEST.*"));
+  }
+
+  @Test
+  public void schemaSpecTakesPriorityOverSchemasList() {
+    final SchemaSpyMain command = new SchemaSpyMain();
+    new CommandLine(command)
+        .parseArgs(
+            "-t",
+            "pgsql",
+            "-db",
+            "books",
+            "-u",
+            "scott",
+            "-s",
+            "single",
+            "-schemas",
+            "list1,list2",
+            "-schemaSpec",
+            ".*REGEX.*");
+
+    final String equivalentCommand = command.toEquivalentCommand();
+    assertThat(equivalentCommand, containsString("--schemas"));
+    assertThat(equivalentCommand, containsString(".*REGEX.*"));
+    assertThat(equivalentCommand, not(containsString("single")));
+    assertThat(equivalentCommand, not(containsString("list1")));
+  }
+
+  @Test
+  public void mapsIncludeTableArgument() {
+    final SchemaSpyMain command = new SchemaSpyMain();
+    new CommandLine(command)
+        .parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-i", ".*\\.PUBLIC\\..*");
+
+    final String equivalentCommand = command.toEquivalentCommand();
+    assertThat(equivalentCommand, containsString("--tables"));
+    assertThat(equivalentCommand, containsString(".*\\.PUBLIC\\..*"));
+  }
+
+  @Test
+  public void mapsExcludeTableArgument() {
+    final SchemaSpyMain command = new SchemaSpyMain();
+    new CommandLine(command)
+        .parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-I", ".*\\.TEMP_.*");
+
+    final String equivalentCommand = command.toEquivalentCommand();
+    assertThat(equivalentCommand, containsString("--tables"));
+    assertThat(
+        equivalentCommand, containsString("(?!.*\\.TEMP_.*).*")); // negative lookahead pattern
+  }
+
+  @Test
+  public void combinesIncludeAndExcludeTablePatterns() {
+    final SchemaSpyMain command = new SchemaSpyMain();
+    new CommandLine(command)
+        .parseArgs(
+            "-t",
+            "pgsql",
+            "-db",
+            "books",
+            "-u",
+            "scott",
+            "-i",
+            ".*\\.PUBLIC\\..*",
+            "-I",
+            ".*TEMP.*");
+
+    final String equivalentCommand = command.toEquivalentCommand();
+    assertThat(equivalentCommand, containsString("--tables"));
+    // Should contain pattern matching both include AND NOT exclude
+    assertThat(equivalentCommand, containsString("(?="));
+    assertThat(equivalentCommand, containsString("(?!"));
+  }
+
+  @Test
+  public void enablesRowCountsByDefault() {
+    final SchemaSpyMain command = new SchemaSpyMain();
+    new CommandLine(command).parseArgs("-t", "pgsql", "-db", "books", "-u", "scott");
+
+    final String equivalentCommand = command.toEquivalentCommand();
+    assertThat(equivalentCommand, containsString("--load-row-counts"));
+    assertThat(equivalentCommand, containsString("true"));
+  }
+
+  @Test
+  public void disablesRowCountsWhenNoRowsFlagSet() {
+    final SchemaSpyMain command = new SchemaSpyMain();
+    new CommandLine(command).parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-norows");
+
+    final String equivalentCommand = command.toEquivalentCommand();
+    assertThat(equivalentCommand, not(containsString("--load-row-counts")));
+  }
 }

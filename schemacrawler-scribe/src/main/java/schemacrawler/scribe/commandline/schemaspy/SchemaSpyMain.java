@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.IVersionProvider;
@@ -23,6 +24,8 @@ import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
 import schemacrawler.schemacrawler.Version;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
+import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
 @Command(
     name = "schemaspy",
@@ -31,6 +34,8 @@ import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
     sortOptions = false,
     description = "SchemaSpy compatibility wrapper for SchemaCrawler Scribe (OKF output).")
 public final class SchemaSpyMain implements Runnable {
+
+  private record DatabaseTypeResolution(String server, boolean isUrlFallback) {}
 
   public static final class SchemaSpyVersionProvider implements IVersionProvider {
 
@@ -184,7 +189,7 @@ public final class SchemaSpyMain implements Runnable {
   public void run() {
     if (dbhelp) {
       spec.commandLine().getOut().println("Supported database types:");
-      spec.commandLine().getOut().println(SchemaSpyDatabaseType.supportedDatabaseTypes());
+      spec.commandLine().getOut().println(getAllSupportedDatabaseTypes());
       return;
     }
 
@@ -217,18 +222,54 @@ public final class SchemaSpyMain implements Runnable {
     };
   }
 
-  private SchemaSpyDatabaseType parseDatabaseType() {
-    return SchemaSpyDatabaseType.fromType(databaseType)
-        .orElseThrow(
-            () ->
-                new ExecutionRuntimeException(
-                    "Unknown database type <%s>. Supported database types: %s"
-                        .formatted(databaseType, SchemaSpyDatabaseType.supportedDatabaseTypes())));
+  private DatabaseTypeResolution resolveDatabaseType(final String typeIdentifier) {
+    requireNonNull(typeIdentifier, "No database type provided");
+
+    // First, try to resolve as a SchemaSpy database type
+    final var schemaSpyType = SchemaSpyDatabaseType.fromType(typeIdentifier);
+    if (schemaSpyType.isPresent()) {
+      final SchemaSpyDatabaseType type = schemaSpyType.get();
+      if (type.isUrlFallback()) {
+        return new DatabaseTypeResolution(null, true);
+      }
+      return new DatabaseTypeResolution(type.getSchemaCrawlerServer().orElseThrow(), false);
+    }
+
+    // Second, try to resolve as a SchemaCrawler server identifier
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
+    if (registry.hasDatabaseSystemIdentifier(typeIdentifier)) {
+      return new DatabaseTypeResolution(typeIdentifier, false);
+    }
+
+    // Not found in either registry
+    throw new ExecutionRuntimeException(
+        "Unknown database type <%s>. Supported database types:\n%s"
+            .formatted(typeIdentifier, getAllSupportedDatabaseTypes()));
+  }
+
+  private String getAllSupportedDatabaseTypes() {
+    final List<String> allTypes = new ArrayList<>();
+
+    // Add SchemaSpy types
+    allTypes.add("SchemaSpy database types:");
+    allTypes.add("  " + SchemaSpyDatabaseType.supportedDatabaseTypes());
+
+    // Add SchemaCrawler servers
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
+    final var serverTypes =
+        registry.getDatabaseServerTypes().stream()
+            .map(st -> st.getDatabaseSystemIdentifier())
+            .collect(Collectors.toList());
+    if (!serverTypes.isEmpty()) {
+      allTypes.add("\nSchemaCrawler database servers:");
+      allTypes.add("  " + String.join(", ", serverTypes));
+    }
+
+    return String.join("\n", allTypes);
   }
 
   private int runSchemaCrawler() {
-    return schemacrawler.tools.commandline.SchemaCrawlerCommandLine.execute(
-        toSchemaCrawlerArgs(false).toArray(String[]::new));
+    return SchemaCrawlerCommandLine.execute(toSchemaCrawlerArgs(false).toArray(String[]::new));
   }
 
   private String toCommandLineLogLevel() {
@@ -241,7 +282,8 @@ public final class SchemaSpyMain implements Runnable {
     }
     if (Level.FINE.equals(logLevelForExecution)) {
       return "FINE";
-    } else if (Level.FINEST.equals(logLevelForExecution)) {
+    }
+    if (Level.FINEST.equals(logLevelForExecution)) {
       return "FINEST";
     } else if (Level.INFO.equals(logLevelForExecution)) {
     }
@@ -249,7 +291,7 @@ public final class SchemaSpyMain implements Runnable {
   }
 
   private List<String> toSchemaCrawlerArgs(final boolean maskPassword) {
-    final SchemaSpyDatabaseType type = parseDatabaseType();
+    final DatabaseTypeResolution resolution = resolveDatabaseType(databaseType);
     final List<String> args = new ArrayList<>();
     args.add("--log-level");
     args.add(toCommandLineLogLevel());
@@ -258,11 +300,11 @@ public final class SchemaSpyMain implements Runnable {
       args.add(configFile);
     }
 
-    if (type.isUrlFallback()) {
+    if (resolution.isUrlFallback()) {
       args.add("--url");
     } else {
       args.add("--server");
-      args.add(type.getSchemaCrawlerServer().orElseThrow());
+      args.add(resolution.server());
       args.add("--host");
       args.add(host);
       if (port != null) {
@@ -281,6 +323,33 @@ public final class SchemaSpyMain implements Runnable {
       args.add("--password");
       args.add(maskPassword ? "******" : password);
     }
+
+    // Phase 1: Connection properties
+    if (connectionProperties != null && !connectionProperties.isBlank()) {
+      args.add("--jdbc-properties");
+      args.add(connectionProperties);
+    }
+
+    // Phase 2: Catalog filtering
+    if (catalog != null && !catalog.isBlank()) {
+      args.add("--catalogs");
+      args.add(catalog);
+    }
+
+    // Phase 3: Schema filtering with priority
+    final String schemaFilter = resolveSchemaFilter();
+    if (schemaFilter != null) {
+      args.add("--schemas");
+      args.add(schemaFilter);
+    }
+
+    // Phase 4: Table filtering with include/exclude logic
+    final String tableFilter = resolveTableFilter();
+    if (tableFilter != null) {
+      args.add("--tables");
+      args.add(tableFilter);
+    }
+
     args.add("--command");
     args.add("scribe");
     args.add("--info-level");
@@ -294,6 +363,12 @@ public final class SchemaSpyMain implements Runnable {
       args.add(locale);
     }
 
+    // Phase 5: Row count behavior - load by default unless -norows
+    if (!noRows) {
+      args.add("--load-row-counts");
+      args.add("true");
+    }
+
     return args;
   }
 
@@ -301,7 +376,7 @@ public final class SchemaSpyMain implements Runnable {
     if (databaseType == null || databaseType.isBlank()) {
       throw new ParameterException(spec.commandLine(), "Missing required option: -t");
     }
-    parseDatabaseType();
+    resolveDatabaseType(databaseType);
     if (database == null || database.isBlank()) {
       throw new ParameterException(spec.commandLine(), "Missing required option: -db");
     }
@@ -316,5 +391,59 @@ public final class SchemaSpyMain implements Runnable {
     if (metaPath != null && !metaPath.isBlank()) {
       throw new ParameterException(spec.commandLine(), "Unsupported option in stage 1: -meta");
     }
+  }
+
+  private String resolveSchemaFilter() {
+    // Priority order: -schemaSpec > -schemas > -s
+    if (schemaRegex != null && !schemaRegex.isBlank()) {
+      return schemaRegex;
+    }
+    if (schemas != null && !schemas.isBlank()) {
+      // Convert comma-separated schema list to regex: "A,B,C" -> ".*\\.(A|B|C)"
+      return convertSchemasListToRegex(schemas);
+    }
+    if (schema != null && !schema.isBlank()) {
+      return schema;
+    }
+    return null;
+  }
+
+  private String convertSchemasListToRegex(final String schemaList) {
+    final String[] schemaArray = schemaList.split(",");
+    final List<String> escapedSchemas = new ArrayList<>();
+    for (final String s : schemaArray) {
+      final String trimmed = s.trim();
+      if (!trimmed.isEmpty()) {
+        escapedSchemas.add("\\Q" + trimmed + "\\E");
+      }
+    }
+    if (escapedSchemas.isEmpty()) {
+      return null;
+    }
+    // Create pattern: ".*\\.(SCHEMA1|SCHEMA2|...)"
+    return ".*\\.(" + String.join("|", escapedSchemas) + ")";
+  }
+
+  private String resolveTableFilter() {
+    final boolean hasInclude = includeTableRegex != null && !includeTableRegex.isBlank();
+    final boolean hasExclude = excludeTableRegex != null && !excludeTableRegex.isBlank();
+
+    if (!hasInclude && !hasExclude) {
+      return null;
+    }
+
+    if (hasInclude && !hasExclude) {
+      // Only include pattern
+      return includeTableRegex;
+    }
+
+    if (!hasInclude && hasExclude) {
+      // Only exclude pattern - match all NOT matching exclude
+      return "(?!" + excludeTableRegex + ").*";
+    }
+
+    // Both include and exclude: include AND NOT exclude
+    // Pattern: matches include but NOT exclude
+    return "(?=.*" + includeTableRegex + ")(?!" + excludeTableRegex + ").*";
   }
 }
