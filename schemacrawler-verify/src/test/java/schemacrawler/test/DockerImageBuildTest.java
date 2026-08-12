@@ -63,4 +63,35 @@ public class DockerImageBuildTest {
     assertThat(result.getStdout(), startsWith(Version.version().toString()));
     assertThat(result.getStderr(), is(emptyString()));
   }
+
+  @Test
+  @DisplayName("Docker image exposes schemacrawler launcher")
+  public void testDockerImageSchemaCrawlerLauncher() throws IOException, InterruptedException {
+
+    LOGGER.log(Level.CONFIG, "Verifying `schemacrawler` launcher in " + DOCKER_IMAGE_NAME);
+
+    final ExecResult result =
+        mcpServerContainer.execInContainer(
+            "bash", "-ic", "source /home/schcrwlr/.bashrc && schemacrawler -V");
+
+    assertThat(result.getExitCode(), is(0));
+    assertThat(result.getStdout(), startsWith(Version.version().toString()));
+    assertThat(result.getStderr(), is(emptyString()));
+  }
+
+  @Test
+  @DisplayName("Docker image exposes schemaspy launcher")
+  public void testDockerImageSchemaSpyLauncher() throws IOException, InterruptedException {
+
+    LOGGER.log(Level.CONFIG, "Verifying `schemaspy` launcher in " + DOCKER_IMAGE_NAME);
+
+    final ExecResult result =
+        mcpServerContainer.execInContainer(
+            "bash", "-ic", "source /home/schcrwlr/.bashrc && schemaspy -V");
+
+    assertThat(result.getExitCode(), is(0));
+    assertThat(
+        result.getStdout().contains("SchemaSpy 7.x adapter for generating OKF bundles."), is(true));
+    assertThat(result.getStderr(), is(emptyString()));
+  }
 }
