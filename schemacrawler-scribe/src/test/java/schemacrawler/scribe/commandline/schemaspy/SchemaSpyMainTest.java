@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.zip.ZipFile;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,7 @@ public class SchemaSpyMainTest {
 
   @Test
   public void commandAssemblyMasksPasswordAndMapsKnownType() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command)
         .parseArgs(
             "-t",
@@ -114,14 +113,14 @@ public class SchemaSpyMainTest {
 
   @Test
   public void logLevelMappingPrefersDebugFlag() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command).parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-debug");
     assertThat(command.toJulLevel(), is(Level.FINE));
   }
 
   @Test
   public void unknownTypeFailsWithSupportedTypeList() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command).parseArgs("-t", "unknown-type", "-db", "books", "-u", "scott");
     final ExecutionRuntimeException exception =
         assertThrows(ExecutionRuntimeException.class, command::toEquivalentCommand);
@@ -145,19 +144,56 @@ public class SchemaSpyMainTest {
     try {
       System.setProperty("user.dir", tempDir.toString());
       final String[] effectiveArgs = SchemaSpyMain.resolveEffectiveArgs("-o", "out.zip");
-
-      assertThat(Arrays.asList(effectiveArgs).contains("-t"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("pgsql"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("-db"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("books"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("-u"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("scott"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("-host"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("db.example"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("-o"), is(true));
+      assertArrayEquals(
+          new String[] {
+            "-t",
+            "pgsql",
+            "-db",
+            "books",
+            "-host",
+            "db.example",
+            "-u",
+            "scott",
+            "-p",
+            "tiger",
+            "-o",
+            "out.zip"
+          },
+          effectiveArgs);
     } finally {
       System.setProperty("user.dir", previousUserDir);
     }
+  }
+
+  @Test
+  public void resolvesArgsFromExplicitConfigFile(@TempDir final Path tempDir) throws Exception {
+    final Path propertiesFile = tempDir.resolve("schemaspy-custom.properties");
+    Files.writeString(
+        propertiesFile,
+        """
+        t=pgsql
+        db=books
+        u=scott
+        """);
+
+    final String[] effectiveArgs =
+        SchemaSpyMain.resolveEffectiveArgs(
+            "-configFile", propertiesFile.toString(), "-o", "out.zip");
+
+    assertArrayEquals(
+        new String[] {
+          "-t",
+          "pgsql",
+          "-db",
+          "books",
+          "-u",
+          "scott",
+          "-configFile",
+          propertiesFile.toString(),
+          "-o",
+          "out.zip"
+        },
+        effectiveArgs);
   }
 
   @Test
@@ -175,11 +211,7 @@ public class SchemaSpyMainTest {
       System.setProperty("user.dir", tempDir.toString());
       final String[] effectiveArgs =
           SchemaSpyMain.resolveEffectiveArgs("-db", "booksFromCli", "-u", "userFromCli");
-
-      assertThat(Arrays.asList(effectiveArgs).contains("booksFromFile"), is(false));
-      assertThat(Arrays.asList(effectiveArgs).contains("userFromFile"), is(false));
-      assertThat(Arrays.asList(effectiveArgs).contains("booksFromCli"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("userFromCli"), is(true));
+      assertArrayEquals(new String[] {"-db", "booksFromCli", "-u", "userFromCli"}, effectiveArgs);
     } finally {
       System.setProperty("user.dir", previousUserDir);
     }
@@ -200,15 +232,11 @@ public class SchemaSpyMainTest {
     try {
       System.setProperty("user.dir", tempDir.toString());
       final String[] effectiveArgs = SchemaSpyMain.resolveEffectiveArgs("-o", "out.zip");
-
-      assertThat(Arrays.asList(effectiveArgs).contains("-t"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("pgsql"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("-db"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("books"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("-u"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("scott"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("-host"), is(true));
-      assertThat(Arrays.asList(effectiveArgs).contains("db.example"), is(true));
+      assertArrayEquals(
+          new String[] {
+            "-t", "pgsql", "-db", "books", "-host", "db.example", "-u", "scott", "-o", "out.zip"
+          },
+          effectiveArgs);
     } finally {
       System.setProperty("user.dir", previousUserDir);
     }
@@ -228,30 +256,32 @@ public class SchemaSpyMainTest {
 
   @Test
   public void mapsConnectionPropertiesArgument() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command)
         .parseArgs(
-            "-t", "pgsql", "-db", "books", "-u", "scott", "-connprops", "key1=value1,key2=value2");
+            "-t", "pgsql", "-db", "books", "-u", "scott", "-connprops", "key1=value1;key2=value2");
 
     final String equivalentCommand = command.toEquivalentCommand();
-    assertThat(equivalentCommand, containsString("--jdbc-properties"));
-    assertThat(equivalentCommand, containsString("key1=value1,key2=value2"));
+    assertThat(equivalentCommand, containsString("--urlx key1=value1"));
+    assertThat(equivalentCommand, containsString("--urlx key2=value2"));
+    assertThat(equivalentCommand, not(containsString("--jdbc-properties")));
   }
 
   @Test
   public void mapsCatalogArgument() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command)
         .parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-cat", "mycat");
 
     final String equivalentCommand = command.toEquivalentCommand();
-    assertThat(equivalentCommand, containsString("--catalogs"));
-    assertThat(equivalentCommand, containsString("mycat"));
+    assertThat(equivalentCommand, containsString("--schemas"));
+    assertThat(equivalentCommand, containsString("\\Qmycat\\E"));
+    assertThat(equivalentCommand, not(containsString("--catalogs")));
   }
 
   @Test
   public void mapsSingleSchemaArgument() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command)
         .parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-s", "public");
 
@@ -262,7 +292,7 @@ public class SchemaSpyMainTest {
 
   @Test
   public void mapsMultipleSchemasWithConversion() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command)
         .parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-schemas", "schema1,schema2");
 
@@ -275,7 +305,7 @@ public class SchemaSpyMainTest {
 
   @Test
   public void mapsSchemaRegexArgument() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command)
         .parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-schemaSpec", ".*\\.TEST.*");
 
@@ -286,7 +316,7 @@ public class SchemaSpyMainTest {
 
   @Test
   public void schemaSpecTakesPriorityOverSchemasList() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command)
         .parseArgs(
             "-t",
@@ -311,7 +341,7 @@ public class SchemaSpyMainTest {
 
   @Test
   public void mapsIncludeTableArgument() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command)
         .parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-i", ".*\\.PUBLIC\\..*");
 
@@ -322,7 +352,7 @@ public class SchemaSpyMainTest {
 
   @Test
   public void mapsExcludeTableArgument() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command)
         .parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-I", ".*\\.TEMP_.*");
 
@@ -334,7 +364,7 @@ public class SchemaSpyMainTest {
 
   @Test
   public void combinesIncludeAndExcludeTablePatterns() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command)
         .parseArgs(
             "-t",
@@ -357,7 +387,7 @@ public class SchemaSpyMainTest {
 
   @Test
   public void enablesRowCountsByDefault() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command).parseArgs("-t", "pgsql", "-db", "books", "-u", "scott");
 
     final String equivalentCommand = command.toEquivalentCommand();
@@ -367,7 +397,7 @@ public class SchemaSpyMainTest {
 
   @Test
   public void disablesRowCountsWhenNoRowsFlagSet() {
-    final SchemaSpyMain command = new SchemaSpyMain();
+    final SchemaSpyCommand command = new SchemaSpyCommand();
     new CommandLine(command).parseArgs("-t", "pgsql", "-db", "books", "-u", "scott", "-norows");
 
     final String equivalentCommand = command.toEquivalentCommand();

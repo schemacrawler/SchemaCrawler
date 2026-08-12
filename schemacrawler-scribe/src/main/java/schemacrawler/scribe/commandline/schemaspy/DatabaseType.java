@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  *
  * <p>Types without a SchemaCrawler server mapping are handled in JDBC URL fallback mode.
  */
-public enum SchemaSpyDatabaseType {
+enum DatabaseType {
   DB2("db2", "db2"),
   DB2NET("db2net", "db2"),
   DB2ZOS("db2zos", "db2"),
@@ -65,7 +65,7 @@ public enum SchemaSpyDatabaseType {
   MAXDB("maxdb"),
   FORCE("force");
 
-  public static Optional<SchemaSpyDatabaseType> fromType(final String type) {
+  public static Optional<DatabaseType> fromType(final String type) {
     requireNonNull(type, "No SchemaSpy database type provided");
     final String normalizedType = normalize(type);
     return Arrays.stream(values())
@@ -75,7 +75,7 @@ public enum SchemaSpyDatabaseType {
 
   public static String supportedDatabaseTypes() {
     return Arrays.stream(values())
-        .map(SchemaSpyDatabaseType::getSchemaspyType)
+        .map(DatabaseType::getSchemaspyType)
         .collect(Collectors.joining(", "));
   }
 
@@ -86,11 +86,11 @@ public enum SchemaSpyDatabaseType {
   private final String schemaCrawlerServer;
   private final String schemaspyType;
 
-  SchemaSpyDatabaseType(final String schemaspyType) {
+  DatabaseType(final String schemaspyType) {
     this(schemaspyType, null);
   }
 
-  SchemaSpyDatabaseType(final String schemaspyType, final String schemaCrawlerServer) {
+  DatabaseType(final String schemaspyType, final String schemaCrawlerServer) {
     this.schemaspyType = requireNonNull(schemaspyType, "No SchemaSpy type provided");
     this.schemaCrawlerServer = schemaCrawlerServer;
   }

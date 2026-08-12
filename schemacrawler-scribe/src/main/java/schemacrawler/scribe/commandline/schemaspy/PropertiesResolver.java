@@ -8,6 +8,8 @@
 
 package schemacrawler.scribe.commandline.schemaspy;
 
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -23,7 +25,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-final class SchemaSpyPropertiesResolver {
+final class PropertiesResolver {
   private static final String PROPERTY_PREFIX = "schemaspy.";
 
   private record OptionSpec(String propertyKey, boolean takesValue, String... names) {}
@@ -74,13 +76,16 @@ final class SchemaSpyPropertiesResolver {
     if (configFile == null) {
       return args;
     }
-    final List<String> fromProperties = readArgumentsFromProperties(configFile, args);
-    if (fromProperties.isEmpty()) {
+
+    final List<String> propertyArgs = readArgumentsFromProperties(configFile, args);
+    if (propertyArgs.isEmpty()) {
       return args;
     }
-    final List<String> merged = new ArrayList<>(fromProperties);
-    merged.addAll(Arrays.asList(args));
-    return merged.toArray(String[]::new);
+
+    final List<String> effectiveArgs = new ArrayList<>(propertyArgs.size() + args.length);
+    effectiveArgs.addAll(propertyArgs);
+    effectiveArgs.addAll(Arrays.asList(args));
+    return effectiveArgs.toArray(String[]::new);
   }
 
   private static String extractOptionName(final String argument) {
@@ -137,30 +142,36 @@ final class SchemaSpyPropertiesResolver {
 
     final Set<String> cliOptions =
         Arrays.stream(cliArgs)
-            .map(SchemaSpyPropertiesResolver::extractOptionName)
+            .map(PropertiesResolver::extractOptionName)
             .filter(name -> name != null && name.startsWith("-"))
             .collect(Collectors.toSet());
 
     final List<String> propertyArgs = new ArrayList<>();
+    final Map<String, String> normalizedProperties = new LinkedHashMap<>();
     for (String key : properties.stringPropertyNames()) {
-      final String normalizedKey = normalizePropertyKey(key);
-      final OptionSpec optionSpec = PROPERTY_OPTION_BY_KEY.get(normalizedKey);
-      if (optionSpec == null) {
-        System.err.println("Ignoring unsupported property key <" + key + ">");
+      normalizedProperties.put(normalizePropertyKey(key), properties.getProperty(key));
+    }
+
+    for (OptionSpec optionSpec : PROPERTY_OPTION_SPECS) {
+      final String rawValue = normalizedProperties.get(optionSpec.propertyKey);
+      if (rawValue == null || hasCliOverride(cliOptions, optionSpec)) {
         continue;
       }
-      if (hasCliOverride(cliOptions, optionSpec)) {
-        continue;
-      }
-      final String rawValue = properties.getProperty(key);
-      if (rawValue == null || rawValue.isBlank()) {
+      final String normalizedValue = rawValue.trim();
+      if (isBlank(normalizedValue)) {
         continue;
       }
       if (optionSpec.takesValue) {
         propertyArgs.add(optionSpec.names[0]);
-        propertyArgs.add(rawValue.trim());
-      } else if (isTrueValue(rawValue.trim(), key)) {
+        propertyArgs.add(normalizedValue);
+      } else if (isTrueValue(normalizedValue, optionSpec.propertyKey)) {
         propertyArgs.add(optionSpec.names[0]);
+      }
+    }
+
+    for (String key : normalizedProperties.keySet()) {
+      if (!PROPERTY_OPTION_BY_KEY.containsKey(key)) {
+        System.err.println("Ignoring unsupported property key <" + key + ">");
       }
     }
     return propertyArgs;
@@ -168,7 +179,7 @@ final class SchemaSpyPropertiesResolver {
 
   private static Path resolveConfigFile(final String[] args) {
     final String configFilePath = extractOptionValue(args, "-configFile");
-    if (configFilePath != null && !configFilePath.isBlank()) {
+    if (!isBlank(configFilePath)) {
       final Path explicitConfigPath = Paths.get(configFilePath).toAbsolutePath().normalize();
       if (!Files.isRegularFile(explicitConfigPath)) {
         throw new IllegalArgumentException(
@@ -195,7 +206,7 @@ final class SchemaSpyPropertiesResolver {
     return normalizedKey;
   }
 
-  private SchemaSpyPropertiesResolver() {
+  private PropertiesResolver() {
     // Utility class
   }
 }
