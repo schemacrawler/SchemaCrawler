@@ -80,23 +80,18 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
   /** {@inheritDoc} */
   @Override
   public void writeDetailRow(final String text1, final String text2, final String text3) {
-    writeDetailRow(text1, text2, text3, true, false, "");
+    writeDetailRow(text1, text2, text3, new DetailRowOptions(true, false));
   }
 
   /** {@inheritDoc} */
   @Override
   public void writeDetailRow(
-      final String text1,
-      final String text2,
-      final String text3,
-      final boolean escapeText,
-      final boolean emphasize,
-      final String style) {
+      final String text1, final String text2, final String text3, final DetailRowOptions options) {
     final int text2Width = 32;
     final int text3Width = 28;
     final String text3Sytle;
-    if (!isBlank(style)) {
-      text3Sytle = " " + style;
+    if (!isBlank(options.style())) {
+      text3Sytle = " " + options.style();
     } else {
       text3Sytle = "";
     }
@@ -111,9 +106,9 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
 
     row.addInnerTag(
         tableCell()
-            .withEscapedText(text2, escapeText)
+            .withEscapedText(text2, options.escapeText())
             .withWidth(text2Width)
-            .withEmphasis(emphasize)
+            .withEmphasis(options.emphasize())
             .withStyleClass("minwidth")
             .make());
 
