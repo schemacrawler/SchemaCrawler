@@ -11,12 +11,13 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
+import schemacrawler.tools.utility.TableCounts;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record SchemaCrawlerFrontMatter(
-    String schema, String name, String completeType, Counts counts, String entityType) {
+    String schema, String name, String completeType, TableCounts counts, String entityType) {
 
   public SchemaCrawlerFrontMatter {
     schema = trimToEmpty(schema);
@@ -27,7 +28,7 @@ public record SchemaCrawlerFrontMatter(
 
   public SchemaCrawlerFrontMatter(
       final DatabaseObjectDescription objectDescription,
-      final Counts counts,
+      final TableCounts counts,
       final String entityType) {
     this(
         requireNonNull(objectDescription, "No database object description provided").schemaName(),

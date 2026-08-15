@@ -25,9 +25,9 @@ import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatter;
 import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
 import schemacrawler.scribe.okf.frontmatter.okf.Verified;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.Counts;
 import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatter;
 import schemacrawler.tools.utility.EntityModelType;
+import schemacrawler.tools.utility.TableCounts;
 import schemacrawler.tools.utility.TableTraits;
 import tools.jackson.databind.JsonNode;
 
@@ -51,7 +51,7 @@ public class OkfFrontMatterYamlUtilityTest {
         new GitHubPagesFrontMatter("books", "Books table", true, true);
     final SchemaCrawlerFrontMatter schemaCrawlerFrontMatter =
         new SchemaCrawlerFrontMatter(
-            "PUBLIC.BOOKS", "BOOKS", null, new Counts(2, 0, 1, 1, null), null);
+            "PUBLIC.BOOKS", "BOOKS", null, new TableCounts(2, 0, 1, 1, null), null);
 
     final String yaml =
         utility.toYamlString(okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
