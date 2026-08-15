@@ -8,10 +8,7 @@
 package schemacrawler.scribe.okf.frontmatter.schemacrawler;
 
 import java.util.function.Function;
-import tools.jackson.databind.PropertyNamingStrategies;
-import tools.jackson.databind.annotation.JsonNaming;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record TableAttributes(
     Boolean noPrimaryKey,
     Boolean noForeignKeys,
