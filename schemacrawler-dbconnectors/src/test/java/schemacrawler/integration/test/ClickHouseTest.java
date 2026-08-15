@@ -77,7 +77,7 @@ public class ClickHouseTest extends BaseAdditionalDatabaseTest {
             new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword())));
 
     try (final Connection connection = getConnection()) {
-      new TestSchemaCreator(connection, "/clickhouse.scripts.txt", false).run();
+      new TestSchemaCreator(connection, "/testdb/clickhouse/clickhouse.scripts.txt", false).run();
     }
   }
 

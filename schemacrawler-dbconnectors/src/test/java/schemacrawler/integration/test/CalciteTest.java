@@ -43,7 +43,7 @@ public class CalciteTest extends BaseAdditionalDatabaseTest {
   public void createDatabase() throws Exception {
     // Read model
     final Path directoryPath =
-        Path.of("src/test/resources/calcite-model", "STOCKMARKET.json").toAbsolutePath();
+        Path.of("src/test/resources/testdb/calcite", "STOCKMARKET.json").toAbsolutePath();
 
     // Create connection
     final Properties info = new Properties();

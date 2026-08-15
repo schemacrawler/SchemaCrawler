@@ -163,6 +163,14 @@
       </exclusions>
     </dependency>
 
+    <!-- Woodstox - required by Teiid for XML/StAX processing -->
+    <dependency>
+      <groupId>com.fasterxml.woodstox</groupId>
+      <artifactId>woodstox-core</artifactId>
+      <version>6.4.0</version>
+      <scope>test</scope>
+    </dependency>
+
     <!-- Teiid -->
     <dependency>
       <groupId>org.teiid</groupId>

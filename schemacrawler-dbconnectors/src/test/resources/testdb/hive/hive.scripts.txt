@@ -1,0 +1,1 @@
+;,/testdb/hive/hive-books-database.sql

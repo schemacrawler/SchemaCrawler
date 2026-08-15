@@ -1,0 +1,1 @@
+;,/testdb/clickhouse/clickhouse-books-database.sql
