@@ -8,6 +8,8 @@
 package schemacrawler.scribe.okf.frontmatter.schemacrawler;
 
 import java.util.function.Function;
+import schemacrawler.loader.utility.TableRowCountsUtility;
+import schemacrawler.schema.Table;
 
 public record Counts(
     Integer columnCount,
@@ -30,5 +32,19 @@ public record Counts(
 
   public Counts() {
     this(null, null, null, null, null);
+  }
+
+  public static Counts from(final Table table) {
+    if (table == null) {
+      return null;
+    }
+    final Long rowCount =
+        TableRowCountsUtility.hasRowCount(table) ? TableRowCountsUtility.getRowCount(table) : null;
+    return new Counts(
+        table.getColumns().size(),
+        table.getReferencedTables().size(),
+        table.getIndexes().size(),
+        table.getTriggers().size(),
+        rowCount);
   }
 }

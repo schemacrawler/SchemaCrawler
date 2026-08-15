@@ -8,16 +8,13 @@
 package schemacrawler.scribe.okf;
 
 import java.net.URI;
-import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.DatabaseObject;
-import schemacrawler.schema.Table;
 import schemacrawler.schema.TypedObject;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
 import schemacrawler.scribe.okf.frontmatter.okf.Actor;
 import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
 import schemacrawler.scribe.okf.frontmatter.okf.Verified;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.Counts;
 import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.UtilityMarker;
 
@@ -54,20 +51,6 @@ public class FrontMatterUtility {
 
     return new DatabaseObjectDescription(
         simpleTypeName, completeType, schemaName, name, fullName, description, intro, resource);
-  }
-
-  public static Counts tableCounts(final Table table) {
-    if (table == null) {
-      return null;
-    }
-    final Long rowCount =
-        TableRowCountsUtility.hasRowCount(table) ? TableRowCountsUtility.getRowCount(table) : null;
-    return new Counts(
-        table.getColumns().size(),
-        table.getReferencedTables().size(),
-        table.getIndexes().size(),
-        table.getTriggers().size(),
-        rowCount);
   }
 
   public static Verified verified() {
