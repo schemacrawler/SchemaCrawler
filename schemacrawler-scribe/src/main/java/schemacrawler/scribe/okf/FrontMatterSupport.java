@@ -57,8 +57,7 @@ public final class FrontMatterSupport extends AbstractExecutionState {
     final GitHubPagesFrontMatter gitHubPagesFrontMatter =
         new GitHubPagesFrontMatter(objectDescription, true, true);
     final SchemaCrawlerFrontMatter schemaCrawlerFrontMatter =
-        new SchemaCrawlerFrontMatter(
-            objectDescription, FrontMatterUtility.routineCounts(routine), null);
+        new SchemaCrawlerFrontMatter(objectDescription, null, null);
 
     return frontMatterYamlUtility.toYamlString(
         okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);

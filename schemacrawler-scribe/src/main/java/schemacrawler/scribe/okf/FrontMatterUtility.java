@@ -10,7 +10,6 @@ package schemacrawler.scribe.okf;
 import java.net.URI;
 import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.DatabaseObject;
-import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TypedObject;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
@@ -57,13 +56,6 @@ public class FrontMatterUtility {
         simpleTypeName, completeType, schemaName, name, fullName, description, intro, resource);
   }
 
-  public static Counts routineCounts(final Routine routine) {
-    if (routine == null) {
-      return new Counts();
-    }
-    return new Counts(null, null, null, null, null, routine.getParameters().size());
-  }
-
   public static Counts tableCounts(final Table table) {
     if (table == null) {
       return null;
@@ -75,8 +67,7 @@ public class FrontMatterUtility {
         table.getReferencedTables().size(),
         table.getIndexes().size(),
         table.getTriggers().size(),
-        rowCount,
-        null);
+        rowCount);
   }
 
   public static Verified verified() {

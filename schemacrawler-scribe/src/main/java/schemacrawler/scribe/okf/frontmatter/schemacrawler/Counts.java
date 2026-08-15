@@ -8,17 +8,13 @@
 package schemacrawler.scribe.okf.frontmatter.schemacrawler;
 
 import java.util.function.Function;
-import tools.jackson.databind.PropertyNamingStrategies;
-import tools.jackson.databind.annotation.JsonNaming;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record Counts(
     Integer columnCount,
     Integer foreignKeyCount,
     Integer indexCount,
     Integer triggerCount,
-    Long rowCount,
-    Integer parameterCount) {
+    Long rowCount) {
 
   private static final Function<Integer, Integer> removeNegativeInteger =
       x -> x == null || x < 0 ? null : x;
@@ -30,10 +26,9 @@ public record Counts(
     indexCount = removeNegativeInteger.apply(indexCount);
     triggerCount = removeNegativeInteger.apply(triggerCount);
     rowCount = makeValidRowCount.apply(rowCount);
-    parameterCount = removeNegativeInteger.apply(parameterCount);
   }
 
   public Counts() {
-    this(null, null, null, null, null, null);
+    this(null, null, null, null, null);
   }
 }

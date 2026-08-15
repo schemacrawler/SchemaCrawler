@@ -25,6 +25,7 @@ import static tools.jackson.dataformat.yaml.YAMLWriteFeature.WRITE_DOC_START_MAR
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.cfg.MapperBuilder;
 import tools.jackson.dataformat.yaml.YAMLMapper;
 import us.fatehi.utility.UtilityMarker;
@@ -66,6 +67,8 @@ public class JsonUtility {
     mapperBuilder.disable(WRITE_DOC_START_MARKER);
     // Preserve YAML insertion order rather than sorting map keys
     mapperBuilder.disable(ORDER_MAP_ENTRIES_BY_KEYS);
+
+    mapperBuilder.propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
 
     return mapperBuilder;
   }
