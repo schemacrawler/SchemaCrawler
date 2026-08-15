@@ -4,7 +4,7 @@
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
 		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>TEST_TABLE</i></b></td>
-		<td bgcolor='#F2E6C2' align='right'>[unknown]</td>
+		<td bgcolor='#F2E6C2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='generated_column_5829206.start' align='left'><b><i>GENERATED_COLUMN</i></b></td>

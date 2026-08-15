@@ -11,7 +11,7 @@ generated:
   at: 1970-01-01T00:00:00Z
   by: process:schemacrawler-v17.12.2
 verified:
-  at: 2026-08-11T02:30:45.334348900Z
+  at: 2026-08-15T17:28:32.012978900Z
   by: machine-confirmed:schemacrawler-v17.12.2
 status: stable
 shortTitle: order details
@@ -20,7 +20,7 @@ showMiniToc: true
 allowTitleToDifferFromFilename: true
 schema: PUBLIC.BOOKS
 name: order details
-complete_type: unknown
+complete_type: table
 counts:
   column_count: 0
   foreign_key_count: 0

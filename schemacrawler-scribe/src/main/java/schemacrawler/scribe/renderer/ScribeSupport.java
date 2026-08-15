@@ -29,13 +29,13 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
-import schemacrawler.schema.View;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.state.ExecutionState;
 import schemacrawler.tools.utility.AbstractTextSupport;
+import schemacrawler.utility.MetaDataUtility;
 
 /**
  * Single source of truth for all catalog, ER model, lint, and message data used by Scribe
@@ -195,10 +195,7 @@ public final class ScribeSupport extends AbstractTextSupport {
    * @return {@code false} when the table is {@code null}
    */
   public boolean isView(final Table table) {
-    if (table == null) {
-      return false;
-    }
-    return table instanceof View || table.getTableType().isView();
+    return MetaDataUtility.isView(table);
   }
 
   /**
@@ -404,7 +401,7 @@ public final class ScribeSupport extends AbstractTextSupport {
     return catalogStats.viewCount();
   }
 
-  private EntityModelType entityModelType(final Table table) {
+  private static EntityModelType entityModelType(final Table table) {
     if (ERModelUtility.inferBridgeTable(table).toBoolean(false)) {
       return EntityModelType.bridge_table;
     }
@@ -424,7 +421,7 @@ public final class ScribeSupport extends AbstractTextSupport {
     }
     final List<Table> views = new ArrayList<>();
     for (final Table candidate : getCatalog().getTables()) {
-      if (isView(candidate) && ((View) candidate).getTableUsage().contains(table)) {
+      if (isView(candidate) && candidate.getReferencedObjects().contains(table)) {
         views.add(candidate);
       }
     }

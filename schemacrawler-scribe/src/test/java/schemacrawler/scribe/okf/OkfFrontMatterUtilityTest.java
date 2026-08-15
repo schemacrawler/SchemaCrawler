@@ -17,9 +17,9 @@ import java.lang.reflect.Proxy;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.scribe.model.TableTraits;
 import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.test.utility.crawl.LightTrigger;
+import schemacrawler.tools.utility.TableTraits;
 
 public class OkfFrontMatterUtilityTest {
 

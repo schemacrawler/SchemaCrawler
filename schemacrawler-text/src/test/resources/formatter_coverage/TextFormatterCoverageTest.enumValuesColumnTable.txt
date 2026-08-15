@@ -1,6 +1,6 @@
 
 
-TEST_TABLE                                                     [unknown]
+TEST_TABLE                                                       [table]
 ------------------------------------------------------------------------
   ENUM_VALUES_COLUMN                VARCHAR NOT NULL            
                                     'VALUE1', VALUE2'           

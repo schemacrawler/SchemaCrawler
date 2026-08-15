@@ -22,7 +22,6 @@ import schemacrawler.ermodel.model.EntityType;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
-import schemacrawler.scribe.model.TableTraits;
 import schemacrawler.scribe.okf.frontmatter.DatabaseObjectDescription;
 import schemacrawler.scribe.okf.frontmatter.github.GitHubPagesFrontMatter;
 import schemacrawler.scribe.okf.frontmatter.okf.Actor;
@@ -32,6 +31,7 @@ import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatter;
 import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatter;
 import schemacrawler.tools.state.AbstractExecutionState;
+import schemacrawler.tools.utility.TableTraits;
 
 public final class FrontMatterSupport extends AbstractExecutionState {
 
