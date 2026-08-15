@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import schemacrawler.ermodel.model.Entity;
 import schemacrawler.ermodel.model.EntityType;
+import schemacrawler.ermodel.utility.ERModelUtility;
 import schemacrawler.loader.ermodel.summary.ERModelStats;
 import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.Column;
@@ -157,19 +157,6 @@ public final class ScribeSupport extends AbstractTextSupport {
    */
   public int foreignKeyCount() {
     return catalogStats.foreignKeyCount();
-  }
-
-  /**
-   * Checks whether a table is a many-to-many bridge table in the ER model.
-   *
-   * @param table Table
-   * @return {@code false} when the table is {@code null} or no ER model is available
-   */
-  public boolean isBridgeTable(final Table table) {
-    if (table == null || !hasERModel()) {
-      return false;
-    }
-    return getERModel().lookupByBridgeTable(table).isPresent();
   }
 
   /**
@@ -418,30 +405,17 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   private EntityModelType entityModelType(final Table table) {
-    if (table == null || !hasERModel()) {
-      return EntityModelType.unknown;
-    }
-    if (isBridgeTable(table)) {
+    if (ERModelUtility.inferBridgeTable(table).toBoolean(false)) {
       return EntityModelType.bridge_table;
     }
-    final Optional<EntityType> optionalEntityType = entityType(table);
-    if (optionalEntityType.isEmpty()) {
-      return EntityModelType.unknown;
-    }
-    return switch (optionalEntityType.get()) {
+    final EntityType entityType = ERModelUtility.inferEntityType(table);
+    return switch (entityType) {
       case strong_entity -> EntityModelType.strong_entity;
       case subtype -> EntityModelType.subtype;
       case weak_entity -> EntityModelType.weak_entity;
       case non_entity -> EntityModelType.non_entity;
       default -> EntityModelType.unknown;
     };
-  }
-
-  private Optional<EntityType> entityType(final Table table) {
-    if (table == null || !hasERModel()) {
-      return Optional.empty();
-    }
-    return getERModel().lookupEntity(table).map(Entity::getType);
   }
 
   private Collection<Table> usedByViews(final Table table) {
