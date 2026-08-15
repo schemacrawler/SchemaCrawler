@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import schemacrawler.ermodel.model.EntityType;
-import schemacrawler.ermodel.utility.ERModelUtility;
 import schemacrawler.loader.ermodel.summary.ERModelStats;
 import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.Column;
@@ -43,16 +41,6 @@ import schemacrawler.utility.MetaDataUtility;
  * own instance.
  */
 public final class ScribeSupport extends AbstractTextSupport {
-
-  public enum EntityModelType {
-    unknown,
-    non_entity,
-    subtype,
-    weak_entity,
-    strong_entity,
-    bridge_table,
-    ;
-  }
 
   private final Lints lints;
   private final ScribeMessages messages;
@@ -221,7 +209,7 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   public String localizedEntityModelType(final Table table) {
-    return switch (entityModelType(table)) {
+    return switch (EntityModelType.from(table)) {
       case non_entity -> messages.valueEntityModelTypeNonEntity();
       case subtype -> messages.valueEntityModelTypeSubtype();
       case weak_entity -> messages.valueEntityModelTypeWeakEntity();
@@ -399,20 +387,6 @@ public final class ScribeSupport extends AbstractTextSupport {
    */
   public int viewCount() {
     return catalogStats.viewCount();
-  }
-
-  private static EntityModelType entityModelType(final Table table) {
-    if (ERModelUtility.inferBridgeTable(table).toBoolean(false)) {
-      return EntityModelType.bridge_table;
-    }
-    final EntityType entityType = ERModelUtility.inferEntityType(table);
-    return switch (entityType) {
-      case strong_entity -> EntityModelType.strong_entity;
-      case subtype -> EntityModelType.subtype;
-      case weak_entity -> EntityModelType.weak_entity;
-      case non_entity -> EntityModelType.non_entity;
-      default -> EntityModelType.unknown;
-    };
   }
 
   private Collection<Table> usedByViews(final Table table) {
