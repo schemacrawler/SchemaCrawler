@@ -11,14 +11,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static schemacrawler.loader.utility.TableRowCountsUtility.TABLE_ROW_COUNT_KEY;
-import static schemacrawler.scribe.okf.FrontMatterUtility.tableAttributes;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributes;
+import schemacrawler.scribe.model.TableTraits;
 import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.test.utility.crawl.LightTrigger;
 
@@ -46,18 +45,18 @@ public class OkfFrontMatterUtilityTest {
                   }
                 });
 
-    final TableAttributes attributes = tableAttributes(table, true);
+    final TableTraits attributes = TableTraits.from(table);
     assertThat(attributes.noPrimaryKey(), is(Boolean.TRUE));
     assertThat(attributes.selfReferencing(), is(Boolean.TRUE));
     assertThat(attributes.hasTriggers(), is(Boolean.TRUE));
     assertThat(attributes.emptyTable(), is(Boolean.TRUE));
-    assertThat(attributes.bridgeTable(), is(Boolean.TRUE));
+    assertThat(attributes.bridgeTable(), is(nullValue()));
   }
 
   @Test
   public void tableAttributesDoNotMarkEmptyWhenRowCountUnavailable() {
     final LightTable table = new LightTable(new SchemaReference("PUBLIC", "BOOKS"), "BOOKS");
-    final TableAttributes attributes = tableAttributes(table, false);
+    final TableTraits attributes = TableTraits.from(table);
     assertThat(attributes.emptyTable(), is(nullValue()));
   }
 }

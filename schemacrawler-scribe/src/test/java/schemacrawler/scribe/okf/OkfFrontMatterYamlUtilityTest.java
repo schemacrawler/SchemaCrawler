@@ -17,6 +17,7 @@ import static schemacrawler.scribe.renderer.JsonUtility.yamlMapper;
 import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import schemacrawler.scribe.model.TableTraits;
 import schemacrawler.scribe.okf.frontmatter.github.GitHubPagesFrontMatter;
 import schemacrawler.scribe.okf.frontmatter.okf.Actor;
 import schemacrawler.scribe.okf.frontmatter.okf.Generated;
@@ -27,7 +28,6 @@ import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
 import schemacrawler.scribe.okf.frontmatter.okf.Verified;
 import schemacrawler.scribe.okf.frontmatter.schemacrawler.Counts;
 import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatter;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributes;
 import tools.jackson.databind.JsonNode;
 
 public class OkfFrontMatterYamlUtilityTest {
@@ -121,8 +121,7 @@ public class OkfFrontMatterYamlUtilityTest {
   @Test
   public void tableAttributesAreConvertedToSnakeCaseTags() {
     final FrontMatterYamlUtility utility = new FrontMatterYamlUtility();
-    final TableAttributes tableAttributes =
-        new TableAttributes(true, true, false, true, false, null, true);
+    final TableTraits tableAttributes = new TableTraits(true, true, false, true, false, null, true);
 
     assertThat(
         utility.toTags(tableAttributes),

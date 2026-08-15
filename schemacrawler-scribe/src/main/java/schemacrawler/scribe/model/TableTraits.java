@@ -5,11 +5,16 @@
  * All rights reserved.
  * SPDX-License-Identifier: EPL-2.0
  */
-package schemacrawler.scribe.okf.frontmatter.schemacrawler;
+package schemacrawler.scribe.model;
+
+import static schemacrawler.ermodel.utility.ERModelUtility.inferBridgeTable;
+import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCount;
+import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 
 import java.util.function.Function;
+import schemacrawler.schema.Table;
 
-public record TableAttributes(
+public record TableTraits(
     Boolean noPrimaryKey,
     Boolean noForeignKeys,
     Boolean noIndexes,
@@ -21,11 +26,25 @@ public record TableAttributes(
   private static final Function<Boolean, Boolean> makeTrueOrNull =
       booleanValue -> booleanValue == null || !booleanValue ? null : Boolean.TRUE;
 
-  public TableAttributes() {
+  public static TableTraits from(final Table table) {
+    if (table == null) {
+      return new TableTraits();
+    }
+    return new TableTraits(
+        !table.hasPrimaryKey(),
+        !table.hasForeignKeys(),
+        !table.hasIndexes(),
+        table.isSelfReferencing(),
+        table.hasTriggers(),
+        hasRowCount(table) && getRowCount(table) == 0,
+        inferBridgeTable(table).toBoolean(false));
+  }
+
+  public TableTraits() {
     this(null, null, null, null, null, null, null);
   }
 
-  public TableAttributes {
+  public TableTraits {
     noPrimaryKey = makeTrueOrNull.apply(noPrimaryKey);
     noForeignKeys = makeTrueOrNull.apply(noForeignKeys);
     noIndexes = makeTrueOrNull.apply(noIndexes);

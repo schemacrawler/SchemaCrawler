@@ -7,9 +7,6 @@
  */
 package schemacrawler.scribe.okf;
 
-import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCount;
-import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
-
 import java.net.URI;
 import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.DatabaseObject;
@@ -22,7 +19,6 @@ import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
 import schemacrawler.scribe.okf.frontmatter.okf.Verified;
 import schemacrawler.scribe.okf.frontmatter.schemacrawler.Counts;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributes;
 import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.UtilityMarker;
 
@@ -66,20 +62,6 @@ public class FrontMatterUtility {
       return new Counts();
     }
     return new Counts(null, null, null, null, null, routine.getParameters().size());
-  }
-
-  public static TableAttributes tableAttributes(final Table table, final boolean isBridgeTable) {
-    if (table == null) {
-      return new TableAttributes();
-    }
-    return new TableAttributes(
-        !table.hasPrimaryKey(),
-        !table.hasForeignKeys(),
-        !table.hasIndexes(),
-        table.isSelfReferencing(),
-        table.hasTriggers(),
-        hasRowCount(table) && getRowCount(table) == 0,
-        isBridgeTable);
   }
 
   public static Counts tableCounts(final Table table) {
