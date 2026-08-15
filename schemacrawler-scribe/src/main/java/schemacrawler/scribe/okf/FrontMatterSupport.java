@@ -20,6 +20,7 @@ import java.util.Optional;
 import schemacrawler.ermodel.model.ERModel;
 import schemacrawler.ermodel.model.Entity;
 import schemacrawler.ermodel.model.EntityType;
+import schemacrawler.ermodel.utility.ERModelUtility;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
@@ -70,7 +71,8 @@ public final class FrontMatterSupport extends AbstractExecutionState {
 
     final List<String> tags = new ArrayList<>();
     addTag(tags, objectDescription.simpleTypeName());
-    final TableAttributes tableAttributes = tableAttributes(table, isBridgeTable(table));
+    final boolean bridgeTable = ERModelUtility.inferBridgeTable(table).toBoolean(false);
+    final TableAttributes tableAttributes = tableAttributes(table, bridgeTable);
     tags.addAll(frontMatterYamlUtility.toTags(tableAttributes));
 
     final String entityType = entityType(table, tags);
@@ -138,13 +140,5 @@ public final class FrontMatterSupport extends AbstractExecutionState {
 
     final Actor scActor = new SchemaCrawlerActor().toActor();
     return new Generated(scActor, crawlTimestamp);
-  }
-
-  private boolean isBridgeTable(final Table table) {
-    if (!hasERModel()) {
-      return false;
-    }
-    final ERModel model = getERModel();
-    return model.lookupByBridgeTable(table).isPresent();
   }
 }
