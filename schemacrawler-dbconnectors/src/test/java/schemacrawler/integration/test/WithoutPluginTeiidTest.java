@@ -48,7 +48,7 @@ public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
 
     final FileManagedConnectionFactory managedconnectionFactory =
         new FileManagedConnectionFactory();
-    managedconnectionFactory.setParentDirectory("src/test/resources/teiid-vdb");
+    managedconnectionFactory.setParentDirectory("src/test/resources/testdb/teiid");
     server.addConnectionFactory(
         "java:/marketdata-price-file", managedconnectionFactory.createConnectionFactory());
 
@@ -58,7 +58,7 @@ public class WithoutPluginTeiidTest extends BaseAdditionalDatabaseTest {
     server.deployVDB(
         WithoutPluginTeiidTest.class
             .getClassLoader()
-            .getResourceAsStream("teiid-vdb/stock-market-vdb.xml"));
+            .getResourceAsStream("testdb/teiid/stock-market-vdb.xml"));
 
     final Connection connection = server.getDriver().connect("jdbc:teiid:StockMarket", null);
     connectionSource = DatabaseConnectionSources.fromConnection(connection);

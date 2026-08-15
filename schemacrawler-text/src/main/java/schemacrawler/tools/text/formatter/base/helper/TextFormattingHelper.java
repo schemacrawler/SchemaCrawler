@@ -14,6 +14,17 @@ import us.fatehi.utility.html.Alignment;
 /** Methods to format entire rows of output. */
 public interface TextFormattingHelper {
 
+  record DetailRowOptions(boolean escapeText, boolean emphasize, String style) {
+
+    public DetailRowOptions(final boolean escapeText, final boolean emphasize) {
+      this(escapeText, emphasize, "");
+    }
+
+    public DetailRowOptions {
+      style = style == null ? "" : style;
+    }
+  }
+
   enum DocumentHeaderType {
     title {
       @Override
@@ -117,17 +128,9 @@ public interface TextFormattingHelper {
    * @param text1 Text for field 1
    * @param text2 Text for field 2
    * @param text3 Text for field 3
-   * @param escapeText Escape sequence
-   * @param emphasize Whether to emphasize text
-   * @param style Other CSS style
+   * @param options Detail row options
    */
-  void writeDetailRow(
-      String text1,
-      String text2,
-      String text3,
-      boolean escapeText,
-      boolean emphasize,
-      String style);
+  void writeDetailRow(String text1, String text2, String text3, DetailRowOptions options);
 
   /** Document end. */
   void writeDocumentEnd();

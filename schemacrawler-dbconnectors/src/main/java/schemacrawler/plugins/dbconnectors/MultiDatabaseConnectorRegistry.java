@@ -75,6 +75,7 @@ public final class MultiDatabaseConnectorRegistry extends BasePluginRegistry {
             "cassandra.yaml",
             "clickhouse.yaml",
             "duckdb.yaml",
+            "hive.yaml",
             "h2.yaml",
             "snowflake.yaml",
             "trino.yaml");

@@ -10,70 +10,84 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static us.fatehi.test.utility.TestUtility.copyResourceToTempFile;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
-import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.Map;
-import java.util.regex.Pattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
-import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.schemacrawler.LimitOptionsBuilder;
+import org.testcontainers.containers.JdbcDatabaseContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.DisableLogging;
+import schemacrawler.testdb.TestSchemaCreator;
+import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import us.fatehi.test.integration.utility.HiveTestUtility;
+import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
+import us.fatehi.utility.datasource.JdbcUrl;
+import us.fatehi.utility.datasource.JdbcUrlParser;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
-@TestInstance(Lifecycle.PER_CLASS)
-public class AccessTest extends BaseAdditionalDatabaseTest {
+@DisableLogging
+@HeavyDatabaseTest("hive")
+@Testcontainers(disabledWithoutDocker = true)
+public class HiveTest extends BaseAdditionalDatabaseTest {
+
+  @Container
+  private final JdbcDatabaseContainer<?> dbContainer = HiveTestUtility.newHiveContainer();
 
   @BeforeEach
   public void createDatabase() throws Exception {
-    final Path databaseFile = copyResourceToTempFile("/testdb/access/Books2010.accdb");
+    final String jdbcUrl = dbContainer.getJdbcUrl();
+    final JdbcUrl parsedUrl = JdbcUrlParser.parse(jdbcUrl);
+    final String host = dbContainer.getHost();
+    final int port = parsedUrl.port();
+    final String database = parsedUrl.databaseName();
+
     final DatabaseConnector connector =
         DatabaseConnectorRegistry.getRegistry()
-            .findDatabaseConnectorFromDatabaseSystemIdentifier("access");
+            .findDatabaseConnectorFromDatabaseSystemIdentifier("hive");
     final DatabaseConnectionOptions connectionOptions =
-        new DatabaseServerHostConnectionOptions(
-            "access", null, null, databaseFile.toString(), Map.of());
+        new DatabaseServerHostConnectionOptions("hive", host, port, database, Map.of());
     createConnectionSource(
-        connector.newDatabaseConnectionSource(connectionOptions, new MultiUseUserCredentials()));
+        connector.newDatabaseConnectionSource(
+            connectionOptions,
+            new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword())));
+
+    try (final Connection connection = getConnection()) {
+      new TestSchemaCreator(connection, "/testdb/hive/hive.scripts.txt", false).run();
+    }
   }
 
   @Test
-  public void testAccessWithConnection() throws Exception {
-
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder().includeSchemas(Pattern.compile(".*"));
-    final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
-        SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.maximum);
+  public void testHiveWithConnection() throws Exception {
     final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevelBuilder(schemaInfoLevelBuilder);
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
+    textOptionsBuilder.noIndexNames().showDatabaseInfo().showJdbcDriverInfo();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(textOptionsBuilder.toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource = "testAccessWithConnection.txt";
+    final String expectedResource = "testHiveWithConnection.txt";
     assertThat(
         outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));

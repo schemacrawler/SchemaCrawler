@@ -40,6 +40,7 @@ jobs:
         - informix
         - trino
         - clickhouse
+        - hive
     runs-on: ubuntu-latest
     steps:
 
@@ -146,11 +147,16 @@ jobs:
         elif [ "${{ matrix.database }}" == "clickhouse" ]; then
             docker pull clickhouse/clickhouse-server:26.2
             dbproject="dbconnectors"
+        elif [ "${{ matrix.database }}" == "hive" ]; then
+            docker pull apache/hive:4.1.0
+            dbproject="dbconnectors"
+            continue_on_error="true"
         else
             dbproject="dbconnectors"
         fi
         echo "dbproject=$dbproject"
         echo "dbproject=$dbproject" >> "$GITHUB_OUTPUT"
+        echo "continue_on_error=${continue_on_error:-false}" >> "$GITHUB_OUTPUT"
     - id: disk-space-after
       name: Show disk space
       shell: bash

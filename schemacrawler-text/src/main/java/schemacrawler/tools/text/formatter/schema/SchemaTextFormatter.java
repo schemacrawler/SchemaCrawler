@@ -83,6 +83,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.BaseTabularFormatter;
+import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DetailRowOptions;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
@@ -635,7 +636,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         relationship =
             "%s %s%s %s".formatted(fkColumnName, fkCardinality.description(), arrow, pkHyperlink);
       }
-      formattingHelper.writeDetailRow(keySequenceString, relationship, "", false, false, "");
+      formattingHelper.writeDetailRow(
+          keySequenceString, relationship, "", new DetailRowOptions(false, false));
     }
   }
 
@@ -930,7 +932,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     if (column == null || !column.hasRemarks() || options.isHideRemarks()) {
       return;
     }
-    formattingHelper.writeDetailRow("", "", column.getRemarks(), true, false, "remarks");
+    formattingHelper.writeDetailRow(
+        "", "", column.getRemarks(), new DetailRowOptions(true, false, "remarks"));
   }
 
   private void printTableColumns(
@@ -975,7 +978,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         ordinalNumberString = String.valueOf(column.getOrdinalPosition());
       }
       formattingHelper.writeDetailRow(
-          ordinalNumberString, columnName, columnDetails, true, emphasize, "");
+          ordinalNumberString, columnName, columnDetails, new DetailRowOptions(true, emphasize));
 
       if (extraDetails) {
         printTableColumnDefaultValue(column);

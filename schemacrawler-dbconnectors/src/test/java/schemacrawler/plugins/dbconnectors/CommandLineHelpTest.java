@@ -30,7 +30,7 @@ public class CommandLineHelpTest {
 
   @ParameterizedTest
   @ValueSource(
-      strings = {"access", "cassandra", "clickhouse", "duckdb", "h2", "snowflake", "trino"})
+      strings = {"access", "cassandra", "clickhouse", "duckdb", "h2", "hive", "snowflake", "trino"})
   public void commandLineHelp(
       final String server, final TestContext testContext, final CapturedSystemStreams streams)
       throws Exception {

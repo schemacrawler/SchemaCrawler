@@ -1,0 +1,13 @@
+** Connect to Apache Hive
+
+      --database=<database>
+                          Hive database name
+      --host=<host>       Host name
+                          Optional, defaults to localhost
+      --port=<port>       Port number
+                          Optional, defaults to 10000
+      --server=<server>   --server=hive
+                          Loads SchemaCrawler plug-in for Apache Hive
+Add connection options to the `connect` command in the SchemaCrawler Shell
+
+
