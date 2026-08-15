@@ -33,6 +33,7 @@ import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.state.ExecutionState;
 import schemacrawler.tools.utility.AbstractTextSupport;
+import schemacrawler.tools.utility.EntityModelType;
 import schemacrawler.utility.MetaDataUtility;
 
 /**
