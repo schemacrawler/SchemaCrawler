@@ -7,11 +7,12 @@ tags:
   - no_primary_key
   - no_foreign_keys
   - no_indexes
+  - non_entity
 generated:
   at: 1970-01-01T00:00:00Z
   by: process:schemacrawler-v17.12.2
 verified:
-  at: 2026-08-15T17:28:32.012978900Z
+  at: 2026-08-15T22:16:41.686031600Z
   by: machine-confirmed:schemacrawler-v17.12.2
 status: stable
 shortTitle: order details

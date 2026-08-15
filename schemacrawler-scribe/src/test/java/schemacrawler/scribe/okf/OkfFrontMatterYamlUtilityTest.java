@@ -27,6 +27,7 @@ import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
 import schemacrawler.scribe.okf.frontmatter.okf.Verified;
 import schemacrawler.scribe.okf.frontmatter.schemacrawler.Counts;
 import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatter;
+import schemacrawler.tools.utility.EntityModelType;
 import schemacrawler.tools.utility.TableTraits;
 import tools.jackson.databind.JsonNode;
 
@@ -121,10 +122,11 @@ public class OkfFrontMatterYamlUtilityTest {
   @Test
   public void tableAttributesAreConvertedToSnakeCaseTags() {
     final FrontMatterYamlUtility utility = new FrontMatterYamlUtility();
-    final TableTraits tableAttributes = new TableTraits(true, true, false, true, false, null, true);
+    final TableTraits tableAttributes =
+        new TableTraits(true, true, false, true, false, null, EntityModelType.strong_entity);
 
     assertThat(
         utility.toTags(tableAttributes),
-        is(List.of("no_primary_key", "no_foreign_keys", "self_referencing", "bridge_table")));
+        is(List.of("no_primary_key", "no_foreign_keys", "self_referencing", "strong_entity")));
   }
 }
