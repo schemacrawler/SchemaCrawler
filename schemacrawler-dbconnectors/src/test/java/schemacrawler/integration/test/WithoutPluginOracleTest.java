@@ -11,7 +11,7 @@ package schemacrawler.integration.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.ExecutableTestUtility.executableExecution;
 import static us.fatehi.test.integration.utility.OracleTestUtility.newOracleContainer;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;

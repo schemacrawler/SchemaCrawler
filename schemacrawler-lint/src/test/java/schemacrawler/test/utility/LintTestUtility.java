@@ -9,9 +9,9 @@
 package schemacrawler.test.utility;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static us.fatehi.test.utility.TestUtility.copyResourceToTempFile;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;

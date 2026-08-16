@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.ExecutableTestUtility.executableExecution;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static us.fatehi.test.utility.TestUtility.failTestSetup;
 import static us.fatehi.test.utility.TestUtility.flattenCommandlineArgs;

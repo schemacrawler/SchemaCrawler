@@ -11,8 +11,8 @@ package schemacrawler.test.serialize;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.oneOf;
+import static schemacrawler.test.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static us.fatehi.test.utility.TestUtility.fileHeaderOf;
 
 import java.nio.file.Path;
