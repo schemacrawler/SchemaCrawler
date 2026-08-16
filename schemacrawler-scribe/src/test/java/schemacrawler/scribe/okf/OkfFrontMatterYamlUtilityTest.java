@@ -51,7 +51,7 @@ public class OkfFrontMatterYamlUtilityTest {
         new GitHubPagesFrontMatter("books", "Books table", true, true);
     final SchemaCrawlerFrontMatter schemaCrawlerFrontMatter =
         new SchemaCrawlerFrontMatter(
-            "PUBLIC.BOOKS", "BOOKS", null, new TableCounts(2, 0, 1, 1, null), null);
+            "PUBLIC.BOOKS", "BOOKS", null, new TableCounts(2, 3, 0, 1, 1, null), null);
 
     final String yaml =
         utility.toYamlString(okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
