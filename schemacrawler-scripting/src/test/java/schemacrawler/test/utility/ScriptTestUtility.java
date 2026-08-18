@@ -8,10 +8,10 @@
 
 package schemacrawler.test.utility;
 
+import static schemacrawler.test.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.ExecutableTestUtility.executableOf;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 
 import java.nio.file.Path;
 import java.util.HashMap;

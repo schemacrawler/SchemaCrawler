@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import schemacrawler.ermodel.model.Entity;
-import schemacrawler.ermodel.model.EntityType;
 import schemacrawler.loader.ermodel.summary.ERModelStats;
 import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.Column;
@@ -29,13 +27,14 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
-import schemacrawler.schema.View;
 import schemacrawler.scribe.command.options.ScribeOptions;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.state.ExecutionState;
 import schemacrawler.tools.utility.AbstractTextSupport;
+import schemacrawler.tools.utility.EntityModelType;
+import schemacrawler.utility.MetaDataUtility;
 
 /**
  * Single source of truth for all catalog, ER model, lint, and message data used by Scribe
@@ -43,16 +42,6 @@ import schemacrawler.tools.utility.AbstractTextSupport;
  * own instance.
  */
 public final class ScribeSupport extends AbstractTextSupport {
-
-  public enum EntityModelType {
-    unknown,
-    non_entity,
-    subtype,
-    weak_entity,
-    strong_entity,
-    bridge_table,
-    ;
-  }
 
   private final Lints lints;
   private final ScribeMessages messages;
@@ -160,19 +149,6 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   /**
-   * Checks whether a table is a many-to-many bridge table in the ER model.
-   *
-   * @param table Table
-   * @return {@code false} when the table is {@code null} or no ER model is available
-   */
-  public boolean isBridgeTable(final Table table) {
-    if (table == null || !hasERModel()) {
-      return false;
-    }
-    return getERModel().lookupByBridgeTable(table).isPresent();
-  }
-
-  /**
    * Checks whether a column is part of a foreign key.
    *
    * @param column Column
@@ -208,10 +184,7 @@ public final class ScribeSupport extends AbstractTextSupport {
    * @return {@code false} when the table is {@code null}
    */
   public boolean isView(final Table table) {
-    if (table == null) {
-      return false;
-    }
-    return table instanceof View || table.getTableType().isView();
+    return MetaDataUtility.isView(table);
   }
 
   /**
@@ -237,7 +210,7 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   public String localizedEntityModelType(final Table table) {
-    return switch (entityModelType(table)) {
+    return switch (EntityModelType.from(table)) {
       case non_entity -> messages.valueEntityModelTypeNonEntity();
       case subtype -> messages.valueEntityModelTypeSubtype();
       case weak_entity -> messages.valueEntityModelTypeWeakEntity();
@@ -417,40 +390,13 @@ public final class ScribeSupport extends AbstractTextSupport {
     return catalogStats.viewCount();
   }
 
-  private EntityModelType entityModelType(final Table table) {
-    if (table == null || !hasERModel()) {
-      return EntityModelType.unknown;
-    }
-    if (isBridgeTable(table)) {
-      return EntityModelType.bridge_table;
-    }
-    final Optional<EntityType> optionalEntityType = entityType(table);
-    if (optionalEntityType.isEmpty()) {
-      return EntityModelType.unknown;
-    }
-    return switch (optionalEntityType.get()) {
-      case strong_entity -> EntityModelType.strong_entity;
-      case subtype -> EntityModelType.subtype;
-      case weak_entity -> EntityModelType.weak_entity;
-      case non_entity -> EntityModelType.non_entity;
-      default -> EntityModelType.unknown;
-    };
-  }
-
-  private Optional<EntityType> entityType(final Table table) {
-    if (table == null || !hasERModel()) {
-      return Optional.empty();
-    }
-    return getERModel().lookupEntity(table).map(Entity::getType);
-  }
-
   private Collection<Table> usedByViews(final Table table) {
     if (table == null) {
       return List.of();
     }
     final List<Table> views = new ArrayList<>();
     for (final Table candidate : getCatalog().getTables()) {
-      if (isView(candidate) && ((View) candidate).getTableUsage().contains(table)) {
+      if (isView(candidate) && candidate.getReferencedObjects().contains(table)) {
         views.add(candidate);
       }
     }

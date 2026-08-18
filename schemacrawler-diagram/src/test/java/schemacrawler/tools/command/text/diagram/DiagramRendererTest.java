@@ -12,7 +12,7 @@ import static java.nio.file.Files.createDirectories;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
+import static schemacrawler.test.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder.builder;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;

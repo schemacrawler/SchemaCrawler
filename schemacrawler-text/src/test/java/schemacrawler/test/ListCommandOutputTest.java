@@ -10,8 +10,8 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
+import static schemacrawler.test.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static us.fatehi.test.utility.TestUtility.clean;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;

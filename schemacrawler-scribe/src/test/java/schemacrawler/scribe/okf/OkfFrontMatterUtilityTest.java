@@ -11,22 +11,24 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static schemacrawler.loader.utility.TableRowCountsUtility.TABLE_ROW_COUNT_KEY;
-import static schemacrawler.scribe.okf.FrontMatterUtility.tableAttributes;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributes;
+import schemacrawler.test.utility.crawl.LightPrimaryKey;
 import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.test.utility.crawl.LightTrigger;
+import schemacrawler.tools.utility.EntityModelType;
+import schemacrawler.tools.utility.TableTraits;
 
 public class OkfFrontMatterUtilityTest {
 
   @Test
   public void tableAttributesDeriveExpectedFlags() {
     final LightTable delegate = new LightTable(new SchemaReference("PUBLIC", "BOOKS"), "BOOKS");
+    delegate.setPrimaryKey(new LightPrimaryKey(delegate.addColumn("PK_COL")));
     delegate.addTrigger(new LightTrigger(delegate, "TRG_BOOKS"));
     delegate.setAttribute(TABLE_ROW_COUNT_KEY, 0L);
 
@@ -46,18 +48,18 @@ public class OkfFrontMatterUtilityTest {
                   }
                 });
 
-    final TableAttributes attributes = tableAttributes(table, true);
-    assertThat(attributes.noPrimaryKey(), is(Boolean.TRUE));
+    final TableTraits attributes = TableTraits.from(table);
+    assertThat(attributes.noPrimaryKey(), is(nullValue()));
     assertThat(attributes.selfReferencing(), is(Boolean.TRUE));
     assertThat(attributes.hasTriggers(), is(Boolean.TRUE));
     assertThat(attributes.emptyTable(), is(Boolean.TRUE));
-    assertThat(attributes.bridgeTable(), is(Boolean.TRUE));
+    assertThat(attributes.entityModelType(), is(EntityModelType.strong_entity));
   }
 
   @Test
   public void tableAttributesDoNotMarkEmptyWhenRowCountUnavailable() {
     final LightTable table = new LightTable(new SchemaReference("PUBLIC", "BOOKS"), "BOOKS");
-    final TableAttributes attributes = tableAttributes(table, false);
+    final TableTraits attributes = TableTraits.from(table);
     assertThat(attributes.emptyTable(), is(nullValue()));
   }
 }

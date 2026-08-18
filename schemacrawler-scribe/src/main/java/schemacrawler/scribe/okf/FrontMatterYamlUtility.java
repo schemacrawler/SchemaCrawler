@@ -90,8 +90,14 @@ final class FrontMatterYamlUtility {
     final List<String> tags = new ArrayList<>();
     final LinkedHashMap<String, Object> map = toMap(value);
     for (final Entry<String, Object> entry : map.entrySet()) {
-      if (entry.getValue() instanceof final Boolean booleanValue && booleanValue) {
+      final Object entryValue = entry.getValue();
+      if (entryValue == null) {
+        continue;
+      }
+      if (entryValue instanceof final Boolean booleanValue && booleanValue) {
         tags.add(toSnakeCase(entry.getKey()));
+      } else {
+        tags.add(toSnakeCase(entryValue.toString()));
       }
     }
     return List.copyOf(tags);

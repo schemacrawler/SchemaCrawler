@@ -25,9 +25,10 @@ import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatter;
 import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.okf.TrustTier;
 import schemacrawler.scribe.okf.frontmatter.okf.Verified;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.Counts;
 import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatter;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributes;
+import schemacrawler.tools.utility.EntityModelType;
+import schemacrawler.tools.utility.TableCounts;
+import schemacrawler.tools.utility.TableTraits;
 import tools.jackson.databind.JsonNode;
 
 public class OkfFrontMatterYamlUtilityTest {
@@ -50,7 +51,7 @@ public class OkfFrontMatterYamlUtilityTest {
         new GitHubPagesFrontMatter("books", "Books table", true, true);
     final SchemaCrawlerFrontMatter schemaCrawlerFrontMatter =
         new SchemaCrawlerFrontMatter(
-            "PUBLIC.BOOKS", "BOOKS", null, new Counts(2, 0, 1, 1, null, null), null);
+            "PUBLIC.BOOKS", "BOOKS", null, new TableCounts(2, 3, 0, 1, 1, null), null);
 
     final String yaml =
         utility.toYamlString(okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
@@ -121,11 +122,11 @@ public class OkfFrontMatterYamlUtilityTest {
   @Test
   public void tableAttributesAreConvertedToSnakeCaseTags() {
     final FrontMatterYamlUtility utility = new FrontMatterYamlUtility();
-    final TableAttributes tableAttributes =
-        new TableAttributes(true, true, false, true, false, null, true);
+    final TableTraits tableAttributes =
+        new TableTraits(true, true, false, true, false, null, EntityModelType.strong_entity);
 
     assertThat(
         utility.toTags(tableAttributes),
-        is(List.of("no_primary_key", "no_foreign_keys", "self_referencing", "bridge_table")));
+        is(List.of("no_primary_key", "no_foreign_keys", "self_referencing", "strong_entity")));
   }
 }

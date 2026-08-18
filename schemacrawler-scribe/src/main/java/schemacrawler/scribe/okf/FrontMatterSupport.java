@@ -8,7 +8,6 @@
 package schemacrawler.scribe.okf;
 
 import static schemacrawler.scribe.okf.FrontMatterUtility.objectDescription;
-import static schemacrawler.scribe.okf.FrontMatterUtility.tableAttributes;
 import static schemacrawler.scribe.okf.FrontMatterUtility.verified;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.toSnakeCase;
@@ -31,8 +30,9 @@ import schemacrawler.scribe.okf.frontmatter.okf.LifecycleStatus;
 import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatter;
 import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatter;
-import schemacrawler.scribe.okf.frontmatter.schemacrawler.TableAttributes;
 import schemacrawler.tools.state.AbstractExecutionState;
+import schemacrawler.tools.utility.TableCounts;
+import schemacrawler.tools.utility.TableTraits;
 
 public final class FrontMatterSupport extends AbstractExecutionState {
 
@@ -58,8 +58,7 @@ public final class FrontMatterSupport extends AbstractExecutionState {
     final GitHubPagesFrontMatter gitHubPagesFrontMatter =
         new GitHubPagesFrontMatter(objectDescription, true, true);
     final SchemaCrawlerFrontMatter schemaCrawlerFrontMatter =
-        new SchemaCrawlerFrontMatter(
-            objectDescription, FrontMatterUtility.routineCounts(routine), null);
+        new SchemaCrawlerFrontMatter(objectDescription, null, null);
 
     return frontMatterYamlUtility.toYamlString(
         okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
@@ -70,7 +69,7 @@ public final class FrontMatterSupport extends AbstractExecutionState {
 
     final List<String> tags = new ArrayList<>();
     addTag(tags, objectDescription.simpleTypeName());
-    final TableAttributes tableAttributes = tableAttributes(table, isBridgeTable(table));
+    final TableTraits tableAttributes = TableTraits.from(table);
     tags.addAll(frontMatterYamlUtility.toTags(tableAttributes));
 
     final String entityType = entityType(table, tags);
@@ -81,8 +80,7 @@ public final class FrontMatterSupport extends AbstractExecutionState {
     final GitHubPagesFrontMatter gitHubPagesFrontMatter =
         new GitHubPagesFrontMatter(objectDescription, true, true);
     final SchemaCrawlerFrontMatter schemaCrawlerFrontMatter =
-        new SchemaCrawlerFrontMatter(
-            objectDescription, FrontMatterUtility.tableCounts(table), entityType);
+        new SchemaCrawlerFrontMatter(objectDescription, TableCounts.from(table), entityType);
 
     return frontMatterYamlUtility.toYamlString(
         okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
@@ -138,13 +136,5 @@ public final class FrontMatterSupport extends AbstractExecutionState {
 
     final Actor scActor = new SchemaCrawlerActor().toActor();
     return new Generated(scActor, crawlTimestamp);
-  }
-
-  private boolean isBridgeTable(final Table table) {
-    if (!hasERModel()) {
-      return false;
-    }
-    final ERModel model = getERModel();
-    return model.lookupByBridgeTable(table).isPresent();
   }
 }

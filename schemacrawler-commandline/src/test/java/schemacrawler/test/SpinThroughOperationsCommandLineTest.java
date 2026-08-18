@@ -9,8 +9,8 @@
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
