@@ -17,6 +17,7 @@ import java.lang.reflect.Proxy;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.test.utility.crawl.LightPrimaryKey;
 import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.test.utility.crawl.LightTrigger;
 import schemacrawler.tools.utility.EntityModelType;
@@ -27,6 +28,7 @@ public class OkfFrontMatterUtilityTest {
   @Test
   public void tableAttributesDeriveExpectedFlags() {
     final LightTable delegate = new LightTable(new SchemaReference("PUBLIC", "BOOKS"), "BOOKS");
+    delegate.setPrimaryKey(new LightPrimaryKey(delegate.addColumn("PK_COL")));
     delegate.addTrigger(new LightTrigger(delegate, "TRG_BOOKS"));
     delegate.setAttribute(TABLE_ROW_COUNT_KEY, 0L);
 
@@ -47,7 +49,7 @@ public class OkfFrontMatterUtilityTest {
                 });
 
     final TableTraits attributes = TableTraits.from(table);
-    assertThat(attributes.noPrimaryKey(), is(Boolean.TRUE));
+    assertThat(attributes.noPrimaryKey(), is(nullValue()));
     assertThat(attributes.selfReferencing(), is(Boolean.TRUE));
     assertThat(attributes.hasTriggers(), is(Boolean.TRUE));
     assertThat(attributes.emptyTable(), is(Boolean.TRUE));
