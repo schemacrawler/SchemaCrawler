@@ -590,10 +590,9 @@ td.section {
 <!-- othereditionid_59222581&#45;&gt;books_f4a675c8 -->
 <g id="edge9" class="edge">
 <title>othereditionid_59222581:w&#45;&gt;books_f4a675c8:e</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M1529.57,-476.63C1401.23,-476.68 1361.49,-477.34 1230.74,-477.37"/>
-<polygon fill="black" stroke="black" points="1534.43,-476.63 1544.43,-481.13 1539.76,-476.63 1544.09,-476.63 1544.09,-476.63 1544.09,-476.63 1539.76,-476.63 1544.43,-472.13 1534.43,-476.63"/>
-<polygon fill="black" stroke="black" points="1532.21,-471.63 1532.21,-481.63 1530.21,-481.63 1530.21,-471.63 1532.21,-471.63"/>
-<polyline fill="none" stroke="black" points="1533.21,-476.63 1528.21,-476.63"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M1534.41,-476.63C1402.11,-476.66 1363.06,-477.34 1230.46,-477.37"/>
+<polygon fill="black" stroke="black" points="1544.26,-472.63 1544.26,-480.63 1536.26,-480.63 1536.26,-472.63 1544.26,-472.63"/>
+<polyline fill="none" stroke="black" points="1536.26,-476.63 1534.26,-476.63"/>
 <polygon fill="black" stroke="black" points="1221.75,-482.37 1221.75,-472.37 1223.75,-472.37 1223.75,-482.37 1221.75,-482.37"/>
 <polyline fill="none" stroke="black" points="1220.75,-477.38 1225.75,-477.37"/>
 <polygon fill="black" stroke="black" points="1226.75,-482.37 1226.75,-472.37 1228.75,-472.37 1228.75,-482.37 1226.75,-482.37"/>
@@ -1337,7 +1336,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID ⇜(1..many) OTHEREDITIONID</td>
+		<td class='minwidth'>ID ⇜ OTHEREDITIONID</td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>

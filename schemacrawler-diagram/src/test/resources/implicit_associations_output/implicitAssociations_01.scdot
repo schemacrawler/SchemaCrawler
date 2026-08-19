@@ -236,7 +236,7 @@ along with the latest updated information</td>
   "id_f8ccecea" [label=<PRIVATE.LIBRARY.BOOKS.ID>];
   "books_f4a675c8":"id_a0284c53.start":w -> "id_f8ccecea":e [label=<3_weak_partial_pk> style="dashed" dir="both" arrowhead="teetee" arrowtail="teetee"];
   "othereditionid_59222581" [label=<PUBLIC.BOOKS.BOOKS.OTHEREDITIONID>];
-  "othereditionid_59222581":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<9_weak_self_reference> style="dashed" dir="both" arrowhead="teetee" arrowtail="crowtee"];
+  "othereditionid_59222581":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<9_weak_self_reference> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
 
 
   /* PUBLIC.BOOKS."Celebrities" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
