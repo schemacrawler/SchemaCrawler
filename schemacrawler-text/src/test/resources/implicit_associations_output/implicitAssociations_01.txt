@@ -27,6 +27,7 @@ PK_AUTHORS                                                 [primary key]
 Foreign Keys
 
 Z_FK_AUTHOR                                [foreign key, with no action]
+Overwritten foreign key remarks line 1
   ID <--(1..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
 Implicit Associations
@@ -34,7 +35,11 @@ Implicit Associations
 2_weak_partial_fk                                 [implicit association]
   ID <~~ PRIVATE.LIBRARY.BOOKAUTHORS.AUTHORID                              
 
+7_weak_duplicate                                  [implicit association]
+  ID <~~ PRIVATE.LIBRARY.MAGAZINEARTICLES.AUTHORID                              
+
 1_weak                                            [implicit association]
+Overwritten remarks line 1
   ID <~~(1..1) PUBLIC.BOOKS.BOOKS.ID                              
 
 Indexes
@@ -73,6 +78,7 @@ along with the latest updated information
 Foreign Keys
 
 Z_FK_AUTHOR                                [foreign key, with no action]
+Overwritten foreign key remarks line 1
   AUTHORID (1..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
 SYS_FK_10121                               [foreign key, with no action]
@@ -132,7 +138,11 @@ Implicit Associations
   ID (1..1)~~> PRIVATE.LIBRARY.BOOKS.ID                              
 
 1_weak                                            [implicit association]
+Overwritten remarks line 1
   ID (1..1)~~> PUBLIC.BOOKS.AUTHORS.ID                              
+
+9_weak_self_reference                             [implicit association]
+  ID <~~(1..many) OTHEREDITIONID                                
 
 Indexes
 

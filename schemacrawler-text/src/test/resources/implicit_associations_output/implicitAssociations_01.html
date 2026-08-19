@@ -330,6 +330,9 @@ td.section {
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
+		<td colspan='3' class='remarks'>Overwritten foreign key remarks line 1</td>
+	</tr>
+	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>ID ←(1..many) <a href='#bookauthors_ead84c5d'>PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID</a></td>
 		<td class='minwidth'></td>
@@ -356,8 +359,23 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>7_weak_duplicate</td>
+		<td class='description right'>[implicit association]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID ⇜ PRIVATE.LIBRARY.MAGAZINEARTICLES.AUTHORID</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>1_weak</td>
 		<td class='description right'>[implicit association]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='remarks'>Overwritten remarks line 1</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
@@ -494,6 +512,9 @@ along with the latest updated information</td>
 	<tr>
 		<td colspan='2' class='name'>Z_FK_AUTHOR</td>
 		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='remarks'>Overwritten foreign key remarks line 1</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
@@ -725,8 +746,23 @@ along with the latest updated information</td>
 		<td class='description right'>[implicit association]</td>
 	</tr>
 	<tr>
+		<td colspan='3' class='remarks'>Overwritten remarks line 1</td>
+	</tr>
+	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>ID (1..1)⇝ <a href='#authors_f521e766'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>9_weak_self_reference</td>
+		<td class='description right'>[implicit association]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID ⇜(1..many) OTHEREDITIONID</td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
