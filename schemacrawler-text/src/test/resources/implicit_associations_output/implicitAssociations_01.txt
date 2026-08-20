@@ -142,7 +142,7 @@ Overwritten remarks line 1
   ID (1..1)~~> PUBLIC.BOOKS.AUTHORS.ID                              
 
 9_weak_self_reference                             [implicit association]
-  ID <~~(1..many) OTHEREDITIONID                                
+  ID <~~ OTHEREDITIONID                                         
 
 Indexes
 
