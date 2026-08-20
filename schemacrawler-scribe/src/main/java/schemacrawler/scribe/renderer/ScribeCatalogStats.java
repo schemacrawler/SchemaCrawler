@@ -11,10 +11,10 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Optional;
 import schemacrawler.ermodel.model.ERModel;
-import schemacrawler.loader.catalog.summary.CatalogStats;
-import schemacrawler.loader.catalog.summary.CatalogStatsUtility;
 import schemacrawler.loader.ermodel.summary.ERModelStats;
 import schemacrawler.loader.ermodel.summary.ERModelStatsUtility;
+import schemacrawler.loader.utility.CatalogStats;
+import schemacrawler.loader.utility.CatalogStatsUtility;
 import schemacrawler.schema.Catalog;
 
 final class ScribeCatalogStats {
