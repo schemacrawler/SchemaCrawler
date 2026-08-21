@@ -18,10 +18,14 @@ import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
+import schemacrawler.ermodel.model.ERModel;
+import schemacrawler.loader.catalog.summary.CatalogStats;
+import schemacrawler.loader.catalog.summary.CatalogStatsUtility;
 import schemacrawler.loader.ermodel.summary.ERModelStats;
+import schemacrawler.loader.ermodel.summary.ERModelStatsUtility;
 import schemacrawler.loader.utility.TableRowCountsUtility;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Routine;
@@ -47,7 +51,8 @@ public final class ScribeSupport extends AbstractTextSupport {
   private final ScribeMessages messages;
   private final ScribeOptions options;
   private final RelationshipsIndex relationsIndex;
-  private final ScribeCatalogStats catalogStats;
+  private final CatalogStats catalogStats;
+  private final ERModelStats erModelStats;
 
   /**
    * Creates the Scribe support instance, transferring catalog, ER model, and connection state from
@@ -63,10 +68,16 @@ public final class ScribeSupport extends AbstractTextSupport {
     this.lints = requireNonNull(lints, "No lints provided");
 
     executionState.transferState(this);
-    relationsIndex = new RelationshipsIndex(getCatalog());
-    catalogStats =
-        new ScribeCatalogStats(
-            getCatalog(), hasERModel() ? Optional.of(getERModel()) : Optional.empty());
+    final Catalog catalog = getCatalog();
+    final ERModel erModel = getERModel();
+
+    relationsIndex = new RelationshipsIndex(catalog);
+    catalogStats = CatalogStatsUtility.from(catalog);
+    if (erModel != null) {
+      erModelStats = ERModelStatsUtility.from(erModel);
+    } else {
+      erModelStats = null;
+    }
 
     messages = new ScribeMessages(options.getLocale());
   }
@@ -91,6 +102,15 @@ public final class ScribeSupport extends AbstractTextSupport {
     final List<Table> tables = new ArrayList<>(getCatalog().getTables());
     tables.sort(Comparator.comparing(Table::getFullName));
     return List.copyOf(tables);
+  }
+
+  /**
+   * Gets the catalog statistics, or {@code null} if no catalog is available.
+   *
+   * @return Catalog stats, or {@code null}
+   */
+  public CatalogStats catalogStats() {
+    return catalogStats;
   }
 
   /**
@@ -132,20 +152,11 @@ public final class ScribeSupport extends AbstractTextSupport {
    * @return ER model stats, or {@code null}
    */
   public ERModelStats erModelStats() {
-    return catalogStats.erModelStats().orElse(null);
+    return erModelStats;
   }
 
   public String escapeMarkdown(final String input) {
     return MarkdownFormattingHelper.escapeMarkdown(input);
-  }
-
-  /**
-   * Gets the deduplicated number of foreign keys across all tables.
-   *
-   * @return Foreign key count
-   */
-  public int foreignKeyCount() {
-    return catalogStats.foreignKeyCount();
   }
 
   /**
@@ -270,15 +281,6 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   /**
-   * Gets the deduplicated number of routines in the catalog.
-   *
-   * @return Routine count
-   */
-  public int routineCount() {
-    return catalogStats.routineCount();
-  }
-
-  /**
    * Gets the routine definition (DDL body).
    *
    * @param routine Routine
@@ -345,15 +347,6 @@ public final class ScribeSupport extends AbstractTextSupport {
   }
 
   /**
-   * Gets the number of tables (excluding views) in the catalog.
-   *
-   * @return Table count
-   */
-  public int tableCount() {
-    return catalogStats.tableCount();
-  }
-
-  /**
    * Gets the table definition (DDL body).
    *
    * @param table Table
@@ -379,15 +372,6 @@ public final class ScribeSupport extends AbstractTextSupport {
     final Set<Table> used = new LinkedHashSet<>(referencingTables(table));
     used.addAll(usedByViews(table));
     return List.copyOf(used);
-  }
-
-  /**
-   * Gets the number of views in the catalog.
-   *
-   * @return View count
-   */
-  public int viewCount() {
-    return catalogStats.viewCount();
   }
 
   private Collection<Table> usedByViews(final Table table) {

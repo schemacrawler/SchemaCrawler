@@ -6,17 +6,20 @@
 <#assign dbVersion = (catalog.crawlInfo.databaseVersion)!>
 - ${msg.labelDatabaseProduct()}: <#if dbVersion??>${(dbVersion.productName)!msg.valueUnknown()}<#else>${msg.valueUnknown()}</#if>
 - ${msg.labelDatabaseVersion()}: <#if dbVersion??>${(dbVersion.productVersion)!msg.valueUnknown()}<#else>${msg.valueUnknown()}</#if>
-- ${msg.labelTables()}: ${support.tableCount()?c}
-- ${msg.labelViews()}: ${support.viewCount()?c}
-- ${msg.labelRoutines()}: ${support.routineCount()?c}
-- ${msg.labelForeignKeyCount()}: ${support.foreignKeyCount()?c}
+<#if support.catalogStats()??>
+<#assign catalogCounts = support.catalogStats().counts()>
+- ${msg.labelTables()}: ${catalogCounts.tables()?c}
+- ${msg.labelViews()}: ${catalogCounts.views()?c}
+- ${msg.labelRoutines()}: ${catalogCounts.routines()?c}
+- ${msg.labelForeignKeyCount()}: ${catalogCounts.foreignKeys()?c}
+</#if>
 
 <#if support.erModelStats()??>
-<#assign erStats = support.erModelStats()>
+<#assign erModelStats = support.erModelStats()>
 ## ${msg.sectionErModel()}
 
-<#assign ec = erStats.entityCounts>
-<#assign rc = erStats.relationshipCounts>
+<#assign ec = erModelStats.entityCounts>
+<#assign rc = erModelStats.relationshipCounts>
 - ${msg.labelEntityCount()}: ${ec.count?c}
 - ${msg.labelStrongEntityCount()}: ${ec.strongEntities?c}
 - ${msg.labelWeakEntityCount()}: ${ec.weakEntities?c}
@@ -30,8 +33,8 @@
 - ${msg.labelZeroToManyRelationshipCount()}: ${rc.zeroMany?c}
 - ${msg.labelManyToManyRelationshipCount()}: ${rc.manyMany?c}
 - ${msg.labelUnknownRelationshipCount()}: ${rc.unknown?c}
-- ${msg.labelImplicitRelationshipCount()}: ${erStats.implicitRelationshipCount?c}
-- ${msg.labelUnmodeledTableCount()}: ${erStats.unmodeledTableCount?c}
+- ${msg.labelImplicitRelationshipCount()}: ${erModelStats.implicitRelationshipCount?c}
+- ${msg.labelUnmodeledTableCount()}: ${erModelStats.unmodeledTableCount?c}
 </#if>
 
 ## ${msg.navTables()}

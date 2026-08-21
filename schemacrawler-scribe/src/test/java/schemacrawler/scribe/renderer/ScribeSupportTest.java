@@ -138,7 +138,7 @@ public class ScribeSupportTest {
 
     final ScribeSupport support = newHelper(catalog, options);
 
-    assertThat(support.tableCount(), is(greaterThan(0)));
+    assertThat(support.catalogStats().counts().tables(), is(greaterThan(0)));
 
     final List<Table> allTables = support.allTables();
     assertThat(allTables.isEmpty(), is(false));
