@@ -15,7 +15,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.sql.Connection;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -30,16 +29,9 @@ import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.integration.utility.HiveTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
-import us.fatehi.utility.datasource.JdbcUrl;
-import us.fatehi.utility.datasource.JdbcUrlParser;
-import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
 @HeavyDatabaseTest("hive")
@@ -51,21 +43,8 @@ public class HiveTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws Exception {
-    final String jdbcUrl = dbContainer.getJdbcUrl();
-    final JdbcUrl parsedUrl = JdbcUrlParser.parse(jdbcUrl);
-    final String host = dbContainer.getHost();
-    final int port = parsedUrl.port();
-    final String database = parsedUrl.databaseName();
-
-    final DatabaseConnector connector =
-        DatabaseConnectorRegistry.getRegistry()
-            .findDatabaseConnectorFromDatabaseSystemIdentifier("hive");
-    final DatabaseConnectionOptions connectionOptions =
-        new DatabaseServerHostConnectionOptions("hive", host, port, database, Map.of());
-    createConnectionSource(
-        connector.newDatabaseConnectionSource(
-            connectionOptions,
-            new MultiUseUserCredentials(dbContainer.getUsername(), dbContainer.getPassword())));
+    createDataSource(
+        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
     try (final Connection connection = getConnection()) {
       new TestSchemaCreator(connection, "/testdb/hive/hive.scripts.txt", false).run();

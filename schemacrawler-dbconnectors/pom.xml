@@ -78,7 +78,21 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <!--  -->
+    <!-- NOTE: Apache Hive JDBC Driver cannot be distributed 
+         because it is an uberjar -->
+    <dependency>
+      <groupId>org.apache.hive</groupId>
+      <artifactId>hive-jdbc</artifactId>
+      <version>4.1.0</version>
+      <classifier>standalone</classifier>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
     <dependency>
       <groupId>org.testcontainers</groupId>
