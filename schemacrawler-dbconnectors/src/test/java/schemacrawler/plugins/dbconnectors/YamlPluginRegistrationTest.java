@@ -21,7 +21,7 @@ public class YamlPluginRegistrationTest {
 
   @ParameterizedTest
   @ValueSource(
-      strings = {"access", "cassandra", "clickhouse", "duckdb", "h2", "hive", "snowflake", "trino"})
+      strings = {"access", "cassandra", "clickhouse", "duckdb", "h2", "snowflake", "trino"})
   void pluginIsRegistered(final String server) {
     final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier(server), is(true));
@@ -29,7 +29,7 @@ public class YamlPluginRegistrationTest {
 
   @ParameterizedTest
   @ValueSource(
-      strings = {"access", "cassandra", "clickhouse", "duckdb", "h2", "hive", "snowflake", "trino"})
+      strings = {"access", "cassandra", "clickhouse", "duckdb", "h2", "snowflake", "trino"})
   void informationSchemaViewsAreEmpty(final String server) throws Exception {
     final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
     final DatabaseConnector connector =
