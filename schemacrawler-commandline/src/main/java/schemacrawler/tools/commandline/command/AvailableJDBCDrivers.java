@@ -8,15 +8,15 @@
 
 package schemacrawler.tools.commandline.command;
 
-import schemacrawler.tools.registry.JDBCDriverRegistry;
+import us.fatehi.utility.database.JdbcDriverRegistry;
 
 public class AvailableJDBCDrivers extends BaseAvailableRegistryPlugins {
 
   private final String name;
 
   public AvailableJDBCDrivers() {
-    super(JDBCDriverRegistry.getRegistry().getRegisteredPlugins());
-    name = JDBCDriverRegistry.getRegistry().getName();
+    super(JdbcDriverRegistry.availableJDBCDrivers());
+    name = "JDBC Drivers";
   }
 
   @Override

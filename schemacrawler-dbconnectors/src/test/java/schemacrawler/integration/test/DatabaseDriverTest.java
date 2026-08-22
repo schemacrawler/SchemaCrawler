@@ -12,16 +12,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static us.fatehi.test.utility.DataSourceTestUtility.JDBC_DRIVER_COUNT;
 
-import java.sql.Driver;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
-import us.fatehi.utility.database.DatabaseUtility;
+import us.fatehi.utility.database.JdbcDriverRegistry;
+import us.fatehi.utility.property.PropertyName;
 
 public class DatabaseDriverTest {
 
   @Test
   public void availableJDBCDrivers() throws Exception {
-    final Collection<Driver> availableJDBCDrivers = DatabaseUtility.getAvailableJdbcDrivers();
+    final Collection<PropertyName> availableJDBCDrivers = JdbcDriverRegistry.availableJDBCDrivers();
     assertThat(
         "Number of of avilable JDBC drivers is not correct",
         availableJDBCDrivers,
