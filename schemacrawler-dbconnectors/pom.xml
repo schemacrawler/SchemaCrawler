@@ -83,7 +83,7 @@
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-jdbc</artifactId>
-      <version>4.1.0</version>
+      <version>4.2.0</version>
       <classifier>standalone</classifier>
       <scope>test</scope>
       <exclusions>
