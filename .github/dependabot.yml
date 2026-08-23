@@ -6,12 +6,14 @@ updates:
       interval: "weekly"
       day: "saturday"
     ignore:
+      # Apache Hive JDBC supports Java 21 from v4.2.0 onwards
+      - dependency-name: "org.apache.hive:hive-jdbc"
+        update-types: ["version-update:semver-minor"]
       # 15.x Informix drivers are not well-behaved
       - dependency-name: "com.ibm.informix:jdbc"
         update-types: ["version-update:semver-major"]
     labels:
       - "dependencies"
-      - ":children_crossing: dependencies"
     assignees:
       - "sualeh"
       - "schemacrawler"
@@ -21,7 +23,6 @@ updates:
       interval: "weekly"
     labels:
       - "dependencies"
-      - ":children_crossing: dependencies"
     assignees:
       - sualeh
       - schemacrawler

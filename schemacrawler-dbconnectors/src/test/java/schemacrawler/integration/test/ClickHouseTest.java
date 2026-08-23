@@ -67,8 +67,7 @@ public class ClickHouseTest extends BaseAdditionalDatabaseTest {
     final String database = parsedUrl.databaseName();
 
     final DatabaseConnector connector =
-        DatabaseConnectorRegistry.getRegistry()
-            .findDatabaseConnectorFromDatabaseSystemIdentifier("clickhouse");
+        DatabaseConnectorRegistry.getRegistry().getDatabaseConnector("clickhouse");
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions("clickhouse", host, port, database, Map.of());
     createConnectionSource(

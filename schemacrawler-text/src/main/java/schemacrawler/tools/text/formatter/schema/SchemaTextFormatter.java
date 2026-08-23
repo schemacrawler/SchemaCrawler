@@ -64,7 +64,6 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Routine;
@@ -88,6 +87,7 @@ import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.Docum
 import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
+import us.fatehi.utility.database.JdbcDriverProperty;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.property.Property;
 import us.fatehi.utility.string.SimpleToStringFunction;

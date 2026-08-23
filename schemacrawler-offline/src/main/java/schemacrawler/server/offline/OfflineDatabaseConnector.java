@@ -36,7 +36,6 @@ public final class OfflineDatabaseConnector extends DatabaseConnector {
 
     return DatabaseConnectorOptionsBuilder.builder(dbServerType)
         .withHelpCommand(pluginCommand)
-        .withUrlStartsWith("jdbc:offline:")
         // Build a fresh mutable builder per request to avoid cross-thread state leakage
         .withDatabaseConnectionSourceBuilder(
             () -> DatabaseConnectionSourceBuilder.builder("jdbc:offline:${database}"))

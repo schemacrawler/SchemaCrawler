@@ -43,8 +43,7 @@ public class H2Test extends BaseAdditionalDatabaseTest {
   @BeforeEach
   public void createDatabase() throws Exception {
     final DatabaseConnector connector =
-        DatabaseConnectorRegistry.getRegistry()
-            .findDatabaseConnectorFromDatabaseSystemIdentifier("h2");
+        DatabaseConnectorRegistry.getRegistry().getDatabaseConnector("h2");
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions("h2", null, null, "mem:schemacrawler", Map.of());
     createConnectionSource(

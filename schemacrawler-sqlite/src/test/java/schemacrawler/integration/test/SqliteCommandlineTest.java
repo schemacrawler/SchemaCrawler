@@ -57,7 +57,7 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
   @BeforeEach
   public void setUpDatabaseConnector() {
     final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
-    dbConnector = registry.findDatabaseConnectorFromDatabaseSystemIdentifier("sqlite");
+    dbConnector = registry.getDatabaseConnector("sqlite");
   }
 
   @Test

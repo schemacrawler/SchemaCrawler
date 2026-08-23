@@ -23,10 +23,9 @@ public class BundledDistributionTest {
 
     final Connection connection = null;
     final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
-    final DatabaseConnector databaseSystemIdentifier =
-        registry.findDatabaseConnectorFromDatabaseSystemIdentifier("db2");
+    final DatabaseConnector databaseConnector = registry.getDatabaseConnector("db2");
     assertThat(
-        databaseSystemIdentifier
+        databaseConnector
             .getSchemaRetrievalOptionsBuilder(connection)
             .toOptions()
             .getInformationSchemaViews()

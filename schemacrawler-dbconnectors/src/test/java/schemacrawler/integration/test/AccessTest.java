@@ -44,8 +44,7 @@ public class AccessTest extends BaseAdditionalDatabaseTest {
   public void createDatabase() throws Exception {
     final Path databaseFile = copyResourceToTempFile("/testdb/access/Books2010.accdb");
     final DatabaseConnector connector =
-        DatabaseConnectorRegistry.getRegistry()
-            .findDatabaseConnectorFromDatabaseSystemIdentifier("access");
+        DatabaseConnectorRegistry.getRegistry().getDatabaseConnector("access");
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions(
             "access", null, null, databaseFile.toString(), Map.of());

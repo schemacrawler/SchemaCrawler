@@ -63,8 +63,7 @@ public class CassandraTest extends BaseAdditionalDatabaseTest {
     final String keyspace = "books";
     final String localDatacenter = dbContainer.getLocalDatacenter();
     final DatabaseConnector connector =
-        DatabaseConnectorRegistry.getRegistry()
-            .findDatabaseConnectorFromDatabaseSystemIdentifier("cassandra");
+        DatabaseConnectorRegistry.getRegistry().getDatabaseConnector("cassandra");
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions(
             "cassandra", host, port, keyspace, Map.of("localdatacenter", localDatacenter));

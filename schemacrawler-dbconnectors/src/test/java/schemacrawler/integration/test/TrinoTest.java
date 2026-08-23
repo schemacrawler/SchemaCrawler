@@ -57,8 +57,7 @@ public class TrinoTest extends BaseAdditionalDatabaseTest {
     final String database = parsedUrl.databaseName();
 
     final DatabaseConnector connector =
-        DatabaseConnectorRegistry.getRegistry()
-            .findDatabaseConnectorFromDatabaseSystemIdentifier("trino");
+        DatabaseConnectorRegistry.getRegistry().getDatabaseConnector("trino");
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions("trino", host, port, database, Map.of());
     createConnectionSource(
