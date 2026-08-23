@@ -158,7 +158,7 @@
     <dependency>
       <groupId>com.clickhouse</groupId>
       <artifactId>clickhouse-jdbc</artifactId>
-      <version>0.9.8</version>
+      <version>0.10.0</version>
       <classifier>all</classifier>
       <scope>test</scope>
       <exclusions>
