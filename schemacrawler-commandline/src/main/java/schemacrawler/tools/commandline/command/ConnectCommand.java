@@ -32,8 +32,6 @@ import schemacrawler.tools.commandline.utility.SchemaRetrievalOptionsConfig;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
-import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.UserCredentials;
@@ -95,25 +93,15 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
       final DatabaseConnectionOptions connectionOptions = getDatabaseConnectionOptions();
       requireNonNull(connectionOptions, "No database connection options provided");
 
+      final String databaseSystemIdentifier = connectionOptions.databaseSystemIdentifier();
       final DatabaseConnectorRegistry databaseConnectorRegistry =
           DatabaseConnectorRegistry.getRegistry();
-      final DatabaseConnector databaseConnector;
-
-      if (connectionOptions instanceof final DatabaseUrlConnectionOptions options1) {
-        final String connectionUrl = options1.connectionUrl();
-        databaseConnector = databaseConnectorRegistry.findDatabaseConnectorFromUrl(connectionUrl);
-      } else if (connectionOptions instanceof final DatabaseServerHostConnectionOptions options) {
-        final String databaseSystemIdentifier = options.databaseSystemIdentifier();
-        if (!databaseConnectorRegistry.hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
-          throw new ConfigurationException(
-              "Unknown server <%s>".formatted(databaseSystemIdentifier));
-        }
-        databaseConnector =
-            databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
-                databaseSystemIdentifier);
-      } else {
-        throw new ConfigurationException("Could not create new database connection source");
+      if (!databaseConnectorRegistry.hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
+        throw new ConfigurationException("Unknown server <%s>".formatted(databaseSystemIdentifier));
       }
+      final DatabaseConnector databaseConnector =
+          databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
+              databaseSystemIdentifier);
 
       LOGGER.log(
           Level.INFO,

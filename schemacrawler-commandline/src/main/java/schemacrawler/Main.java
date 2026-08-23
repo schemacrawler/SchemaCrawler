@@ -105,7 +105,7 @@ public final class Main {
 
     final String title = "Registered JDBC drivers:";
     final String registeredPlugins =
-        PropertyNameUtility.tableOf(title, JdbcDriverRegistry.availableJDBCDrivers());
+        PropertyNameUtility.tableOf(title, JdbcDriverRegistry.getRegistry().availableJDBCDrivers());
     LOGGER.log(Level.CONFIG, registeredPlugins);
   }
 
