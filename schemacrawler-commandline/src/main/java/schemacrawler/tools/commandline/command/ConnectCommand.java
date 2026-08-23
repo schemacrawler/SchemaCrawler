@@ -32,6 +32,7 @@ import schemacrawler.tools.commandline.utility.SchemaRetrievalOptionsConfig;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.UserCredentials;
@@ -96,12 +97,12 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
       final String databaseSystemIdentifier = connectionOptions.databaseSystemIdentifier();
       final DatabaseConnectorRegistry databaseConnectorRegistry =
           DatabaseConnectorRegistry.getRegistry();
-      if (!databaseConnectorRegistry.hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
+      if (connectionOptions instanceof DatabaseServerHostConnectionOptions
+          && !databaseConnectorRegistry.hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
         throw new ConfigurationException("Unknown server <%s>".formatted(databaseSystemIdentifier));
       }
       final DatabaseConnector databaseConnector =
-          databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
-              databaseSystemIdentifier);
+          databaseConnectorRegistry.getDatabaseConnector(databaseSystemIdentifier);
 
       LOGGER.log(
           Level.INFO,

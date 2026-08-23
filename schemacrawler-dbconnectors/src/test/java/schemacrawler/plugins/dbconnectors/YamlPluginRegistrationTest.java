@@ -32,8 +32,7 @@ public class YamlPluginRegistrationTest {
       strings = {"access", "cassandra", "clickhouse", "duckdb", "h2", "snowflake", "trino"})
   void informationSchemaViewsAreEmpty(final String server) throws Exception {
     final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
-    final DatabaseConnector connector =
-        registry.findDatabaseConnectorFromDatabaseSystemIdentifier(server);
+    final DatabaseConnector connector = registry.getDatabaseConnector(server);
     assertThat(
         connector
             .getSchemaRetrievalOptionsBuilder(null)

@@ -21,11 +21,10 @@ public class BundledDistributionTest {
   @Test
   public void testInformationSchema_hsqldb() throws Exception {
     final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
-    final DatabaseConnector databaseSystemIdentifier =
-        registry.findDatabaseConnectorFromDatabaseSystemIdentifier("hsqldb");
+    final DatabaseConnector databaseConnector = registry.getDatabaseConnector("hsqldb");
     final Connection connection = null;
     assertThat(
-        databaseSystemIdentifier
+        databaseConnector
             .getSchemaRetrievalOptionsBuilder(connection)
             .toOptions()
             .getInformationSchemaViews()

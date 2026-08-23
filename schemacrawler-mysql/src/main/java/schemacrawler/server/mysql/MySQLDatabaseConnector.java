@@ -8,8 +8,6 @@
 
 package schemacrawler.server.mysql;
 
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
 import schemacrawler.plugins.dbconnectors.DatabaseConnectorDefinitionAdapter;
 import schemacrawler.plugins.dbconnectors.model.DatabaseConnectorDefinition;
 import schemacrawler.plugins.dbconnectors.yaml.DatabasePluginYamlDeserializer;
@@ -19,9 +17,6 @@ import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class MySQLDatabaseConnector extends DatabaseConnector {
 
-  private static final Predicate<String> urlMatcher =
-      Pattern.compile("jdbc:(mysql|mariadb):.*").asMatchPredicate();
-
   private static DatabaseConnectorOptions databaseConnectorOptions() {
     final DatabaseConnectorDefinition definition =
         new DatabasePluginYamlDeserializer()
@@ -29,7 +24,6 @@ public final class MySQLDatabaseConnector extends DatabaseConnector {
 
     return new DatabaseConnectorDefinitionAdapter(definition)
         .toDatabaseConnectorOptionsBuilder()
-        .withUrlSupportPredicate(url -> urlMatcher.test(url))
         .withSchemaRetrievalOptionsBuilder(
             (builder, conn) -> {
               builder.withEnumDataTypeHelper(new MySQLEnumDataTypeHelper());

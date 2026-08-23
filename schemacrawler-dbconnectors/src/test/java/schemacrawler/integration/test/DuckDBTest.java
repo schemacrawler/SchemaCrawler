@@ -48,8 +48,7 @@ public class DuckDBTest extends BaseAdditionalDatabaseTest {
     final Path databasePath = IOUtility.createTempFilePath("sc.", "db");
 
     final DatabaseConnector connector =
-        DatabaseConnectorRegistry.getRegistry()
-            .findDatabaseConnectorFromDatabaseSystemIdentifier("duckdb");
+        DatabaseConnectorRegistry.getRegistry().getDatabaseConnector("duckdb");
     final DatabaseConnectionOptions connectionOptions =
         new DatabaseServerHostConnectionOptions(
             "duckdb", null, null, databasePath.toString(), Map.of());

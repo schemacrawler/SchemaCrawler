@@ -24,7 +24,7 @@ public class OracleDistributionTest {
   @BeforeEach
   public void setup() {
     final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getRegistry();
-    dbConnector = registry.findDatabaseConnectorFromDatabaseSystemIdentifier("oracle");
+    dbConnector = registry.getDatabaseConnector("oracle");
   }
 
   @Test
