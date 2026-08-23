@@ -32,9 +32,41 @@ import us.fatehi.utility.datasource.DatabaseServerType;
 @WithTestDatabase
 public class MatchSchemaRetrievalOptionsTest {
 
-  @DisplayName("No exception for known connector + plugin not found = throw an exception")
+  @DisplayName("1: Controlled + on classpath + no exception = use plugin")
   @Test
-  public void a_noException_noPlugin() throws Exception {
+  public void test1_controlled_onClasspath_noException(
+      final DatabaseConnectionSource connectionSource) throws Exception {
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
+    final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
+    assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("hsqldb"));
+  }
+
+  @DisplayName("2: Controlled + on classpath + exception matches = use plugin")
+  @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
+  public void test2_controlled_onClasspath_exceptionMatches(
+      final DatabaseConnectionSource connectionSource) throws Exception {
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
+    final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
+    assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("hsqldb"));
+  }
+
+  @DisplayName("3: Controlled + on classpath + exception doesn't match = use plugin")
+  @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "newdb")
+  public void test3_controlled_onClasspath_exceptionDoesNotMatch(
+      final DatabaseConnectionSource connectionSource) throws Exception {
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
+    final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
+    assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("hsqldb"));
+  }
+
+  @DisplayName("4: Controlled + not on classpath + no exception = throw exception")
+  @Test
+  public void test4_controlled_noClasspath_noException() throws Exception {
 
     final DatabaseConnectionSource connectionSource = mockOracleConnectionSource();
 
@@ -45,42 +77,10 @@ public class MatchSchemaRetrievalOptionsTest {
     assertThat(exception.getMessage(), containsString("<oracle>"));
   }
 
-  @DisplayName("No exception for known connector + plugin found = use plugin")
-  @Test
-  public void b_noException_withPlugin(final DatabaseConnectionSource connectionSource)
-      throws Exception {
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
-    final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
-    assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("hsqldb"));
-  }
-
-  @DisplayName("Exception does not match URL + plugin found = use plugin")
-  @Test
-  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "newdb")
-  public void c_exceptionDoesNotMatch_withPlugin(final DatabaseConnectionSource connectionSource)
-      throws Exception {
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
-    final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
-    assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("hsqldb"));
-  }
-
-  @DisplayName("Exception matches URL + plugin found = use plugin")
-  @Test
-  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void d_exceptionMatchesURL_withPlugin(final DatabaseConnectionSource connectionSource)
-      throws Exception {
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
-    final DatabaseServerType databaseServerType = schemaRetrievalOptions.getDatabaseServerType();
-    assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("hsqldb"));
-  }
-
-  @DisplayName("Exception matches URL + plugin not found = use 'unknown' plugin")
+  @DisplayName("5: Controlled + not on classpath + exception matches = use 'unknown' plugin")
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "oracle")
-  public void e_exceptionMatchesURL_withoutPlugin() throws Exception {
+  public void test5_controlled_noClasspath_exceptionMatches() throws Exception {
 
     final DatabaseConnectionSource connectionSource = mockOracleConnectionSource();
 
@@ -90,10 +90,10 @@ public class MatchSchemaRetrievalOptionsTest {
     assertThat(databaseServerType.isUnknownDatabaseSystem(), is(true));
   }
 
-  @DisplayName("Exception does not match URL + plugin not found = throw an exception")
+  @DisplayName("6: Controlled + not on classpath + exception doesn't match = throw exception")
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "newdb")
-  public void f_exceptionDoesNotMatch_withputPlugin() throws Exception {
+  public void test6_controlled_noClasspath_exceptionDoesNotMatch() throws Exception {
 
     // Mock an Oracle connection - plugin is not found
     final DatabaseConnectionSource connectionSource = mockOracleConnectionSource();
@@ -105,12 +105,11 @@ public class MatchSchemaRetrievalOptionsTest {
     assertThat(exception.getMessage(), containsString("<oracle>"));
   }
 
-  @DisplayName("Unknown connector + plugin not required = use 'unknown' plugin")
+  @DisplayName("8: Uncontrolled + not on classpath + any exception = use 'unknown' plugin")
   @Test
-  public void g_noException_unknownUrl() throws Exception {
+  public void test8_uncontrolled_noClasspath_noException() throws Exception {
 
-    final DatabaseConnectionSource connectionSource =
-        mockConnectionSourceForUrl("jdbc:newdb:foo", "Mock NewDB connection");
+    final DatabaseConnectionSource connectionSource = mockUncontrolledConnectionSource();
 
     final SchemaRetrievalOptions schemaRetrievalOptions =
         DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
@@ -136,5 +135,9 @@ public class MatchSchemaRetrievalOptionsTest {
     final DatabaseConnectionSource connectionSource =
         mockConnectionSourceForUrl(fakeOracleUrl, "Mock Oracle connection");
     return connectionSource;
+  }
+
+  private DatabaseConnectionSource mockUncontrolledConnectionSource() throws SQLException {
+    return mockConnectionSourceForUrl("jdbc:newdb:foo", "Mock NewDB connection");
   }
 }
