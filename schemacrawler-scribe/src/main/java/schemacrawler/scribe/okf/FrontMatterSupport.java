@@ -31,7 +31,7 @@ import schemacrawler.scribe.okf.frontmatter.okf.OkfFrontMatter;
 import schemacrawler.scribe.okf.frontmatter.okf.SchemaCrawlerActor;
 import schemacrawler.scribe.okf.frontmatter.schemacrawler.SchemaCrawlerFrontMatter;
 import schemacrawler.tools.state.AbstractExecutionState;
-import schemacrawler.tools.utility.TableCounts;
+import schemacrawler.tools.utility.TableImportanceUtility;
 import schemacrawler.tools.utility.TableTraits;
 
 public final class FrontMatterSupport extends AbstractExecutionState {
@@ -69,7 +69,7 @@ public final class FrontMatterSupport extends AbstractExecutionState {
 
     final List<String> tags = new ArrayList<>();
     addTag(tags, objectDescription.simpleTypeName());
-    final TableTraits tableAttributes = TableTraits.from(table);
+    final TableTraits tableAttributes = TableImportanceUtility.tableTraitsfrom(table);
     tags.addAll(frontMatterYamlUtility.toTags(tableAttributes));
 
     final String entityType = entityType(table, tags);
@@ -80,7 +80,8 @@ public final class FrontMatterSupport extends AbstractExecutionState {
     final GitHubPagesFrontMatter gitHubPagesFrontMatter =
         new GitHubPagesFrontMatter(objectDescription, true, true);
     final SchemaCrawlerFrontMatter schemaCrawlerFrontMatter =
-        new SchemaCrawlerFrontMatter(objectDescription, TableCounts.from(table), entityType);
+        new SchemaCrawlerFrontMatter(
+            objectDescription, TableImportanceUtility.tableCountsfrom(table), entityType);
 
     return frontMatterYamlUtility.toYamlString(
         okfFrontMatter, gitHubPagesFrontMatter, schemaCrawlerFrontMatter);
