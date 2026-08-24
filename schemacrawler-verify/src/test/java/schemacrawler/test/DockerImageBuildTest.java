@@ -8,15 +8,16 @@
 
 package schemacrawler.test;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.startsWith;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,7 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
+
 import schemacrawler.schemacrawler.Version;
 import us.fatehi.utility.readconfig.SystemPropertiesConfig;
 
@@ -49,7 +51,7 @@ public class DockerImageBuildTest {
           .withCommand("tail", "-f", "/dev/null");
 
   @Test
-  @DisplayName("Docker image starts successfully and SchemaCrawler runs")
+  @DisplayName("Docker image starts successfully and SchemaCrawler script runs")
   public void testDockerImageHealth() throws IOException, InterruptedException {
 
     LOGGER.log(Level.CONFIG, "Verifying " + DOCKER_IMAGE_NAME);
@@ -59,39 +61,40 @@ public class DockerImageBuildTest {
         mcpServerContainer.execInContainer("/opt/schemacrawler/bin/schemacrawler.sh", "-V");
 
     // Assert successful execution
-    assertThat(result.getExitCode(), is(0));
-    assertThat(result.getStdout(), startsWith(Version.version().toString()));
-    assertThat(result.getStderr(), is(emptyString()));
+    assertCommandExecution(result);
   }
 
   @Test
-  @DisplayName("Docker image exposes schemacrawler launcher")
+  @DisplayName("Docker image exposes `schemacrawler` launcher")
   public void testDockerImageSchemaCrawlerLauncher() throws IOException, InterruptedException {
 
     LOGGER.log(Level.CONFIG, "Verifying `schemacrawler` launcher in " + DOCKER_IMAGE_NAME);
 
-    final ExecResult result =
-        mcpServerContainer.execInContainer(
-            "bash", "-ic", "source /home/schcrwlr/.bashrc && schemacrawler -V");
+    // Run SchemaCrawler alias and capture output
+    final ExecResult result = mcpServerContainer.execInContainer("schemacrawler", "-V");
 
-    assertThat(result.getExitCode(), is(0));
-    assertThat(result.getStdout(), startsWith(Version.version().toString()));
-    assertThat(result.getStderr(), is(emptyString()));
+    // Assert successful execution
+    assertCommandExecution(result);
   }
 
   @Test
-  @DisplayName("Docker image exposes schemaspy launcher")
+  @DisplayName("Docker image exposes `schemaspy` launcher")
   public void testDockerImageSchemaSpyLauncher() throws IOException, InterruptedException {
 
     LOGGER.log(Level.CONFIG, "Verifying `schemaspy` launcher in " + DOCKER_IMAGE_NAME);
 
-    final ExecResult result =
-        mcpServerContainer.execInContainer(
-            "bash", "-ic", "source /home/schcrwlr/.bashrc && schemaspy -V");
+    // Run SchemaSpy alias and capture output
+    final ExecResult result = mcpServerContainer.execInContainer("schemaspy", "-V");
 
-    assertThat(result.getExitCode(), is(0));
+    // Assert successful execution
+    assertCommandExecution(result);
     assertThat(
         result.getStdout().contains("SchemaSpy 7.x adapter for generating OKF bundles."), is(true));
+  }
+
+  private void assertCommandExecution(final ExecResult result) {
+    assertThat(result.getExitCode(), is(0));
+    assertThat(result.getStdout(), containsString(Version.version().toString()));
     assertThat(result.getStderr(), is(emptyString()));
   }
 }

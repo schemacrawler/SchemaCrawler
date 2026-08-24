@@ -46,6 +46,11 @@ RUN \
  && mkdir -p /home/schcrwlr \
  && chown -R schcrwlr:users /home/schcrwlr
 
+# Expose launchers on PATH so they work in non-interactive shells
+RUN \
+    ln -s /opt/schemacrawler/bin/schemacrawler.sh /usr/local/bin/schemacrawler \
+ && ln -s /opt/schemacrawler/bin/schemaspy.sh /usr/local/bin/schemaspy
+
 # Change user
 USER schcrwlr
 WORKDIR /home/schcrwlr
@@ -60,7 +65,7 @@ RUN \
     >> /home/schcrwlr/.profile \
  && cp /home/schcrwlr/.profile /home/schcrwlr/.bashrc \
  && echo 'PS1="\[\e[0;33m\]SchemaCrawler\[\e[m\]:\w\$ "'  >> /home/schcrwlr/.bashrc \
- && echo 'echo "`schemacrawler --version`"' >> ~/.bashrc \
+ && echo 'echo "`schemacrawler --version`"' >> /home/schcrwlr/.bashrc \
  && echo 'echo -e "\n\nUse the schemacrawler command.\n"' >> /home/schcrwlr/.bashrc
 
 CMD ["bash"]
