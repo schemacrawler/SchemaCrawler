@@ -21,6 +21,7 @@ import schemacrawler.test.utility.crawl.LightPrimaryKey;
 import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.test.utility.crawl.LightTrigger;
 import schemacrawler.tools.utility.EntityModelType;
+import schemacrawler.tools.utility.TableImportanceUtility;
 import schemacrawler.tools.utility.TableTraits;
 
 public class OkfFrontMatterUtilityTest {
@@ -48,7 +49,7 @@ public class OkfFrontMatterUtilityTest {
                   }
                 });
 
-    final TableTraits attributes = TableTraits.from(table);
+    final TableTraits attributes = TableImportanceUtility.tableTraitsfrom(table);
     assertThat(attributes.noPrimaryKey(), is(nullValue()));
     assertThat(attributes.selfReferencing(), is(Boolean.TRUE));
     assertThat(attributes.hasTriggers(), is(Boolean.TRUE));
@@ -59,7 +60,7 @@ public class OkfFrontMatterUtilityTest {
   @Test
   public void tableAttributesDoNotMarkEmptyWhenRowCountUnavailable() {
     final LightTable table = new LightTable(new SchemaReference("PUBLIC", "BOOKS"), "BOOKS");
-    final TableTraits attributes = TableTraits.from(table);
+    final TableTraits attributes = TableImportanceUtility.tableTraitsfrom(table);
     assertThat(attributes.emptyTable(), is(nullValue()));
   }
 }
