@@ -22,7 +22,7 @@ public class DatabaseDriverTest {
   @Test
   public void availableJDBCDrivers() throws Exception {
     final Collection<PropertyName> availableJDBCDrivers =
-        JdbcDriverRegistry.getRegistry().availableJDBCDrivers();
+        JdbcDriverRegistry.getRegistry().getRegisteredPlugins();
     assertThat(
         "Number of of avilable JDBC drivers is not correct",
         availableJDBCDrivers,
