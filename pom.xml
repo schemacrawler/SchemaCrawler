@@ -19,6 +19,8 @@
   <name>SchemaCrawler [Aggregator]</name>
 
   <modules>
+    <!-- Verify SchemaCrawler Core exports -->
+    <module>schemacrawler-verify-module</module>
     <!-- Additional functionality -->
     <module>schemacrawler-text</module>
     <module>schemacrawler-diagram</module>
