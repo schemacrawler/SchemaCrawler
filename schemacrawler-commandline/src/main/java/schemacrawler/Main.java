@@ -30,7 +30,6 @@ import us.fatehi.utility.database.JdbcDriverRegistry;
 import us.fatehi.utility.property.JvmArchitectureInfo;
 import us.fatehi.utility.property.JvmSystemInfo;
 import us.fatehi.utility.property.OperatingSystemInfo;
-import us.fatehi.utility.property.PropertyNameUtility;
 import us.fatehi.utility.readconfig.SystemPropertiesConfig;
 
 /** Main class that takes arguments for a database for crawling a schema. */
@@ -56,7 +55,7 @@ public final class Main {
     logger.logSafeArguments(args);
     logger.logSystemClasspath();
     logger.logSystemProperties();
-    logJdbcDrivers();
+    JdbcDriverRegistry.getRegistry().log();
 
     final ConnectionTestOptions connectionTestOptions = new ConnectionTestOptions();
     populateCommand(connectionTestOptions, args);
@@ -96,17 +95,6 @@ public final class Main {
       throw new SystemExitException(exitCode, "SchemaCrawler has exited with an error");
     }
     System.exit(exitCode);
-  }
-
-  private static final void logJdbcDrivers() {
-    if (!LOGGER.isLoggable(Level.CONFIG)) {
-      return;
-    }
-
-    final String title = "Registered JDBC drivers:";
-    final String registeredPlugins =
-        PropertyNameUtility.tableOf(title, JdbcDriverRegistry.getRegistry().availableJDBCDrivers());
-    LOGGER.log(Level.CONFIG, registeredPlugins);
   }
 
   private static boolean showHelpIfRequested(final String[] args) {
