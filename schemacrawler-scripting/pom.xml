@@ -88,7 +88,7 @@
     <dependency>
       <groupId>org.graalvm.polyglot</groupId>
       <artifactId>polyglot</artifactId>
-      <version>25.2.4</version>
+      <version>25.3.4.1</version>
     </dependency>
     <dependency>
       <groupId>org.graalvm.polyglot</groupId>
