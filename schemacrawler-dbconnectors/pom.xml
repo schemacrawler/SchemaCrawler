@@ -69,7 +69,7 @@
     <dependency>
       <groupId>com.ing.data</groupId>
       <artifactId>cassandra-jdbc-wrapper</artifactId>
-      <version>5.0.2</version>
+      <version>5.0.3</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
