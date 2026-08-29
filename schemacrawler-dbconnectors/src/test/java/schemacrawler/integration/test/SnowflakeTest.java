@@ -41,8 +41,6 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.integration.utility.SnowflakeTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
-import us.fatehi.utility.datasource.JdbcUrl;
-import us.fatehi.utility.datasource.JdbcUrlParser;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
@@ -61,10 +59,8 @@ public class SnowflakeTest extends BaseAdditionalDatabaseTest {
       fail("Testcontainer for database is not available");
     }
 
-    final String jdbcUrl = dbContainer.getJdbcUrl();
-    final JdbcUrl parsedUrl = JdbcUrlParser.parse(jdbcUrl);
     final String host = dbContainer.getHost();
-    final int port = parsedUrl.port();
+    final int port = dbContainer.getFirstMappedPort();
 
     final DatabaseConnector connector =
         DatabaseConnectorRegistry.getRegistry().getDatabaseConnector("snowflake");
