@@ -40,8 +40,6 @@ import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.integration.utility.ClickHouseTestUtility;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
-import us.fatehi.utility.datasource.JdbcUrl;
-import us.fatehi.utility.datasource.JdbcUrlParser;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
@@ -60,11 +58,9 @@ public class ClickHouseTest extends BaseAdditionalDatabaseTest {
       fail("Testcontainer for database is not available");
     }
 
-    final String jdbcUrl = dbContainer.getJdbcUrl();
-    final JdbcUrl parsedUrl = JdbcUrlParser.parse(jdbcUrl);
     final String host = dbContainer.getHost();
-    final int port = parsedUrl.port();
-    final String database = parsedUrl.databaseName();
+    final int port = dbContainer.getFirstMappedPort();
+    final String database = dbContainer.getDatabaseName();
 
     final DatabaseConnector connector =
         DatabaseConnectorRegistry.getRegistry().getDatabaseConnector("clickhouse");

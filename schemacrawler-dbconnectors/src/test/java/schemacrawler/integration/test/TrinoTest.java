@@ -33,8 +33,6 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
-import us.fatehi.utility.datasource.JdbcUrl;
-import us.fatehi.utility.datasource.JdbcUrlParser;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @HeavyDatabaseTest("trino")
@@ -51,10 +49,9 @@ public class TrinoTest extends BaseAdditionalDatabaseTest {
     }
 
     final String jdbcUrl = dbContainer.getJdbcUrl();
-    final JdbcUrl parsedUrl = JdbcUrlParser.parse(jdbcUrl);
     final String host = dbContainer.getHost();
-    final int port = parsedUrl.port();
-    final String database = parsedUrl.databaseName();
+    final int port = dbContainer.getMappedPort(8080);
+    final String database = dbContainer.getDatabaseName();
 
     final DatabaseConnector connector =
         DatabaseConnectorRegistry.getRegistry().getDatabaseConnector("trino");
