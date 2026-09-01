@@ -353,8 +353,6 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
     formattingHelper.writeObjectStart();
     formattingHelper.writeNameValueRow(
-        "connection url", driverInfo.getConnectionUrl(), Alignment.inherit);
-    formattingHelper.writeNameValueRow(
         "driver name", driverInfo.getProductName(), Alignment.inherit);
     formattingHelper.writeNameValueRow(
         "driver version", driverInfo.getProductVersion(), Alignment.inherit);

@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
-import us.fatehi.utility.ProcessExecutor;
+import us.fatehi.utility.process.ProcessExecutor;
 import us.fatehi.utility.string.FileContents;
 import us.fatehi.utility.string.StringFormat;
 
