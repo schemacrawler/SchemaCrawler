@@ -4,17 +4,25 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import org.jgrapht.Graph;
 import org.junit.jupiter.api.Test;
 import schemacrawler.importance.cache.DatabaseObjectNodeId;
 import schemacrawler.importance.cache.EdgeType;
 import schemacrawler.importance.cache.SchemaEdge;
 import schemacrawler.importance.cache.SchemaGraphCache;
+import schemacrawler.importance.cache.TableImportance;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.NamedObjectKey;
@@ -42,6 +50,17 @@ class SchemaGraphCacheBuilderTest {
   @Test
   void buildsASingleTableCatalog() {
     final Table customers = table("CUSTOMERS");
+    final AtomicReference<TableImportance> importance = new AtomicReference<>();
+    doAnswer(
+            invocation -> {
+              importance.set(invocation.getArgument(1));
+              return null;
+            })
+        .when(customers)
+        .setAttribute(eq(TableImportance.class.getName()), any());
+    doAnswer(invocation -> importance.get())
+        .when(customers)
+        .getAttribute(TableImportance.class.getName());
 
     final SchemaGraphCache cache =
         new SchemaGraphCacheBuilder()
@@ -50,6 +69,13 @@ class SchemaGraphCacheBuilderTest {
 
     assertThat(cache.getFullGraph().vertexSet(), hasSize(1));
     assertThat(cache.getTableViewNodes(), hasSize(1));
+    assertThat(cache.getMetrics(NodeIdFactory.create(customers)).inDegree(), is(0));
+    assertThat(
+        customers
+            .<TableImportance>getAttribute(TableImportance.class.getName())
+            .graphMetrics()
+            .outDegree(),
+        is(0));
   }
 
   @Test
@@ -106,8 +132,16 @@ class SchemaGraphCacheBuilderTest {
     assertThat(fullGraph.getEdgeTarget(foreignKeyEdge), is(NodeIdFactory.create(customers)));
     assertThat(foreignKeyEdge.getReferenceKey(), is(foreignKey.key()));
     assertThat(cache.getMetricsGraph().edgeSet(), hasSize(4));
+    assertThat(cache.getMetrics(NodeIdFactory.create(orders)).outDegree(), is(1));
     assertThat(cache.getTableViewNodes(), hasSize(3));
     assertThat(cache.getObjectByKey(customers.key()), is(customers));
+    assertThat(cache.getMetrics(NodeIdFactory.create(orderSummary)).outDegree(), is(1));
+    assertThat(cache.getMetrics(NodeIdFactory.create(refreshOrders)).outDegree(), is(1));
+    assertThat(cache.getMetrics(NodeIdFactory.create(customerAlias)).outDegree(), is(1));
+    verify(orderSummary)
+        .setAttribute(eq(TableImportance.class.getName()), any(TableImportance.class));
+    verify(refreshOrders, never()).setAttribute(anyString(), any());
+    verify(customerAlias, never()).setAttribute(anyString(), any());
     assertThrows(
         UnsupportedOperationException.class,
         () ->
@@ -130,9 +164,11 @@ class SchemaGraphCacheBuilderTest {
     final Table orders = table("ORDERS");
     final ForeignKey missingTarget = mock(ForeignKey.class);
     when(missingTarget.getPrimaryKeyTable()).thenReturn(null);
+    when(missingTarget.key()).thenReturn(new NamedObjectKey("FK_MISSING_TARGET"));
     final ForeignKey excludedTarget = mock(ForeignKey.class);
     final Table excludedCustomers = table("CUSTOMERS");
     when(excludedTarget.getPrimaryKeyTable()).thenReturn(excludedCustomers);
+    when(excludedTarget.key()).thenReturn(new NamedObjectKey("FK_EXCLUDED_TARGET"));
     when(orders.getImportedForeignKeys()).thenReturn(List.of(missingTarget, excludedTarget));
 
     final SchemaGraphCache cache =
@@ -141,6 +177,38 @@ class SchemaGraphCacheBuilderTest {
             .build();
 
     assertThat(cache.getFullGraph().edgeSet(), hasSize(0));
+  }
+
+  @Test
+  void rebuildsDerivedViewsForEachCatalog() {
+    final SchemaGraphCacheBuilder builder = new SchemaGraphCacheBuilder();
+    builder.buildNodesAndEdges(catalog(List.of(table("ORDERS")), List.of(), List.of())).build();
+
+    final SchemaGraphCache cache =
+        builder
+            .buildNodesAndEdges(catalog(List.of(table("CUSTOMERS")), List.of(), List.of()))
+            .build();
+
+    assertThat(cache.getFullGraph().vertexSet(), hasSize(1));
+    assertThat(cache.getTableViewNodes(), hasSize(1));
+    assertThat(cache.getMetricsGraph().vertexSet(), hasSize(1));
+    assertThat(cache.getObjectByKey(new NamedObjectKey("PUBLIC", "ORDERS")), is((Table) null));
+  }
+
+  @Test
+  void avoidsAmbiguousKeyOnlyObjectLookups() {
+    final Table table = table("ORDERS");
+    final Procedure procedure = mock(Procedure.class);
+    initialize(procedure, "ORDERS");
+
+    final SchemaGraphCache cache =
+        new SchemaGraphCacheBuilder()
+            .buildNodesAndEdges(catalog(List.of(table), List.<Routine>of(procedure), List.of()))
+            .build();
+
+    assertThat(cache.getObjectByNodeId(NodeIdFactory.create(table)), is(table));
+    assertThat(cache.getObjectByNodeId(NodeIdFactory.create(procedure)), is(procedure));
+    assertThat(cache.getObjectByKey(table.key()), is((Table) null));
   }
 
   private static Catalog catalog() {
@@ -166,12 +234,30 @@ class SchemaGraphCacheBuilderTest {
     initialize(table, name);
     when(table.getImportedForeignKeys()).thenReturn(List.of());
     when(table.getTableConstraints()).thenReturn(List.of());
+    when(table.getColumns()).thenReturn(List.of());
+    when(table.getReferencedTables()).thenReturn(List.of());
+    when(table.getIndexes()).thenReturn(List.of());
+    when(table.getTriggers()).thenReturn(List.of());
+    when(table.hasPrimaryKey()).thenReturn(false);
+    when(table.hasForeignKeys()).thenReturn(false);
+    when(table.hasIndexes()).thenReturn(false);
+    when(table.isSelfReferencing()).thenReturn(false);
+    when(table.hasTriggers()).thenReturn(false);
     return table;
   }
 
   private static void initialize(final Table table, final String name) {
     when(table.key()).thenReturn(new NamedObjectKey("PUBLIC", name));
     when(table.getTableType()).thenReturn(new TableType("TABLE"));
+    when(table.getColumns()).thenReturn(List.of());
+    when(table.getReferencedTables()).thenReturn(List.of());
+    when(table.getIndexes()).thenReturn(List.of());
+    when(table.getTriggers()).thenReturn(List.of());
+    when(table.hasPrimaryKey()).thenReturn(false);
+    when(table.hasForeignKeys()).thenReturn(false);
+    when(table.hasIndexes()).thenReturn(false);
+    when(table.isSelfReferencing()).thenReturn(false);
+    when(table.hasTriggers()).thenReturn(false);
   }
 
   private static void initialize(final Procedure procedure, final String name) {

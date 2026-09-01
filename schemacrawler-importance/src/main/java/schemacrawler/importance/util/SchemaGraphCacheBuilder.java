@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.AsSubgraph;
 import org.jgrapht.graph.DirectedPseudograph;
@@ -19,20 +20,28 @@ import schemacrawler.importance.cache.DatabaseObjectNodeId;
 import schemacrawler.importance.cache.EdgeType;
 import schemacrawler.importance.cache.SchemaEdge;
 import schemacrawler.importance.cache.SchemaGraphCache;
+import schemacrawler.importance.cache.TableImportance;
+import schemacrawler.importance.cache.TableImportanceMetrics;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Table;
+import schemacrawler.tools.utility.TableImportanceUtility;
+import schemacrawler.tools.utility.TableTraits;
 import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 
 /** Builds the immutable dependency graph foundation from a SchemaCrawler catalog. */
 public final class SchemaGraphCacheBuilder {
+
+  private static final Logger LOGGER = Logger.getLogger(SchemaGraphCacheBuilder.class.getName());
 
   private Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph;
   private Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject;
   private Map<NamedObjectKey, DatabaseObject> keyToObject;
   private Graph<DatabaseObjectNodeId, SchemaEdge> metricsGraph;
   private Set<DatabaseObjectNodeId> tableViewNodes;
+  private Set<NamedObjectKey> ambiguousObjectKeys;
 
   public SchemaGraphCache build() {
     if (fullGraph == null) {
@@ -41,13 +50,20 @@ public final class SchemaGraphCacheBuilder {
     if (metricsGraph == null || tableViewNodes == null) {
       precomputeViews();
     }
-    return new SchemaGraphCache(fullGraph, metricsGraph, tableViewNodes, nodeToObject, keyToObject);
+    final Map<DatabaseObjectNodeId, TableImportanceMetrics> metrics =
+        GraphMetricsCalculator.calculate(metricsGraph);
+    storeTableImportance(metrics);
+    return new SchemaGraphCache(
+        fullGraph, metricsGraph, tableViewNodes, nodeToObject, keyToObject, metrics);
   }
 
   public SchemaGraphCacheBuilder buildNodesAndEdges(final Catalog catalog) {
     fullGraph = new DirectedPseudograph<>(SchemaEdge.class);
     nodeToObject = new LinkedHashMap<>();
     keyToObject = new LinkedHashMap<>();
+    ambiguousObjectKeys = new LinkedHashSet<>();
+    metricsGraph = null;
+    tableViewNodes = null;
 
     for (final Table table : catalog.getTables()) {
       addNode(table);
@@ -88,6 +104,40 @@ public final class SchemaGraphCacheBuilder {
     final DatabaseObjectNodeId nodeId = NodeIdFactory.create(databaseObject);
     fullGraph.addVertex(nodeId);
     nodeToObject.put(nodeId, databaseObject);
-    keyToObject.put(databaseObject.key(), databaseObject);
+    final NamedObjectKey key = databaseObject.key();
+    if (keyToObject.containsKey(key)) {
+      keyToObject.remove(key);
+      ambiguousObjectKeys.add(key);
+    } else if (!ambiguousObjectKeys.contains(key)) {
+      keyToObject.put(key, databaseObject);
+    }
+  }
+
+  private void storeTableImportance(
+      final Map<DatabaseObjectNodeId, TableImportanceMetrics> metrics) {
+    for (final Map.Entry<DatabaseObjectNodeId, DatabaseObject> entry : nodeToObject.entrySet()) {
+      if (entry.getValue() instanceof final Table table) {
+        table.setAttribute(
+            TableImportance.class.getName(),
+            new TableImportance(
+                tableTraits(table),
+                TableImportanceUtility.tableCountsfrom(table),
+                metrics.get(entry.getKey())));
+      }
+    }
+  }
+
+  private static TableTraits tableTraits(final Table table) {
+    for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
+      if (foreignKey.getPrimaryKeyTable() == null || foreignKey.key() == null) {
+        LOGGER.warning(
+            () ->
+                "Skipping entity-model inference for "
+                    + table.key()
+                    + " because it has malformed foreign-key metadata");
+        return new TableTraits();
+      }
+    }
+    return TableImportanceUtility.tableTraitsfrom(table);
   }
 }

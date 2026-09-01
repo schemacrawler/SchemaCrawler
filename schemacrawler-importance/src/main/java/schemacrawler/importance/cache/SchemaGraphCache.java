@@ -22,6 +22,7 @@ public final class SchemaGraphCache {
   private final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph;
   private final Graph<DatabaseObjectNodeId, SchemaEdge> metricsGraph;
   private final Map<NamedObjectKey, DatabaseObject> keyToObject;
+  private final Map<DatabaseObjectNodeId, TableImportanceMetrics> nodeMetrics;
   private final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject;
   private final Set<DatabaseObjectNodeId> tableViewNodes;
 
@@ -31,6 +32,16 @@ public final class SchemaGraphCache {
       final Set<DatabaseObjectNodeId> tableViewNodes,
       final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject,
       final Map<NamedObjectKey, DatabaseObject> keyToObject) {
+    this(fullGraph, metricsGraph, tableViewNodes, nodeToObject, keyToObject, Map.of());
+  }
+
+  public SchemaGraphCache(
+      final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph,
+      final Graph<DatabaseObjectNodeId, SchemaEdge> metricsGraph,
+      final Set<DatabaseObjectNodeId> tableViewNodes,
+      final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject,
+      final Map<NamedObjectKey, DatabaseObject> keyToObject,
+      final Map<DatabaseObjectNodeId, TableImportanceMetrics> nodeMetrics) {
     this.fullGraph =
         new AsUnmodifiableGraph<>(Objects.requireNonNull(fullGraph, "No full graph provided"));
     this.metricsGraph =
@@ -39,6 +50,7 @@ public final class SchemaGraphCache {
     this.tableViewNodes = Set.copyOf(tableViewNodes);
     this.nodeToObject = Map.copyOf(nodeToObject);
     this.keyToObject = Map.copyOf(keyToObject);
+    this.nodeMetrics = Map.copyOf(nodeMetrics);
   }
 
   public Graph<DatabaseObjectNodeId, SchemaEdge> getFullGraph() {
@@ -55,6 +67,10 @@ public final class SchemaGraphCache {
 
   public DatabaseObject getObjectByNodeId(final DatabaseObjectNodeId nodeId) {
     return nodeToObject.get(nodeId);
+  }
+
+  public TableImportanceMetrics getMetrics(final DatabaseObjectNodeId nodeId) {
+    return nodeMetrics.get(nodeId);
   }
 
   public Set<DatabaseObjectNodeId> getTableViewNodes() {
