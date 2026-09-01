@@ -1,0 +1,8 @@
+command:importance
+
+** Generate a database object importance report
+
+table-filter
+Regular expression for table and view full names to include in the report
+
+Add command options to the `execute` command in the SchemaCrawler Shell
