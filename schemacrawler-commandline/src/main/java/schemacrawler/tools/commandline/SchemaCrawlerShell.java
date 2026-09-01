@@ -41,7 +41,7 @@ import picocli.shell.jline3.PicocliCommands.PicocliCommandsFactory;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.commandline.utility.CommandLineLogger;
-import us.fatehi.utility.UtilityLogger;
+import us.fatehi.utility.logging.UtilityLogger;
 
 public final class SchemaCrawlerShell {
 

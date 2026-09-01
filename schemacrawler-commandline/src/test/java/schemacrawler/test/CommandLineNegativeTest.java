@@ -29,7 +29,7 @@ import us.fatehi.test.utility.extensions.CaptureSystemStreams;
 import us.fatehi.test.utility.extensions.CapturedSystemStreams;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
-import us.fatehi.utility.SystemExitException;
+import us.fatehi.utility.process.SystemExitException;
 
 @WithTestDatabase
 @ResolveTestContext
