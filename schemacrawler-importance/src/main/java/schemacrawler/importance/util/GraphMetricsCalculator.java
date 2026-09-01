@@ -13,10 +13,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-
 import org.jgrapht.Graph;
 import org.jgrapht.alg.scoring.BetweennessCentrality;
-
 import schemacrawler.importance.cache.DatabaseObjectNodeId;
 import schemacrawler.importance.cache.SchemaEdge;
 import schemacrawler.importance.cache.TableImportanceMetrics;
@@ -68,6 +66,6 @@ public final class GraphMetricsCalculator {
   }
 
   private GraphMetricsCalculator() {
-	    // Prevent instantiation
-	  }
+    // Prevent instantiation
+  }
 }
