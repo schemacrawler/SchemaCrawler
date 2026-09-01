@@ -29,6 +29,7 @@
     <module>schemacrawler-scribe</module>
     <module>schemacrawler-commandline</module>
     <module>schemacrawler-lint</module>
+    <module>schemacrawler-importance</module>
     <!-- Database plugins -->
     <module>schemacrawler-dbconnectors</module>
     <module>schemacrawler-db2</module>
