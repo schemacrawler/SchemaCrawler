@@ -65,7 +65,7 @@ public final class PathService {
     final Set<SchemaEdge> edges =
         fullGraph.edgeSet().stream().filter(edgeFilter).collect(Collectors.toSet());
     final Graph<DatabaseObjectNodeId, SchemaEdge> graph =
-        new AsSubgraph<>(fullGraph, cache.getTableViewNodes(), edges);
+        new AsSubgraph<>(fullGraph, cache.getTableNodes(), edges);
     if (!graph.containsVertex(from) || !graph.containsVertex(to)) {
       return null;
     }
@@ -74,7 +74,7 @@ public final class PathService {
 
   private void requireTableOrView(final DatabaseObjectNodeId nodeId, final String role) {
     Objects.requireNonNull(nodeId, "No %s node provided".formatted(role));
-    if (!cache.getTableViewNodes().contains(nodeId)) {
+    if (!cache.getTableNodes().contains(nodeId)) {
       throw new IllegalArgumentException(
           "%s node must identify a table or view in the graph: %s".formatted(role, nodeId));
     }

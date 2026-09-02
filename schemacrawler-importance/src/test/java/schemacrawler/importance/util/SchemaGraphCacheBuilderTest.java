@@ -44,7 +44,6 @@ class SchemaGraphCacheBuilderTest {
         new SchemaGraphCacheBuilder().buildNodesAndEdges(catalog()).build();
 
     assertThat(cache.getFullGraph().vertexSet(), hasSize(0));
-    assertThat(cache.getMetricsGraph().edgeSet(), hasSize(0));
   }
 
   @Test
@@ -68,8 +67,7 @@ class SchemaGraphCacheBuilderTest {
             .build();
 
     assertThat(cache.getFullGraph().vertexSet(), hasSize(1));
-    assertThat(cache.getTableViewNodes(), hasSize(1));
-    assertThat(cache.getMetrics(NodeIdFactory.create(customers)).inDegree(), is(0));
+    assertThat(cache.getTableNodes(), hasSize(1));
     assertThat(
         customers
             .<TableImportance>getAttribute(TableImportance.class.getName())
@@ -131,13 +129,7 @@ class SchemaGraphCacheBuilderTest {
     assertThat(fullGraph.getEdgeSource(foreignKeyEdge), is(NodeIdFactory.create(orders)));
     assertThat(fullGraph.getEdgeTarget(foreignKeyEdge), is(NodeIdFactory.create(customers)));
     assertThat(foreignKeyEdge.getReferenceKey(), is(foreignKey.key()));
-    assertThat(cache.getMetricsGraph().edgeSet(), hasSize(4));
-    assertThat(cache.getMetrics(NodeIdFactory.create(orders)).outDegree(), is(1));
-    assertThat(cache.getTableViewNodes(), hasSize(3));
-    assertThat(cache.getObjectByKey(customers.key()), is(customers));
-    assertThat(cache.getMetrics(NodeIdFactory.create(orderSummary)).outDegree(), is(1));
-    assertThat(cache.getMetrics(NodeIdFactory.create(refreshOrders)).outDegree(), is(1));
-    assertThat(cache.getMetrics(NodeIdFactory.create(customerAlias)).outDegree(), is(1));
+    assertThat(cache.getTableNodes(), hasSize(3));
     verify(orderSummary)
         .setAttribute(eq(TableImportance.class.getName()), any(TableImportance.class));
     verify(refreshOrders, never()).setAttribute(anyString(), any());
@@ -148,15 +140,7 @@ class SchemaGraphCacheBuilderTest {
             fullGraph.addVertex(
                 new DatabaseObjectNodeId(
                     new NamedObjectKey("OTHER"), SimpleDatabaseObjectType.table)));
-    assertThrows(
-        UnsupportedOperationException.class,
-        () ->
-            cache
-                .getMetricsGraph()
-                .addVertex(
-                    new DatabaseObjectNodeId(
-                        new NamedObjectKey("OTHER"), SimpleDatabaseObjectType.table)));
-    assertThrows(UnsupportedOperationException.class, cache.getTableViewNodes()::clear);
+    assertThrows(UnsupportedOperationException.class, cache.getTableNodes()::clear);
   }
 
   @Test
@@ -190,9 +174,7 @@ class SchemaGraphCacheBuilderTest {
             .build();
 
     assertThat(cache.getFullGraph().vertexSet(), hasSize(1));
-    assertThat(cache.getTableViewNodes(), hasSize(1));
-    assertThat(cache.getMetricsGraph().vertexSet(), hasSize(1));
-    assertThat(cache.getObjectByKey(new NamedObjectKey("PUBLIC", "ORDERS")), is((Table) null));
+    assertThat(cache.getTableNodes(), hasSize(1));
   }
 
   @Test
@@ -208,7 +190,6 @@ class SchemaGraphCacheBuilderTest {
 
     assertThat(cache.getObjectByNodeId(NodeIdFactory.create(table)), is(table));
     assertThat(cache.getObjectByNodeId(NodeIdFactory.create(procedure)), is(procedure));
-    assertThat(cache.getObjectByKey(table.key()), is((Table) null));
   }
 
   private static Catalog catalog() {

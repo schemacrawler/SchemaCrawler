@@ -42,10 +42,8 @@ class ReportServiceTest {
     final SchemaGraphCache cache =
         new SchemaGraphCache(
             new DefaultDirectedGraph<>(SchemaEdge.class),
-            new DefaultDirectedGraph<>(SchemaEdge.class),
             Set.of(alphaNode, betaNode),
-            Map.of(alphaNode, alpha, betaNode, beta),
-            Map.of());
+            Map.of(alphaNode, alpha, betaNode, beta));
 
     final var entries = new ReportService(cache).report(new RegularExpressionRule(".*", ""));
 
@@ -61,10 +59,8 @@ class ReportServiceTest {
     final SchemaGraphCache cache =
         new SchemaGraphCache(
             new DefaultDirectedGraph<>(SchemaEdge.class),
-            new DefaultDirectedGraph<>(SchemaEdge.class),
             Set.of(alphaNode),
-            Map.of(alphaNode, alpha),
-            Map.of());
+            Map.of(alphaNode, alpha));
 
     final var entries = new ReportService(cache).report(new RegularExpressionRule(".*BETA", ""));
 
@@ -86,7 +82,7 @@ class ReportServiceTest {
   }
 
   private static TableImportanceMetrics metrics(final String name) {
-    return new TableImportanceMetrics(0, 0, name.equals("BETA") ? 1.0 : 0.0, 0, 0);
+    return new TableImportanceMetrics(0, 0, "BETA".equals(name) ? 1.0 : 0.0, 0, 0);
   }
 
   private static DatabaseObjectNodeId node(final String name) {

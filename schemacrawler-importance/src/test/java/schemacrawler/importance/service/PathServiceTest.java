@@ -101,8 +101,7 @@ class PathServiceTest {
     for (final Edge edge : graphEdges) {
       graph.addEdge(edge.source(), edge.target(), edge.edge());
     }
-    return new PathService(
-        new SchemaGraphCache(graph, graph, Set.copyOf(nodes), Map.of(), Map.of()));
+    return new PathService(new SchemaGraphCache(graph, Set.copyOf(nodes), Map.of()));
   }
 
   private static DatabaseObjectNodeId table(final String name) {

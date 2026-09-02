@@ -53,8 +53,7 @@ public final class SchemaGraphCacheBuilder {
     final Map<DatabaseObjectNodeId, TableImportanceMetrics> metrics =
         GraphMetricsCalculator.calculate(metricsGraph);
     storeTableImportance(metrics);
-    return new SchemaGraphCache(
-        fullGraph, metricsGraph, tableViewNodes, nodeToObject, keyToObject, metrics);
+    return new SchemaGraphCache(fullGraph, tableViewNodes, nodeToObject);
   }
 
   public SchemaGraphCacheBuilder buildNodesAndEdges(final Catalog catalog) {

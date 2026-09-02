@@ -40,7 +40,7 @@ public final class ReportService {
     requireNonNull(tableInclusionRule, "No table inclusion rule provided");
 
     final List<ImportanceReportEntry> entries = new ArrayList<>();
-    for (final DatabaseObjectNodeId nodeId : cache.getTableViewNodes()) {
+    for (final DatabaseObjectNodeId nodeId : cache.getTableNodes()) {
       final DatabaseObject databaseObject = cache.getObjectByNodeId(nodeId);
       if (!(databaseObject instanceof final Table table)
           || !tableInclusionRule.test(table.getFullName())) {
