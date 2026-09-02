@@ -36,7 +36,9 @@ public final class ImportanceCommand extends AbstractSchemaCrawlerCommand<Import
 
     final ImportanceReportOutputFormat outputFormat =
         ImportanceReportOutputFormat.fromFormat(getOutputOptions().getOutputFormatValue());
-    final List<ImportanceReportEntry> entries = reportEntries();
+    final List<ImportanceReportEntry> entries =
+        new ReportService(new SchemaGraphCacheBuilder().buildNodesAndEdges(getCatalog()).build())
+            .report(getCommandOptions().getTableInclusionRule());
     try {
       ImportanceReportWriter.write(entries, outputFormat, getOutputOptions());
     } catch (final IOException e) {
@@ -47,10 +49,5 @@ public final class ImportanceCommand extends AbstractSchemaCrawlerCommand<Import
   @Override
   public boolean usesConnection() {
     return false;
-  }
-
-  private List<ImportanceReportEntry> reportEntries() {
-    return new ReportService(new SchemaGraphCacheBuilder().buildNodesAndEdges(getCatalog()).build())
-        .report(getCommandOptions().getTableInclusionRule());
   }
 }

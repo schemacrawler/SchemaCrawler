@@ -36,10 +36,6 @@ public final class ImportanceReportWriter {
               inclusion -> inclusion.withValueInclusion(JsonInclude.Include.NON_EMPTY))
           .build();
 
-  private ImportanceReportWriter() {
-    // Prevent instantiation
-  }
-
   public static void write(
       final List<ImportanceReportEntry> entries,
       final ImportanceReportOutputFormat outputFormat,
@@ -71,5 +67,9 @@ public final class ImportanceReportWriter {
               + "  table traits: %s%n".formatted(entry.tableTraits())
               + "  table counts: %s%n%n".formatted(entry.tableCounts()));
     }
+  }
+
+  private ImportanceReportWriter() {
+    // Prevent instantiation
   }
 }

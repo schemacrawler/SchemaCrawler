@@ -36,11 +36,26 @@ public final class SchemaGraphCacheBuilder {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaGraphCacheBuilder.class.getName());
 
+  private static TableTraits tableTraits(final Table table) {
+    for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
+      if (foreignKey.getPrimaryKeyTable() == null || foreignKey.key() == null) {
+        LOGGER.warning(
+            () ->
+                "Skipping entity-model inference for "
+                    + table.key()
+                    + " because it has malformed foreign-key metadata");
+        return new TableTraits();
+      }
+    }
+    return TableImportanceUtility.tableTraitsfrom(table);
+  }
+
   private Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph;
   private Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject;
   private Map<NamedObjectKey, DatabaseObject> keyToObject;
   private Graph<DatabaseObjectNodeId, SchemaEdge> metricsGraph;
   private Set<DatabaseObjectNodeId> tableViewNodes;
+
   private Set<NamedObjectKey> ambiguousObjectKeys;
 
   public SchemaGraphCache build() {
@@ -124,19 +139,5 @@ public final class SchemaGraphCacheBuilder {
                 metrics.get(entry.getKey())));
       }
     }
-  }
-
-  private static TableTraits tableTraits(final Table table) {
-    for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
-      if (foreignKey.getPrimaryKeyTable() == null || foreignKey.key() == null) {
-        LOGGER.warning(
-            () ->
-                "Skipping entity-model inference for "
-                    + table.key()
-                    + " because it has malformed foreign-key metadata");
-        return new TableTraits();
-      }
-    }
-    return TableImportanceUtility.tableTraitsfrom(table);
   }
 }

@@ -60,7 +60,7 @@ public final class ReportService {
     }
     entries.sort(
         Comparator.comparing(
-                (ImportanceReportEntry entry) -> entry.graphMetrics().betweennessCentrality())
+                (final ImportanceReportEntry entry) -> entry.graphMetrics().betweennessCentrality())
             .reversed()
             .thenComparing(ImportanceReportEntry::tableFullName));
     return List.copyOf(entries);
