@@ -10,10 +10,10 @@ tags:
   - non_entity
 generated:
   at: 1970-01-01T00:00:00Z
-  by: process:schemacrawler-v17.12.2
+  by: process:schemacrawler-v17.14.1
 verified:
-  at: 2026-08-16T01:26:55.088903500Z
-  by: machine-confirmed:schemacrawler-v17.12.2
+  at: 2026-09-02T22:55:31.087305700Z
+  by: machine-confirmed:schemacrawler-v17.14.1
 status: stable
 shortTitle: order details
 intro: Description of table PUBLIC.BOOKS.order details
@@ -23,7 +23,7 @@ schema: PUBLIC.BOOKS
 name: order details
 complete_type: table
 counts:
-  significant_column_count: 0
+  attribute_column_count: 0
   column_count: 0
   foreign_key_count: 0
   index_count: 0

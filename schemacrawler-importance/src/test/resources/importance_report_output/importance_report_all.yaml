@@ -1,0 +1,350 @@
+  - node_id:
+      type: table
+    table_full_name: PUBLIC."PUBLISHER SALES".SALES
+    graph_metrics:
+      in_degree: 0
+      out_degree: 3
+      betweenness_centrality: 7.0
+      dependency_reachability_count: 3
+      impact_reachability_count: 0
+    table_counts:
+      attribute_column_count: 3
+      column_count: 7
+      foreign_key_count: 3
+      index_count: 3
+      trigger_count: 0
+    table_traits:
+      no_primary_key: true
+      entity_model_type: non_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.BOOKS.BOOKS
+    graph_metrics:
+      in_degree: 3
+      out_degree: 1
+      betweenness_centrality: 6.0
+      dependency_reachability_count: 0
+      impact_reachability_count: 2
+    table_counts:
+      attribute_column_count: 5
+      column_count: 7
+      foreign_key_count: 1
+      index_count: 3
+      trigger_count: 0
+    table_traits:
+      self_referencing: true
+      entity_model_type: strong_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.BOOKS.BOOKAUTHORS
+    graph_metrics:
+      in_degree: 0
+      out_degree: 2
+      betweenness_centrality: 4.0
+      dependency_reachability_count: 2
+      impact_reachability_count: 0
+    table_counts:
+      attribute_column_count: 1
+      column_count: 3
+      foreign_key_count: 2
+      index_count: 3
+      trigger_count: 0
+    table_traits:
+      no_primary_key: true
+      entity_model_type: bridge_table
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.FOR_LINT.PUBLICATIONS
+    graph_metrics:
+      in_degree: 3
+      out_degree: 1
+      betweenness_centrality: 0.5
+      dependency_reachability_count: 1
+      impact_reachability_count: 3
+    table_counts:
+      attribute_column_count: 6
+      column_count: 8
+      foreign_key_count: 1
+      index_count: 2
+      trigger_count: 0
+    table_traits:
+      entity_model_type: strong_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.FOR_LINT.WRITERS
+    graph_metrics:
+      in_degree: 3
+      out_degree: 1
+      betweenness_centrality: 0.5
+      dependency_reachability_count: 1
+      impact_reachability_count: 3
+    table_counts:
+      attribute_column_count: 16
+      column_count: 18
+      foreign_key_count: 1
+      index_count: 6
+      trigger_count: 0
+    table_traits:
+      entity_model_type: strong_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC."PUBLISHER SALES".REGIONS
+    graph_metrics:
+      in_degree: 1
+      out_degree: 0
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 0
+      impact_reachability_count: 1
+    table_counts:
+      attribute_column_count: 2
+      column_count: 4
+      foreign_key_count: 0
+      index_count: 1
+      trigger_count: 0
+    table_traits:
+      entity_model_type: strong_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC."PUBLISHER SALES".SALESDATA
+    graph_metrics:
+      in_degree: 1
+      out_degree: 0
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 0
+      impact_reachability_count: 1
+    table_counts:
+      attribute_column_count: 2
+      column_count: 2
+      foreign_key_count: 0
+      index_count: 1
+      trigger_count: 0
+    table_traits:
+      no_primary_key: true
+      entity_model_type: non_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.BOOKS."Celebrities"
+    graph_metrics:
+      in_degree: 1
+      out_degree: 0
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 0
+      impact_reachability_count: 1
+    table_counts:
+      attribute_column_count: 1
+      column_count: 2
+      foreign_key_count: 0
+      index_count: 1
+      trigger_count: 0
+    table_traits:
+      entity_model_type: strong_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.BOOKS."Celebrity Updates"
+    graph_metrics:
+      in_degree: 0
+      out_degree: 1
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 1
+      impact_reachability_count: 0
+    table_counts:
+      attribute_column_count: 1
+      column_count: 2
+      foreign_key_count: 1
+      index_count: 2
+      trigger_count: 0
+    table_traits:
+      entity_model_type: subtype
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.BOOKS.AUTHORS
+    graph_metrics:
+      in_degree: 1
+      out_degree: 0
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 0
+      impact_reachability_count: 1
+    table_counts:
+      attribute_column_count: 8
+      column_count: 9
+      foreign_key_count: 0
+      index_count: 3
+      trigger_count: 0
+    table_traits:
+      entity_model_type: strong_entity
+  - node_id:
+      type: view
+    table_full_name: PUBLIC.BOOKS.AUTHORSLIST
+    graph_metrics:
+      in_degree: 0
+      out_degree: 0
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 0
+      impact_reachability_count: 0
+    table_counts:
+      attribute_column_count: 3
+      column_count: 3
+      foreign_key_count: 0
+      index_count: 0
+      trigger_count: 0
+    table_traits:
+      no_primary_key: true
+      no_foreign_keys: true
+      no_indexes: true
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.BOOKS.COUPONS
+    graph_metrics:
+      in_degree: 0
+      out_degree: 0
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 0
+      impact_reachability_count: 0
+    table_counts:
+      attribute_column_count: 3
+      column_count: 4
+      foreign_key_count: 0
+      index_count: 1
+      trigger_count: 0
+    table_traits:
+      no_foreign_keys: true
+      entity_model_type: strong_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.BOOKS.CUSTOMERDATA
+    graph_metrics:
+      in_degree: 0
+      out_degree: 1
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 1
+      impact_reachability_count: 0
+    table_counts:
+      attribute_column_count: 1
+      column_count: 3
+      foreign_key_count: 1
+      index_count: 2
+      trigger_count: 0
+    table_traits:
+      entity_model_type: weak_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.BOOKS.CUSTOMERS
+    graph_metrics:
+      in_degree: 1
+      out_degree: 0
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 0
+      impact_reachability_count: 1
+    table_counts:
+      attribute_column_count: 3
+      column_count: 4
+      foreign_key_count: 0
+      index_count: 1
+      trigger_count: 0
+    table_traits:
+      entity_model_type: strong_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.BOOKS.PUBLISHERS
+    graph_metrics:
+      in_degree: 1
+      out_degree: 0
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 0
+      impact_reachability_count: 1
+    table_counts:
+      attribute_column_count: 1
+      column_count: 2
+      foreign_key_count: 0
+      index_count: 1
+      trigger_count: 0
+    table_traits:
+      entity_model_type: strong_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.BOOKS.ΒΙΒΛΊΑ
+    graph_metrics:
+      in_degree: 0
+      out_degree: 1
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 1
+      impact_reachability_count: 0
+    table_counts:
+      attribute_column_count: 2
+      column_count: 4
+      foreign_key_count: 1
+      index_count: 2
+      trigger_count: 0
+    table_traits:
+      entity_model_type: strong_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.FOR_LINT."Global Counts"
+    graph_metrics:
+      in_degree: 0
+      out_degree: 0
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 0
+      impact_reachability_count: 0
+    table_counts:
+      attribute_column_count: 1
+      column_count: 1
+      foreign_key_count: 0
+      index_count: 0
+      trigger_count: 0
+    table_traits:
+      no_primary_key: true
+      no_foreign_keys: true
+      no_indexes: true
+      entity_model_type: non_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.FOR_LINT.EXTRA_PK
+    graph_metrics:
+      in_degree: 0
+      out_degree: 2
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 2
+      impact_reachability_count: 0
+    table_counts:
+      attribute_column_count: 0
+      column_count: 3
+      foreign_key_count: 2
+      index_count: 3
+      trigger_count: 0
+    table_traits: {}
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.FOR_LINT.PUBLICATIONWRITERS
+    graph_metrics:
+      in_degree: 0
+      out_degree: 2
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 2
+      impact_reachability_count: 0
+    table_counts:
+      attribute_column_count: 0
+      column_count: 2
+      foreign_key_count: 2
+      index_count: 2
+      trigger_count: 0
+    table_traits:
+      no_primary_key: true
+      entity_model_type: non_entity
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.FOR_LINT.SELFREFERENCE
+    graph_metrics:
+      in_degree: 1
+      out_degree: 1
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 0
+      impact_reachability_count: 0
+    table_counts:
+      attribute_column_count: 1
+      column_count: 2
+      foreign_key_count: 1
+      index_count: 2
+      trigger_count: 0
+    table_traits:
+      self_referencing: true

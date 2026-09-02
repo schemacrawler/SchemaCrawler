@@ -15,10 +15,8 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import org.jgrapht.Graph;
-import org.jgrapht.graph.AsSubgraph;
 import org.jgrapht.graph.DirectedPseudograph;
 import schemacrawler.importance.model.DatabaseObjectNodeId;
-import schemacrawler.importance.model.EdgeType;
 import schemacrawler.importance.model.SchemaEdge;
 import schemacrawler.importance.model.SchemaGraphModel;
 import schemacrawler.importance.model.TableImportance;
@@ -69,7 +67,7 @@ public final class SchemaGraphModelBuilder implements Builder<SchemaGraphModel> 
           "Build nodes and edges before building the schema graph model");
     }
     final Map<DatabaseObjectNodeId, TableImportanceMetrics> metrics =
-        GraphMetricsCalculator.calculate(declaredDependenciesGraph());
+        GraphMetricsCalculator.calculate(fullGraph);
     storeTableImportance(metrics);
     return new SchemaGraphModel(fullGraph, tableViewNodes, nodeToObject);
   }
@@ -82,16 +80,6 @@ public final class SchemaGraphModelBuilder implements Builder<SchemaGraphModel> 
         || nodeId.type() == SimpleDatabaseObjectType.view) {
       tableViewNodes.add(nodeId);
     }
-  }
-
-  private Graph<DatabaseObjectNodeId, SchemaEdge> declaredDependenciesGraph() {
-    final Set<SchemaEdge> declaredEdges = new LinkedHashSet<>();
-    for (final SchemaEdge edge : fullGraph.edgeSet()) {
-      if (edge.getEdgeType() != EdgeType.IMPLICIT_ASSOCIATION) {
-        declaredEdges.add(edge);
-      }
-    }
-    return new AsSubgraph<>(fullGraph, fullGraph.vertexSet(), declaredEdges);
   }
 
   private void storeTableImportance(

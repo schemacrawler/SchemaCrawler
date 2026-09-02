@@ -15,19 +15,26 @@ import java.util.Map;
 import java.util.Set;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.scoring.BetweennessCentrality;
+import org.jgrapht.graph.AsUndirectedGraph;
 import schemacrawler.importance.model.DatabaseObjectNodeId;
 import schemacrawler.importance.model.SchemaEdge;
 import schemacrawler.importance.model.TableImportanceMetrics;
 import us.fatehi.utility.UtilityMarker;
 
-/** Calculates topology metrics from the declared-dependency graph. */
+/**
+ * Calculates topology metrics from the complete schema graph.
+ *
+ * <p>Degree and reachability retain dependency direction. Betweenness treats every typed dependency
+ * as an undirected structural connection so bridge tables with only outgoing foreign keys are
+ * scored.
+ */
 @UtilityMarker
 public final class GraphMetricsCalculator {
 
   public static Map<DatabaseObjectNodeId, TableImportanceMetrics> calculate(
       final Graph<DatabaseObjectNodeId, SchemaEdge> graph) {
     final BetweennessCentrality<DatabaseObjectNodeId, SchemaEdge> centrality =
-        new BetweennessCentrality<>(graph);
+        new BetweennessCentrality<>(new AsUndirectedGraph<>(graph));
     final Map<DatabaseObjectNodeId, TableImportanceMetrics> metrics = new LinkedHashMap<>();
     for (final DatabaseObjectNodeId nodeId : graph.vertexSet()) {
       metrics.put(

@@ -14,6 +14,7 @@ import static schemacrawler.test.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import schemacrawler.importance.options.ImportanceReportOutputFormat;
@@ -61,6 +62,26 @@ class ImportanceCommandOutputTest {
     executable.setAdditionalConfiguration(config);
 
     final String referenceFile = "importance_report.%s".formatted(outputFormat.getFormat());
+    assertThat(
+        outputOf(executableExecution(connectionSource, executable, outputFormat)),
+        hasSameContentAndTypeAs(
+            classpathResource(IMPORTANCE_REPORT_OUTPUT + referenceFile), outputFormat));
+  }
+
+  @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
+  void producesImportanceReport(final DatabaseConnectionSource connectionSource) throws Exception {
+
+    final SchemaCrawlerOptions withLimitOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLoadOptions(
+                LoadOptionsBuilder.builder().withInfoLevel(InfoLevel.maximum).toOptions());
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("importance");
+    executable.setSchemaCrawlerOptions(withLimitOptions);
+
+    ImportanceReportOutputFormat outputFormat = ImportanceReportOutputFormat.yaml;
+    final String referenceFile = "importance_report_all.%s".formatted(outputFormat.getFormat());
     assertThat(
         outputOf(executableExecution(connectionSource, executable, outputFormat)),
         hasSameContentAndTypeAs(
