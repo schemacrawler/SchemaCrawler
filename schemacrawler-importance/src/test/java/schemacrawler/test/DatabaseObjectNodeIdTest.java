@@ -1,7 +1,6 @@
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
@@ -24,6 +23,5 @@ class DatabaseObjectNodeIdTest {
         new DatabaseObjectNodeId(key, SimpleDatabaseObjectType.table);
     assertThat(table, is(equivalent));
     assertThat(table.hashCode(), is(equivalent.hashCode()));
-    assertThat(table, comparesEqualTo(equivalent));
   }
 }

@@ -10,14 +10,17 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ServiceLoader;
 import org.junit.jupiter.api.Test;
 import schemacrawler.importance.command.ImportanceCommandProvider;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.test.utility.PluginCommandTestUtility;
 import schemacrawler.tools.command.SchemaCrawlerCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
@@ -61,6 +64,18 @@ class ImportanceCommandProviderTest {
             null,
             OutputOptionsBuilder.newOutputOptions()),
         is(true));
+  }
+
+  @Test
+  void rejectsAnUnsupportedCommand() {
+    final ImportanceCommandProvider provider = new ImportanceCommandProvider();
+
+    final ExecutionRuntimeException exception =
+        assertThrows(
+            ExecutionRuntimeException.class,
+            () -> provider.newCommand("lint", ConfigUtility.newConfig()));
+
+    assertThat(exception.getMessage(), is("Unsupported command <lint>"));
   }
 
   @Test
