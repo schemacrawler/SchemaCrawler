@@ -10,42 +10,87 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.ServiceLoader;
 import org.junit.jupiter.api.Test;
 import schemacrawler.importance.command.ImportanceCommandProvider;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.test.utility.PluginCommandTestUtility;
+import schemacrawler.tools.command.SchemaCrawlerCommandProvider;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.options.ConfigUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
 
 @ResolveTestContext
-public class CommandProviderTest {
+class CommandProviderTest {
 
   @Test
-  public void testCommandProvider() throws Exception {
-    final ImportanceCommandProvider commandProvider = new ImportanceCommandProvider();
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-    final OutputOptions outputOptions = OutputOptionsBuilder.newOutputOptions();
+  void importanceCommandIsDiscoveredViaServiceLoader() {
+    boolean found = false;
+    for (final SchemaCrawlerCommandProvider provider :
+        ServiceLoader.load(SchemaCrawlerCommandProvider.class)) {
+      if (provider instanceof ImportanceCommandProvider) {
+        found = true;
+      }
+    }
+    assertThat(found, is(true));
+  }
+
+  @Test
+  void supportsOnlyKnownOutputFormats() {
+    final ImportanceCommandProvider provider = new ImportanceCommandProvider();
+    final OutputOptions json =
+        OutputOptionsBuilder.builder().withOutputFormatValue("json").toOptions();
+    final OutputOptions unsupported =
+        OutputOptionsBuilder.builder().withOutputFormatValue("xml").toOptions();
+
+    assertThat(provider.supportsOutputFormat("importance", json), is(true));
+    assertThat(provider.supportsOutputFormat("importance", unsupported), is(false));
+  }
+
+  @Test
+  void supportsImportanceCommand() {
+    final ImportanceCommandProvider provider = new ImportanceCommandProvider();
+
     assertThat(
-        commandProvider.supportsSchemaCrawlerCommand(
-            "importance", schemaCrawlerOptions, null, outputOptions),
+        provider.supportsSchemaCrawlerCommand(
+            "importance",
+            SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
+            null,
+            OutputOptionsBuilder.newOutputOptions()),
         is(true));
   }
 
   @Test
-  public void testImportanceCommandProviderPluginCommand(final TestContext testContext) {
-    final PluginCommand pluginCommand = new ImportanceCommandProvider().getCommandLineCommand();
-    PluginCommandTestUtility.testPluginCommand(testContext, pluginCommand);
+  void rejectsAnUnsupportedCommand() {
+    final ImportanceCommandProvider provider = new ImportanceCommandProvider();
+
+    final ExecutionRuntimeException exception =
+        assertThrows(
+            ExecutionRuntimeException.class,
+            () -> provider.newCommand("lint", ConfigUtility.newConfig()));
+
+    assertThat(exception.getMessage(), is("Unsupported command <lint>"));
   }
 
   @Test
-  public void testImportanceCommandProviderHelpCommand(final TestContext testContext) {
-    final PluginCommand pluginCommand = new ImportanceCommandProvider().getHelpCommand();
-    PluginCommandTestUtility.testPluginCommand(testContext, pluginCommand);
+  void providesValidCommandLineCommand(final TestContext testContext) {
+    final ImportanceCommandProvider provider = new ImportanceCommandProvider();
+    final PluginCommand commandLineCommand = provider.getCommandLineCommand();
+
+    PluginCommandTestUtility.testPluginCommand(testContext, commandLineCommand);
+  }
+
+  @Test
+  void providesValidHelpCommand(final TestContext testContext) {
+    final ImportanceCommandProvider provider = new ImportanceCommandProvider();
+    final PluginCommand helpCommand = provider.getHelpCommand();
+
+    PluginCommandTestUtility.testPluginCommand(testContext, helpCommand);
   }
 }
