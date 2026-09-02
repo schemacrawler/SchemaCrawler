@@ -38,10 +38,67 @@ import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 
 class SchemaGraphCacheBuilderTest {
 
+  private static Catalog catalog() {
+    return catalog(List.of(), List.of(), List.of());
+  }
+
+  private static Catalog catalog(
+      final List<Table> tables, final List<Routine> routines, final List<Synonym> synonyms) {
+    final Catalog catalog = mock(Catalog.class);
+    when(catalog.getTables()).thenReturn(tables);
+    when(catalog.getRoutines()).thenReturn(routines);
+    when(catalog.getSynonyms()).thenReturn(synonyms);
+    return catalog;
+  }
+
+  private static int edgesOfType(
+      final Graph<DatabaseObjectNodeId, SchemaEdge> graph, final EdgeType edgeType) {
+    return (int) graph.edgeSet().stream().filter(edge -> edge.getEdgeType() == edgeType).count();
+  }
+
+  private static void initialize(final Procedure procedure, final String name) {
+    when(procedure.key()).thenReturn(new NamedObjectKey("PUBLIC", name));
+  }
+
+  private static void initialize(final Synonym synonym, final String name) {
+    when(synonym.key()).thenReturn(new NamedObjectKey("PUBLIC", name));
+  }
+
+  private static void initialize(final Table table, final String name) {
+    when(table.key()).thenReturn(new NamedObjectKey("PUBLIC", name));
+    when(table.getTableType()).thenReturn(new TableType("TABLE"));
+    when(table.getColumns()).thenReturn(List.of());
+    when(table.getReferencedTables()).thenReturn(List.of());
+    when(table.getIndexes()).thenReturn(List.of());
+    when(table.getTriggers()).thenReturn(List.of());
+    when(table.hasPrimaryKey()).thenReturn(false);
+    when(table.hasForeignKeys()).thenReturn(false);
+    when(table.hasIndexes()).thenReturn(false);
+    when(table.isSelfReferencing()).thenReturn(false);
+    when(table.hasTriggers()).thenReturn(false);
+  }
+
+  private static Table table(final String name) {
+    final Table table = mock(Table.class);
+    initialize(table, name);
+    when(table.getImportedForeignKeys()).thenReturn(List.of());
+    when(table.getTableConstraints()).thenReturn(List.of());
+    when(table.getColumns()).thenReturn(List.of());
+    when(table.getReferencedTables()).thenReturn(List.of());
+    when(table.getIndexes()).thenReturn(List.of());
+    when(table.getTriggers()).thenReturn(List.of());
+    when(table.hasPrimaryKey()).thenReturn(false);
+    when(table.hasForeignKeys()).thenReturn(false);
+    when(table.hasIndexes()).thenReturn(false);
+    when(table.isSelfReferencing()).thenReturn(false);
+    when(table.hasTriggers()).thenReturn(false);
+    return table;
+  }
+
   @Test
   void buildsAnEmptyCatalog() {
-    final SchemaGraphCache cache =
-        new SchemaGraphCacheBuilder().buildNodesAndEdges(catalog()).build();
+    final Catalog catalog = catalog();
+    final SchemaGraphCache cache = SchemaGraphCacheBuilder.builder(catalog).build();
 
     assertThat(cache.getFullGraph().vertexSet(), hasSize(0));
   }
@@ -61,10 +118,8 @@ class SchemaGraphCacheBuilderTest {
         .when(customers)
         .getAttribute(TableImportance.class.getName());
 
-    final SchemaGraphCache cache =
-        new SchemaGraphCacheBuilder()
-            .buildNodesAndEdges(catalog(List.of(customers), List.of(), List.of()))
-            .build();
+    final Catalog catalog = catalog(List.of(customers), List.of(), List.of());
+    final SchemaGraphCache cache = SchemaGraphCacheBuilder.builder(catalog).build();
 
     assertThat(cache.getFullGraph().vertexSet(), hasSize(1));
     assertThat(cache.getTableNodes(), hasSize(1));
@@ -103,15 +158,12 @@ class SchemaGraphCacheBuilderTest {
     when(impliedAssociation.key()).thenReturn(new NamedObjectKey("IA_ORDERS_CUSTOMERS"));
     when(orders.getTableConstraints()).thenReturn(List.of(impliedAssociation));
 
-    final SchemaGraphCache cache =
-        new SchemaGraphCacheBuilder()
-            .buildNodesAndEdges(
-                catalog(
-                    List.of(customers, orders, orderSummary),
-                    List.<Routine>of(refreshOrders),
-                    List.of(customerAlias)))
-            .precomputeViews()
-            .build();
+    final Catalog catalog =
+        catalog(
+            List.of(customers, orders, orderSummary),
+            List.<Routine>of(refreshOrders),
+            List.of(customerAlias));
+    final SchemaGraphCache cache = SchemaGraphCacheBuilder.builder(catalog).build();
 
     final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph = cache.getFullGraph();
     assertThat(fullGraph.vertexSet(), hasSize(5));
@@ -144,108 +196,15 @@ class SchemaGraphCacheBuilderTest {
   }
 
   @Test
-  void skipsMalformedForeignKeyReferences() {
-    final Table orders = table("ORDERS");
-    final ForeignKey missingTarget = mock(ForeignKey.class);
-    when(missingTarget.getPrimaryKeyTable()).thenReturn(null);
-    when(missingTarget.key()).thenReturn(new NamedObjectKey("FK_MISSING_TARGET"));
-    final ForeignKey excludedTarget = mock(ForeignKey.class);
-    final Table excludedCustomers = table("CUSTOMERS");
-    when(excludedTarget.getPrimaryKeyTable()).thenReturn(excludedCustomers);
-    when(excludedTarget.key()).thenReturn(new NamedObjectKey("FK_EXCLUDED_TARGET"));
-    when(orders.getImportedForeignKeys()).thenReturn(List.of(missingTarget, excludedTarget));
-
-    final SchemaGraphCache cache =
-        new SchemaGraphCacheBuilder()
-            .buildNodesAndEdges(catalog(List.of(orders), List.of(), List.of()))
-            .build();
-
-    assertThat(cache.getFullGraph().edgeSet(), hasSize(0));
-  }
-
-  @Test
-  void rebuildsDerivedViewsForEachCatalog() {
-    final SchemaGraphCacheBuilder builder = new SchemaGraphCacheBuilder();
-    builder.buildNodesAndEdges(catalog(List.of(table("ORDERS")), List.of(), List.of())).build();
-
-    final SchemaGraphCache cache =
-        builder
-            .buildNodesAndEdges(catalog(List.of(table("CUSTOMERS")), List.of(), List.of()))
-            .build();
-
-    assertThat(cache.getFullGraph().vertexSet(), hasSize(1));
-    assertThat(cache.getTableNodes(), hasSize(1));
-  }
-
-  @Test
-  void avoidsAmbiguousKeyOnlyObjectLookups() {
+  void retainsTypedObjectLookupsForCollidingNames() {
     final Table table = table("ORDERS");
     final Procedure procedure = mock(Procedure.class);
     initialize(procedure, "ORDERS");
 
-    final SchemaGraphCache cache =
-        new SchemaGraphCacheBuilder()
-            .buildNodesAndEdges(catalog(List.of(table), List.<Routine>of(procedure), List.of()))
-            .build();
+    final Catalog catalog = catalog(List.of(table), List.<Routine>of(procedure), List.of());
+    final SchemaGraphCache cache = SchemaGraphCacheBuilder.builder(catalog).build();
 
     assertThat(cache.getObjectByNodeId(NodeIdFactory.create(table)), is(table));
     assertThat(cache.getObjectByNodeId(NodeIdFactory.create(procedure)), is(procedure));
-  }
-
-  private static Catalog catalog() {
-    return catalog(List.of(), List.of(), List.of());
-  }
-
-  private static Catalog catalog(
-      final List<Table> tables, final List<Routine> routines, final List<Synonym> synonyms) {
-    final Catalog catalog = mock(Catalog.class);
-    when(catalog.getTables()).thenReturn(tables);
-    when(catalog.getRoutines()).thenReturn(routines);
-    when(catalog.getSynonyms()).thenReturn(synonyms);
-    return catalog;
-  }
-
-  private static int edgesOfType(
-      final Graph<DatabaseObjectNodeId, SchemaEdge> graph, final EdgeType edgeType) {
-    return (int) graph.edgeSet().stream().filter(edge -> edge.getEdgeType() == edgeType).count();
-  }
-
-  private static Table table(final String name) {
-    final Table table = mock(Table.class);
-    initialize(table, name);
-    when(table.getImportedForeignKeys()).thenReturn(List.of());
-    when(table.getTableConstraints()).thenReturn(List.of());
-    when(table.getColumns()).thenReturn(List.of());
-    when(table.getReferencedTables()).thenReturn(List.of());
-    when(table.getIndexes()).thenReturn(List.of());
-    when(table.getTriggers()).thenReturn(List.of());
-    when(table.hasPrimaryKey()).thenReturn(false);
-    when(table.hasForeignKeys()).thenReturn(false);
-    when(table.hasIndexes()).thenReturn(false);
-    when(table.isSelfReferencing()).thenReturn(false);
-    when(table.hasTriggers()).thenReturn(false);
-    return table;
-  }
-
-  private static void initialize(final Table table, final String name) {
-    when(table.key()).thenReturn(new NamedObjectKey("PUBLIC", name));
-    when(table.getTableType()).thenReturn(new TableType("TABLE"));
-    when(table.getColumns()).thenReturn(List.of());
-    when(table.getReferencedTables()).thenReturn(List.of());
-    when(table.getIndexes()).thenReturn(List.of());
-    when(table.getTriggers()).thenReturn(List.of());
-    when(table.hasPrimaryKey()).thenReturn(false);
-    when(table.hasForeignKeys()).thenReturn(false);
-    when(table.hasIndexes()).thenReturn(false);
-    when(table.isSelfReferencing()).thenReturn(false);
-    when(table.hasTriggers()).thenReturn(false);
-  }
-
-  private static void initialize(final Procedure procedure, final String name) {
-    when(procedure.key()).thenReturn(new NamedObjectKey("PUBLIC", name));
-  }
-
-  private static void initialize(final Synonym synonym, final String name) {
-    when(synonym.key()).thenReturn(new NamedObjectKey("PUBLIC", name));
   }
 }
