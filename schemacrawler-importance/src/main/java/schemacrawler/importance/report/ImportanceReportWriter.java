@@ -8,9 +8,6 @@
 
 package schemacrawler.importance.report;
 
-import static tools.jackson.databind.SerializationFeature.INDENT_OUTPUT;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
@@ -18,23 +15,12 @@ import schemacrawler.importance.cache.TableImportanceMetrics;
 import schemacrawler.importance.options.ImportanceReportOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import tools.jackson.databind.ObjectMapper;
-import tools.jackson.dataformat.yaml.YAMLMapper;
 
 /** Writes importance report entries in the requested format. */
 public final class ImportanceReportWriter {
 
-  private static final ObjectMapper JSON_MAPPER =
-      tools.jackson.databind.json.JsonMapper.builder()
-          .enable(INDENT_OUTPUT)
-          .changeDefaultPropertyInclusion(
-              inclusion -> inclusion.withValueInclusion(JsonInclude.Include.NON_EMPTY))
-          .build();
-  private static final ObjectMapper YAML_MAPPER =
-      YAMLMapper.builder()
-          .enable(INDENT_OUTPUT)
-          .changeDefaultPropertyInclusion(
-              inclusion -> inclusion.withValueInclusion(JsonInclude.Include.NON_EMPTY))
-          .build();
+  private static final ObjectMapper jsonMapper = JsonUtility.newJsonMapperBuilder().build();
+  private static final ObjectMapper yamlMapper = JsonUtility.newJsonMapperBuilder().build();
 
   public static void write(
       final List<ImportanceReportEntry> entries,
@@ -43,8 +29,8 @@ public final class ImportanceReportWriter {
       throws IOException {
     try (final Writer writer = outputOptions.openNewOutputWriter()) {
       switch (outputFormat) {
-        case json -> JSON_MAPPER.writeValue(writer, entries);
-        case yaml -> YAML_MAPPER.writeValue(writer, entries);
+        case json -> jsonMapper.writeValue(writer, entries);
+        case yaml -> yamlMapper.writeValue(writer, entries);
         case text -> writeText(entries, writer);
       }
     }

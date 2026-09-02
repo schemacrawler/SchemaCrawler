@@ -1,4 +1,4 @@
-package schemacrawler.importance.service;
+package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -16,6 +16,8 @@ import schemacrawler.importance.cache.DatabaseObjectNodeId;
 import schemacrawler.importance.cache.EdgeType;
 import schemacrawler.importance.cache.SchemaEdge;
 import schemacrawler.importance.cache.SchemaGraphCache;
+import schemacrawler.importance.service.PathResult;
+import schemacrawler.importance.service.PathService;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 

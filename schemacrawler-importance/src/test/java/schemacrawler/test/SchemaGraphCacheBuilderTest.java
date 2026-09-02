@@ -1,4 +1,4 @@
-package schemacrawler.importance.util;
+package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -23,6 +23,8 @@ import schemacrawler.importance.cache.EdgeType;
 import schemacrawler.importance.cache.SchemaEdge;
 import schemacrawler.importance.cache.SchemaGraphCache;
 import schemacrawler.importance.cache.TableImportance;
+import schemacrawler.importance.util.NodeIdFactory;
+import schemacrawler.importance.util.SchemaGraphCacheBuilder;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.NamedObjectKey;

@@ -6,13 +6,14 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.importance.options;
+package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+import schemacrawler.importance.options.ImportanceReportOutputFormat;
 
 class ImportanceReportOutputFormatTest {
 

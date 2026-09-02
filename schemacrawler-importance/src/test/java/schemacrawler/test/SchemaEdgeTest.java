@@ -1,4 +1,4 @@
-package schemacrawler.importance.cache;
+package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DirectedPseudograph;
 import org.junit.jupiter.api.Test;
+import schemacrawler.importance.cache.DatabaseObjectNodeId;
+import schemacrawler.importance.cache.EdgeType;
+import schemacrawler.importance.cache.SchemaEdge;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 

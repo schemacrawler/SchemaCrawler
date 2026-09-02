@@ -1,0 +1,10 @@
+PUBLIC.BOOKS.BOOKAUTHORS
+  graph metrics: in-degree=%d, out-degree=%d, betweenness-centrality=%s, dependency-reachability-count=0, impact-reachability-count=2
+  table traits: TableTraits[noPrimaryKey=true, noForeignKeys=null, noIndexes=null, selfReferencing=null, hasTriggers=null, emptyTable=null, entityModelType=bridge_table]
+  table counts: TableCounts[significantColumnCount=2, columnCount=3, foreignKeyCount=2, indexCount=3, triggerCount=0, rowCount=null]
+
+PUBLIC.BOOKS.BOOKS
+  graph metrics: in-degree=%d, out-degree=%d, betweenness-centrality=%s, dependency-reachability-count=3, impact-reachability-count=1
+  table traits: TableTraits[noPrimaryKey=null, noForeignKeys=null, noIndexes=null, selfReferencing=true, hasTriggers=null, emptyTable=null, entityModelType=strong_entity]
+  table counts: TableCounts[significantColumnCount=2, columnCount=7, foreignKeyCount=1, indexCount=3, triggerCount=0, rowCount=null]
+

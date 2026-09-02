@@ -1,0 +1,47 @@
+[ {
+  "nodeId" : {
+    "type" : "table"
+  },
+  "tableFullName" : "PUBLIC.BOOKS.BOOKAUTHORS",
+  "graphMetrics" : {
+    "inDegree" : 0,
+    "outDegree" : 2,
+    "betweennessCentrality" : 0.0,
+    "dependencyReachabilityCount" : 2,
+    "impactReachabilityCount" : 0
+  },
+  "tableCounts" : {
+    "significantColumnCount" : 2,
+    "columnCount" : 3,
+    "foreignKeyCount" : 2,
+    "indexCount" : 3,
+    "triggerCount" : 0
+  },
+  "tableTraits" : {
+    "noPrimaryKey" : true,
+    "entityModelType" : "bridge_table"
+  }
+}, {
+  "nodeId" : {
+    "type" : "table"
+  },
+  "tableFullName" : "PUBLIC.BOOKS.BOOKS",
+  "graphMetrics" : {
+    "inDegree" : 3,
+    "outDegree" : 1,
+    "betweennessCentrality" : 0.0,
+    "dependencyReachabilityCount" : 0,
+    "impactReachabilityCount" : 2
+  },
+  "tableCounts" : {
+    "significantColumnCount" : 2,
+    "columnCount" : 7,
+    "foreignKeyCount" : 1,
+    "indexCount" : 3,
+    "triggerCount" : 0
+  },
+  "tableTraits" : {
+    "selfReferencing" : true,
+    "entityModelType" : "strong_entity"
+  }
+} ]

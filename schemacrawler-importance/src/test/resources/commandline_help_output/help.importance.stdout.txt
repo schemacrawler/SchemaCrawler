@@ -1,0 +1,12 @@
+** Generate a database object importance report
+      --output-format=<output-format>
+         Supported importance report output formats
+         Use one of [txt, text] Plain text format, [json] JavaScript Object
+           Notation (JSON) format, [yaml] YAML Ain't Markup Language (YAML)
+           format
+      --table-filter=<table-filter>
+         Regular expression for table and view full names to include in the
+           report
+Add command options to the `execute` command in the SchemaCrawler Shell
+
+

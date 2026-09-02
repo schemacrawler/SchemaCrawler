@@ -1,4 +1,4 @@
-package schemacrawler.importance.util;
+package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -11,6 +11,7 @@ import schemacrawler.importance.cache.DatabaseObjectNodeId;
 import schemacrawler.importance.cache.EdgeType;
 import schemacrawler.importance.cache.SchemaEdge;
 import schemacrawler.importance.cache.TableImportanceMetrics;
+import schemacrawler.importance.util.GraphMetricsCalculator;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 
