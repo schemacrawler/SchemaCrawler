@@ -14,8 +14,8 @@ import schemacrawler.importance.cache.SchemaGraphCache;
 import schemacrawler.importance.options.ImportanceOptions;
 import schemacrawler.importance.options.ImportanceReportOutputFormat;
 import schemacrawler.importance.report.ImportanceReportEntry;
+import schemacrawler.importance.report.ImportanceReportGenerator;
 import schemacrawler.importance.report.ImportanceReportWriter;
-import schemacrawler.importance.service.ReportService;
 import schemacrawler.importance.util.SchemaGraphCacheBuilder;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
@@ -39,7 +39,8 @@ public final class ImportanceCommand extends AbstractSchemaCrawlerCommand<Import
         ImportanceReportOutputFormat.fromFormat(getOutputOptions().getOutputFormatValue());
     final SchemaGraphCache schemaGraphCache = SchemaGraphCacheBuilder.builder(getCatalog()).build();
     final List<ImportanceReportEntry> entries =
-        new ReportService(schemaGraphCache).report(getCommandOptions().getTableInclusionRule());
+        new ImportanceReportGenerator(schemaGraphCache)
+            .report(getCommandOptions().getTableInclusionRule());
     try {
       ImportanceReportWriter.write(entries, outputFormat, getOutputOptions());
     } catch (final IOException e) {

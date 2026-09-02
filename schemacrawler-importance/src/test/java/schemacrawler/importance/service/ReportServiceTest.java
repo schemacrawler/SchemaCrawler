@@ -24,6 +24,7 @@ import schemacrawler.importance.cache.SchemaGraphCache;
 import schemacrawler.importance.cache.TableImportance;
 import schemacrawler.importance.cache.TableImportanceMetrics;
 import schemacrawler.importance.report.ImportanceReportEntry;
+import schemacrawler.importance.report.ImportanceReportGenerator;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Table;
@@ -45,7 +46,8 @@ class ReportServiceTest {
             Set.of(alphaNode, betaNode),
             Map.of(alphaNode, alpha, betaNode, beta));
 
-    final var entries = new ReportService(cache).report(new RegularExpressionRule(".*", ""));
+    final var entries =
+        new ImportanceReportGenerator(cache).report(new RegularExpressionRule(".*", ""));
 
     assertThat(entries, contains(entry(betaNode, "BETA"), entry(alphaNode, "ALPHA")));
     assertThat(entries.get(0).nodeId(), is(betaNode));
@@ -62,7 +64,8 @@ class ReportServiceTest {
             Set.of(alphaNode),
             Map.of(alphaNode, alpha));
 
-    final var entries = new ReportService(cache).report(new RegularExpressionRule(".*BETA", ""));
+    final var entries =
+        new ImportanceReportGenerator(cache).report(new RegularExpressionRule(".*BETA", ""));
 
     assertThat(entries.isEmpty(), is(true));
   }

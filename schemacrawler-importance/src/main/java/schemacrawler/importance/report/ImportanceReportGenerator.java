@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.importance.service;
+package schemacrawler.importance.report;
 
 import static java.util.Objects.requireNonNull;
 
@@ -16,17 +16,16 @@ import java.util.List;
 import schemacrawler.importance.cache.DatabaseObjectNodeId;
 import schemacrawler.importance.cache.SchemaGraphCache;
 import schemacrawler.importance.cache.TableImportance;
-import schemacrawler.importance.report.ImportanceReportEntry;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Table;
 
 /** Builds filtered, deterministically ordered importance reports from a schema graph cache. */
-public final class ReportService {
+public final class ImportanceReportGenerator {
 
   private final SchemaGraphCache cache;
 
-  public ReportService(final SchemaGraphCache cache) {
+  public ImportanceReportGenerator(final SchemaGraphCache cache) {
     this.cache = requireNonNull(cache, "No schema graph cache provided");
   }
 
