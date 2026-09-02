@@ -18,7 +18,7 @@ import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 class GraphMetricsCalculatorTest {
 
   @Test
-  void calculatesDeclaredDependencyAndImpactMetrics() {
+  void calculatesCompleteSchemaGraphMetricsIncludingUndirectedBridgeCentrality() {
     final DatabaseObjectNodeId orders = node("ORDERS");
     final DatabaseObjectNodeId customers = node("CUSTOMERS");
     final DatabaseObjectNodeId countries = node("COUNTRIES");
@@ -28,7 +28,7 @@ class GraphMetricsCalculatorTest {
     graph.addVertex(customers);
     graph.addVertex(countries);
     graph.addEdge(orders, customers, new SchemaEdge(EdgeType.FOREIGN_KEY, null));
-    graph.addEdge(customers, countries, new SchemaEdge(EdgeType.FOREIGN_KEY, null));
+    graph.addEdge(orders, countries, new SchemaEdge(EdgeType.IMPLICIT_ASSOCIATION, null));
 
     final var metrics = GraphMetricsCalculator.calculate(graph);
     final TableImportanceMetrics ordersMetrics = metrics.get(orders);
@@ -36,18 +36,18 @@ class GraphMetricsCalculatorTest {
     final TableImportanceMetrics countriesMetrics = metrics.get(countries);
 
     assertThat(ordersMetrics.inDegree(), is(0));
-    assertThat(ordersMetrics.outDegree(), is(1));
+    assertThat(ordersMetrics.outDegree(), is(2));
     assertThat(ordersMetrics.dependencyReachabilityCount(), is(2));
     assertThat(ordersMetrics.impactReachabilityCount(), is(0));
     assertThat(customersMetrics.inDegree(), is(1));
-    assertThat(customersMetrics.outDegree(), is(1));
-    assertThat(customersMetrics.dependencyReachabilityCount(), is(1));
+    assertThat(customersMetrics.outDegree(), is(0));
+    assertThat(customersMetrics.dependencyReachabilityCount(), is(0));
     assertThat(customersMetrics.impactReachabilityCount(), is(1));
     assertThat(
-        customersMetrics.betweennessCentrality(),
-        greaterThan(ordersMetrics.betweennessCentrality()));
+        ordersMetrics.betweennessCentrality(),
+        greaterThan(customersMetrics.betweennessCentrality()));
     assertThat(
-        customersMetrics.betweennessCentrality(),
+        ordersMetrics.betweennessCentrality(),
         greaterThan(countriesMetrics.betweennessCentrality()));
   }
 

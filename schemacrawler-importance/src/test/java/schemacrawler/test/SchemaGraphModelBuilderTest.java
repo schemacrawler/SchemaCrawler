@@ -1,6 +1,7 @@
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -137,6 +138,14 @@ class SchemaGraphModelBuilderTest {
   void buildsTypedEdgesForAllSupportedCatalogObjects() {
     final Table customers = table("CUSTOMERS");
     final Table orders = table("ORDERS");
+    final AtomicReference<TableImportance> ordersImportance = new AtomicReference<>();
+    doAnswer(
+            invocation -> {
+              ordersImportance.set(invocation.getArgument(1));
+              return null;
+            })
+        .when(orders)
+        .setAttribute(eq(TableImportance.class.getName()), any());
     final View orderSummary = mock(View.class);
     initialize(orderSummary, "ORDER_SUMMARY");
     when(orderSummary.getTableType()).thenReturn(new TableType("VIEW"));
@@ -184,6 +193,9 @@ class SchemaGraphModelBuilderTest {
     assertThat(fullGraph.getEdgeTarget(foreignKeyEdge), is(NodeIdFactory.create(customers)));
     assertThat(foreignKeyEdge.getReferenceKey(), is(foreignKey.key()));
     assertThat(schemaGraphModel.getTableNodes(), hasSize(3));
+    assertThat(ordersImportance.get().graphMetrics().inDegree(), is(2));
+    assertThat(ordersImportance.get().graphMetrics().outDegree(), is(2));
+    assertThat(ordersImportance.get().graphMetrics().betweennessCentrality(), greaterThan(0.0));
     verify(orderSummary)
         .setAttribute(eq(TableImportance.class.getName()), any(TableImportance.class));
     verify(refreshOrders, never()).setAttribute(anyString(), any());
