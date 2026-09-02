@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DirectedPseudograph;
 import org.junit.jupiter.api.Test;
-import schemacrawler.importance.cache.DatabaseObjectNodeId;
-import schemacrawler.importance.cache.EdgeType;
-import schemacrawler.importance.cache.SchemaEdge;
+import schemacrawler.importance.model.DatabaseObjectNodeId;
+import schemacrawler.importance.model.EdgeType;
+import schemacrawler.importance.model.SchemaEdge;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 

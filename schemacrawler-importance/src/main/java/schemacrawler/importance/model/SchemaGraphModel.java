@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.importance.cache;
+package schemacrawler.importance.model;
 
 import java.util.Map;
 import java.util.Objects;
@@ -16,13 +16,13 @@ import org.jgrapht.graph.AsUnmodifiableGraph;
 import schemacrawler.schema.DatabaseObject;
 
 /** Immutable graph and object lookup data built from a SchemaCrawler catalog. */
-public final class SchemaGraphCache {
+public final class SchemaGraphModel {
 
   private final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph;
   private final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject;
   private final Set<DatabaseObjectNodeId> tableViewNodes;
 
-  public SchemaGraphCache(
+  public SchemaGraphModel(
       final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph,
       final Set<DatabaseObjectNodeId> tableViewNodes,
       final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject) {

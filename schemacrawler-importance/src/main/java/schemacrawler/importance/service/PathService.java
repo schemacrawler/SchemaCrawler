@@ -17,18 +17,19 @@ import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.AsSubgraph;
-import schemacrawler.importance.cache.DatabaseObjectNodeId;
-import schemacrawler.importance.cache.EdgeType;
-import schemacrawler.importance.cache.SchemaEdge;
-import schemacrawler.importance.cache.SchemaGraphCache;
+import schemacrawler.importance.model.DatabaseObjectNodeId;
+import schemacrawler.importance.model.EdgeType;
+import schemacrawler.importance.model.SchemaEdge;
+import schemacrawler.importance.model.SchemaGraphModel;
 
 /** Finds directed shortest paths through table and view foreign-key relationships. */
 public final class PathService {
 
-  private final SchemaGraphCache cache;
+  private final SchemaGraphModel schemaGraphModel;
 
-  public PathService(final SchemaGraphCache cache) {
-    this.cache = Objects.requireNonNull(cache, "No graph cache provided");
+  public PathService(final SchemaGraphModel schemaGraphModel) {
+    this.schemaGraphModel =
+        Objects.requireNonNull(schemaGraphModel, "No schema graph model provided");
   }
 
   public PathResult findShortestPath(
@@ -61,11 +62,11 @@ public final class PathService {
       final DatabaseObjectNodeId from,
       final DatabaseObjectNodeId to,
       final Predicate<SchemaEdge> edgeFilter) {
-    final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph = cache.getFullGraph();
+    final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph = schemaGraphModel.getFullGraph();
     final Set<SchemaEdge> edges =
         fullGraph.edgeSet().stream().filter(edgeFilter).collect(Collectors.toSet());
     final Graph<DatabaseObjectNodeId, SchemaEdge> graph =
-        new AsSubgraph<>(fullGraph, cache.getTableNodes(), edges);
+        new AsSubgraph<>(fullGraph, schemaGraphModel.getTableNodes(), edges);
     if (!graph.containsVertex(from) || !graph.containsVertex(to)) {
       return null;
     }
@@ -74,7 +75,7 @@ public final class PathService {
 
   private void requireTableOrView(final DatabaseObjectNodeId nodeId, final String role) {
     Objects.requireNonNull(nodeId, "No %s node provided".formatted(role));
-    if (!cache.getTableNodes().contains(nodeId)) {
+    if (!schemaGraphModel.getTableNodes().contains(nodeId)) {
       throw new IllegalArgumentException(
           "%s node must identify a table or view in the graph: %s".formatted(role, nodeId));
     }

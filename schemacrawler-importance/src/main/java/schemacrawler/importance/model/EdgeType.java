@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.importance.cache;
+package schemacrawler.importance.model;
 
 /** Categorizes a directed dependency in the schema graph. */
 public enum EdgeType {

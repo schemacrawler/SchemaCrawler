@@ -8,8 +8,8 @@
 
 package schemacrawler.importance.report;
 
-import schemacrawler.importance.cache.DatabaseObjectNodeId;
-import schemacrawler.importance.cache.TableImportanceMetrics;
+import schemacrawler.importance.model.DatabaseObjectNodeId;
+import schemacrawler.importance.model.TableImportanceMetrics;
 import schemacrawler.tools.utility.TableCounts;
 import schemacrawler.tools.utility.TableTraits;
 

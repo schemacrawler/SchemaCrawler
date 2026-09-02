@@ -9,7 +9,7 @@
 package schemacrawler.importance.util;
 
 import java.util.Objects;
-import schemacrawler.importance.cache.DatabaseObjectNodeId;
+import schemacrawler.importance.model.DatabaseObjectNodeId;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.UtilityMarker;

@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
 import org.junit.jupiter.api.Test;
-import schemacrawler.importance.cache.DatabaseObjectNodeId;
+import schemacrawler.importance.model.DatabaseObjectNodeId;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 

@@ -10,7 +10,7 @@ package schemacrawler.importance.service;
 
 import java.util.List;
 import java.util.Objects;
-import schemacrawler.importance.cache.DatabaseObjectNodeId;
+import schemacrawler.importance.model.DatabaseObjectNodeId;
 
 /** An ordered relationship path and the confidence of the edges it required. */
 public record PathResult(List<DatabaseObjectNodeId> path, boolean usesImpliedAssociations) {

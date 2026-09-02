@@ -18,11 +18,11 @@ import java.util.Map;
 import java.util.Set;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.junit.jupiter.api.Test;
-import schemacrawler.importance.cache.DatabaseObjectNodeId;
-import schemacrawler.importance.cache.SchemaEdge;
-import schemacrawler.importance.cache.SchemaGraphCache;
-import schemacrawler.importance.cache.TableImportance;
-import schemacrawler.importance.cache.TableImportanceMetrics;
+import schemacrawler.importance.model.DatabaseObjectNodeId;
+import schemacrawler.importance.model.SchemaEdge;
+import schemacrawler.importance.model.SchemaGraphModel;
+import schemacrawler.importance.model.TableImportance;
+import schemacrawler.importance.model.TableImportanceMetrics;
 import schemacrawler.importance.report.ImportanceReportEntry;
 import schemacrawler.importance.report.ImportanceReportGenerator;
 import schemacrawler.inclusionrule.RegularExpressionRule;
@@ -40,14 +40,14 @@ class ReportServiceTest {
     final Table beta = table("BETA");
     final DatabaseObjectNodeId alphaNode = node("ALPHA");
     final DatabaseObjectNodeId betaNode = node("BETA");
-    final SchemaGraphCache cache =
-        new SchemaGraphCache(
+    final SchemaGraphModel schemaGraphModel =
+        new SchemaGraphModel(
             new DefaultDirectedGraph<>(SchemaEdge.class),
             Set.of(alphaNode, betaNode),
             Map.of(alphaNode, alpha, betaNode, beta));
 
     final var entries =
-        new ImportanceReportGenerator(cache).report(new RegularExpressionRule(".*", ""));
+        new ImportanceReportGenerator(schemaGraphModel).report(new RegularExpressionRule(".*", ""));
 
     assertThat(entries, contains(entry(betaNode, "BETA"), entry(alphaNode, "ALPHA")));
     assertThat(entries.get(0).nodeId(), is(betaNode));
@@ -58,14 +58,15 @@ class ReportServiceTest {
   void appliesTheSuppliedInclusionRule() {
     final Table alpha = table("ALPHA");
     final DatabaseObjectNodeId alphaNode = node("ALPHA");
-    final SchemaGraphCache cache =
-        new SchemaGraphCache(
+    final SchemaGraphModel schemaGraphModel =
+        new SchemaGraphModel(
             new DefaultDirectedGraph<>(SchemaEdge.class),
             Set.of(alphaNode),
             Map.of(alphaNode, alpha));
 
     final var entries =
-        new ImportanceReportGenerator(cache).report(new RegularExpressionRule(".*BETA", ""));
+        new ImportanceReportGenerator(schemaGraphModel)
+            .report(new RegularExpressionRule(".*BETA", ""));
 
     assertThat(entries.isEmpty(), is(true));
   }

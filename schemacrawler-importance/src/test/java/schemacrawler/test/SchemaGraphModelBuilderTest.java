@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import org.jgrapht.Graph;
 import org.junit.jupiter.api.Test;
-import schemacrawler.importance.cache.DatabaseObjectNodeId;
-import schemacrawler.importance.cache.EdgeType;
-import schemacrawler.importance.cache.SchemaEdge;
-import schemacrawler.importance.cache.SchemaGraphCache;
-import schemacrawler.importance.cache.TableImportance;
+import schemacrawler.importance.model.DatabaseObjectNodeId;
+import schemacrawler.importance.model.EdgeType;
+import schemacrawler.importance.model.SchemaEdge;
+import schemacrawler.importance.model.SchemaGraphModel;
+import schemacrawler.importance.model.TableImportance;
 import schemacrawler.importance.util.NodeIdFactory;
-import schemacrawler.importance.util.SchemaGraphCacheBuilder;
+import schemacrawler.importance.util.SchemaGraphModelBuilder;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.NamedObjectKey;
@@ -38,7 +38,7 @@ import schemacrawler.schema.TableType;
 import schemacrawler.schema.View;
 import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 
-class SchemaGraphCacheBuilderTest {
+class SchemaGraphModelBuilderTest {
 
   private static Catalog catalog() {
     return catalog(List.of(), List.of(), List.of());
@@ -100,9 +100,9 @@ class SchemaGraphCacheBuilderTest {
   @Test
   void buildsAnEmptyCatalog() {
     final Catalog catalog = catalog();
-    final SchemaGraphCache cache = SchemaGraphCacheBuilder.builder(catalog).build();
+    final SchemaGraphModel schemaGraphModel = SchemaGraphModelBuilder.builder(catalog).build();
 
-    assertThat(cache.getFullGraph().vertexSet(), hasSize(0));
+    assertThat(schemaGraphModel.getFullGraph().vertexSet(), hasSize(0));
   }
 
   @Test
@@ -121,10 +121,10 @@ class SchemaGraphCacheBuilderTest {
         .getAttribute(TableImportance.class.getName());
 
     final Catalog catalog = catalog(List.of(customers), List.of(), List.of());
-    final SchemaGraphCache cache = SchemaGraphCacheBuilder.builder(catalog).build();
+    final SchemaGraphModel schemaGraphModel = SchemaGraphModelBuilder.builder(catalog).build();
 
-    assertThat(cache.getFullGraph().vertexSet(), hasSize(1));
-    assertThat(cache.getTableNodes(), hasSize(1));
+    assertThat(schemaGraphModel.getFullGraph().vertexSet(), hasSize(1));
+    assertThat(schemaGraphModel.getTableNodes(), hasSize(1));
     assertThat(
         customers
             .<TableImportance>getAttribute(TableImportance.class.getName())
@@ -165,9 +165,9 @@ class SchemaGraphCacheBuilderTest {
             List.of(customers, orders, orderSummary),
             List.<Routine>of(refreshOrders),
             List.of(customerAlias));
-    final SchemaGraphCache cache = SchemaGraphCacheBuilder.builder(catalog).build();
+    final SchemaGraphModel schemaGraphModel = SchemaGraphModelBuilder.builder(catalog).build();
 
-    final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph = cache.getFullGraph();
+    final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph = schemaGraphModel.getFullGraph();
     assertThat(fullGraph.vertexSet(), hasSize(5));
     assertThat(fullGraph.edgeSet(), hasSize(5));
     assertThat(edgesOfType(fullGraph, EdgeType.FOREIGN_KEY), is(1));
@@ -183,7 +183,7 @@ class SchemaGraphCacheBuilderTest {
     assertThat(fullGraph.getEdgeSource(foreignKeyEdge), is(NodeIdFactory.create(orders)));
     assertThat(fullGraph.getEdgeTarget(foreignKeyEdge), is(NodeIdFactory.create(customers)));
     assertThat(foreignKeyEdge.getReferenceKey(), is(foreignKey.key()));
-    assertThat(cache.getTableNodes(), hasSize(3));
+    assertThat(schemaGraphModel.getTableNodes(), hasSize(3));
     verify(orderSummary)
         .setAttribute(eq(TableImportance.class.getName()), any(TableImportance.class));
     verify(refreshOrders, never()).setAttribute(anyString(), any());
@@ -194,7 +194,7 @@ class SchemaGraphCacheBuilderTest {
             fullGraph.addVertex(
                 new DatabaseObjectNodeId(
                     new NamedObjectKey("OTHER"), SimpleDatabaseObjectType.table)));
-    assertThrows(UnsupportedOperationException.class, cache.getTableNodes()::clear);
+    assertThrows(UnsupportedOperationException.class, schemaGraphModel.getTableNodes()::clear);
   }
 
   @Test
@@ -204,9 +204,9 @@ class SchemaGraphCacheBuilderTest {
     initialize(procedure, "ORDERS");
 
     final Catalog catalog = catalog(List.of(table), List.<Routine>of(procedure), List.of());
-    final SchemaGraphCache cache = SchemaGraphCacheBuilder.builder(catalog).build();
+    final SchemaGraphModel schemaGraphModel = SchemaGraphModelBuilder.builder(catalog).build();
 
-    assertThat(cache.getObjectByNodeId(NodeIdFactory.create(table)), is(table));
-    assertThat(cache.getObjectByNodeId(NodeIdFactory.create(procedure)), is(procedure));
+    assertThat(schemaGraphModel.getObjectByNodeId(NodeIdFactory.create(table)), is(table));
+    assertThat(schemaGraphModel.getObjectByNodeId(NodeIdFactory.create(procedure)), is(procedure));
   }
 }

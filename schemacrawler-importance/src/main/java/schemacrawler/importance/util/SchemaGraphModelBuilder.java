@@ -17,12 +17,12 @@ import java.util.Set;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.AsSubgraph;
 import org.jgrapht.graph.DirectedPseudograph;
-import schemacrawler.importance.cache.DatabaseObjectNodeId;
-import schemacrawler.importance.cache.EdgeType;
-import schemacrawler.importance.cache.SchemaEdge;
-import schemacrawler.importance.cache.SchemaGraphCache;
-import schemacrawler.importance.cache.TableImportance;
-import schemacrawler.importance.cache.TableImportanceMetrics;
+import schemacrawler.importance.model.DatabaseObjectNodeId;
+import schemacrawler.importance.model.EdgeType;
+import schemacrawler.importance.model.SchemaEdge;
+import schemacrawler.importance.model.SchemaGraphModel;
+import schemacrawler.importance.model.TableImportance;
+import schemacrawler.importance.model.TableImportanceMetrics;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Table;
@@ -31,18 +31,18 @@ import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 import us.fatehi.utility.Builder;
 
 /** Builds the immutable dependency graph foundation from a SchemaCrawler catalog. */
-public final class SchemaGraphCacheBuilder implements Builder<SchemaGraphCache> {
+public final class SchemaGraphModelBuilder implements Builder<SchemaGraphModel> {
 
-  public static SchemaGraphCacheBuilder builder(final Catalog catalog) {
+  public static SchemaGraphModelBuilder builder(final Catalog catalog) {
     requireNonNull(catalog, "No catalog provided");
-    return new SchemaGraphCacheBuilder(catalog);
+    return new SchemaGraphModelBuilder(catalog);
   }
 
   private Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph;
   private Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject;
   private Set<DatabaseObjectNodeId> tableViewNodes;
 
-  private SchemaGraphCacheBuilder(final Catalog catalog) {
+  private SchemaGraphModelBuilder(final Catalog catalog) {
     requireNonNull(catalog, "No catalog provided");
 
     fullGraph = new DirectedPseudograph<>(SchemaEdge.class);
@@ -63,14 +63,15 @@ public final class SchemaGraphCacheBuilder implements Builder<SchemaGraphCache> 
   }
 
   @Override
-  public SchemaGraphCache build() {
+  public SchemaGraphModel build() {
     if (fullGraph == null) {
-      throw new IllegalStateException("Build nodes and edges before building the cache");
+      throw new IllegalStateException(
+          "Build nodes and edges before building the schema graph model");
     }
     final Map<DatabaseObjectNodeId, TableImportanceMetrics> metrics =
         GraphMetricsCalculator.calculate(declaredDependenciesGraph());
     storeTableImportance(metrics);
-    return new SchemaGraphCache(fullGraph, tableViewNodes, nodeToObject);
+    return new SchemaGraphModel(fullGraph, tableViewNodes, nodeToObject);
   }
 
   private void addNode(final DatabaseObject databaseObject) {

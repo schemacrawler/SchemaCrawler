@@ -15,9 +15,9 @@ import java.util.Map;
 import java.util.Set;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.scoring.BetweennessCentrality;
-import schemacrawler.importance.cache.DatabaseObjectNodeId;
-import schemacrawler.importance.cache.SchemaEdge;
-import schemacrawler.importance.cache.TableImportanceMetrics;
+import schemacrawler.importance.model.DatabaseObjectNodeId;
+import schemacrawler.importance.model.SchemaEdge;
+import schemacrawler.importance.model.TableImportanceMetrics;
 import us.fatehi.utility.UtilityMarker;
 
 /** Calculates topology metrics from the declared-dependency graph. */

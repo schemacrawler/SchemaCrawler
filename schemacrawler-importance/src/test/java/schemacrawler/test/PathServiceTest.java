@@ -12,10 +12,10 @@ import java.util.Set;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DirectedPseudograph;
 import org.junit.jupiter.api.Test;
-import schemacrawler.importance.cache.DatabaseObjectNodeId;
-import schemacrawler.importance.cache.EdgeType;
-import schemacrawler.importance.cache.SchemaEdge;
-import schemacrawler.importance.cache.SchemaGraphCache;
+import schemacrawler.importance.model.DatabaseObjectNodeId;
+import schemacrawler.importance.model.EdgeType;
+import schemacrawler.importance.model.SchemaEdge;
+import schemacrawler.importance.model.SchemaGraphModel;
 import schemacrawler.importance.service.PathResult;
 import schemacrawler.importance.service.PathService;
 import schemacrawler.schema.NamedObjectKey;
@@ -103,7 +103,7 @@ class PathServiceTest {
     for (final Edge edge : graphEdges) {
       graph.addEdge(edge.source(), edge.target(), edge.edge());
     }
-    return new PathService(new SchemaGraphCache(graph, Set.copyOf(nodes), Map.of()));
+    return new PathService(new SchemaGraphModel(graph, Set.copyOf(nodes), Map.of()));
   }
 
   private static DatabaseObjectNodeId table(final String name) {

@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.importance.cache;
+package schemacrawler.importance.model;
 
 /** Immutable topology metrics for one schema graph object. */
 public record TableImportanceMetrics(
