@@ -1,0 +1,13 @@
+command:importance
+
+** Generate a database object importance report
+
+table-filter
+Regular expression for table and view full names to include in the report
+
+output-format
+Supported importance report output formats
+<output-format> is one of ${COMPLETION-CANDIDATES}
+Optional, inferred from the extension of the output file
+
+Add command options to the `execute` command in the SchemaCrawler Shell
