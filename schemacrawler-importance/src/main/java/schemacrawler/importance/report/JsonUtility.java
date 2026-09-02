@@ -24,6 +24,7 @@ import static tools.jackson.dataformat.yaml.YAMLWriteFeature.MINIMIZE_QUOTES;
 import static tools.jackson.dataformat.yaml.YAMLWriteFeature.WRITE_DOC_START_MARKER;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.cfg.MapperBuilder;
 import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.dataformat.yaml.YAMLMapper;
@@ -53,6 +54,8 @@ public class JsonUtility {
     // Omit null and empty values in output
     mapperBuilder.changeDefaultPropertyInclusion(
         incl -> incl.withValueInclusion(JsonInclude.Include.NON_EMPTY));
+
+    mapperBuilder.propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
 
     return mapperBuilder;
   }

@@ -1,10 +1,36 @@
-PUBLIC.BOOKS.BOOKAUTHORS
-  graph metrics: in-degree=%d, out-degree=%d, betweenness-centrality=%s, dependency-reachability-count=0, impact-reachability-count=2
-  table traits: TableTraits[noPrimaryKey=true, noForeignKeys=null, noIndexes=null, selfReferencing=null, hasTriggers=null, emptyTable=null, entityModelType=bridge_table]
-  table counts: TableCounts[significantColumnCount=2, columnCount=3, foreignKeyCount=2, indexCount=3, triggerCount=0, rowCount=null]
-
-PUBLIC.BOOKS.BOOKS
-  graph metrics: in-degree=%d, out-degree=%d, betweenness-centrality=%s, dependency-reachability-count=3, impact-reachability-count=1
-  table traits: TableTraits[noPrimaryKey=null, noForeignKeys=null, noIndexes=null, selfReferencing=true, hasTriggers=null, emptyTable=null, entityModelType=strong_entity]
-  table counts: TableCounts[significantColumnCount=2, columnCount=7, foreignKeyCount=1, indexCount=3, triggerCount=0, rowCount=null]
-
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.BOOKS.BOOKAUTHORS
+    graph_metrics:
+      in_degree: 0
+      out_degree: 2
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 2
+      impact_reachability_count: 0
+    table_counts:
+      significant_column_count: 2
+      column_count: 3
+      foreign_key_count: 2
+      index_count: 3
+      trigger_count: 0
+    table_traits:
+      no_primary_key: true
+      entity_model_type: bridge_table
+  - node_id:
+      type: table
+    table_full_name: PUBLIC.BOOKS.BOOKS
+    graph_metrics:
+      in_degree: 3
+      out_degree: 1
+      betweenness_centrality: 0.0
+      dependency_reachability_count: 0
+      impact_reachability_count: 2
+    table_counts:
+      significant_column_count: 2
+      column_count: 7
+      foreign_key_count: 1
+      index_count: 3
+      trigger_count: 0
+    table_traits:
+      self_referencing: true
+      entity_model_type: strong_entity

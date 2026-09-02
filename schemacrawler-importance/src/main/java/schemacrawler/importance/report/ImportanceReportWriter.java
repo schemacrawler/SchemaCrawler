@@ -11,7 +11,6 @@ package schemacrawler.importance.report;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
-import schemacrawler.importance.cache.TableImportanceMetrics;
 import schemacrawler.importance.options.ImportanceReportOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import tools.jackson.databind.ObjectMapper;
@@ -30,28 +29,8 @@ public final class ImportanceReportWriter {
     try (final Writer writer = outputOptions.openNewOutputWriter()) {
       switch (outputFormat) {
         case json -> jsonMapper.writeValue(writer, entries);
-        case yaml -> yamlMapper.writeValue(writer, entries);
-        case text -> writeText(entries, writer);
+        case text, yaml -> yamlMapper.writeValue(writer, entries);
       }
-    }
-  }
-
-  private static void writeText(final List<ImportanceReportEntry> entries, final Writer writer)
-      throws IOException {
-    for (final ImportanceReportEntry entry : entries) {
-      final TableImportanceMetrics metrics = entry.graphMetrics();
-      writer.write(
-          "%s%n".formatted(entry.tableFullName())
-              + "  graph metrics: in-degree=%d, out-degree=%d, betweenness-centrality=%s,"
-              + " dependency-reachability-count=%d, impact-reachability-count=%d%n"
-                  .formatted(
-                      metrics.inDegree(),
-                      metrics.outDegree(),
-                      metrics.betweennessCentrality(),
-                      metrics.dependencyReachabilityCount(),
-                      metrics.impactReachabilityCount())
-              + "  table traits: %s%n".formatted(entry.tableTraits())
-              + "  table counts: %s%n%n".formatted(entry.tableCounts()));
     }
   }
 
