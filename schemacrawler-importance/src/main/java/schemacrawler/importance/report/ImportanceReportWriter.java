@@ -20,7 +20,7 @@ import tools.jackson.databind.ObjectMapper;
 public final class ImportanceReportWriter {
 
   private static final ObjectMapper jsonMapper = JsonUtility.newJsonMapperBuilder().build();
-  private static final ObjectMapper yamlMapper = JsonUtility.newJsonMapperBuilder().build();
+  private static final ObjectMapper yamlMapper = JsonUtility.newYamlMapperBuilder().build();
 
   public static void write(
       final List<ImportanceReportEntry> entries,
