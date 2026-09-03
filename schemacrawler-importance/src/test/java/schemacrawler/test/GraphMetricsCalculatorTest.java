@@ -11,7 +11,7 @@ import schemacrawler.importance.model.DatabaseObjectNodeId;
 import schemacrawler.importance.model.EdgeType;
 import schemacrawler.importance.model.SchemaEdge;
 import schemacrawler.importance.model.TableImportanceMetrics;
-import schemacrawler.importance.util.GraphMetricsCalculator;
+import schemacrawler.importance.model.builder.GraphMetricsCalculator;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 

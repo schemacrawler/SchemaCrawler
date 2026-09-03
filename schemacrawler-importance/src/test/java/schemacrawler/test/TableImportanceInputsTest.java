@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.nullValue;
 import org.junit.jupiter.api.Test;
 import schemacrawler.importance.model.DatabaseObjectNodeId;
 import schemacrawler.importance.model.TableImportanceMetrics;
-import schemacrawler.importance.util.TableImportanceInputs;
+import schemacrawler.importance.model.builder.TableImportanceInputs;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.tools.utility.TableCounts;
 import schemacrawler.tools.utility.TableTraits;

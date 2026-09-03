@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.importance.util;
+package schemacrawler.importance.model.builder;
 
 import static java.util.Objects.requireNonNull;
 
