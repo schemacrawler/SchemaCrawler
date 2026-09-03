@@ -36,9 +36,9 @@ public final class SchemaGraphModelBuilder implements Builder<SchemaGraphModel> 
     return new SchemaGraphModelBuilder(catalog);
   }
 
-  private Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph;
-  private Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject;
-  private Set<DatabaseObjectNodeId> tableViewNodes;
+  private final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph;
+  private final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject;
+  private final Set<DatabaseObjectNodeId> tableViewNodes;
 
   private SchemaGraphModelBuilder(final Catalog catalog) {
     requireNonNull(catalog, "No catalog provided");
@@ -66,9 +66,25 @@ public final class SchemaGraphModelBuilder implements Builder<SchemaGraphModel> 
       throw new IllegalStateException(
           "Build nodes and edges before building the schema graph model");
     }
-    final Map<DatabaseObjectNodeId, TableImportanceMetrics> metrics =
+    final Map<DatabaseObjectNodeId, TableImportanceMetrics> topologyMetrics =
         GraphMetricsCalculator.calculate(fullGraph);
-    storeTableImportance(metrics);
+
+    final TableImportanceInputs inputs = new TableImportanceInputs();
+    for (final Map.Entry<DatabaseObjectNodeId, TableImportanceMetrics> entry :
+        topologyMetrics.entrySet()) {
+      inputs.put(entry.getKey(), entry.getValue());
+    }
+    for (final Map.Entry<DatabaseObjectNodeId, DatabaseObject> entry : nodeToObject.entrySet()) {
+      if (entry.getValue() instanceof final Table table) {
+        inputs.put(entry.getKey(), TableImportanceUtility.tableTraitsfrom(table));
+        inputs.put(entry.getKey(), TableImportanceUtility.tableCountsfrom(table));
+      }
+    }
+
+    final Map<DatabaseObjectNodeId, Integer> importanceScores =
+        ImportanceScoreCalculator.calculate(inputs);
+
+    storeTableImportance(inputs, importanceScores);
     return new SchemaGraphModel(fullGraph, tableViewNodes, nodeToObject);
   }
 
@@ -83,15 +99,19 @@ public final class SchemaGraphModelBuilder implements Builder<SchemaGraphModel> 
   }
 
   private void storeTableImportance(
-      final Map<DatabaseObjectNodeId, TableImportanceMetrics> metrics) {
+      final TableImportanceInputs inputs,
+      final Map<DatabaseObjectNodeId, Integer> importanceScores) {
     for (final Map.Entry<DatabaseObjectNodeId, DatabaseObject> entry : nodeToObject.entrySet()) {
+      final DatabaseObjectNodeId nodeId = entry.getKey();
       if (entry.getValue() instanceof final Table table) {
+        final TableImportanceInputs.TableImportanceInput tableInputs = inputs.get(nodeId);
         table.setAttribute(
             TableImportance.class.getName(),
             new TableImportance(
-                TableImportanceUtility.tableTraitsfrom(table),
-                TableImportanceUtility.tableCountsfrom(table),
-                metrics.get(entry.getKey())));
+                importanceScores.get(nodeId),
+                tableInputs.importanceMetrics(),
+                tableInputs.tableTraits(),
+                tableInputs.tableCounts()));
       }
     }
   }
