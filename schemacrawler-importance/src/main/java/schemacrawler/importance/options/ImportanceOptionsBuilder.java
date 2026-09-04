@@ -10,6 +10,7 @@ package schemacrawler.importance.options;
 
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
@@ -79,7 +80,7 @@ public final class ImportanceOptionsBuilder
   }
 
   public ImportanceOptionsBuilder withTableNamePattern(final String tableNamePattern) {
-    tableInclusionRule = new RegularExpressionRule(tableNamePattern, "");
+    tableInclusionRule = new RegularExpressionInclusionRule(tableNamePattern);
     return this;
   }
 }
