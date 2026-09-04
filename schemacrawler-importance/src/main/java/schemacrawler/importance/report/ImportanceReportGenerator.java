@@ -23,6 +23,10 @@ import schemacrawler.schema.Table;
 /** Builds filtered, deterministically ordered importance reports from a schema graph model. */
 public final class ImportanceReportGenerator {
 
+  private static final Comparator<ImportanceReportEntry> IMPORTANCE_REPORT_ENTRY_COMPARATOR =
+      Comparator.comparing(ImportanceReportEntry::tableImportance)
+          .thenComparing(ImportanceReportEntry::tableFullName);
+
   private final SchemaGraphModel schemaGraphModel;
 
   public ImportanceReportGenerator(final SchemaGraphModel schemaGraphModel) {
@@ -33,7 +37,8 @@ public final class ImportanceReportGenerator {
    * Gets importance report entries for tables and views selected by an inclusion rule.
    *
    * @param tableInclusionRule rule applied to table and view full names
-   * @return immutable entries sorted by descending betweenness centrality and then full name
+   * @return immutable entries sorted by descending importance score, then descending betweenness
+   *     centrality, then full name
    */
   public List<ImportanceReportEntry> report(final InclusionRule tableInclusionRule) {
     requireNonNull(tableInclusionRule, "No table inclusion rule provided");
@@ -48,20 +53,10 @@ public final class ImportanceReportGenerator {
 
       final TableImportance importance = table.getAttribute(TableImportance.class.getName());
       if (importance != null) {
-        entries.add(
-            new ImportanceReportEntry(
-                nodeId,
-                table.getFullName(),
-                importance.graphMetrics(),
-                importance.tableCounts(),
-                importance.tableTraits()));
+        entries.add(new ImportanceReportEntry(nodeId, table.getFullName(), importance));
       }
     }
-    entries.sort(
-        Comparator.comparing(
-                (final ImportanceReportEntry entry) -> entry.graphMetrics().betweennessCentrality())
-            .reversed()
-            .thenComparing(ImportanceReportEntry::tableFullName));
+    entries.sort(IMPORTANCE_REPORT_ENTRY_COMPARATOR);
     return List.copyOf(entries);
   }
 }

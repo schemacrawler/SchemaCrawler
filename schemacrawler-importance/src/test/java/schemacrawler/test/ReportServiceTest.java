@@ -35,7 +35,7 @@ import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 class ReportServiceTest {
 
   @Test
-  void returnsFilteredEntriesOrderedByCentralityThenFullName() {
+  void returnsFilteredEntriesOrderedByImportanceScoreThenCentralityThenFullName() {
     final Table alpha = table("ALPHA");
     final Table beta = table("BETA");
     final DatabaseObjectNodeId alphaNode = node("ALPHA");
@@ -52,6 +52,25 @@ class ReportServiceTest {
     assertThat(entries, contains(entry(betaNode, "BETA"), entry(alphaNode, "ALPHA")));
     assertThat(entries.get(0).nodeId(), is(betaNode));
     assertThat(entries.get(0).tableFullName(), is("BETA"));
+  }
+
+  @Test
+  void fallsBackToCentralityThenFullNameWhenImportanceScoresAreEqual() {
+    final Table alpha = tableWithScore("ALPHA", 5, 0.0);
+    final Table beta = tableWithScore("BETA", 5, 1.0);
+    final DatabaseObjectNodeId alphaNode = node("ALPHA");
+    final DatabaseObjectNodeId betaNode = node("BETA");
+    final SchemaGraphModel schemaGraphModel =
+        new SchemaGraphModel(
+            new DefaultDirectedGraph<>(SchemaEdge.class),
+            Set.of(alphaNode, betaNode),
+            Map.of(alphaNode, alpha, betaNode, beta));
+
+    final var entries =
+        new ImportanceReportGenerator(schemaGraphModel).report(new RegularExpressionRule(".*", ""));
+
+    assertThat(entries.get(0).tableFullName(), is("BETA"));
+    assertThat(entries.get(1).tableFullName(), is("ALPHA"));
   }
 
   @Test
@@ -74,15 +93,32 @@ class ReportServiceTest {
   private static ImportanceReportEntry entry(
       final DatabaseObjectNodeId nodeId, final String tableFullName) {
     return new ImportanceReportEntry(
-        nodeId, tableFullName, metrics(tableFullName), new TableCounts(), new TableTraits());
+        nodeId,
+        tableFullName,
+        new TableImportance(
+            score(tableFullName), metrics(tableFullName), new TableTraits(), new TableCounts()));
   }
 
   private static Table table(final String name) {
+    return tableWithScore(name, score(name), "BETA".equals(name) ? 1.0 : 0.0);
+  }
+
+  private static Table tableWithScore(
+      final String name, final int importanceScore, final double betweennessCentrality) {
     final Table table = mock(Table.class);
     when(table.getFullName()).thenReturn(name);
     when(table.getAttribute(TableImportance.class.getName()))
-        .thenReturn(new TableImportance(new TableTraits(), new TableCounts(), metrics(name)));
+        .thenReturn(
+            new TableImportance(
+                importanceScore,
+                new TableImportanceMetrics(0, 0, betweennessCentrality, 0, 0),
+                new TableTraits(),
+                new TableCounts()));
     return table;
+  }
+
+  private static int score(final String name) {
+    return "BETA".equals(name) ? 10 : 5;
   }
 
   private static TableImportanceMetrics metrics(final String name) {

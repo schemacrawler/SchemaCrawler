@@ -6,7 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
-import schemacrawler.importance.util.NodeIdFactory;
+import schemacrawler.importance.model.builder.NodeIdFactory;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Synonym;

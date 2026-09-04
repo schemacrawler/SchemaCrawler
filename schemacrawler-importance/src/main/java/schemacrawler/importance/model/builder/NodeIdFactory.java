@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.importance.util;
+package schemacrawler.importance.model.builder;
 
 import java.util.Objects;
 import schemacrawler.importance.model.DatabaseObjectNodeId;

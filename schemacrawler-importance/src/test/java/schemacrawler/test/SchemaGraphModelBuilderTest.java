@@ -2,8 +2,10 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -24,8 +26,8 @@ import schemacrawler.importance.model.EdgeType;
 import schemacrawler.importance.model.SchemaEdge;
 import schemacrawler.importance.model.SchemaGraphModel;
 import schemacrawler.importance.model.TableImportance;
-import schemacrawler.importance.util.NodeIdFactory;
-import schemacrawler.importance.util.SchemaGraphModelBuilder;
+import schemacrawler.importance.model.builder.NodeIdFactory;
+import schemacrawler.importance.model.builder.SchemaGraphModelBuilder;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.NamedObjectKey;
@@ -129,7 +131,7 @@ class SchemaGraphModelBuilderTest {
     assertThat(
         customers
             .<TableImportance>getAttribute(TableImportance.class.getName())
-            .graphMetrics()
+            .importanceMetrics()
             .outDegree(),
         is(0));
   }
@@ -193,9 +195,10 @@ class SchemaGraphModelBuilderTest {
     assertThat(fullGraph.getEdgeTarget(foreignKeyEdge), is(NodeIdFactory.create(customers)));
     assertThat(foreignKeyEdge.getReferenceKey(), is(foreignKey.key()));
     assertThat(schemaGraphModel.getTableNodes(), hasSize(3));
-    assertThat(ordersImportance.get().graphMetrics().inDegree(), is(2));
-    assertThat(ordersImportance.get().graphMetrics().outDegree(), is(2));
-    assertThat(ordersImportance.get().graphMetrics().betweennessCentrality(), greaterThan(0.0));
+    assertThat(ordersImportance.get().importanceMetrics().inDegree(), is(2));
+    assertThat(ordersImportance.get().importanceMetrics().outDegree(), is(2));
+    assertThat(
+        ordersImportance.get().importanceMetrics().betweennessCentrality(), greaterThan(0.0));
     verify(orderSummary)
         .setAttribute(eq(TableImportance.class.getName()), any(TableImportance.class));
     verify(refreshOrders, never()).setAttribute(anyString(), any());
@@ -207,6 +210,41 @@ class SchemaGraphModelBuilderTest {
                 new DatabaseObjectNodeId(
                     new NamedObjectKey("OTHER"), SimpleDatabaseObjectType.table)));
     assertThrows(UnsupportedOperationException.class, schemaGraphModel.getTableNodes()::clear);
+  }
+
+  @Test
+  void storesAnImportanceScoreWithinZeroToOneHundredForEveryTableAndView() {
+    final Table customers = table("CUSTOMERS");
+    final Table orders = table("ORDERS");
+    final AtomicReference<TableImportance> customersImportance = new AtomicReference<>();
+    final AtomicReference<TableImportance> ordersImportance = new AtomicReference<>();
+    doAnswer(
+            invocation -> {
+              customersImportance.set(invocation.getArgument(1));
+              return null;
+            })
+        .when(customers)
+        .setAttribute(eq(TableImportance.class.getName()), any());
+    doAnswer(
+            invocation -> {
+              ordersImportance.set(invocation.getArgument(1));
+              return null;
+            })
+        .when(orders)
+        .setAttribute(eq(TableImportance.class.getName()), any());
+
+    final ForeignKey foreignKey = mock(ForeignKey.class);
+    when(foreignKey.getPrimaryKeyTable()).thenReturn(customers);
+    when(foreignKey.key()).thenReturn(new NamedObjectKey("FK_ORDERS_CUSTOMERS"));
+    when(orders.getImportedForeignKeys()).thenReturn(List.of(foreignKey));
+
+    final Catalog catalog = catalog(List.of(customers, orders), List.of(), List.of());
+    SchemaGraphModelBuilder.builder(catalog).build();
+
+    assertThat(customersImportance.get().importanceScore(), greaterThanOrEqualTo(0));
+    assertThat(customersImportance.get().importanceScore(), lessThanOrEqualTo(100));
+    assertThat(ordersImportance.get().importanceScore(), greaterThanOrEqualTo(0));
+    assertThat(ordersImportance.get().importanceScore(), lessThanOrEqualTo(100));
   }
 
   @Test
