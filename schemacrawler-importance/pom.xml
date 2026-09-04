@@ -1,22 +1,28 @@
-<?xml version="1.0"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
     <version>17.14.1</version>
+    <relativePath />
   </parent>
   <artifactId>schemacrawler-importance</artifactId>
   <packaging>jar</packaging>
-  <name>SchemaCrawler Importance</name>
+
+  <name>SchemaCrawler Text</name>
+
   <dependencies>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
+
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-text</artifactId>
@@ -64,4 +70,49 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+            </manifest>
+            <manifestEntries>
+              <Author>Sualeh Fatehi sualeh@hotmail.com</Author>
+              <Copyright>Copyright (c) 2000-2026, Sualeh Fatehi</Copyright>
+              <Website>https://www.SchemaCrawler.com</Website>
+              <Automatic-Module-Name>us.fatehi.schemacrawler.importance</Automatic-Module-Name>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>create-test-jar</id>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+
 </project>

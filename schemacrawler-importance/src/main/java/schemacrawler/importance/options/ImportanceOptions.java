@@ -15,10 +15,16 @@ import schemacrawler.tools.text.options.BaseTextOptions;
 public final class ImportanceOptions extends BaseTextOptions {
 
   private final InclusionRule tableInclusionRule;
+  private final int maxTables;
 
   ImportanceOptions(final ImportanceOptionsBuilder builder) {
     super(builder);
     tableInclusionRule = builder.tableInclusionRule;
+    maxTables = builder.maxTables;
+  }
+
+  public int getMaxTables() {
+    return maxTables;
   }
 
   public InclusionRule getTableInclusionRule() {

@@ -77,8 +77,12 @@ class ImportanceCommandOutputTest {
             .withLoadOptions(
                 LoadOptionsBuilder.builder().withInfoLevel(InfoLevel.maximum).toOptions());
 
+    final Config config = ConfigUtility.newConfig();
+    config.put("max-tables", 0);
+
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("importance");
     executable.setSchemaCrawlerOptions(withLimitOptions);
+    executable.setAdditionalConfiguration(config);
 
     ImportanceReportOutputFormat outputFormat = ImportanceReportOutputFormat.yaml;
     final String referenceFile = "importance_report_all.%s".formatted(outputFormat.getFormat());

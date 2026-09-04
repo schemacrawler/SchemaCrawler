@@ -41,6 +41,20 @@ public final class ImportanceReportGenerator {
    *     centrality, then full name
    */
   public List<ImportanceReportEntry> report(final InclusionRule tableInclusionRule) {
+    return report(tableInclusionRule, 0);
+  }
+
+  /**
+   * Gets importance report entries for tables and views selected by an inclusion rule, capped to a
+   * maximum number of entries.
+   *
+   * @param tableInclusionRule rule applied to table and view full names
+   * @param maxTables maximum number of entries to return (default 5, <=0 for unlimited)
+   * @return immutable entries sorted by descending importance score, then descending betweenness
+   *     centrality, then full name
+   */
+  public List<ImportanceReportEntry> report(
+      final InclusionRule tableInclusionRule, final int maxTables) {
     requireNonNull(tableInclusionRule, "No table inclusion rule provided");
 
     final List<ImportanceReportEntry> entries = new ArrayList<>();
@@ -57,6 +71,11 @@ public final class ImportanceReportGenerator {
       }
     }
     entries.sort(IMPORTANCE_REPORT_ENTRY_COMPARATOR);
-    return List.copyOf(entries);
+
+    // Limit number of tables returned
+    final List<ImportanceReportEntry> result =
+        maxTables > 0 && entries.size() > maxTables ? entries.subList(0, maxTables) : entries;
+
+    return List.copyOf(result);
   }
 }

@@ -90,6 +90,49 @@ class ReportServiceTest {
     assertThat(entries.isEmpty(), is(true));
   }
 
+  @Test
+  void truncatesEntriesWhenMaxTablesIsPositive() {
+    final Table alpha = table("ALPHA");
+    final Table beta = table("BETA");
+    final DatabaseObjectNodeId alphaNode = node("ALPHA");
+    final DatabaseObjectNodeId betaNode = node("BETA");
+    final SchemaGraphModel schemaGraphModel =
+        new SchemaGraphModel(
+            new DefaultDirectedGraph<>(SchemaEdge.class),
+            Set.of(alphaNode, betaNode),
+            Map.of(alphaNode, alpha, betaNode, beta));
+
+    final var entries =
+        new ImportanceReportGenerator(schemaGraphModel)
+            .report(new RegularExpressionRule(".*", ""), 1);
+
+    assertThat(entries.size(), is(1));
+    assertThat(entries.get(0).tableFullName(), is("BETA"));
+  }
+
+  @Test
+  void returnsAllEntriesWhenMaxTablesIsZeroOrNegative() {
+    final Table alpha = table("ALPHA");
+    final Table beta = table("BETA");
+    final DatabaseObjectNodeId alphaNode = node("ALPHA");
+    final DatabaseObjectNodeId betaNode = node("BETA");
+    final SchemaGraphModel schemaGraphModel =
+        new SchemaGraphModel(
+            new DefaultDirectedGraph<>(SchemaEdge.class),
+            Set.of(alphaNode, betaNode),
+            Map.of(alphaNode, alpha, betaNode, beta));
+
+    final var entriesZero =
+        new ImportanceReportGenerator(schemaGraphModel)
+            .report(new RegularExpressionRule(".*", ""), 0);
+    assertThat(entriesZero.size(), is(2));
+
+    final var entriesNegative =
+        new ImportanceReportGenerator(schemaGraphModel)
+            .report(new RegularExpressionRule(".*", ""), -1);
+    assertThat(entriesNegative.size(), is(2));
+  }
+
   private static ImportanceReportEntry entry(
       final DatabaseObjectNodeId nodeId, final String tableFullName) {
     return new ImportanceReportEntry(
