@@ -20,15 +20,19 @@ public final class ImportanceOptionsBuilder
 
   private static final String TABLE_FILTER = "table-filter";
   private static final String TABLE_FILTER_PROPERTY = "schemacrawler.importance.table-filter";
+  private static final String MAX_TABLES = "max-tables";
+  private static final String MAX_TABLES_PROPERTY = "schemacrawler.importance.max-tables";
 
   public static ImportanceOptionsBuilder builder() {
     return new ImportanceOptionsBuilder();
   }
 
   InclusionRule tableInclusionRule;
+  int maxTables;
 
   private ImportanceOptionsBuilder() {
     tableInclusionRule = new IncludeAll();
+    maxTables = 5;
   }
 
   @Override
@@ -42,6 +46,10 @@ public final class ImportanceOptionsBuilder
     if (!filter.isBlank()) {
       tableInclusionRule = new RegularExpressionRule(filter, "");
     }
+    final String maxTablesProp = config.containsKey(MAX_TABLES) ? MAX_TABLES : MAX_TABLES_PROPERTY;
+    if (config.containsKey(maxTablesProp)) {
+      maxTables = config.getIntegerValue(maxTablesProp, 5);
+    }
     return this;
   }
 
@@ -50,6 +58,7 @@ public final class ImportanceOptionsBuilder
     if (options != null) {
       super.fromOptions(options);
       tableInclusionRule = options.getTableInclusionRule();
+      maxTables = options.getMaxTables();
     }
     return this;
   }
@@ -57,6 +66,11 @@ public final class ImportanceOptionsBuilder
   @Override
   public ImportanceOptions toOptions() {
     return new ImportanceOptions(this);
+  }
+
+  public ImportanceOptionsBuilder withMaxTables(final int maxTables) {
+    this.maxTables = maxTables;
+    return this;
   }
 
   public ImportanceOptionsBuilder withTableInclusionRule(final InclusionRule tableInclusionRule) {

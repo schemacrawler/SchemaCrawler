@@ -40,7 +40,8 @@ public final class ImportanceCommand extends AbstractSchemaCrawlerCommand<Import
     final SchemaGraphModel schemaGraphModel = SchemaGraphModelBuilder.builder(getCatalog()).build();
     final List<ImportanceReportEntry> entries =
         new ImportanceReportGenerator(schemaGraphModel)
-            .report(getCommandOptions().getTableInclusionRule());
+            .report(
+                getCommandOptions().getTableInclusionRule(), getCommandOptions().getMaxTables());
     try {
       ImportanceReportWriter.write(entries, outputFormat, getOutputOptions());
     } catch (final IOException e) {

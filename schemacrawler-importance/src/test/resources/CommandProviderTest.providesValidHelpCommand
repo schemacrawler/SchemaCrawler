@@ -5,6 +5,9 @@ command:importance
 table-filter
 Regular expression for table and view full names to include in the report
 
+max-tables
+Maximum number of tables to include in the report (default 5, <=0 for all)
+
 output-format
 Supported importance report output formats
 <output-format> is one of ${COMPLETION-CANDIDATES}

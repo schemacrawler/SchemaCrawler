@@ -26,6 +26,25 @@ class ImportanceOptionsBuilderTest {
     final ImportanceOptions options = ImportanceOptionsBuilder.builder().toOptions();
 
     assertThat(options.getTableInclusionRule().test("PUBLIC.BOOKS.BOOK"), is(true));
+    assertThat(options.getMaxTables(), is(5));
+  }
+
+  @Test
+  void handlesMaxTablesConfigurationAndOptions() {
+    final Config config = ConfigUtility.newConfig();
+    config.put("max-tables", 10);
+
+    final ImportanceOptions optionsFromConfig =
+        ImportanceOptionsBuilder.builder().fromConfig(config).toOptions();
+    assertThat(optionsFromConfig.getMaxTables(), is(10));
+
+    final ImportanceOptions optionsFromBuilder =
+        ImportanceOptionsBuilder.builder().withMaxTables(0).toOptions();
+    assertThat(optionsFromBuilder.getMaxTables(), is(0));
+
+    final ImportanceOptions copied =
+        ImportanceOptionsBuilder.builder().fromOptions(optionsFromBuilder).toOptions();
+    assertThat(copied.getMaxTables(), is(0));
   }
 
   @Test

@@ -33,7 +33,11 @@ public final class ImportanceCommandProvider extends AbstractSchemaCrawlerComman
         .addOption(
             "table-filter",
             String.class,
-            "Regular expression for table and view full names to include in the report");
+            "Regular expression for table and view full names to include in the report")
+        .addOption(
+            "max-tables",
+            Integer.class,
+            "Maximum number of tables to include in the report (default 5, <=0 for all)");
   }
 
   @Override
