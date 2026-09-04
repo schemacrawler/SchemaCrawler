@@ -71,8 +71,11 @@ public final class ImportanceReportGenerator {
       }
     }
     entries.sort(IMPORTANCE_REPORT_ENTRY_COMPARATOR);
+
+    // Limit number of tables returned
     final List<ImportanceReportEntry> result =
         maxTables > 0 && entries.size() > maxTables ? entries.subList(0, maxTables) : entries;
+
     return List.copyOf(result);
   }
 }
