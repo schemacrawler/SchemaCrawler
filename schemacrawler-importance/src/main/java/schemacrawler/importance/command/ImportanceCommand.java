@@ -9,12 +9,11 @@
 package schemacrawler.importance.command;
 
 import java.io.IOException;
-import java.util.List;
 import schemacrawler.importance.model.SchemaGraphModel;
 import schemacrawler.importance.model.builder.SchemaGraphModelBuilder;
 import schemacrawler.importance.options.ImportanceOptions;
 import schemacrawler.importance.options.ImportanceReportOutputFormat;
-import schemacrawler.importance.report.ImportanceReportEntry;
+import schemacrawler.importance.report.ImportanceReport;
 import schemacrawler.importance.report.ImportanceReportGenerator;
 import schemacrawler.importance.report.ImportanceReportWriter;
 import schemacrawler.inclusionrule.InclusionRule;
@@ -41,10 +40,10 @@ public final class ImportanceCommand extends AbstractSchemaCrawlerCommand<Import
     final SchemaGraphModel schemaGraphModel = SchemaGraphModelBuilder.builder(getCatalog()).build();
     final InclusionRule tableInclusionRule = getCommandOptions().getTableInclusionRule();
     final int maxTables = getCommandOptions().getMaxTables();
-    final List<ImportanceReportEntry> entries =
+    final ImportanceReport report =
         new ImportanceReportGenerator(schemaGraphModel).report(tableInclusionRule, maxTables);
     try {
-      ImportanceReportWriter.write(entries, outputFormat, getOutputOptions());
+      ImportanceReportWriter.write(report, outputFormat, getOutputOptions());
     } catch (final IOException e) {
       throw new ExecutionRuntimeException("Could not generate importance report", e);
     }

@@ -1,53 +1,86 @@
-[ {
-  "node_id" : {
-    "type" : "table"
-  },
-  "table_full_name" : "PUBLIC.BOOKS.BOOKS",
-  "table_importance" : {
-    "importance_score" : 73,
-    "table_traits" : {
-      "self_referencing" : true,
-      "entity_model_type" : "strong_entity"
+{
+  "communities" : [ {
+    "id" : "a61b0ea7-c688-3e35-ab3b-b7593f7fd788",
+    "anchor_node_id" : {
+      "type" : "table"
     },
-    "table_counts" : {
-      "attribute_column_count" : 5,
-      "column_count" : 7,
-      "foreign_key_count" : 1,
-      "index_count" : 3,
-      "trigger_count" : 0
+    "anchor_table_full_name" : "PUBLIC.BOOKS.BOOKS",
+    "total_community_size" : 4,
+    "member_node_ids" : [ {
+      "type" : "table"
+    }, {
+      "type" : "table"
+    }, {
+      "type" : "table"
+    }, {
+      "type" : "table"
+    } ],
+    "member_table_full_names" : [ "PUBLIC.BOOKS.BOOKS", "PUBLIC.\"PUBLISHER SALES\".SALES", "PUBLIC.\"PUBLISHER SALES\".REGIONS", "PUBLIC.\"PUBLISHER SALES\".SALESDATA" ]
+  }, {
+    "id" : "7ab3a732-e860-3b7d-9755-27762095638b",
+    "anchor_node_id" : {
+      "type" : "table"
     },
-    "importance_metrics" : {
-      "in_degree" : 3,
-      "out_degree" : 1,
-      "betweenness_centrality" : 6.0,
-      "dependency_reachability_count" : 0,
-      "impact_reachability_count" : 2
+    "anchor_table_full_name" : "PUBLIC.BOOKS.BOOKAUTHORS",
+    "total_community_size" : 2,
+    "member_node_ids" : [ {
+      "type" : "table"
+    }, {
+      "type" : "table"
+    } ],
+    "member_table_full_names" : [ "PUBLIC.BOOKS.BOOKAUTHORS", "PUBLIC.BOOKS.AUTHORS" ]
+  } ],
+  "tables" : [ {
+    "node_id" : {
+      "type" : "table"
+    },
+    "table_full_name" : "PUBLIC.BOOKS.BOOKS",
+    "table_importance" : {
+      "importance_score" : 73,
+      "importance_metrics" : {
+        "in_degree" : 3,
+        "out_degree" : 1,
+        "betweenness_centrality" : 6.0,
+        "dependency_reachability_count" : 0,
+        "impact_reachability_count" : 2
+      },
+      "table_traits" : {
+        "self_referencing" : true,
+        "entity_model_type" : "strong_entity"
+      },
+      "table_counts" : {
+        "attribute_column_count" : 5,
+        "column_count" : 7,
+        "foreign_key_count" : 1,
+        "index_count" : 3,
+        "trigger_count" : 0
+      }
     }
-  }
-}, {
-  "node_id" : {
-    "type" : "table"
-  },
-  "table_full_name" : "PUBLIC.BOOKS.BOOKAUTHORS",
-  "table_importance" : {
-    "importance_score" : 36,
-    "table_traits" : {
-      "no_primary_key" : true,
-      "entity_model_type" : "bridge_table"
+  }, {
+    "node_id" : {
+      "type" : "table"
     },
-    "table_counts" : {
-      "attribute_column_count" : 1,
-      "column_count" : 3,
-      "foreign_key_count" : 2,
-      "index_count" : 3,
-      "trigger_count" : 0
-    },
-    "importance_metrics" : {
-      "in_degree" : 0,
-      "out_degree" : 2,
-      "betweenness_centrality" : 4.0,
-      "dependency_reachability_count" : 2,
-      "impact_reachability_count" : 0
+    "table_full_name" : "PUBLIC.BOOKS.BOOKAUTHORS",
+    "table_importance" : {
+      "importance_score" : 36,
+      "importance_metrics" : {
+        "in_degree" : 0,
+        "out_degree" : 2,
+        "betweenness_centrality" : 4.0,
+        "dependency_reachability_count" : 2,
+        "impact_reachability_count" : 0
+      },
+      "table_traits" : {
+        "no_primary_key" : true,
+        "entity_model_type" : "bridge_table"
+      },
+      "table_counts" : {
+        "attribute_column_count" : 1,
+        "column_count" : 3,
+        "foreign_key_count" : 2,
+        "index_count" : 3,
+        "trigger_count" : 0
+      }
     }
-  }
-} ]
+  } ]
+}

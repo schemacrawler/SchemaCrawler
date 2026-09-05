@@ -75,7 +75,10 @@ public final class EdgeFactory {
                   + " edge because a referenced object is not part of the catalog");
       return;
     }
-    graph.addEdge(sourceNode, targetNode, new SchemaEdge(edgeType, referenceKey));
+    final SchemaEdge edge = new SchemaEdge(edgeType, referenceKey);
+    if (graph.addEdge(sourceNode, targetNode, edge)) {
+      graph.setEdgeWeight(edge, edgeType.getWeight());
+    }
   }
 
   private static void addForeignKeyEdges(

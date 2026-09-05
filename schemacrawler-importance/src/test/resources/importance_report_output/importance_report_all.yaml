@@ -1,3 +1,115 @@
+communities:
+  - id: a61b0ea7-c688-3e35-ab3b-b7593f7fd788
+    anchor_node_id:
+      type: table
+    anchor_table_full_name: PUBLIC.BOOKS.BOOKS
+    total_community_size: 4
+    member_node_ids:
+      - type: table
+      - type: table
+      - type: table
+      - type: table
+    member_table_full_names:
+      - PUBLIC.BOOKS.BOOKS
+      - PUBLIC."PUBLISHER SALES".SALES
+      - PUBLIC."PUBLISHER SALES".REGIONS
+      - PUBLIC."PUBLISHER SALES".SALESDATA
+  - id: 4d99692f-a647-393e-b7a9-68ad59737a2e
+    anchor_node_id:
+      type: table
+    anchor_table_full_name: PUBLIC.FOR_LINT.WRITERS
+    total_community_size: 4
+    member_node_ids:
+      - type: table
+      - type: table
+      - type: table
+      - type: table
+    member_table_full_names:
+      - PUBLIC.FOR_LINT.WRITERS
+      - PUBLIC.FOR_LINT.PUBLICATIONS
+      - PUBLIC.FOR_LINT.EXTRA_PK
+      - PUBLIC.FOR_LINT.PUBLICATIONWRITERS
+  - id: 7ab3a732-e860-3b7d-9755-27762095638b
+    anchor_node_id:
+      type: table
+    anchor_table_full_name: PUBLIC.BOOKS.BOOKAUTHORS
+    total_community_size: 2
+    member_node_ids:
+      - type: table
+      - type: table
+    member_table_full_names:
+      - PUBLIC.BOOKS.BOOKAUTHORS
+      - PUBLIC.BOOKS.AUTHORS
+  - id: 8967829e-2d71-3f57-85f0-75342fcd2f78
+    anchor_node_id:
+      type: table
+    anchor_table_full_name: PUBLIC.BOOKS.CUSTOMERS
+    total_community_size: 2
+    member_node_ids:
+      - type: table
+      - type: table
+    member_table_full_names:
+      - PUBLIC.BOOKS.CUSTOMERS
+      - PUBLIC.BOOKS.CUSTOMERDATA
+  - id: 0bead1f3-f578-39aa-a807-0eb76a100e56
+    anchor_node_id:
+      type: table
+    anchor_table_full_name: PUBLIC.BOOKS."Celebrities"
+    total_community_size: 2
+    member_node_ids:
+      - type: table
+      - type: table
+    member_table_full_names:
+      - PUBLIC.BOOKS."Celebrities"
+      - PUBLIC.BOOKS."Celebrity Updates"
+  - id: cc2c396c-8425-33d7-828b-dec8a0bdef56
+    anchor_node_id:
+      type: table
+    anchor_table_full_name: PUBLIC.BOOKS.PUBLISHERS
+    total_community_size: 2
+    member_node_ids:
+      - type: table
+      - type: table
+    member_table_full_names:
+      - PUBLIC.BOOKS.PUBLISHERS
+      - PUBLIC.BOOKS.ΒΙΒΛΊΑ
+  - id: e02f22de-21c3-33ca-884e-c5075adf6c9b
+    anchor_node_id:
+      type: table
+    anchor_table_full_name: PUBLIC.BOOKS.COUPONS
+    total_community_size: 1
+    member_node_ids:
+      - type: table
+    member_table_full_names:
+      - PUBLIC.BOOKS.COUPONS
+  - id: 6d0dd99f-cb68-340d-81d8-ed8a703a4bf8
+    anchor_node_id:
+      type: table
+    anchor_table_full_name: PUBLIC.FOR_LINT.SELFREFERENCE
+    total_community_size: 1
+    member_node_ids:
+      - type: table
+    member_table_full_names:
+      - PUBLIC.FOR_LINT.SELFREFERENCE
+  - id: ff53ed3d-5e94-352b-a169-765e6f711394
+    anchor_node_id:
+      type: view
+    anchor_table_full_name: PUBLIC.BOOKS.AUTHORSLIST
+    total_community_size: 1
+    member_node_ids:
+      - type: view
+    member_table_full_names:
+      - PUBLIC.BOOKS.AUTHORSLIST
+  - id: 5a48d032-6f08-3a19-b2c4-5e3300655fcb
+    anchor_node_id:
+      type: table
+    anchor_table_full_name: PUBLIC.FOR_LINT."Global Counts"
+    total_community_size: 1
+    member_node_ids:
+      - type: table
+    member_table_full_names:
+      - PUBLIC.FOR_LINT."Global Counts"
+tables:
   - node_id:
       type: table
     table_full_name: PUBLIC.BOOKS.BOOKS

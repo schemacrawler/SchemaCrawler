@@ -103,7 +103,7 @@ class PathServiceTest {
     for (final Edge edge : graphEdges) {
       graph.addEdge(edge.source(), edge.target(), edge.edge());
     }
-    return new PathService(new SchemaGraphModel(graph, Set.copyOf(nodes), Map.of()));
+    return new PathService(new SchemaGraphModel(graph, Set.copyOf(nodes), Map.of(), List.of()));
   }
 
   private static DatabaseObjectNodeId table(final String name) {

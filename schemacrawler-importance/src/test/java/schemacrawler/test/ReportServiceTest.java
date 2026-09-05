@@ -10,15 +10,20 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.junit.jupiter.api.Test;
 import schemacrawler.importance.model.DatabaseObjectNodeId;
+import schemacrawler.importance.model.SchemaCommunity;
 import schemacrawler.importance.model.SchemaEdge;
 import schemacrawler.importance.model.SchemaGraphModel;
 import schemacrawler.importance.model.TableImportance;
@@ -44,14 +49,16 @@ class ReportServiceTest {
         new SchemaGraphModel(
             new DefaultDirectedGraph<>(SchemaEdge.class),
             Set.of(alphaNode, betaNode),
-            Map.of(alphaNode, alpha, betaNode, beta));
+            Map.of(alphaNode, alpha, betaNode, beta),
+            List.of());
 
-    final var entries =
+    final var report =
         new ImportanceReportGenerator(schemaGraphModel).report(new RegularExpressionRule(".*", ""));
 
-    assertThat(entries, contains(entry(betaNode, "BETA"), entry(alphaNode, "ALPHA")));
-    assertThat(entries.get(0).nodeId(), is(betaNode));
-    assertThat(entries.get(0).tableFullName(), is("BETA"));
+    assertThat(report.tables(), contains(entry(betaNode, "BETA"), entry(alphaNode, "ALPHA")));
+    assertThat(report.tables().get(0).nodeId(), is(betaNode));
+    assertThat(report.tables().get(0).tableFullName(), is("BETA"));
+    assertThat(report.communities(), empty());
   }
 
   @Test
@@ -64,13 +71,14 @@ class ReportServiceTest {
         new SchemaGraphModel(
             new DefaultDirectedGraph<>(SchemaEdge.class),
             Set.of(alphaNode, betaNode),
-            Map.of(alphaNode, alpha, betaNode, beta));
+            Map.of(alphaNode, alpha, betaNode, beta),
+            List.of());
 
-    final var entries =
+    final var report =
         new ImportanceReportGenerator(schemaGraphModel).report(new RegularExpressionRule(".*", ""));
 
-    assertThat(entries.get(0).tableFullName(), is("BETA"));
-    assertThat(entries.get(1).tableFullName(), is("ALPHA"));
+    assertThat(report.tables().get(0).tableFullName(), is("BETA"));
+    assertThat(report.tables().get(1).tableFullName(), is("ALPHA"));
   }
 
   @Test
@@ -81,13 +89,14 @@ class ReportServiceTest {
         new SchemaGraphModel(
             new DefaultDirectedGraph<>(SchemaEdge.class),
             Set.of(alphaNode),
-            Map.of(alphaNode, alpha));
+            Map.of(alphaNode, alpha),
+            List.of());
 
-    final var entries =
+    final var report =
         new ImportanceReportGenerator(schemaGraphModel)
             .report(new RegularExpressionRule(".*BETA", ""));
 
-    assertThat(entries.isEmpty(), is(true));
+    assertThat(report.tables().isEmpty(), is(true));
   }
 
   @Test
@@ -100,14 +109,15 @@ class ReportServiceTest {
         new SchemaGraphModel(
             new DefaultDirectedGraph<>(SchemaEdge.class),
             Set.of(alphaNode, betaNode),
-            Map.of(alphaNode, alpha, betaNode, beta));
+            Map.of(alphaNode, alpha, betaNode, beta),
+            List.of());
 
-    final var entries =
+    final var report =
         new ImportanceReportGenerator(schemaGraphModel)
             .report(new RegularExpressionRule(".*", ""), 1);
 
-    assertThat(entries.size(), is(1));
-    assertThat(entries.get(0).tableFullName(), is("BETA"));
+    assertThat(report.tables().size(), is(1));
+    assertThat(report.tables().get(0).tableFullName(), is("BETA"));
   }
 
   @Test
@@ -120,17 +130,38 @@ class ReportServiceTest {
         new SchemaGraphModel(
             new DefaultDirectedGraph<>(SchemaEdge.class),
             Set.of(alphaNode, betaNode),
-            Map.of(alphaNode, alpha, betaNode, beta));
+            Map.of(alphaNode, alpha, betaNode, beta),
+            List.of());
 
-    final var entriesZero =
+    final var reportZero =
         new ImportanceReportGenerator(schemaGraphModel)
             .report(new RegularExpressionRule(".*", ""), 0);
-    assertThat(entriesZero.size(), is(2));
+    assertThat(reportZero.tables().size(), is(2));
 
-    final var entriesNegative =
+    final var reportNegative =
         new ImportanceReportGenerator(schemaGraphModel)
             .report(new RegularExpressionRule(".*", ""), -1);
-    assertThat(entriesNegative.size(), is(2));
+    assertThat(reportNegative.tables().size(), is(2));
+  }
+
+  @Test
+  void usesCommunitiesCachedOnTheSchemaGraphModel() {
+    final Table alpha = table("ALPHA");
+    final DatabaseObjectNodeId alphaNode = node("ALPHA");
+    final SchemaCommunity cachedCommunity =
+        new SchemaCommunity(UUID.randomUUID(), alphaNode, List.of(alphaNode));
+    final SchemaGraphModel schemaGraphModel =
+        new SchemaGraphModel(
+            new DefaultDirectedGraph<>(SchemaEdge.class),
+            Set.of(alphaNode),
+            Map.of(alphaNode, alpha),
+            List.of(cachedCommunity));
+
+    final var report =
+        new ImportanceReportGenerator(schemaGraphModel).report(new RegularExpressionRule(".*", ""));
+
+    assertThat(report.communities(), hasSize(1));
+    assertThat(report.communities().get(0).id(), is(cachedCommunity.id()));
   }
 
   private static ImportanceReportEntry entry(
