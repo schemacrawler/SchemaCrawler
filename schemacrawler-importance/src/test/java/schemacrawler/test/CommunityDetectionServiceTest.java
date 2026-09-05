@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.importance.model.SchemaCommunity;
 import schemacrawler.importance.model.SchemaGraphModel;
 import schemacrawler.importance.model.TableImportance;
-import schemacrawler.importance.model.builder.NodeIdFactory;
 import schemacrawler.importance.model.builder.SchemaGraphModelBuilder;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ForeignKey;
@@ -74,34 +73,6 @@ class CommunityDetectionServiceTest {
 
     assertThat(communities, hasSize(0));
     assertThat(graphModel.getCommunities(), hasSize(0));
-  }
-
-  @Test
-  void detectsCommunitiesForSingleTable() {
-    final Table customers = table("CUSTOMERS");
-    final AtomicReference<TableImportance> customersImportance = new AtomicReference<>();
-    doAnswer(
-            invocation -> {
-              customersImportance.set(invocation.getArgument(1));
-              return null;
-            })
-        .when(customers)
-        .setAttribute(eq(TableImportance.class.getName()), any());
-    doAnswer(invocation -> customersImportance.get())
-        .when(customers)
-        .getAttribute(TableImportance.class.getName());
-
-    final Catalog catalog = catalog(List.of(customers));
-    final SchemaGraphModel graphModel = SchemaGraphModelBuilder.builder(catalog).build();
-    final List<SchemaCommunity> communities = graphModel.getCommunities();
-
-    assertThat(communities, hasSize(1));
-    final SchemaCommunity community = communities.get(0);
-    assertThat(community.id(), notNullValue());
-    assertThat(community.anchorNode().key(), is(NodeIdFactory.create(customers).key()));
-    assertThat(community.memberNodes(), hasSize(1));
-    assertThat(community.memberNodes().get(0), is(community.anchorNode()));
-    assertThat(graphModel.getCommunities(), is(communities));
   }
 
   @Test

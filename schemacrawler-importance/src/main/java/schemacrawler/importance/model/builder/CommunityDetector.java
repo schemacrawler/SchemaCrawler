@@ -36,6 +36,8 @@ import us.fatehi.utility.UtilityMarker;
 @UtilityMarker
 final class CommunityDetector {
 
+  private static final int MIN_CLUSTER_SIZE = 3;
+
   static List<SchemaCommunity> detectCommunities(
       final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph,
       final Set<DatabaseObjectNodeId> tableNodes,
@@ -61,7 +63,7 @@ final class CommunityDetector {
 
     final List<SchemaCommunity> communities = new ArrayList<>();
     for (final Set<DatabaseObjectNodeId> cluster : clustering.getClusters()) {
-      if (cluster != null && !cluster.isEmpty()) {
+      if (cluster != null && cluster.size() >= MIN_CLUSTER_SIZE) {
         communities.add(createCommunity(cluster, nodeToObject));
       }
     }

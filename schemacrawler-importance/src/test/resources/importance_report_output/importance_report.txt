@@ -14,17 +14,6 @@ communities:
       - PUBLIC."PUBLISHER SALES".SALES
       - PUBLIC."PUBLISHER SALES".REGIONS
       - PUBLIC."PUBLISHER SALES".SALESDATA
-  - id: 7ab3a732-e860-3b7d-9755-27762095638b
-    anchor_node_id:
-      type: table
-    anchor_table_full_name: PUBLIC.BOOKS.BOOKAUTHORS
-    total_community_size: 2
-    member_node_ids:
-      - type: table
-      - type: table
-    member_table_full_names:
-      - PUBLIC.BOOKS.BOOKAUTHORS
-      - PUBLIC.BOOKS.AUTHORS
 tables:
   - node_id:
       type: table
