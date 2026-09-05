@@ -16,7 +16,6 @@ import schemacrawler.importance.options.ImportanceReportOutputFormat;
 import schemacrawler.importance.report.ImportanceReport;
 import schemacrawler.importance.report.ImportanceReportGenerator;
 import schemacrawler.importance.report.ImportanceReportWriter;
-import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
 import us.fatehi.utility.property.PropertyName;
@@ -38,10 +37,8 @@ public final class ImportanceCommand extends AbstractSchemaCrawlerCommand<Import
     final ImportanceReportOutputFormat outputFormat =
         ImportanceReportOutputFormat.fromFormat(getOutputOptions().getOutputFormatValue());
     final SchemaGraphModel schemaGraphModel = SchemaGraphModelBuilder.builder(getCatalog()).build();
-    final InclusionRule tableInclusionRule = getCommandOptions().getTableInclusionRule();
-    final int maxTables = getCommandOptions().getMaxTables();
     final ImportanceReport report =
-        new ImportanceReportGenerator(schemaGraphModel).report(tableInclusionRule, maxTables);
+        new ImportanceReportGenerator(schemaGraphModel).report(getCommandOptions());
     try {
       ImportanceReportWriter.write(report, outputFormat, getOutputOptions());
     } catch (final IOException e) {

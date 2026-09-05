@@ -21,19 +21,29 @@ public final class ImportanceOptionsBuilder
 
   private static final String TABLE_FILTER = "table-filter";
   private static final String TABLE_FILTER_PROPERTY = "schemacrawler.importance.table-filter";
-  private static final String MAX_TABLES = "max-tables";
-  private static final String MAX_TABLES_PROPERTY = "schemacrawler.importance.max-tables";
+  private static final String MAX_COMMUNITIES = "max-communities";
+  private static final String MAX_COMMUNITIES_PROPERTY = "schemacrawler.importance.max-communities";
+  private static final String MAX_COMMUNITY_SIZE = "max-community-size";
+  private static final String MAX_COMMUNITY_SIZE_PROPERTY =
+      "schemacrawler.importance.max-community-size";
+  private static final String MAX_IMPORTANT_TABLES = "max-important-tables";
+  private static final String MAX_IMPORTANT_TABLES_PROPERTY =
+      "schemacrawler.importance.max-important-tables";
 
   public static ImportanceOptionsBuilder builder() {
     return new ImportanceOptionsBuilder();
   }
 
   InclusionRule tableInclusionRule;
-  int maxTables;
+  int maxCommunities;
+  int maxCommunitySize;
+  int maxImportantTables;
 
   private ImportanceOptionsBuilder() {
     tableInclusionRule = new IncludeAll();
-    maxTables = 5;
+    maxImportantTables = 5;
+    maxCommunities = 5;
+    maxCommunitySize = 5;
   }
 
   @Override
@@ -47,10 +57,9 @@ public final class ImportanceOptionsBuilder
     if (!filter.isBlank()) {
       tableInclusionRule = new RegularExpressionRule(filter, "");
     }
-    final String maxTablesProp = config.containsKey(MAX_TABLES) ? MAX_TABLES : MAX_TABLES_PROPERTY;
-    if (config.containsKey(maxTablesProp)) {
-      maxTables = config.getIntegerValue(maxTablesProp, 5);
-    }
+    maxImportantTables = getLimit(config, MAX_IMPORTANT_TABLES, MAX_IMPORTANT_TABLES_PROPERTY);
+    maxCommunities = getLimit(config, MAX_COMMUNITIES, MAX_COMMUNITIES_PROPERTY);
+    maxCommunitySize = getLimit(config, MAX_COMMUNITY_SIZE, MAX_COMMUNITY_SIZE_PROPERTY);
     return this;
   }
 
@@ -59,7 +68,9 @@ public final class ImportanceOptionsBuilder
     if (options != null) {
       super.fromOptions(options);
       tableInclusionRule = options.getTableInclusionRule();
-      maxTables = options.getMaxTables();
+      maxImportantTables = options.getMaxImportantTables();
+      maxCommunities = options.getMaxCommunities();
+      maxCommunitySize = options.getMaxCommunitySize();
     }
     return this;
   }
@@ -69,8 +80,18 @@ public final class ImportanceOptionsBuilder
     return new ImportanceOptions(this);
   }
 
-  public ImportanceOptionsBuilder withMaxTables(final int maxTables) {
-    this.maxTables = maxTables;
+  public ImportanceOptionsBuilder withMaxCommunities(final int maxCommunities) {
+    this.maxCommunities = maxCommunities;
+    return this;
+  }
+
+  public ImportanceOptionsBuilder withMaxCommunitySize(final int maxCommunitySize) {
+    this.maxCommunitySize = maxCommunitySize;
+    return this;
+  }
+
+  public ImportanceOptionsBuilder withMaxImportantTables(final int maxImportantTables) {
+    this.maxImportantTables = maxImportantTables;
     return this;
   }
 
@@ -82,5 +103,11 @@ public final class ImportanceOptionsBuilder
   public ImportanceOptionsBuilder withTableNamePattern(final String tableNamePattern) {
     tableInclusionRule = new RegularExpressionInclusionRule(tableNamePattern);
     return this;
+  }
+
+  private static int getLimit(
+      final Config config, final String commandLineKey, final String propertyKey) {
+    final String key = config.containsKey(commandLineKey) ? commandLineKey : propertyKey;
+    return config.containsKey(key) ? config.getIntegerValue(key, 5) : 5;
   }
 }

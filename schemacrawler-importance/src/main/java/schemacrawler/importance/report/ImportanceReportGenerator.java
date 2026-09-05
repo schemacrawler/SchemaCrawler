@@ -17,6 +17,7 @@ import schemacrawler.importance.model.DatabaseObjectNodeId;
 import schemacrawler.importance.model.SchemaCommunity;
 import schemacrawler.importance.model.SchemaGraphModel;
 import schemacrawler.importance.model.TableImportance;
+import schemacrawler.importance.options.ImportanceOptions;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Table;
@@ -34,43 +35,16 @@ public final class ImportanceReportGenerator {
     this.schemaGraphModel = requireNonNull(schemaGraphModel, "No schema graph model provided");
   }
 
-  /**
-   * Gets the complete importance report including communities and table entries.
-   *
-   * @param tableInclusionRule rule applied to table and view full names
-   * @return consolidated importance report
-   */
-  public ImportanceReport report(final InclusionRule tableInclusionRule) {
-    return report(tableInclusionRule, 0, 5);
-  }
-
-  /**
-   * Gets the complete importance report with capped table entries.
-   *
-   * @param tableInclusionRule rule applied to table and view full names
-   * @param maxTables maximum number of table entries to return (default 5, <=0 for unlimited)
-   * @return consolidated importance report
-   */
-  public ImportanceReport report(final InclusionRule tableInclusionRule, final int maxTables) {
-    return report(tableInclusionRule, maxTables, 5);
-  }
-
-  /**
-   * Gets the complete importance report with capped table entries and capped community sizes.
-   *
-   * @param tableInclusionRule rule applied to table and view full names
-   * @param maxTables maximum number of table entries to return (default 5, <=0 for unlimited)
-   * @param maxCommunitySize maximum member tables to list per community (default 5, <=0 for
-   *     unlimited)
-   * @return consolidated importance report
-   */
-  public ImportanceReport report(
-      final InclusionRule tableInclusionRule, final int maxTables, final int maxCommunitySize) {
-    requireNonNull(tableInclusionRule, "No table inclusion rule provided");
-
-    final List<ImportanceReportEntry> tables = reportTables(tableInclusionRule, maxTables);
+  /** Gets the complete importance report using the supplied inclusion and limit options. */
+  public ImportanceReport report(final ImportanceOptions options) {
+    requireNonNull(options, "No importance options provided");
+    final InclusionRule tableInclusionRule = options.getTableInclusionRule();
+    final List<ImportanceReportEntry> tables =
+        reportTables(tableInclusionRule, options.getMaxImportantTables());
     final List<CommunityReportEntry> communities =
-        reportCommunities(tableInclusionRule, maxCommunitySize);
+        limit(
+            reportCommunities(tableInclusionRule, options.getMaxCommunitySize()),
+            options.getMaxCommunities());
 
     return new ImportanceReport(communities, tables);
   }
@@ -127,6 +101,12 @@ public final class ImportanceReportGenerator {
     return List.copyOf(entries);
   }
 
+  private static <T> List<T> limit(final List<T> entries, final int maximum) {
+    return maximum > 0 && entries.size() > maximum
+        ? List.copyOf(entries.subList(0, maximum))
+        : List.copyOf(entries);
+  }
+
   private List<ImportanceReportEntry> reportTables(
       final InclusionRule tableInclusionRule, final int maxTables) {
     final List<ImportanceReportEntry> entries = new ArrayList<>();
@@ -145,9 +125,6 @@ public final class ImportanceReportGenerator {
     entries.sort(IMPORTANCE_REPORT_ENTRY_COMPARATOR);
 
     // Limit number of tables returned
-    final List<ImportanceReportEntry> result =
-        maxTables > 0 && entries.size() > maxTables ? entries.subList(0, maxTables) : entries;
-
-    return List.copyOf(result);
+    return limit(entries, maxTables);
   }
 }
