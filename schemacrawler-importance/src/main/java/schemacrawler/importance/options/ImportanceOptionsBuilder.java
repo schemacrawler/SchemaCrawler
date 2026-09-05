@@ -36,9 +36,16 @@ public final class ImportanceOptionsBuilder
     return new ImportanceOptionsBuilder();
   }
 
+  private static int getLimit(
+      final Config config, final String commandLineKey, final String propertyKey) {
+    final String key = config.containsKey(commandLineKey) ? commandLineKey : propertyKey;
+    return config.containsKey(key) ? config.getIntegerValue(key, MAX_COUNT) : MAX_COUNT;
+  }
+
   InclusionRule tableInclusionRule;
   int maxCommunities;
   int maxCommunitySize;
+
   int maxImportantTables;
 
   private ImportanceOptionsBuilder() {
@@ -105,11 +112,5 @@ public final class ImportanceOptionsBuilder
   public ImportanceOptionsBuilder withTableNamePattern(final String tableNamePattern) {
     tableInclusionRule = new RegularExpressionInclusionRule(tableNamePattern);
     return this;
-  }
-
-  private static int getLimit(
-      final Config config, final String commandLineKey, final String propertyKey) {
-    final String key = config.containsKey(commandLineKey) ? commandLineKey : propertyKey;
-    return config.containsKey(key) ? config.getIntegerValue(key, MAX_COUNT) : MAX_COUNT;
   }
 }

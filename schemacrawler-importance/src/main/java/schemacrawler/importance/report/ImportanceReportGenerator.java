@@ -29,6 +29,17 @@ public final class ImportanceReportGenerator {
       Comparator.comparing(ImportanceReportEntry::tableImportance)
           .thenComparing(ImportanceReportEntry::tableFullName);
 
+  private static <T> List<T> limit(final List<T> entries, final int maximum) {
+    if (maximum == 0) {
+      return List.of();
+    }
+    if (maximum < 0) {
+      return List.copyOf(entries);
+    }
+    final int limit = Math.min(entries.size(), maximum);
+    return List.copyOf(entries.subList(0, limit));
+  }
+
   private final SchemaGraphModel schemaGraphModel;
 
   public ImportanceReportGenerator(final SchemaGraphModel schemaGraphModel) {
@@ -99,17 +110,6 @@ public final class ImportanceReportGenerator {
               truncatedFullNames));
     }
     return List.copyOf(entries);
-  }
-
-  private static <T> List<T> limit(final List<T> entries, final int maximum) {
-    if (maximum == 0) {
-      return List.of();
-    }
-    if (maximum < 0) {
-      return List.copyOf(entries);
-    }
-    final int limit = Math.min(entries.size(), maximum);
-    return List.copyOf(entries.subList(0, limit));
   }
 
   private List<ImportanceReportEntry> reportTables(
