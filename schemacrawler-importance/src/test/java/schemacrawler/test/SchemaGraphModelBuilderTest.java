@@ -211,11 +211,6 @@ class SchemaGraphModelBuilderTest {
             .filter(edge -> edge.getEdgeType() == EdgeType.SYNONYM_RESOLUTION)
             .findFirst()
             .orElseThrow();
-    assertThat(fullGraph.getEdgeWeight(foreignKeyEdge), is(1.00));
-    assertThat(fullGraph.getEdgeWeight(viewDepEdge), is(0.80));
-    assertThat(fullGraph.getEdgeWeight(routineDepEdge), is(0.70));
-    assertThat(fullGraph.getEdgeWeight(implicitAssocEdge), is(0.50));
-    assertThat(fullGraph.getEdgeWeight(synonymResEdge), is(0.20));
     assertThat(fullGraph.getEdgeSource(foreignKeyEdge), is(NodeIdFactory.create(orders)));
     assertThat(fullGraph.getEdgeTarget(foreignKeyEdge), is(NodeIdFactory.create(customers)));
     assertThat(foreignKeyEdge.getReferenceKey(), is(foreignKey.key()));

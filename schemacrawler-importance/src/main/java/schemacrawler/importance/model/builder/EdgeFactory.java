@@ -76,9 +76,7 @@ public final class EdgeFactory {
       return;
     }
     final SchemaEdge edge = new SchemaEdge(edgeType, referenceKey);
-    if (graph.addEdge(sourceNode, targetNode, edge)) {
-      graph.setEdgeWeight(edge, edgeType.getWeight());
-    }
+    graph.addEdge(sourceNode, targetNode, edge);
   }
 
   private static void addForeignKeyEdges(

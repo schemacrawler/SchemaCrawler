@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.jgrapht.Graph;
-import org.jgrapht.graph.DirectedWeightedPseudograph;
+import org.jgrapht.graph.DirectedPseudograph;
 import schemacrawler.importance.model.DatabaseObjectNodeId;
 import schemacrawler.importance.model.SchemaCommunity;
 import schemacrawler.importance.model.SchemaEdge;
@@ -45,7 +45,7 @@ public final class SchemaGraphModelBuilder implements Builder<SchemaGraphModel> 
   private SchemaGraphModelBuilder(final Catalog catalog) {
     requireNonNull(catalog, "No catalog provided");
 
-    fullGraph = new DirectedWeightedPseudograph<>(SchemaEdge.class);
+    fullGraph = new DirectedPseudograph<>(SchemaEdge.class);
     nodeToObject = new LinkedHashMap<>();
     tableViewNodes = new LinkedHashSet<>();
 

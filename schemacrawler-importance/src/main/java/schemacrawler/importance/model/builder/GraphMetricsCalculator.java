@@ -16,7 +16,6 @@ import java.util.Set;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.scoring.BetweennessCentrality;
 import org.jgrapht.graph.AsUndirectedGraph;
-import org.jgrapht.graph.AsUnweightedGraph;
 import schemacrawler.importance.model.DatabaseObjectNodeId;
 import schemacrawler.importance.model.SchemaEdge;
 import schemacrawler.importance.model.TableImportanceMetrics;
@@ -35,7 +34,7 @@ final class GraphMetricsCalculator {
   static Map<DatabaseObjectNodeId, TableImportanceMetrics> calculate(
       final Graph<DatabaseObjectNodeId, SchemaEdge> graph) {
     final BetweennessCentrality<DatabaseObjectNodeId, SchemaEdge> centrality =
-        new BetweennessCentrality<>(new AsUnweightedGraph<>(new AsUndirectedGraph<>(graph)));
+        new BetweennessCentrality<>(new AsUndirectedGraph<>(graph));
     final Map<DatabaseObjectNodeId, TableImportanceMetrics> metrics = new LinkedHashMap<>();
     for (final DatabaseObjectNodeId nodeId : graph.vertexSet()) {
       metrics.put(
