@@ -33,7 +33,7 @@ public final class SchemaGraphModel {
       final List<SchemaCommunity> communities) {
     this.fullGraph =
         new AsUnmodifiableGraph<>(Objects.requireNonNull(fullGraph, "No full graph provided"));
-    this.tableNodes = Collections.unmodifiableSet(new LinkedHashSet<>(tableViewNodes));
+    tableNodes = Collections.unmodifiableSet(new LinkedHashSet<>(tableViewNodes));
     this.nodeToObject = Map.copyOf(nodeToObject);
     this.communities = List.copyOf(communities);
   }

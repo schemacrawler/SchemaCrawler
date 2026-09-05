@@ -76,7 +76,8 @@ final class CommunityDetector {
         cluster.stream()
             .sorted(
                 Comparator.comparingInt(
-                        (DatabaseObjectNodeId nodeId) -> getImportanceScore(nodeId, nodeToObject))
+                        (final DatabaseObjectNodeId nodeId) ->
+                            getImportanceScore(nodeId, nodeToObject))
                     .reversed()
                     .thenComparing(nodeId -> getTableFullName(nodeId, nodeToObject)))
             .toList();
@@ -87,13 +88,36 @@ final class CommunityDetector {
     return new SchemaCommunity(communityId, anchorNode, sortedMembers);
   }
 
+  private static int getImportanceScore(
+      final DatabaseObjectNodeId nodeId,
+      final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject) {
+    final DatabaseObject object = nodeToObject.get(nodeId);
+    if (object instanceof final Table table) {
+      final TableImportance importance = table.getAttribute(TableImportance.class.getName());
+      if (importance != null) {
+        return importance.importanceScore();
+      }
+    }
+    return 0;
+  }
+
+  private static String getTableFullName(
+      final DatabaseObjectNodeId nodeId,
+      final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject) {
+    final DatabaseObject object = nodeToObject.get(nodeId);
+    if (object != null && object.getFullName() != null) {
+      return object.getFullName();
+    }
+    return nodeId.key().toString();
+  }
+
   private static List<SchemaCommunity> sortCommunities(
       final List<SchemaCommunity> communities,
       final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject) {
     return communities.stream()
         .sorted(
             Comparator.comparingInt(
-                    (SchemaCommunity community) ->
+                    (final SchemaCommunity community) ->
                         getImportanceScore(community.anchorNode(), nodeToObject))
                 .reversed()
                 .thenComparing(community -> getTableFullName(community.anchorNode(), nodeToObject)))
@@ -113,29 +137,6 @@ final class CommunityDetector {
     }
     // Community affinity is direction-independent, unlike schema dependencies.
     return new AsUndirectedGraph<>(new AsSubgraph<>(fullGraph, tableNodes, tableEdges));
-  }
-
-  private static String getTableFullName(
-      final DatabaseObjectNodeId nodeId,
-      final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject) {
-    final DatabaseObject object = nodeToObject.get(nodeId);
-    if (object != null && object.getFullName() != null) {
-      return object.getFullName();
-    }
-    return nodeId.key().toString();
-  }
-
-  private static int getImportanceScore(
-      final DatabaseObjectNodeId nodeId,
-      final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject) {
-    final DatabaseObject object = nodeToObject.get(nodeId);
-    if (object instanceof final Table table) {
-      final TableImportance importance = table.getAttribute(TableImportance.class.getName());
-      if (importance != null) {
-        return importance.importanceScore();
-      }
-    }
-    return 0;
   }
 
   private CommunityDetector() {

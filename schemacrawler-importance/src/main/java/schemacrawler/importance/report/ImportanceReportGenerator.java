@@ -75,30 +75,6 @@ public final class ImportanceReportGenerator {
     return new ImportanceReport(communities, tables);
   }
 
-  private List<ImportanceReportEntry> reportTables(
-      final InclusionRule tableInclusionRule, final int maxTables) {
-    final List<ImportanceReportEntry> entries = new ArrayList<>();
-    for (final DatabaseObjectNodeId nodeId : schemaGraphModel.getTableNodes()) {
-      final DatabaseObject databaseObject = schemaGraphModel.getObjectByNodeId(nodeId);
-      if (!(databaseObject instanceof final Table table)
-          || !tableInclusionRule.test(table.getFullName())) {
-        continue;
-      }
-
-      final TableImportance importance = table.getAttribute(TableImportance.class.getName());
-      if (importance != null) {
-        entries.add(new ImportanceReportEntry(nodeId, table.getFullName(), importance));
-      }
-    }
-    entries.sort(IMPORTANCE_REPORT_ENTRY_COMPARATOR);
-
-    // Limit number of tables returned
-    final List<ImportanceReportEntry> result =
-        maxTables > 0 && entries.size() > maxTables ? entries.subList(0, maxTables) : entries;
-
-    return List.copyOf(result);
-  }
-
   private List<CommunityReportEntry> reportCommunities(
       final InclusionRule tableInclusionRule, final int maxCommunitySize) {
     final List<SchemaCommunity> schemaCommunities = schemaGraphModel.getCommunities();
@@ -149,5 +125,29 @@ public final class ImportanceReportGenerator {
               truncatedFullNames));
     }
     return List.copyOf(entries);
+  }
+
+  private List<ImportanceReportEntry> reportTables(
+      final InclusionRule tableInclusionRule, final int maxTables) {
+    final List<ImportanceReportEntry> entries = new ArrayList<>();
+    for (final DatabaseObjectNodeId nodeId : schemaGraphModel.getTableNodes()) {
+      final DatabaseObject databaseObject = schemaGraphModel.getObjectByNodeId(nodeId);
+      if (!(databaseObject instanceof final Table table)
+          || !tableInclusionRule.test(table.getFullName())) {
+        continue;
+      }
+
+      final TableImportance importance = table.getAttribute(TableImportance.class.getName());
+      if (importance != null) {
+        entries.add(new ImportanceReportEntry(nodeId, table.getFullName(), importance));
+      }
+    }
+    entries.sort(IMPORTANCE_REPORT_ENTRY_COMPARATOR);
+
+    // Limit number of tables returned
+    final List<ImportanceReportEntry> result =
+        maxTables > 0 && entries.size() > maxTables ? entries.subList(0, maxTables) : entries;
+
+    return List.copyOf(result);
   }
 }
