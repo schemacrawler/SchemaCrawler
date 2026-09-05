@@ -102,9 +102,14 @@ public final class ImportanceReportGenerator {
   }
 
   private static <T> List<T> limit(final List<T> entries, final int maximum) {
-    return maximum > 0 && entries.size() > maximum
-        ? List.copyOf(entries.subList(0, maximum))
-        : List.copyOf(entries);
+    if (maximum == 0) {
+      return List.of();
+    }
+    if (maximum < 0) {
+      return List.copyOf(entries);
+    }
+    final int limit = Math.min(entries.size(), maximum);
+    return List.copyOf(entries.subList(0, limit));
   }
 
   private List<ImportanceReportEntry> reportTables(

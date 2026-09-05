@@ -54,7 +54,7 @@ class ReportServiceTest {
             Map.of(alphaNode, alpha, betaNode, beta),
             List.of());
 
-    final var report = new ImportanceReportGenerator(schemaGraphModel).report(options(".*", 0));
+    final var report = new ImportanceReportGenerator(schemaGraphModel).report(options(".*", -1));
 
     assertThat(report.tables(), contains(entry(betaNode, "BETA"), entry(alphaNode, "ALPHA")));
     assertThat(report.tables().get(0).nodeId(), is(betaNode));
@@ -75,7 +75,7 @@ class ReportServiceTest {
             Map.of(alphaNode, alpha, betaNode, beta),
             List.of());
 
-    final var report = new ImportanceReportGenerator(schemaGraphModel).report(options(".*", 0));
+    final var report = new ImportanceReportGenerator(schemaGraphModel).report(options(".*", -1));
 
     assertThat(report.tables().get(0).tableFullName(), is("BETA"));
     assertThat(report.tables().get(1).tableFullName(), is("ALPHA"));
@@ -92,7 +92,8 @@ class ReportServiceTest {
             Map.of(alphaNode, alpha),
             List.of());
 
-    final var report = new ImportanceReportGenerator(schemaGraphModel).report(options(".*BETA", 0));
+    final var report =
+        new ImportanceReportGenerator(schemaGraphModel).report(options(".*BETA", -1));
 
     assertThat(report.tables().isEmpty(), is(true));
   }
@@ -129,7 +130,8 @@ class ReportServiceTest {
             Map.of(alphaNode, alpha, betaNode, beta),
             List.of());
 
-    final var reportZero = new ImportanceReportGenerator(schemaGraphModel).report(options(".*", 0));
+    final var reportZero =
+        new ImportanceReportGenerator(schemaGraphModel).report(options(".*", -1));
     assertThat(reportZero.tables().size(), is(2));
 
     final var reportNegative =
@@ -150,7 +152,7 @@ class ReportServiceTest {
             Map.of(alphaNode, alpha),
             List.of(cachedCommunity));
 
-    final var report = new ImportanceReportGenerator(schemaGraphModel).report(options(".*", 0));
+    final var report = new ImportanceReportGenerator(schemaGraphModel).report(options(".*", -1));
 
     assertThat(report.communities(), hasSize(1));
     assertThat(report.communities().get(0).id(), is(cachedCommunity.id()));
@@ -169,7 +171,6 @@ class ReportServiceTest {
     return ImportanceOptionsBuilder.builder()
         .withTableInclusionRule(new RegularExpressionRule(pattern, ""))
         .withMaxImportantTables(maxImportantTables)
-        .withMaxCommunities(0)
         .toOptions();
   }
 

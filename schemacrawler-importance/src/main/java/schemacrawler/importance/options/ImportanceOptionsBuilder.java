@@ -19,6 +19,8 @@ import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
 public final class ImportanceOptionsBuilder
     extends BaseTextOptionsBuilder<ImportanceOptionsBuilder, ImportanceOptions> {
 
+  private static final int MAX_COUNT = 5;
+
   private static final String TABLE_FILTER = "table-filter";
   private static final String TABLE_FILTER_PROPERTY = "schemacrawler.importance.table-filter";
   private static final String MAX_COMMUNITIES = "max-communities";
@@ -41,9 +43,9 @@ public final class ImportanceOptionsBuilder
 
   private ImportanceOptionsBuilder() {
     tableInclusionRule = new IncludeAll();
-    maxImportantTables = 5;
-    maxCommunities = 5;
-    maxCommunitySize = 5;
+    maxImportantTables = MAX_COUNT;
+    maxCommunities = MAX_COUNT;
+    maxCommunitySize = MAX_COUNT;
   }
 
   @Override
@@ -108,6 +110,6 @@ public final class ImportanceOptionsBuilder
   private static int getLimit(
       final Config config, final String commandLineKey, final String propertyKey) {
     final String key = config.containsKey(commandLineKey) ? commandLineKey : propertyKey;
-    return config.containsKey(key) ? config.getIntegerValue(key, 5) : 5;
+    return config.containsKey(key) ? config.getIntegerValue(key, MAX_COUNT) : MAX_COUNT;
   }
 }

@@ -6,13 +6,13 @@ table-filter
 Regular expression for table and view full names to include in the report
 
 max-important-tables
-Maximum number of important tables to include in the report (default 5, <=0 for all)
+Maximum number of important tables to include in the report (default 5; -1 for all)
 
 max-communities
-Maximum number of communities to include in the report (default 5, <=0 for all)
+Maximum number of communities to include in the report (default 5; -1 for all)
 
 max-community-size
-Maximum members per community to include in the report (default 5, <=0 for all)
+Maximum members per community to include in the report (default 5; -1 for all)
 
 output-format
 Supported importance report output formats

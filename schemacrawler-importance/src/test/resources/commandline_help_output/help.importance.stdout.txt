@@ -1,13 +1,13 @@
 ** Generate a database object importance report
       --max-communities=<max-communities>
-         Maximum number of communities to include in the report (default 5, <=0
+         Maximum number of communities to include in the report (default 5; -1
            for all)
       --max-community-size=<max-community-size>
-         Maximum members per community to include in the report (default 5, <=0
+         Maximum members per community to include in the report (default 5; -1
            for all)
       --max-important-tables=<max-important-tables>
          Maximum number of important tables to include in the report (default
-           5, <=0 for all)
+           5; -1 for all)
       --output-format=<output-format>
          Supported importance report output formats
          Use one of [txt, text] Plain text format, [json] JavaScript Object
