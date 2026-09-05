@@ -78,7 +78,8 @@ class ImportanceCommandOutputTest {
                 LoadOptionsBuilder.builder().withInfoLevel(InfoLevel.maximum).toOptions());
 
     final Config config = ConfigUtility.newConfig();
-    config.put("max-tables", 0);
+    config.put("max-important-tables", -1);
+    config.put("max-communities", -1);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("importance");
     executable.setSchemaCrawlerOptions(withLimitOptions);

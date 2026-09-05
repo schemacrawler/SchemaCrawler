@@ -191,10 +191,31 @@ class SchemaGraphModelBuilderTest {
             .filter(edge -> edge.getEdgeType() == EdgeType.FOREIGN_KEY)
             .findFirst()
             .orElseThrow();
+    final SchemaEdge implicitAssocEdge =
+        fullGraph.edgeSet().stream()
+            .filter(edge -> edge.getEdgeType() == EdgeType.IMPLICIT_ASSOCIATION)
+            .findFirst()
+            .orElseThrow();
+    final SchemaEdge viewDepEdge =
+        fullGraph.edgeSet().stream()
+            .filter(edge -> edge.getEdgeType() == EdgeType.VIEW_DEPENDENCY)
+            .findFirst()
+            .orElseThrow();
+    final SchemaEdge routineDepEdge =
+        fullGraph.edgeSet().stream()
+            .filter(edge -> edge.getEdgeType() == EdgeType.ROUTINE_DEPENDENCY)
+            .findFirst()
+            .orElseThrow();
+    final SchemaEdge synonymResEdge =
+        fullGraph.edgeSet().stream()
+            .filter(edge -> edge.getEdgeType() == EdgeType.SYNONYM_RESOLUTION)
+            .findFirst()
+            .orElseThrow();
     assertThat(fullGraph.getEdgeSource(foreignKeyEdge), is(NodeIdFactory.create(orders)));
     assertThat(fullGraph.getEdgeTarget(foreignKeyEdge), is(NodeIdFactory.create(customers)));
     assertThat(foreignKeyEdge.getReferenceKey(), is(foreignKey.key()));
     assertThat(schemaGraphModel.getTableNodes(), hasSize(3));
+    assertThat(schemaGraphModel.getCommunities(), hasSize(1));
     assertThat(ordersImportance.get().importanceMetrics().inDegree(), is(2));
     assertThat(ordersImportance.get().importanceMetrics().outDegree(), is(2));
     assertThat(
@@ -210,6 +231,7 @@ class SchemaGraphModelBuilderTest {
                 new DatabaseObjectNodeId(
                     new NamedObjectKey("OTHER"), SimpleDatabaseObjectType.table)));
     assertThrows(UnsupportedOperationException.class, schemaGraphModel.getTableNodes()::clear);
+    assertThrows(UnsupportedOperationException.class, schemaGraphModel.getCommunities()::clear);
   }
 
   @Test

@@ -53,7 +53,7 @@ import us.fatehi.utility.UtilityMarker;
  * same catalog.
  */
 @UtilityMarker
-public final class ImportanceScoreCalculator {
+final class ImportanceScoreCalculator {
 
   /**
    * Catalog-wide maximum structural signals, analogous to {@link TableImportanceMetrics} but
@@ -85,7 +85,7 @@ public final class ImportanceScoreCalculator {
   private static final double DAMPENING_NO_PRIMARY_KEY = 1.00 - 0.15;
   private static final double DAMPENING_NO_INDEXES = 1.00 - 0.10;
 
-  public static Map<DatabaseObjectNodeId, Integer> calculate(final TableImportanceInputs inputs) {
+  static Map<DatabaseObjectNodeId, Integer> calculate(final TableImportanceInputs inputs) {
     final MaxValues maxValues = calculateMaxValues(inputs);
     return calculateScores(inputs, maxValues);
   }

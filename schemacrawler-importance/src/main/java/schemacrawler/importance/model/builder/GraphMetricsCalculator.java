@@ -29,9 +29,9 @@ import us.fatehi.utility.UtilityMarker;
  * scored.
  */
 @UtilityMarker
-public final class GraphMetricsCalculator {
+final class GraphMetricsCalculator {
 
-  public static Map<DatabaseObjectNodeId, TableImportanceMetrics> calculate(
+  static Map<DatabaseObjectNodeId, TableImportanceMetrics> calculate(
       final Graph<DatabaseObjectNodeId, SchemaEdge> graph) {
     final BetweennessCentrality<DatabaseObjectNodeId, SchemaEdge> centrality =
         new BetweennessCentrality<>(new AsUndirectedGraph<>(graph));

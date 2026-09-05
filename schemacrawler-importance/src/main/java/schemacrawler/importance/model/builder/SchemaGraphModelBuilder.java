@@ -12,11 +12,13 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DirectedPseudograph;
 import schemacrawler.importance.model.DatabaseObjectNodeId;
+import schemacrawler.importance.model.SchemaCommunity;
 import schemacrawler.importance.model.SchemaEdge;
 import schemacrawler.importance.model.SchemaGraphModel;
 import schemacrawler.importance.model.TableImportance;
@@ -85,7 +87,9 @@ public final class SchemaGraphModelBuilder implements Builder<SchemaGraphModel> 
         ImportanceScoreCalculator.calculate(inputs);
 
     storeTableImportance(inputs, importanceScores);
-    return new SchemaGraphModel(fullGraph, tableViewNodes, nodeToObject);
+    final List<SchemaCommunity> communities =
+        CommunityDetector.detectCommunities(fullGraph, tableViewNodes, nodeToObject);
+    return new SchemaGraphModel(fullGraph, tableViewNodes, nodeToObject, communities);
   }
 
   private void addNode(final DatabaseObject databaseObject) {

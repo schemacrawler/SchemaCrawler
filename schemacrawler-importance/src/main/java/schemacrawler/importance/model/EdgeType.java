@@ -11,8 +11,8 @@ package schemacrawler.importance.model;
 /** Categorizes a directed dependency in the schema graph. */
 public enum EdgeType {
   FOREIGN_KEY,
-  IMPLICIT_ASSOCIATION,
   VIEW_DEPENDENCY,
   ROUTINE_DEPENDENCY,
+  IMPLICIT_ASSOCIATION,
   SYNONYM_RESOLUTION
 }

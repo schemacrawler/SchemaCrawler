@@ -10,7 +10,6 @@ package schemacrawler.importance.report;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.List;
 import schemacrawler.importance.options.ImportanceReportOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import tools.jackson.databind.ObjectMapper;
@@ -22,14 +21,14 @@ public final class ImportanceReportWriter {
   private static final ObjectMapper yamlMapper = JsonUtility.newYamlMapperBuilder().build();
 
   public static void write(
-      final List<ImportanceReportEntry> entries,
+      final ImportanceReport report,
       final ImportanceReportOutputFormat outputFormat,
       final OutputOptions outputOptions)
       throws IOException {
     try (final Writer writer = outputOptions.openNewOutputWriter()) {
       switch (outputFormat) {
-        case json -> jsonMapper.writeValue(writer, entries);
-        case text, yaml -> yamlMapper.writeValue(writer, entries);
+        case json -> jsonMapper.writeValue(writer, report);
+        case text, yaml -> yamlMapper.writeValue(writer, report);
       }
     }
   }

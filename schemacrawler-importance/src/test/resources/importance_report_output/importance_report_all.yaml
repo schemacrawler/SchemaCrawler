@@ -1,3 +1,35 @@
+communities:
+  - id: a61b0ea7-c688-3e35-ab3b-b7593f7fd788
+    anchor_node_id:
+      type: table
+    anchor_table_full_name: PUBLIC.BOOKS.BOOKS
+    total_community_size: 4
+    member_node_ids:
+      - type: table
+      - type: table
+      - type: table
+      - type: table
+    member_table_full_names:
+      - PUBLIC.BOOKS.BOOKS
+      - PUBLIC."PUBLISHER SALES".SALES
+      - PUBLIC."PUBLISHER SALES".REGIONS
+      - PUBLIC."PUBLISHER SALES".SALESDATA
+  - id: 4d99692f-a647-393e-b7a9-68ad59737a2e
+    anchor_node_id:
+      type: table
+    anchor_table_full_name: PUBLIC.FOR_LINT.WRITERS
+    total_community_size: 4
+    member_node_ids:
+      - type: table
+      - type: table
+      - type: table
+      - type: table
+    member_table_full_names:
+      - PUBLIC.FOR_LINT.WRITERS
+      - PUBLIC.FOR_LINT.PUBLICATIONS
+      - PUBLIC.FOR_LINT.EXTRA_PK
+      - PUBLIC.FOR_LINT.PUBLICATIONWRITERS
+tables:
   - node_id:
       type: table
     table_full_name: PUBLIC.BOOKS.BOOKS

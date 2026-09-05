@@ -26,25 +26,33 @@ class ImportanceOptionsBuilderTest {
     final ImportanceOptions options = ImportanceOptionsBuilder.builder().toOptions();
 
     assertThat(options.getTableInclusionRule().test("PUBLIC.BOOKS.BOOK"), is(true));
-    assertThat(options.getMaxTables(), is(5));
+    assertThat(options.getMaxImportantTables(), is(5));
+    assertThat(options.getMaxCommunities(), is(5));
   }
 
   @Test
-  void handlesMaxTablesConfigurationAndOptions() {
+  void handlesReportLimitConfigurationAndOptions() {
     final Config config = ConfigUtility.newConfig();
-    config.put("max-tables", 10);
+    config.put("max-important-tables", 10);
+    config.put("max-communities", 3);
 
     final ImportanceOptions optionsFromConfig =
         ImportanceOptionsBuilder.builder().fromConfig(config).toOptions();
-    assertThat(optionsFromConfig.getMaxTables(), is(10));
+    assertThat(optionsFromConfig.getMaxImportantTables(), is(10));
+    assertThat(optionsFromConfig.getMaxCommunities(), is(3));
 
     final ImportanceOptions optionsFromBuilder =
-        ImportanceOptionsBuilder.builder().withMaxTables(0).toOptions();
-    assertThat(optionsFromBuilder.getMaxTables(), is(0));
+        ImportanceOptionsBuilder.builder()
+            .withMaxImportantTables(0)
+            .withMaxCommunities(0)
+            .toOptions();
+    assertThat(optionsFromBuilder.getMaxImportantTables(), is(0));
+    assertThat(optionsFromBuilder.getMaxCommunities(), is(0));
 
     final ImportanceOptions copied =
         ImportanceOptionsBuilder.builder().fromOptions(optionsFromBuilder).toOptions();
-    assertThat(copied.getMaxTables(), is(0));
+    assertThat(copied.getMaxImportantTables(), is(0));
+    assertThat(copied.getMaxCommunities(), is(0));
   }
 
   @Test

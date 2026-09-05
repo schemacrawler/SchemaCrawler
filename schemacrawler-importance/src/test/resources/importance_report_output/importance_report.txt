@@ -1,3 +1,20 @@
+communities:
+  - id: a61b0ea7-c688-3e35-ab3b-b7593f7fd788
+    anchor_node_id:
+      type: table
+    anchor_table_full_name: PUBLIC.BOOKS.BOOKS
+    total_community_size: 4
+    member_node_ids:
+      - type: table
+      - type: table
+      - type: table
+      - type: table
+    member_table_full_names:
+      - PUBLIC.BOOKS.BOOKS
+      - PUBLIC."PUBLISHER SALES".SALES
+      - PUBLIC."PUBLISHER SALES".REGIONS
+      - PUBLIC."PUBLISHER SALES".SALESDATA
+tables:
   - node_id:
       type: table
     table_full_name: PUBLIC.BOOKS.BOOKS

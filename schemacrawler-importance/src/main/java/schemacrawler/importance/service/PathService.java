@@ -25,6 +25,8 @@ import schemacrawler.importance.model.SchemaGraphModel;
 /** Finds directed shortest paths through table and view foreign-key relationships. */
 public final class PathService {
 
+  public static final int DEFAULT_MAX_PATH_DEPTH = 5;
+
   private final SchemaGraphModel schemaGraphModel;
 
   public PathService(final SchemaGraphModel schemaGraphModel) {
@@ -34,6 +36,15 @@ public final class PathService {
 
   public PathResult findShortestPath(
       final DatabaseObjectNodeId from, final DatabaseObjectNodeId to) {
+    return findShortestPath(from, to, DEFAULT_MAX_PATH_DEPTH);
+  }
+
+  /**
+   * Finds the shortest dependency path up to the supplied number of hops. Non-positive values allow
+   * an unlimited path depth.
+   */
+  public PathResult findShortestPath(
+      final DatabaseObjectNodeId from, final DatabaseObjectNodeId to, final int maxPathDepth) {
     requireTableOrView(from, "source");
     requireTableOrView(to, "target");
     if (from.equals(to)) {
@@ -41,7 +52,7 @@ public final class PathService {
     }
 
     final GraphPath<DatabaseObjectNodeId, SchemaEdge> foreignKeyPath =
-        findPath(from, to, edge -> edge.getEdgeType() == EdgeType.FOREIGN_KEY);
+        findPath(from, to, edge -> edge.getEdgeType() == EdgeType.FOREIGN_KEY, maxPathDepth);
     if (foreignKeyPath != null) {
       return new PathResult(foreignKeyPath.getVertexList(), false);
     }
@@ -52,7 +63,8 @@ public final class PathService {
             to,
             edge ->
                 edge.getEdgeType() == EdgeType.FOREIGN_KEY
-                    || edge.getEdgeType() == EdgeType.IMPLICIT_ASSOCIATION);
+                    || edge.getEdgeType() == EdgeType.IMPLICIT_ASSOCIATION,
+            maxPathDepth);
     return fallbackPath == null
         ? new PathResult(List.of(), false)
         : new PathResult(fallbackPath.getVertexList(), true);
@@ -61,7 +73,8 @@ public final class PathService {
   private GraphPath<DatabaseObjectNodeId, SchemaEdge> findPath(
       final DatabaseObjectNodeId from,
       final DatabaseObjectNodeId to,
-      final Predicate<SchemaEdge> edgeFilter) {
+      final Predicate<SchemaEdge> edgeFilter,
+      final int maxPathDepth) {
     final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph = schemaGraphModel.getFullGraph();
     final Set<SchemaEdge> edges =
         fullGraph.edgeSet().stream().filter(edgeFilter).collect(Collectors.toSet());
@@ -70,7 +83,9 @@ public final class PathService {
     if (!graph.containsVertex(from) || !graph.containsVertex(to)) {
       return null;
     }
-    return new DijkstraShortestPath<>(graph).getPath(from, to);
+    final GraphPath<DatabaseObjectNodeId, SchemaEdge> path =
+        new DijkstraShortestPath<>(graph).getPath(from, to);
+    return path != null && maxPathDepth > 0 && path.getLength() > maxPathDepth ? null : path;
   }
 
   private void requireTableOrView(final DatabaseObjectNodeId nodeId, final String role) {

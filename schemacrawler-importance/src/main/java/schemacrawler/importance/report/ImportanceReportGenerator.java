@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import schemacrawler.importance.model.DatabaseObjectNodeId;
+import schemacrawler.importance.model.SchemaCommunity;
 import schemacrawler.importance.model.SchemaGraphModel;
 import schemacrawler.importance.model.TableImportance;
+import schemacrawler.importance.options.ImportanceOptions;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Table;
@@ -27,36 +29,91 @@ public final class ImportanceReportGenerator {
       Comparator.comparing(ImportanceReportEntry::tableImportance)
           .thenComparing(ImportanceReportEntry::tableFullName);
 
+  private static <T> List<T> limit(final List<T> entries, final int maximum) {
+    if (maximum == 0) {
+      return List.of();
+    }
+    if (maximum < 0) {
+      return List.copyOf(entries);
+    }
+    final int limit = Math.min(entries.size(), maximum);
+    return List.copyOf(entries.subList(0, limit));
+  }
+
   private final SchemaGraphModel schemaGraphModel;
 
   public ImportanceReportGenerator(final SchemaGraphModel schemaGraphModel) {
     this.schemaGraphModel = requireNonNull(schemaGraphModel, "No schema graph model provided");
   }
 
-  /**
-   * Gets importance report entries for tables and views selected by an inclusion rule.
-   *
-   * @param tableInclusionRule rule applied to table and view full names
-   * @return immutable entries sorted by descending importance score, then descending betweenness
-   *     centrality, then full name
-   */
-  public List<ImportanceReportEntry> report(final InclusionRule tableInclusionRule) {
-    return report(tableInclusionRule, 0);
+  /** Gets the complete importance report using the supplied inclusion and limit options. */
+  public ImportanceReport report(final ImportanceOptions options) {
+    requireNonNull(options, "No importance options provided");
+    final InclusionRule tableInclusionRule = options.getTableInclusionRule();
+    final List<ImportanceReportEntry> tables =
+        reportTables(tableInclusionRule, options.getMaxImportantTables());
+    final List<CommunityReportEntry> communities =
+        limit(
+            reportCommunities(tableInclusionRule, options.getMaxCommunitySize()),
+            options.getMaxCommunities());
+
+    return new ImportanceReport(communities, tables);
   }
 
-  /**
-   * Gets importance report entries for tables and views selected by an inclusion rule, capped to a
-   * maximum number of entries.
-   *
-   * @param tableInclusionRule rule applied to table and view full names
-   * @param maxTables maximum number of entries to return (default 5, <=0 for unlimited)
-   * @return immutable entries sorted by descending importance score, then descending betweenness
-   *     centrality, then full name
-   */
-  public List<ImportanceReportEntry> report(
-      final InclusionRule tableInclusionRule, final int maxTables) {
-    requireNonNull(tableInclusionRule, "No table inclusion rule provided");
+  private List<CommunityReportEntry> reportCommunities(
+      final InclusionRule tableInclusionRule, final int maxCommunitySize) {
+    final List<SchemaCommunity> schemaCommunities = schemaGraphModel.getCommunities();
 
+    final List<CommunityReportEntry> entries = new ArrayList<>();
+    for (final SchemaCommunity community : schemaCommunities) {
+      final DatabaseObject anchorObj = schemaGraphModel.getObjectByNodeId(community.anchorNode());
+      final String anchorFullName =
+          anchorObj != null ? anchorObj.getFullName() : community.anchorNode().key().toString();
+
+      boolean matchesInclusionRule = false;
+      final List<DatabaseObjectNodeId> allMembers = community.memberNodes();
+      final List<String> allFullNames = new ArrayList<>();
+
+      for (final DatabaseObjectNodeId memberId : allMembers) {
+        final DatabaseObject memberObj = schemaGraphModel.getObjectByNodeId(memberId);
+        final String fullName =
+            memberObj != null ? memberObj.getFullName() : memberId.key().toString();
+        allFullNames.add(fullName);
+        if (tableInclusionRule.test(fullName)) {
+          matchesInclusionRule = true;
+        }
+      }
+
+      if (!matchesInclusionRule) {
+        continue;
+      }
+
+      final int totalSize = allMembers.size();
+      final List<DatabaseObjectNodeId> truncatedMembers;
+      final List<String> truncatedFullNames;
+
+      if (maxCommunitySize > 0 && totalSize > maxCommunitySize) {
+        truncatedMembers = allMembers.subList(0, maxCommunitySize);
+        truncatedFullNames = allFullNames.subList(0, maxCommunitySize);
+      } else {
+        truncatedMembers = allMembers;
+        truncatedFullNames = allFullNames;
+      }
+
+      entries.add(
+          new CommunityReportEntry(
+              community.id(),
+              community.anchorNode(),
+              anchorFullName,
+              totalSize,
+              truncatedMembers,
+              truncatedFullNames));
+    }
+    return List.copyOf(entries);
+  }
+
+  private List<ImportanceReportEntry> reportTables(
+      final InclusionRule tableInclusionRule, final int maxTables) {
     final List<ImportanceReportEntry> entries = new ArrayList<>();
     for (final DatabaseObjectNodeId nodeId : schemaGraphModel.getTableNodes()) {
       final DatabaseObject databaseObject = schemaGraphModel.getObjectByNodeId(nodeId);
@@ -73,9 +130,6 @@ public final class ImportanceReportGenerator {
     entries.sort(IMPORTANCE_REPORT_ENTRY_COMPARATOR);
 
     // Limit number of tables returned
-    final List<ImportanceReportEntry> result =
-        maxTables > 0 && entries.size() > maxTables ? entries.subList(0, maxTables) : entries;
-
-    return List.copyOf(result);
+    return limit(entries, maxTables);
   }
 }

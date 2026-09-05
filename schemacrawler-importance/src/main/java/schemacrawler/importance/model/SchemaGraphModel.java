@@ -8,6 +8,9 @@
 
 package schemacrawler.importance.model;
 
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -19,17 +22,25 @@ import schemacrawler.schema.DatabaseObject;
 public final class SchemaGraphModel {
 
   private final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph;
+  private final List<SchemaCommunity> communities;
   private final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject;
-  private final Set<DatabaseObjectNodeId> tableViewNodes;
+  private final Set<DatabaseObjectNodeId> tableNodes;
 
   public SchemaGraphModel(
       final Graph<DatabaseObjectNodeId, SchemaEdge> fullGraph,
       final Set<DatabaseObjectNodeId> tableViewNodes,
-      final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject) {
+      final Map<DatabaseObjectNodeId, DatabaseObject> nodeToObject,
+      final List<SchemaCommunity> communities) {
     this.fullGraph =
         new AsUnmodifiableGraph<>(Objects.requireNonNull(fullGraph, "No full graph provided"));
-    this.tableViewNodes = Set.copyOf(tableViewNodes);
+    tableNodes = Collections.unmodifiableSet(new LinkedHashSet<>(tableViewNodes));
     this.nodeToObject = Map.copyOf(nodeToObject);
+    this.communities = List.copyOf(communities);
+  }
+
+  /** Gets the immutable, ordered communities calculated when this model was built. */
+  public List<SchemaCommunity> getCommunities() {
+    return communities;
   }
 
   public Graph<DatabaseObjectNodeId, SchemaEdge> getFullGraph() {
@@ -41,6 +52,6 @@ public final class SchemaGraphModel {
   }
 
   public Set<DatabaseObjectNodeId> getTableNodes() {
-    return tableViewNodes;
+    return tableNodes;
   }
 }
