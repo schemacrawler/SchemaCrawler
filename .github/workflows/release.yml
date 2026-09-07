@@ -41,7 +41,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.7.2
+      uses: sualeh/prepare-maven-build@v1.8.0
       with:
         java-version: 17
         gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -76,10 +76,10 @@ jobs:
       name: Upload artifacts for the release
       uses: actions/upload-artifact@v7
       with:
-        name: release-artifacts-v17.15.0
+        name: release-artifacts-v17.15.1
         path: |
-          ./schemacrawler-distrib/target/schemacrawler-17.15.0-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.15.0-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-17.15.1-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.15.1-bin.zip.SHA-512
         retention-days: 2
     - id: create-release
       name: Create GitHub release
@@ -95,8 +95,8 @@ jobs:
           See the change history at https://www.schemacrawler.com/changes-report.html
         generate_release_notes: true
         files: |
-          ./schemacrawler-distrib/target/schemacrawler-17.15.0-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.15.0-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-17.15.1-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-17.15.1-bin.zip.SHA-512
         overwrite_files: true
 
 # BUILD AND PUBLISH DOCKER IMAGE

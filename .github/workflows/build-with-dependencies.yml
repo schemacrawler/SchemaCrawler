@@ -19,7 +19,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.7.2
+      uses: sualeh/prepare-maven-build@v1.8.0
       with:
         java-version: 17
     - id: install-graphviz
@@ -32,7 +32,7 @@ jobs:
       uses: sualeh/build-maven-dependency@v1.0.9
       with:
         repository: schemacrawler/SchemaCrawler-Core
-        artifact: us.fatehi:schemacrawler:17.15.0
+        artifact: us.fatehi:schemacrawler:17.15.1
 
 # BUILD AND TEST
     - id: build-test
