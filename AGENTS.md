@@ -34,7 +34,6 @@ Diagram-related tests require **Graphviz** (`dot` on `PATH`). Diagram generation
 | `schemacrawler-scripting` | JSR-223 scripting engine integration (Velocity, Thymeleaf, FreeMarker, Mustache, Mermaid, DBML, PlantUML templates) |
 | `schemacrawler-commandline` | CLI entry point (picocli), command discovery, interactive shell (jline3) |
 | `schemacrawler-lint` | Schema lint rules engine with 23 built-in linters |
-| `schemacrawler-offline` | Offline/snapshot mode for serialized catalogs |
 | `schemacrawler-docs` | Documentation generation |
 | `schemacrawler-db2` / `-hsqldb` / `-mysql` / `-oracle` / `-postgresql` / `-sqlite` / `-sqlserver` | Bundled JDBC driver plugins |
 | `schemacrawler-dbconnectors` | YAML-driven database connector framework with bundled connectors and integration tests |

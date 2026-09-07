@@ -110,11 +110,6 @@
         <artifactId>schemacrawler-sqlserver</artifactId>
         <version>${project.version}</version>
       </dependency>
-      <dependency>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-offline</artifactId>
-        <version>${project.version}</version>
-      </dependency>
       <!-- Test dependencies -->
       <dependency>
         <groupId>us.fatehi</groupId>
