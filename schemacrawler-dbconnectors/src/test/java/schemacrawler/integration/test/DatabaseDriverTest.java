@@ -14,7 +14,7 @@ import static us.fatehi.test.utility.DataSourceTestUtility.JDBC_DRIVER_COUNT;
 
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
-import us.fatehi.utility.database.JdbcDriverRegistry;
+import us.fatehi.utility.jdbc.driver.JdbcDriverRegistry;
 import us.fatehi.utility.property.PropertyName;
 
 public class DatabaseDriverTest {

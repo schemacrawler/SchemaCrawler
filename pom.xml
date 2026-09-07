@@ -39,7 +39,6 @@
     <module>schemacrawler-postgresql</module>
     <module>schemacrawler-sqlite</module>
     <module>schemacrawler-sqlserver</module>
-    <module>schemacrawler-offline</module>
     <!-- Additional modules -->
     <module>schemacrawler-docs</module>
     <module>schemacrawler-library-bom</module>

@@ -81,11 +81,6 @@
     <!-- SchemaCrawler database plugins -->
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-offline</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-db2</artifactId>
       <version>${project.version}</version>
     </dependency>

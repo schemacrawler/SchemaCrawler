@@ -87,8 +87,8 @@ import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.Docum
 import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
-import us.fatehi.utility.database.JdbcDriverProperty;
 import us.fatehi.utility.html.Alignment;
+import us.fatehi.utility.jdbc.driver.JdbcDriverProperty;
 import us.fatehi.utility.property.Property;
 import us.fatehi.utility.string.SimpleToStringFunction;
 import us.fatehi.utility.string.StringFormat;

@@ -24,7 +24,7 @@ import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
 import schemacrawler.tools.commandline.command.LogCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
-import us.fatehi.utility.database.JdbcDriverRegistry;
+import us.fatehi.utility.jdbc.driver.JdbcDriverRegistry;
 import us.fatehi.utility.logging.UtilityLogger;
 import us.fatehi.utility.process.SystemExitException;
 import us.fatehi.utility.property.JvmArchitectureInfo;
