@@ -3,11 +3,11 @@
       --database=<database>
                           File name and location of the database metadata
                             snapshot
-      --host=<host>       Should be omitted
-      --port=<port>       Should be omitted
+      --host=<host>       Host name
+      --port=<port>       Port number
       --server=<server>   --server=offline
-                          Loads SchemaCrawler plug-in for offline catalog
-                            snapshots
+                          Loads SchemaCrawler plug-in for SchemaCrawler Offline
+                            Catalog Snapshot
 Add connection options to the `connect` command in the SchemaCrawler Shell
 
 

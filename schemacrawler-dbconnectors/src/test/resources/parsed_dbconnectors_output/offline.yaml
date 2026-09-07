@@ -1,0 +1,13 @@
+database-connector:
+  database-server-type:
+    server: offline
+    name: SchemaCrawler Offline Catalog Snapshot
+  url-template: "jdbc:offline://${database}"
+  standard-options:
+    host: {}
+    port: {}
+    database:
+      help:
+        - File name and location of the database metadata snapshot
+  schema-retrieval: {}
+  limit: {}

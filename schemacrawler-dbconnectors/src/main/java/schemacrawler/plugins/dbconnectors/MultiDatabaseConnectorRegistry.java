@@ -76,6 +76,7 @@ public final class MultiDatabaseConnectorRegistry extends BasePluginRegistry {
             "clickhouse.yaml",
             "duckdb.yaml",
             "h2.yaml",
+            "offline.yaml",
             "snowflake.yaml",
             "trino.yaml");
 

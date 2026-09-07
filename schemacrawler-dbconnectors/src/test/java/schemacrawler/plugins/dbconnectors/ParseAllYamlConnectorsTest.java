@@ -38,7 +38,16 @@ class ParseAllYamlConnectorsTest {
 
   @ParameterizedTest
   @ValueSource(
-      strings = {"access", "cassandra", "clickhouse", "duckdb", "h2", "snowflake", "trino"})
+      strings = {
+        "access",
+        "cassandra",
+        "clickhouse",
+        "duckdb",
+        "h2",
+        "offline",
+        "snowflake",
+        "trino"
+      })
   void parseYamlConnectors(final String server, final CapturedSystemStreams streams)
       throws IOException {
 

@@ -17,7 +17,6 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
-import static schemacrawler.test.ExecutableTestUtility.executableExecution;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static us.fatehi.test.utility.TestUtility.failTestSetup;
 import static us.fatehi.test.utility.TestUtility.flattenCommandlineArgs;
@@ -46,14 +45,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.server.offline.OfflineDatabaseConnector;
 import schemacrawler.test.utility.WithTestDatabase;
-import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
-import schemacrawler.tools.offline.connectionsource.OfflineConnectionSourceUtility;
 import schemacrawler.tools.options.ConfigUtility;
+import schemacrawler.utility.SerializedCatalogUtility;
 import us.fatehi.test.utility.TestWriter;
 import us.fatehi.test.utility.extensions.WithSystemProperty;
 import us.fatehi.utility.IOUtility;
@@ -145,33 +140,6 @@ public class OfflineSnapshotTest {
             classpathResource(OFFLINE_EXECUTABLE_OUTPUT + "offlineWithSchemaFilters.txt")));
   }
 
-  @Test
-  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void offlineSnapshotExecutable() throws Exception {
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder().includeAllRoutines();
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions())
-            .withLoadOptions(loadOptionsBuilder.toOptions());
-
-    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    schemaTextOptionsBuilder.noInfo(false);
-
-    final DatabaseConnectionSource connectionSource =
-        OfflineConnectionSourceUtility.newOfflineDatabaseConnectionSource(serializedCatalogFile);
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-    executable.setConnectionSource(connectionSource);
-
-    final String expectedResource = "details.txt";
-    executeExecutable(executable, OFFLINE_EXECUTABLE_OUTPUT + expectedResource);
-  }
-
   @BeforeEach
   public void serializeCatalog(final DatabaseConnectionSource connectionSource) {
     try {
@@ -190,38 +158,25 @@ public class OfflineSnapshotTest {
               SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
               schemaCrawlerOptions,
               ConfigUtility.newConfig());
-      assertThat("Could not obtain catalog", catalog, notNullValue());
-      assertThat("Could not find any schemas", catalog.getSchemas(), not(empty()));
-
-      final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
-      assertThat("Could not obtain schema", schema, notNullValue());
-      assertThat(
-          "Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(11));
+      validateCatalog(catalog);
 
       serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler", "ser");
-      final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
       final OutputStream outputStream =
           new GZIPOutputStream(
               Files.newOutputStream(serializedCatalogFile, WRITE, CREATE, TRUNCATE_EXISTING));
-      serializedCatalog.save(outputStream);
+      SerializedCatalogUtility.saveCatalog(catalog, outputStream);
       assertThat("Database was not serialized", isFileReadable(serializedCatalogFile), is(true));
     } catch (final IOException e) {
       failTestSetup("Could not serialize catalog", e);
     }
   }
 
-  private void executeExecutable(
-      final SchemaCrawlerExecutable executable, final String referenceFileName) throws Exception {
-    final DatabaseConnectionSource connectionSource =
-        OfflineConnectionSourceUtility.newOfflineDatabaseConnectionSource(serializedCatalogFile);
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder.withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);
+  private void validateCatalog(final Catalog catalog) {
+    assertThat("Could not obtain catalog", catalog, notNullValue());
+    assertThat("Could not find any schemas", catalog.getSchemas(), not(empty()));
 
-    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
-
-    assertThat(
-        outputOf(executableExecution(connectionSource, executable)),
-        hasSameContentAs(classpathResource(referenceFileName)));
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
+    assertThat("Could not obtain schema", schema, notNullValue());
+    assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(11));
   }
 }

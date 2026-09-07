@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: EPL-2.0
  */
 
-package schemacrawler.integration.test;
+package schemacrawler.test;
 
 import static java.nio.file.Files.newInputStream;
 import static java.nio.file.StandardOpenOption.CREATE;
