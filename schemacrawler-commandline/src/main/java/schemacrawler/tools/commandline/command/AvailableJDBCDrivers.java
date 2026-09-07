@@ -8,7 +8,7 @@
 
 package schemacrawler.tools.commandline.command;
 
-import us.fatehi.utility.database.JdbcDriverRegistry;
+import us.fatehi.utility.jdbc.driver.JdbcDriverRegistry;
 
 public class AvailableJDBCDrivers extends BaseAvailableRegistryPlugins {
 
