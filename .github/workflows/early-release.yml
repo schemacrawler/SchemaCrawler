@@ -33,7 +33,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v1.8.0
+      uses: sualeh/prepare-maven-build@v1.8.2
       with:
         java-version: 17
         fetch-depth: 0
@@ -84,6 +84,7 @@ jobs:
         SHA: ${{ github.sha }}
       shell: bash
       run: |
+        # Move early-access-release tag
         set -euo pipefail
         ## Set username
         git config user.name "Sualeh Fatehi"
@@ -95,7 +96,7 @@ jobs:
         git push origin --delete "$TAG" || true
         git rev-parse -q --verify "refs/tags/$TAG" >/dev/null && git tag -d "$TAG" || true
         ## Re-tag to last commit
-        git tag -a "$TAG" -m "SchemaCrawler AI Early Access Release"
+        git tag -a "$TAG" -m "SchemaCrawler Early Access Release"
         git push origin "$TAG"
         ## Create pre-release and add files
         gh release create "$TAG" \
