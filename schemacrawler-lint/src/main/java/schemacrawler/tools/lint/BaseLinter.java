@@ -11,6 +11,7 @@ package schemacrawler.tools.lint;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -58,7 +59,8 @@ public abstract class BaseLinter extends AbstractLinter {
   public final void execute() {
     try (final Connection connection = getConnection(); ) {
       start(connection);
-      for (final Table table : getCatalog().getTables()) {
+      final Collection<Table> tables = getCatalog().getTables();
+      for (final Table table : tables) {
         if (includeTable(table)) {
           lint(table, connection);
         } else {
