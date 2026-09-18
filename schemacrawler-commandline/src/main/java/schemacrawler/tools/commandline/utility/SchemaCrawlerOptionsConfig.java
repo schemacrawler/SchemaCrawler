@@ -131,10 +131,6 @@ public final class SchemaCrawlerOptionsConfig {
       return builder;
     }
 
-    final String SC_LOAD_MAX_THREADS = "schemacrawler.load.max_threads";
-
-    builder.withMaxThreads(config.getIntegerValue(SC_LOAD_MAX_THREADS, 5));
-
     return builder;
   }
 
