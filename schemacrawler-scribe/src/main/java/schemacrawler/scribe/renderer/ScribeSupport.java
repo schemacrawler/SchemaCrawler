@@ -29,6 +29,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Routine;
+import schemacrawler.schema.SimpleTableType;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
 import schemacrawler.scribe.command.options.ScribeOptions;
@@ -38,7 +39,6 @@ import schemacrawler.tools.lint.Lints;
 import schemacrawler.tools.state.ExecutionState;
 import schemacrawler.tools.utility.AbstractTextSupport;
 import schemacrawler.tools.utility.EntityModelType;
-import schemacrawler.utility.MetaDataUtility;
 
 /**
  * Single source of truth for all catalog, ER model, lint, and message data used by Scribe
@@ -195,7 +195,7 @@ public final class ScribeSupport extends AbstractTextSupport {
    * @return {@code false} when the table is {@code null}
    */
   public boolean isView(final Table table) {
-    return MetaDataUtility.isView(table);
+    return table.getTableType().getSimpleTableType() == SimpleTableType.view;
   }
 
   /**
