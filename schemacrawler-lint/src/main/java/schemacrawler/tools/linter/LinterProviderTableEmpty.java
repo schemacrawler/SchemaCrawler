@@ -16,9 +16,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.filter.TableTypesFilter;
+import schemacrawler.filter.NamedObjectFilters;
 import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.IdentifiersBuilder;
+import schemacrawler.schema.SimpleTableType;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.lint.BaseLinter;
@@ -50,7 +51,7 @@ class LinterTableEmpty extends BaseLinter {
   public LinterTableEmpty(final PropertyName propertyName, final LintCollector lintCollector) {
     super(propertyName, lintCollector);
     setSeverity(LintSeverity.low);
-    setTableTypesFilter(new TableTypesFilter("TABLE"));
+    setTableTypesFilter(NamedObjectFilters.tableTypes(SimpleTableType.table));
   }
 
   @Override

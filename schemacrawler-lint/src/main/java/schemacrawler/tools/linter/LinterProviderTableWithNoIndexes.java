@@ -11,8 +11,9 @@ package schemacrawler.tools.linter;
 import java.io.Serial;
 import java.sql.Connection;
 import java.util.Collection;
-import schemacrawler.filter.TableTypesFilter;
+import schemacrawler.filter.NamedObjectFilters;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.SimpleTableType;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
@@ -38,7 +39,7 @@ class LinterTableWithNoIndexes extends BaseLinter {
 
   LinterTableWithNoIndexes(final PropertyName propertyName, final LintCollector lintCollector) {
     super(propertyName, lintCollector);
-    setTableTypesFilter(new TableTypesFilter("TABLE"));
+    setTableTypesFilter(NamedObjectFilters.tableTypes(SimpleTableType.table));
   }
 
   @Override

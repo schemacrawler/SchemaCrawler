@@ -31,6 +31,7 @@
 [PUBLIC.FOR_LINT.SELFREFERENCE] should have remarks
 [PUBLIC.FOR_LINT.SELFREFERENCE] should have remarks: [ID, TITLE]
 [PUBLIC.FOR_LINT.TEMP1] no non-nullable data columns
+[PUBLIC.FOR_LINT.TEMP1] empty table
 [PUBLIC.FOR_LINT.TEMP1] should have remarks
 [PUBLIC.FOR_LINT.TEMP1] should have remarks: [ID, SCORES, NAMES, DATA]
 [PUBLIC.FOR_LINT.WRITERS] foreign key data type different from primary key: PUBLIC.FOR_LINT.WRITERS.FK_WRITERS_PUBLICATION
