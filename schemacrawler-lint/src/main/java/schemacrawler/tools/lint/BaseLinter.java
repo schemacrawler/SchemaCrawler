@@ -16,7 +16,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import schemacrawler.filter.TableTypesFilter;
+import schemacrawler.filter.NamedObjectFilter;
+import schemacrawler.filter.NamedObjectFilters;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
@@ -37,7 +38,7 @@ public abstract class BaseLinter extends AbstractLinter {
 
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
-  private TableTypesFilter tableTypesFilter;
+  private NamedObjectFilter<Table> tableTypesFilter;
 
   protected BaseLinter(final PropertyName linterName, final LintCollector lintCollector) {
     super(linterName, lintCollector);
@@ -131,9 +132,9 @@ public abstract class BaseLinter extends AbstractLinter {
 
   protected abstract void lint(Table table, Connection connection);
 
-  protected final void setTableTypesFilter(final TableTypesFilter tableTypesFilter) {
+  protected final void setTableTypesFilter(final NamedObjectFilter<Table> tableTypesFilter) {
     if (tableTypesFilter == null) {
-      this.tableTypesFilter = new TableTypesFilter();
+      this.tableTypesFilter = table -> true;
     } else {
       this.tableTypesFilter = tableTypesFilter;
     }
@@ -144,12 +145,11 @@ public abstract class BaseLinter extends AbstractLinter {
   }
 
   private final boolean includeColumn(final Column column) {
-    return column != null && columnInclusionRule.test(column.getFullName());
+    return column != null && NamedObjectFilters.<Column>fullName(columnInclusionRule).test(column);
   }
 
   private final boolean includeTable(final Table table) {
     return table != null
-        && tableInclusionRule.test(table.getFullName())
-        && tableTypesFilter.test(table);
+        && NamedObjectFilters.<Table>fullName(tableInclusionRule).and(tableTypesFilter).test(table);
   }
 }

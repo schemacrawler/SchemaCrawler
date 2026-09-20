@@ -12,8 +12,9 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.Serial;
 import java.sql.Connection;
-import schemacrawler.filter.TableTypesFilter;
+import schemacrawler.filter.NamedObjectFilters;
 import schemacrawler.schema.PrimaryKey;
+import schemacrawler.schema.SimpleTableType;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.tools.lint.BaseLinter;
@@ -43,7 +44,7 @@ class LinterTableWithPrimaryKeyNotFirst extends BaseLinter {
       final PropertyName propertyName, final LintCollector lintCollector) {
     super(propertyName, lintCollector);
     setSeverity(LintSeverity.low);
-    setTableTypesFilter(new TableTypesFilter("TABLE"));
+    setTableTypesFilter(NamedObjectFilters.tableTypes(SimpleTableType.table));
   }
 
   @Override

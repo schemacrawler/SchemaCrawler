@@ -12,9 +12,10 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.Serial;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import schemacrawler.filter.NamedObjectFilter;
+import schemacrawler.filter.NamedObjectFilters;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
@@ -74,16 +75,11 @@ class LinterTableWithBadlyNamedColumns extends BaseLinter {
   }
 
   private List<Column> findBadlyNamedColumns(final List<Column> columns) {
-    final List<Column> badlyNamedColumns = new ArrayList<>();
     if (columnNames == null) {
-      return badlyNamedColumns;
+      return List.of();
     }
 
-    for (final Column column : columns) {
-      if (columnNames.test(column.getFullName())) {
-        badlyNamedColumns.add(column);
-      }
-    }
-    return badlyNamedColumns;
+    final NamedObjectFilter<Column> filter = NamedObjectFilters.fullName(columnNames);
+    return columns.stream().filter(filter).toList();
   }
 }

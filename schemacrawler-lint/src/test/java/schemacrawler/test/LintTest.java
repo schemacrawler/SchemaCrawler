@@ -96,7 +96,7 @@ public class LintTest {
     linters.setConnectionSource(connectionSource);
     linters.lint();
     final Lints lintReport = linters.getLints();
-    assertThat(lintReport.size(), is(53));
+    assertThat(lintReport.size(), is(54));
 
     final TestWriter testout1 = new TestWriter();
     try (final TestWriter out = testout1) {
@@ -145,7 +145,7 @@ public class LintTest {
     linters.setConnectionSource(connectionSource);
     linters.lint();
     final Lints lintReport = linters.getLints();
-    assertThat(lintReport.size(), is(42));
+    assertThat(lintReport.size(), is(43));
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

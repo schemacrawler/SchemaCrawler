@@ -20,9 +20,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import schemacrawler.filter.TableTypesFilter;
+import schemacrawler.filter.NamedObjectFilters;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.SimpleTableType;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.BaseLinterProvider;
@@ -51,7 +52,7 @@ class LinterRedundantIndexes extends BaseLinter {
   LinterRedundantIndexes(final PropertyName propertyName, final LintCollector lintCollector) {
     super(propertyName, lintCollector);
     setSeverity(LintSeverity.high);
-    setTableTypesFilter(new TableTypesFilter("TABLE"));
+    setTableTypesFilter(NamedObjectFilters.tableTypes(SimpleTableType.table));
   }
 
   @Override
