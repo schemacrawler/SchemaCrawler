@@ -26,6 +26,7 @@ graphify-out/
 /schemacrawler-scripting/serialize.*
 /schemacrawler-docker-compose/*.pdf
 /schemacrawler-docker-compose/*.html
+/schemacrawler-dbconnectors/bad-dbconnector*.yaml
 
 **/target*
 tree*.txt

@@ -51,6 +51,14 @@ public record DatabaseConnectorDefinition(
     }
   }
 
+  public boolean isEmpty() {
+    final boolean emptyDatabaseServerType =
+        databaseServerType == null
+            || databaseServerType.toDatabaseServerType().isUnknownDatabaseSystem();
+    final boolean blankUrlTemplate = isBlank(urlTemplate);
+    return emptyDatabaseServerType || blankUrlTemplate;
+  }
+
   @Override
   public String toString() {
     return JsonUtility.yamlMapper.writeValueAsString(this);
