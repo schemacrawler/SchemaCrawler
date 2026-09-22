@@ -35,7 +35,7 @@ class TableImportanceInputsTest {
     final TableImportanceInputs inputs = new TableImportanceInputs();
     final Table table = new LightTable("ORDERS");
     final DatabaseObjectVertexId vertexId = VertexUtility.createVertexId(table);
-    final TableImportanceMetrics metrics = new TableImportanceMetrics(1, 2, 3.0, 4, 5);
+    final TableImportanceMetrics metrics = new TableImportanceMetrics(1, 2, 3, 4, 5);
 
     inputs.putInputs(table, metrics);
 
@@ -50,8 +50,8 @@ class TableImportanceInputsTest {
     final TableImportanceInputs inputs = new TableImportanceInputs();
     final Table table = new LightTable("ORDERS");
     final DatabaseObjectVertexId vertexId = VertexUtility.createVertexId(table);
-    final TableImportanceMetrics firstMetrics = new TableImportanceMetrics(1, 1, 1.0, 1, 1);
-    final TableImportanceMetrics secondMetrics = new TableImportanceMetrics(2, 2, 2.0, 2, 2);
+    final TableImportanceMetrics firstMetrics = new TableImportanceMetrics(1, 1, 1, 1, 1);
+    final TableImportanceMetrics secondMetrics = new TableImportanceMetrics(2, 2, 2, 2, 2);
 
     inputs.putInputs(table, firstMetrics);
     inputs.putInputs(table, secondMetrics);

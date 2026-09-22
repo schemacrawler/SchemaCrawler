@@ -18,11 +18,11 @@ clusters:
 tables:
   - table_full_name: PUBLIC.BOOKS.BOOKS
     table_importance:
-      importance_score: 73
+      importance_score: 75
       importance_metrics:
         in_degree: 3
         out_degree: 1
-        betweenness_centrality: 6.0
+        betweenness_centrality: 2
         dependency_reachability_count: 0
         impact_reachability_count: 2
       table_traits:
@@ -36,11 +36,11 @@ tables:
         trigger_count: 0
   - table_full_name: PUBLIC.FOR_LINT.WRITERS
     table_importance:
-      importance_score: 57
+      importance_score: 51
       importance_metrics:
         in_degree: 3
         out_degree: 1
-        betweenness_centrality: 0.5
+        betweenness_centrality: 0
         dependency_reachability_count: 1
         impact_reachability_count: 3
       table_traits:
@@ -53,11 +53,11 @@ tables:
         trigger_count: 0
   - table_full_name: PUBLIC.FOR_LINT.PUBLICATIONS
     table_importance:
-      importance_score: 53
+      importance_score: 47
       importance_metrics:
         in_degree: 3
         out_degree: 1
-        betweenness_centrality: 0.5
+        betweenness_centrality: 0
         dependency_reachability_count: 1
         impact_reachability_count: 3
       table_traits:
@@ -74,7 +74,7 @@ tables:
       importance_metrics:
         in_degree: 0
         out_degree: 3
-        betweenness_centrality: 7.0
+        betweenness_centrality: 2
         dependency_reachability_count: 3
         impact_reachability_count: 0
       table_traits:
@@ -86,31 +86,13 @@ tables:
         foreign_key_count: 3
         index_count: 3
         trigger_count: 0
-  - table_full_name: PUBLIC.BOOKS.BOOKAUTHORS
-    table_importance:
-      importance_score: 36
-      importance_metrics:
-        in_degree: 0
-        out_degree: 2
-        betweenness_centrality: 4.0
-        dependency_reachability_count: 2
-        impact_reachability_count: 0
-      table_traits:
-        no_primary_key: true
-        entity_model_type: bridge_table
-      table_counts:
-        attribute_column_count: 1
-        column_count: 3
-        foreign_key_count: 2
-        index_count: 3
-        trigger_count: 0
   - table_full_name: PUBLIC.BOOKS.AUTHORS
     table_importance:
       importance_score: 35
       importance_metrics:
         in_degree: 1
         out_degree: 0
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 0
         impact_reachability_count: 1
       table_traits:
@@ -127,7 +109,7 @@ tables:
       importance_metrics:
         in_degree: 1
         out_degree: 0
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 0
         impact_reachability_count: 1
       table_traits:
@@ -144,7 +126,7 @@ tables:
       importance_metrics:
         in_degree: 1
         out_degree: 0
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 0
         impact_reachability_count: 1
       table_traits:
@@ -155,13 +137,31 @@ tables:
         foreign_key_count: 0
         index_count: 1
         trigger_count: 0
+  - table_full_name: PUBLIC.BOOKS.BOOKAUTHORS
+    table_importance:
+      importance_score: 29
+      importance_metrics:
+        in_degree: 0
+        out_degree: 2
+        betweenness_centrality: 1
+        dependency_reachability_count: 2
+        impact_reachability_count: 0
+      table_traits:
+        no_primary_key: true
+        entity_model_type: bridge_table
+      table_counts:
+        attribute_column_count: 1
+        column_count: 3
+        foreign_key_count: 2
+        index_count: 3
+        trigger_count: 0
   - table_full_name: PUBLIC.BOOKS."Celebrities"
     table_importance:
       importance_score: 28
       importance_metrics:
         in_degree: 1
         out_degree: 0
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 0
         impact_reachability_count: 1
       table_traits:
@@ -178,7 +178,7 @@ tables:
       importance_metrics:
         in_degree: 1
         out_degree: 0
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 0
         impact_reachability_count: 1
       table_traits:
@@ -195,7 +195,7 @@ tables:
       importance_metrics:
         in_degree: 0
         out_degree: 1
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 1
         impact_reachability_count: 0
       table_traits:
@@ -212,7 +212,7 @@ tables:
       importance_metrics:
         in_degree: 0
         out_degree: 0
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 0
         impact_reachability_count: 0
       table_traits:
@@ -230,7 +230,7 @@ tables:
       importance_metrics:
         in_degree: 0
         out_degree: 1
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 1
         impact_reachability_count: 0
       table_traits:
@@ -247,7 +247,7 @@ tables:
       importance_metrics:
         in_degree: 0
         out_degree: 1
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 1
         impact_reachability_count: 0
       table_traits:
@@ -264,7 +264,7 @@ tables:
       importance_metrics:
         in_degree: 1
         out_degree: 1
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 0
         impact_reachability_count: 0
       table_traits:
@@ -281,7 +281,7 @@ tables:
       importance_metrics:
         in_degree: 1
         out_degree: 0
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 0
         impact_reachability_count: 1
       table_traits:
@@ -299,7 +299,7 @@ tables:
       importance_metrics:
         in_degree: 0
         out_degree: 2
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 2
         impact_reachability_count: 0
       table_traits: {}
@@ -315,7 +315,7 @@ tables:
       importance_metrics:
         in_degree: 0
         out_degree: 2
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 2
         impact_reachability_count: 0
       table_traits:
@@ -333,7 +333,7 @@ tables:
       importance_metrics:
         in_degree: 0
         out_degree: 0
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 0
         impact_reachability_count: 0
       table_traits:
@@ -352,7 +352,7 @@ tables:
       importance_metrics:
         in_degree: 0
         out_degree: 0
-        betweenness_centrality: 0.0
+        betweenness_centrality: 0
         dependency_reachability_count: 0
         impact_reachability_count: 0
       table_traits:

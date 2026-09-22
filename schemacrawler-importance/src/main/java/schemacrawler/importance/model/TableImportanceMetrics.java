@@ -14,7 +14,7 @@ import java.io.Serializable;
 public record TableImportanceMetrics(
     int inDegree,
     int outDegree,
-    double betweennessCentrality,
+    int betweennessCentrality,
     int dependencyReachabilityCount,
     int impactReachabilityCount)
     implements Serializable {}
