@@ -113,6 +113,9 @@ public final class MultiDatabaseConnectorRegistry extends BasePluginRegistry {
                 try {
                   final DatabaseConnectorDefinition databaseConnectorDefinition =
                       DESERIALIZER.parse(inputResource);
+                  if (databaseConnectorDefinition.isEmpty()) {
+                    return Optional.<DatabaseConnectorDefinition>empty();
+                  }
                   return Optional.<DatabaseConnectorDefinition>of(databaseConnectorDefinition);
                 } catch (final Exception e) {
                   LOGGER.log(
