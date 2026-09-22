@@ -26,9 +26,11 @@ import us.fatehi.utility.UtilityMarker;
  * <p>The score blends structural signals (betweenness centrality, impact reachability, total
  * degree) with data-modeling signals (entity role, attribute column count, row count, foreign key
  * count, trigger count, self-referencing), then applies multiplicative dampening for tables that
- * have no primary key or no indexes. Every raw count signal is normalized against the catalog-wide
- * maximum for that signal using a log-dampened scale, so a single outlier table does not compress
- * every other table's score into a narrow band. Weights:
+ * have no primary key or no indexes. Betweenness is normalized linearly against the catalog-wide
+ * maximum so its contribution is independent of whether it is represented as a fraction or a
+ * percentage. Every raw count signal is normalized against the catalog-wide maximum for that signal
+ * using a log-dampened scale, so a single outlier table does not compress every other table's score
+ * into a narrow band. Weights:
  *
  * <pre>
  * structural (50%):
@@ -150,7 +152,7 @@ final class ImportanceScoreCalculator {
       final double rawScore =
           100
               * (WEIGHT_BETWEENNESS
-                      * norm(
+                      * ratio(
                           nodeMetrics.betweennessCentrality(),
                           maxGraphMetrics.betweennessCentrality())
                   + WEIGHT_IMPACT_REACHABILITY
@@ -229,6 +231,13 @@ final class ImportanceScoreCalculator {
       return 0;
     }
     return Math.log1p(x) / Math.log1p(max);
+  }
+
+  private static double ratio(final double x, final double max) {
+    if (max <= 0) {
+      return 0;
+    }
+    return x / max;
   }
 
   private ImportanceScoreCalculator() {

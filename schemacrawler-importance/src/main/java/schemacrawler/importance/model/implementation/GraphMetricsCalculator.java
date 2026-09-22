@@ -34,15 +34,22 @@ final class GraphMetricsCalculator {
   static Map<DatabaseObjectVertexId, TableImportanceMetrics> calculate(
       final Graph<DatabaseObjectVertexId, SchemaEdge> graph) {
     final BetweennessCentrality<DatabaseObjectVertexId, SchemaEdge> centrality =
-        new BetweennessCentrality<>(new AsUndirectedGraph<>(graph));
+        new BetweennessCentrality<>(new AsUndirectedGraph<>(graph), true);
     final Map<DatabaseObjectVertexId, TableImportanceMetrics> metrics = new LinkedHashMap<>();
     for (final DatabaseObjectVertexId vertexId : graph.vertexSet()) {
+      final int vertexCentralityPercentageScore;
+      final Double vertexCentralityScore = centrality.getVertexScore(vertexId);
+      if (vertexCentralityScore == null) {
+        vertexCentralityPercentageScore = 0;
+      } else {
+        vertexCentralityPercentageScore = (int) Math.round(vertexCentralityScore * 100D);
+      }
       metrics.put(
           vertexId,
           new TableImportanceMetrics(
               graph.inDegreeOf(vertexId),
               graph.outDegreeOf(vertexId),
-              centrality.getVertexScore(vertexId),
+              vertexCentralityPercentageScore,
               reachableCount(graph, vertexId, false),
               reachableCount(graph, vertexId, true)));
     }

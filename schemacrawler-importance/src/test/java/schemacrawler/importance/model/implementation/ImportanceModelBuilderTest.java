@@ -187,7 +187,7 @@ class ImportanceModelBuilderTest {
             .<TableImportance>getAttribute(TableImportance.class.getName())
             .importanceMetrics()
             .betweennessCentrality(),
-        greaterThan(0.0));
+        greaterThan(0));
     verify(refreshOrders, never()).setAttribute(anyString(), any());
     verify(customerAlias, never()).setAttribute(anyString(), any());
     assertThrows(

@@ -51,7 +51,7 @@ class ReportServiceTest {
   }
 
   private static TableImportanceMetrics metrics(final String name) {
-    return new TableImportanceMetrics(0, 0, "BETA".equals(name) ? 1.0 : 0.0, 0, 0);
+    return new TableImportanceMetrics(0, 0, "BETA".equals(name) ? 1 : 0, 0, 0);
   }
 
   private static DatabaseObjectVertexId node(final String name) {
@@ -78,11 +78,11 @@ class ReportServiceTest {
   }
 
   private static Table table(final String name) {
-    return tableWithScore(name, score(name), "BETA".equals(name) ? 1.0 : 0.0);
+    return tableWithScore(name, score(name), "BETA".equals(name) ? 1 : 0);
   }
 
   private static Table tableWithScore(
-      final String name, final int importanceScore, final double betweennessCentrality) {
+      final String name, final int importanceScore, final int betweennessCentrality) {
     final Table table = new LightTable(name);
     table.setAttribute(
         TableImportance.class.getName(),
@@ -112,8 +112,8 @@ class ReportServiceTest {
 
   @Test
   void fallsBackToCentralityThenFullNameWhenImportanceScoresAreEqual() {
-    final Table alpha = tableWithScore("ALPHA", 5, 0.0);
-    final Table beta = tableWithScore("BETA", 5, 1.0);
+    final Table alpha = tableWithScore("ALPHA", 5, 0);
+    final Table beta = tableWithScore("BETA", 5, 1);
     final DatabaseObjectVertexId alphaNode = node("ALPHA");
     final DatabaseObjectVertexId betaNode = node("BETA");
     final ImportanceModel importanceModel =

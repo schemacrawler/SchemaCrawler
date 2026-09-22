@@ -54,8 +54,8 @@ class ImportanceScoreCalculatorTest {
     final DatabaseObjectVertexId disconnectedNode = VertexUtility.createVertexId(disconnectedTable);
 
     final TableImportanceInputs inputs = new TableImportanceInputs();
-    put(inputs, connectedTable, new TableImportanceMetrics(1, 1, 0.1, 1, 1), false, false);
-    put(inputs, disconnectedTable, new TableImportanceMetrics(0, 0, 0.0, 0, 0), false, false);
+    put(inputs, connectedTable, new TableImportanceMetrics(1, 1, 1, 1, 1), false, false);
+    put(inputs, disconnectedTable, new TableImportanceMetrics(0, 0, 0, 0, 0), false, false);
 
     final Map<DatabaseObjectVertexId, Integer> scores = ImportanceScoreCalculator.calculate(inputs);
 
@@ -71,11 +71,11 @@ class ImportanceScoreCalculatorTest {
         VertexUtility.createVertexId(noPrimaryKeyOrIndexesTable);
 
     final TableImportanceInputs inputs = new TableImportanceInputs();
-    put(inputs, wellFormedTable, new TableImportanceMetrics(2, 2, 1.0, 2, 2), true, true);
+    put(inputs, wellFormedTable, new TableImportanceMetrics(2, 2, 1, 2, 2), true, true);
     put(
         inputs,
         noPrimaryKeyOrIndexesTable,
-        new TableImportanceMetrics(2, 2, 1.0, 2, 2),
+        new TableImportanceMetrics(2, 2, 1, 2, 2),
         false,
         false);
 
@@ -92,7 +92,7 @@ class ImportanceScoreCalculatorTest {
     final Table table = table("MAXED_OUT");
     final DatabaseObjectVertexId maxed = VertexUtility.createVertexId(table);
     final TableImportanceInputs inputs = new TableImportanceInputs();
-    put(inputs, table, new TableImportanceMetrics(100, 100, 1000.0, 500, 500), true, true);
+    put(inputs, table, new TableImportanceMetrics(100, 100, 1000, 500, 500), true, true);
 
     final Map<DatabaseObjectVertexId, Integer> scores = ImportanceScoreCalculator.calculate(inputs);
 
@@ -105,12 +105,31 @@ class ImportanceScoreCalculatorTest {
     final Table table = table("ORDERS");
     final DatabaseObjectVertexId node = VertexUtility.createVertexId(table);
     final TableImportanceInputs inputs = new TableImportanceInputs();
-    put(inputs, table, new TableImportanceMetrics(3, 4, 2.5, 5, 6), true, true);
+    put(inputs, table, new TableImportanceMetrics(3, 4, 2, 5, 6), true, true);
 
     final int firstRun = ImportanceScoreCalculator.calculate(inputs).get(node);
     final int secondRun = ImportanceScoreCalculator.calculate(inputs).get(node);
 
     assertThat(firstRun, is(equalTo(secondRun)));
+  }
+
+  @Test
+  void scalesBetweennessCentralityLinearly() {
+    final Table lowCentralityTable = table("LOW_CENTRALITY");
+    final DatabaseObjectVertexId lowCentralityNode =
+        VertexUtility.createVertexId(lowCentralityTable);
+    final Table highCentralityTable = table("HIGH_CENTRALITY");
+    final DatabaseObjectVertexId highCentralityNode =
+        VertexUtility.createVertexId(highCentralityTable);
+
+    final TableImportanceInputs inputs = new TableImportanceInputs();
+    put(inputs, lowCentralityTable, new TableImportanceMetrics(0, 0, 10, 0, 0), true, true);
+    put(inputs, highCentralityTable, new TableImportanceMetrics(0, 0, 50, 0, 0), true, true);
+
+    final Map<DatabaseObjectVertexId, Integer> scores = ImportanceScoreCalculator.calculate(inputs);
+
+    assertThat(scores.get(lowCentralityNode), is(equalTo(21)));
+    assertThat(scores.get(highCentralityNode), is(equalTo(45)));
   }
 
   @Test
@@ -121,8 +140,8 @@ class ImportanceScoreCalculatorTest {
     final DatabaseObjectVertexId connectedNode = VertexUtility.createVertexId(connectedTable);
 
     final TableImportanceInputs inputs = new TableImportanceInputs();
-    put(inputs, smallTable, new TableImportanceMetrics(0, 0, 0.0, 0, 0), false, false);
-    put(inputs, connectedTable, new TableImportanceMetrics(10, 10, 50.0, 20, 20), false, false);
+    put(inputs, smallTable, new TableImportanceMetrics(0, 0, 0, 0, 0), false, false);
+    put(inputs, connectedTable, new TableImportanceMetrics(10, 10, 50, 20, 20), false, false);
 
     final Map<DatabaseObjectVertexId, Integer> scores = ImportanceScoreCalculator.calculate(inputs);
 
@@ -135,7 +154,7 @@ class ImportanceScoreCalculatorTest {
     final DatabaseObjectVertexId onlyTable = VertexUtility.createVertexId(table);
 
     final TableImportanceInputs inputs = new TableImportanceInputs();
-    put(inputs, table, new TableImportanceMetrics(0, 0, 0.0, 0, 0), true, true);
+    put(inputs, table, new TableImportanceMetrics(0, 0, 0, 0, 0), true, true);
 
     final Map<DatabaseObjectVertexId, Integer> scores = ImportanceScoreCalculator.calculate(inputs);
 
