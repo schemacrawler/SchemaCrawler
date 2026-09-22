@@ -10,6 +10,7 @@ package schemacrawler.plugins.dbconnectors.model;
 
 import static us.fatehi.utility.Utility.isBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Set;
@@ -51,6 +52,7 @@ public record DatabaseConnectorDefinition(
     }
   }
 
+  @JsonIgnore
   public boolean isEmpty() {
     final boolean emptyDatabaseServerType =
         databaseServerType == null
