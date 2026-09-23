@@ -13,6 +13,8 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import schemacrawler.filter.NamedObjectFilter;
+import schemacrawler.filter.NamedObjectFilters;
 import schemacrawler.importance.model.DatabaseObjectVertexId;
 import schemacrawler.importance.model.ImportanceModel;
 import schemacrawler.importance.model.TableCluster;
@@ -62,6 +64,9 @@ public final class ImportanceReportGenerator {
   private List<ClusterReportEntry> reportTableClusters(
       final InclusionRule tableInclusionRule, final int maxClusterSize) {
     final List<TableCluster> tableClusters = importanceModel.getTableClusters();
+    // Quote-tolerant matching, consistent with the rest of the codebase - a regular expression
+    // inclusion rule is tested against both the quoted (displayed) and unquoted full name.
+    final NamedObjectFilter<Table> tableFilter = NamedObjectFilters.fullName(tableInclusionRule);
 
     final List<ClusterReportEntry> entries = new ArrayList<>();
     for (final TableCluster tableCluster : tableClusters) {
@@ -73,15 +78,19 @@ public final class ImportanceReportGenerator {
               : tableCluster.anchorVertexId().key().toString();
 
       boolean matchesInclusionRule = false;
-      final List<DatabaseObjectVertexId> allMembers = tableCluster.memberVertexIds();
-      final List<String> allFullNames = new ArrayList<>();
+      // Members that cannot be resolved to a table have no full name available, and are
+      // dropped from the cluster rather than falling back to a synthetic name.
+      final List<DatabaseObjectVertexId> resolvedMembers = new ArrayList<>();
+      final List<String> resolvedFullNames = new ArrayList<>();
 
-      for (final DatabaseObjectVertexId memberId : allMembers) {
+      for (final DatabaseObjectVertexId memberId : tableCluster.memberVertexIds()) {
         final Table memberTable = importanceModel.lookupTableByVertexId(memberId).orElse(null);
-        final String fullName =
-            memberTable != null ? memberTable.getFullName() : memberId.key().toString();
-        allFullNames.add(fullName);
-        if (tableInclusionRule.test(fullName)) {
+        if (memberTable == null) {
+          continue;
+        }
+        resolvedMembers.add(memberId);
+        resolvedFullNames.add(memberTable.getFullName());
+        if (tableFilter.test(memberTable)) {
           matchesInclusionRule = true;
         }
       }
@@ -90,16 +99,16 @@ public final class ImportanceReportGenerator {
         continue;
       }
 
-      final int totalSize = allMembers.size();
+      final int totalSize = resolvedMembers.size();
       final List<DatabaseObjectVertexId> truncatedMembers;
       final List<String> truncatedFullNames;
 
       if (maxClusterSize > 0 && totalSize > maxClusterSize) {
-        truncatedMembers = allMembers.subList(0, maxClusterSize);
-        truncatedFullNames = allFullNames.subList(0, maxClusterSize);
+        truncatedMembers = resolvedMembers.subList(0, maxClusterSize);
+        truncatedFullNames = resolvedFullNames.subList(0, maxClusterSize);
       } else {
-        truncatedMembers = allMembers;
-        truncatedFullNames = allFullNames;
+        truncatedMembers = resolvedMembers;
+        truncatedFullNames = resolvedFullNames;
       }
 
       entries.add(
@@ -116,10 +125,11 @@ public final class ImportanceReportGenerator {
 
   private List<ImportanceReportEntry> reportTables(
       final InclusionRule tableInclusionRule, final int maxTables) {
+    final NamedObjectFilter<Table> tableFilter = NamedObjectFilters.fullName(tableInclusionRule);
     final List<ImportanceReportEntry> entries = new ArrayList<>();
     for (final DatabaseObjectVertexId vertexId : importanceModel.getTableVertexIds()) {
       final Table table = importanceModel.lookupTableByVertexId(vertexId).orElse(null);
-      if (table == null || !tableInclusionRule.test(table.getFullName())) {
+      if (table == null || !tableFilter.test(table)) {
         continue;
       }
 
