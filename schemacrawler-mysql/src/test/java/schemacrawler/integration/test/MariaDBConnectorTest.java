@@ -9,9 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.utility.DatabaseConnectorUtility;
@@ -38,9 +40,6 @@ public class MariaDBConnectorTest {
     final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.fromConnection(connection);
 
-    // Fails in 17.15.x with:
-    // InternalRuntimeException: Add the SchemaCrawler database connector plugin for
-    // <mysql> to the CLASSPATH
     assertDoesNotThrow(
         () -> {
           final SchemaRetrievalOptions options =
