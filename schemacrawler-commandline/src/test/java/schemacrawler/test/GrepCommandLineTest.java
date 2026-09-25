@@ -9,11 +9,13 @@
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.AbstractMap;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -56,7 +59,11 @@ public class GrepCommandLineTest {
             List.of(
                 new AbstractMap.SimpleEntry<>("--grep-columns", ".*\\.STREET|.*\\.PRICE"),
                 new AbstractMap.SimpleEntry<>("--grep-def", ".*book authors.*")),
-            List.of(new AbstractMap.SimpleEntry<>("--grep-tables", ".*\\.BOOKS")));
+            List.of(new AbstractMap.SimpleEntry<>("--grep-tables", ".*\\.BOOKS")),
+            List.of(
+                new AbstractMap.SimpleEntry<>("--tables", ""),
+                new AbstractMap.SimpleEntry<>("--routines", ".*"),
+                new AbstractMap.SimpleEntry<>("--grep-routines", ".*\\.ALLOC_BLOCKS")));
 
     return IntStream.range(0, grepArgs.size()).mapToObj(i -> Arguments.of(i, grepArgs.get(i)));
   }
@@ -93,5 +100,33 @@ public class GrepCommandLineTest {
 
     final String expectedResource = GREP_OUTPUT + referenceFile;
     assertThat(outputOf(testOutputFile), hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @Test
+  public void grepRoutinesWithNoMatch(final DatabaseConnectionInfo connectionInfo)
+      throws Exception {
+    final Path testOutputFile = IOUtility.createTempFilePath("grep-routines-no-match", "data");
+    final Map<String, String> args =
+        Map.of(
+            "--tables",
+            "",
+            "--routines",
+            ".*",
+            "--grep-routines",
+            ".*\\.NO_SUCH_ROUTINE",
+            "--info-level",
+            InfoLevel.detailed.name(),
+            "--no-info",
+            Boolean.TRUE.toString());
+
+    commandlineExecution(
+        connectionInfo,
+        SchemaTextDetailType.details.name(),
+        args,
+        DatabaseTestUtility.tempHsqldbConfig(),
+        TextOutputFormat.text.getFormat(),
+        testOutputFile);
+
+    assertThat(Files.size(testOutputFile), is(0L));
   }
 }

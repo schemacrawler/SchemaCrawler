@@ -32,8 +32,10 @@ public class GrepCommandTest {
       "new.*pattern[1-3]",
       "--grep-parameters",
       "new.*pattern[4-6]",
-      "--grep-def",
+      "--grep-routines",
       "new.*pattern[7-9]",
+      "--grep-def",
+      "new.*pattern[10-12]",
       "--invert-match=true",
       "additional",
       "-extra"
@@ -56,10 +58,15 @@ public class GrepCommandTest {
         grepOptions.grepRoutineParameterInclusionRule(),
         is(new RegularExpressionInclusionRule(Pattern.compile("new.*pattern[4-6]"))));
 
+    assertThat(grepOptions.isGrepRoutines(), is(true));
+    assertThat(
+        grepOptions.grepRoutineInclusionRule(),
+        is(new RegularExpressionInclusionRule(Pattern.compile("new.*pattern[7-9]"))));
+
     assertThat(grepOptions.isGrepDefinitions(), is(true));
     assertThat(
         grepOptions.grepDefinitionInclusionRule(),
-        is(new RegularExpressionInclusionRule(Pattern.compile("new.*pattern[7-9]"))));
+        is(new RegularExpressionInclusionRule(Pattern.compile("new.*pattern[10-12]"))));
 
     assertThat(grepOptions.isGrepInvertMatch(), is(true));
   }
@@ -103,6 +110,7 @@ public class GrepCommandTest {
 
     final GrepOptions grepOptions = schemaCrawlerOptions.grepOptions();
     assertThat(grepOptions.isGrepColumns(), is(false));
+    assertThat(grepOptions.isGrepRoutines(), is(false));
     assertThat(grepOptions.isGrepRoutineParameters(), is(false));
     assertThat(grepOptions.isGrepDefinitions(), is(false));
     assertThat(grepOptions.isGrepInvertMatch(), is(false));
@@ -120,6 +128,7 @@ public class GrepCommandTest {
 
     final GrepOptions grepOptions = schemaCrawlerOptions.grepOptions();
     assertThat(grepOptions.isGrepColumns(), is(false));
+    assertThat(grepOptions.isGrepRoutines(), is(false));
     assertThat(grepOptions.isGrepRoutineParameters(), is(false));
     assertThat(grepOptions.isGrepDefinitions(), is(false));
     assertThat(grepOptions.isGrepInvertMatch(), is(false));

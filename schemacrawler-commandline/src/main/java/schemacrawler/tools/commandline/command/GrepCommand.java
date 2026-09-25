@@ -60,6 +60,17 @@ public final class GrepCommand extends BaseStateHolder implements Runnable {
   private Pattern grepdef;
 
   @Option(
+      names = "--grep-routines",
+      description = {
+        "<greproutines> is a regular expression to match fully qualified routine names, "
+            + "in the form \"CATALOGNAME.SCHEMANAME.ROUTINENAME\" "
+            + "- for example, --grep-routines=.*\\.NEW_CUSTOMER|.*\\.NEW_ORDER "
+            + "matches routines named NEW_CUSTOMER or NEW_ORDER",
+        "Optional, default is no grep"
+      })
+  private Pattern greproutines;
+
+  @Option(
       names = "--grep-parameters",
       description = {
         "<grepparameters> is a regular expression to match fully qualified routine parameter names,"
@@ -95,6 +106,9 @@ public final class GrepCommand extends BaseStateHolder implements Runnable {
     }
     if (grepcolumns != null) {
       grepOptionsBuilder.includeGreppedColumns(grepcolumns);
+    }
+    if (greproutines != null) {
+      grepOptionsBuilder.includeGreppedRoutines(greproutines);
     }
     if (grepparameters != null) {
       grepOptionsBuilder.includeGreppedRoutineParameters(grepparameters);

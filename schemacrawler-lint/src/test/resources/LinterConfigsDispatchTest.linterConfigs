@@ -25,9 +25,11 @@
     }
   },
   "columnInclusionRule" : {
+    "exclusionPattern" : "(?!)",
     "inclusionPattern" : ".*"
   },
   "tableInclusionRule" : {
+    "exclusionPattern" : "(?!)",
     "inclusionPattern" : ".*"
   }
 } ]

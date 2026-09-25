@@ -43,7 +43,7 @@ public class SchemaCrawlerOptionsConfigTest {
     final LimitOptions limitOptions = builder.toOptions();
 
     assertThat(
-        limitOptions.get(ruleForTableInclusion).toString(), endsWith("{+/.*.SOME_TAB/ -//}"));
+        limitOptions.get(ruleForTableInclusion).toString(), endsWith("{+/.*.SOME_TAB/ -/(?!)/}"));
     assertThat(
         limitOptions.get(ruleForColumnInclusion).toString(), endsWith("{+/.*/ -/.*.SOME_COL/}"));
     assertThat(
@@ -51,9 +51,10 @@ public class SchemaCrawlerOptionsConfigTest {
         endsWith("{+/.*/ -/.*.SOME_ROUTINE/}"));
     assertThat(
         limitOptions.get(ruleForRoutineParameterInclusion).toString(),
-        endsWith("{+/.*.OTHER_ROUTINE/ -//}"));
+        endsWith("{+/.*.OTHER_ROUTINE/ -/(?!)/}"));
     assertThat(
-        limitOptions.get(ruleForSynonymInclusion).toString(), endsWith("{+/.*.A_SYNONYM/ -//}"));
+        limitOptions.get(ruleForSynonymInclusion).toString(),
+        endsWith("{+/.*.A_SYNONYM/ -/(?!)/}"));
     assertThat(
         limitOptions.get(ruleForSequenceInclusion).toString(), endsWith("{+/.*/ -/EXC_SYN/}"));
   }

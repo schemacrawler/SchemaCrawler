@@ -1,4 +1,4 @@
-SchemaCrawler 17.12.2
+SchemaCrawler 17.15.5
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -193,6 +193,14 @@ Options:
                                INOUTNAME" - for example, --grep-parameters=.*\.
                                STREET|.*\.PRICE matches routine parameters
                                named STREET or PRICE in any routine
+                             Optional, default is no grep
+      --grep-routines=<greproutines>
+                             <greproutines> is a regular expression to match
+                               fully qualified routine names, in the form
+                               "CATALOGNAME.SCHEMANAME.ROUTINENAME" - for
+                               example, --grep-routines=.*\.NEW_CUSTOMER|.*\.
+                               NEW_ORDER matches routines named NEW_CUSTOMER or
+                               NEW_ORDER
                              Optional, default is no grep
       --grep-tables=<greptables>
                              <greptables> is a regular expression to match
