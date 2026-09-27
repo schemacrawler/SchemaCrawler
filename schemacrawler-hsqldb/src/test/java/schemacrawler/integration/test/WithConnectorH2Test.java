@@ -35,11 +35,10 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import us.fatehi.test.utility.extensions.WithSystemProperty;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
-public class WithoutPluginH2Test extends BaseAdditionalDatabaseTest {
+public class WithConnectorH2Test extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws Exception {
@@ -56,7 +55,6 @@ public class WithoutPluginH2Test extends BaseAdditionalDatabaseTest {
   }
 
   @Test
-  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void testH2WithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
