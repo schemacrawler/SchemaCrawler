@@ -18,22 +18,22 @@ import schemacrawler.tools.utility.DatabaseConnectorUtility;
 import us.fatehi.utility.datasource.DatabaseConnectionSource;
 import us.fatehi.utility.datasource.DatabaseConnectionSources;
 
-public class MariaDBConnectorTest {
+public class H2ConnectorTest {
 
   @Test
   public void shouldResolveConnectorForMariaDbJdbcUrl() throws SQLException {
 
-    // Check that MySQL connector is on the classpath
+    // Check that HyperSQL connector is on the classpath
     final boolean hasConnector =
-        DatabaseConnectorRegistry.getRegistry().hasDatabaseSystemIdentifier("mysql");
-    assertThat("MySQL connector should be on the classpath", hasConnector, is(true));
+        DatabaseConnectorRegistry.getRegistry().hasDatabaseSystemIdentifier("hsqldb");
+    assertThat("HyperSQL connector should be on the classpath", hasConnector, is(true));
 
     final Connection connection = Mockito.mock(Connection.class);
     final DatabaseMetaData metaData = Mockito.mock(DatabaseMetaData.class);
 
     Mockito.when(connection.isValid(ArgumentMatchers.anyInt())).thenReturn(true);
     Mockito.when(connection.getMetaData()).thenReturn(metaData);
-    Mockito.when(metaData.getURL()).thenReturn("jdbc:mariadb://localhost:3306/test");
+    Mockito.when(metaData.getURL()).thenReturn("jdbc:h2:mem:schemacrawler");
 
     final DatabaseConnectionSource connectionSource =
         DatabaseConnectionSources.fromConnection(connection);
@@ -43,7 +43,7 @@ public class MariaDBConnectorTest {
           final SchemaRetrievalOptions options =
               DatabaseConnectorUtility.matchSchemaRetrievalOptions(connectionSource);
           assertThat(options, is(not(nullValue())));
-          assertThat(options.getDatabaseServerType().getDatabaseSystemIdentifier(), is("mysql"));
+          assertThat(options.getDatabaseServerType().getDatabaseSystemIdentifier(), is("hsqldb"));
         });
   }
 }

@@ -9,16 +9,18 @@
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.ExecutableTestUtility.executableExecution;
+import static us.fatehi.test.integration.utility.MariaDBTestUtility.newMariaDBContainer;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
-import java.sql.Connection;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import org.testcontainers.containers.JdbcDatabaseContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -27,42 +29,39 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
-import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import us.fatehi.test.utility.extensions.WithSystemProperty;
-import us.fatehi.utility.datasource.MultiUseUserCredentials;
+import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 
 @DisableLogging
-public class H2Test extends BaseAdditionalDatabaseTest {
+@HeavyDatabaseTest("mariadb")
+@Testcontainers(disabledWithoutDocker = true)
+public class WithConnectorMariaDBTest extends BaseAdditionalDatabaseTest {
+
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newMariaDBContainer();
 
   @BeforeEach
-  public void createDatabase() throws Exception {
-    final DatabaseConnector connector =
-        DatabaseConnectorRegistry.getRegistry().getDatabaseConnector("h2");
-    final DatabaseConnectionOptions connectionOptions =
-        new DatabaseServerHostConnectionOptions("h2", null, null, "mem:schemacrawler", Map.of());
-    createConnectionSource(
-        connector.newDatabaseConnectionSource(connectionOptions, new MultiUseUserCredentials()));
+  public void createDatabase() {
 
-    try (final Connection connection = getConnection()) {
-      new TestSchemaCreator(connection, "/h2.scripts.txt", false).run();
+    if (!dbContainer.isRunning()) {
+      fail("Testcontainer for database is not available");
     }
+
+    createDataSource(
+        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+
+    createDatabase("/mysql.scripts.txt");
   }
 
   @Test
-  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void testH2WithConnection() throws Exception {
+  public void testMariaDBWithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
-            .includeSequences(new RegularExpressionExclusionRule(".*\\.BOOKS\\.SYSTEM_SEQUENCE.*"))
-            .tableTypes("BASE TABLE", "VIEW", "GLOBAL TEMPORARY", "LOCAL TEMPORARY", "SYNONYM");
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeAllRoutines();
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
@@ -70,14 +69,14 @@ public class H2Test extends BaseAdditionalDatabaseTest {
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder.noIndexNames().showDatabaseInfo().showJdbcDriverInfo();
+    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource = "testH2WithConnection.txt";
+    final String expectedResource = "testMariaDBWithConnection.txt";
     assertThat(
         outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));

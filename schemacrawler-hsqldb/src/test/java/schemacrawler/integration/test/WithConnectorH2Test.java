@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -35,11 +36,10 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import us.fatehi.test.utility.extensions.WithSystemProperty;
 import us.fatehi.utility.datasource.MultiUseUserCredentials;
 
 @DisableLogging
-public class H2Test extends BaseAdditionalDatabaseTest {
+public class WithConnectorH2Test extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
   public void createDatabase() throws Exception {
@@ -56,11 +56,11 @@ public class H2Test extends BaseAdditionalDatabaseTest {
   }
 
   @Test
-  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void testH2WithConnection() throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+            .includeRoutines(new IncludeAll())
             .includeSequences(new RegularExpressionExclusionRule(".*\\.BOOKS\\.SYSTEM_SEQUENCE.*"))
             .tableTypes("BASE TABLE", "VIEW", "GLOBAL TEMPORARY", "LOCAL TEMPORARY", "SYNONYM");
     final LoadOptionsBuilder loadOptionsBuilder =
