@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -59,6 +60,7 @@ public class WithConnectorH2Test extends BaseAdditionalDatabaseTest {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+            .includeRoutines(new IncludeAll())
             .includeSequences(new RegularExpressionExclusionRule(".*\\.BOOKS\\.SYSTEM_SEQUENCE.*"))
             .tableTypes("BASE TABLE", "VIEW", "GLOBAL TEMPORARY", "LOCAL TEMPORARY", "SYNONYM");
     final LoadOptionsBuilder loadOptionsBuilder =
