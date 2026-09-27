@@ -8,6 +8,7 @@
 package schemacrawler.scribe.okf.frontmatter.okf;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.Objects.requireNonNullElseGet;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,7 +21,7 @@ public record Generated(@JsonIgnore Actor actor, Instant at) {
 
   public Generated {
     actor = requireNonNull(actor, "No generated.by actor provided");
-    at = at == null ? Instant.now() : at;
+    at = requireNonNullElseGet(at, Instant::now);
   }
 
   @JsonProperty("by")

@@ -8,6 +8,7 @@
 package schemacrawler.scribe.okf.frontmatter.okf;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.Objects.requireNonNullElse;
 import static us.fatehi.utility.Utility.requireNotBlank;
 import static us.fatehi.utility.Utility.toSnakeCase;
 import static us.fatehi.utility.Utility.trimToEmpty;
@@ -37,7 +38,7 @@ public record OkfFrontMatter(
     description = trimToEmpty(description);
     tags = normalizeTags(tags);
     verified = requireNonNull(verified, "No verified front-matter provided");
-    status = status == null ? LifecycleStatus.stable : status;
+    status = requireNonNullElse(status, LifecycleStatus.stable);
   }
 
   public OkfFrontMatter(

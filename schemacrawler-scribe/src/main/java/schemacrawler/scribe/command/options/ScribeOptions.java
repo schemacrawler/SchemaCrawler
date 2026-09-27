@@ -9,6 +9,7 @@
 package schemacrawler.scribe.command.options;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.Objects.requireNonNullElseGet;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -29,7 +30,7 @@ public final class ScribeOptions implements CommandOptions {
       final boolean expandedOutput) {
     this.title = requireNonNull(title, "No title provided");
     this.includeLint = includeLint;
-    this.locale = locale == null ? Locale.getDefault() : locale;
+    this.locale = requireNonNullElseGet(locale, Locale::getDefault);
     this.expandedOutput = expandedOutput;
   }
 

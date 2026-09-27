@@ -8,6 +8,8 @@
 
 package schemacrawler.importance.options;
 
+import static java.util.Objects.requireNonNullElseGet;
+
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
@@ -105,7 +107,7 @@ public final class ImportanceOptionsBuilder
   }
 
   public ImportanceOptionsBuilder withTableInclusionRule(final InclusionRule tableInclusionRule) {
-    this.tableInclusionRule = tableInclusionRule == null ? new IncludeAll() : tableInclusionRule;
+    this.tableInclusionRule = requireNonNullElseGet(tableInclusionRule, IncludeAll::new);
     return this;
   }
 

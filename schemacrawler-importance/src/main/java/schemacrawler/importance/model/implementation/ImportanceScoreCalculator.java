@@ -8,6 +8,8 @@
 
 package schemacrawler.importance.model.implementation;
 
+import static java.util.Objects.requireNonNullElse;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -214,7 +216,7 @@ final class ImportanceScoreCalculator {
       return 0;
     }
     final Integer value = accessor.apply(counts);
-    return value == null ? 0 : value;
+    return requireNonNullElse(value, 0);
   }
 
   private static double nonNegativeLong(
@@ -223,7 +225,7 @@ final class ImportanceScoreCalculator {
       return 0;
     }
     final Long value = accessor.apply(counts);
-    return value == null ? 0 : value;
+    return requireNonNullElse(value, 0L);
   }
 
   private static double norm(final double x, final double max) {

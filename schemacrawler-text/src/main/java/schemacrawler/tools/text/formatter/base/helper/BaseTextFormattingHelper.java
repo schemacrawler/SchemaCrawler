@@ -8,6 +8,7 @@
 
 package schemacrawler.tools.text.formatter.base.helper;
 
+import static java.util.Objects.requireNonNullElse;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.anchor;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
@@ -185,7 +186,7 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
     final int nameWidth = 40;
     final int valueWidth = 70 - nameWidth;
 
-    final Alignment alignmentForValue = valueAlignment == null ? Alignment.inherit : valueAlignment;
+    final Alignment alignmentForValue = requireNonNullElse(valueAlignment, Alignment.inherit);
     final String valueStyle =
         "property_value" + (alignmentForValue == Alignment.inherit ? "" : " right");
 

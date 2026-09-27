@@ -8,6 +8,7 @@
 
 package schemacrawler.plugins.dbconnectors.model;
 
+import static java.util.Objects.requireNonNullElseGet;
 import static us.fatehi.utility.Utility.isBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,14 +38,14 @@ public record DatabaseConnectorDefinition(
 
   public DatabaseConnectorDefinition {
     databaseServerType =
-        databaseServerType == null ? new DatabaseServerTypeDefinition() : databaseServerType;
+        requireNonNullElseGet(databaseServerType, DatabaseServerTypeDefinition::new);
     urlTemplate = isBlank(urlTemplate) ? "" : urlTemplate;
     allowedDriverProperties =
         allowedDriverProperties == null ? List.of() : List.copyOf(allowedDriverProperties);
-    standardOptions = standardOptions == null ? new StandardOptionsDefinition() : standardOptions;
+    standardOptions = requireNonNullElseGet(standardOptions, StandardOptionsDefinition::new);
     additionalOptions = additionalOptions == null ? List.of() : List.copyOf(additionalOptions);
-    schemaRetrieval = schemaRetrieval == null ? new SchemaRetrievalDefinition() : schemaRetrieval;
-    limit = limit == null ? new LimitDefinition() : limit;
+    schemaRetrieval = requireNonNullElseGet(schemaRetrieval, SchemaRetrievalDefinition::new);
+    limit = requireNonNullElseGet(limit, LimitDefinition::new);
 
     // Validate allowedDriverProperties
     if (!allowedDriverProperties.equals(Set.copyOf(allowedDriverProperties))) {
