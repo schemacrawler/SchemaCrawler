@@ -7,6 +7,7 @@
  */
 package schemacrawler.scribe.okf.frontmatter.okf;
 
+import static java.util.Objects.requireNonNullElse;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 public record Actor(ActorType actorType, String actor) {
@@ -18,7 +19,7 @@ public record Actor(ActorType actorType, String actor) {
   }
 
   public Actor {
-    actorType = actorType == null ? actorType = ActorType.process : actorType;
+    actorType = requireNonNullElse(actorType, ActorType.process);
     requireNotBlank(actor, "No actor provided");
   }
 

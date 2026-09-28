@@ -8,6 +8,7 @@
 
 package schemacrawler.scribe.command.options;
 
+import static java.util.Objects.requireNonNullElseGet;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
@@ -137,7 +138,7 @@ public final class ScribeOptionsBuilder
    * @return Builder
    */
   public ScribeOptionsBuilder withLocale(final Locale value) {
-    locale = value == null ? Locale.getDefault() : value;
+    locale = requireNonNullElseGet(value, Locale::getDefault);
     return this;
   }
 

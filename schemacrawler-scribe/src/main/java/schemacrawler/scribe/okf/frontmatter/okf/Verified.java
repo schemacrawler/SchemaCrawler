@@ -8,6 +8,8 @@
 package schemacrawler.scribe.okf.frontmatter.okf;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.Objects.requireNonNullElse;
+import static java.util.Objects.requireNonNullElseGet;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,9 +20,9 @@ import tools.jackson.databind.annotation.JsonNaming;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record Verified(@JsonIgnore TrustTier trustTier, @JsonIgnore Actor actor, Instant at) {
   public Verified {
-    trustTier = trustTier == null ? TrustTier.unverified : trustTier;
+    trustTier = requireNonNullElse(trustTier, TrustTier.unverified);
     requireNonNull(actor, "No actor provided");
-    at = at == null ? Instant.now() : at;
+    at = requireNonNullElseGet(at, Instant::now);
   }
 
   public Verified(final TrustTier trustTier, final Actor actor) {

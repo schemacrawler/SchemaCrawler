@@ -8,6 +8,7 @@
 
 package schemacrawler.tools.lint.config;
 
+import static java.util.Objects.requireNonNullElse;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.beans.ConstructorProperties;
@@ -59,9 +60,9 @@ public final class LinterConfig implements CommandOptions, Comparable<LinterConf
       final String columnExclusionPattern,
       final Map<String, Object> configMap) {
     this.linterId = requireNotBlank(linterId, "No linter id provided");
-    this.runLinter = runLinter == null ? true : runLinter;
+    this.runLinter = requireNonNullElse(runLinter, Boolean.TRUE);
     this.severity = severity;
-    this.threshold = threshold == null ? Integer.MAX_VALUE : threshold;
+    this.threshold = requireNonNullElse(threshold, Integer.MAX_VALUE);
     this.tableInclusionPattern = tableInclusionPattern;
     this.tableExclusionPattern = tableExclusionPattern;
     this.columnInclusionPattern = columnInclusionPattern;
@@ -80,8 +81,8 @@ public final class LinterConfig implements CommandOptions, Comparable<LinterConf
     if (comparison == 0) {
       comparison =
           -1
-              * (severity == null ? LintSeverity.low : severity)
-                  .compareTo(other.severity == null ? LintSeverity.low : other.severity);
+              * requireNonNullElse(severity, LintSeverity.low)
+                  .compareTo(requireNonNullElse(other.severity, LintSeverity.low));
     }
 
     if (comparison == 0) {

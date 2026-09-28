@@ -8,6 +8,8 @@
 
 package schemacrawler.plugins.dbconnectors.model;
 
+import static java.util.Objects.requireNonNullElseGet;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jspecify.annotations.Nullable;
 import schemacrawler.plugins.dbconnectors.yaml.JsonUtility;
@@ -26,9 +28,9 @@ public record StandardOptionsDefinition(
   }
 
   public StandardOptionsDefinition {
-    host = host == null ? new StandardOptionDefinition() : host;
-    port = port == null ? new StandardOptionDefinition() : port;
-    database = database == null ? new StandardOptionDefinition() : database;
+    host = requireNonNullElseGet(host, StandardOptionDefinition::new);
+    port = requireNonNullElseGet(port, StandardOptionDefinition::new);
+    database = requireNonNullElseGet(database, StandardOptionDefinition::new);
   }
 
   @Override

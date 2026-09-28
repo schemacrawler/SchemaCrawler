@@ -8,6 +8,8 @@
 
 package schemacrawler.tools.text.formatter.base.helper;
 
+import static java.util.Objects.requireNonNullElse;
+
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
 
@@ -21,7 +23,7 @@ public interface TextFormattingHelper {
     }
 
     public DetailRowOptions {
-      style = style == null ? "" : style;
+      style = requireNonNullElse(style, "");
     }
   }
 
