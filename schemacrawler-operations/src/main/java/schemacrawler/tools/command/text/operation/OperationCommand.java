@@ -125,7 +125,13 @@ public final class OperationCommand extends AbstractSchemaCrawlerCommand<Operati
     switch (outputFormat) {
       case text:
       case html:
-        formatter = new DataTextFormatter(operation, commandOptions, outputOptions, identifiers);
+        formatter =
+            new DataTextFormatter(
+                operation,
+                commandOptions,
+                outputOptions,
+                identifiers,
+                getTableVisibilityPredicate());
         break;
       case json:
       default:

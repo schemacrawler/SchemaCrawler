@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.command.lint.options.LintOptions;
@@ -37,8 +38,9 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
   public LintReportTextFormatter(
       final LintOptions lintOptions,
       final OutputOptions outputOptions,
-      final Identifiers identifiers) {
-    super(schema, lintOptions, outputOptions, identifiers);
+      final Identifiers identifiers,
+      final Predicate<Table> tableVisibilityPredicate) {
+    super(schema, lintOptions, outputOptions, identifiers, tableVisibilityPredicate);
   }
 
   @Override

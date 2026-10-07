@@ -88,7 +88,8 @@ public class LintCommand extends AbstractSchemaCrawlerCommand<LintOptions> {
         break;
       default:
         final LintReportTextFormatter textFormatter =
-            new LintReportTextFormatter(commandOptions, outputOptions, identifiers);
+            new LintReportTextFormatter(
+                commandOptions, outputOptions, identifiers, getTableVisibilityPredicate());
         final LintReportTextGenerator textGenerator = new LintReportTextGenerator();
         transferState(textGenerator);
         textGenerator.setHandler(textFormatter);

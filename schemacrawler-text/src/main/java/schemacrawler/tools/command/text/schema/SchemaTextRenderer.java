@@ -65,12 +65,22 @@ public final class SchemaTextRenderer extends AbstractSchemaCrawlerCommand<Schem
 
     if (schemaTextDetailType == SchemaTextDetailType.list) {
       formatter =
-          new SchemaListFormatter(schemaTextDetailType, commandOptions, outputOptions, identifiers);
+          new SchemaListFormatter(
+              schemaTextDetailType,
+              commandOptions,
+              outputOptions,
+              identifiers,
+              getTableVisibilityPredicate());
     } else {
       final ModelHelper modelHelper = ModelHelper.from(this);
       formatter =
           new SchemaTextFormatter(
-              schemaTextDetailType, commandOptions, outputOptions, identifiers, modelHelper);
+              schemaTextDetailType,
+              commandOptions,
+              outputOptions,
+              identifiers,
+              modelHelper,
+              getTableVisibilityPredicate());
     }
 
     return formatter;

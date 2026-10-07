@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.ermodel.model.RelationshipCardinality;
@@ -66,20 +67,23 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   private final ModelHelper modelHelper;
 
   /**
-   * Text formatting of schema.
+   * Creates a formatter that determines table visibility for this execution.
    *
-   * @param schemaTextDetailType Types for text formatting of schema
-   * @param options Options for text formatting of schema
-   * @param outputOptions Options for text formatting of schema
-   * @param identifierQuoteString Quote character for database objects
+   * @param schemaTextDetailType Schema text detail level
+   * @param options Diagram options
+   * @param outputOptions Output options
+   * @param identifiers Identifier quoting options
+   * @param modelHelper Model helper
+   * @param tableVisibilityPredicate Returns true for tables selected in this execution
    */
   public SchemaDotFormatter(
       final SchemaTextDetailType schemaTextDetailType,
       final DiagramOptions options,
       final OutputOptions outputOptions,
       final Identifiers identifiers,
-      final ModelHelper modelHelper) {
-    super(schemaTextDetailType, options, outputOptions, identifiers);
+      final ModelHelper modelHelper,
+      final Predicate<Table> tableVisibilityPredicate) {
+    super(schemaTextDetailType, options, outputOptions, identifiers, tableVisibilityPredicate);
 
     tableColspan = options.isShowOrdinalNumbers() ? 4 : 3;
     this.modelHelper = requireNonNull(modelHelper, "No model helper provided");

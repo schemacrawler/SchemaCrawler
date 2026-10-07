@@ -145,6 +145,11 @@ public final class DiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramO
 
     final ModelHelper modelHelper = ModelHelper.from(this);
     return new SchemaDotFormatter(
-        schemaTextDetailType, commandOptions, outputOptions, identifiers, modelHelper);
+        schemaTextDetailType,
+        commandOptions,
+        outputOptions,
+        identifiers,
+        modelHelper,
+        getTableVisibilityPredicate());
   }
 }

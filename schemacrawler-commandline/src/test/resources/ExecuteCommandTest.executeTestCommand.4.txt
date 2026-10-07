@@ -1,2 +1,3 @@
 Output generated from schemacrawler.test.utility.testcommand.TestCommand
 TestOptions [testCommandParameter=]
+Tables: 20
