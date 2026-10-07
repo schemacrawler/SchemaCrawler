@@ -83,17 +83,17 @@ public final class LintReportTextFormatter extends BaseTabularFormatter<LintOpti
   }
 
   private void handleCatalog() {
+    final Collection<Lint<?>> lints = report.getCatalogLints();
+    if (lints == null || lints.isEmpty()) {
+      return;
+    }
+
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Database Lints");
 
-    final Collection<Lint<?>> lints = report.getCatalogLints();
-    if (lints != null && !lints.isEmpty()) {
-      formattingHelper.writeObjectStart();
-
-      formattingHelper.writeObjectNameRow("", "Database", "[database]", Color.white);
-
-      printLints(lints);
-      formattingHelper.writeObjectEnd();
-    }
+    formattingHelper.writeObjectStart();
+    formattingHelper.writeObjectNameRow("", "Database", "[database]", Color.white);
+    printLints(lints);
+    formattingHelper.writeObjectEnd();
   }
 
   private void printLints(final Collection<Lint<?>> lints) {

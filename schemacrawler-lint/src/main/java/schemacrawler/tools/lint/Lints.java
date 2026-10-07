@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import schemacrawler.schema.NamedObjectKey;
@@ -49,7 +50,14 @@ public final class Lints implements Options, Iterable<Lint<? extends Serializabl
    * @return All lints for a named object.
    */
   public List<Lint<?>> getCatalogLints() {
-    return getLints(new NamedObjectKey("catalog"));
+    final List<Lint<? extends Serializable>> catalogLints =
+        allLints.stream()
+            .filter(lint -> lint.getObjectType() == LintObjectType.catalog)
+            .collect(Collectors.toList());
+
+    final List<Lint<?>> lints = new ArrayList<>(catalogLints);
+    lints.sort(LINT_COMPARATOR);
+    return List.copyOf(lints);
   }
 
   /**
@@ -68,7 +76,14 @@ public final class Lints implements Options, Iterable<Lint<? extends Serializabl
    */
   public List<Lint<?>> getLints(final Table table) {
     requireNonNull(table, "No table provided");
-    return getLints(table.key());
+    final List<Lint<? extends Serializable>> lintsForKey = lintsByObject.get(table.key());
+    if (lintsForKey == null) {
+      return List.of();
+    }
+
+    final List<Lint<?>> lints = new ArrayList<>(lintsForKey);
+    lints.sort(LINT_COMPARATOR);
+    return List.copyOf(lints);
   }
 
   /**
@@ -101,16 +116,5 @@ public final class Lints implements Options, Iterable<Lint<? extends Serializabl
    */
   public Stream<Lint<? extends Serializable>> stream() {
     return StreamSupport.stream(spliterator(), false);
-  }
-
-  private List<Lint<?>> getLints(final NamedObjectKey key) {
-    final List<Lint<? extends Serializable>> lintsForKey = lintsByObject.get(key);
-    if (lintsForKey == null) {
-      return List.of();
-    }
-
-    final List<Lint<?>> lints = new ArrayList<>(lintsForKey);
-    lints.sort(LINT_COMPARATOR);
-    return lints;
   }
 }
