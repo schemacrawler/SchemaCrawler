@@ -94,6 +94,7 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
 
       final Catalog catalog = loadCatalog();
       state.setCatalog(catalog);
+      state.markCatalogLoaded();
       LOGGER.log(Level.INFO, "Loaded catalog");
 
       final ERModel erModel = buildERModel();
