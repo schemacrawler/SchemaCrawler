@@ -43,7 +43,7 @@ public class FilterCommandTest {
 
     assertThat(filterOptions.parentTableFilterDepth(), is(2));
     assertThat(filterOptions.childTableFilterDepth(), is(2));
-    assertThat(filterOptions.noEmptyTables(), is(true));
+    assertThat(filterOptions.omitEmptyTables(), is(true));
   }
 
   @Test

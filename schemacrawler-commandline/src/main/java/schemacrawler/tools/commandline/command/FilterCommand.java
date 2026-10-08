@@ -46,7 +46,7 @@ public final class FilterCommand extends BaseStateHolder implements Runnable {
         "Requires table row counts to be loaded",
         "Optional, default is false"
       })
-  private Boolean noEmptyTables;
+  private Boolean omitEmptyTables;
 
   @Option(
       names = "--parents",
@@ -86,8 +86,8 @@ public final class FilterCommand extends BaseStateHolder implements Runnable {
       optionsBuilder.childTableFilterDepth(children);
     }
 
-    if (noEmptyTables != null) {
-      optionsBuilder.noEmptyTables(noEmptyTables);
+    if (omitEmptyTables != null) {
+      optionsBuilder.omitEmptyTables(omitEmptyTables);
     }
 
     state.withFilterOptions(optionsBuilder.toOptions());
