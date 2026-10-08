@@ -12,6 +12,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.CommandlineTestUtility.createConnectedSchemaCrawlerShellState;
 import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
 import static schemacrawler.test.utility.CommandlineTestUtility.executeCommandInTest;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
@@ -44,6 +45,23 @@ import us.fatehi.utility.datasource.DatabaseConnectionSource;
 @WithTestDatabase
 @ResolveTestContext
 public class ExecuteCommandTest {
+
+  @Test
+  @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
+  public void executeDeferredCatalogLoad(final DatabaseConnectionSource connectionSource)
+      throws Exception {
+    final ShellState state = createConnectedSchemaCrawlerShellState(connectionSource);
+    state.setDeferCatalogLoad(true);
+    final CommandLine commandLine = createShellCommandLine(state);
+    final Path outputFile = IOUtility.createTempFilePath("deferred-execute", ".txt");
+
+    final int exitCode =
+        commandLine.execute("execute", "-c", "test-command", "-o", outputFile.toString());
+
+    assertThat(exitCode, is(0));
+    assertThat(Files.readString(outputFile), containsString("Tables: "));
+    assertThat(state.getCatalog() == null, is(true));
+  }
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
