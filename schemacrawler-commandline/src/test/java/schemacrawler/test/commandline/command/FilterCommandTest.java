@@ -8,6 +8,7 @@
 
 package schemacrawler.test.commandline.command;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,6 +43,16 @@ public class FilterCommandTest {
 
     assertThat(filterOptions.parentTableFilterDepth(), is(2));
     assertThat(filterOptions.childTableFilterDepth(), is(2));
+    assertThat(filterOptions.noEmptyTables(), is(true));
+  }
+
+  @Test
+  public void helpShowsNoEmptyTablesOption() {
+    final ShellState state = new ShellState();
+    state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
+    final CommandLine commandLine = newCommandLine(FilterCommand.class, new StateFactory(state));
+
+    assertThat(commandLine.getUsageMessage(), containsString("--no-empty-tables"));
   }
 
   @Test

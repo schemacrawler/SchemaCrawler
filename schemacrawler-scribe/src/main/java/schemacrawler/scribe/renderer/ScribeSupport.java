@@ -9,6 +9,8 @@
 package schemacrawler.scribe.renderer;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.utility.TableRowCountsUtility.getRowCount;
+import static schemacrawler.utility.TableRowCountsUtility.hasRowCount;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.time.Instant;
@@ -24,7 +26,6 @@ import schemacrawler.loader.catalog.summary.CatalogStats;
 import schemacrawler.loader.catalog.summary.CatalogStatsUtility;
 import schemacrawler.loader.ermodel.summary.ERModelStats;
 import schemacrawler.loader.ermodel.summary.ERModelStatsUtility;
-import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
@@ -303,10 +304,10 @@ public final class ScribeSupport extends AbstractTextSupport {
    * @return Row count, or {@code -1} if unavailable
    */
   public long rowCount(final Table table) {
-    if (table == null || !TableRowCountsUtility.hasRowCount(table)) {
+    if (table == null || !hasRowCount(table)) {
       return -1;
     }
-    final long rowCount = TableRowCountsUtility.getRowCount(table);
+    final long rowCount = getRowCount(table);
     return rowCount;
   }
 

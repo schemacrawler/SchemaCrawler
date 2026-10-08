@@ -10,8 +10,6 @@ package schemacrawler.tools.text.formatter.schema;
 
 import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
-import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideImplicitAssociationNames;
@@ -32,7 +30,9 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableColumns;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
+import static schemacrawler.tools.text.formatter.base.TableRowCountsMessageUtility.getRowCountMessage;
 import static schemacrawler.utility.MetaDataUtility.getTypeName;
+import static schemacrawler.utility.TableRowCountsUtility.hasRowCount;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 

@@ -28,9 +28,6 @@ Options:
                           Optional, defaults to false
   -m, --title=<title>     Shows the title on the output
                           Optional, defaults to no title being shown
-      --no-empty-tables   Includes only tables that have rows of data
-                          Requires table row counts to be loaded
-                          Optional, default is false
 
 For additional options, specific to individual catalog loaders,
 run SchemaCrawler with: `-h loaders`

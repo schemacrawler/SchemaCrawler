@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaRetrievalOptionsDefault;
+import static schemacrawler.utility.TableRowCountsUtility.hasRowCount;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,7 +22,6 @@ import java.util.List;
 import java.util.Locale;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.scribe.command.options.ScribeOptions;
@@ -59,7 +59,7 @@ public class OkfConceptWriterTableCountsTest {
 
     Table target = null;
     for (final Table table : support.allTables()) {
-      if (TableRowCountsUtility.hasRowCount(table)) {
+      if (hasRowCount(table)) {
         target = table;
         break;
       }

@@ -9,8 +9,8 @@
 package schemacrawler.tools.text.formatter.operation;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.tools.command.text.schema.options.SchemaTextDetailType.schema;
+import static schemacrawler.tools.text.formatter.base.TableRowCountsMessageUtility.getRowCountMessage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

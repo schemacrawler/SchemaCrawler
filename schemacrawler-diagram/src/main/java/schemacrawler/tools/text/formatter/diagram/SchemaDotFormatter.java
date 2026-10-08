@@ -9,8 +9,6 @@
 package schemacrawler.tools.text.formatter.diagram;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
-import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.TableConstraintType.foreign_key;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideImplicitAssociationNames;
@@ -19,7 +17,9 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideImplicitAssociations;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableColumns;
+import static schemacrawler.tools.text.formatter.base.TableRowCountsMessageUtility.getRowCountMessage;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
+import static schemacrawler.utility.TableRowCountsUtility.hasRowCount;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
