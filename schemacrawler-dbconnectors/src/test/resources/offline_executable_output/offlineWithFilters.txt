@@ -59,3 +59,158 @@ TRIGGER                                                      [privilege]
 UPDATE                                                       [privilege]
   _SYSTEM --> DBA (grantable)                                   
 
+
+
+Routines
+========================================================================
+
+
+
+PUBLIC.BOOKS.GETBOOKSCOUNT                        [procedure, no result]
+------------------------------------------------------------------------
+  BOOKSCOUNT                        INTEGER, out                
+
+                                                         [specific name]
+GETBOOKSCOUNT_10158
+
+
+
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+------------------------------------------------------------------------
+  PUBLISHER                         CHARACTER VARYING, out      
+
+                                                         [specific name]
+NEW_PUBLISHER_FORCE_VALUE
+
+
+
+PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+------------------------------------------------------------------------
+  NEWPUBLISHER                      CHARACTER VARYING, in       
+  PUBLISHER                         CHARACTER VARYING, out      
+
+                                                         [specific name]
+NEW_PUBLISHER_10154
+
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               INTEGER, in                 
+
+                                                         [specific name]
+CUSTOMADD_10156
+
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               INTEGER, in                 
+  TWO                               INTEGER, in                 
+
+                                                         [specific name]
+CUSTOMADD_10155
+
+
+
+PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
+------------------------------------------------------------------------
+  B_COUNT                           INTEGER, in                 
+  B_OFFSET                          INTEGER, in                 
+  L_ID                              BIGINT, in                  
+
+                                                         [specific name]
+ALLOC_BLOCKS_10071
+
+
+
+PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK             [procedure, no result]
+------------------------------------------------------------------------
+  B_COUNT                           INTEGER, in                 
+  B_OFFSET                          INTEGER, in                 
+  L_ID                              BIGINT, in                  
+
+                                                         [specific name]
+ALLOC_SINGLE_BLOCK_10074
+
+
+
+PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
+------------------------------------------------------------------------
+  B_ADDR                            INTEGER, in                 
+  B_COUNT                           INTEGER, in                 
+  B_OFFSET                          INTEGER, in                 
+  L_ID                              BIGINT, in                  
+
+                                                         [specific name]
+CONVERT_BLOCK_10029
+
+
+
+PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
+------------------------------------------------------------------------
+  B_ADDR                            INTEGER, in/ out            
+  B_COUNT                           INTEGER, in                 
+
+                                                         [specific name]
+CREATE_EMPTY_BLOCK_10063
+
+
+
+PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
+------------------------------------------------------------------------
+  L_ID                              BIGINT, in                  
+  B_OFFSET                          INTEGER, in                 
+  B_LIMIT                           INTEGER, in                 
+  TX_ID                             BIGINT, in                  
+
+                                                         [specific name]
+DELETE_BLOCKS_10060
+
+
+
+PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
+------------------------------------------------------------------------
+  L_ID                              BIGINT, in                  
+  TX_ID                             BIGINT, in                  
+
+                                                         [specific name]
+DELETE_LOB_10031
+
+
+
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
+------------------------------------------------------------------------
+  L_IDS                             BIGINT ARRAY, in            
+
+                                                         [specific name]
+DELETE_UNUSED_10046
+
+
+
+PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS             [procedure, no result]
+------------------------------------------------------------------------
+  LIMIT_ID                          BIGINT, in                  
+  TOTAL_COUNT                       INTEGER, out                
+
+                                                         [specific name]
+DELETE_UNUSED_LOBS_10058
+
+
+
+PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
+------------------------------------------------------------------------
+  B_OFFSET                          INTEGER, in                 
+  L_ID                              BIGINT, in                  
+
+                                                         [specific name]
+DIVIDE_BLOCK_10066
+
+
+
+PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS             [procedure, no result]
+------------------------------------------------------------------------
+
+                                                         [specific name]
+MERGE_EMPTY_BLOCKS_10079
+

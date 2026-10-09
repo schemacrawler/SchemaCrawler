@@ -119,7 +119,6 @@ public class TextFormatterCoverageTest {
     final LightTable selectedTable = new LightTable(new SchemaReference(), "SELECTED_TABLE");
     final LightTable excludedTable = new LightTable(new SchemaReference(), "EXCLUDED_TABLE");
     final PartialTable partialTable = new PartialTable(new SchemaReference(), "PARTIAL_TABLE");
-    selectedTable.setAttribute("schemacrawler.filtered_out", true);
     final Set<?> selectedTableKeys = Set.of(selectedTable.key(), partialTable.key());
 
     try (final TestWriter out = new TestWriter()) {

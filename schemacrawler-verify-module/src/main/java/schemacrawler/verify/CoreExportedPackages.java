@@ -12,7 +12,6 @@ import java.util.List;
 import schemacrawler.ermodel.associations.ImplicitAssociationAnalyzer;
 import schemacrawler.ermodel.model.ERModel;
 import schemacrawler.ermodel.utility.ERModelUtility;
-import schemacrawler.filter.ReducerFactory;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.loader.catalog.CatalogLoader;
 import schemacrawler.loader.catalog.model.CatalogAttributes;
@@ -62,7 +61,6 @@ public final class CoreExportedPackages {
         Catalog.class,
         SchemaCrawlerOptions.class,
         SchemaCrawlerException.class,
-        ReducerFactory.class,
         InclusionRule.class,
         EnumDataTypeHelper.class,
         MetaDataUtility.class,
