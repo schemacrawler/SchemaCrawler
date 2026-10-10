@@ -7,6 +7,7 @@
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
     <version>17.15.7</version>
+    <relativePath />
   </parent>
   <artifactId>schemacrawler-commandline</artifactId>
   <packaging>jar</packaging>
@@ -27,7 +28,7 @@
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-diagram</artifactId>
       <version>${project.version}</version>
-    </dependency>    
+    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-operations</artifactId>
@@ -45,7 +46,7 @@
       <artifactId>schemacrawler-test-utility</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency>      
+    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-tests</artifactId>
@@ -120,10 +121,6 @@
             </manifestEntries>
           </archive>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
         <executions>
           <execution>
             <id>create-test-jar</id>

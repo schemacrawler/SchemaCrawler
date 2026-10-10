@@ -12,6 +12,7 @@
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
     <version>17.15.7</version>
+    <relativePath />
   </parent>
   <artifactId>schemacrawler-aggregator</artifactId>
   <packaging>pom</packaging>

@@ -8,6 +8,7 @@
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
     <version>17.15.7</version>
+    <relativePath />
   </parent>
   <artifactId>schemacrawler-oracle</artifactId>
   <packaging>jar</packaging>
@@ -75,7 +76,7 @@
     </dependency>
 
   </dependencies>
-  
+
   <build>
     <plugins>
       <plugin>

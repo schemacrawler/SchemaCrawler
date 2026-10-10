@@ -7,6 +7,7 @@
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
     <version>17.15.7</version>
+    <relativePath />
   </parent>
   <artifactId>schemacrawler-lint</artifactId>
   <packaging>jar</packaging>
@@ -22,13 +23,13 @@
       <artifactId>schemacrawler-text</artifactId>
       <version>${project.version}</version>
     </dependency>
-    
+
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
       <scope>provided</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-testdb</artifactId>
