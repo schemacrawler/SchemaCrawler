@@ -11,6 +11,7 @@ package schemacrawler.tools.commandline.state;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import schemacrawler.schemacrawler.CrawlOptions;
 import schemacrawler.schemacrawler.FilterOptions;
 import schemacrawler.schemacrawler.GrepOptions;
 import schemacrawler.schemacrawler.LimitOptions;
@@ -33,6 +34,7 @@ public class ShellState extends AbstractExecutionState implements AutoCloseable 
   private Throwable lastException;
 
   private SchemaCrawlerOptions schemaCrawlerOptions;
+  private CrawlOptions loadedCrawlOptions;
   private SchemaRetrievalOptions schemaRetrievalOptions;
   private boolean isDeferCatalogLoad;
 
@@ -85,7 +87,14 @@ public class ShellState extends AbstractExecutionState implements AutoCloseable 
   }
 
   public boolean isLoaded() {
-    return hasCatalog();
+    return hasCatalog() && !isCatalogStale();
+  }
+
+  public boolean isCatalogStale() {
+    return hasCatalog()
+        && loadedCrawlOptions != null
+        && (schemaCrawlerOptions == null
+            || !loadedCrawlOptions.equals(schemaCrawlerOptions.crawlOptions()));
   }
 
   public void setBaseConfig(final Config baseConfig) {
@@ -128,12 +137,23 @@ public class ShellState extends AbstractExecutionState implements AutoCloseable 
     this.schemaRetrievalOptions = schemaRetrievalOptions;
   }
 
+  public void markCatalogLoaded() {
+    if (!hasCatalog()) {
+      throw new IllegalStateException("No catalog is loaded");
+    }
+    if (schemaCrawlerOptions == null) {
+      throw new IllegalStateException("No SchemaCrawler options are available");
+    }
+    loadedCrawlOptions = schemaCrawlerOptions.crawlOptions();
+  }
+
   public void sweep() {
     disconnect();
     super.clear();
     baseConfig = null;
     commandOptions = null;
     schemaCrawlerOptions = null;
+    loadedCrawlOptions = null;
     schemaRetrievalOptions = null;
     lastException = null;
   }

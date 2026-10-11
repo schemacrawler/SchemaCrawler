@@ -8,7 +8,12 @@
 
 package schemacrawler.integration.test;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.readString;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
 import static schemacrawler.test.ExecutableTestUtility.executableExecution;
 import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
@@ -76,6 +81,26 @@ public class OfflineTest extends BaseAdditionalDatabaseTest {
     assertThat(
         outputOf(executableExecution(getConnectionSource(), executable)),
         hasSameContentAs(classpathResource(expectedResource)));
+  }
+
+  @Test
+  public void testOfflineLimitsNarrowProjectionWithoutChangingBaseline() throws Exception {
+
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(
+                LimitOptionsBuilder.builder()
+                    .includeSchemas(Pattern.compile("PUBLIC\\.BOOKS"))
+                    .toOptions());
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("list");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+
+    final Path outputFile = executableExecution(getConnectionSource(), executable);
+    final String output = readString(outputFile, UTF_8);
+
+    assertThat(output, containsString("PUBLIC.BOOKS.AUTHORS"));
+    assertThat(output, not(containsString("PUBLIC.\"PUBLISHER SALES\"")));
+    assertThat(executable.getCatalog().getTables(), hasSize(20));
   }
 
   private void createDatabase() throws Exception {

@@ -68,6 +68,11 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
 
       final SchemaCrawlerExecutable executable = configureExecutable();
 
+      if (state.isCatalogStale()) {
+        throw new ExecutionException(
+            spec.commandLine(),
+            "Load or limit options have changed; run the load command before executing");
+      }
       if (!state.isLoaded() && !state.isDeferCatalogLoad()) {
         throw new ExecutionException(spec.commandLine(), "Database metadata is not loaded");
       }

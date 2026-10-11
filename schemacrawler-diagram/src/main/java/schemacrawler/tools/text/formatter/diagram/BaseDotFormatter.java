@@ -17,8 +17,10 @@ import static us.fatehi.utility.html.TagOutputFormat.html;
 
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Predicate;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Identifiers;
+import schemacrawler.schema.Table;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
@@ -33,8 +35,9 @@ public abstract class BaseDotFormatter extends BaseFormatter<DiagramOptions> {
       final SchemaTextDetailType schemaTextDetailType,
       final DiagramOptions options,
       final OutputOptions outputOptions,
-      final Identifiers identifiers) {
-    super(schemaTextDetailType, options, outputOptions, identifiers);
+      final Identifiers identifiers,
+      final Predicate<Table> tableVisibilityPredicate) {
+    super(schemaTextDetailType, options, outputOptions, identifiers, tableVisibilityPredicate);
   }
 
   @Override

@@ -13,17 +13,18 @@ import static schemacrawler.tools.command.text.schema.options.HideDatabaseObject
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideSynonyms;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectsType.hideTables;
 
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.Identifiers;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.options.OutputOptions;
@@ -39,19 +40,21 @@ public final class SchemaListFormatter extends BaseTabularFormatter<SchemaTextOp
   private static final Logger LOGGER = Logger.getLogger(SchemaListFormatter.class.getName());
 
   /**
-   * Text formatting of schema.
+   * Creates a list formatter with execution-local table visibility.
    *
-   * @param schemaTextDetailType Types for text formatting of schema
-   * @param options Options for text formatting of schema
-   * @param outputOptions Options for text formatting of schema
-   * @param identifierQuoteString Quote character for identifier
+   * @param schemaTextDetailType Schema text detail level
+   * @param options Schema text options
+   * @param outputOptions Output options
+   * @param identifiers Identifier quoting options
+   * @param tableVisibilityPredicate Returns true for tables selected in this execution
    */
   public SchemaListFormatter(
       final SchemaTextDetailType schemaTextDetailType,
       final SchemaTextOptions options,
       final OutputOptions outputOptions,
-      final Identifiers identifiers) {
-    super(schemaTextDetailType, options, outputOptions, identifiers);
+      final Identifiers identifiers,
+      final Predicate<Table> tableVisibilityPredicate) {
+    super(schemaTextDetailType, options, outputOptions, identifiers, tableVisibilityPredicate);
   }
 
   /** {@inheritDoc} */

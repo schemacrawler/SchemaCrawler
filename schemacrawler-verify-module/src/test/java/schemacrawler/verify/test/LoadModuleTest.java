@@ -12,13 +12,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.verify.CoreExportedPackages;
 
 public class LoadModuleTest {
 
   @Test
   public void loadModule() {
-    assertThat(CoreExportedPackages.exportedCoreTypes().size(), is(34));
+    assertThat(CoreExportedPackages.exportedCoreTypes().size(), is(33));
   }
 }

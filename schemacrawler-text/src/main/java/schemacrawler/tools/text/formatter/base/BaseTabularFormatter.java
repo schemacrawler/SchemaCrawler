@@ -10,8 +10,10 @@ package schemacrawler.tools.text.formatter.base;
 
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.util.function.Predicate;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Identifiers;
+import schemacrawler.schema.Table;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
@@ -25,8 +27,9 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
       final SchemaTextDetailType schemaTextDetailType,
       final O options,
       final OutputOptions outputOptions,
-      final Identifiers identifiers) {
-    super(schemaTextDetailType, options, outputOptions, identifiers);
+      final Identifiers identifiers,
+      final Predicate<Table> tableVisibilityPredicate) {
+    super(schemaTextDetailType, options, outputOptions, identifiers, tableVisibilityPredicate);
   }
 
   /** {@inheritDoc} */

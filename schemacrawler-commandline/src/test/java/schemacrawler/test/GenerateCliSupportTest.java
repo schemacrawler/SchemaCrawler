@@ -19,7 +19,9 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import schemacrawler.tools.commandline.utility.GenerateCliSupport;
+import us.fatehi.test.utility.extensions.CaptureSystemStreams;
 
+@CaptureSystemStreams
 public class GenerateCliSupportTest {
 
   @Test

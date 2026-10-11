@@ -9,12 +9,13 @@
 package schemacrawler.tools.text.formatter.operation;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.tools.command.text.schema.options.SchemaTextDetailType.schema;
+import static schemacrawler.tools.text.formatter.base.TableRowCountsMessageUtility.getRowCountMessage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.Identifiers;
@@ -66,8 +67,9 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
       final Operation operation,
       final OperationOptions options,
       final OutputOptions outputOptions,
-      final Identifiers identifiers) {
-    super(schema, options, outputOptions, identifiers);
+      final Identifiers identifiers,
+      final Predicate<Table> tableVisibilityPredicate) {
+    super(schema, options, outputOptions, identifiers, tableVisibilityPredicate);
     this.operation = requireNonNull(operation, "No operation provided");
   }
 

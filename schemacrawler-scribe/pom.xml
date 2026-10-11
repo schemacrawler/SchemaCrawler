@@ -8,6 +8,7 @@
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
     <version>17.15.7</version>
+    <relativePath />
   </parent>
   <artifactId>schemacrawler-scribe</artifactId>
   <packaging>jar</packaging>
@@ -44,7 +45,7 @@
       <groupId>tools.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-yaml</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-testdb</artifactId>
@@ -78,7 +79,7 @@
       <artifactId>freemarker</artifactId>
       <version>2.3.35</version>
     </dependency>
-    
+
   </dependencies>
   <build>
     <plugins>

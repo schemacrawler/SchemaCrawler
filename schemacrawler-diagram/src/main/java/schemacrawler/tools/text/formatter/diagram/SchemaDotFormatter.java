@@ -9,8 +9,6 @@
 package schemacrawler.tools.text.formatter.diagram;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
-import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.TableConstraintType.foreign_key;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideImplicitAssociationNames;
@@ -19,7 +17,9 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideImplicitAssociations;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideIndexes;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableColumns;
+import static schemacrawler.tools.text.formatter.base.TableRowCountsMessageUtility.getRowCountMessage;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
+import static schemacrawler.utility.TableRowCountsUtility.hasRowCount;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.ermodel.model.RelationshipCardinality;
@@ -66,20 +67,23 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   private final ModelHelper modelHelper;
 
   /**
-   * Text formatting of schema.
+   * Creates a formatter that determines table visibility for this execution.
    *
-   * @param schemaTextDetailType Types for text formatting of schema
-   * @param options Options for text formatting of schema
-   * @param outputOptions Options for text formatting of schema
-   * @param identifierQuoteString Quote character for database objects
+   * @param schemaTextDetailType Schema text detail level
+   * @param options Diagram options
+   * @param outputOptions Output options
+   * @param identifiers Identifier quoting options
+   * @param modelHelper Model helper
+   * @param tableVisibilityPredicate Returns true for tables selected in this execution
    */
   public SchemaDotFormatter(
       final SchemaTextDetailType schemaTextDetailType,
       final DiagramOptions options,
       final OutputOptions outputOptions,
       final Identifiers identifiers,
-      final ModelHelper modelHelper) {
-    super(schemaTextDetailType, options, outputOptions, identifiers);
+      final ModelHelper modelHelper,
+      final Predicate<Table> tableVisibilityPredicate) {
+    super(schemaTextDetailType, options, outputOptions, identifiers, tableVisibilityPredicate);
 
     tableColspan = options.isShowOrdinalNumbers() ? 4 : 3;
     this.modelHelper = requireNonNull(modelHelper, "No model helper provided");

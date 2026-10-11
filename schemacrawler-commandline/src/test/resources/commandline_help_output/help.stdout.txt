@@ -1,4 +1,4 @@
-SchemaCrawler 17.15.5
+SchemaCrawler 17.15.7
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2026, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -223,6 +223,9 @@ Options:
                               descendants for the tables selected by grep, and
                               shown in the results
                             Optional, default is 0
+      --no-empty-tables     Includes only tables that have rows of data
+                            Requires table row counts to be loaded
+                            Optional, default is false
       --parents=<parents>   <parents> is the number of generations of ancestors
                               for the tables selected by grep, and shown in the
                               results
@@ -237,9 +240,6 @@ Options:
       --load-row-counts   Loads row counts for each table
                           This can be a time consuming operation
                           Optional, defaults to false
-      --no-empty-tables   Includes only tables that have rows of data
-                          Requires table row counts to be loaded
-                          Optional, default is false
 Add loader options to the `load` command in the SchemaCrawler Shell
 
 

@@ -13,6 +13,7 @@
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
     <version>17.15.7</version>
+    <relativePath />
   </parent>
   <artifactId>schemacrawler-library-bom</artifactId>
   <packaging>pom</packaging>
@@ -160,20 +161,6 @@
       <dependency>
         <groupId>us.fatehi</groupId>
         <artifactId>schemacrawler-scripting</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-text</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-diagram</artifactId>
         <version>${project.version}</version>
         <type>test-jar</type>
         <scope>test</scope>

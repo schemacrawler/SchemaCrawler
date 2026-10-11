@@ -36,6 +36,7 @@ public class OfflineSnapshotTest {
 
   private Path serializedCatalogFile;
 
+  // Verifies the offline CLI can deserialize a snapshot and render its details.
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void offlineSnapshotCommandLine() throws Exception {
@@ -61,6 +62,7 @@ public class OfflineSnapshotTest {
         hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT + expectedResource)));
   }
 
+  // Verifies table grep selects from the snapshot without applying current routine limits.
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void offlineSnapshotCommandLineWithFilters() throws Exception {
@@ -75,7 +77,7 @@ public class OfflineSnapshotTest {
       argsMap.put("--command", "details");
       argsMap.put("--output-format", TextOutputFormat.text.getFormat());
       argsMap.put("--routines", "");
-      argsMap.put("--tables", ".*SALES");
+      argsMap.put("--grep-tables", ".*SALES");
       argsMap.put("--output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
@@ -85,6 +87,7 @@ public class OfflineSnapshotTest {
         hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT + "offlineWithFilters.txt")));
   }
 
+  // Verifies current schema and routine limits do not narrow serialized snapshot membership.
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
   public void offlineSnapshotCommandLineWithSchemaFilters() throws Exception {

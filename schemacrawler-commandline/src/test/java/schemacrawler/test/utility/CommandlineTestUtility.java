@@ -141,6 +141,7 @@ public final class CommandlineTestUtility {
 
     final ShellState state = createConnectedSchemaCrawlerShellState(connectionSource);
     state.setCatalog(catalog); // is-loaded
+    state.markCatalogLoaded();
     return state;
   }
 

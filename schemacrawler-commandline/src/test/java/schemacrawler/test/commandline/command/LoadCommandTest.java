@@ -61,6 +61,8 @@ public class LoadCommandTest {
     assertThat(schemaInfoLevel, is(InfoLevel.detailed));
     assertThat(state.getCatalog(), is(not(nullValue())));
     assertThat(state.getCatalog().getTables(), hasSize(20));
+    assertThat(state.isLoaded(), is(true));
+    assertThat(state.isCatalogStale(), is(false));
   }
 
   @Test

@@ -10,7 +10,7 @@ package schemacrawler.scribe.okf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static schemacrawler.loader.utility.TableRowCountsUtility.TABLE_ROW_COUNT_KEY;
+import static schemacrawler.utility.TableRowCountsUtility.TABLE_ROW_COUNT_KEY;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;

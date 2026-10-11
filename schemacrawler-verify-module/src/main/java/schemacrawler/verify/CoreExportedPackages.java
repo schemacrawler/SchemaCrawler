@@ -12,14 +12,12 @@ import java.util.List;
 import schemacrawler.ermodel.associations.ImplicitAssociationAnalyzer;
 import schemacrawler.ermodel.model.ERModel;
 import schemacrawler.ermodel.utility.ERModelUtility;
-import schemacrawler.filter.ReducerFactory;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.loader.catalog.CatalogLoader;
 import schemacrawler.loader.catalog.model.CatalogAttributes;
 import schemacrawler.loader.catalog.summary.CatalogStats;
 import schemacrawler.loader.ermodel.ERModelLoader;
 import schemacrawler.loader.ermodel.summary.ERModelStats;
-import schemacrawler.loader.utility.TableRowCountsUtility;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -31,6 +29,7 @@ import schemacrawler.tools.options.Config;
 import schemacrawler.tools.state.ExecutionState;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.MetaDataUtility;
+import schemacrawler.utility.TableRowCountsUtility;
 import us.fatehi.registry.PluginRegistry;
 import us.fatehi.utility.Builder;
 import us.fatehi.utility.database.DatabaseUtility;
@@ -62,7 +61,6 @@ public final class CoreExportedPackages {
         Catalog.class,
         SchemaCrawlerOptions.class,
         SchemaCrawlerException.class,
-        ReducerFactory.class,
         InclusionRule.class,
         EnumDataTypeHelper.class,
         MetaDataUtility.class,

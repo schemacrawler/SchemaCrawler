@@ -10,8 +10,6 @@ package schemacrawler.tools.text.formatter.schema;
 
 import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.loader.utility.TableRowCountsUtility.getRowCountMessage;
-import static schemacrawler.loader.utility.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideForeignKeyNames;
 import static schemacrawler.tools.command.text.schema.options.HideDatabaseObjectNamesType.hideImplicitAssociationNames;
@@ -32,7 +30,9 @@ import static schemacrawler.tools.command.text.schema.options.HideDependantDatab
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableColumns;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTableConstraints;
 import static schemacrawler.tools.command.text.schema.options.HideDependantDatabaseObjectsType.hideTriggers;
+import static schemacrawler.tools.text.formatter.base.TableRowCountsMessageUtility.getRowCountMessage;
 import static schemacrawler.utility.MetaDataUtility.getTypeName;
+import static schemacrawler.utility.TableRowCountsUtility.hasRowCount;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.trimToEmpty;
 
@@ -43,6 +43,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.ermodel.model.RelationshipCardinality;
@@ -125,7 +126,27 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final OutputOptions outputOptions,
       final Identifiers identifiers,
       final ModelHelper modelHelper) {
-    super(schemaTextDetailType, options, outputOptions, identifiers);
+    this(schemaTextDetailType, options, outputOptions, identifiers, modelHelper, table -> true);
+  }
+
+  /**
+   * Creates a formatter that determines table visibility for this execution.
+   *
+   * @param schemaTextDetailType Schema text detail level
+   * @param options Schema text options
+   * @param outputOptions Output options
+   * @param identifiers Identifier quoting options
+   * @param modelHelper Model helper
+   * @param tableVisibilityPredicate Returns true for tables selected in this execution
+   */
+  public SchemaTextFormatter(
+      final SchemaTextDetailType schemaTextDetailType,
+      final SchemaTextOptions options,
+      final OutputOptions outputOptions,
+      final Identifiers identifiers,
+      final ModelHelper modelHelper,
+      final Predicate<Table> tableVisibilityPredicate) {
+    super(schemaTextDetailType, options, outputOptions, identifiers, tableVisibilityPredicate);
     this.modelHelper = requireNonNull(modelHelper, "No model helper provided");
   }
 
@@ -1120,8 +1141,14 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       return;
     }
     // Get used by objects that are pre-sorted
-    final Collection<DatabaseObject> usedByObjects = table.getUsedByObjects();
-    if (usedByObjects.isEmpty()) {
+    final List<DatabaseObject> visibleUsedByObjects =
+        table.getUsedByObjects().stream()
+            .filter(
+                referencingObject ->
+                    !(referencingObject instanceof Table referencingTable)
+                        || !isTableFiltered(referencingTable))
+            .toList();
+    if (visibleUsedByObjects.isEmpty()) {
       return;
     }
 
@@ -1129,7 +1156,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeWideRow("Used By Objects", "section");
 
     formattingHelper.writeEmptyRow();
-    for (final DatabaseObject referencingObject : usedByObjects) {
+    for (final DatabaseObject referencingObject : visibleUsedByObjects) {
       final String objectName = quoteName(referencingObject);
       final String objectType = "[" + getTypeName(referencingObject).toLowerCase() + "]";
       formattingHelper.writeNameRow(objectName, objectType);

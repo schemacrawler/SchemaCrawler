@@ -7,6 +7,7 @@
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
     <version>17.15.7</version>
+    <relativePath />
   </parent>
   <artifactId>schemacrawler-operations</artifactId>
   <packaging>jar</packaging>
@@ -28,7 +29,7 @@
       <artifactId>jackson-annotations</artifactId>
       <scope>provided</scope>
     </dependency>
- 
+
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-testdb</artifactId>
@@ -67,10 +68,6 @@
             </manifestEntries>
           </archive>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
         <executions>
           <execution>
             <id>create-test-jar</id>

@@ -13,6 +13,7 @@ import static schemacrawler.utility.MetaDataUtility.isPartial;
 import static us.fatehi.utility.Utility.hasNoUpperCase;
 
 import java.io.PrintWriter;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.Column;
@@ -41,18 +42,22 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
   protected final TextFormattingHelper formattingHelper;
   protected final DatabaseObjectColorMap colorMap;
   protected final Identifiers identifiers;
+  private final Predicate<Table> tableVisibilityPredicate;
   private final PrintWriter out;
 
   protected BaseFormatter(
       final SchemaTextDetailType schemaTextDetailType,
       final O options,
       final OutputOptions outputOptions,
-      final Identifiers identifiers) {
+      final Identifiers identifiers,
+      final Predicate<Table> tableVisibilityPredicate) {
 
     this.options = requireNonNull(options, "Options not provided");
     this.schemaTextDetailType =
         requireNonNull(schemaTextDetailType, "SchemaTextDetailType not provided");
     this.outputOptions = requireNonNull(outputOptions, "Output options not provided");
+    this.tableVisibilityPredicate =
+        requireNonNull(tableVisibilityPredicate, "Table visibility predicate not provided");
     colorMap = options.getColorMap();
 
     final IdentifiersBuilder identifiersBuilder =
@@ -111,7 +116,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
   }
 
   protected boolean isTableFiltered(final Table table) {
-    return table.getAttribute("schemacrawler.filtered_out", false) || isPartial(table);
+    return table == null || !tableVisibilityPredicate.test(table) || isPartial(table);
   }
 
   protected boolean isVerbose() {
