@@ -8,6 +8,8 @@
 
 package schemacrawler.plugins.dbconnectors.model;
 
+import java.util.Locale;
+
 public enum CommandlineOptionType {
   STRING(String.class),
   INTEGER(Integer.class),
@@ -25,6 +27,6 @@ public enum CommandlineOptionType {
 
   @Override
   public String toString() {
-    return name().toLowerCase();
+    return name().toLowerCase(Locale.ROOT);
   }
 }

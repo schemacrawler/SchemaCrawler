@@ -16,6 +16,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.classpathResource
 import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
+import java.util.Locale;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
@@ -61,7 +62,7 @@ public class WithoutPluginDB2Test extends BaseAdditionalDatabaseTest {
 
     final String username = dbContainer.getUsername();
     createDataSource(dbContainer.getJdbcUrl(), username, dbContainer.getPassword());
-    schemaName = username.toUpperCase();
+    schemaName = username.toUpperCase(Locale.ROOT);
 
     createDatabase("/db2.scripts.txt");
   }

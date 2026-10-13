@@ -875,7 +875,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeEmptyRow();
     for (final DatabaseObject reference : references) {
       final String objectName = quoteName(reference);
-      final String objectType = "[" + getTypeName(reference).toLowerCase() + "]";
+      final String objectType = "[" + getTypeName(reference).toLowerCase(Locale.ROOT) + "]";
       formattingHelper.writeNameRow(objectName, objectType);
     }
   }
@@ -1045,7 +1045,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       } else {
         constraintName = "";
       }
-      final String constraintType = constraint.getType().getValue().toLowerCase();
+      final String constraintType = constraint.getType().getValue().toLowerCase(Locale.ROOT);
       final String constraintDetails = "[" + constraintType + " constraint]";
       formattingHelper.writeEmptyRow();
       formattingHelper.writeNameRow(constraintName, constraintDetails);
@@ -1158,7 +1158,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     formattingHelper.writeEmptyRow();
     for (final DatabaseObject referencingObject : visibleUsedByObjects) {
       final String objectName = quoteName(referencingObject);
-      final String objectType = "[" + getTypeName(referencingObject).toLowerCase() + "]";
+      final String objectType = "[" + getTypeName(referencingObject).toLowerCase(Locale.ROOT) + "]";
       formattingHelper.writeNameRow(objectName, objectType);
     }
   }
@@ -1204,7 +1204,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         final String timing = timingBuffer.toString();
 
         String triggerType = "[trigger]";
-        triggerType = triggerType.toLowerCase(Locale.ENGLISH);
+        triggerType = triggerType.toLowerCase(Locale.ROOT);
         final String actionCondition = trigger.getActionCondition();
         final String actionStatement = trigger.getActionStatement();
         formattingHelper.writeEmptyRow();

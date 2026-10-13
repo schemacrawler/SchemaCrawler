@@ -11,6 +11,7 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import schemacrawler.schema.DatabaseObject;
 import us.fatehi.utility.UtilityMarker;
 
@@ -29,7 +30,8 @@ public final class MarkdownFormattingHelper {
     if (isBlank(text)) {
       return "";
     }
-    return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
+    return text.substring(0, 1).toUpperCase(Locale.ROOT)
+        + text.substring(1).toLowerCase(Locale.ROOT);
   }
 
   static String escapeMarkdown(final String input) {

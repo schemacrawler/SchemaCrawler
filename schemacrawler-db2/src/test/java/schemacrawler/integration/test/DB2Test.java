@@ -25,6 +25,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -80,7 +81,7 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
 
     final String username = dbContainer.getUsername();
     createDataSource(dbContainer.getJdbcUrl(), username, dbContainer.getPassword());
-    schemaName = username.toUpperCase();
+    schemaName = username.toUpperCase(Locale.ROOT);
 
     createDatabase("/db2.scripts.txt");
   }
@@ -135,7 +136,7 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
     assertThat(databaseUsers, hasSize(1));
     assertThat(
         databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
-        hasItems(dbContainer.getUsername().toUpperCase()));
+        hasItems(dbContainer.getUsername().toUpperCase(Locale.ROOT)));
     assertThat(
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())

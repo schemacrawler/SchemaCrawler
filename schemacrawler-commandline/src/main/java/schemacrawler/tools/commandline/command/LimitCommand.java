@@ -202,7 +202,7 @@ public final class LimitCommand extends BaseStateHolder implements Runnable {
     final Collection<RoutineType> routineTypesCollection = new HashSet<>();
     for (final String routineTypeString : routinetypes) {
       final RoutineType routineType =
-          enumValue(routineTypeString.toLowerCase(Locale.ENGLISH), RoutineType.unknown);
+          enumValue(routineTypeString.toLowerCase(Locale.ROOT), RoutineType.unknown);
       routineTypesCollection.add(routineType);
     }
     return routineTypesCollection;
