@@ -53,7 +53,6 @@ public abstract class BaseJacksonFormatter implements DataTraversalHandler {
    * @param operation Operation type
    * @param options Options for text formatting of data
    * @param outputOptions Options for text formatting of data
-   * @param identifierQuoteString Quote character for identifier
    */
   public BaseJacksonFormatter(
       final Operation operation,
@@ -78,7 +77,6 @@ public abstract class BaseJacksonFormatter implements DataTraversalHandler {
 
   protected abstract MapperBuilder<? extends ObjectMapper, ?> newMapperBuilder();
 
-  /** {@inheritDoc} */
   @Override
   public void begin() {
     try {
@@ -88,7 +86,6 @@ public abstract class BaseJacksonFormatter implements DataTraversalHandler {
     }
   }
 
-  /** {@inheritDoc} */
   @Override
   public void end() {
     try {
@@ -152,7 +149,6 @@ public abstract class BaseJacksonFormatter implements DataTraversalHandler {
     writeEndDataBlock();
   }
 
-  /** {@inheritDoc} */
   @Override
   public void handleHeader(final CrawlInfo crawlInfo) {
     if (crawlInfo == null) {

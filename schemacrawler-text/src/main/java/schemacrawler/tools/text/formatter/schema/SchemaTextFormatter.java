@@ -118,7 +118,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
    * @param schemaTextDetailType Types for text formatting of schema
    * @param options Options for text formatting of schema
    * @param outputOptions Options for text formatting of schema
-   * @param identifierQuoteString Quote character for identifier
+   * @param identifiers Identifier quoting options
+   * @param modelHelper Model helper
    */
   public SchemaTextFormatter(
       final SchemaTextDetailType schemaTextDetailType,
