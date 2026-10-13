@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.CrawlInfo;
@@ -213,7 +214,7 @@ public abstract class BaseJacksonFormatter implements DataTraversalHandler {
   private void handleTableData(final String title, final ResultSet rows) {
     try {
       final String name = "Data for %s for <%s>".formatted(operation, title);
-      final InclusionCounts retrievalCounts = new InclusionCounts(name.toLowerCase());
+      final InclusionCounts retrievalCounts = new InclusionCounts(name.toLowerCase(Locale.ROOT));
       generator.writeName("data");
       generator.writeStartArray();
       try (final DataResultSet dataRows = new DataResultSet(rows)) {

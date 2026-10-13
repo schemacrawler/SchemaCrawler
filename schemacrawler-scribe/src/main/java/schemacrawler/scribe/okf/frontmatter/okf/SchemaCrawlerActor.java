@@ -7,6 +7,7 @@
  */
 package schemacrawler.scribe.okf.frontmatter.okf;
 
+import java.util.Locale;
 import schemacrawler.schemacrawler.Version;
 import schemacrawler.scribe.okf.frontmatter.okf.Actor.ActorType;
 import us.fatehi.utility.property.ProductVersion;
@@ -20,7 +21,8 @@ public final class SchemaCrawlerActor {
     actorType = ActorType.process;
 
     final ProductVersion version = Version.version();
-    final String actorName = version.getProductName().toLowerCase().replaceAll("[^a-z0-9]+", "");
+    final String actorName =
+        version.getProductName().toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", "");
     actor = "%s-v%s".formatted(actorName, version.getProductVersion());
   }
 

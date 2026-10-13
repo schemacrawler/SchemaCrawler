@@ -21,6 +21,7 @@ import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Locale;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -72,7 +73,7 @@ public class DB2OperationsTest extends BaseAdditionalDatabaseTest {
 
     final String username = dbContainer.getUsername();
     createDataSource(dbContainer.getJdbcUrl(), username, dbContainer.getPassword());
-    schemaName = username.toUpperCase();
+    schemaName = username.toUpperCase(Locale.ROOT);
 
     createDatabase("/db2.scripts.txt");
   }

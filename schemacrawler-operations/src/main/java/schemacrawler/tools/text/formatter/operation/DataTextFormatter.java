@@ -15,6 +15,7 @@ import static schemacrawler.tools.text.formatter.base.TableRowCountsMessageUtili
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -153,7 +154,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
     formattingHelper.writeObjectNameRow("", title, "", Color.white);
 
     final String name = "Data for %s for <%s>".formatted(operation, title);
-    final InclusionCounts retrievalCounts = new InclusionCounts(name.toLowerCase());
+    final InclusionCounts retrievalCounts = new InclusionCounts(name.toLowerCase(Locale.ROOT));
     try (final DataResultSet dataRows = new DataResultSet(rows)) {
       dataRows.setReadLargeData(options.isShowLobs());
       dataRows.setMaxRows(options.getMaxRows());
