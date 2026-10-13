@@ -120,7 +120,7 @@ public class ExecuteCommandTest {
 
   @Test
   @WithSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "hsqldb")
-  public void executeSelectionsAreIndependentFromLoadedBaseline(
+  public void executeProjectionsAreIndependentFromLoadedBaseline(
       final DatabaseConnectionSource connectionSource) throws Exception {
     final ShellState state = createLoadedSchemaCrawlerShellState(connectionSource);
     final Catalog baseline = state.getCatalog();
