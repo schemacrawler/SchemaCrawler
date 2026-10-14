@@ -62,7 +62,8 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
    * @param operation Options for text formatting of data
    * @param options Options for text formatting of data
    * @param outputOptions Options for text formatting of data
-   * @param identifierQuoteString Quote character for identifier
+   * @param identifiers Identifier quoting options
+   * @param tableVisibilityPredicate Returns true for tables selected in this execution
    */
   public DataTextFormatter(
       final Operation operation,
