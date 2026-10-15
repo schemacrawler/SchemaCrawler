@@ -6,7 +6,7 @@
 # SPDX-License-Identifier: EPL-2.0
 # ========================================================================
 
-FROM eclipse-temurin:21-jdk-alpine
+FROM eclipse-temurin:25-jdk-alpine
 
 # Install Graphviz as root user
 RUN \
