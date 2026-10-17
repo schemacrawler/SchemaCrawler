@@ -30,7 +30,7 @@ public final class SerializedImportanceModelUtility {
           Pattern.compile("schemacrawler\\.importance\\.model\\.[A-Z].*"),
           Pattern.compile("schemacrawler\\.importance\\.model\\.implementation\\.[A-Z].*"),
           Pattern.compile("schemacrawler\\.tools\\.utility\\.[A-Z].*"),
-          Pattern.compile("schemacrawler\\.utility\\.MetaDataUtility\\$SimpleDatabaseObjectType"),
+          Pattern.compile("schemacrawler\\.utility\\.[A-Z].*"),
           Pattern.compile("schemacrawler\\.[A-Z].*"),
           Pattern.compile("(\\[L)?java\\.(lang|util)\\..*"),
           Pattern.compile("java\\.(sql|math|time|net)\\..*"),
