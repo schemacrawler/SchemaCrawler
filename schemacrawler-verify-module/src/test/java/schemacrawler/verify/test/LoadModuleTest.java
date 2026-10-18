@@ -18,6 +18,6 @@ public class LoadModuleTest {
 
   @Test
   public void loadModule() {
-    assertThat(CoreExportedPackages.exportedCoreTypes().size(), is(33));
+    assertThat(CoreExportedPackages.exportedCoreTypes().size(), is(34));
   }
 }

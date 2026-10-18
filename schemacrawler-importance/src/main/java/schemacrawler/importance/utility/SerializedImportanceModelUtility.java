@@ -27,6 +27,7 @@ public final class SerializedImportanceModelUtility {
           Pattern.compile("us\\.fatehi\\.utility\\.[A-Z].*"),
           Pattern.compile("us\\.fatehi\\.utility\\.property\\.[A-Z].*"),
           Pattern.compile("schemacrawler\\.(schema(crawler)?|crawl)\\.[A-Z].*"),
+          Pattern.compile("schemacrawler\\.namedobject\\.[A-Z].*"),
           Pattern.compile("schemacrawler\\.importance\\.model\\.[A-Z].*"),
           Pattern.compile("schemacrawler\\.importance\\.model\\.implementation\\.[A-Z].*"),
           Pattern.compile("schemacrawler\\.tools\\.utility\\.[A-Z].*"),
