@@ -16,6 +16,7 @@ import static us.fatehi.utility.IOUtility.readResourceFully;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
+import schemacrawler.namedobject.NamedObjectSort;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.schemacrawler.exceptions.SchemaCrawlerException;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
@@ -28,7 +29,6 @@ import schemacrawler.tools.text.formatter.diagram.SchemaDotFormatter;
 import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
-import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.property.PropertyName;
 
 public final class DiagramRenderer extends AbstractSchemaCrawlerCommand<DiagramOptions> {

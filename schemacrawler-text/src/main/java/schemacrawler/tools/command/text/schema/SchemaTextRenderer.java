@@ -8,6 +8,7 @@
 
 package schemacrawler.tools.command.text.schema;
 
+import schemacrawler.namedobject.NamedObjectSort;
 import schemacrawler.tools.command.AbstractSchemaCrawlerCommand;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
@@ -16,7 +17,6 @@ import schemacrawler.tools.text.formatter.schema.SchemaTextFormatter;
 import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
-import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.property.PropertyName;
 
 /** Basic SchemaCrawler executor for text output. */

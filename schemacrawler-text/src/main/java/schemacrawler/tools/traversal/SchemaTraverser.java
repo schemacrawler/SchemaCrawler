@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import schemacrawler.namedobject.NamedObjectSort;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.NamedObject;
@@ -23,7 +24,6 @@ import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.exceptions.ExecutionRuntimeException;
 import schemacrawler.tools.state.AbstractExecutionState;
-import schemacrawler.utility.NamedObjectSort;
 
 public class SchemaTraverser extends AbstractExecutionState {
 

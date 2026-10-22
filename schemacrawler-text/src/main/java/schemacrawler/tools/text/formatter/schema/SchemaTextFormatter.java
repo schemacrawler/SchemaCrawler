@@ -47,6 +47,7 @@ import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.ermodel.model.RelationshipCardinality;
+import schemacrawler.namedobject.NamedObjectSort;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -87,7 +88,6 @@ import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.Detai
 import schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.traversal.ModelHelper;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
-import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.jdbc.driver.JdbcDriverProperty;
 import us.fatehi.utility.property.Property;

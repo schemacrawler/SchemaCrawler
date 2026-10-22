@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import schemacrawler.namedobject.NamedObjectSort;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Identifiers;
 import schemacrawler.schema.IdentifiersBuilder;
@@ -34,7 +35,6 @@ import schemacrawler.tools.command.text.operation.options.OperationsOutputFormat
 import schemacrawler.tools.text.formatter.operation.DataJsonFormatter;
 import schemacrawler.tools.text.formatter.operation.DataTextFormatter;
 import schemacrawler.tools.text.formatter.operation.DataTraversalHandler;
-import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.property.PropertyName;
 import us.fatehi.utility.string.StringFormat;
 

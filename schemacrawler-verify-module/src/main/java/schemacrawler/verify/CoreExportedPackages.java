@@ -18,6 +18,7 @@ import schemacrawler.loader.catalog.model.CatalogAttributes;
 import schemacrawler.loader.catalog.summary.CatalogStats;
 import schemacrawler.loader.ermodel.ERModelLoader;
 import schemacrawler.loader.ermodel.summary.ERModelStats;
+import schemacrawler.namedobject.AbstractNamedObject;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -59,6 +60,7 @@ public final class CoreExportedPackages {
         TaskRunner.class,
         StringFormat.class,
         Catalog.class,
+        AbstractNamedObject.class,
         SchemaCrawlerOptions.class,
         SchemaCrawlerException.class,
         InclusionRule.class,
