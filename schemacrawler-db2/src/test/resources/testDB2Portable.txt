@@ -36,15 +36,15 @@ Indexes
   ID                                ascending                   
 
                                                       [non-unique index]
-  LASTNAME                          ascending                   
-  FIRSTNAME                         ascending                   
-
-                                                      [non-unique index]
 Index on author's location
   CITY                              ascending                   
   STATE                             descending                  
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+                                                      [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
 
 Triggers
 
@@ -86,11 +86,11 @@ along with the latest updated information
 Foreign Keys
 
                                            [foreign key, with no action]
-Foreign key marking relationship of authors to books
-  AUTHORID (1..many)--> AUTHORS.ID                              
+  BOOKID (1..many)--> BOOKS.ID                                  
 
                                            [foreign key, with no action]
-  BOOKID (1..many)--> BOOKS.ID                                  
+Foreign key marking relationship of authors to books
+  AUTHORID (1..many)--> AUTHORS.ID                              
 
 Indexes
 
@@ -127,10 +127,10 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  ID <--(1..many) BOOKAUTHORS.BOOKID                              
+  ID <--(1..1) PREVIOUSEDITIONID                                
 
                                            [foreign key, with no action]
-  ID <--(1..1) PREVIOUSEDITIONID                                
+  ID <--(1..many) BOOKAUTHORS.BOOKID                              
 
                                            [foreign key, with no action]
   ID <-- PUBLICATIONS.PREVIOUSEDITIONID                              

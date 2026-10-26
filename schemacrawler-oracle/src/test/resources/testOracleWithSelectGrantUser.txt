@@ -33,15 +33,15 @@ Indexes
 PK_AUTHORS                                                [unique index]
   ID                                ascending                   
 
-IDX_B_AUTHORS                                         [non-unique index]
-  LASTNAME                          ascending                   
-  FIRSTNAME                         ascending                   
-
 IDX_A_AUTHORS                                         [non-unique index]
   CITY                              ascending                   
   "SYS_NC00010$"                    descending                  
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+IDX_B_AUTHORS                                         [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
 
 Triggers
 
@@ -59,13 +59,13 @@ Table Constraints
 CHECK_UPPERCASE_STATE                                 [check constraint]
   STATE                                                         
 
-SYS_C008647                                           [check constraint]
+SYS_C008752                                           [check constraint]
   ID                                                            
 
-SYS_C008648                                           [check constraint]
+SYS_C008753                                           [check constraint]
   FIRSTNAME                                                     
 
-SYS_C008649                                           [check constraint]
+SYS_C008754                                           [check constraint]
   LASTNAME                                                      
 
 Privileges and Grants

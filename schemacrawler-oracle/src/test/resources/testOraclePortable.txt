@@ -35,14 +35,14 @@ Indexes
   ID                                ascending                   
 
                                                       [non-unique index]
-  LASTNAME                          ascending                   
-  FIRSTNAME                         ascending                   
-
-                                                      [non-unique index]
   CITY                              ascending                   
   "SYS_NC00010$"                    descending                  
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+                                                      [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
 
 Triggers
 
@@ -115,10 +115,10 @@ along with the latest updated information
 Foreign Keys
 
                                        [foreign key, on delete restrict]
-  AUTHORID (1..many)--> AUTHORS.ID                              
+  BOOKID (1..many)--> BOOKS.ID                                  
 
                                        [foreign key, on delete restrict]
-  BOOKID (1..many)--> BOOKS.ID                                  
+  AUTHORID (1..many)--> AUTHORS.ID                              
 
 Indexes
 
@@ -162,10 +162,10 @@ Primary Key
 Foreign Keys
 
                                        [foreign key, on delete restrict]
-  ID <--(1..many) BOOKAUTHORS.BOOKID                              
+  ID <--(0..1) PREVIOUSEDITIONID                                
 
                                        [foreign key, on delete restrict]
-  ID <--(0..1) PREVIOUSEDITIONID                                
+  ID <--(1..many) BOOKAUTHORS.BOOKID                              
 
 Indexes
 
@@ -279,7 +279,7 @@ PUBLISHERS                                                       [table]
 ------------------------------------------------------------------------
 List of book publishers
   ID                                NUMERIC(38, 0) NOT NULL     
-                                    default "BOOKS"."ISEQ$$_72401".nextval
+                                    default "BOOKS"."ISEQ$$_72426".nextval
                                     auto-incremented            
                                     Unique (internal) id for book publisher
   PUBLISHER                         VARCHAR(255)                
@@ -434,7 +434,7 @@ Sequences
 
 
 
-"ISEQ$$_72401"                                                [sequence]
+"ISEQ$$_72426"                                                [sequence]
 ------------------------------------------------------------------------
   increment                         1                           
   start value                                                   
