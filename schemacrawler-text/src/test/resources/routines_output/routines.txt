@@ -10,11 +10,25 @@ GETBOOKSCOUNT                                     [procedure, no result]
   BOOKSCOUNT                        INTEGER, out                
 
                                                          [specific name]
-GETBOOKSCOUNT_10155
+GETBOOKSCOUNT_10158
 
 Definition
                                                             [definition]
-CREATE PROCEDURE BOOKS.GETBOOKSCOUNT(OUT BOOKSCOUNT INTEGER) SPECIFIC GETBOOKSCOUNT_10155 LANGUAGE SQL NOT DETERMINISTIC READS SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC SELECT COUNT(*)INTO BOOKSCOUNT FROM BOOKS.BOOKS;END
+CREATE PROCEDURE BOOKS.GETBOOKSCOUNT(OUT BOOKSCOUNT INTEGER) SPECIFIC GETBOOKSCOUNT_10158 LANGUAGE SQL NOT DETERMINISTIC READS SQL DATA NEW SAVEPOINT LEVEL BEGIN ATOMIC SELECT COUNT(*)INTO BOOKSCOUNT FROM BOOKS.BOOKS;END
+
+
+
+NEW_PUBLISHER                                     [procedure, no result]
+------------------------------------------------------------------------
+  NEWPUBLISHER                      CHARACTER VARYING, in       
+  PUBLISHER                         CHARACTER VARYING, out      
+
+                                                         [specific name]
+NEW_PUBLISHER_10154
+
+Definition
+                                                            [definition]
+CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10154 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER
 
 
 
@@ -31,42 +45,28 @@ CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUB
 
 
 
-NEW_PUBLISHER                                     [procedure, no result]
-------------------------------------------------------------------------
-  NEWPUBLISHER                      CHARACTER VARYING, in       
-  PUBLISHER                         CHARACTER VARYING, out      
-
-                                                         [specific name]
-NEW_PUBLISHER_10151
-
-Definition
-                                                            [definition]
-CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10151 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER
-
-
-
-CUSTOMADD                            [function, does not return a table]
-------------------------------------------------------------------------
-  ONE                               INTEGER, in                 
-
-                                                         [specific name]
-CUSTOMADD_10153
-
-Definition
-                                                            [definition]
-CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10153 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
-
-
-
 CUSTOMADD                            [function, does not return a table]
 ------------------------------------------------------------------------
   ONE                               INTEGER, in                 
   TWO                               INTEGER, in                 
 
                                                          [specific name]
-CUSTOMADD_10152
+CUSTOMADD_10155
 
 Definition
                                                             [definition]
-CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10152 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10155 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO
+
+
+
+CUSTOMADD                            [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               INTEGER, in                 
+
+                                                         [specific name]
+CUSTOMADD_10156
+
+Definition
+                                                            [definition]
+CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10156 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)
 

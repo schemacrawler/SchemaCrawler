@@ -40,11 +40,11 @@ BOOKAUTHORS                                                      [table]
 
 Foreign Keys
 
-Z_FK_AUTHOR                                [foreign key, with no action]
- 1  AUTHORID (1..many)--> AUTHORS.ID                              
-
 SYS_FK_10121                               [foreign key, with no action]
  1  BOOKID (1..many)--> BOOKS.ID                                  
+
+Z_FK_AUTHOR                                [foreign key, with no action]
+ 1  AUTHORID (1..many)--> AUTHORS.ID                              
 
 
 
@@ -60,14 +60,14 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-FK_SALES_BOOK                              [foreign key, with no action]
- 1  ID <--(0..many) SALES.BOOKID                                  
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+ 1  ID <--(0..1) PREVIOUSEDITIONID                                
 
 SYS_FK_10121                               [foreign key, with no action]
  1  ID <--(1..many) BOOKAUTHORS.BOOKID                              
 
-FK_PREVIOUSEDITION                         [foreign key, with no action]
- 1  ID <--(0..1) PREVIOUSEDITIONID                                
+FK_SALES_BOOK                              [foreign key, with no action]
+ 1  ID <--(0..many) SALES.BOOKID                                  
 
 
 
@@ -213,12 +213,12 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
  1  BOOKID (0..many)--> BOOKS.ID                                  
 
-FK_SALES_SALESDATA                         [foreign key, with no action]
- 1  SALESDATAID (0..many)--> SALESDATA.SALESDATAID                              
-
 FK_SALES_REGIONS                           [foreign key, with no action]
  1  POSTALCODE (1..many)--> REGIONS.POSTALCODE                              
  2  COUNTRY (1..many)--> REGIONS.COUNTRY                              
+
+FK_SALES_SALESDATA                         [foreign key, with no action]
+ 1  SALESDATAID (0..many)--> SALESDATA.SALESDATAID                              
 
 
 

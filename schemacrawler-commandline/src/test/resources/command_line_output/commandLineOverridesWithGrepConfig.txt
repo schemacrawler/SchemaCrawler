@@ -19,12 +19,12 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-FK_SALES_BOOK                              [foreign key, with no action]
-  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
-
-SYS_FK_10118                               [foreign key, with no action]
-  ID <--(1..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
-
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
+
+SYS_FK_10121                               [foreign key, with no action]
+  ID <--(1..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
+
+FK_SALES_BOOK                              [foreign key, with no action]
+  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 

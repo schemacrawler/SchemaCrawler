@@ -356,23 +356,6 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>IDX_B_AUTHORS</td>
-		<td class='description right'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>LASTNAME</td>
-		<td class='minwidth'>ascending</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>FIRSTNAME</td>
-		<td class='minwidth'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>IDX_A_AUTHORS</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
@@ -394,6 +377,23 @@ td.section {
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>COUNTRY</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>IDX_B_AUTHORS</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>LASTNAME</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>FIRSTNAME</td>
 		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
@@ -460,12 +460,12 @@ td.section {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>SA → OTHERUSER</td>
+		<td class='minwidth'>_SYSTEM → SA (grantable)</td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>_SYSTEM → SA (grantable)</td>
+		<td class='minwidth'>SA → OTHERUSER</td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -649,18 +649,6 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>Z_FK_AUTHOR</td>
-		<td class='description right'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>AUTHORID (1..many)→ <a href='#authors_f521e766'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
-		<td class='minwidth'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>SYS_FK_10121</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
@@ -673,14 +661,31 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>Z_FK_AUTHOR</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>AUTHORID (1..many)→ <a href='#authors_f521e766'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='3' class='section'>Indexes</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>Z_FK_AUTHOR</td>
-		<td class='description right'>[non-unique index]</td>
+		<td colspan='2' class='name'>UIDX_BOOKAUTHORS</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>BOOKID</td>
+		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
@@ -703,13 +708,8 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>UIDX_BOOKAUTHORS</td>
-		<td class='description right'>[unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>BOOKID</td>
-		<td class='minwidth'>ascending</td>
+		<td colspan='2' class='name'>Z_FK_AUTHOR</td>
+		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
@@ -902,12 +902,12 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_SALES_BOOK</td>
+		<td colspan='2' class='name'>FK_PREVIOUSEDITION</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID ← PUBLIC."PUBLISHER SALES".SALES.BOOKID</td>
+		<td class='minwidth'>ID ←(0..1) <a href='#books_f4a675c8'>PREVIOUSEDITIONID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -926,12 +926,12 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_PREVIOUSEDITION</td>
+		<td colspan='2' class='name'>FK_SALES_BOOK</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID ←(0..1) <a href='#books_f4a675c8'>PREVIOUSEDITIONID</a></td>
+		<td class='minwidth'>ID ← PUBLIC."PUBLISHER SALES".SALES.BOOKID</td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -986,11 +986,11 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.BOOKS.BOOKAUTHORS</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.BOOKS</td>
 		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.BOOKS.BOOKS</td>
+		<td colspan='2' class='name'>PUBLIC.BOOKS.BOOKAUTHORS</td>
 		<td class='description right'>[table]</td>
 	</tr>
 	<tr>
@@ -1629,18 +1629,6 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_CUSTOMER</td>
-		<td class='description right'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>CUSTOMERID</td>
-		<td class='minwidth'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>PK_CUSTOMERDATA</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
@@ -1652,6 +1640,18 @@ along with the latest updated information</td>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>DATAID</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_CUSTOMER</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>CUSTOMERID</td>
 		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
@@ -2169,24 +2169,24 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_ΒΙΒΛΊΑ_PUBLISHERS</td>
-		<td class='description right'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ΕΚΔΌΤΗΣ</td>
-		<td class='minwidth'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>PK_ΒΙΒΛΊΑ</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>ΜΟΝΑΔΙΚΌΣ</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_ΒΙΒΛΊΑ_PUBLISHERS</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ΕΚΔΌΤΗΣ</td>
 		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
@@ -2303,6 +2303,37 @@ along with the latest updated information</td>
 
 <table>
 	<caption style='background-color: #C2DCF2;'>
+		<span id='new_publisher_10154_43f13174' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span>
+		<span class='caption_description'>[procedure, no result]</span>
+	</caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>NEWPUBLISHER</td>
+		<td class='minwidth'>CHARACTER VARYING, in</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>PUBLISHER</td>
+		<td class='minwidth'>CHARACTER VARYING, out</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3'>NEW_PUBLISHER_10154</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+	<caption style='background-color: #C2DCF2;'>
 		<span id='new_publisher_force_value_7d16ddc0' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span>
 		<span class='caption_description'>[procedure, no result]</span>
 	</caption>
@@ -2342,19 +2373,19 @@ along with the latest updated information</td>
 
 <table>
 	<caption style='background-color: #C2DCF2;'>
-		<span id='new_publisher_10154_43f13174' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span>
-		<span class='caption_description'>[procedure, no result]</span>
+		<span id='customadd_10155_a370a995' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span>
+		<span class='caption_description'>[function, does not return a table]</span>
 	</caption>
 
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>NEWPUBLISHER</td>
-		<td class='minwidth'>CHARACTER VARYING, in</td>
+		<td class='minwidth'>ONE</td>
+		<td class='minwidth'>INTEGER, in</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>PUBLISHER</td>
-		<td class='minwidth'>CHARACTER VARYING, out</td>
+		<td class='minwidth'>TWO</td>
+		<td class='minwidth'>INTEGER, in</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -2364,7 +2395,7 @@ along with the latest updated information</td>
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3'>NEW_PUBLISHER_10154</td>
+		<td colspan='3'>CUSTOMADD_10155</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -2391,37 +2422,6 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td colspan='3'>CUSTOMADD_10156</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-
-
-<table>
-	<caption style='background-color: #C2DCF2;'>
-		<span id='customadd_10155_a370a995' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span>
-		<span class='caption_description'>[function, does not return a table]</span>
-	</caption>
-
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ONE</td>
-		<td class='minwidth'>INTEGER, in</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>TWO</td>
-		<td class='minwidth'>INTEGER, in</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[specific name]</td>
-	</tr>
-	<tr>
-		<td colspan='3'>CUSTOMADD_10155</td>
 	</tr>
 </table>
 <p>&#160;</p>

@@ -35,14 +35,14 @@ Indexes
   ID                                ascending                   
 
                                                       [non-unique index]
-  LASTNAME                          ascending                   
-  FIRSTNAME                         ascending                   
-
-                                                      [non-unique index]
   CITY                              ascending                   
   STATE                             ascending                   
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+                                                      [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
 
 Triggers
 
@@ -86,21 +86,21 @@ along with the latest updated information
 Foreign Keys
 
                                            [foreign key, with no action]
-  AUTHORID (1..many)--> AUTHORS.ID                              
+  BOOKID (1..many)--> BOOKS.ID                                  
 
                                            [foreign key, with no action]
-  BOOKID (1..many)--> BOOKS.ID                                  
+  AUTHORID (1..many)--> AUTHORS.ID                              
 
 Indexes
 
-                                                      [non-unique index]
+                                                          [unique index]
+  BOOKID                            ascending                   
   AUTHORID                          ascending                   
 
                                                       [non-unique index]
   BOOKID                            ascending                   
 
-                                                          [unique index]
-  BOOKID                            ascending                   
+                                                      [non-unique index]
   AUTHORID                          ascending                   
 
 Table Constraints
@@ -139,13 +139,13 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  ID <--(0..many) SALES.BOOKID                                  
-
-                                           [foreign key, with no action]
   ID <--(1..many) BOOKAUTHORS.BOOKID                              
 
                                            [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
+
+                                           [foreign key, with no action]
+  ID <--(0..many) SALES.BOOKID                                  
 
 Indexes
 
@@ -275,12 +275,12 @@ Foreign Keys
 
 Indexes
 
-                                                      [non-unique index]
-  CUSTOMERID                        ascending                   
-
                                                           [unique index]
   CUSTOMERID                        ascending                   
   DATAID                            ascending                   
+
+                                                      [non-unique index]
+  CUSTOMERID                        ascending                   
 
 Table Constraints
 
@@ -401,11 +401,11 @@ Foreign Keys
 
 Indexes
 
-                                                      [non-unique index]
-  ΕΚΔΌΤΗΣ                           ascending                   
-
                                                           [unique index]
   ΜΟΝΑΔΙΚΌΣ                         ascending                   
+
+                                                      [non-unique index]
+  ΕΚΔΌΤΗΣ                           ascending                   
 
 Table Constraints
 
@@ -442,14 +442,14 @@ Foreign Keys
 
 Indexes
 
-                                                      [non-unique index]
-  WRITERID                          ascending                   
-
                                                           [unique index]
   ID                                ascending                   
 
                                                       [non-unique index]
   PUBLICATIONID                     ascending                   
+
+                                                      [non-unique index]
+  WRITERID                          ascending                   
 
 Table Constraints
 
@@ -503,11 +503,11 @@ Foreign Keys
 
 Indexes
 
-                                                      [non-unique index]
-  WRITERID                          ascending                   
-
                                                           [unique index]
   ID                                ascending                   
+
+                                                      [non-unique index]
+  WRITERID                          ascending                   
 
 Table Constraints
 
@@ -538,10 +538,10 @@ Foreign Keys
 Indexes
 
                                                       [non-unique index]
-  WRITERID                          ascending                   
+  PUBLICATIONID                     ascending                   
 
                                                       [non-unique index]
-  PUBLICATIONID                     ascending                   
+  WRITERID                          ascending                   
 
 Table Constraints
 
@@ -649,6 +649,10 @@ Foreign Keys
 Indexes
 
                                                           [unique index]
+  EMAIL1                            ascending                   
+  COUNTRY                           ascending                   
+
+                                                          [unique index]
   ID                                ascending                   
 
                                                       [non-unique index]
@@ -658,19 +662,15 @@ Indexes
   CITY                              ascending                   
   STATE                             ascending                   
 
-                                                          [unique index]
-  EMAIL1                            ascending                   
-  COUNTRY                           ascending                   
-
-                                                      [non-unique index]
-  LASTNAME                          ascending                   
-  FIRSTNAME                         ascending                   
-
                                                       [non-unique index]
   CITY                              ascending                   
   STATE                             ascending                   
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+                                                      [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
 
 Table Constraints
 
@@ -751,11 +751,11 @@ Foreign Keys
   BOOKID (0..many)--> BOOKS.ID                                  
 
                                            [foreign key, with no action]
-  SALESDATAID (0..many)--> SALESDATA.SALESDATAID                              
-
-                                           [foreign key, with no action]
   POSTALCODE (1..many)--> REGIONS.POSTALCODE                              
   COUNTRY (1..many)--> REGIONS.COUNTRY                              
+
+                                           [foreign key, with no action]
+  SALESDATAID (0..many)--> SALESDATA.SALESDATAID                              
 
 Indexes
 
@@ -763,11 +763,11 @@ Indexes
   BOOKID                            ascending                   
 
                                                       [non-unique index]
-  SALESDATAID                       ascending                   
-
-                                                      [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+                                                      [non-unique index]
+  SALESDATAID                       ascending                   
 
 Table Constraints
 
@@ -814,20 +814,14 @@ GETBOOKSCOUNT                                     [procedure, no result]
 
 NEW_PUBLISHER                                     [procedure, no result]
 ------------------------------------------------------------------------
+  NEWPUBLISHER                      CHARACTER VARYING, in       
   PUBLISHER                         CHARACTER VARYING, out      
 
 
 
 NEW_PUBLISHER                                     [procedure, no result]
 ------------------------------------------------------------------------
-  NEWPUBLISHER                      CHARACTER VARYING, in       
   PUBLISHER                         CHARACTER VARYING, out      
-
-
-
-CUSTOMADD                            [function, does not return a table]
-------------------------------------------------------------------------
-  ONE                               INTEGER, in                 
 
 
 
@@ -835,6 +829,12 @@ CUSTOMADD                            [function, does not return a table]
 ------------------------------------------------------------------------
   ONE                               INTEGER, in                 
   TWO                               INTEGER, in                 
+
+
+
+CUSTOMADD                            [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               INTEGER, in                 
 
 
 

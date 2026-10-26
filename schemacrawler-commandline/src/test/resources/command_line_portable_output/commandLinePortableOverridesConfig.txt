@@ -34,15 +34,15 @@ Indexes
 PK_AUTHORS                                                [unique index]
 1   ID                                ascending                   
 
-IDX_B_AUTHORS                                         [non-unique index]
-3   LASTNAME                          ascending                   
-2   FIRSTNAME                         ascending                   
-
 IDX_A_AUTHORS                                         [non-unique index]
 6   CITY                              ascending                   
 7   STATE                             ascending                   
 8   POSTALCODE                        ascending                   
 9   COUNTRY                           ascending                   
+
+IDX_B_AUTHORS                                         [non-unique index]
+3   LASTNAME                          ascending                   
+2   FIRSTNAME                         ascending                   
 
 Triggers
 
@@ -85,22 +85,22 @@ along with the latest updated information
 
 Foreign Keys
 
-Z_FK_AUTHOR                                [foreign key, with no action]
- 1  AUTHORID (1..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
-
 SYS_FK_10121                               [foreign key, with no action]
  1  BOOKID (1..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
+Z_FK_AUTHOR                                [foreign key, with no action]
+ 1  AUTHORID (1..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
+
 Indexes
 
-Z_FK_AUTHOR                                           [non-unique index]
+UIDX_BOOKAUTHORS                                          [unique index]
+1   BOOKID                            ascending                   
 2   AUTHORID                          ascending                   
 
 SYS_FK_10121                                          [non-unique index]
 1   BOOKID                            ascending                   
 
-UIDX_BOOKAUTHORS                                          [unique index]
-1   BOOKID                            ascending                   
+Z_FK_AUTHOR                                           [non-unique index]
 2   AUTHORID                          ascending                   
 
 Table Constraints
@@ -138,14 +138,14 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-FK_SALES_BOOK                              [foreign key, with no action]
- 1  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+ 1  ID <--(0..1) PREVIOUSEDITIONID                                
 
 SYS_FK_10121                               [foreign key, with no action]
  1  ID <--(1..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
-FK_PREVIOUSEDITION                         [foreign key, with no action]
- 1  ID <--(0..1) PREVIOUSEDITIONID                                
+FK_SALES_BOOK                              [foreign key, with no action]
+ 1  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
 Indexes
 
@@ -275,12 +275,12 @@ FK_CUSTOMER                                [foreign key, with no action]
 
 Indexes
 
-FK_CUSTOMER                                           [non-unique index]
-1   CUSTOMERID                        ascending                   
-
 PK_CUSTOMERDATA                                           [unique index]
 1   CUSTOMERID                        ascending                   
 2   DATAID                            ascending                   
+
+FK_CUSTOMER                                           [non-unique index]
+1   CUSTOMERID                        ascending                   
 
 Table Constraints
 
@@ -372,11 +372,11 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
 
 Indexes
 
-FK_ΒΙΒΛΊΑ_PUBLISHERS                                  [non-unique index]
-4   ΕΚΔΌΤΗΣ                           ascending                   
-
 PK_ΒΙΒΛΊΑ                                                 [unique index]
 1   ΜΟΝΑΔΙΚΌΣ                         ascending                   
+
+FK_ΒΙΒΛΊΑ_PUBLISHERS                                  [non-unique index]
+4   ΕΚΔΌΤΗΣ                           ascending                   
 
 Table Constraints
 
@@ -447,24 +447,24 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
  1  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
-FK_SALES_SALESDATA                         [foreign key, with no action]
- 1  SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              
-
 FK_SALES_REGIONS                           [foreign key, with no action]
  1  POSTALCODE (1..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
  2  COUNTRY (1..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
+
+FK_SALES_SALESDATA                         [foreign key, with no action]
+ 1  SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              
 
 Indexes
 
 FK_SALES_BOOK                                         [non-unique index]
 3   BOOKID                            ascending                   
 
-FK_SALES_SALESDATA                                    [non-unique index]
-7   SALESDATAID                       ascending                   
-
 FK_SALES_REGIONS                                      [non-unique index]
 1   POSTALCODE                        ascending                   
 2   COUNTRY                           ascending                   
+
+FK_SALES_SALESDATA                                    [non-unique index]
+7   SALESDATAID                       ascending                   
 
 Table Constraints
 

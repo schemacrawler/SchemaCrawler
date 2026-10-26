@@ -33,15 +33,15 @@ Indexes
 PK_AUTHORS                                                [unique index]
   ID                                ascending                   
 
-IDX_B_AUTHORS                                         [non-unique index]
-  LASTNAME                          ascending                   
-  FIRSTNAME                         ascending                   
-
 IDX_A_AUTHORS                                         [non-unique index]
   CITY                              ascending                   
   STATE                             ascending                   
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+IDX_B_AUTHORS                                         [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
 
 
 
@@ -61,22 +61,22 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 
 Foreign Keys
 
-Z_FK_AUTHOR                                [foreign key, with no action]
-  AUTHORID (1..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
-
 SYS_FK_10121                               [foreign key, with no action]
   BOOKID (1..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
+Z_FK_AUTHOR                                [foreign key, with no action]
+  AUTHORID (1..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
+
 Indexes
 
-Z_FK_AUTHOR                                           [non-unique index]
+UIDX_BOOKAUTHORS                                          [unique index]
+  BOOKID                            ascending                   
   AUTHORID                          ascending                   
 
 SYS_FK_10121                                          [non-unique index]
   BOOKID                            ascending                   
 
-UIDX_BOOKAUTHORS                                          [unique index]
-  BOOKID                            ascending                   
+Z_FK_AUTHOR                                           [non-unique index]
   AUTHORID                          ascending                   
 
 
@@ -98,14 +98,14 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-FK_SALES_BOOK                              [foreign key, with no action]
-  ID <-- PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+  ID <--(0..1) PREVIOUSEDITIONID                                
 
 SYS_FK_10121                               [foreign key, with no action]
   ID <--(1..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
-FK_PREVIOUSEDITION                         [foreign key, with no action]
-  ID <--(0..1) PREVIOUSEDITIONID                                
+FK_SALES_BOOK                              [foreign key, with no action]
+  ID <-- PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
 Indexes
 
@@ -206,12 +206,12 @@ FK_CUSTOMER                                [foreign key, with no action]
 
 Indexes
 
-FK_CUSTOMER                                           [non-unique index]
-  CUSTOMERID                        ascending                   
-
 PK_CUSTOMERDATA                                           [unique index]
   CUSTOMERID                        ascending                   
   DATAID                            ascending                   
+
+FK_CUSTOMER                                           [non-unique index]
+  CUSTOMERID                        ascending                   
 
 
 
@@ -281,11 +281,11 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
 
 Indexes
 
-FK_ΒΙΒΛΊΑ_PUBLISHERS                                  [non-unique index]
-  ΕΚΔΌΤΗΣ                           ascending                   
-
 PK_ΒΙΒΛΊΑ                                                 [unique index]
   ΜΟΝΑΔΙΚΌΣ                         ascending                   
+
+FK_ΒΙΒΛΊΑ_PUBLISHERS                                  [non-unique index]
+  ΕΚΔΌΤΗΣ                           ascending                   
 
 
 
@@ -302,20 +302,14 @@ PUBLIC.BOOKS.GETBOOKSCOUNT                        [procedure, no result]
 
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
+  NEWPUBLISHER                      CHARACTER VARYING, in       
   PUBLISHER                         CHARACTER VARYING, out      
 
 
 
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-  NEWPUBLISHER                      CHARACTER VARYING, in       
   PUBLISHER                         CHARACTER VARYING, out      
-
-
-
-PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
-------------------------------------------------------------------------
-  ONE                               INTEGER, in                 
 
 
 
@@ -323,4 +317,10 @@ PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
   ONE                               INTEGER, in                 
   TWO                               INTEGER, in                 
+
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+  ONE                               INTEGER, in                 
 

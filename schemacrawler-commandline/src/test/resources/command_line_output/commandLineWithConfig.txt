@@ -19,14 +19,14 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-FK_SALES_BOOK                              [foreign key, with no action]
-  ID <-- SALES.BOOKID                                           
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+  ID <--(0..1) PREVIOUSEDITIONID                                
 
 SYS_FK_10121                               [foreign key, with no action]
   ID <-- BOOKAUTHORS.BOOKID                                     
 
-FK_PREVIOUSEDITION                         [foreign key, with no action]
-  ID <--(0..1) PREVIOUSEDITIONID                                
+FK_SALES_BOOK                              [foreign key, with no action]
+  ID <-- SALES.BOOKID                                           
 
 
 

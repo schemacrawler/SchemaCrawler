@@ -244,6 +244,7 @@ td.section {
 <!-- authors_f521e766 -->
 <g id="node1" class="node">
 <title>authors_f521e766</title>
+<polygon fill="none" stroke="#888888" points="8,-487 8,-706.25 354.75,-706.25 354.75,-487 8,-487"/>
 <polygon fill="#c2dcf2" stroke="none" points="9,-685.5 9,-705.25 189.25,-705.25 189.25,-685.5 9,-685.5"/>
 <text xml:space="preserve" text-anchor="start" x="11" y="-690.95" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.AUTHORS</text>
 <polygon fill="#c2dcf2" stroke="none" points="189.25,-685.5 189.25,-705.25 353.75,-705.25 353.75,-685.5 189.25,-685.5"/>
@@ -276,11 +277,11 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="11" y="-493" font-family="Helvetica,sans-Serif" font-size="14.00">COUNTRY</text>
 <text xml:space="preserve" text-anchor="start" x="145.75" y="-493" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="191.25" y="-493" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(50)</text>
-<polygon fill="none" stroke="#888888" points="8,-487 8,-706.25 354.75,-706.25 354.75,-487 8,-487"/>
 </g>
 <!-- bookauthors_ead84c5d -->
 <g id="node2" class="node">
 <title>bookauthors_ead84c5d</title>
+<polygon fill="none" stroke="#888888" points="1426.5,-685.25 1426.5,-786 1956.75,-786 1956.75,-685.25 1426.5,-685.25"/>
 <polygon fill="#c2dcf2" stroke="none" points="1427.5,-765.25 1427.5,-785 1763.08,-785 1763.08,-765.25 1427.5,-765.25"/>
 <text xml:space="preserve" text-anchor="start" x="1429.5" y="-770.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.BOOKAUTHORS</text>
 <polygon fill="#c2dcf2" stroke="none" points="1763.08,-765.25 1763.08,-785 1955.75,-785 1955.75,-765.25 1763.08,-765.25"/>
@@ -295,7 +296,6 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="1429.5" y="-691.25" font-family="Helvetica,sans-Serif" font-size="14.00">SOMEDATA</text>
 <text xml:space="preserve" text-anchor="start" x="1633.29" y="-691.25" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="1765.08" y="-691.25" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(30)</text>
-<polygon fill="none" stroke="#888888" points="1426.5,-685.25 1426.5,-786 1956.75,-786 1956.75,-685.25 1426.5,-685.25"/>
 </g>
 <!-- bookauthors_ead84c5d&#45;&gt;authors_f521e766 -->
 <g id="edge1" class="edge">
@@ -314,6 +314,7 @@ td.section {
 <!-- books_f4a675c8 -->
 <g id="node5" class="node">
 <title>books_f4a675c8</title>
+<polygon fill="none" stroke="#888888" points="565.75,-229.5 565.75,-527.75 1220.75,-527.75 1220.75,-229.5 565.75,-229.5"/>
 <polygon fill="#c2dcf2" stroke="none" points="566.75,-507 566.75,-526.75 730.5,-526.75 730.5,-507 566.75,-507"/>
 <text xml:space="preserve" text-anchor="start" x="568.75" y="-512.45" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.BOOKS</text>
 <polygon fill="#c2dcf2" stroke="none" points="730.5,-507 730.5,-526.75 1219.75,-526.75 1219.75,-507 730.5,-507"/>
@@ -352,10 +353,9 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="568.75" y="-235.5" font-family="Helvetica,sans-Serif" font-size="14.00">PREVIOUSEDITIONID</text>
 <text xml:space="preserve" text-anchor="start" x="718.5" y="-235.5" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="732.5" y="-235.5" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
-<polygon fill="none" stroke="#888888" points="565.75,-229.5 565.75,-527.75 1220.75,-527.75 1220.75,-229.5 565.75,-229.5"/>
 </g>
 <!-- bookauthors_ead84c5d&#45;&gt;books_f4a675c8 -->
-<g id="edge7" class="edge">
+<g id="edge6" class="edge">
 <title>bookauthors_ead84c5d:w&#45;&gt;books_f4a675c8:e</title>
 <path fill="none" stroke="black" d="M1412.88,-728.45C1368.18,-690 1270.69,-509.06 1229.85,-481.03"/>
 <polygon fill="black" stroke="black" points="1417.36,-730.81 1424.11,-739.45 1422.08,-733.29 1425.91,-735.31 1425.91,-735.31 1425.91,-735.31 1422.08,-733.29 1428.3,-731.49 1417.36,-730.81"/>
@@ -451,6 +451,7 @@ td.section {
 <!-- authorslist_9ccb3c04 -->
 <g id="node6" class="node">
 <title>authorslist_9ccb3c04</title>
+<polygon fill="none" stroke="#888888" points="2208.62,-446.12 2208.62,-527.12 2513.38,-527.12 2513.38,-446.12 2208.62,-446.12"/>
 <polygon fill="#c2dcf2" stroke="none" points="2209.62,-506.38 2209.62,-526.12 2419.12,-526.12 2419.12,-506.38 2209.62,-506.38"/>
 <text xml:space="preserve" text-anchor="start" x="2211.62" y="-511.82" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.AUTHORSLIST</text>
 <polygon fill="#c2dcf2" stroke="none" points="2419.12,-506.38 2419.12,-526.12 2512.38,-526.12 2512.38,-506.38 2419.12,-506.38"/>
@@ -464,11 +465,11 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="2211.62" y="-452.12" font-family="Helvetica,sans-Serif" font-size="14.00">LASTNAME</text>
 <text xml:space="preserve" text-anchor="start" x="2353.88" y="-452.12" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="2421.12" y="-452.12" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20)</text>
-<polygon fill="none" stroke="#888888" points="2208.62,-446.12 2208.62,-527.12 2513.38,-527.12 2513.38,-446.12 2208.62,-446.12"/>
 </g>
 <!-- sales_751e68cc -->
 <g id="node7" class="node">
 <title>sales_751e68cc</title>
+<polygon fill="none" stroke="#888888" points="1484.88,-23.62 1484.88,-183.62 1898.38,-183.62 1898.38,-23.62 1484.88,-23.62"/>
 <polygon fill="#f2d6c2" stroke="none" points="1485.88,-162.88 1485.88,-182.62 1732.88,-182.62 1732.88,-162.88 1485.88,-162.88"/>
 <text xml:space="preserve" text-anchor="start" x="1487.88" y="-168.32" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.&quot;PUBLISHER SALES&quot;.SALES</text>
 <polygon fill="#f2d6c2" stroke="none" points="1732.88,-162.88 1732.88,-182.62 1897.38,-182.62 1897.38,-162.88 1732.88,-162.88"/>
@@ -494,10 +495,9 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="1487.88" y="-29.62" font-family="Helvetica,sans-Serif" font-size="14.00">SALESDATAID</text>
 <text xml:space="preserve" text-anchor="start" x="1667.62" y="-29.62" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="1734.88" y="-29.62" font-family="Helvetica,sans-Serif" font-size="14.00">INTEGER</text>
-<polygon fill="none" stroke="#888888" points="1484.88,-23.62 1484.88,-183.62 1898.38,-183.62 1898.38,-23.62 1484.88,-23.62"/>
 </g>
 <!-- sales_751e68cc&#45;&gt;books_f4a675c8 -->
-<g id="edge6" class="edge">
+<g id="edge7" class="edge">
 <title>sales_751e68cc:w&#45;&gt;books_f4a675c8:e</title>
 <path fill="none" stroke="black" d="M1470.02,-126.03C1419.1,-184.76 1270.32,-431.73 1229.08,-471.86"/>
 <polygon fill="black" stroke="black" points="1476.97,-120.16 1487.52,-117.16 1481.05,-116.72 1484.36,-113.93 1484.36,-113.93 1484.36,-113.93 1481.05,-116.72 1481.72,-110.28 1476.97,-120.16"/>
@@ -511,6 +511,7 @@ td.section {
 <!-- regions_dbf65bbf -->
 <g id="node17" class="node">
 <title>regions_dbf65bbf</title>
+<polygon fill="none" stroke="#888888" points="677.12,-102.25 677.12,-203 1109.38,-203 1109.38,-102.25 677.12,-102.25"/>
 <polygon fill="#f2d6c2" stroke="none" points="678.12,-182.25 678.12,-202 943.88,-202 943.88,-182.25 678.12,-182.25"/>
 <text xml:space="preserve" text-anchor="start" x="680.12" y="-187.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.&quot;PUBLISHER SALES&quot;.REGIONS</text>
 <polygon fill="#f2d6c2" stroke="none" points="943.88,-182.25 943.88,-202 1108.38,-202 1108.38,-182.25 943.88,-182.25"/>
@@ -527,7 +528,6 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="680.12" y="-108.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">COUNTRY</text>
 <text xml:space="preserve" text-anchor="start" x="858.38" y="-108.25" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="945.88" y="-108.25" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(50) NOT NULL</text>
-<polygon fill="none" stroke="#888888" points="677.12,-102.25 677.12,-203 1109.38,-203 1109.38,-102.25 677.12,-102.25"/>
 </g>
 <!-- sales_751e68cc&#45;&gt;regions_dbf65bbf -->
 <g id="edge13" class="edge">
@@ -558,6 +558,7 @@ td.section {
 <!-- salesdata_1193fa76 -->
 <g id="node20" class="node">
 <title>salesdata_1193fa76</title>
+<polygon fill="none" stroke="#888888" points="701.12,-4 701.12,-65.25 1085.38,-65.25 1085.38,-4 701.12,-4"/>
 <polygon fill="#f2d6c2" stroke="none" points="702.12,-44.5 702.12,-64.25 985.12,-64.25 985.12,-44.5 702.12,-44.5"/>
 <text xml:space="preserve" text-anchor="start" x="704.12" y="-49.95" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.&quot;PUBLISHER SALES&quot;.SALESDATA</text>
 <polygon fill="#f2d6c2" stroke="none" points="985.12,-44.5 985.12,-64.25 1084.38,-64.25 1084.38,-44.5 985.12,-44.5"/>
@@ -568,7 +569,6 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="704.12" y="-10" font-family="Helvetica,sans-Serif" font-size="14.00">YEARLYAMOUNT</text>
 <text xml:space="preserve" text-anchor="start" x="899.62" y="-10" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="987.12" y="-10" font-family="Helvetica,sans-Serif" font-size="14.00">DOUBLE(64, 0)</text>
-<polygon fill="none" stroke="#888888" points="701.12,-4 701.12,-65.25 1085.38,-65.25 1085.38,-4 701.12,-4"/>
 </g>
 <!-- sales_751e68cc&#45;&gt;salesdata_1193fa76 -->
 <g id="edge17" class="edge">
@@ -602,6 +602,7 @@ td.section {
 <!-- celebrities_db1258df -->
 <g id="node10" class="node">
 <title>celebrities_db1258df</title>
+<polygon fill="none" stroke="#888888" points="1525,-812 1525,-873.25 1858.25,-873.25 1858.25,-812 1525,-812"/>
 <polygon fill="#c2dcf2" stroke="none" points="1526,-852.5 1526,-872.25 1721.25,-872.25 1721.25,-852.5 1526,-852.5"/>
 <text xml:space="preserve" text-anchor="start" x="1528" y="-857.95" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.&quot;Celebrities&quot;</text>
 <polygon fill="#c2dcf2" stroke="none" points="1721.25,-852.5 1721.25,-872.25 1857.25,-872.25 1857.25,-852.5 1721.25,-852.5"/>
@@ -612,11 +613,11 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="1528" y="-818" font-family="Helvetica,sans-Serif" font-size="14.00">NAME</text>
 <text xml:space="preserve" text-anchor="start" x="1643.62" y="-818" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="1723.25" y="-818" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20)</text>
-<polygon fill="none" stroke="#888888" points="1525,-812 1525,-873.25 1858.25,-873.25 1858.25,-812 1525,-812"/>
 </g>
 <!-- celebrityupdates_f5088e8b -->
 <g id="node11" class="node">
 <title>celebrityupdates_f5088e8b</title>
+<polygon fill="none" stroke="#888888" points="2171.5,-812 2171.5,-873.25 2550.5,-873.25 2550.5,-812 2171.5,-812"/>
 <polygon fill="#c2dcf2" stroke="none" points="2172.5,-852.5 2172.5,-872.25 2413.5,-872.25 2413.5,-852.5 2172.5,-852.5"/>
 <text xml:space="preserve" text-anchor="start" x="2174.5" y="-857.95" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.&quot;Celebrity Updates&quot;</text>
 <polygon fill="#c2dcf2" stroke="none" points="2413.5,-852.5 2413.5,-872.25 2549.5,-872.25 2549.5,-852.5 2413.5,-852.5"/>
@@ -627,7 +628,6 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="2174.5" y="-818" font-family="Helvetica,sans-Serif" font-size="14.00">&quot;UPDATE&quot;</text>
 <text xml:space="preserve" text-anchor="start" x="2336.62" y="-818" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="2415.5" y="-818" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20)</text>
-<polygon fill="none" stroke="#888888" points="2171.5,-812 2171.5,-873.25 2550.5,-873.25 2550.5,-812 2171.5,-812"/>
 </g>
 <!-- celebrityupdates_f5088e8b&#45;&gt;celebrities_db1258df -->
 <g id="edge10" class="edge">
@@ -646,6 +646,7 @@ td.section {
 <!-- coupons_54c3042b -->
 <g id="node12" class="node">
 <title>coupons_54c3042b</title>
+<polygon fill="none" stroke="#888888" points="2186.5,-899.25 2186.5,-1000 2535.5,-1000 2535.5,-899.25 2186.5,-899.25"/>
 <polygon fill="#c2dcf2" stroke="none" points="2187.5,-979.25 2187.5,-999 2370,-999 2370,-979.25 2187.5,-979.25"/>
 <text xml:space="preserve" text-anchor="start" x="2189.5" y="-984.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.COUPONS</text>
 <polygon fill="#c2dcf2" stroke="none" points="2370,-979.25 2370,-999 2534.5,-999 2534.5,-979.25 2370,-979.25"/>
@@ -662,11 +663,11 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="2189.5" y="-905.25" font-family="Helvetica,sans-Serif" font-size="14.00">BOOKS</text>
 <text xml:space="preserve" text-anchor="start" x="2313.75" y="-905.25" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="2372" y="-905.25" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(20) ARRAY[10]</text>
-<polygon fill="none" stroke="#888888" points="2186.5,-899.25 2186.5,-1000 2535.5,-1000 2535.5,-899.25 2186.5,-899.25"/>
 </g>
 <!-- customerdata_b0af83c6 -->
 <g id="node13" class="node">
 <title>customerdata_b0af83c6</title>
+<polygon fill="none" stroke="#888888" points="2178.25,-1026.12 2178.25,-1107.12 2543.75,-1107.12 2543.75,-1026.12 2178.25,-1026.12"/>
 <polygon fill="#c2dcf2" stroke="none" points="2179.25,-1086.38 2179.25,-1106.12 2406.75,-1106.12 2406.75,-1086.38 2179.25,-1086.38"/>
 <text xml:space="preserve" text-anchor="start" x="2181.25" y="-1091.83" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.CUSTOMERDATA</text>
 <polygon fill="#c2dcf2" stroke="none" points="2406.75,-1086.38 2406.75,-1106.12 2542.75,-1106.12 2542.75,-1086.38 2406.75,-1086.38"/>
@@ -680,11 +681,11 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="2181.25" y="-1032.12" font-family="Helvetica,sans-Serif" font-size="14.00">DATA</text>
 <text xml:space="preserve" text-anchor="start" x="2339.25" y="-1032.12" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="2408.75" y="-1032.12" font-family="Helvetica,sans-Serif" font-size="14.00">VALID_STRING(20)</text>
-<polygon fill="none" stroke="#888888" points="2178.25,-1026.12 2178.25,-1107.12 2543.75,-1107.12 2543.75,-1026.12 2178.25,-1026.12"/>
 </g>
 <!-- customers_f705d773 -->
 <g id="node14" class="node">
 <title>customers_f705d773</title>
+<polygon fill="none" stroke="#888888" points="1511.5,-1006.25 1511.5,-1107 1871.75,-1107 1871.75,-1006.25 1511.5,-1006.25"/>
 <polygon fill="#c2dcf2" stroke="none" points="1512.5,-1086.25 1512.5,-1106 1713,-1106 1713,-1086.25 1512.5,-1086.25"/>
 <text xml:space="preserve" text-anchor="start" x="1514.5" y="-1091.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.CUSTOMERS</text>
 <polygon fill="#c2dcf2" stroke="none" points="1713,-1086.25 1713,-1106 1870.75,-1106 1870.75,-1086.25 1713,-1086.25"/>
@@ -701,7 +702,6 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="1514.5" y="-1012.25" font-family="Helvetica,sans-Serif" font-size="14.00">AGE</text>
 <text xml:space="preserve" text-anchor="start" x="1652.25" y="-1012.25" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="1715" y="-1012.25" font-family="Helvetica,sans-Serif" font-size="14.00">AGE_TYPE</text>
-<polygon fill="none" stroke="#888888" points="1511.5,-1006.25 1511.5,-1107 1871.75,-1107 1871.75,-1006.25 1511.5,-1006.25"/>
 </g>
 <!-- customerdata_b0af83c6&#45;&gt;customers_f705d773 -->
 <g id="edge11" class="edge">
@@ -719,6 +719,7 @@ td.section {
 <!-- publishers_8037d535 -->
 <g id="node15" class="node">
 <title>publishers_8037d535</title>
+<polygon fill="none" stroke="#888888" points="1476.25,-1133.5 1476.25,-1273.75 1907,-1273.75 1907,-1133.5 1476.25,-1133.5"/>
 <polygon fill="#c2dcf2" stroke="none" points="1477.25,-1253 1477.25,-1272.75 1677,-1272.75 1677,-1253 1477.25,-1253"/>
 <text xml:space="preserve" text-anchor="start" x="1479.25" y="-1258.45" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.PUBLISHERS</text>
 <polygon fill="#c2dcf2" stroke="none" points="1677,-1253 1677,-1272.75 1906,-1272.75 1906,-1253 1677,-1253"/>
@@ -736,11 +737,11 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="1679" y="-1159.25" font-family="Helvetica,sans-Serif" font-size="14.00">VARCHAR(255)</text>
 <text xml:space="preserve" text-anchor="start" x="1615.5" y="-1139.5" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="1679" y="-1139.5" font-family="Helvetica,sans-Serif" font-size="14.00">Name of book publisher</text>
-<polygon fill="none" stroke="#888888" points="1476.25,-1133.5 1476.25,-1273.75 1907,-1273.75 1907,-1133.5 1476.25,-1133.5"/>
 </g>
 <!-- βιβλία_3cecb755 -->
 <g id="node16" class="node">
 <title>βιβλία_3cecb755</title>
+<polygon fill="none" stroke="#888888" points="2193.25,-1211.25 2193.25,-1312 2528.75,-1312 2528.75,-1211.25 2193.25,-1211.25"/>
 <polygon fill="#c2dcf2" stroke="none" points="2194.25,-1291.25 2194.25,-1311 2355.75,-1311 2355.75,-1291.25 2194.25,-1291.25"/>
 <text xml:space="preserve" text-anchor="start" x="2196.25" y="-1296.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-style="italic" font-size="14.00">PUBLIC.BOOKS.ΒΙΒΛΊΑ</text>
 <polygon fill="#c2dcf2" stroke="none" points="2355.75,-1291.25 2355.75,-1311 2527.75,-1311 2527.75,-1291.25 2355.75,-1291.25"/>
@@ -757,7 +758,6 @@ td.section {
 <text xml:space="preserve" text-anchor="start" x="2196.25" y="-1217.25" font-family="Helvetica,sans-Serif" font-size="14.00">ΕΚΔΌΤΗΣ</text>
 <text xml:space="preserve" text-anchor="start" x="2318.25" y="-1217.25" font-family="Helvetica,sans-Serif" font-size="14.00"> </text>
 <text xml:space="preserve" text-anchor="start" x="2357.75" y="-1217.25" font-family="Helvetica,sans-Serif" font-size="14.00">SMALLINT NOT NULL</text>
-<polygon fill="none" stroke="#888888" points="2193.25,-1211.25 2193.25,-1312 2528.75,-1312 2528.75,-1211.25 2193.25,-1211.25"/>
 </g>
 <!-- βιβλία_3cecb755&#45;&gt;publishers_8037d535 -->
 <g id="edge12" class="edge">
@@ -978,23 +978,6 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>IDX_B_AUTHORS</td>
-		<td class='description right'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>LASTNAME</td>
-		<td class='minwidth'>ascending</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>FIRSTNAME</td>
-		<td class='minwidth'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>IDX_A_AUTHORS</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
@@ -1016,6 +999,23 @@ td.section {
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>COUNTRY</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>IDX_B_AUTHORS</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>LASTNAME</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>FIRSTNAME</td>
 		<td class='minwidth'>ascending</td>
 	</tr>
 </table>
@@ -1084,6 +1084,18 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>SYS_FK_10121</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>BOOKID (1..many)→ <a href='#books_f4a675c8'>PUBLIC.BOOKS.BOOKS.ID</a></td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>Z_FK_AUTHOR</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
@@ -1099,26 +1111,19 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_FK_10121</td>
-		<td class='description right'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>BOOKID (1..many)→ <a href='#books_f4a675c8'>PUBLIC.BOOKS.BOOKS.ID</a></td>
-		<td class='minwidth'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
 		<td colspan='3' class='section'>Indexes</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>Z_FK_AUTHOR</td>
-		<td class='description right'>[non-unique index]</td>
+		<td colspan='2' class='name'>UIDX_BOOKAUTHORS</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>BOOKID</td>
+		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
@@ -1141,13 +1146,8 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>UIDX_BOOKAUTHORS</td>
-		<td class='description right'>[unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>BOOKID</td>
-		<td class='minwidth'>ascending</td>
+		<td colspan='2' class='name'>Z_FK_AUTHOR</td>
+		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
@@ -1262,12 +1262,12 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_SALES_BOOK</td>
+		<td colspan='2' class='name'>FK_PREVIOUSEDITION</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID ←(0..many) <a href='#sales_751e68cc'>PUBLIC."PUBLISHER SALES".SALES.BOOKID</a></td>
+		<td class='minwidth'>ID ←(0..1) <a href='#books_f4a675c8'>PREVIOUSEDITIONID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1286,12 +1286,12 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_PREVIOUSEDITION</td>
+		<td colspan='2' class='name'>FK_SALES_BOOK</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID ←(0..1) <a href='#books_f4a675c8'>PREVIOUSEDITIONID</a></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#sales_751e68cc'>PUBLIC."PUBLISHER SALES".SALES.BOOKID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1299,18 +1299,6 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td colspan='3' class='section'>Implicit Associations</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>3_weak_partial_pk</td>
-		<td class='description right'>[implicit association]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ID (1..1)⇝ PRIVATE.LIBRARY.BOOKS.ID</td>
-		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1325,6 +1313,18 @@ along with the latest updated information</td>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>ID (1..1)⇝ <a href='#authors_f521e766'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>3_weak_partial_pk</td>
+		<td class='description right'>[implicit association]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID (1..1)⇝ PRIVATE.LIBRARY.BOOKS.ID</td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -1692,18 +1692,6 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_CUSTOMER</td>
-		<td class='description right'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>CUSTOMERID</td>
-		<td class='minwidth'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>PK_CUSTOMERDATA</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
@@ -1715,6 +1703,18 @@ along with the latest updated information</td>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>DATAID</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_CUSTOMER</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>CUSTOMERID</td>
 		<td class='minwidth'>ascending</td>
 	</tr>
 </table>
@@ -1972,24 +1972,24 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_ΒΙΒΛΊΑ_PUBLISHERS</td>
-		<td class='description right'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ΕΚΔΌΤΗΣ</td>
-		<td class='minwidth'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>PK_ΒΙΒΛΊΑ</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>ΜΟΝΑΔΙΚΌΣ</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_ΒΙΒΛΊΑ_PUBLISHERS</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ΕΚΔΌΤΗΣ</td>
 		<td class='minwidth'>ascending</td>
 	</tr>
 </table>
@@ -2160,18 +2160,6 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_SALES_SALESDATA</td>
-		<td class='description right'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>SALESDATAID (0..many)→ <a href='#salesdata_1193fa76'>PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID</a></td>
-		<td class='minwidth'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>FK_SALES_REGIONS</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
@@ -2183,6 +2171,18 @@ along with the latest updated information</td>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>COUNTRY (1..many)→ <a href='#regions_dbf65bbf'>PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY</a></td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_SALES_SALESDATA</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>SALESDATAID (0..many)→ <a href='#salesdata_1193fa76'>PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -2230,18 +2230,6 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_SALES_SALESDATA</td>
-		<td class='description right'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>SALESDATAID</td>
-		<td class='minwidth'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>FK_SALES_REGIONS</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
@@ -2253,6 +2241,18 @@ along with the latest updated information</td>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>COUNTRY</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_SALES_SALESDATA</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>SALESDATAID</td>
 		<td class='minwidth'>ascending</td>
 	</tr>
 </table>

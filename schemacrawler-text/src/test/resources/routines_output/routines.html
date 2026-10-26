@@ -280,45 +280,6 @@ td.section {
 
 <table>
 	<caption style='background-color: #C2DCF2;'>
-		<span id='new_publisher_force_value_7d16ddc0' class='caption_name'>NEW_PUBLISHER</span>
-		<span class='caption_description'>[procedure, no result]</span>
-	</caption>
-
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>PUBLISHER</td>
-		<td class='minwidth'>CHARACTER VARYING, out</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[specific name]</td>
-	</tr>
-	<tr>
-		<td colspan='3'>NEW_PUBLISHER_FORCE_VALUE</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='3' class='section'>Definition</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_FORCE_VALUE LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-
-
-<table>
-	<caption style='background-color: #C2DCF2;'>
 		<span id='new_publisher_10154_43f13174' class='caption_name'>NEW_PUBLISHER</span>
 		<span class='caption_description'>[procedure, no result]</span>
 	</caption>
@@ -363,14 +324,14 @@ td.section {
 
 <table>
 	<caption style='background-color: #C2DCF2;'>
-		<span id='customadd_10156_a370a996' class='caption_name'>CUSTOMADD</span>
-		<span class='caption_description'>[function, does not return a table]</span>
+		<span id='new_publisher_force_value_7d16ddc0' class='caption_name'>NEW_PUBLISHER</span>
+		<span class='caption_description'>[procedure, no result]</span>
 	</caption>
 
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ONE</td>
-		<td class='minwidth'>INTEGER, in</td>
+		<td class='minwidth'>PUBLISHER</td>
+		<td class='minwidth'>CHARACTER VARYING, out</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -380,7 +341,7 @@ td.section {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3'>CUSTOMADD_10156</td>
+		<td colspan='3'>NEW_PUBLISHER_FORCE_VALUE</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -393,7 +354,7 @@ td.section {
 		<td class='description right'>[definition]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10156 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_FORCE_VALUE LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -438,6 +399,45 @@ td.section {
 	</tr>
 	<tr>
 		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10155 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+	<caption style='background-color: #C2DCF2;'>
+		<span id='customadd_10156_a370a996' class='caption_name'>CUSTOMADD</span>
+		<span class='caption_description'>[function, does not return a table]</span>
+	</caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ONE</td>
+		<td class='minwidth'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3'>CUSTOMADD_10156</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Definition</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10156 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
 	</tr>
 </table>
 <p>&#160;</p>

@@ -34,15 +34,15 @@ Indexes
 PK_AUTHORS                                                [unique index]
   ID                                ascending                   
 
-IDX_B_AUTHORS                                         [non-unique index]
-  LASTNAME                          ascending                   
-  FIRSTNAME                         ascending                   
-
 IDX_A_AUTHORS                                         [non-unique index]
   CITY                              ascending                   
   STATE                             ascending                   
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+IDX_B_AUTHORS                                         [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
 
 Triggers
 
@@ -199,6 +199,10 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 
 Indexes
 
+IDX_U_WRITERS                                             [unique index]
+  EMAIL1                            ascending                   
+  COUNTRY                           ascending                   
+
 PK_WRITERS                                                [unique index]
   ID                                ascending                   
 
@@ -209,19 +213,15 @@ IDX_A1_WRITERS                                        [non-unique index]
   CITY                              ascending                   
   STATE                             ascending                   
 
-IDX_U_WRITERS                                             [unique index]
-  EMAIL1                            ascending                   
-  COUNTRY                           ascending                   
-
-IDX_B_WRITERS                                         [non-unique index]
-  LASTNAME                          ascending                   
-  FIRSTNAME                         ascending                   
-
 IDX_A_WRITERS                                         [non-unique index]
   CITY                              ascending                   
   STATE                             ascending                   
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+IDX_B_WRITERS                                         [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
 
 Table Constraints
 

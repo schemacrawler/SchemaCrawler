@@ -47,15 +47,15 @@ Indexes
 PK_AUTHORS                                                [unique index]
   ID                                ascending                   
 
-IDX_B_AUTHORS                                         [non-unique index]
-  LASTNAME                          ascending                   
-  FIRSTNAME                         ascending                   
-
 IDX_A_AUTHORS                                         [non-unique index]
   CITY                              ascending                   
   STATE                             ascending                   
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+IDX_B_AUTHORS                                         [non-unique index]
+  LASTNAME                          ascending                   
+  FIRSTNAME                         ascending                   
 
 
 
@@ -77,23 +77,23 @@ along with the latest updated information
 
 Foreign Keys
 
+SYS_FK_10121                               [foreign key, with no action]
+  BOOKID (1..many)--> PUBLIC.BOOKS.BOOKS.ID                              
+
 Z_FK_AUTHOR                                [foreign key, with no action]
 Overwritten foreign key remarks line 1
   AUTHORID (1..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
-SYS_FK_10121                               [foreign key, with no action]
-  BOOKID (1..many)--> PUBLIC.BOOKS.BOOKS.ID                              
-
 Indexes
 
-Z_FK_AUTHOR                                           [non-unique index]
+UIDX_BOOKAUTHORS                                          [unique index]
+  BOOKID                            ascending                   
   AUTHORID                          ascending                   
 
 SYS_FK_10121                                          [non-unique index]
   BOOKID                            ascending                   
 
-UIDX_BOOKAUTHORS                                          [unique index]
-  BOOKID                            ascending                   
+Z_FK_AUTHOR                                           [non-unique index]
   AUTHORID                          ascending                   
 
 
@@ -123,23 +123,23 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-FK_SALES_BOOK                              [foreign key, with no action]
-  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+  ID <--(0..1) PREVIOUSEDITIONID                                
 
 SYS_FK_10121                               [foreign key, with no action]
   ID <--(1..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
-FK_PREVIOUSEDITION                         [foreign key, with no action]
-  ID <--(0..1) PREVIOUSEDITIONID                                
+FK_SALES_BOOK                              [foreign key, with no action]
+  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
 Implicit Associations
-
-3_weak_partial_pk                                 [implicit association]
-  ID (1..1)~~> PRIVATE.LIBRARY.BOOKS.ID                              
 
 1_weak                                            [implicit association]
 Overwritten remarks line 1
   ID (1..1)~~> PUBLIC.BOOKS.AUTHORS.ID                              
+
+3_weak_partial_pk                                 [implicit association]
+  ID (1..1)~~> PRIVATE.LIBRARY.BOOKS.ID                              
 
 9_weak_self_reference                             [implicit association]
   ID <~~ OTHEREDITIONID                                         
@@ -243,12 +243,12 @@ FK_CUSTOMER                                [foreign key, with no action]
 
 Indexes
 
-FK_CUSTOMER                                           [non-unique index]
-  CUSTOMERID                        ascending                   
-
 PK_CUSTOMERDATA                                           [unique index]
   CUSTOMERID                        ascending                   
   DATAID                            ascending                   
+
+FK_CUSTOMER                                           [non-unique index]
+  CUSTOMERID                        ascending                   
 
 
 
@@ -321,11 +321,11 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
 
 Indexes
 
-FK_ΒΙΒΛΊΑ_PUBLISHERS                                  [non-unique index]
-  ΕΚΔΌΤΗΣ                           ascending                   
-
 PK_ΒΙΒΛΊΑ                                                 [unique index]
   ΜΟΝΑΔΙΚΌΣ                         ascending                   
+
+FK_ΒΙΒΛΊΑ_PUBLISHERS                                  [non-unique index]
+  ΕΚΔΌΤΗΣ                           ascending                   
 
 
 
@@ -371,12 +371,12 @@ Foreign Keys
 FK_SALES_BOOK                              [foreign key, with no action]
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
-FK_SALES_SALESDATA                         [foreign key, with no action]
-  SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              
-
 FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE (1..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
   COUNTRY (1..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
+
+FK_SALES_SALESDATA                         [foreign key, with no action]
+  SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              
 
 Implicit Associations
 
@@ -389,12 +389,12 @@ Indexes
 FK_SALES_BOOK                                         [non-unique index]
   BOOKID                            ascending                   
 
-FK_SALES_SALESDATA                                    [non-unique index]
-  SALESDATAID                       ascending                   
-
 FK_SALES_REGIONS                                      [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+FK_SALES_SALESDATA                                    [non-unique index]
+  SALESDATAID                       ascending                   
 
 
 

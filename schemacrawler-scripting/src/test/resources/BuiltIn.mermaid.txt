@@ -30,6 +30,14 @@ erDiagram
     decimal PRICE "Current price for the book"
   }
 
+  "PUBLIC.BOOKS.Celebrities":::strong_entity {
+    string NAME
+  }
+
+  "PUBLIC.BOOKS.Celebrity Updates":::subtype {
+    string UPDATE
+  }
+
   "PUBLIC.BOOKS.COUPONS":::strong_entity {
     string DATA
     other COUPONS
@@ -44,14 +52,6 @@ erDiagram
     string FIRSTNAME
     string LASTNAME
     integer AGE
-  }
-
-  "PUBLIC.BOOKS.Celebrities":::strong_entity {
-    string NAME
-  }
-
-  "PUBLIC.BOOKS.Celebrity Updates":::subtype {
-    string UPDATE
   }
 
   "PUBLIC.BOOKS.PUBLISHERS":::strong_entity {
@@ -79,10 +79,10 @@ erDiagram
     decimal TOTALAMOUNT
   }
 
-  "PUBLIC.BOOKS.AUTHORS" }o--o{ "PUBLIC.BOOKS.BOOKS" : "via bridge table BOOKAUTHORS"
+  "PUBLIC.BOOKS.BOOKS" }o--o{ "PUBLIC.BOOKS.AUTHORS" : "via bridge table BOOKAUTHORS"
   "PUBLIC.BOOKS.BOOKS" |o--|| "PUBLIC.BOOKS.BOOKS" : "self-reference"
-  "PUBLIC.BOOKS.CUSTOMERDATA" }|--|| "PUBLIC.BOOKS.CUSTOMERS" : "foreign key"
   "PUBLIC.BOOKS.Celebrity Updates" ||--|| "PUBLIC.BOOKS.Celebrities" : "foreign key"
+  "PUBLIC.BOOKS.CUSTOMERDATA" }|--|| "PUBLIC.BOOKS.CUSTOMERS" : "foreign key"
   "PUBLIC.BOOKS.ΒΙΒΛΊΑ" }|--|| "PUBLIC.BOOKS.PUBLISHERS" : "foreign key"
   "PUBLIC.PUBLISHER SALES.SALES" }o--|| "PUBLIC.BOOKS.BOOKS" : "foreign key"
   "PUBLIC.PUBLISHER SALES.SALES" }|--|| "PUBLIC.PUBLISHER SALES.REGIONS" : "foreign key"

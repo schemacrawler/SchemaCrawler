@@ -44,10 +44,10 @@ along with the latest updated information
 Foreign Keys
 
                                            [foreign key, with no action]
-  AUTHORID (1..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
+  BOOKID (1..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
                                            [foreign key, with no action]
-  BOOKID (1..many)--> PUBLIC.BOOKS.BOOKS.ID                              
+  AUTHORID (1..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
 
 
@@ -66,13 +66,13 @@ PK_BOOKS                                                   [primary key]
 Foreign Keys
 
                                            [foreign key, with no action]
-  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
+  ID <--(0..1) PREVIOUSEDITIONID                                
 
                                            [foreign key, with no action]
   ID <--(1..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
                                            [foreign key, with no action]
-  ID <--(0..1) PREVIOUSEDITIONID                                
+  ID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
 
 
 
@@ -221,11 +221,11 @@ Foreign Keys
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
                                            [foreign key, with no action]
-  SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              
-
-                                           [foreign key, with no action]
   POSTALCODE (1..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
   COUNTRY (1..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
+
+                                           [foreign key, with no action]
+  SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              
 
 
 
