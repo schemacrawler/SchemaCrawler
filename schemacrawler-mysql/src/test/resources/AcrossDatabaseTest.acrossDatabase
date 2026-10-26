@@ -53,11 +53,11 @@ FK_A_A_TO_A_A                               [foreign key, with restrict]
 
 Indexes
 
-FK_A_A_TO_A_A                                         [non-unique index]
-  FK_COL_TO_A_A                     ascending                   
-
 `PRIMARY`                                                 [unique index]
   `Id`                              ascending                   
+
+FK_A_A_TO_A_A                                         [non-unique index]
+  FK_COL_TO_A_A                     ascending                   
 
 Used By Objects
 
@@ -83,11 +83,11 @@ FK_A_B_TO_A_A                               [foreign key, with restrict]
 
 Indexes
 
-FK_A_B_TO_A_A                                         [non-unique index]
-  FK_COL_TO_A_A                     ascending                   
-
 `PRIMARY`                                                 [unique index]
   `Id`                              ascending                   
+
+FK_A_B_TO_A_A                                         [non-unique index]
+  FK_COL_TO_A_A                     ascending                   
 
 
 

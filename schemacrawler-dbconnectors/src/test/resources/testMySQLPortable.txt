@@ -35,14 +35,14 @@ Indexes
   `Id`                              ascending                   
 
                                                       [non-unique index]
-  `LastName`                        ascending                   
-  `FirstName`                       ascending                   
-
-                                                      [non-unique index]
   `City`                            ascending                   
   `State`                           ascending                   
   `PostalCode`                      ascending                   
   `Country`                         ascending                   
+
+                                                      [non-unique index]
+  `LastName`                        ascending                   
+  `FirstName`                       ascending                   
 
 
 
@@ -66,18 +66,18 @@ along with the latest updated information
 Foreign Keys
 
                                             [foreign key, with restrict]
-  `AuthorId` (1..many)--> authors.`Id`                              
+  `BookId` (1..many)--> books.`Id`                              
 
                                             [foreign key, with restrict]
-  `BookId` (1..many)--> books.`Id`                              
+  `AuthorId` (1..many)--> authors.`Id`                              
 
 Indexes
 
-                                                      [non-unique index]
-  `AuthorId`                        ascending                   
-
                                                           [unique index]
   `BookId`                          ascending                   
+  `AuthorId`                        ascending                   
+
+                                                      [non-unique index]
   `AuthorId`                        ascending                   
 
 
@@ -108,10 +108,10 @@ Primary Key
 Foreign Keys
 
                                             [foreign key, with restrict]
-  `Id` <--(1..many) bookauthors.`BookId`                              
+  `Id` <--(0..1) `PreviousEditionId`                              
 
                                             [foreign key, with restrict]
-  `Id` <--(0..1) `PreviousEditionId`                              
+  `Id` <--(1..many) bookauthors.`BookId`                              
 
 Indexes
 

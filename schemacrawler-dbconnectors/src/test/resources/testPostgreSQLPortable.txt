@@ -35,20 +35,20 @@ Indexes
   id                                ascending                   
 
                                                       [non-unique index]
+Index on author's location
+  city                              ascending                   
+  state                             descending                  
+  postalcode                        ascending                   
   country                           ascending                   
-                                                      [filter condition]
-((country)::text = 'USA'::text)
 
                                                       [non-unique index]
   lastname                          ascending                   
   firstname                         ascending                   
 
                                                       [non-unique index]
-Index on author's location
-  city                              ascending                   
-  state                             descending                  
-  postalcode                        ascending                   
   country                           ascending                   
+                                                      [filter condition]
+((country)::text = 'USA'::text)
 
 
 
@@ -80,10 +80,10 @@ along with the latest updated information
 Foreign Keys
 
                                            [foreign key, with no action]
-  authorid (1..many)--> authors.id                              
+  bookid (1..many)--> books.id                                  
 
                                            [foreign key, with no action]
-  bookid (1..many)--> books.id                                  
+  authorid (1..many)--> authors.id                              
 
 Indexes
 
@@ -119,10 +119,10 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  id <--(1..many) bookauthors.bookid                              
+  id <--(0..1) previouseditionid                                
 
                                            [foreign key, with no action]
-  id <--(0..1) previouseditionid                                
+  id <--(1..many) bookauthors.bookid                              
 
 Indexes
 

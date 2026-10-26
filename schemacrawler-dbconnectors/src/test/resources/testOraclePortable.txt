@@ -34,14 +34,14 @@ Indexes
   ID                                unknown                     
 
                                             [non-unique clustered index]
-  LASTNAME                          unknown                     
-  FIRSTNAME                         unknown                     
-
-                                            [non-unique clustered index]
   CITY                              unknown                     
   "SYS_NC00010$"                    unknown                     
   POSTALCODE                        unknown                     
   COUNTRY                           unknown                     
+
+                                            [non-unique clustered index]
+  LASTNAME                          unknown                     
+  FIRSTNAME                         unknown                     
 
 
 
@@ -81,10 +81,10 @@ BOOKAUTHORS                                                      [table]
 Foreign Keys
 
                                        [foreign key, on delete restrict]
-  AUTHORID (1..many)--> AUTHORS.ID                              
+  BOOKID (1..many)--> BOOKS.ID                                  
 
                                        [foreign key, on delete restrict]
-  BOOKID (1..many)--> BOOKS.ID                                  
+  AUTHORID (1..many)--> AUTHORS.ID                              
 
 Indexes
 
@@ -112,10 +112,10 @@ Primary Key
 Foreign Keys
 
                                        [foreign key, on delete restrict]
-  ID <--(1..many) BOOKAUTHORS.BOOKID                              
+  ID <--(0..1) PREVIOUSEDITIONID                                
 
                                        [foreign key, on delete restrict]
-  ID <--(0..1) PREVIOUSEDITIONID                                
+  ID <--(1..many) BOOKAUTHORS.BOOKID                              
 
 Indexes
 
@@ -194,7 +194,7 @@ JSON_BOOKS                                                        [view]
 PUBLISHERS                                                       [table]
 ------------------------------------------------------------------------
   ID                                BIT NOT NULL                
-                                    default "BOOKS"."ISEQ$$_72401".nextval
+                                    default "BOOKS"."ISEQ$$_72426".nextval
   PUBLISHER                         VARCHAR(255)                
 
 Primary Key

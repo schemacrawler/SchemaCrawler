@@ -34,6 +34,9 @@ Indexes
   Id                                ascending                   
 
                                                       [non-unique index]
+  City                              ascending                   
+  State                             descending                  
+  PostalCode                        ascending                   
   Country                           ascending                   
 
                                                       [non-unique index]
@@ -41,9 +44,6 @@ Indexes
   FirstName                         ascending                   
 
                                                       [non-unique index]
-  City                              ascending                   
-  State                             descending                  
-  PostalCode                        ascending                   
   Country                           ascending                   
 
 
@@ -80,10 +80,10 @@ BookAuthors                                                      [table]
 Foreign Keys
 
                                            [foreign key, with no action]
-  AuthorId (1..many)--> Authors.Id                              
+  BookId (1..many)--> Books.Id                                  
 
                                            [foreign key, with no action]
-  BookId (1..many)--> Books.Id                                  
+  AuthorId (1..many)--> Authors.Id                              
 
 Indexes
 
@@ -111,10 +111,10 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  Id <--(1..many) BookAuthors.BookId                              
+  Id <--(0..1) PreviousEditionId                                
 
                                            [foreign key, with no action]
-  Id <--(0..1) PreviousEditionId                                
+  Id <--(1..many) BookAuthors.BookId                              
 
 Indexes
 
