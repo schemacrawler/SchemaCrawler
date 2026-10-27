@@ -473,12 +473,12 @@ FK_WRITERS_PUBLICATION                     [foreign key, with no action]
 
 Indexes
 
+PK_WRITERS                                                [unique index]
+  ID                                ascending                   
+
 IDX_U_WRITERS                                             [unique index]
   EMAIL1                            ascending                   
   COUNTRY                           ascending                   
-
-PK_WRITERS                                                [unique index]
-  ID                                ascending                   
 
 FK_WRITERS_PUBLICATION                                [non-unique index]
   PUBLICATION_ID                    ascending                   

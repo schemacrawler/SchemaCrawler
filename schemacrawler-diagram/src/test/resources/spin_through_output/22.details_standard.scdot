@@ -29,7 +29,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2026-10-26 16:30:07</td>
+		<td align='left'>2026-10-27 02:39:33</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -834,10 +834,10 @@ along with the latest updated information</td>
 	</tr>
 	<hr/>
 	<tr>
-		<td colspan='3' bgcolor='#F4F4F4' align='left'>• IDX_U_WRITERS (EMAIL1, COUNTRY) [unique index]</td>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• PK_WRITERS (ID) [unique index]</td>
 	</tr>
 	<tr>
-		<td colspan='3' bgcolor='#F4F4F4' align='left'>• PK_WRITERS (ID) [unique index]</td>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• IDX_U_WRITERS (EMAIL1, COUNTRY) [unique index]</td>
 	</tr>
 	<tr>
 		<td colspan='3' bgcolor='#F4F4F4' align='left'>• FK_WRITERS_PUBLICATION (PUBLICATION_ID) [non-unique index]</td>

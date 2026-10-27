@@ -647,11 +647,11 @@ Foreign Keys
 Indexes
 
                                                           [unique index]
-  EMAIL1                            ascending                   
-  COUNTRY                           ascending                   
+  ID                                ascending                   
 
                                                           [unique index]
-  ID                                ascending                   
+  EMAIL1                            ascending                   
+  COUNTRY                           ascending                   
 
                                                       [non-unique index]
   PUBLICATION_ID                    ascending                   
