@@ -61,6 +61,10 @@ jobs:
           --batch-mode \
           -Ddistrib \
           clean install
+        
+        # Extract project version for use in artifact paths
+        PROJECT_VERSION=$(mvn --no-transfer-progress --batch-mode help:evaluate -Dexpression=project.version -q -DforceStdout)
+        echo "project-version=${PROJECT_VERSION}" >> $GITHUB_OUTPUT
     - id: show-distrib
       name: Show distribution directory
       shell: bash
@@ -75,10 +79,10 @@ jobs:
       name: Upload artifacts for the release
       uses: actions/upload-artifact@v7
       with:
-        name: release-artifacts-v17.16.0
+        name: release-artifacts-v${{ steps.build.outputs.project-version }}
         path: |
-          ./schemacrawler-distrib/target/schemacrawler-17.16.0-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.16.0-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-${{ steps.build.outputs.project-version }}-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-${{ steps.build.outputs.project-version }}-bin.zip.SHA-512
         retention-days: 2
     - id: create-release
       name: Create GitHub release
@@ -94,8 +98,8 @@ jobs:
           See the change history at https://www.schemacrawler.com/changes-report.html
         generate_release_notes: true
         files: |
-          ./schemacrawler-distrib/target/schemacrawler-17.16.0-bin.zip
-          ./schemacrawler-distrib/target/schemacrawler-17.16.0-bin.zip.SHA-512
+          ./schemacrawler-distrib/target/schemacrawler-${{ steps.build.outputs.project-version }}-bin.zip
+          ./schemacrawler-distrib/target/schemacrawler-${{ steps.build.outputs.project-version }}-bin.zip.SHA-512
         overwrite_files: true
 
 # BUILD AND PUBLISH DOCKER IMAGE
