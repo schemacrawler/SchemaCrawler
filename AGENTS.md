@@ -51,7 +51,25 @@ All major extension points use Java's `ServiceLoader`. Register new implementati
 | `schemacrawler.tools.lint.LinterProvider` | `META-INF/services/schemacrawler.tools.lint.LinterProvider` | Lint rules |
 | `schemacrawler.tools.databaseconnector.DatabaseConnector` | `META-INF/services/schemacrawler.tools.databaseconnector.DatabaseConnector` | Database plugins |
 
-## Command-Line Framework
+## Build Artifacts and Manifest Metadata
+
+All non-test JAR artifacts include consistent Git metadata and standard implementation attributes in their manifests:
+
+- **Git-Commit-Id**: Full commit hash from the current checkout's HEAD
+- **Git-Commit-Time**: ISO 8601 UTC timestamp of the commit (`yyyy-MM-dd'T'HH:mm:ss'Z'`)
+- **Git-Branch**: Current Git branch name (includes detached HEAD)
+- **Implementation-Title**: Product name
+- **Implementation-Version**: Maven project version
+- **Implementation-Vendor**: Organization name
+- **Specification-Title** and **Specification-Version**: JAR specification identity
+
+The `git-commit-id-maven-plugin` (version 8.0.1) runs in the initialize phase before packaging to populate these properties from the live Git repository. **Requires a Git checkout with accessible `.git/` directory**; builds from detached HEAD are supported. Missing Git metadata results in a build failure with a clear error message.
+
+## Version Management
+
+SchemaCrawler shares a single version literal (currently `17.16.0`) with [SchemaCrawler-Core](https://github.com/schemacrawler/SchemaCrawler-Core). When SchemaCrawler-Core is upgraded, update its `schemacrawler-parent/pom.xml` to the new version, and all downstream projects automatically resolve the correct Core version through dependency management and library BOMs.
+
+Do not add new version literals or embed versions in resource files; all same-product dependencies use `${project.version}` and are resolved through the shared parent POM.
 
 The CLI uses **picocli** (v4.7.7) with **jline3** for the interactive shell.
 
