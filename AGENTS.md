@@ -67,7 +67,7 @@ The `git-commit-id-maven-plugin` (version 8.0.1) runs in the initialize phase be
 
 ## Version Management
 
-SchemaCrawler shares a single version literal (currently `17.16.0`) with [SchemaCrawler-Core](https://github.com/schemacrawler/SchemaCrawler-Core). When SchemaCrawler-Core is upgraded, update its `schemacrawler-parent/pom.xml` to the new version, and all downstream projects automatically resolve the correct Core version through dependency management and library BOMs.
+SchemaCrawler shares a single version literal (currently `18.0.1`) with [SchemaCrawler-Core](https://github.com/schemacrawler/SchemaCrawler-Core). When SchemaCrawler-Core is upgraded, update its `schemacrawler-parent/pom.xml` to the new version, and all downstream projects automatically resolve the correct Core version through dependency management and library BOMs.
 
 Do not add new version literals or embed versions in resource files; all same-product dependencies use `${project.version}` and are resolved through the shared parent POM.
 
