@@ -43,7 +43,7 @@ public final class Main {
   /**
    * @deprecated Use SCHCRWLR_EXIT_WITH_EXCEPTION.
    */
-  @Deprecated(forRemoval = false)
+  @Deprecated(forRemoval = true)
   private static final String SC_EXIT_WITH_EXCEPTION = "SC_EXIT_WITH_EXCEPTION";
 
   private static final ReadConfig CONFIG =

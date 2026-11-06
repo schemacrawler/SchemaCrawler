@@ -27,7 +27,7 @@ public final class GraphvizUtility {
   /**
    * @deprecated Use SCHCRWLR_GRAPHVIZ_PROC_DISABLE.
    */
-  @Deprecated(forRemoval = false)
+  @Deprecated(forRemoval = true)
   private static final String SC_GRAPHVIZ_PROC_DISABLE = "SC_GRAPHVIZ_PROC_DISABLE";
 
   private static final ReadConfig CONFIG =
