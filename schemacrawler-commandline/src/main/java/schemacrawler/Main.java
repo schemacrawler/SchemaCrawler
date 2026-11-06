@@ -30,14 +30,27 @@ import us.fatehi.utility.process.SystemExitException;
 import us.fatehi.utility.property.JvmArchitectureInfo;
 import us.fatehi.utility.property.JvmSystemInfo;
 import us.fatehi.utility.property.OperatingSystemInfo;
-import us.fatehi.utility.readconfig.SystemPropertiesConfig;
+import us.fatehi.utility.readconfig.ReadConfig;
+import us.fatehi.utility.readconfig.SystemConfigBuilder;
 
 /** Main class that takes arguments for a database for crawling a schema. */
 public final class Main {
 
   private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
+  private static final String SCHCRWLR_EXIT_WITH_EXCEPTION = "SCHCRWLR_EXIT_WITH_EXCEPTION";
+
+  /**
+   * @deprecated Use SCHCRWLR_EXIT_WITH_EXCEPTION.
+   */
+  @Deprecated(forRemoval = false)
   private static final String SC_EXIT_WITH_EXCEPTION = "SC_EXIT_WITH_EXCEPTION";
+
+  private static final ReadConfig CONFIG =
+      SystemConfigBuilder.builder()
+          .withSystemProperties()
+          .withAlias(SCHCRWLR_EXIT_WITH_EXCEPTION, SC_EXIT_WITH_EXCEPTION)
+          .build();
 
   public static void main(final String... args) throws Exception {
     requireNonNull(args, "No command-line arguments provided");
@@ -89,8 +102,7 @@ public final class Main {
    * @param exitCode Exit code to exit with.
    */
   private static void exit(int exitCode) {
-    final boolean exitWithException =
-        new SystemPropertiesConfig().getBooleanValue(SC_EXIT_WITH_EXCEPTION);
+    final boolean exitWithException = CONFIG.getBooleanValue(SCHCRWLR_EXIT_WITH_EXCEPTION);
     if (exitWithException) {
       throw new SystemExitException(exitCode, "SchemaCrawler has exited with an error");
     }
