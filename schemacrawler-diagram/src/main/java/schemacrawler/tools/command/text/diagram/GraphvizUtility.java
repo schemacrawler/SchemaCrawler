@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import us.fatehi.utility.process.ProcessExecutor;
-import us.fatehi.utility.readconfig.SystemPropertiesConfig;
+import us.fatehi.utility.readconfig.ReadConfig;
+import us.fatehi.utility.readconfig.SystemConfigBuilder;
 import us.fatehi.utility.string.FileContents;
 import us.fatehi.utility.string.StringFormat;
 
@@ -21,12 +22,23 @@ public final class GraphvizUtility {
 
   private static final Logger LOGGER = Logger.getLogger(GraphvizUtility.class.getName());
 
+  private static final String SCHCRWLR_GRAPHVIZ_PROC_DISABLE = "SCHCRWLR_GRAPHVIZ_PROC_DISABLE";
+
+  /**
+   * @deprecated Use SCHCRWLR_GRAPHVIZ_PROC_DISABLE.
+   */
+  @Deprecated(forRemoval = true)
   private static final String SC_GRAPHVIZ_PROC_DISABLE = "SC_GRAPHVIZ_PROC_DISABLE";
+
+  private static final ReadConfig CONFIG =
+      SystemConfigBuilder.builder()
+          .withSystemProperties()
+          .withAlias(SCHCRWLR_GRAPHVIZ_PROC_DISABLE, SC_GRAPHVIZ_PROC_DISABLE)
+          .build();
 
   public static boolean isGraphvizAvailable() {
 
-    final boolean disableGraphviz =
-        new SystemPropertiesConfig().getBooleanValue(SC_GRAPHVIZ_PROC_DISABLE);
+    final boolean disableGraphviz = CONFIG.getBooleanValue(SCHCRWLR_GRAPHVIZ_PROC_DISABLE);
     if (disableGraphviz) {
       LOGGER.log(Level.CONFIG, "Not creating a native process for Grahviz, since this is disabled");
       return false;

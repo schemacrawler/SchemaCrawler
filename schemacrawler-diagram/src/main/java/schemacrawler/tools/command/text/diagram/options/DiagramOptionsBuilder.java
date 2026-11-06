@@ -21,7 +21,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.command.text.schema.options.BaseSchemaTextOptionsBuilder;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.readconfig.SystemPropertiesConfig;
+import us.fatehi.utility.readconfig.ReadConfig;
+import us.fatehi.utility.readconfig.SystemConfigBuilder;
 import us.fatehi.utility.string.StringFormat;
 
 public final class DiagramOptionsBuilder
@@ -36,7 +37,20 @@ public final class DiagramOptionsBuilder
   private static final String GRAPH_SHOW_FOREIGN_KEY_FILTERED_TABLES =
       SCHEMACRAWLER_GRAPH_PREFIX + "show.foreignkey.filtered_tables";
   private static final String GRAPH_GRAPHVIZ_OPTS = SCHEMACRAWLER_GRAPH_PREFIX + "graphviz_opts";
+
+  private static final String SCHCRWLR_GRAPHVIZ_OPTS = "SCHCRWLR_GRAPHVIZ_OPTS";
+
+  /**
+   * @deprecated Use SCHCRWLR_GRAPHVIZ_OPTS.
+   */
+  @Deprecated(forRemoval = true)
   private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
+
+  private static final ReadConfig CONFIG =
+      SystemConfigBuilder.builder()
+          .withSystemProperties()
+          .withAlias(SCHCRWLR_GRAPHVIZ_OPTS, SC_GRAPHVIZ_OPTS)
+          .build();
   private static final String GRAPH_GRAPHVIZ_ATTRIBUTES = SCHEMACRAWLER_GRAPH_PREFIX + "graphviz";
 
   private static final Logger LOGGER = Logger.getLogger(DiagramOptions.class.getName());
@@ -67,10 +81,25 @@ public final class DiagramOptionsBuilder
     return graphvizAttributes;
   }
 
+  private static String readGraphvizOpts(final Config config) {
+    final String scGraphvizOptsCfg = config.getStringValue(GRAPH_GRAPHVIZ_OPTS, "");
+    if (!isBlank(scGraphvizOptsCfg)) {
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat(
+              "Using additional Graphviz command-line options from config <%s>",
+              scGraphvizOptsCfg));
+      return scGraphvizOptsCfg;
+    }
+
+    return CONFIG.getStringValue(SCHCRWLR_GRAPHVIZ_OPTS);
+  }
+
   protected List<String> graphvizOpts;
   protected Map<String, String> graphvizAttributes;
   protected boolean isShowForeignKeyCardinality;
   protected boolean isShowPrimaryKeyCardinality;
+
   protected boolean isShowFilteredTables;
 
   private DiagramOptionsBuilder() {
@@ -224,19 +253,5 @@ public final class DiagramOptionsBuilder
     }
 
     return graphvizAttributes;
-  }
-
-  private String readGraphvizOpts(final Config config) {
-    final String scGraphvizOptsCfg = config.getStringValue(GRAPH_GRAPHVIZ_OPTS, "");
-    if (!isBlank(scGraphvizOptsCfg)) {
-      LOGGER.log(
-          Level.CONFIG,
-          new StringFormat(
-              "Using additional Graphviz command-line options from config <%s>",
-              scGraphvizOptsCfg));
-      return scGraphvizOptsCfg;
-    }
-
-    return new SystemPropertiesConfig().getStringValue(SC_GRAPHVIZ_OPTS);
   }
 }

@@ -36,6 +36,16 @@ import us.fatehi.utility.process.SystemExitException;
 @CaptureSystemStreams
 public class CommandLineNegativeTest {
 
+  @Test
+  public void canonicalExceptionExitWins() throws Exception {
+    restoreSystemProperties(
+        () -> {
+          System.setProperty("SCHCRWLR_EXIT_WITH_EXCEPTION", "true");
+          System.setProperty("SC_EXIT_WITH_EXCEPTION", "false");
+          assertThrows(SystemExitException.class, () -> Main.main());
+        });
+  }
+
   private static final String COMMAND_LINE_NEGATIVE_OUTPUT = "command_line_negative_output/";
 
   @Test
