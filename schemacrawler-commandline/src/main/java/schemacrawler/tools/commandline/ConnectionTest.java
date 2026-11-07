@@ -11,6 +11,7 @@ package schemacrawler.tools.commandline;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
+import java.sql.Connection;
 import java.util.Map;
 import java.util.ServiceConfigurationError;
 import java.util.logging.Level;
@@ -58,6 +59,7 @@ public final class ConnectionTest {
       }
       System.out.printf("%n%n");
       System.out.println(CommandLineUtility.getConnectionInfo(state));
+      printConnectionUrl(state, throwable == null);
       if (throwable != null) {
         System.out.println("  " + throwable.getMessage());
         LOGGER.log(Level.CONFIG, throwable.getMessage(), throwable);
@@ -67,6 +69,20 @@ public final class ConnectionTest {
       return 0;
     } finally {
       state.close();
+    }
+  }
+
+  static void printConnectionUrl(final ShellState state, final boolean connectionSucceeded) {
+    if (!connectionSucceeded || !state.isConnected()) {
+      return;
+    }
+    try (final Connection connection = state.getConnectionSource().get()) {
+      final String url = connection.getMetaData().getURL();
+      System.out.println(
+          "Warning: connection-test output may contain credentials; review before sharing.");
+      System.out.printf("JDBC URL: %s%n", url);
+    } catch (final Exception e) {
+      LOGGER.log(Level.CONFIG, "Connection-test JDBC URL is unavailable");
     }
   }
 
