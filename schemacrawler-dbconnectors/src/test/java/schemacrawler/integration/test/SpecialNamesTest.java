@@ -54,7 +54,7 @@ public class SpecialNamesTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      newMariaDBContainer("10.7.3")
+      newMariaDBContainer()
           .withCommand(
               "mariadbd", "--lower_case_table_names=1", "--log_bin_trust_function_creators=1");
 
