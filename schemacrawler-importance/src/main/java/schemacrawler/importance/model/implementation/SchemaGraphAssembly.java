@@ -30,7 +30,8 @@ final class SchemaGraphAssembly {
   private final Map<DatabaseObjectVertexId, Table> tablesByVertexId;
 
   SchemaGraphAssembly() {
-    catalogGraph = new DirectedPseudograph<>(SchemaEdge.class);
+    // Vertices and edges are supplied explicitly; avoid serializing a lambda-based edge supplier.
+    catalogGraph = new DirectedPseudograph<>(null, null, false);
     objectsByVertexId = new LinkedHashMap<>();
     tablesByVertexId = new LinkedHashMap<>();
   }

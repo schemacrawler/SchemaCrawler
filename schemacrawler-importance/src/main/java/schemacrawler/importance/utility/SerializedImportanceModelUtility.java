@@ -12,7 +12,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import schemacrawler.importance.model.ImportanceModel;
 import schemacrawler.utility.SerializedObjectInputStream;
@@ -21,25 +21,28 @@ import us.fatehi.utility.UtilityMarker;
 @UtilityMarker
 public final class SerializedImportanceModelUtility {
 
-  private static final List<Pattern> IMPORTANCE_MODEL_CLASS_PATTERNS =
-      List.of(
-          Pattern.compile("org\\.jgrapht\\..*"),
-          Pattern.compile("us\\.fatehi\\.utility\\.[A-Z].*"),
-          Pattern.compile("us\\.fatehi\\.utility\\.property\\.[A-Z].*"),
-          Pattern.compile("schemacrawler\\.(schema(crawler)?|crawl)\\.[A-Z].*"),
-          Pattern.compile("schemacrawler\\.namedobject\\.[A-Z].*"),
-          Pattern.compile("schemacrawler\\.importance\\.model\\.[A-Z].*"),
-          Pattern.compile("schemacrawler\\.importance\\.model\\.implementation\\.[A-Z].*"),
-          Pattern.compile("schemacrawler\\.tools\\.utility\\.[A-Z].*"),
-          Pattern.compile("schemacrawler\\.utility\\.[A-Z].*"),
-          Pattern.compile("schemacrawler\\.[A-Z].*"),
-          Pattern.compile("(\\[L)?java\\.(lang|util)\\..*"),
-          Pattern.compile("java\\.(sql|math|time|net)\\..*"),
-          Pattern.compile("\\[[BC]"));
+  private static final Predicate<String> IMPORTANCE_MODEL_CLASS_NAME =
+      matching("org\\.jgrapht\\..*")
+          .or(matching("us\\.fatehi\\.utility\\.[A-Z].*"))
+          .or(matching("us\\.fatehi\\.utility\\.property\\.[A-Z].*"))
+          .or(matching("schemacrawler\\.(schema(crawler)?|crawl)\\.[A-Z].*"))
+          .or(matching("schemacrawler\\.namedobject\\.[A-Z].*"))
+          .or(matching("schemacrawler\\.importance\\.model\\.[A-Z].*"))
+          .or(matching("schemacrawler\\.importance\\.model\\.implementation\\.[A-Z].*"))
+          .or(matching("schemacrawler\\.tools\\.utility\\.[A-Z].*"))
+          .or(matching("schemacrawler\\.utility\\.[A-Z].*"))
+          .or(matching("schemacrawler\\.[A-Z].*"))
+          .or(matching("(\\[L)?java\\.(lang|util)\\..*"))
+          .or(matching("java\\.(sql|math|time|net)\\..*"))
+          .or(matching("\\[[BC]"));
+
+  private static Predicate<String> matching(final String regex) {
+    return Pattern.compile(regex).asMatchPredicate();
+  }
 
   public static ImportanceModel readImportanceModel(final InputStream in) {
     requireNonNull(in, "No input stream provided");
-    return SerializedObjectInputStream.read(in, IMPORTANCE_MODEL_CLASS_PATTERNS);
+    return SerializedObjectInputStream.read(in, IMPORTANCE_MODEL_CLASS_NAME);
   }
 
   public static void saveImportanceModel(
