@@ -153,8 +153,8 @@ public class SqliteCommandlineTest extends BaseSqliteTest {
         contentsOf(streams.err()),
         matchesPattern(
             Pattern.compile(
-                ".*Error: Could not connect to <.*>, for <unspecified user>, with properties"
-                    + " <\\{\\}>.*",
+                ".*Could not connect to database \\{type=sqlite, host classification=INTERNAL,"
+                    + " fingerprint=.*\\[LOW\\]\\}.*",
                 Pattern.DOTALL)));
     assertThat(outputOf(streams.out()), hasNoContent());
   }
