@@ -10,8 +10,12 @@ package schemacrawler.tools.commandline;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static us.fatehi.utility.Utility.isBlank;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.util.Map;
 import java.util.ServiceConfigurationError;
 import java.util.logging.Level;
@@ -39,6 +43,12 @@ public final class ConnectionTest {
       requireNonNull(args, "No arguments provided");
 
       System.out.printf("%s%n%n", Version.about());
+      System.out.printf(
+          """
+          >  The following may contain credentials or sensitive information.
+          >  Review before sharing.
+          %n
+          """);
 
       state.setDeferCatalogLoad(true);
       final StateFactory stateFactory = new StateFactory(state);
@@ -57,32 +67,20 @@ public final class ConnectionTest {
         // other errors (e.g. OutOfMemoryError) are intentionally not caught here
         throwable = e;
       }
-      System.out.printf("%n%n");
-      System.out.println(CommandLineUtility.getConnectionInfo(state));
-      printConnectionUrl(state, throwable == null);
-      if (throwable != null) {
+      final boolean connectionSucceeded = throwable == null;
+      if (connectionSucceeded) {
+        System.out.printf("%n");
+        System.out.println(CommandLineUtility.getConnectionInfo(state));
+        System.out.println(getConnectionUrl(state));
+      } else {
         System.out.println("  " + throwable.getMessage());
         LOGGER.log(Level.CONFIG, throwable.getMessage(), throwable);
       }
       System.out.flush();
 
-      return 0;
+      return connectionSucceeded ? 0 : 1;
     } finally {
       state.close();
-    }
-  }
-
-  static void printConnectionUrl(final ShellState state, final boolean connectionSucceeded) {
-    if (!connectionSucceeded || !state.isConnected()) {
-      return;
-    }
-    try (final Connection connection = state.getConnectionSource().get()) {
-      final String url = connection.getMetaData().getURL();
-      System.out.println(
-          "Warning: connection-test output may contain credentials; review before sharing.");
-      System.out.printf("JDBC URL: %s%n", url);
-    } catch (final Exception e) {
-      LOGGER.log(Level.CONFIG, "Connection-test JDBC URL is unavailable");
     }
   }
 
@@ -91,6 +89,29 @@ public final class ConnectionTest {
     final Runnable command = (Runnable) subcommands.get("connect");
     LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());
     command.run();
+  }
+
+  private static String getConnectionUrl(final ShellState state) {
+    requireNonNull(state, "No shell state provided");
+    if (!state.isConnected()) {
+      return "";
+    }
+    final StringWriter stringWriter = new StringWriter();
+    try (final PrintWriter writer = new PrintWriter(stringWriter)) {
+      try (final Connection connection = state.getConnectionSource().get()) {
+        final DatabaseMetaData metaData = connection.getMetaData();
+        final String url = metaData.getURL();
+        writer.printf("  JDBC URL: %s", url);
+        final String userName = metaData.getUserName();
+        if (!isBlank(userName)) {
+          writer.printf("%n  Database user name:  %s", userName);
+        }
+      } catch (final Exception e) {
+        writer.printf("%n  Could not obtain JDBC connection URL");
+      }
+      writer.flush();
+    }
+    return stringWriter.toString();
   }
 
   private ConnectionTest() {

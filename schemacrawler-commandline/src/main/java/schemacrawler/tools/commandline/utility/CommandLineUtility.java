@@ -90,6 +90,7 @@ public class CommandLineUtility {
   }
 
   public static String getConnectionInfo(final ShellState state) {
+    requireNonNull(state, "No shell state provided");
 
     final StringWriter stringWriter = new StringWriter();
     try (final PrintWriter writer = new PrintWriter(stringWriter)) {
@@ -105,9 +106,9 @@ public class CommandLineUtility {
               new BaseProductVersion(builder.buildDatabaseInformation());
           final ProductVersion jdbcDriverInfo =
               new BaseProductVersion(builder.buildJdbcDriverInformation());
-          writer.printf("%n  %s%n  %s", databaseInfo, jdbcDriverInfo);
+          writer.printf("%n  Database: %s%n  JDBC Driver: %s", databaseInfo, jdbcDriverInfo);
         } catch (final Exception e) {
-          writer.printf("%n  %s", e.getMessage());
+          writer.printf("%n   %s", e.getMessage());
         }
       } else {
         writer.printf("%n  Not connected to a database");
