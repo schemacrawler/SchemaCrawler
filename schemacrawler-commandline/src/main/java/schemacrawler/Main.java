@@ -38,18 +38,12 @@ public final class Main {
 
   private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
-  private static final String SCHCRWLR_EXIT_WITH_EXCEPTION = "SCHCRWLR_EXIT_WITH_EXCEPTION";
-
-  /**
-   * @deprecated Use SCHCRWLR_EXIT_WITH_EXCEPTION.
-   */
-  @Deprecated(forRemoval = true)
   private static final String SC_EXIT_WITH_EXCEPTION = "SC_EXIT_WITH_EXCEPTION";
 
   private static final ReadConfig CONFIG =
       SystemConfigBuilder.builder()
           .withSystemProperties()
-          .withAlias(SCHCRWLR_EXIT_WITH_EXCEPTION, SC_EXIT_WITH_EXCEPTION)
+          .withAlias(SC_EXIT_WITH_EXCEPTION, "SCHCRWLR_EXIT_WITH_EXCEPTION")
           .build();
 
   public static void main(final String... args) throws Exception {
@@ -102,7 +96,7 @@ public final class Main {
    * @param exitCode Exit code to exit with.
    */
   private static void exit(int exitCode) {
-    final boolean exitWithException = CONFIG.getBooleanValue(SCHCRWLR_EXIT_WITH_EXCEPTION);
+    final boolean exitWithException = CONFIG.getBooleanValue(SC_EXIT_WITH_EXCEPTION);
     if (exitWithException) {
       throw new SystemExitException(exitCode, "SchemaCrawler has exited with an error");
     }

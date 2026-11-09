@@ -36,22 +36,16 @@ public final class DiagramOptionsBuilder
       SCHEMACRAWLER_GRAPH_PREFIX + "show.foreignkey.cardinality";
   private static final String GRAPH_SHOW_FOREIGN_KEY_FILTERED_TABLES =
       SCHEMACRAWLER_GRAPH_PREFIX + "show.foreignkey.filtered_tables";
+  private static final String GRAPH_GRAPHVIZ_ATTRIBUTES = SCHEMACRAWLER_GRAPH_PREFIX + "graphviz";
   private static final String GRAPH_GRAPHVIZ_OPTS = SCHEMACRAWLER_GRAPH_PREFIX + "graphviz_opts";
 
-  private static final String SCHCRWLR_GRAPHVIZ_OPTS = "SCHCRWLR_GRAPHVIZ_OPTS";
-
-  /**
-   * @deprecated Use SCHCRWLR_GRAPHVIZ_OPTS.
-   */
-  @Deprecated(forRemoval = true)
   private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
 
   private static final ReadConfig CONFIG =
       SystemConfigBuilder.builder()
           .withSystemProperties()
-          .withAlias(SCHCRWLR_GRAPHVIZ_OPTS, SC_GRAPHVIZ_OPTS)
+          .withAlias(SC_GRAPHVIZ_OPTS, "SCHCRWLR_GRAPHVIZ_OPTS")
           .build();
-  private static final String GRAPH_GRAPHVIZ_ATTRIBUTES = SCHEMACRAWLER_GRAPH_PREFIX + "graphviz";
 
   private static final Logger LOGGER = Logger.getLogger(DiagramOptions.class.getName());
 
@@ -92,7 +86,7 @@ public final class DiagramOptionsBuilder
       return scGraphvizOptsCfg;
     }
 
-    return CONFIG.getStringValue(SCHCRWLR_GRAPHVIZ_OPTS);
+    return CONFIG.getStringValue(SC_GRAPHVIZ_OPTS);
   }
 
   protected List<String> graphvizOpts;
