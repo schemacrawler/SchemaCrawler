@@ -115,7 +115,9 @@ Run with `-Dverify`. `ArchitectureTest` enforces the same structural rules as `s
 - Use `Optional`, streams, and functional programming idioms.
 - Sort methods based on whether they are static, then by visibility, and then alphabetically.
 - Format code using Google Java style guidelines.
-- Do not use `var` - instead use the interface or class name.
+- Never use `var` to define variables; use the actual Java type.
+- Always use imports instead of fully qualified class names in code, unless there is a class name conflict in the file.
+- When generating Markdown, keep each paragraph on a single line; do not hard-wrap paragraph text.
 - Ensure **thread safety**: avoid mutable shared state.
 - Write meaningful **Javadoc** for all public API.
 - Tests use **JUnit 6** with **Hamcrest** matchers; mock with **Mockito**.
