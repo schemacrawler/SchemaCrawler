@@ -40,8 +40,18 @@ public class CommandLineNegativeTest {
   public void canonicalExceptionExitWins() throws Exception {
     restoreSystemProperties(
         () -> {
+          System.setProperty("SC_EXIT_WITH_EXCEPTION", "true");
+          System.setProperty("SCHCRWLR_EXIT_WITH_EXCEPTION", "false");
+          assertThrows(SystemExitException.class, () -> Main.main());
+        });
+  }
+
+  @Test
+  public void compatibilityExceptionExitIsUsed() throws Exception {
+    restoreSystemProperties(
+        () -> {
+          System.clearProperty("SC_EXIT_WITH_EXCEPTION");
           System.setProperty("SCHCRWLR_EXIT_WITH_EXCEPTION", "true");
-          System.setProperty("SC_EXIT_WITH_EXCEPTION", "false");
           assertThrows(SystemExitException.class, () -> Main.main());
         });
   }

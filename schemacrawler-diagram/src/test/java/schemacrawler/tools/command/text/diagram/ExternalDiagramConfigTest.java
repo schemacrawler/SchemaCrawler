@@ -11,6 +11,7 @@ package schemacrawler.tools.command.text.diagram;
 import static com.github.stefanbirkner.systemlambda.SystemLambda.restoreSystemProperties;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import org.junit.jupiter.api.Test;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
@@ -23,8 +24,31 @@ public class ExternalDiagramConfigTest {
   public void canonicalProcessDisableWins() throws Exception {
     restoreSystemProperties(
         () -> {
-          System.setProperty("SCHCRWLR_GRAPHVIZ_PROC_DISABLE", "true");
+          System.setProperty("SC_GRAPHVIZ_PROC_DISABLE", "true");
+          System.setProperty("SCHCRWLR_GRAPHVIZ_PROC_DISABLE", "false");
+          assertThat(GraphvizUtility.isGraphvizAvailable(), is(false));
+        });
+  }
+
+  @Test
+  public void canonicalFalseProcessDisableWins() throws Exception {
+    restoreSystemProperties(
+        () -> {
+          System.clearProperty("SC_GRAPHVIZ_PROC_DISABLE");
+          System.clearProperty("SCHCRWLR_GRAPHVIZ_PROC_DISABLE");
+          assumeTrue(GraphvizUtility.isGraphvizAvailable());
           System.setProperty("SC_GRAPHVIZ_PROC_DISABLE", "false");
+          System.setProperty("SCHCRWLR_GRAPHVIZ_PROC_DISABLE", "true");
+          assertThat(GraphvizUtility.isGraphvizAvailable(), is(true));
+        });
+  }
+
+  @Test
+  public void compatibilityProcessDisableIsUsed() throws Exception {
+    restoreSystemProperties(
+        () -> {
+          System.clearProperty("SC_GRAPHVIZ_PROC_DISABLE");
+          System.setProperty("SCHCRWLR_GRAPHVIZ_PROC_DISABLE", "true");
           assertThat(GraphvizUtility.isGraphvizAvailable(), is(false));
         });
   }
@@ -34,11 +58,12 @@ public class ExternalDiagramConfigTest {
     restoreSystemProperties(
         () -> {
           final Config config = ConfigUtility.newConfig();
-          System.setProperty("SC_GRAPHVIZ_OPTS", "-Glegacy=true");
+          System.clearProperty("SC_GRAPHVIZ_OPTS");
+          System.setProperty("SCHCRWLR_GRAPHVIZ_OPTS", "-Glegacy=true");
           assertThat(options(config), is("-Glegacy=true"));
-          System.setProperty("SCHCRWLR_GRAPHVIZ_OPTS", "-Gcanonical=true");
+          System.setProperty("SC_GRAPHVIZ_OPTS", "-Gcanonical=true");
           assertThat(options(config), is("-Gcanonical=true"));
-          System.setProperty("SCHCRWLR_GRAPHVIZ_OPTS", "");
+          System.setProperty("SC_GRAPHVIZ_OPTS", "");
           assertThat(options(config), is(""));
           config.put("schemacrawler.graph.graphviz_opts", "-Gexplicit=true");
           assertThat(options(config), is("-Gexplicit=true"));
