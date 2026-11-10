@@ -163,7 +163,7 @@ Definition
 SELECT id,
     firstname,
     lastname
-   FROM authors;
+   FROM books.authors;
 
 Table Usage
 
