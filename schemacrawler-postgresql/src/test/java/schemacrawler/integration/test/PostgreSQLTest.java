@@ -24,6 +24,9 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 import static us.fatehi.test.utility.extensions.FileHasContent.text;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -46,6 +49,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DisableLogging;
 import schemacrawler.tools.command.text.schema.options.PortableType;
@@ -56,6 +60,8 @@ import schemacrawler.tools.options.Config;
 import us.fatehi.test.utility.extensions.HeavyDatabaseTest;
 import us.fatehi.test.utility.extensions.ResolveTestContext;
 import us.fatehi.test.utility.extensions.TestContext;
+import us.fatehi.utility.datasource.DatabaseConnectionSource;
+import us.fatehi.utility.datasource.DatabaseConnectionSources;
 import us.fatehi.utility.property.Property;
 import us.fatehi.utility.string.ObjectToStringFunction;
 
@@ -75,12 +81,35 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
     }
 
     createDataSource(
-        dbContainer.getJdbcUrl(),
-        dbContainer.getUsername(),
-        dbContainer.getPassword(),
-        Map.of("options", "-c search_path=public,books"));
+        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
     createDatabase("/postgresql.scripts.txt");
+  }
+
+  @Test
+  public void testConnectionInitialization() throws Exception {
+    try (final Connection connection = getConnection()) {
+      final PostgreSQLDatabaseConnector connector = new PostgreSQLDatabaseConnector();
+      final DatabaseConnectionSource connectionSource =
+          DatabaseConnectionSources.fromConnection(connection);
+      connectionSource.setFirstConnectionInitializer(
+          connector
+              .getSchemaRetrievalOptionsBuilder(connection)
+              .toOptions()
+              .getConnectionInitializer());
+
+      connection.setSchema("books");
+      for (int borrow = 0; borrow < 2; borrow++) {
+        try (final Connection borrowedConnection = connectionSource.get();
+            final Statement statement = borrowedConnection.createStatement()) {
+          try (final ResultSet results = statement.executeQuery("SHOW search_path")) {
+            assertThat(results.next(), is(true));
+            assertThat(results.getString(1), is("\"$user\", public"));
+          }
+          borrowedConnection.setSchema("books");
+        }
+      }
+    }
   }
 
   @Test
