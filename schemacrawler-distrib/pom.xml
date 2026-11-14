@@ -137,7 +137,7 @@
     <dependency>
       <groupId>com.typesafe</groupId>
       <artifactId>config</artifactId>
-      <version>1.4.9</version>
+      <version>1.4.10</version>
     </dependency>
 
     <!-- Jackson -->
