@@ -23,6 +23,7 @@ jobs:
     permissions:
       id-token: write # Required for OIDC authentication
       contents: write # Required to create a new tag
+      attestations: write # Required for creating attestations
     steps:
 
 # VALIDATE TAGS
@@ -195,6 +196,16 @@ jobs:
         provenance: true
         load: false
         push: true
+
+    - id: attest-and-publish
+      name: Create provenance attestation and publish image digest
+      uses: schemacrawler/actions-docker-attest@v1.0.0
+      with:
+        image-name: index.docker.io/schemacrawler/schemacrawler
+        digest: ${{ steps.push-docker-image.outputs.digest }}
+        publishing-repo: schemacrawler/SchemaCrawler
+        tag-name: ${{ github.ref_name }}
+        update-release: ${{ startsWith(github.ref, 'refs/tags/') }}
 
 # PUBLISH TO CENTRAL REPOSITORY
     - id: publish-to-central
