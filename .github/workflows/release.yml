@@ -48,7 +48,7 @@ jobs:
         gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
     - id: install-graphviz
       name: Install Graphviz
-      uses: sualeh/install-graphviz@v1.0.3
+      uses: schemacrawler/actions-install-graphviz@v1.0.1
 
 # BUILD FOR DISTRIBUTION
     - id: build
