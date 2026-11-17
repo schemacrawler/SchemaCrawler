@@ -24,7 +24,7 @@ jobs:
         java-version: 25
     - id: install-graphviz
       name: Install Graphviz
-      uses: sualeh/install-graphviz@v1.0.3
+      uses: schemacrawler/actions-install-graphviz@v1.0.1
 
 # BUILD DEPENDENCIES
     - id: build-schemacrawler-core
@@ -32,7 +32,7 @@ jobs:
       uses: sualeh/build-maven-dependency@v1.0.9
       with:
         repository: schemacrawler/SchemaCrawler-Core
-        artifact: us.fatehi:schemacrawler:18.0.2
+        artifact: us.fatehi:schemacrawler:18.0.3
 
 # BUILD AND TEST
     - id: build-test
