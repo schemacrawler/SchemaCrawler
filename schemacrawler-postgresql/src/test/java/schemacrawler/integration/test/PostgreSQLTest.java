@@ -92,7 +92,7 @@ public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
       final PostgreSQLDatabaseConnector connector = new PostgreSQLDatabaseConnector();
       final DatabaseConnectionSource connectionSource =
           DatabaseConnectionSources.fromConnection(connection);
-      connectionSource.setFirstConnectionInitializer(
+      connectionSource.withConnectionInitializer(
           connector
               .getSchemaRetrievalOptionsBuilder(connection)
               .toOptions()

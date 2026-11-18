@@ -93,7 +93,7 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
   @DisplayName("Issue #1139 - data-source - override connection initializer")
   public void showSchemaInDDLWithDataSource() throws Exception {
     final DatabaseConnectionSource connectionSource = getConnectionSource();
-    connectionSource.setFirstConnectionInitializer(customConnectionInitializer);
+    connectionSource.withConnectionInitializer(customConnectionInitializer);
 
     showSchemaInDDL(connectionSource, "TEST1");
   }
@@ -106,7 +106,7 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
         DatabaseConnectionSources.newDatabaseConnectionSource(
             dbContainer.getJdbcUrl(),
             new MultiUseUserCredentials("SYS AS SYSDBA", dbContainer.getPassword()));
-    connectionSource.setFirstConnectionInitializer(customConnectionInitializer);
+    connectionSource.withConnectionInitializer(customConnectionInitializer);
 
     showSchemaInDDL(connectionSource, "TEST2");
   }
@@ -119,7 +119,7 @@ public class Issue1139Test extends BaseOracleWithConnectionTest {
         DatabaseConnectionSources.newDatabaseConnectionSource(
             dbContainer.getJdbcUrl(),
             new MultiUseUserCredentials("SYS AS SYSDBA", dbContainer.getPassword()));
-    connectionSource.setFirstConnectionInitializer(customConnectionInitializer);
+    connectionSource.withConnectionInitializer(customConnectionInitializer);
 
     showSchemaInDDL(connectionSource, "TEST3");
   }
