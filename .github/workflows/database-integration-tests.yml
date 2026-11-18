@@ -77,19 +77,28 @@ jobs:
       shell: bash
       run: |
         set -euxo pipefail
-        # Stop Docker
-        sudo systemctl stop docker
+        docker version
+        # Stop Docker (including the socket, so it is not re-activated)
+        sudo systemctl stop docker.socket docker
         sudo rm -rf /var/lib/docker
         # Put Docker storage on the large workspace mount
         sudo mkdir -p "$GITHUB_WORKSPACE/.docker-root"
         sudo chown root:root "$GITHUB_WORKSPACE/.docker-root"
-        sudo chmod -R ugo+rwx /home/runner/work/SchemaCrawler/SchemaCrawler/.docker-root || true
+        sudo chmod -R ugo+rwx "$GITHUB_WORKSPACE/.docker-root" || true
         # Configure daemon and start Docker
-        echo "{ \"data-root\": \"$GITHUB_WORKSPACE/.docker-root\" }" | sudo tee /etc/docker/daemon.json
-        sudo systemctl start docker
+        # Newer Docker versions (ubuntu-26.04 runners) default to the containerd
+        # image store, which keeps image layers in /var/lib/containerd on the
+        # root filesystem and ignores data-root. Disable it so that images are
+        # stored under data-root on the workspace volume.
+        echo "{ \"data-root\": \"$GITHUB_WORKSPACE/.docker-root\", \"features\": { \"containerd-snapshotter\": false } }" | sudo tee /etc/docker/daemon.json
+        sudo systemctl start docker.socket docker
         # Check configured space
-        echo "Confirm Docker root directory:"
-        docker info | grep -E 'Docker Root Dir'
+        echo "Confirm Docker root directory and storage driver:"
+        docker info | grep -E 'Docker Root Dir|Storage Driver|driver-type'
+        if docker info --format '{{json .DriverStatus}}' | grep -q 'io.containerd.snapshotter'; then
+          echo "::error::Docker is still using the containerd image store"
+          exit 1
+        fi
         echo "Confirm Docker root free space:"
         df -h "$GITHUB_WORKSPACE/.docker-root"
         echo "Available storage:"
@@ -165,6 +174,7 @@ jobs:
         docker system df
         sudo du -sh "$GITHUB_WORKSPACE/.docker-root" || true
         ls -ld "$GITHUB_WORKSPACE/.docker-root"
+        df -h / "$GITHUB_WORKSPACE"
     - id: build-test-databases
       name: Build and run database tests
       shell: bash
