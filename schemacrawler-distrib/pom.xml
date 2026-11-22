@@ -128,9 +128,15 @@
       <version>4.7.7</version>
     </dependency>
     <dependency>
-      <groupId>info.picocli</groupId>
-      <artifactId>picocli-shell-jline3</artifactId>
-      <version>4.7.7</version>
+      <groupId>org.jline</groupId>
+      <artifactId>jline-picocli</artifactId>
+      <version>4.7.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.jline</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- Processing configuration -->

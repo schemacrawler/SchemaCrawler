@@ -8,19 +8,27 @@
 
 package schemacrawler.tools.commandline.state;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import us.fatehi.utility.logging.LoggerMarker;
 import us.fatehi.utility.string.ObjectToStringFormat;
 
-public final class StateUtility {
+@LoggerMarker
+public final class StateLogger {
 
-  private static final Logger LOGGER = Logger.getLogger(StateUtility.class.getName());
+  private final Logger logger;
 
-  public static void logState(final ShellState state, final boolean showlog) {
-    if (state == null) {
+  public StateLogger(final Logger logger) {
+    this.logger = requireNonNull(logger, "No logger provided");
+  }
+
+  public void logState(final ShellState state, final boolean showlog) {
+    if ((state == null) || (!showlog && logger.isLoggable(Level.CONFIG))) {
       return;
     }
 
@@ -41,11 +49,11 @@ public final class StateUtility {
     log(Level.FINE, new ObjectToStringFormat(state.getConfig()), showlog);
   }
 
-  private static void log(final Level level, final Supplier<String> toLog, final boolean showlog) {
+  private void log(final Level level, final Supplier<String> toLog, final boolean showlog) {
     if (showlog) {
       System.out.println(toLog.get());
     } else {
-      LOGGER.log(level, toLog);
+      logger.log(level, toLog);
     }
   }
 }
