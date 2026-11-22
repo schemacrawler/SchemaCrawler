@@ -30,13 +30,14 @@ import org.jline.terminal.TerminalBuilder;
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 import picocli.CommandLine.PicocliException;
+import schemacrawler.CommandLineExecutor;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.commandline.utility.CommandLineLogger;
 import us.fatehi.utility.logging.UtilityLogger;
 
 /** Runs the SchemaCrawler interactive shell. */
-public final class SchemaCrawlerShell {
+public final class SchemaCrawlerShell implements CommandLineExecutor {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerShell.class.getName());
 
@@ -46,7 +47,8 @@ public final class SchemaCrawlerShell {
    * @param args command-line arguments, currently ignored by the interactive shell
    * @return 0 when the shell exits normally, or 1 when a fatal error occurs
    */
-  public static int execute(final String[] args) {
+  @Override
+  public int execute(final String[] args) {
     // NOTE: Ignore arguments in the shell
     final ShellState state = new ShellState();
     try (final Terminal terminal = TerminalBuilder.builder().build();
@@ -61,7 +63,7 @@ public final class SchemaCrawlerShell {
     }
   }
 
-  static Shell newShell(final Terminal terminal, final IFactory factory) throws IOException {
+  Shell newShell(final Terminal terminal, final IFactory factory) throws IOException {
     requireNonNull(terminal, "No terminal provided");
     final CommandLine commandLine = newShellCommandLine(factory);
     final PicocliCommandRegistry picocliCommands = new PicocliCommandRegistry(commandLine);
@@ -79,7 +81,7 @@ public final class SchemaCrawlerShell {
         .build();
   }
 
-  private static void handleFatalError(final Throwable throwable, final ShellState state) {
+  private void handleFatalError(final Throwable throwable, final ShellState state) {
     final UtilityLogger logger = new UtilityLogger(LOGGER);
     logger.logFatalStackTrace(throwable);
     final CommandLineLogger commandLineLogger = new CommandLineLogger(LOGGER);
@@ -100,7 +102,7 @@ public final class SchemaCrawlerShell {
     printCommandLineErrorMessage(errorMessage, state);
   }
 
-  private static CommandLine newShellCommandLine(final IFactory factory) {
+  private CommandLine newShellCommandLine(final IFactory factory) {
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
     final CommandLine commandLine = newCommandLine(commands, factory);
     final CommandLine loadCommandLine = commandLine.getSubcommands().getOrDefault("load", null);
@@ -123,9 +125,5 @@ public final class SchemaCrawlerShell {
           return 0;
         });
     return commandLine;
-  }
-
-  private SchemaCrawlerShell() {
-    // Prevent instantiation
   }
 }
