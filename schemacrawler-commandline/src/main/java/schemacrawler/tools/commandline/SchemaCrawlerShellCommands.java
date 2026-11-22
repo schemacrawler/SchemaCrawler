@@ -23,7 +23,6 @@ import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.shell.AvailableERModelLoadersCommand;
 import schemacrawler.tools.commandline.shell.AvailableServersCommand;
 import schemacrawler.tools.commandline.shell.DisconnectCommand;
-import schemacrawler.tools.commandline.shell.ExitCommand;
 import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 
@@ -45,7 +44,6 @@ import schemacrawler.tools.commandline.shell.SystemCommand;
       AvailableCommandsCommand.class,
       DisconnectCommand.class,
       SweepCommand.class,
-      SystemCommand.class,
-      ExitCommand.class
+      SystemCommand.class
     })
 public class SchemaCrawlerShellCommands {}

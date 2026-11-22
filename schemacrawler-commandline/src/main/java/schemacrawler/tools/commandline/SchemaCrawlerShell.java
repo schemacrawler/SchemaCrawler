@@ -9,51 +9,79 @@
 package schemacrawler.tools.commandline;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.erModelLoaderPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCommandLineErrorMessage;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.util.logging.Level;
+import java.io.IOException;
 import java.util.logging.Logger;
-import org.jline.reader.EndOfFileException;
-import org.jline.reader.UserInterruptException;
+import org.jline.picocli.PicocliCommandRegistry;
+import org.jline.reader.LineReader;
+import org.jline.reader.Parser;
+import org.jline.reader.impl.DefaultParser;
+import org.jline.shell.Shell;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
+import picocli.CommandLine;
+import picocli.CommandLine.IFactory;
 import picocli.CommandLine.PicocliException;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.commandline.utility.CommandLineLogger;
 import us.fatehi.utility.logging.UtilityLogger;
 
+/** Runs the SchemaCrawler interactive shell. */
 public final class SchemaCrawlerShell {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerShell.class.getName());
 
+  /**
+   * Executes an interactive shell session.
+   *
+   * @param args command-line arguments used when reporting fatal errors
+   * @return 0 when the shell exits normally, or 1 when a fatal error occurs
+   */
   public static int execute(final String[] args) {
 
     final ShellState state = new ShellState();
-    try (final Terminal terminal = TerminalBuilder.builder().build()) {
-
+    try {
       requireNonNull(args, "No arguments provided");
-
-      final StateFactory stateFactory = new StateFactory(state);
-      final ShellSession session = new ShellSession(terminal, stateFactory);
-
-      while (true) {
-        try {
-          session.cleanUp();
-          final String line = session.readLine("schemacrawler> ");
-          session.execute(line);
-        } catch (final UserInterruptException e) {
-          // Ignore
-        } catch (final EndOfFileException e) {
-          throw e;
-        } catch (final Exception e) {
-          LOGGER.log(Level.WARNING, e.getMessage(), e);
-          session.trace(e);
-        }
+      try (final Terminal terminal = TerminalBuilder.builder().build()) {
+        return runShell(terminal, args, state);
       }
-    } catch (final EndOfFileException e) {
-      // User-initiated exit
+    } catch (final Throwable throwable) {
+      // Exceptional exit
+      handleFatalError(args, throwable, state);
+      state.close();
+      return 1;
+    }
+  }
+
+  static Shell newShell(final Terminal terminal, final IFactory factory) throws IOException {
+    final Terminal shellTerminal = requireNonNull(terminal, "No terminal provided");
+    final CommandLine commandLine = newShellCommandLine(factory);
+    final PicocliCommandRegistry picocliCommands = new PicocliCommandRegistry(commandLine);
+    final Parser parser = new DefaultParser().escapeChars(new char[0]);
+
+    return Shell.builder()
+        .terminal(shellTerminal)
+        .prompt("schemacrawler> ")
+        .parser(parser)
+        .variable(LineReader.LIST_MAX, 3)
+        .groups(picocliCommands, new ScreenCommands())
+        .exitCommands(true)
+        .helpCommands(false)
+        .onReaderReady((reader, dispatcher) -> picocliCommands.setLineReader(reader))
+        .build();
+  }
+
+  static int runShell(final Terminal terminal, final String[] args, final ShellState state) {
+    try (final Shell shell = newShell(terminal, new StateFactory(state))) {
+      shell.run();
       return 0;
     } catch (final Throwable throwable) {
       // Exceptional exit
@@ -86,6 +114,31 @@ public final class SchemaCrawlerShell {
     }
 
     printCommandLineErrorMessage(errorMessage, state);
+  }
+
+  private static CommandLine newShellCommandLine(final IFactory factory) {
+    final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
+    final CommandLine commandLine = newCommandLine(commands, factory);
+    final CommandLine loadCommandLine = commandLine.getSubcommands().getOrDefault("load", null);
+    if (loadCommandLine != null) {
+      addPluginCommands(loadCommandLine, catalogLoaderPluginCommands);
+      addPluginCommands(loadCommandLine, erModelLoaderPluginCommands);
+      commandLine.addSubcommand(loadCommandLine);
+    }
+    final CommandLine executeCommandLine =
+        commandLine.getSubcommands().getOrDefault("execute", null);
+    if (executeCommandLine != null) {
+      addPluginCommands(executeCommandLine, commandPluginCommands);
+      commandLine.addSubcommand(executeCommandLine);
+    }
+    commandLine.setExecutionExceptionHandler(
+        (ex, cmdLine, parseResult) -> {
+          if (ex != null && ex.getMessage() != null) {
+            cmdLine.getErr().printf("ERROR: %s%n", ex.getMessage());
+          }
+          return 0;
+        });
+    return commandLine;
   }
 
   private SchemaCrawlerShell() {

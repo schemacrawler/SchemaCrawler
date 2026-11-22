@@ -21,7 +21,6 @@ import schemacrawler.tools.commandline.shell.AvailableCatalogLoadersCommand;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.shell.AvailableERModelLoadersCommand;
 import schemacrawler.tools.commandline.shell.AvailableServersCommand;
-import schemacrawler.tools.commandline.shell.ExitCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
@@ -86,15 +85,6 @@ public class ShellCommandsTest {
         hasSameContentAs(
             classpathResource(
                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName() + ".stdout.txt")));
-  }
-
-  @Test
-  public void exit(final TestContext testContext, final CapturedSystemStreams streams) {
-    // The exit command is a no-op
-    new ExitCommand().run();
-
-    assertThat(outputOf(streams.err()), hasNoContent());
-    assertThat(outputOf(streams.out()), hasNoContent());
   }
 
   @Test
