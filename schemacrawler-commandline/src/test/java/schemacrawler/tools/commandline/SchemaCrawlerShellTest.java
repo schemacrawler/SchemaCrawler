@@ -101,7 +101,6 @@ public class SchemaCrawlerShellTest {
   @Test
   @DisplayName("Clear the screen on a terminal without screen control")
   public void clearScreen() throws Exception {
-    shell.dispatcher().execute("cls");
     shell.dispatcher().execute("clear");
   }
 
@@ -182,16 +181,18 @@ public class SchemaCrawlerShellTest {
         .build();
   }
 
-  private static void runShell(final String input) throws Exception {
-    final Terminal testTerminal = newTerminal(input);
+  private static int runShell(final String input) throws Exception {
     final TrackingShellState testState = new TrackingShellState();
-    try {
-      final int exitCode = SchemaCrawlerShell.runShell(testTerminal, new String[0], testState);
-      assertThat(exitCode, is(0));
-      assertThat(testState.closed, is(true));
+    try (final Terminal testTerminal = newTerminal(input)) {
+      try (final Shell testShell =
+          SchemaCrawlerShell.newShell(testTerminal, new StateFactory(testState))) {
+        testShell.run();
+      }
     } finally {
-      testTerminal.close();
+      testState.close();
     }
+    assertThat(testState.closed, is(true));
+    return 0;
   }
 
   private static final class TrackingShellState extends ShellState {

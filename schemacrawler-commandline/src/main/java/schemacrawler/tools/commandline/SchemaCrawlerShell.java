@@ -19,6 +19,7 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.IOException;
 import java.util.logging.Logger;
+import org.jline.builtins.PosixCommandGroup;
 import org.jline.picocli.PicocliCommandRegistry;
 import org.jline.reader.LineReader;
 import org.jline.reader.Parser;
@@ -42,61 +43,44 @@ public final class SchemaCrawlerShell {
   /**
    * Executes an interactive shell session.
    *
-   * @param args command-line arguments used when reporting fatal errors
+   * @param args command-line arguments, currently ignored by the interactive shell
    * @return 0 when the shell exits normally, or 1 when a fatal error occurs
    */
   public static int execute(final String[] args) {
-
+    // NOTE: Ignore arguments in the shell
     final ShellState state = new ShellState();
-    try {
-      requireNonNull(args, "No arguments provided");
-      try (final Terminal terminal = TerminalBuilder.builder().build()) {
-        return runShell(terminal, args, state);
-      }
-    } catch (final Throwable throwable) {
-      // Exceptional exit
-      handleFatalError(args, throwable, state);
-      state.close();
-      return 1;
-    }
-  }
-
-  static Shell newShell(final Terminal terminal, final IFactory factory) throws IOException {
-    final Terminal shellTerminal = requireNonNull(terminal, "No terminal provided");
-    final CommandLine commandLine = newShellCommandLine(factory);
-    final PicocliCommandRegistry picocliCommands = new PicocliCommandRegistry(commandLine);
-    final Parser parser = new DefaultParser().escapeChars(new char[0]);
-
-    return Shell.builder()
-        .terminal(shellTerminal)
-        .prompt("schemacrawler> ")
-        .parser(parser)
-        .variable(LineReader.LIST_MAX, 3)
-        .groups(picocliCommands, new ScreenCommands())
-        .exitCommands(true)
-        .helpCommands(false)
-        .onReaderReady((reader, dispatcher) -> picocliCommands.setLineReader(reader))
-        .build();
-  }
-
-  static int runShell(final Terminal terminal, final String[] args, final ShellState state) {
-    try (final Shell shell = newShell(terminal, new StateFactory(state))) {
+    try (final Terminal terminal = TerminalBuilder.builder().build();
+        final Shell shell = newShell(terminal, new StateFactory(state))) {
       shell.run();
       return 0;
     } catch (final Throwable throwable) {
-      // Exceptional exit
-      handleFatalError(args, throwable, state);
+      handleFatalError(throwable, state);
       return 1;
     } finally {
       state.close();
     }
   }
 
-  private static void handleFatalError(
-      final String[] args, final Throwable throwable, final ShellState state) {
+  static Shell newShell(final Terminal terminal, final IFactory factory) throws IOException {
+    requireNonNull(terminal, "No terminal provided");
+    final CommandLine commandLine = newShellCommandLine(factory);
+    final PicocliCommandRegistry picocliCommands = new PicocliCommandRegistry(commandLine);
+    final Parser parser = new DefaultParser().escapeChars(new char[0]);
 
+    return Shell.builder()
+        .terminal(terminal)
+        .prompt("schemacrawler> ")
+        .parser(parser)
+        .variable(LineReader.LIST_MAX, 3)
+        .groups(picocliCommands, new PosixCommandGroup())
+        .exitMessage("Terminating SchemaCrawler shell")
+        .helpCommands(false)
+        .onReaderReady((reader, dispatcher) -> picocliCommands.setLineReader(reader))
+        .build();
+  }
+
+  private static void handleFatalError(final Throwable throwable, final ShellState state) {
     final UtilityLogger logger = new UtilityLogger(LOGGER);
-    logger.logSafeArguments(args);
     logger.logFatalStackTrace(throwable);
     final CommandLineLogger commandLineLogger = new CommandLineLogger(LOGGER);
     commandLineLogger.logState(state);
