@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.zip.ZipFile;
 import org.junit.jupiter.api.Test;
@@ -73,6 +74,22 @@ public class SchemaSpyMainTest {
   public void dbHelpRunsWithoutConnectionArguments() {
     final int result = new SchemaSpyMain().execute("-dbHelp");
     assertThat(result, is(0));
+  }
+
+  @Test
+  public void executeUsesEffectiveArgumentsResolver() {
+    final AtomicReference<String[]> suppliedArgs = new AtomicReference<>();
+    final SchemaSpyMain schemaSpyMain =
+        new SchemaSpyMain(
+            args -> {
+              suppliedArgs.set(args);
+              return new String[] {"-dbhelp"};
+            });
+
+    final int result = schemaSpyMain.execute("-t", "pgsql");
+
+    assertThat(result, is(0));
+    assertArrayEquals(new String[] {"-t", "pgsql"}, suppliedArgs.get());
   }
 
   @Test
@@ -144,7 +161,7 @@ public class SchemaSpyMainTest {
     final String previousUserDir = System.getProperty("user.dir");
     try {
       System.setProperty("user.dir", tempDir.toString());
-      final String[] effectiveArgs = new SchemaSpyMain().resolveEffectiveArgs("-o", "out.zip");
+      final String[] effectiveArgs = PropertiesResolver.resolveEffectiveArgs("-o", "out.zip");
       assertArrayEquals(
           new String[] {
             "-t",
@@ -178,8 +195,8 @@ public class SchemaSpyMainTest {
         """);
 
     final String[] effectiveArgs =
-        new SchemaSpyMain()
-            .resolveEffectiveArgs("-configFile", propertiesFile.toString(), "-o", "out.zip");
+        PropertiesResolver.resolveEffectiveArgs(
+            "-configFile", propertiesFile.toString(), "-o", "out.zip");
 
     assertArrayEquals(
         new String[] {
@@ -211,7 +228,7 @@ public class SchemaSpyMainTest {
     try {
       System.setProperty("user.dir", tempDir.toString());
       final String[] effectiveArgs =
-          new SchemaSpyMain().resolveEffectiveArgs("-db", "booksFromCli", "-u", "userFromCli");
+          PropertiesResolver.resolveEffectiveArgs("-db", "booksFromCli", "-u", "userFromCli");
       assertArrayEquals(new String[] {"-db", "booksFromCli", "-u", "userFromCli"}, effectiveArgs);
     } finally {
       System.setProperty("user.dir", previousUserDir);
@@ -232,7 +249,7 @@ public class SchemaSpyMainTest {
     final String previousUserDir = System.getProperty("user.dir");
     try {
       System.setProperty("user.dir", tempDir.toString());
-      final String[] effectiveArgs = new SchemaSpyMain().resolveEffectiveArgs("-o", "out.zip");
+      final String[] effectiveArgs = PropertiesResolver.resolveEffectiveArgs("-o", "out.zip");
       assertArrayEquals(
           new String[] {
             "-t", "pgsql", "-db", "books", "-host", "db.example", "-u", "scott", "-o", "out.zip"
@@ -248,7 +265,7 @@ public class SchemaSpyMainTest {
     final String previousUserDir = System.getProperty("user.dir");
     try {
       System.setProperty("user.dir", tempDir.toString());
-      final String[] effectiveArgs = new SchemaSpyMain().resolveEffectiveArgs("-t", "pgsql");
+      final String[] effectiveArgs = PropertiesResolver.resolveEffectiveArgs("-t", "pgsql");
       assertArrayEquals(new String[] {"-t", "pgsql"}, effectiveArgs);
     } finally {
       System.setProperty("user.dir", previousUserDir);

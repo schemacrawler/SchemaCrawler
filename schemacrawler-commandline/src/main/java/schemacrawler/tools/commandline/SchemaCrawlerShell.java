@@ -18,6 +18,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCo
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 import org.jline.builtins.PosixCommandGroup;
@@ -40,24 +41,29 @@ import us.fatehi.utility.logging.UtilityLogger;
 /** Runs the SchemaCrawler interactive shell. */
 public final class SchemaCrawlerShell implements CommandLineExecutor {
 
-  @FunctionalInterface
-  interface TerminalFactory {
-
-    Terminal build() throws IOException;
+  private static final class TerminalFactory implements Supplier<Terminal> {
+    @Override
+    public Terminal get() {
+      try {
+        return TerminalBuilder.builder().name("SchemaCrawler Shell").build();
+      } catch (final IOException e) {
+        throw new UncheckedIOException(e);
+      }
+    }
   }
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerShell.class.getName());
-  private final TerminalFactory terminalFactory;
 
+  private final Supplier<Terminal> terminalFactory;
   private final Supplier<ShellState> stateSupplier;
 
   /** Creates an interactive shell executor. */
   public SchemaCrawlerShell() {
-    this(() -> TerminalBuilder.builder().build(), ShellState::new);
+    this(new TerminalFactory(), ShellState::new);
   }
 
   SchemaCrawlerShell(
-      final TerminalFactory terminalFactory, final Supplier<ShellState> stateSupplier) {
+      final Supplier<Terminal> terminalFactory, final Supplier<ShellState> stateSupplier) {
     this.terminalFactory = requireNonNull(terminalFactory, "No terminal factory provided");
     this.stateSupplier = requireNonNull(stateSupplier, "No state supplier provided");
   }
@@ -72,7 +78,7 @@ public final class SchemaCrawlerShell implements CommandLineExecutor {
   public int execute(final String... args) {
     // NOTE: Ignore arguments in the shell
     final ShellState state = requireNonNull(stateSupplier.get(), "No shell state provided");
-    try (final Terminal terminal = terminalFactory.build();
+    try (final Terminal terminal = terminalFactory.get();
         final Shell shell = newShell(terminal, new StateFactory(state))) {
       shell.run();
       return 0;
