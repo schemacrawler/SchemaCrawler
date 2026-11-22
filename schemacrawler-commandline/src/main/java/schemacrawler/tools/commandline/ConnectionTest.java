@@ -21,12 +21,15 @@ import java.util.ServiceConfigurationError;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import picocli.CommandLine;
+import schemacrawler.CommandLineExecutor;
 import schemacrawler.schemacrawler.Version;
+import schemacrawler.schemacrawler.exceptions.InternalRuntimeException;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.commandline.utility.CommandLineUtility;
+import us.fatehi.utility.jdbc.driver.JdbcConnectionUtility;
 
-public final class ConnectionTest {
+public final class ConnectionTest implements CommandLineExecutor {
 
   private static final Logger LOGGER = Logger.getLogger(ConnectionTest.class.getName());
 
@@ -36,7 +39,8 @@ public final class ConnectionTest {
    * @param args Command-line arguments
    * @return System exit code
    */
-  public static int execute(final String[] args) {
+  @Override
+  public int execute(final String... args) {
 
     final ShellState state = new ShellState();
     try {
@@ -84,37 +88,36 @@ public final class ConnectionTest {
     }
   }
 
-  private static void executeCommandLine(final CommandLine commandLine) {
+  private void executeCommandLine(final CommandLine commandLine) {
     final Map<String, Object> subcommands = commandLine.getMixins();
     final Runnable command = (Runnable) subcommands.get("connect");
     LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());
     command.run();
   }
 
-  private static String getConnectionUrl(final ShellState state) {
+  private String getConnectionUrl(final ShellState state) {
     requireNonNull(state, "No shell state provided");
     if (!state.isConnected()) {
       return "";
     }
     final StringWriter stringWriter = new StringWriter();
-    try (final PrintWriter writer = new PrintWriter(stringWriter)) {
-      try (final Connection connection = state.getConnectionSource().get()) {
-        final DatabaseMetaData metaData = connection.getMetaData();
-        final String url = metaData.getURL();
-        writer.printf("  JDBC URL: %s", url);
-        final String userName = metaData.getUserName();
-        if (!isBlank(userName)) {
-          writer.printf("%n  Database user name:  %s", userName);
-        }
-      } catch (final Exception e) {
-        writer.printf("%n  Could not obtain JDBC connection URL");
+    try (final PrintWriter writer = new PrintWriter(stringWriter);
+        final Connection connection = state.getConnectionSource().get()) {
+      final String url = JdbcConnectionUtility.getConnectionUrl(connection);
+      if (isBlank(url)) {
+        throw new InternalRuntimeException("Could not obtain database connection URL");
+      }
+      writer.printf("  JDBC URL: %s", url);
+
+      final DatabaseMetaData metaData = connection.getMetaData();
+      final String userName = metaData.getUserName();
+      if (!isBlank(userName)) {
+        writer.printf("%n  Database user name:  %s", userName);
       }
       writer.flush();
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
     return stringWriter.toString();
-  }
-
-  private ConnectionTest() {
-    // Prevent instantiation
   }
 }

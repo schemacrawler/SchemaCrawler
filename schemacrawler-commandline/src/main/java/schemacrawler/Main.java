@@ -64,6 +64,10 @@ public final class Main {
     logger.logSystemProperties();
     JdbcDriverRegistry.getRegistry().log();
 
+    if (showHelpIfRequested(args) || showVersionIfRequested(args)) {
+      return;
+    }
+
     final ConnectionTestOptions connectionTestOptions = new ConnectionTestOptions();
     populateCommand(connectionTestOptions, args);
     final boolean isConnectionTest = connectionTestOptions.isConnectionTest();
@@ -72,21 +76,16 @@ public final class Main {
     populateCommand(interactiveShellOptions, args);
     final boolean isInteractive = interactiveShellOptions.isInteractive();
 
-    int exitCode = 0;
+    final CommandLineExecutor executor;
     if (isConnectionTest) {
-      exitCode = ConnectionTest.execute(args);
+      executor = new ConnectionTest();
     } else if (isInteractive) {
-      exitCode = SchemaCrawlerShell.execute(args);
+      executor = new SchemaCrawlerShell();
     } else {
-      if (showHelpIfRequested(args) || showVersionIfRequested(args)) {
-        return;
-      }
-      exitCode = SchemaCrawlerCommandLine.execute(args);
+      executor = new SchemaCrawlerCommandLine();
     }
 
-    if (exitCode == 0) {
-      return;
-    }
+    final int exitCode = executor.execute(args);
     exit(exitCode);
   }
 
@@ -95,7 +94,10 @@ public final class Main {
    *
    * @param exitCode Exit code to exit with.
    */
-  private static void exit(int exitCode) {
+  private static void exit(final int exitCode) {
+    if (exitCode == 0) {
+      return;
+    }
     final boolean exitWithException = CONFIG.getBooleanValue(SC_EXIT_WITH_EXCEPTION);
     if (exitWithException) {
       throw new SystemExitException(exitCode, "SchemaCrawler has exited with an error");

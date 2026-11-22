@@ -51,7 +51,7 @@ public class SchemaCrawlerShellTest {
   public void setUp() throws IOException {
     terminal = newTerminal("");
     state = new ShellState();
-    shell = SchemaCrawlerShell.newShell(terminal, new StateFactory(state));
+    shell = new SchemaCrawlerShell().newShell(terminal, new StateFactory(state));
   }
 
   @AfterEach
@@ -148,7 +148,7 @@ public class SchemaCrawlerShellTest {
   public void terminalOwnership() throws IOException {
     final Terminal suppliedTerminal = spy(newTerminal(""));
     final Shell suppliedShell =
-        SchemaCrawlerShell.newShell(suppliedTerminal, new StateFactory(state));
+        new SchemaCrawlerShell().newShell(suppliedTerminal, new StateFactory(state));
 
     suppliedShell.close();
 
@@ -185,7 +185,7 @@ public class SchemaCrawlerShellTest {
     final TrackingShellState testState = new TrackingShellState();
     try (final Terminal testTerminal = newTerminal(input)) {
       try (final Shell testShell =
-          SchemaCrawlerShell.newShell(testTerminal, new StateFactory(testState))) {
+          new SchemaCrawlerShell().newShell(testTerminal, new StateFactory(testState))) {
         testShell.run();
       }
     } finally {
