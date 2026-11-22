@@ -22,12 +22,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import picocli.CommandLine;
 import picocli.CommandLine.PicocliException;
+import schemacrawler.CommandLineExecutor;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.commandline.utility.CommandLineLogger;
 import us.fatehi.utility.logging.UtilityLogger;
 
-public final class SchemaCrawlerCommandLine {
+public final class SchemaCrawlerCommandLine implements CommandLineExecutor {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerCommandLine.class.getName());
 
@@ -37,7 +38,8 @@ public final class SchemaCrawlerCommandLine {
    * @param args Command-line arguments
    * @return System exit code
    */
-  public static int execute(final String[] args) {
+  @Override
+  public int execute(final String... args) {
 
     final ShellState state = new ShellState();
     try {
@@ -72,7 +74,7 @@ public final class SchemaCrawlerCommandLine {
     }
   }
 
-  private static void executeCommandLine(final CommandLine commandLine) {
+  private void executeCommandLine(final CommandLine commandLine) {
     final Map<String, Object> subcommands = commandLine.getMixins();
 
     for (final String commandName :
@@ -85,7 +87,7 @@ public final class SchemaCrawlerCommandLine {
     }
   }
 
-  private static String extractErrorMessage(final Throwable throwable) {
+  private String extractErrorMessage(final Throwable throwable) {
     final String errorMessage;
     if (throwable instanceof PicocliException) {
       final Throwable cause = throwable.getCause();
@@ -98,9 +100,5 @@ public final class SchemaCrawlerCommandLine {
       errorMessage = throwable.getMessage();
     }
     return errorMessage;
-  }
-
-  private SchemaCrawlerCommandLine() {
-    // Prevent instantiation
   }
 }

@@ -8,12 +8,13 @@
 
 package schemacrawler.tools.commandline.shell;
 
+import java.util.logging.Logger;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.Version;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
-import schemacrawler.tools.commandline.state.StateUtility;
+import schemacrawler.tools.commandline.state.StateLogger;
 import schemacrawler.tools.commandline.utility.CommandLineUtility;
 
 @Command(
@@ -25,6 +26,8 @@ import schemacrawler.tools.commandline.utility.CommandLineUtility;
     customSynopsis = {"system"},
     optionListHeading = "Options:%n")
 public class SystemCommand extends BaseStateHolder implements Runnable {
+
+  private static final Logger LOGGER = Logger.getLogger(SystemCommand.class.getName());
 
   @Option(
       names = {"-C", "--is-connected"},
@@ -113,7 +116,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   }
 
   private void showState() {
-    StateUtility.logState(state, true);
+    new StateLogger(LOGGER).logState(state, true);
   }
 
   private void showVersion() {

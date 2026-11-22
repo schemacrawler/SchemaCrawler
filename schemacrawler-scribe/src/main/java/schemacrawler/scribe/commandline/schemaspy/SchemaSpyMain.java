@@ -10,11 +10,30 @@ package schemacrawler.scribe.commandline.schemaspy;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.function.Function;
 import picocli.CommandLine;
+import schemacrawler.CommandLineExecutor;
 
-public final class SchemaSpyMain {
+public final class SchemaSpyMain implements CommandLineExecutor {
 
-  public static int execute(final String... args) {
+  public static void main(final String... args) {
+    System.exit(new SchemaSpyMain().execute(args));
+  }
+
+  private final Function<String[], String[]> effectiveArgsResolver;
+
+  /** Creates a SchemaSpy command-line executor. */
+  public SchemaSpyMain() {
+    this(PropertiesResolver::resolveEffectiveArgs);
+  }
+
+  SchemaSpyMain(final Function<String[], String[]> effectiveArgsResolver) {
+    this.effectiveArgsResolver =
+        requireNonNull(effectiveArgsResolver, "No effective arguments resolver provided");
+  }
+
+  @Override
+  public int execute(final String... args) {
     requireNonNull(args, "No command-line arguments provided");
     try {
       final SchemaSpyCommand command = new SchemaSpyCommand();
@@ -24,22 +43,10 @@ public final class SchemaSpyMain {
             cmd.getErr().println(exception.getMessage());
             return 1;
           });
-      return commandLine.execute(resolveEffectiveArgs(args));
+      return commandLine.execute(effectiveArgsResolver.apply(args));
     } catch (final RuntimeException e) {
       System.err.println(e.getMessage());
       return 1;
     }
-  }
-
-  public static void main(final String[] args) {
-    System.exit(execute(args));
-  }
-
-  static String[] resolveEffectiveArgs(final String... args) {
-    return PropertiesResolver.resolveEffectiveArgs(args);
-  }
-
-  private SchemaSpyMain() {
-    // Utility class
   }
 }

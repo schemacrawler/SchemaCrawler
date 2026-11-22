@@ -13,7 +13,9 @@ import static java.util.Objects.requireNonNull;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.tools.commandline.state.ShellState;
+import us.fatehi.utility.logging.LoggerMarker;
 
+@LoggerMarker
 public final class CommandLineLogger {
 
   private final Logger logger;

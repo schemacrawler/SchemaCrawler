@@ -8,10 +8,11 @@
 
 package schemacrawler.tools.commandline.command;
 
+import java.util.logging.Logger;
 import picocli.CommandLine.Command;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
-import schemacrawler.tools.commandline.state.StateUtility;
+import schemacrawler.tools.commandline.state.StateLogger;
 
 @Command(
     name = "showstate",
@@ -25,12 +26,14 @@ import schemacrawler.tools.commandline.state.StateUtility;
     optionListHeading = "Options:%n")
 public final class ShowStateCommand extends BaseStateHolder implements Runnable {
 
+  private static final Logger LOGGER = Logger.getLogger(ShowStateCommand.class.getName());
+
   public ShowStateCommand(final ShellState state) {
     super(state);
   }
 
   @Override
   public void run() {
-    StateUtility.logState(state, false);
+    new StateLogger(LOGGER).logState(state, false);
   }
 }

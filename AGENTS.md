@@ -32,7 +32,7 @@ Diagram-related tests require **Graphviz** (`dot` on `PATH`). Diagram generation
 | `schemacrawler-diagram` | ER diagram generation via Graphviz `dot` |
 | `schemacrawler-operations` | Data operations (count, quickdump, etc.) |
 | `schemacrawler-scripting` | JSR-223 scripting engine integration (Velocity, Thymeleaf, FreeMarker, Mustache, Mermaid, DBML, PlantUML templates) |
-| `schemacrawler-commandline` | CLI entry point (picocli), command discovery, interactive shell (jline3) |
+| `schemacrawler-commandline` | CLI entry point (picocli), command discovery, interactive shell (JLine) |
 | `schemacrawler-lint` | Schema lint rules engine with 23 built-in linters |
 | `schemacrawler-docs` | Documentation generation |
 | `schemacrawler-db2` / `-hsqldb` / `-mysql` / `-oracle` / `-postgresql` / `-sqlite` / `-sqlserver` | Bundled JDBC driver plugins |
@@ -71,7 +71,7 @@ SchemaCrawler shares a single version literal (currently `18.0.3`) with [SchemaC
 
 Do not add new version literals or embed versions in resource files; all same-product dependencies use `${project.version}` and are resolved through the shared parent POM.
 
-The CLI uses **picocli** (v4.7.7) with **jline3** for the interactive shell.
+The CLI uses **picocli** (v4.7.7) with **JLine** (4.x, via `jline-picocli`) for the interactive shell.
 
 - Entry point: `schemacrawler.Main`
 - Command discovery: `CommandRegistry` loads all registered `SchemaCrawlerCommandProvider` instances via ServiceLoader at startup

@@ -203,7 +203,7 @@ public final class SchemaSpyCommand implements Runnable {
 
   private int runSchemaCrawler() {
     final List<String> args = buildArgsBuilder().toArgs(false);
-    return SchemaCrawlerCommandLine.execute(args.toArray(String[]::new));
+    return new SchemaCrawlerCommandLine().execute(args.toArray(String[]::new));
   }
 
   private void validateOptions() {
