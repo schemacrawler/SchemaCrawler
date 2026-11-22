@@ -18,6 +18,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCo
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.IOException;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 import org.jline.builtins.PosixCommandGroup;
 import org.jline.picocli.PicocliCommandRegistry;
@@ -39,7 +40,27 @@ import us.fatehi.utility.logging.UtilityLogger;
 /** Runs the SchemaCrawler interactive shell. */
 public final class SchemaCrawlerShell implements CommandLineExecutor {
 
+  @FunctionalInterface
+  interface TerminalFactory {
+
+    Terminal build() throws IOException;
+  }
+
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerShell.class.getName());
+  private final TerminalFactory terminalFactory;
+
+  private final Supplier<ShellState> stateSupplier;
+
+  /** Creates an interactive shell executor. */
+  public SchemaCrawlerShell() {
+    this(() -> TerminalBuilder.builder().build(), ShellState::new);
+  }
+
+  SchemaCrawlerShell(
+      final TerminalFactory terminalFactory, final Supplier<ShellState> stateSupplier) {
+    this.terminalFactory = requireNonNull(terminalFactory, "No terminal factory provided");
+    this.stateSupplier = requireNonNull(stateSupplier, "No state supplier provided");
+  }
 
   /**
    * Executes an interactive shell session.
@@ -50,8 +71,8 @@ public final class SchemaCrawlerShell implements CommandLineExecutor {
   @Override
   public int execute(final String... args) {
     // NOTE: Ignore arguments in the shell
-    final ShellState state = new ShellState();
-    try (final Terminal terminal = TerminalBuilder.builder().build();
+    final ShellState state = requireNonNull(stateSupplier.get(), "No shell state provided");
+    try (final Terminal terminal = terminalFactory.build();
         final Shell shell = newShell(terminal, new StateFactory(state))) {
       shell.run();
       return 0;
@@ -61,24 +82,6 @@ public final class SchemaCrawlerShell implements CommandLineExecutor {
     } finally {
       state.close();
     }
-  }
-
-  Shell newShell(final Terminal terminal, final IFactory factory) throws IOException {
-    requireNonNull(terminal, "No terminal provided");
-    final CommandLine commandLine = newShellCommandLine(factory);
-    final PicocliCommandRegistry picocliCommands = new PicocliCommandRegistry(commandLine);
-    final Parser parser = new DefaultParser().escapeChars(new char[0]);
-
-    return Shell.builder()
-        .terminal(terminal)
-        .prompt("schemacrawler> ")
-        .parser(parser)
-        .variable(LineReader.LIST_MAX, 3)
-        .groups(picocliCommands, new PosixCommandGroup())
-        .exitMessage("Terminating SchemaCrawler shell")
-        .helpCommands(false)
-        .onReaderReady((reader, dispatcher) -> picocliCommands.setLineReader(reader))
-        .build();
   }
 
   private void handleFatalError(final Throwable throwable, final ShellState state) {
@@ -100,6 +103,24 @@ public final class SchemaCrawlerShell implements CommandLineExecutor {
     }
 
     printCommandLineErrorMessage(errorMessage, state);
+  }
+
+  private Shell newShell(final Terminal terminal, final IFactory factory) throws IOException {
+    requireNonNull(terminal, "No terminal provided");
+    final CommandLine commandLine = newShellCommandLine(factory);
+    final PicocliCommandRegistry picocliCommands = new PicocliCommandRegistry(commandLine);
+    final Parser parser = new DefaultParser().escapeChars(new char[0]);
+
+    return Shell.builder()
+        .terminal(terminal)
+        .prompt("schemacrawler> ")
+        .parser(parser)
+        .variable(LineReader.LIST_MAX, 3)
+        .groups(picocliCommands, new PosixCommandGroup())
+        .exitMessage("Terminating SchemaCrawler shell")
+        .helpCommands(false)
+        .onReaderReady((reader, dispatcher) -> picocliCommands.setLineReader(reader))
+        .build();
   }
 
   private CommandLine newShellCommandLine(final IFactory factory) {
