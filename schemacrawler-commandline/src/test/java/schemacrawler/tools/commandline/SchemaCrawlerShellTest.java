@@ -11,6 +11,8 @@ package schemacrawler.tools.commandline;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -19,8 +21,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import org.jline.terminal.Size;
 import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
+import org.jline.terminal.impl.DumbTerminal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.DisableLogging;
@@ -74,7 +77,7 @@ public class SchemaCrawlerShellTest {
   }
 
   @Test
-  @DisplayName("Clear the screen on a terminal without screen control")
+  @DisplayName("Clear the screen")
   public void clearScreen() throws Exception {
     assertThat(runShell("clear\nexit\n").exitCode(), is(0));
   }
@@ -126,6 +129,9 @@ public class SchemaCrawlerShellTest {
   private static ShellResult runShell(final String input) throws Exception {
     final ByteArrayOutputStream output = new ByteArrayOutputStream();
     final Terminal terminal = spy(newTerminal(input, output));
+    // Capability probes would consume the scripted input as terminal responses.
+    doReturn(false).when(terminal).isModeSupported(any());
+    doReturn(false).when(terminal).supportsGraphemeClusterMode();
     final TrackingShellState state = new TrackingShellState();
     final int exitCode = new SchemaCrawlerShell(() -> terminal, () -> state).execute();
     verify(terminal, times(1)).close();
@@ -134,11 +140,16 @@ public class SchemaCrawlerShellTest {
 
   private static Terminal newTerminal(final String input, final ByteArrayOutputStream output)
       throws IOException {
-    return TerminalBuilder.builder()
-        .dumb(true)
-        .system(false)
-        .streams(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)), output)
-        .build();
+    // Read input without a terminal pump, but use ANSI's interactive key bindings.
+    final Terminal terminal =
+        new DumbTerminal(
+            "SchemaCrawler shell test",
+            "ansi",
+            new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)),
+            output,
+            StandardCharsets.UTF_8);
+    terminal.setSize(Size.of(80, 24));
+    return terminal;
   }
 
   private record ShellResult(int exitCode, String output, boolean stateClosed) {}
