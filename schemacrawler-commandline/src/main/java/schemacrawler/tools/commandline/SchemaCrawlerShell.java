@@ -48,7 +48,7 @@ public final class SchemaCrawlerShell implements CommandLineExecutor {
    * @return 0 when the shell exits normally, or 1 when a fatal error occurs
    */
   @Override
-  public int execute(final String[] args) {
+  public int execute(final String... args) {
     // NOTE: Ignore arguments in the shell
     final ShellState state = new ShellState();
     try (final Terminal terminal = TerminalBuilder.builder().build();
