@@ -76,8 +76,10 @@ final class TermRanker {
     for (final Map.Entry<String, StemUsage> entry : usageMap.entrySet()) {
       final String stem = entry.getKey();
       final StemUsage usage = entry.getValue();
-      if (usage.objectCount() >= thresholds.minObjectCount()) {
-        terms.add(new VocabularyTerm(shownWord(stem, usage.words()), stem, usage.objectCount()));
+      final int objectCount = usage.objectCount();
+      if (objectCount >= thresholds.minObjectCount()) {
+        final String word = shownWord(stem, usage.words());
+        terms.add(new VocabularyTerm(word, stem, objectCount));
       }
     }
     terms.sort(comparingInt(VocabularyTerm::objectCount).reversed());
@@ -89,18 +91,18 @@ final class TermRanker {
    * is sorted by stem, so that the final sort by count keeps ties in alphabetical order.
    */
   private Map<String, StemUsage> collectUsage(final Names names, final Set<String> stems) {
-    final Map<String, StemUsage> usageByStem = new TreeMap<>();
+    final Map<String, StemUsage> usageMap = new TreeMap<>();
     for (final NamedItem item : names.items()) {
       for (final Token token : item.tokenization().tokens()) {
         final String stem = token.stem();
         if (stems.contains(stem)) {
-          usageByStem
+          usageMap
               .computeIfAbsent(stem, key -> new StemUsage())
               .add(item.parentKey(), token.word());
         }
       }
     }
-    return usageByStem;
+    return usageMap;
   }
 
   /**
