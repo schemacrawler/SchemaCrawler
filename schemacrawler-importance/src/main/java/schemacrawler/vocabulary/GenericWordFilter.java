@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.UnaryOperator;
 import schemacrawler.schema.NamedObjectKey;
 
 /**
@@ -22,7 +21,7 @@ import schemacrawler.schema.NamedObjectKey;
  * created}, that is never part of a table or routine name. A word in a table or routine name is
  * never generic, which protects domain words in small schemas.
  */
-final class GenericWordFilter implements UnaryOperator<Set<String>> {
+final class GenericWordFilter implements StemFilter {
 
   private final Names names;
   private final VocabularyThresholds thresholds;

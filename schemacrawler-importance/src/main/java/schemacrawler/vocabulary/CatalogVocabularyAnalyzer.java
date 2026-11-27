@@ -12,7 +12,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 import java.util.Set;
-import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
@@ -63,14 +62,7 @@ public final class CatalogVocabularyAnalyzer {
   }
 
   private Vocabulary vocabulary() {
-    final UnaryOperator<Set<String>> stemFilters =
-        set ->
-            new CreditFilter(names)
-                .andThen(new PrefixFilter(names, thresholds))
-                .andThen(new GenericWordFilter(names, thresholds))
-                .apply(set);
-
-    final Set<String> stems = stemFilters.apply(names.allStems());
+    final Set<String> stems = StemFilter.filters(names, thresholds).apply(names.allStems());
     final List<VocabularyTerm> terms = new TermRanker(thresholds).rank(names, stems);
 
     final double coverage = TableCoverage.of(names, terms);

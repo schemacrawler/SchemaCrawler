@@ -9,7 +9,6 @@
 package schemacrawler.vocabulary;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -54,7 +53,6 @@ final class Names {
         final NamedObjectKey key,
         final NamedObjectKey parentKey,
         final String name) {
-      requireNotBlank(name, "No name provided");
       requireNonNull(key, new StringFormat("No key for %s <%s>", kind, name));
       final Tokenization tokenization = NameTokenizer.tokenize(name);
       items.add(new NamedItem(kind, key, parentKey, tokenization));

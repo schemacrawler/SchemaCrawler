@@ -17,7 +17,6 @@ import static org.hamcrest.Matchers.not;
 
 import java.util.Set;
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.NamedObjectKey;
 
@@ -26,8 +25,7 @@ public class StemFiltersTest {
 
   private static final VocabularyThresholds THRESHOLDS = VocabularyThresholds.DEFAULT;
 
-  private static Set<String> apply(
-      final Function<Names, UnaryOperator<Set<String>>> filter, final Names names) {
+  private static Set<String> apply(final Function<Names, StemFilter> filter, final Names names) {
     return filter.apply(names).apply(names.allStems());
   }
 
