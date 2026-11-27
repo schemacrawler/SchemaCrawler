@@ -34,6 +34,7 @@ final class GenericWordFilter implements UnaryOperator<Set<String>> {
 
   @Override
   public Set<String> apply(final Set<String> stems) {
+    requireNonNull(stems, "No stems provided");
     final Set<String> kept = new HashSet<>(stems);
     kept.removeAll(genericStems());
     return Set.copyOf(kept);

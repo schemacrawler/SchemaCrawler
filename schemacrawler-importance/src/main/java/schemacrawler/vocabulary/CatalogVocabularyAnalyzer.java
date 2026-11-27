@@ -20,8 +20,9 @@ import us.fatehi.utility.string.StringFormat;
 
 /**
  * Analyzes the names of the objects in a catalog to find its {@link Vocabulary}, with no dictionary
- * and no knowledge of any language. The steps run in this order, and each narrows the set of words
- * that are kept:
+ * and no knowledge of any language. The filters decide which words are kept. They are independent
+ * of each other: each reads the names and only removes words, so the order in which they run does
+ * not matter. Ranking and trust come after them, in this order:
  *
  * <ol>
  *   <li>Credit: keep a word only if it appears inside a name with two or more segments.

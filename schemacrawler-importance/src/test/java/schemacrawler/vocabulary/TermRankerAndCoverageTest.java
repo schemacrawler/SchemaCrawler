@@ -244,13 +244,38 @@ public class TermRankerAndCoverageTest {
   }
 
   @Test
-  public void coverageIgnoresRoutinesAndOtherObjects() {
+  public void coverageCountsTablesWithATermInAContainedObjectName() {
     final NamesFixture fixture = new NamesFixture();
-    final NamedObjectKey table = fixture.add(ObjectKind.TABLE, "unit1");
-    fixture.add(ObjectKind.TRIGGER, table, "audit_customer");
+    final NamedObjectKey withTrigger = fixture.add(ObjectKind.TABLE, "unit1");
+    fixture.add(ObjectKind.TRIGGER, withTrigger, "audit_customer");
+    final NamedObjectKey withIndex = fixture.add(ObjectKind.TABLE, "unit2");
+    fixture.add(ObjectKind.INDEX, withIndex, "idx_customer");
+    final NamedObjectKey withConstraint = fixture.add(ObjectKind.TABLE, "unit3");
+    fixture.add(ObjectKind.CONSTRAINT, withConstraint, "fk_customer");
+    fixture.add(ObjectKind.TABLE, "unit4");
+
+    assertThat(TableCoverage.of(fixture.build(), List.of(term("customer"))), closeTo(0.75, 1e-9));
+  }
+
+  @Test
+  public void coverageIgnoresRoutinesSequencesAndSynonyms() {
+    final NamesFixture fixture = new NamesFixture();
+    fixture.add(ObjectKind.TABLE, "unit1");
     fixture.add(ObjectKind.ROUTINE, "refresh_customer");
+    fixture.add(ObjectKind.SEQUENCE, "customer_seq");
+    fixture.add(ObjectKind.SYNONYM, "customer_alias");
 
     assertThat(TableCoverage.of(fixture.build(), List.of(term("customer"))), is(0.0));
+  }
+
+  @Test
+  public void coverageCountsATableOnceForManyWords() {
+    final NamesFixture fixture = new NamesFixture();
+    final NamedObjectKey table = fixture.add(ObjectKind.TABLE, "customer_order");
+    fixture.add(ObjectKind.COLUMN, table, "customer_id");
+
+    assertThat(
+        TableCoverage.of(fixture.build(), List.of(term("customer"), term("order"))), is(1.0));
   }
 
   @Test

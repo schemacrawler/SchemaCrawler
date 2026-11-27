@@ -9,15 +9,12 @@
 package schemacrawler.vocabulary;
 
 import static java.util.Comparator.comparingInt;
+import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import schemacrawler.schema.NamedObjectKey;
 
 /**
  * Counts the distinct top-level objects using each kept word, drops rare words, and sorts by count
@@ -31,32 +28,10 @@ import schemacrawler.schema.NamedObjectKey;
  */
 final class TermRanker {
 
-  /** The objects that use a stem, and the words in which the stem is written. */
-  private static final class StemUsage {
-
-    private final Set<NamedObjectKey> owners = new HashSet<>();
-    // In alphabetical order, so that the shown word does not depend on the order of
-    // the names
-    private final Set<String> words = new TreeSet<>();
-
-    void add(final NamedObjectKey owner, final String word) {
-      owners.add(owner);
-      words.add(word);
-    }
-
-    int objectCount() {
-      return owners.size();
-    }
-
-    Set<String> words() {
-      return words;
-    }
-  }
-
   private final VocabularyThresholds thresholds;
 
   TermRanker(final VocabularyThresholds thresholds) {
-    this.thresholds = thresholds;
+    this.thresholds = requireNonNull(thresholds, "No thresholds provided");
   }
 
   /**
@@ -71,38 +46,22 @@ final class TermRanker {
    * @return Terms sorted by count descending and then by stem, without rare words
    */
   List<VocabularyTerm> rank(final Names names, final Set<String> stems) {
+    requireNonNull(names, "No names provided");
+    requireNonNull(stems, "No stems provided");
+
     final List<VocabularyTerm> terms = new ArrayList<>();
-    final Map<String, StemUsage> usageMap = collectUsage(names, stems);
-    for (final Map.Entry<String, StemUsage> entry : usageMap.entrySet()) {
+    // The usage is sorted by stem, so that the final sort by count keeps ties in alphabetical order
+    for (final Map.Entry<String, StemUsage> entry : names.usageByStem().entrySet()) {
       final String stem = entry.getKey();
       final StemUsage usage = entry.getValue();
       final int objectCount = usage.objectCount();
-      if (objectCount >= thresholds.minObjectCount()) {
+      if (stems.contains(stem) && objectCount >= thresholds.minObjectCount()) {
         final String word = shownWord(stem, usage.words());
         terms.add(new VocabularyTerm(word, stem, objectCount));
       }
     }
     terms.sort(comparingInt(VocabularyTerm::objectCount).reversed());
     return List.copyOf(terms);
-  }
-
-  /**
-   * Collects, for each kept stem, the objects that use it and the words written for it. The result
-   * is sorted by stem, so that the final sort by count keeps ties in alphabetical order.
-   */
-  private Map<String, StemUsage> collectUsage(final Names names, final Set<String> stems) {
-    final Map<String, StemUsage> usageMap = new TreeMap<>();
-    for (final NamedItem item : names.items()) {
-      for (final Token token : item.tokenization().tokens()) {
-        final String stem = token.stem();
-        if (stems.contains(stem)) {
-          usageMap
-              .computeIfAbsent(stem, key -> new StemUsage())
-              .add(item.parentKey(), token.word());
-        }
-      }
-    }
-    return usageMap;
   }
 
   /**

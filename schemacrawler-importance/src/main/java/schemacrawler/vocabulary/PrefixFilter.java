@@ -34,6 +34,7 @@ final class PrefixFilter implements UnaryOperator<Set<String>> {
 
   @Override
   public Set<String> apply(final Set<String> stems) {
+    requireNonNull(stems, "No stems provided");
     final Set<String> kept = new HashSet<>(stems);
     for (final ObjectKind kind : ObjectKind.values()) {
       final List<NamedItem> kindItems = names.itemsOfKind(kind);

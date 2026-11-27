@@ -36,7 +36,7 @@ public final class NameTokenizer {
     int segmentCount = 0;
     final List<Token> tokens = new ArrayList<>();
     for (final String segment : segments) {
-      if (segment.isEmpty()) {
+      if (isBlank(segment)) {
         continue;
       }
       segmentCount++;

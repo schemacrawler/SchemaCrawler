@@ -28,6 +28,7 @@ final class CreditFilter implements UnaryOperator<Set<String>> {
 
   @Override
   public Set<String> apply(final Set<String> stems) {
+    requireNonNull(stems, "No stems provided");
     final Set<String> credited = new HashSet<>();
     for (final NamedItem item : names.items()) {
       if (item.tokenization().segmentCount() >= 2) {
