@@ -12,12 +12,13 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.UnaryOperator;
 
 /**
  * Keeps a word only if it appears inside a name with two or more segments. Codes such as {@code
  * VBAK} appear only as whole names, so they are never credited.
  */
-final class CreditFilter implements StemFilter {
+final class CreditFilter implements UnaryOperator<Set<String>> {
 
   private final Names names;
 
@@ -34,6 +35,6 @@ final class CreditFilter implements StemFilter {
       }
     }
     credited.retainAll(stems);
-    return credited;
+    return Set.copyOf(credited);
   }
 }
