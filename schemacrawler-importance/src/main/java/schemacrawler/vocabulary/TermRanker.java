@@ -11,7 +11,6 @@ package schemacrawler.vocabulary;
 import static java.util.Comparator.comparingInt;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -32,43 +31,87 @@ import schemacrawler.schema.NamedObjectKey;
  */
 final class TermRanker {
 
+  /** The objects that use a stem, and the words in which the stem is written. */
+  private static final class StemUsage {
+
+    private final Set<NamedObjectKey> owners = new HashSet<>();
+    // In alphabetical order, so that the shown word does not depend on the order of
+    // the names
+    private final Set<String> words = new TreeSet<>();
+
+    void add(final NamedObjectKey owner, final String word) {
+      owners.add(owner);
+      words.add(word);
+    }
+
+    int objectCount() {
+      return owners.size();
+    }
+
+    Set<String> words() {
+      return words;
+    }
+  }
+
   private final VocabularyThresholds thresholds;
 
   TermRanker(final VocabularyThresholds thresholds) {
     this.thresholds = thresholds;
   }
 
+  /**
+   * Ranks the kept stems. A stem is the grouping key, and one stem can have more than one word,
+   * because different written words can have the same singular form: {@code order} and {@code
+   * orders} have the stem {@code order}, and {@code media} and {@code mediums} have the stem {@code
+   * medium}. The count for a stem is the distinct owners that use any of its words, so an owner
+   * that uses two words counts once.
+   *
+   * @param names Names to read the words from
+   * @param stems Stems to keep, and to rank
+   * @return Terms sorted by count descending and then by stem, without rare words
+   */
   List<VocabularyTerm> rank(final Names names, final Set<String> stems) {
-    // Sorted by stem, so the final sort by count keeps ties in alphabetical order
-    final Map<String, Set<NamedObjectKey>> ownersByStem = new TreeMap<>();
-    // For each stem, the words written for it, in alphabetical order
-    final Map<String, Set<String>> wordsByStem = new HashMap<>();
-    for (final NamedItem item : names.items()) {
-      for (final Token token : item.tokenization().tokens()) {
-        if (!stems.contains(token.stem())) {
-          continue;
-        }
-        ownersByStem.computeIfAbsent(token.stem(), key -> new HashSet<>()).add(item.parentKey());
-        wordsByStem.computeIfAbsent(token.stem(), key -> new TreeSet<>()).add(token.word());
-      }
-    }
-
     final List<VocabularyTerm> terms = new ArrayList<>();
-    for (final Map.Entry<String, Set<NamedObjectKey>> entry : ownersByStem.entrySet()) {
-      final int objectCount = entry.getValue().size();
-      if (objectCount < thresholds.minObjectCount()) {
-        continue;
+    final Map<String, StemUsage> usageMap = collectUsage(names, stems);
+    for (final Map.Entry<String, StemUsage> entry : usageMap.entrySet()) {
+      final String stem = entry.getKey();
+      final StemUsage usage = entry.getValue();
+      if (usage.objectCount() >= thresholds.minObjectCount()) {
+        terms.add(new VocabularyTerm(shownWord(stem, usage.words()), stem, usage.objectCount()));
       }
-      final String word = shownWord(entry.getKey(), wordsByStem.get(entry.getKey()));
-      terms.add(new VocabularyTerm(word, entry.getKey(), objectCount));
     }
     terms.sort(comparingInt(VocabularyTerm::objectCount).reversed());
     return List.copyOf(terms);
   }
 
   /**
+   * Collects, for each kept stem, the objects that use it and the words written for it. The result
+   * is sorted by stem, so that the final sort by count keeps ties in alphabetical order.
+   */
+  private Map<String, StemUsage> collectUsage(final Names names, final Set<String> stems) {
+    final Map<String, StemUsage> usageByStem = new TreeMap<>();
+    for (final NamedItem item : names.items()) {
+      for (final Token token : item.tokenization().tokens()) {
+        final String stem = token.stem();
+        if (stems.contains(stem)) {
+          usageByStem
+              .computeIfAbsent(stem, key -> new StemUsage())
+              .add(item.parentKey(), token.word());
+        }
+      }
+    }
+    return usageByStem;
+  }
+
+  /**
    * The word to show for a stem: the alphabetically first word that differs from the stem, or the
-   * stem itself if it is the only word written.
+   * stem itself if it is the only word written. A stem can have several words, such as {@code
+   * order} and {@code orders}, and the shown word is chosen without counting how often each is
+   * used. It is a word that occurs in a name, which is not always true of the stem, as for {@code
+   * categories} and its stem {@code category}.
+   *
+   * @param stem The singular form that groups the words
+   * @param words The distinct words written for the stem, in alphabetical order
    */
   private String shownWord(final String stem, final Set<String> words) {
     for (final String word : words) {
