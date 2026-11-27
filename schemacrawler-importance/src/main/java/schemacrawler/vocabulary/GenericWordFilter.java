@@ -35,28 +35,52 @@ final class GenericWordFilter implements UnaryOperator<Set<String>> {
   @Override
   public Set<String> apply(final Set<String> stems) {
     final Set<String> kept = new HashSet<>(stems);
+    kept.removeAll(genericStems());
+    return Set.copyOf(kept);
+  }
+
+  /** Stems used in the columns of many tables, that are not used to name a table or routine. */
+  private Set<String> genericStems() {
     final int tableCount = names.tableCount();
     if (tableCount == 0) {
-      return kept;
+      return Set.of();
     }
+    final double minTables = thresholds.genericTableShare() * tableCount;
+    final Set<String> namingStems = namingStems();
+
+    final Set<String> genericStems = new HashSet<>();
+    for (final Map.Entry<String, Set<NamedObjectKey>> entry : tablesByColumnStem().entrySet()) {
+      final String stem = entry.getKey();
+      final boolean isInManyTables = entry.getValue().size() >= minTables;
+      if (isInManyTables && !namingStems.contains(stem)) {
+        genericStems.add(stem);
+      }
+    }
+    return genericStems;
+  }
+
+  /** Stems of the names of tables and routines. */
+  private Set<String> namingStems() {
     final Set<String> namingStems = new HashSet<>();
-    final Map<String, Set<NamedObjectKey>> tablesByColumnStem = new HashMap<>();
     for (final NamedItem item : names.items()) {
       if (item.kind() == ObjectKind.TABLE || item.kind() == ObjectKind.ROUTINE) {
         namingStems.addAll(item.stems());
-      } else if (item.kind() == ObjectKind.COLUMN) {
+      }
+    }
+    return namingStems;
+  }
+
+  /** For each stem used in a column name, the tables that have such a column. */
+  private Map<String, Set<NamedObjectKey>> tablesByColumnStem() {
+    final Map<String, Set<NamedObjectKey>> tablesByColumnStem = new HashMap<>();
+    for (final NamedItem item : names.items()) {
+      if (item.kind() == ObjectKind.COLUMN) {
         for (final String stem : item.stems()) {
-          tablesByColumnStem.computeIfAbsent(stem, key -> new HashSet<>()).add(item.parentKey());
+          final NamedObjectKey tableKey = item.parentKey();
+          tablesByColumnStem.computeIfAbsent(stem, key -> new HashSet<>()).add(tableKey);
         }
       }
     }
-    for (final Map.Entry<String, Set<NamedObjectKey>> entry : tablesByColumnStem.entrySet()) {
-      final boolean isInManyTables =
-          entry.getValue().size() >= thresholds.genericTableShare() * tableCount;
-      if (isInManyTables && !namingStems.contains(entry.getKey())) {
-        kept.remove(entry.getKey());
-      }
-    }
-    return kept;
+    return tablesByColumnStem;
   }
 }

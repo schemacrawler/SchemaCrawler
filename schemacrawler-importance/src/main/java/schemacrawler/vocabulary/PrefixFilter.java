@@ -47,7 +47,7 @@ final class PrefixFilter implements UnaryOperator<Set<String>> {
         }
       }
     }
-    return kept;
+    return Set.copyOf(kept);
   }
 
   /** Counts the names that start with each word. */
