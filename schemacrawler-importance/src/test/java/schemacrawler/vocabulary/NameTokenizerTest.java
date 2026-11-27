@@ -100,6 +100,19 @@ public class NameTokenizerTest {
   }
 
   @Test
+  public void firstSegment() {
+    final List<Token> tokens = NameTokenizer.tokenize("customer_order").tokens();
+    assertThat(tokens.get(0).isFirstSegment(), is(true));
+    assertThat(tokens.get(1).isFirstSegment(), is(false));
+    // Digits split a word but not the segment
+    final List<Token> glued = NameTokenizer.tokenize("abcd1efgh").tokens();
+    assertThat(glued.get(0).isFirstSegment(), is(true));
+    assertThat(glued.get(1).isFirstSegment(), is(true));
+    // The short first segment is dropped, so no token is in the first segment
+    assertThat(NameTokenizer.tokenize("no_cust").tokens().get(0).isFirstSegment(), is(false));
+  }
+
+  @Test
   public void blankNames() {
     final Tokenization tokenization = NameTokenizer.tokenize("  ");
     assertThat(tokenization.segmentCount(), is(0));

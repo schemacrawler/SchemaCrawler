@@ -156,7 +156,7 @@ public class TermRankerAndCoverageTest {
     assertThat(stems(terms), contains("order"));
     assertThat(terms.get(0).word(), is("orders"));
     assertThat(terms.get(0).stem(), is("order"));
-    // The count is the owners using either form, and each owner counts once
+    // The count is the owners using either word, and each owner counts once
     assertThat(terms.get(0).objectCount(), is(3));
   }
 
@@ -187,7 +187,7 @@ public class TermRankerAndCoverageTest {
   }
 
   @Test
-  public void firstOfSeveralWrittenFormsIsShown() {
+  public void firstOfSeveralWordsIsShown() {
     final NamesFixture fixture = new NamesFixture();
     fixture.add(ObjectKind.ROUTINE, "get1_media");
     fixture.add(ObjectKind.ROUTINE, "get2_media");

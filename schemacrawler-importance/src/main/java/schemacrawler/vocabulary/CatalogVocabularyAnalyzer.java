@@ -69,8 +69,8 @@ public final class CatalogVocabularyAnalyzer {
                 .andThen(new PrefixFilter(names, thresholds))
                 .andThen(new GenericWordFilter(names, thresholds))
                 .apply(set);
-
     final Set<String> stems = stemFilters.apply(names.allStems());
+
     final List<VocabularyTerm> terms = new TermRanker(thresholds).rank(names, stems);
 
     final double coverage = TableCoverage.of(names, terms);

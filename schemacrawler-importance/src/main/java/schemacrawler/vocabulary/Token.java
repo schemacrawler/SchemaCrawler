@@ -15,4 +15,14 @@ import us.fatehi.utility.Inflection;
  *     {@code customer_order} has segment 0 and the second has segment 1. Digits and punctuation
  *     inside a segment do not change it, so {@code abcd1efgh} gives two tokens in segment 0.
  */
-public record Token(String word, String stem, int segment) {}
+public record Token(String word, String stem, int segment) {
+
+  /**
+   * Whether the word comes from the first segment of the name, which is the position of a prefix
+   * such as {@code proc} in {@code proc_orders}. A short first segment that was dropped does not
+   * count, so the first token of {@code no_customer} is not in the first segment.
+   */
+  public boolean isFirstSegment() {
+    return segment == 0;
+  }
+}

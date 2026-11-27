@@ -26,9 +26,9 @@ import schemacrawler.schema.NamedObjectKey;
  * the name of the table or routine, or in the name of anything it contains, such as a column or a
  * parameter. A word that is used in many columns of one table still counts once.
  *
- * <p>Each term shows one written word for its stem: the alphabetically first written form that
- * differs from the stem, which is usually the plural, or the stem itself when that is the only form
- * that is written. The shown word always occurs in a name.
+ * <p>Each term shows one word for its stem: the alphabetically first word that differs from the
+ * stem, which is usually the plural, or the stem itself when that is the only word written. The
+ * shown word always occurs in a name.
  */
 final class TermRanker {
 
@@ -41,7 +41,7 @@ final class TermRanker {
   List<VocabularyTerm> rank(final Names names, final Set<String> stems) {
     // Sorted by stem, so the final sort by count keeps ties in alphabetical order
     final Map<String, Set<NamedObjectKey>> ownersByStem = new TreeMap<>();
-    // For each stem, the forms in which it is written, in alphabetical order
+    // For each stem, the words written for it, in alphabetical order
     final Map<String, Set<String>> wordsByStem = new HashMap<>();
     for (final NamedItem item : names.items()) {
       for (final Token token : item.tokenization().tokens()) {
@@ -63,17 +63,17 @@ final class TermRanker {
       terms.add(new VocabularyTerm(word, entry.getKey(), objectCount));
     }
     terms.sort(comparingInt(VocabularyTerm::objectCount).reversed());
-    return terms;
+    return List.copyOf(terms);
   }
 
   /**
-   * The word to show for a stem: the alphabetically first written form that differs from the stem,
-   * or the stem itself if it is the only form written.
+   * The word to show for a stem: the alphabetically first word that differs from the stem, or the
+   * stem itself if it is the only word written.
    */
-  private String shownWord(final String stem, final Set<String> writtenForms) {
-    for (final String form : writtenForms) {
-      if (!form.equals(stem)) {
-        return form;
+  private String shownWord(final String stem, final Set<String> words) {
+    for (final String word : words) {
+      if (!word.equals(stem)) {
+        return word;
       }
     }
     return stem;

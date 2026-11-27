@@ -17,10 +17,10 @@ import java.io.Serializable;
  * A word used in the names of catalog objects. A term is serializable, and holds only strings and a
  * number.
  *
- * @param word The word shown for the stem, lowercased. It is the alphabetically first written form
- *     that differs from the stem, which is usually the plural, or the stem itself when that is the
- *     only form written. It always occurs in a name, and is the same as the stem when only the
- *     singular is written.
+ * @param word The word shown for the stem, lowercased. It is the alphabetically first word that
+ *     differs from the stem, which is usually the plural, or the stem itself when that is the only
+ *     word written. It always occurs in a name, and is the same as the stem when only the singular
+ *     is written.
  * @param stem The singular form of the word, used as the key that groups {@code order} and {@code
  *     orders} together.
  * @param objectCount Number of distinct catalog objects whose names contain the word.

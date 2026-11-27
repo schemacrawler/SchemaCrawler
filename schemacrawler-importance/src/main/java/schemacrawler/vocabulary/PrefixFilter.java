@@ -56,7 +56,7 @@ final class PrefixFilter implements UnaryOperator<Set<String>> {
     for (final NamedItem item : kindItems) {
       final Set<String> prefixes = new HashSet<>();
       for (final Token token : item.tokenization().tokens()) {
-        if (token.segment() == 0) {
+        if (token.isFirstSegment()) {
           prefixes.add(token.stem());
         }
       }
