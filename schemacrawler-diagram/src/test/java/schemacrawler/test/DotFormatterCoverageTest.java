@@ -17,9 +17,6 @@ import static us.fatehi.test.utility.extensions.FileHasContent.hasSameContentAs;
 import static us.fatehi.test.utility.extensions.FileHasContent.outputOf;
 
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import org.junit.jupiter.api.Tag;
@@ -225,19 +222,8 @@ public class DotFormatterCoverageTest {
 
   private static class RelationshipTable extends LightTable {
 
-    private final List<ForeignKey> foreignKeys = new ArrayList<>();
-
     private RelationshipTable(final SchemaReference schema, final String name) {
       super(schema, name);
-    }
-
-    @Override
-    public Collection<ForeignKey> getForeignKeys() {
-      return List.copyOf(foreignKeys);
-    }
-
-    private void addForeignKey(final ForeignKey foreignKey) {
-      foreignKeys.add(foreignKey);
     }
   }
 

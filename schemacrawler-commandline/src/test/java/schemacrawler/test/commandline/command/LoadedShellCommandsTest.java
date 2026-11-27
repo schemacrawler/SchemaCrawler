@@ -13,9 +13,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.mockito.Mockito.mock;
 import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
 import static schemacrawler.test.utility.CommandlineTestUtility.executeCommandInTest;
+import static schemacrawler.test.utility.crawl.LightCatalogUtility.lightCatalog;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static us.fatehi.test.utility.extensions.FileHasContent.contentsOf;
 import static us.fatehi.test.utility.extensions.FileHasContent.hasNoContent;
@@ -45,7 +45,7 @@ public class LoadedShellCommandsTest {
 
   @Test
   public void projectionOptionChangesKeepLoadedBaseline() throws Throwable {
-    final Catalog baseline = mock(Catalog.class);
+    final Catalog baseline = lightCatalog();
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
     state.setCatalog(baseline);
@@ -61,7 +61,7 @@ public class LoadedShellCommandsTest {
 
   @Test
   public void loadAndLimitChangesRequireReload() {
-    final Catalog baseline = mock(Catalog.class);
+    final Catalog baseline = lightCatalog();
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
     state.setCatalog(baseline);

@@ -12,9 +12,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static schemacrawler.test.utility.crawl.LightCatalogUtility.lightCatalog;
 
 import java.util.List;
 import org.jgrapht.Graph;
@@ -36,6 +36,9 @@ import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.View;
+import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.test.utility.crawl.LightForeignKey;
+import schemacrawler.test.utility.crawl.LightProcedure;
 import schemacrawler.test.utility.crawl.LightTable;
 import schemacrawler.utility.MetaDataUtility.SimpleDatabaseObjectType;
 
@@ -47,11 +50,7 @@ class ImportanceModelBuilderTest {
 
   private static Catalog catalog(
       final List<Table> tables, final List<Routine> routines, final List<Synonym> synonyms) {
-    final Catalog catalog = mock(Catalog.class);
-    when(catalog.getTables()).thenReturn(tables);
-    when(catalog.getRoutines()).thenReturn(routines);
-    when(catalog.getSynonyms()).thenReturn(synonyms);
-    return catalog;
+    return lightCatalog(tables, routines, List.of(), synonyms);
   }
 
   private static int edgesOfType(
@@ -67,8 +66,8 @@ class ImportanceModelBuilderTest {
     when(synonym.key()).thenReturn(new NamedObjectKey("PUBLIC", name));
   }
 
-  private static Table table(final String name) {
-    return spy(new LightTable(name));
+  private static LightTable table(final String name) {
+    return new LightTable(name);
   }
 
   @Test
@@ -97,8 +96,8 @@ class ImportanceModelBuilderTest {
 
   @Test
   void buildsTypedEdgesForAllSupportedCatalogObjects() {
-    final Table customers = table("CUSTOMERS");
-    final Table orders = table("ORDERS");
+    final LightTable customers = table("CUSTOMERS");
+    final LightTable orders = table("ORDERS");
     final View orderSummary = mock(View.class);
     when(orderSummary.key()).thenReturn(new NamedObjectKey("PUBLIC", "ORDER_SUMMARY"));
     when(orderSummary.getTableType()).thenReturn(new TableType("VIEW"));
@@ -111,16 +110,14 @@ class ImportanceModelBuilderTest {
     when(customerAlias.hasReferencedObject()).thenReturn(true);
     when(customerAlias.getReferencedObject()).thenReturn(customers);
 
-    final ForeignKey foreignKey = mock(ForeignKey.class);
-    when(foreignKey.getPrimaryKeyTable()).thenReturn(customers);
-    when(foreignKey.key()).thenReturn(new NamedObjectKey("FK_ORDERS_CUSTOMERS"));
-    doReturn(List.of(foreignKey)).when(orders).getImportedForeignKeys();
+    final ForeignKey foreignKey = new LightForeignKey("FK_ORDERS_CUSTOMERS", orders, customers);
+    orders.addImportedForeignKey(foreignKey);
 
     final TableReference impliedAssociation = mock(TableReference.class);
     when(impliedAssociation.getType()).thenReturn(TableConstraintType.implicit_association);
     when(impliedAssociation.getPrimaryKeyTable()).thenReturn(customers);
     when(impliedAssociation.key()).thenReturn(new NamedObjectKey("IA_ORDERS_CUSTOMERS"));
-    doReturn(List.of(impliedAssociation)).when(orders).getTableConstraints();
+    orders.addTableConstraint(impliedAssociation);
 
     final Catalog catalog =
         catalog(
@@ -203,8 +200,7 @@ class ImportanceModelBuilderTest {
   @Test
   void retainsTypedObjectLookupsForCollidingNames() {
     final Table table = table("ORDERS");
-    final Procedure procedure = mock(Procedure.class);
-    initialize(procedure, "ORDERS");
+    final Procedure procedure = new LightProcedure(new SchemaReference(null, "PUBLIC"), "ORDERS");
 
     final Catalog catalog = catalog(List.of(table), List.<Routine>of(procedure), List.of());
     final ImportanceModel importanceModel = ImportanceModelBuilder.builder(catalog).build();
@@ -219,12 +215,9 @@ class ImportanceModelBuilderTest {
 
   @Test
   void storesAnImportanceScoreWithinZeroToOneHundredForEveryTable() {
-    final Table customers = table("CUSTOMERS");
-    final Table orders = table("ORDERS");
-    final ForeignKey foreignKey = mock(ForeignKey.class);
-    when(foreignKey.getPrimaryKeyTable()).thenReturn(customers);
-    when(foreignKey.key()).thenReturn(new NamedObjectKey("FK_ORDERS_CUSTOMERS"));
-    doReturn(List.of(foreignKey)).when(orders).getImportedForeignKeys();
+    final LightTable customers = table("CUSTOMERS");
+    final LightTable orders = table("ORDERS");
+    orders.addImportedForeignKey(new LightForeignKey("FK_ORDERS_CUSTOMERS", orders, customers));
 
     final Catalog catalog = catalog(List.of(customers, orders), List.of(), List.of());
     ImportanceModelBuilder.builder(catalog).build();

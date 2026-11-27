@@ -11,17 +11,16 @@ package schemacrawler.importance.model.implementation;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import org.jgrapht.Graph;
 import org.junit.jupiter.api.Test;
 import schemacrawler.importance.model.DatabaseObjectVertexId;
 import schemacrawler.importance.model.EdgeType;
 import schemacrawler.importance.model.SchemaEdge;
-import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.test.utility.crawl.LightProcedure;
 import schemacrawler.test.utility.crawl.LightTable;
 
 class SchemaGraphAssemblyTest {
@@ -30,8 +29,8 @@ class SchemaGraphAssemblyTest {
   void tableSubgraphRetainsParallelTableEdgesAndExcludesNonTableEdges() {
     final Table orders = new LightTable("ORDERS");
     final Table customers = new LightTable("CUSTOMERS");
-    final Procedure refreshOrders = mock(Procedure.class);
-    when(refreshOrders.key()).thenReturn(new NamedObjectKey("PUBLIC", "REFRESH_ORDERS"));
+    final Procedure refreshOrders =
+        new LightProcedure(new SchemaReference(null, "PUBLIC"), "REFRESH_ORDERS");
 
     final SchemaGraphAssembly assembly = new SchemaGraphAssembly();
     assembly.addNode(orders);
