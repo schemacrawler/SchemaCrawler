@@ -15,13 +15,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.UnaryOperator;
 
 /**
  * Drops a word that is the first segment of a large share of the names of one object kind, such as
  * {@code proc} in {@code proc_x}. Such words describe the kind of object and say nothing about the
  * domain.
  */
-final class PrefixFilter implements StemFilter {
+final class PrefixFilter implements UnaryOperator<Set<String>> {
 
   private final Names names;
   private final VocabularyThresholds thresholds;
