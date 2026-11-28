@@ -1121,7 +1121,7 @@ _pg_user_mapping
 {"key": "null/null/_pg_user_mappings"}
 _pg_user_mappings
   system
-  java.sql.Types: STRUCT
+  java.sql.Types: ARRAY
 
 {"key": "null/null/_pg_views"}
 _pg_views
