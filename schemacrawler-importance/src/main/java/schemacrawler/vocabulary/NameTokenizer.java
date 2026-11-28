@@ -11,6 +11,8 @@ package schemacrawler.vocabulary;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.toSnakeCase;
 
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.List;
 import us.fatehi.utility.Inflection;
@@ -19,13 +21,15 @@ import us.fatehi.utility.Inflection;
  * Breaks a name into word tokens. The name is first split into segments with {@link
  * us.fatehi.utility.Utility#toSnakeCase(String)}, which also lowercases it. Each segment is then
  * broken into runs of letters, so that digits and punctuation separate words instead of joining the
- * letters on either side. Runs that are too short are dropped, and the rest are stemmed with {@link
- * Inflection#singularize(String)}. The class is generic: it works on any text name and knows
- * nothing about where the name came from.
+ * letters on either side. Each run is normalized with Unicode compatibility normalization (NFKC),
+ * so that full-width and half-width spellings of a word are the same. Runs whose normalized form is
+ * too short are dropped, and the rest are stemmed from the normalized form with {@link
+ * Inflection#singularize(String)}. The word of a token stays as written. The class is generic: it
+ * works on any text name and knows nothing about where the name came from.
  */
 public final class NameTokenizer {
 
-  /** Words shorter than this number of characters are dropped. */
+  /** Words shorter than this number of characters, after normalization, are dropped. */
   static final int MIN_TOKEN_LENGTH = 4;
 
   public static Tokenization tokenize(final String name) {
@@ -41,8 +45,9 @@ public final class NameTokenizer {
       }
       segmentCount++;
       for (final String word : letterRuns(segment)) {
-        if (word.codePointCount(0, word.length()) >= MIN_TOKEN_LENGTH) {
-          tokens.add(new Token(word, Inflection.singularize(word), segmentCount - 1));
+        final String normalizedWord = Normalizer.normalize(word, Form.NFKC);
+        if (normalizedWord.codePointCount(0, normalizedWord.length()) >= MIN_TOKEN_LENGTH) {
+          tokens.add(new Token(word, Inflection.singularize(normalizedWord), segmentCount - 1));
         }
       }
     }

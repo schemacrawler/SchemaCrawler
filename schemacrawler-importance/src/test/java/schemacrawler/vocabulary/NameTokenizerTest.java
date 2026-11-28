@@ -76,7 +76,11 @@ public class NameTokenizerTest {
   @Test
   public void combiningMarksStayInWord() {
     // "e" followed by a combining acute accent
-    assertThat(stems("café_name"), contains("café", "name"));
+    // The word keeps the combining mark, and the stem is normalized to the composed form
+    final Token token = NameTokenizer.tokenize("café_name").tokens().get(0);
+    assertThat(token.word(), is("café"));
+    assertThat(token.stem(), is("café"));
+    assertThat(stems("café_name"), contains("café", "name"));
   }
 
   @Test
@@ -118,5 +122,35 @@ public class NameTokenizerTest {
     assertThat(tokenization.segmentCount(), is(0));
     assertThat(tokenization.tokens(), empty());
     assertThat(NameTokenizer.tokenize(null).segmentCount(), is(0));
+  }
+
+  @Test
+  public void fullWidthLatinSharesStemWithAscii() {
+    final Token fullWidth = NameTokenizer.tokenize("ｏｒｄｅｒ_detail").tokens().get(0);
+    assertThat(fullWidth.stem(), is("order"));
+    assertThat(fullWidth.word(), is("ｏｒｄｅｒ"));
+    assertThat(stems("order_id"), contains("order"));
+  }
+
+  @Test
+  public void halfWidthKatakanaSharesStemWithFullWidth() {
+    final String halfWidth = "ｼﾞｭﾁｭｳ_detail";
+    final String fullWidth = "ジュチュウ_id";
+    assertThat(stems(halfWidth).get(0), is("ジュチュウ"));
+    assertThat(stems(fullWidth), contains("ジュチュウ"));
+  }
+
+  @Test
+  public void minimumLengthUsesNormalizedForm() {
+    // Six code points as written, three after normalization
+    assertThat(stems("ｶﾞｷﾞｸﾞ_id"), empty());
+    assertThat(stems("ガギグ_id"), empty());
+  }
+
+  @Test
+  public void ideographicSpaceSeparatesSegments() {
+    final Tokenization tokenization = NameTokenizer.tokenize("customer　order");
+    assertThat(tokenization.segmentCount(), is(2));
+    assertThat(tokenization.tokens().size(), is(2));
   }
 }

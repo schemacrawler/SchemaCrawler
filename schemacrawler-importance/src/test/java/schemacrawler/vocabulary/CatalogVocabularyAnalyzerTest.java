@@ -263,4 +263,25 @@ public class CatalogVocabularyAnalyzerTest {
     assertThat(messages.get(0), containsString("<10> words kept"));
     assertThat(messages.get(0), containsString("vocabulary trusted"));
   }
+
+  @Test
+  public void fullWidthAndAsciiSpellingsAreOneTerm() {
+    final String fullWidth = "ｏｒｄｅｒ";
+    final Catalog catalog =
+        new TestCatalogBuilder()
+            .table(fullWidth + "_detail")
+            .table("order_item")
+            .table(fullWidth + "_history")
+            .build();
+
+    final Vocabulary vocabulary = CatalogVocabularyAnalyzer.analyze(catalog, LENIENT);
+
+    final List<VocabularyTerm> orderTerms =
+        vocabulary.topTerms(100).stream().filter(term -> term.stem().equals("order")).toList();
+    assertThat(orderTerms, hasSize(1));
+    assertThat(orderTerms.get(0).objectCount(), is(3));
+    assertThat(
+        orderTerms.get(0).word().equals("order") || orderTerms.get(0).word().equals(fullWidth),
+        is(true));
+  }
 }
