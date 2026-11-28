@@ -10,12 +10,16 @@ package schemacrawler.vocabulary;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static schemacrawler.test.utility.crawl.LightCatalogUtility.lightCatalog;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.test.utility.crawl.LightTable;
 
 public class CatalogNamesTest {
 
@@ -48,6 +52,32 @@ public class CatalogNamesTest {
     assertThat(stemsOfKind(names, ObjectKind.SYNONYM), contains("alias", "shipment"));
     // "seq" is too short to be a word
     assertThat(names.items(), hasSize(7));
+  }
+
+  @Test
+  public void schemaNamesAreNotRead() {
+    final SchemaReference sales = new SchemaReference("catalog", "sales_data");
+    final SchemaReference inventory = new SchemaReference("catalog", "inventory_data");
+    final LightTable customer = new LightTable(sales, "customer");
+    final LightTable stock = new LightTable(inventory, "stock");
+    final Catalog catalog = lightCatalog(List.of(customer, stock), List.of(), List.of(), List.of());
+    assertThat(catalog.getSchemas(), hasSize(2));
+
+    final Names names = CatalogNames.read(catalog);
+
+    assertThat(names.items(), hasSize(2));
+    assertThat(names.allStems(), containsInAnyOrder("customer", "stock"));
+  }
+
+  @Test
+  public void catalogWithAnUnnamedSchemaIsRead() {
+    final Catalog catalog = lightCatalog(new LightTable(new SchemaReference(), "customer_order"));
+    assertThat(catalog.getSchemas(), hasSize(1));
+
+    final Names names = CatalogNames.read(catalog);
+
+    assertThat(names.items(), hasSize(1));
+    assertThat(names.allStems(), containsInAnyOrder("customer", "order"));
   }
 
   @Test

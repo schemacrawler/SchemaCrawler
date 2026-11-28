@@ -116,7 +116,7 @@ public class TermRankerAndCoverageTest {
     final NamesFixture fixture = new NamesFixture();
     fixture.add(ObjectKind.SEQUENCE, "audit_number");
     fixture.add(ObjectKind.SYNONYM, "audit_alias");
-    fixture.add(ObjectKind.SCHEMA, "audit_data");
+    fixture.add(ObjectKind.ROUTINE, "audit_refresh");
 
     final List<VocabularyTerm> terms = rank(fixture.build());
 
