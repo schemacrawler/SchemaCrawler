@@ -35,11 +35,13 @@ final class Names {
     private final List<NamedItem> items = new ArrayList<>();
 
     void add(final ObjectKind kind, final DependantObject<?> object) {
+      requireNonNull(kind, "No object kind provided");
       requireNonNull(object, "No object provided");
       add(kind, object.key(), object.getParent().key(), object.getName());
     }
 
     void add(final ObjectKind kind, final NamedObject object) {
+      requireNonNull(kind, "No object kind provided");
       requireNonNull(object, "No object provided");
       add(kind, object.key(), null, object.getName());
     }
@@ -62,6 +64,7 @@ final class Names {
         final NamedObjectKey key,
         final NamedObjectKey parentKey,
         final String name) {
+      requireNonNull(kind, "No object kind provided");
       requireNotBlank(name, "No name provided");
       requireNonNull(key, new StringFormat("No key for %s <%s>", kind, name));
       final Tokenization tokenization = NameTokenizer.tokenize(name);

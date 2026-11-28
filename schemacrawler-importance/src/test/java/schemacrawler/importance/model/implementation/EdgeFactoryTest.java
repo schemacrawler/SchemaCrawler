@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Synonym;
+import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.test.utility.crawl.LightTable;
 
 class EdgeFactoryTest {
 
@@ -24,8 +26,7 @@ class EdgeFactoryTest {
   void addsSynonymResolutionEdgeForMockedCatalogObjects() {
     final Synonym synonym = mock(Synonym.class);
     when(synonym.key()).thenReturn(new NamedObjectKey("PUBLIC", "ORDER_ALIAS"));
-    final DatabaseObject orders = mock(DatabaseObject.class);
-    when(orders.key()).thenReturn(new NamedObjectKey("PUBLIC", "ORDERS"));
+    final DatabaseObject orders = new LightTable(new SchemaReference(null, "PUBLIC"), "ORDERS");
     when(synonym.hasReferencedObject()).thenReturn(true);
     when(synonym.getReferencedObject()).thenReturn(null);
 

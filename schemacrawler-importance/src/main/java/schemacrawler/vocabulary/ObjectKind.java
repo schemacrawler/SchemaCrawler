@@ -10,7 +10,6 @@ package schemacrawler.vocabulary;
 
 /** The kinds of catalog objects whose names are used to build a vocabulary. */
 enum ObjectKind {
-  SCHEMA,
   TABLE,
   COLUMN,
   TRIGGER,

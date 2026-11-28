@@ -18,7 +18,6 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineParameter;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
@@ -34,9 +33,6 @@ final class CatalogNames {
     requireNonNull(catalog, "No catalog provided");
 
     final Names.Builder names = Names.builder();
-    for (final Schema schema : catalog.getSchemas()) {
-      names.add(ObjectKind.SCHEMA, schema);
-    }
     for (final Table table : catalog.getTables()) {
       readTable(names, table);
     }
